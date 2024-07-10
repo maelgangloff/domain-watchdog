@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\DomainEntityRepository;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: DomainEntityRepository::class)]
@@ -18,8 +19,8 @@ class DomainEntity
     #[ORM\JoinColumn(nullable: false, referencedColumnName: 'handle')]
     private ?Entity $entity = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $roles = null;
+    #[ORM\Column(type: Types::ARRAY)]
+    private array $roles = [];
 
     public function getDomain(): ?Domain
     {
@@ -45,12 +46,12 @@ class DomainEntity
         return $this;
     }
 
-    public function getRoles(): ?string
+    public function getRoles(): ?array
     {
         return $this->roles;
     }
 
-    public function setRoles(string $roles): static
+    public function setRoles(array $roles): static
     {
         $this->roles = $roles;
 
