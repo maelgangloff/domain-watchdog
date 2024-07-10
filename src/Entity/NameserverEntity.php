@@ -10,16 +10,13 @@ use Doctrine\ORM\Mapping as ORM;
 class NameserverEntity
 {
     #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column]
-    private ?int $id = null;
-
     #[ORM\ManyToOne(inversedBy: 'nameserverEntities')]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(nullable: false, referencedColumnName: 'handle')]
     private ?Nameserver $nameserver = null;
 
+    #[ORM\Id]
     #[ORM\ManyToOne(inversedBy: 'nameserverEntities')]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(nullable: false, referencedColumnName: 'handle')]
     private ?Entity $entity = null;
 
     #[ORM\Column(type: Types::ARRAY)]
@@ -27,11 +24,6 @@ class NameserverEntity
 
     #[ORM\Column(type: Types::ARRAY)]
     private array $status = [];
-
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
 
     public function getNameserver(): ?Nameserver
     {
