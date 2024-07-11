@@ -2,7 +2,6 @@
 
 namespace App\Entity;
 
-use App\Config\EventAction;
 use App\Repository\EntityEventRepository;
 use Doctrine\ORM\Mapping as ORM;
 

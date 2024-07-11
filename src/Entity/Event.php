@@ -3,7 +3,7 @@
 namespace App\Entity;
 
 use App\Config\EventAction;
-use App\Repository\EntityEventRepository;
+use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\MappedSuperclass]
@@ -18,7 +18,7 @@ class Event
     private ?EventAction $action = null;
 
     #[ORM\Column]
-    private ?\DateTimeImmutable $date = null;
+    private ?DateTimeImmutable $date = null;
 
 
     public function getId(): ?int
@@ -38,12 +38,12 @@ class Event
         return $this;
     }
 
-    public function getDate(): ?\DateTimeImmutable
+    public function getDate(): ?DateTimeImmutable
     {
         return $this->date;
     }
 
-    public function setDate(\DateTimeImmutable $date): static
+    public function setDate(DateTimeImmutable $date): static
     {
         $this->date = $date;
 

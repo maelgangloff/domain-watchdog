@@ -49,8 +49,8 @@ class Domain
      */
     #[ORM\ManyToMany(targetEntity: Nameserver::class, inversedBy: 'domains')]
     #[ORM\JoinTable(name: 'domain_nameservers',
-    joinColumns: [new ORM\JoinColumn(name: 'domain_handle', referencedColumnName: 'handle'), new ORM\JoinColumn(name: 'domain_ldh_name', referencedColumnName: 'ldh_name')],
-    inverseJoinColumns: [new ORM\JoinColumn(name: 'nameserver_handle', referencedColumnName: 'handle')]
+        joinColumns: [new ORM\JoinColumn(name: 'domain_handle', referencedColumnName: 'handle'), new ORM\JoinColumn(name: 'domain_ldh_name', referencedColumnName: 'ldh_name')],
+        inverseJoinColumns: [new ORM\JoinColumn(name: 'nameserver_handle', referencedColumnName: 'handle')]
     )]
     private Collection $nameservers;
 
