@@ -3,10 +3,10 @@
 namespace App\Entity;
 
 use App\Config\EventAction;
-use App\Repository\EventRepository;
+use App\Repository\EntityEventRepository;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: EventRepository::class)]
+#[ORM\MappedSuperclass]
 class Event
 {
     #[ORM\Id]
@@ -19,10 +19,6 @@ class Event
 
     #[ORM\Column]
     private ?\DateTimeImmutable $date = null;
-
-    #[ORM\ManyToOne(targetEntity: Entity::class, inversedBy: 'events')]
-    #[ORM\JoinColumn(referencedColumnName: 'handle', nullable: false)]
-    private ?Entity $entity = null;
 
 
     public function getId(): ?int
@@ -50,18 +46,6 @@ class Event
     public function setDate(\DateTimeImmutable $date): static
     {
         $this->date = $date;
-
-        return $this;
-    }
-
-    public function getEntity(): ?Entity
-    {
-        return $this->entity;
-    }
-
-    public function setEntity(?Entity $entity): static
-    {
-        $this->entity = $entity;
 
         return $this;
     }

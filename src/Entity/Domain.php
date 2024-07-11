@@ -39,15 +39,26 @@ class Domain
     private array $status = [];
 
     /**
+     * @var Collection<int, BookmarkList>
+     */
+    #[ORM\ManyToMany(targetEntity: BookmarkList::class, mappedBy: 'domains')]
+    private Collection $bookmarkLists;
+
+    /**
      * @var Collection<int, Nameserver>
      */
-    #[ORM\ManyToMany(targetEntity: Nameserver::class, mappedBy: 'handle')]
+    #[ORM\ManyToMany(targetEntity: Nameserver::class, inversedBy: 'domains')]
+    #[ORM\JoinTable(name: 'domain_nameservers',
+    joinColumns: [new ORM\JoinColumn(name: 'domain_handle', referencedColumnName: 'handle'), new ORM\JoinColumn(name: 'domain_ldh_name', referencedColumnName: 'ldh_name')],
+    inverseJoinColumns: [new ORM\JoinColumn(name: 'nameserver_handle', referencedColumnName: 'handle')]
+    )]
     private Collection $nameservers;
 
     public function __construct()
     {
         $this->events = new ArrayCollection();
         $this->domainEntities = new ArrayCollection();
+        $this->bookmarkLists = new ArrayCollection();
         $this->nameservers = new ArrayCollection();
     }
 
@@ -158,6 +169,33 @@ class Domain
     public function setStatus(array $status): static
     {
         $this->status = $status;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, BookmarkList>
+     */
+    public function getBookmarkLists(): Collection
+    {
+        return $this->bookmarkLists;
+    }
+
+    public function addBookmarkList(BookmarkList $bookmarkList): static
+    {
+        if (!$this->bookmarkLists->contains($bookmarkList)) {
+            $this->bookmarkLists->add($bookmarkList);
+            $bookmarkList->addDomain($this);
+        }
+
+        return $this;
+    }
+
+    public function removeBookmarkList(BookmarkList $bookmarkList): static
+    {
+        if ($this->bookmarkLists->removeElement($bookmarkList)) {
+            $bookmarkList->removeDomain($this);
+        }
 
         return $this;
     }

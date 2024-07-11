@@ -2,14 +2,14 @@
 
 namespace App\Entity;
 
-use App\Repository\BookmarkDomainListRepository;
+use App\Repository\BookmarkListRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Uid\Uuid;
 
-#[ORM\Entity(repositoryClass: BookmarkDomainListRepository::class)]
-class BookmarkDomainList
+#[ORM\Entity(repositoryClass: BookmarkListRepository::class)]
+class BookmarkList
 {
     #[ORM\Id]
     #[ORM\Column(length: 36)]
@@ -22,7 +22,10 @@ class BookmarkDomainList
     /**
      * @var Collection<int, Domain>
      */
-    #[ORM\ManyToMany(targetEntity: Domain::class, mappedBy: 'handle')]
+    #[ORM\ManyToMany(targetEntity: Domain::class, inversedBy: 'bookmarkLists')]
+    #[ORM\JoinTable(name: 'bookmark_lists_domains',
+        joinColumns: [new ORM\JoinColumn(name: 'bookmark_token', referencedColumnName: 'token')],
+        inverseJoinColumns: [new ORM\JoinColumn(name: 'domain_ldh_name', referencedColumnName: 'ldh_name'), new ORM\JoinColumn(name: 'domain_handle', referencedColumnName: 'handle')])]
     private Collection $domains;
 
     public function __construct()

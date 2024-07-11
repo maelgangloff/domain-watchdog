@@ -34,9 +34,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $password = null;
 
     /**
-     * @var Collection<int, BookmarkDomainList>
+     * @var Collection<int, BookmarkList>
      */
-    #[ORM\OneToMany(targetEntity: BookmarkDomainList::class, mappedBy: 'user', orphanRemoval: true)]
+    #[ORM\OneToMany(targetEntity: BookmarkList::class, mappedBy: 'user', orphanRemoval: true)]
     private Collection $bookmarkDomainLists;
 
     public function __construct()
@@ -121,14 +121,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     /**
-     * @return Collection<int, BookmarkDomainList>
+     * @return Collection<int, BookmarkList>
      */
     public function getBookmarkDomainLists(): Collection
     {
         return $this->bookmarkDomainLists;
     }
 
-    public function addBookmarkDomainList(BookmarkDomainList $bookmarkDomainList): static
+    public function addBookmarkDomainList(BookmarkList $bookmarkDomainList): static
     {
         if (!$this->bookmarkDomainLists->contains($bookmarkDomainList)) {
             $this->bookmarkDomainLists->add($bookmarkDomainList);
@@ -138,7 +138,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function removeBookmarkDomainList(BookmarkDomainList $bookmarkDomainList): static
+    public function removeBookmarkDomainList(BookmarkList $bookmarkDomainList): static
     {
         if ($this->bookmarkDomainLists->removeElement($bookmarkDomainList)) {
             // set the owning side to null (unless already changed)

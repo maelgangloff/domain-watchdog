@@ -2,22 +2,23 @@
 
 namespace App\Repository;
 
+use App\Entity\EntityEvent;
 use App\Entity\Event;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceEntityRepository<Event>
+ * @extends ServiceEntityRepository<EntityEvent>
  */
-class EventRepository extends ServiceEntityRepository
+class EntityEventRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, Event::class);
+        parent::__construct($registry, EntityEvent::class);
     }
 
     //    /**
-    //     * @return Event[] Returns an array of Event objects
+    //     * @return EntityEvent[] Returns an array of EntityEvent objects
     //     */
     //    public function findByExampleField($value): array
     //    {

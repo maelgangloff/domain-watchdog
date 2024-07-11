@@ -2,22 +2,22 @@
 
 namespace App\Repository;
 
-use App\Entity\BookmarkDomainList;
+use App\Entity\BookmarkList;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceEntityRepository<BookmarkDomainList>
+ * @extends ServiceEntityRepository<BookmarkList>
  */
-class BookmarkDomainListRepository extends ServiceEntityRepository
+class BookmarkListRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, BookmarkDomainList::class);
+        parent::__construct($registry, BookmarkList::class);
     }
 
     //    /**
-    //     * @return BookmarkDomainList[] Returns an array of BookmarkDomainList objects
+    //     * @return BookmarkList[] Returns an array of BookmarkList objects
     //     */
     //    public function findByExampleField($value): array
     //    {
@@ -31,7 +31,7 @@ class BookmarkDomainListRepository extends ServiceEntityRepository
     //        ;
     //    }
 
-    //    public function findOneBySomeField($value): ?BookmarkDomainList
+    //    public function findOneBySomeField($value): ?BookmarkList
     //    {
     //        return $this->createQueryBuilder('b')
     //            ->andWhere('b.exampleField = :val')

@@ -28,9 +28,16 @@ class Nameserver
     #[ORM\Column(type: Types::SIMPLE_ARRAY, enumType: DomainStatus::class)]
     private array $status = [];
 
+    /**
+     * @var Collection<int, Domain>
+     */
+    #[ORM\ManyToMany(targetEntity: Domain::class, mappedBy: 'nameservers')]
+    private Collection $domains;
+
     public function __construct()
     {
         $this->nameserverEntities = new ArrayCollection();
+        $this->domains = new ArrayCollection();
     }
 
     public function getHandle(): ?string
@@ -98,6 +105,33 @@ class Nameserver
     public function setStatus(array $status): static
     {
         $this->status = $status;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Domain>
+     */
+    public function getDomains(): Collection
+    {
+        return $this->domains;
+    }
+
+    public function addDomain(Domain $domain): static
+    {
+        if (!$this->domains->contains($domain)) {
+            $this->domains->add($domain);
+            $domain->addNameserver($this);
+        }
+
+        return $this;
+    }
+
+    public function removeDomain(Domain $domain): static
+    {
+        if ($this->domains->removeElement($domain)) {
+            $domain->removeNameserver($this);
+        }
 
         return $this;
     }
