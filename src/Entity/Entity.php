@@ -27,9 +27,9 @@ class Entity
     private Collection $nameserverEntities;
 
     /**
-     * @var Collection<int, Event>
+     * @var Collection<int, EntityEvent>
      */
-    #[ORM\OneToMany(targetEntity: Event::class, mappedBy: 'entity', orphanRemoval: true)]
+    #[ORM\OneToMany(targetEntity: EntityEvent::class, mappedBy: 'entity', cascade: ['persist'], orphanRemoval: true)]
     private Collection $events;
 
     public function __construct()
@@ -112,14 +112,14 @@ class Entity
     }
 
     /**
-     * @return Collection<int, Event>
+     * @return Collection<int, EntityEvent>
      */
     public function getEvents(): Collection
     {
         return $this->events;
     }
 
-    public function addEvent(Event $event): static
+    public function addEvent(EntityEvent $event): static
     {
         if (!$this->events->contains($event)) {
             $this->events->add($event);
@@ -129,7 +129,7 @@ class Entity
         return $this;
     }
 
-    public function removeEvent(Event $event): static
+    public function removeEvent(EntityEvent $event): static
     {
         if ($this->events->removeElement($event)) {
             // set the owning side to null (unless already changed)

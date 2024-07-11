@@ -25,7 +25,7 @@ class BookmarkList
     #[ORM\ManyToMany(targetEntity: Domain::class, inversedBy: 'bookmarkLists')]
     #[ORM\JoinTable(name: 'bookmark_lists_domains',
         joinColumns: [new ORM\JoinColumn(name: 'bookmark_token', referencedColumnName: 'token')],
-        inverseJoinColumns: [new ORM\JoinColumn(name: 'domain_ldh_name', referencedColumnName: 'ldh_name'), new ORM\JoinColumn(name: 'domain_handle', referencedColumnName: 'handle')])]
+        inverseJoinColumns: [new ORM\JoinColumn(name: 'domain_handle', referencedColumnName: 'handle')])]
     private Collection $domains;
 
     public function __construct()

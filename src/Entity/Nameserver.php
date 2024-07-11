@@ -22,7 +22,7 @@ class Nameserver
     /**
      * @var Collection<int, NameserverEntity>
      */
-    #[ORM\OneToMany(targetEntity: NameserverEntity::class, mappedBy: 'nameserver', orphanRemoval: true)]
+    #[ORM\OneToMany(targetEntity: NameserverEntity::class, mappedBy: 'nameserver', cascade: ['persist'], orphanRemoval: true)]
     private Collection $nameserverEntities;
 
     #[ORM\Column(type: Types::SIMPLE_ARRAY, enumType: DomainStatus::class)]

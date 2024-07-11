@@ -12,7 +12,6 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Entity(repositoryClass: DomainRepository::class)]
 class Domain
 {
-    #[ORM\Id]
     #[ORM\Column(length: 255)]
     private ?string $ldhName = null;
 
@@ -23,13 +22,13 @@ class Domain
     /**
      * @var Collection<int, DomainEvent>
      */
-    #[ORM\OneToMany(targetEntity: DomainEvent::class, mappedBy: 'domain', orphanRemoval: true)]
+    #[ORM\OneToMany(targetEntity: DomainEvent::class, mappedBy: 'domain', cascade: ['persist'], orphanRemoval: true)]
     private Collection $events;
 
     /**
      * @var Collection<int, DomainEntity>
      */
-    #[ORM\OneToMany(targetEntity: DomainEntity::class, mappedBy: 'domain', orphanRemoval: true)]
+    #[ORM\OneToMany(targetEntity: DomainEntity::class, mappedBy: 'domain', cascade: ['persist'], orphanRemoval: true)]
     private Collection $domainEntities;
 
     #[ORM\Column(length: 255)]
@@ -41,15 +40,15 @@ class Domain
     /**
      * @var Collection<int, BookmarkList>
      */
-    #[ORM\ManyToMany(targetEntity: BookmarkList::class, mappedBy: 'domains')]
+    #[ORM\ManyToMany(targetEntity: BookmarkList::class, mappedBy: 'domains', cascade: ['persist'])]
     private Collection $bookmarkLists;
 
     /**
      * @var Collection<int, Nameserver>
      */
-    #[ORM\ManyToMany(targetEntity: Nameserver::class, inversedBy: 'domains')]
+    #[ORM\ManyToMany(targetEntity: Nameserver::class, inversedBy: 'domains', cascade: ['persist'])]
     #[ORM\JoinTable(name: 'domain_nameservers',
-        joinColumns: [new ORM\JoinColumn(name: 'domain_handle', referencedColumnName: 'handle'), new ORM\JoinColumn(name: 'domain_ldh_name', referencedColumnName: 'ldh_name')],
+        joinColumns: [new ORM\JoinColumn(name: 'domain_handle', referencedColumnName: 'handle')],
         inverseJoinColumns: [new ORM\JoinColumn(name: 'nameserver_handle', referencedColumnName: 'handle')]
     )]
     private Collection $nameservers;
