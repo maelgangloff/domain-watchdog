@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Config\DomainRole;
 use App\Repository\DomainEntityRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
@@ -19,8 +20,9 @@ class DomainEntity
     #[ORM\JoinColumn(referencedColumnName: 'handle', nullable: false)]
     private ?Entity $entity = null;
 
-    #[ORM\Column(type: Types::SIMPLE_ARRAY)]
+    #[ORM\Column(type: Types::SIMPLE_ARRAY, enumType: DomainRole::class)]
     private array $roles = [];
+
 
     public function getDomain(): ?Domain
     {
@@ -46,7 +48,10 @@ class DomainEntity
         return $this;
     }
 
-    public function getRoles(): ?array
+    /**
+     * @return DomainRole[]
+     */
+    public function getRoles(): array
     {
         return $this->roles;
     }
@@ -57,4 +62,5 @@ class DomainEntity
 
         return $this;
     }
+
 }

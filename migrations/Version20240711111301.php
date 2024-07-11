@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20240711002439 extends AbstractMigration
+final class Version20240711111301 extends AbstractMigration
 {
     public function getDescription(): string
     {
@@ -22,8 +22,8 @@ final class Version20240711002439 extends AbstractMigration
         // this up() migration is auto-generated, please modify it to your needs
         $this->addSql('CREATE TABLE bookmark_domain_list (token VARCHAR(36) NOT NULL, user_id INTEGER NOT NULL, PRIMARY KEY(token), CONSTRAINT FK_F05EDCECA76ED395 FOREIGN KEY (user_id) REFERENCES user (id) NOT DEFERRABLE INITIALLY IMMEDIATE)');
         $this->addSql('CREATE INDEX IDX_F05EDCECA76ED395 ON bookmark_domain_list (user_id)');
-        $this->addSql('CREATE TABLE domain (ldhname VARCHAR(255) NOT NULL, handle VARCHAR(255) NOT NULL, status CLOB NOT NULL --(DC2Type:simple_array)
-        , whois_status VARCHAR(255) NOT NULL, PRIMARY KEY(ldhname))');
+        $this->addSql('CREATE TABLE domain (ldhname VARCHAR(255) NOT NULL, handle VARCHAR(255) NOT NULL, whois_status VARCHAR(255) NOT NULL, status CLOB NOT NULL --(DC2Type:simple_array)
+        , PRIMARY KEY(ldhname))');
         $this->addSql('CREATE TABLE domain_entity (domain_id VARCHAR(255) NOT NULL, entity_id VARCHAR(255) NOT NULL, roles CLOB NOT NULL --(DC2Type:simple_array)
         , PRIMARY KEY(domain_id, entity_id), CONSTRAINT FK_614B48A1115F0EE5 FOREIGN KEY (domain_id) REFERENCES domain (ldhname) NOT DEFERRABLE INITIALLY IMMEDIATE, CONSTRAINT FK_614B48A181257D5D FOREIGN KEY (entity_id) REFERENCES entity (handle) NOT DEFERRABLE INITIALLY IMMEDIATE)');
         $this->addSql('CREATE INDEX IDX_614B48A1115F0EE5 ON domain_entity (domain_id)');
@@ -32,7 +32,7 @@ final class Version20240711002439 extends AbstractMigration
         $this->addSql('CREATE TABLE event ("action" VARCHAR(255) NOT NULL, domain_id VARCHAR(255) NOT NULL, date DATE NOT NULL --(DC2Type:date_immutable)
         , PRIMARY KEY("action", domain_id), CONSTRAINT FK_3BAE0AA7115F0EE5 FOREIGN KEY (domain_id) REFERENCES domain (ldhname) NOT DEFERRABLE INITIALLY IMMEDIATE)');
         $this->addSql('CREATE INDEX IDX_3BAE0AA7115F0EE5 ON event (domain_id)');
-        $this->addSql('CREATE TABLE nameserver (handle VARCHAR(255) NOT NULL, ldhname VARCHAR(255) NOT NULL, status CLOB NOT NULL --(DC2Type:array)
+        $this->addSql('CREATE TABLE nameserver (handle VARCHAR(255) NOT NULL, ldhname VARCHAR(255) NOT NULL, status CLOB NOT NULL --(DC2Type:simple_array)
         , PRIMARY KEY(handle))');
         $this->addSql('CREATE TABLE nameserver_entity (nameserver_id VARCHAR(255) NOT NULL, entity_id VARCHAR(255) NOT NULL, roles CLOB NOT NULL --(DC2Type:simple_array)
         , status CLOB NOT NULL --(DC2Type:simple_array)

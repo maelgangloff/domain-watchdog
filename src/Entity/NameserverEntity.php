@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use App\Config\DomainRole;
+use App\Config\DomainStatus;
 use App\Repository\NameserverEntityRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
@@ -19,10 +21,10 @@ class NameserverEntity
     #[ORM\JoinColumn(referencedColumnName: 'handle', nullable: false)]
     private ?Entity $entity = null;
 
-    #[ORM\Column(type: Types::SIMPLE_ARRAY)]
+    #[ORM\Column(type: Types::SIMPLE_ARRAY, enumType: DomainRole::class)]
     private array $roles = [];
 
-    #[ORM\Column(type: Types::SIMPLE_ARRAY)]
+    #[ORM\Column(type: Types::SIMPLE_ARRAY, enumType: DomainStatus::class)]
     private array $status = [];
 
     public function getNameserver(): ?Nameserver
@@ -49,6 +51,9 @@ class NameserverEntity
         return $this;
     }
 
+    /**
+     * @return DomainRole[]
+     */
     public function getRoles(): array
     {
         return $this->roles;
@@ -61,6 +66,9 @@ class NameserverEntity
         return $this;
     }
 
+    /**
+     * @return DomainStatus[]
+     */
     public function getStatus(): array
     {
         return $this->status;
@@ -72,4 +80,5 @@ class NameserverEntity
 
         return $this;
     }
+
 }

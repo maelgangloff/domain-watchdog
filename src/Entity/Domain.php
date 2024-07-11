@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Config\DomainStatus;
 use App\Repository\DomainRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -18,9 +19,6 @@ class Domain
     #[ORM\Column(length: 255)]
     private ?string $handle = null;
 
-    #[ORM\Column(type: Types::SIMPLE_ARRAY)]
-    private array $status = [];
-
     /**
      * @var Collection<int, Event>
      */
@@ -35,6 +33,9 @@ class Domain
 
     #[ORM\Column(length: 255)]
     private ?string $whoisStatus = null;
+
+    #[ORM\Column(type: Types::SIMPLE_ARRAY, enumType: DomainStatus::class)]
+    private array $status = [];
 
     public function __construct()
     {
@@ -62,18 +63,6 @@ class Domain
     public function setHandle(string $handle): static
     {
         $this->handle = $handle;
-
-        return $this;
-    }
-
-    public function getStatus(): array
-    {
-        return $this->status;
-    }
-
-    public function setStatus(array $status): static
-    {
-        $this->status = $status;
 
         return $this;
     }
@@ -146,6 +135,21 @@ class Domain
     public function setWhoisStatus(string $whoisStatus): static
     {
         $this->whoisStatus = $whoisStatus;
+
+        return $this;
+    }
+
+    /**
+     * @return DomainStatus[]
+     */
+    public function getStatus(): array
+    {
+        return $this->status;
+    }
+
+    public function setStatus(array $status): static
+    {
+        $this->status = $status;
 
         return $this;
     }

@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Config\DomainStatus;
 use App\Repository\NameserverRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -24,7 +25,7 @@ class Nameserver
     #[ORM\OneToMany(targetEntity: NameserverEntity::class, mappedBy: 'nameserver', orphanRemoval: true)]
     private Collection $nameserverEntities;
 
-    #[ORM\Column(type: Types::ARRAY)]
+    #[ORM\Column(type: Types::SIMPLE_ARRAY, enumType: DomainStatus::class)]
     private array $status = [];
 
     public function __construct()
@@ -86,6 +87,9 @@ class Nameserver
         return $this;
     }
 
+    /**
+     * @return DomainStatus[]
+     */
     public function getStatus(): array
     {
         return $this->status;
@@ -97,4 +101,5 @@ class Nameserver
 
         return $this;
     }
+
 }
