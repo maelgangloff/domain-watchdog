@@ -11,12 +11,12 @@ use Doctrine\ORM\Mapping as ORM;
 class DomainEntity
 {
     #[ORM\Id]
-    #[ORM\ManyToOne(inversedBy: 'domainEntities')]
-    #[ORM\JoinColumn(referencedColumnName: 'ldhname', nullable: false)]
+    #[ORM\ManyToOne(targetEntity: Domain::class, inversedBy: 'domainEntities')]
+    #[ORM\JoinColumn(referencedColumnName: 'handle', nullable: false)]
     private ?Domain $domain = null;
 
     #[ORM\Id]
-    #[ORM\ManyToOne(inversedBy: 'domainEntities')]
+    #[ORM\ManyToOne(targetEntity: Entity::class, inversedBy: 'domainEntities')]
     #[ORM\JoinColumn(referencedColumnName: 'handle', nullable: false)]
     private ?Entity $entity = null;
 

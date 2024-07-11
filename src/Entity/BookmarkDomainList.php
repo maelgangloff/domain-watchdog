@@ -15,14 +15,14 @@ class BookmarkDomainList
     #[ORM\Column(length: 36)]
     private string $token;
 
-    #[ORM\ManyToOne(inversedBy: 'bookmarkDomainLists')]
+    #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'bookmarkDomainLists')]
     #[ORM\JoinColumn(nullable: false)]
     private ?User $user = null;
 
     /**
      * @var Collection<int, Domain>
      */
-    #[ORM\ManyToMany(targetEntity: Domain::class, mappedBy: 'ldhname')]
+    #[ORM\ManyToMany(targetEntity: Domain::class, mappedBy: 'handle')]
     private Collection $domains;
 
     public function __construct()

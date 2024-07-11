@@ -12,9 +12,12 @@
         "doctrine/doctrine-migrations-bundle": "^3.3",
         "doctrine/orm": "^3.2",
         "eluceo/ical": "^2.13",
+        "guzzlehttp/guzzle": "^7.8",
         "juanparati/rdap-lib": "^2.1",
+        "nyholm/psr7": "^1.8",
         "phpdocumentor/reflection-docblock": "^5.4",
         "phpstan/phpdoc-parser": "^1.29",
+        "psr/http-client": "^1.0",
         "symfony/asset": "7.1.*",
         "symfony/asset-mapper": "7.1.*",
         "symfony/console": "7.1.*",
@@ -49,7 +52,6 @@
     },
     "config": {
         "allow-plugins": {
-            "php-http/discovery": true,
             "symfony/flex": true,
             "symfony/runtime": true
         },

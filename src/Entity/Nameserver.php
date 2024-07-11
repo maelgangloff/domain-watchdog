@@ -17,7 +17,7 @@ class Nameserver
     private ?string $handle = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $ldhname = null;
+    private ?string $ldhName = null;
 
     /**
      * @var Collection<int, NameserverEntity>
@@ -28,9 +28,16 @@ class Nameserver
     #[ORM\Column(type: Types::SIMPLE_ARRAY, enumType: DomainStatus::class)]
     private array $status = [];
 
+    /**
+     * @var Collection<int, NameserverEvent>
+     */
+    #[ORM\OneToMany(targetEntity: NameserverEvent::class, mappedBy: 'nameserver', orphanRemoval: true)]
+    private Collection $nameserverEvents;
+
     public function __construct()
     {
         $this->nameserverEntities = new ArrayCollection();
+        $this->nameserverEvents = new ArrayCollection();
     }
 
     public function getHandle(): ?string
@@ -45,14 +52,14 @@ class Nameserver
         return $this;
     }
 
-    public function getLdhname(): ?string
+    public function getLdhName(): ?string
     {
-        return $this->ldhname;
+        return $this->ldhName;
     }
 
-    public function setLdhname(string $ldhname): static
+    public function setLdhName(string $ldhName): static
     {
-        $this->ldhname = $ldhname;
+        $this->ldhName = $ldhName;
 
         return $this;
     }
@@ -98,6 +105,36 @@ class Nameserver
     public function setStatus(array $status): static
     {
         $this->status = $status;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, NameserverEvent>
+     */
+    public function getNameserverEvents(): Collection
+    {
+        return $this->nameserverEvents;
+    }
+
+    public function addNameserverEvent(NameserverEvent $nameserverEvent): static
+    {
+        if (!$this->nameserverEvents->contains($nameserverEvent)) {
+            $this->nameserverEvents->add($nameserverEvent);
+            $nameserverEvent->setNameserver($this);
+        }
+
+        return $this;
+    }
+
+    public function removeNameserverEvent(NameserverEvent $nameserverEvent): static
+    {
+        if ($this->nameserverEvents->removeElement($nameserverEvent)) {
+            // set the owning side to null (unless already changed)
+            if ($nameserverEvent->getNameserver() === $this) {
+                $nameserverEvent->setNameserver(null);
+            }
+        }
 
         return $this;
     }

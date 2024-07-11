@@ -2,31 +2,32 @@
 
 namespace App\Entity;
 
-use App\Repository\EventRepository;
+use App\Config\EventAction;
+use App\Repository\DomainEventRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: EventRepository::class)]
-class Event
+#[ORM\Entity(repositoryClass: DomainEventRepository::class)]
+class DomainEvent
 {
     #[ORM\Id]
-    #[ORM\Column(length: 255)]
-    private ?string $action = null;
+    #[ORM\Column(enumType: EventAction::class)]
+    private ?EventAction $action = null;
 
     #[ORM\Column(type: Types::DATE_IMMUTABLE)]
     private ?\DateTimeImmutable $date = null;
 
     #[ORM\Id]
-    #[ORM\ManyToOne(inversedBy: 'events')]
-    #[ORM\JoinColumn(referencedColumnName: 'ldhname', nullable: false)]
+    #[ORM\ManyToOne(targetEntity: Domain::class, inversedBy: 'events')]
+    #[ORM\JoinColumn(referencedColumnName: 'handle', nullable: false)]
     private ?Domain $domain = null;
 
-    public function getAction(): ?string
+    public function getAction(): ?EventAction
     {
         return $this->action;
     }
 
-    public function setAction(string $action): static
+    public function setAction(EventAction $action): static
     {
         $this->action = $action;
 

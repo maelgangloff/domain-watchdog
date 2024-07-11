@@ -14,15 +14,16 @@ class Domain
 {
     #[ORM\Id]
     #[ORM\Column(length: 255)]
-    private ?string $ldhname = null;
+    private ?string $ldhName = null;
 
+    #[ORM\Id]
     #[ORM\Column(length: 255)]
     private ?string $handle = null;
 
     /**
-     * @var Collection<int, Event>
+     * @var Collection<int, DomainEvent>
      */
-    #[ORM\OneToMany(targetEntity: Event::class, mappedBy: 'domain', orphanRemoval: true)]
+    #[ORM\OneToMany(targetEntity: DomainEvent::class, mappedBy: 'domain', orphanRemoval: true)]
     private Collection $events;
 
     /**
@@ -37,20 +38,27 @@ class Domain
     #[ORM\Column(type: Types::SIMPLE_ARRAY, enumType: DomainStatus::class)]
     private array $status = [];
 
+    /**
+     * @var Collection<int, Nameserver>
+     */
+    #[ORM\ManyToMany(targetEntity: Nameserver::class, mappedBy: 'handle')]
+    private Collection $nameservers;
+
     public function __construct()
     {
         $this->events = new ArrayCollection();
         $this->domainEntities = new ArrayCollection();
+        $this->nameservers = new ArrayCollection();
     }
 
-    public function getLdhname(): ?string
+    public function getLdhName(): ?string
     {
-        return $this->ldhname;
+        return $this->ldhName;
     }
 
-    public function setLdhname(string $ldhname): static
+    public function setLdhName(string $ldhName): static
     {
-        $this->ldhname = $ldhname;
+        $this->ldhName = $ldhName;
 
         return $this;
     }
@@ -68,14 +76,14 @@ class Domain
     }
 
     /**
-     * @return Collection<int, Event>
+     * @return Collection<int, DomainEvent>
      */
     public function getEvents(): Collection
     {
         return $this->events;
     }
 
-    public function addEvent(Event $event): static
+    public function addEvent(DomainEvent $event): static
     {
         if (!$this->events->contains($event)) {
             $this->events->add($event);
@@ -85,7 +93,7 @@ class Domain
         return $this;
     }
 
-    public function removeEvent(Event $event): static
+    public function removeEvent(DomainEvent $event): static
     {
         if ($this->events->removeElement($event)) {
             // set the owning side to null (unless already changed)
@@ -150,6 +158,30 @@ class Domain
     public function setStatus(array $status): static
     {
         $this->status = $status;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Nameserver>
+     */
+    public function getNameservers(): Collection
+    {
+        return $this->nameservers;
+    }
+
+    public function addNameserver(Nameserver $nameserver): static
+    {
+        if (!$this->nameservers->contains($nameserver)) {
+            $this->nameservers->add($nameserver);
+        }
+
+        return $this;
+    }
+
+    public function removeNameserver(Nameserver $nameserver): static
+    {
+        $this->nameservers->removeElement($nameserver);
 
         return $this;
     }

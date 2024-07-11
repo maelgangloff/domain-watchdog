@@ -12,12 +12,12 @@ use Doctrine\ORM\Mapping as ORM;
 class NameserverEntity
 {
     #[ORM\Id]
-    #[ORM\ManyToOne(inversedBy: 'nameserverEntities')]
+    #[ORM\ManyToOne(targetEntity: Nameserver::class, inversedBy: 'nameserverEntities')]
     #[ORM\JoinColumn(referencedColumnName: 'handle', nullable: false)]
     private ?Nameserver $nameserver = null;
 
     #[ORM\Id]
-    #[ORM\ManyToOne(inversedBy: 'nameserverEntities')]
+    #[ORM\ManyToOne(targetEntity: Entity::class, inversedBy: 'nameserverEntities')]
     #[ORM\JoinColumn(referencedColumnName: 'handle', nullable: false)]
     private ?Entity $entity = null;
 
