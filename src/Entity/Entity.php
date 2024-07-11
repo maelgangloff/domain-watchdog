@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\EntityRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: EntityRepository::class)]
@@ -26,10 +27,17 @@ class Entity
     #[ORM\OneToMany(targetEntity: NameserverEntity::class, mappedBy: 'entity')]
     private Collection $nameserverEntities;
 
+    /**
+     * @var Collection<int, Event>
+     */
+    #[ORM\OneToMany(targetEntity: Event::class, mappedBy: 'entity', orphanRemoval: true)]
+    private Collection $events;
+
     public function __construct()
     {
         $this->domainEntities = new ArrayCollection();
         $this->nameserverEntities = new ArrayCollection();
+        $this->events = new ArrayCollection();
     }
 
     public function getHandle(): ?string
@@ -103,4 +111,35 @@ class Entity
 
         return $this;
     }
+
+    /**
+     * @return Collection<int, Event>
+     */
+    public function getEvents(): Collection
+    {
+        return $this->events;
+    }
+
+    public function addEvent(Event $event): static
+    {
+        if (!$this->events->contains($event)) {
+            $this->events->add($event);
+            $event->setEntity($this);
+        }
+
+        return $this;
+    }
+
+    public function removeEvent(Event $event): static
+    {
+        if ($this->events->removeElement($event)) {
+            // set the owning side to null (unless already changed)
+            if ($event->getEntity() === $this) {
+                $event->setEntity(null);
+            }
+        }
+
+        return $this;
+    }
+
 }

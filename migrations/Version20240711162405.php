@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20240711145906 extends AbstractMigration
+final class Version20240711162405 extends AbstractMigration
 {
     public function getDescription(): string
     {
@@ -32,6 +32,9 @@ final class Version20240711145906 extends AbstractMigration
         , PRIMARY KEY("action", domain_id), CONSTRAINT FK_E8D52271115F0EE5 FOREIGN KEY (domain_id) REFERENCES domain (handle) NOT DEFERRABLE INITIALLY IMMEDIATE)');
         $this->addSql('CREATE INDEX IDX_E8D52271115F0EE5 ON domain_event (domain_id)');
         $this->addSql('CREATE TABLE entity (handle VARCHAR(255) NOT NULL, PRIMARY KEY(handle))');
+        $this->addSql('CREATE TABLE event (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, entity_id VARCHAR(255) NOT NULL, "action" VARCHAR(255) NOT NULL, date DATETIME NOT NULL --(DC2Type:datetime_immutable)
+        , CONSTRAINT FK_3BAE0AA781257D5D FOREIGN KEY (entity_id) REFERENCES entity (handle) NOT DEFERRABLE INITIALLY IMMEDIATE)');
+        $this->addSql('CREATE INDEX IDX_3BAE0AA781257D5D ON event (entity_id)');
         $this->addSql('CREATE TABLE nameserver (handle VARCHAR(255) NOT NULL, ldh_name VARCHAR(255) NOT NULL, status CLOB NOT NULL --(DC2Type:simple_array)
         , PRIMARY KEY(handle))');
         $this->addSql('CREATE TABLE nameserver_entity (nameserver_id VARCHAR(255) NOT NULL, entity_id VARCHAR(255) NOT NULL, roles CLOB NOT NULL --(DC2Type:simple_array)
@@ -39,9 +42,6 @@ final class Version20240711145906 extends AbstractMigration
         , PRIMARY KEY(nameserver_id, entity_id), CONSTRAINT FK_A269AFB41A555619 FOREIGN KEY (nameserver_id) REFERENCES nameserver (handle) NOT DEFERRABLE INITIALLY IMMEDIATE, CONSTRAINT FK_A269AFB481257D5D FOREIGN KEY (entity_id) REFERENCES entity (handle) NOT DEFERRABLE INITIALLY IMMEDIATE)');
         $this->addSql('CREATE INDEX IDX_A269AFB41A555619 ON nameserver_entity (nameserver_id)');
         $this->addSql('CREATE INDEX IDX_A269AFB481257D5D ON nameserver_entity (entity_id)');
-        $this->addSql('CREATE TABLE nameserver_event ("action" VARCHAR(255) NOT NULL, nameserver_id VARCHAR(255) NOT NULL, date DATETIME NOT NULL --(DC2Type:datetime_immutable)
-        , PRIMARY KEY(nameserver_id, "action"), CONSTRAINT FK_C6BC968C1A555619 FOREIGN KEY (nameserver_id) REFERENCES nameserver (handle) NOT DEFERRABLE INITIALLY IMMEDIATE)');
-        $this->addSql('CREATE INDEX IDX_C6BC968C1A555619 ON nameserver_event (nameserver_id)');
         $this->addSql('CREATE TABLE user (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, email VARCHAR(180) NOT NULL, roles CLOB NOT NULL --(DC2Type:json)
         , password VARCHAR(255) NOT NULL)');
         $this->addSql('CREATE UNIQUE INDEX UNIQ_IDENTIFIER_EMAIL ON user (email)');
@@ -62,9 +62,9 @@ final class Version20240711145906 extends AbstractMigration
         $this->addSql('DROP TABLE domain_entity');
         $this->addSql('DROP TABLE domain_event');
         $this->addSql('DROP TABLE entity');
+        $this->addSql('DROP TABLE event');
         $this->addSql('DROP TABLE nameserver');
         $this->addSql('DROP TABLE nameserver_entity');
-        $this->addSql('DROP TABLE nameserver_event');
         $this->addSql('DROP TABLE user');
         $this->addSql('DROP TABLE messenger_messages');
     }
