@@ -18,7 +18,7 @@ class Event
 
     #[ORM\Id]
     #[ORM\ManyToOne(inversedBy: 'events')]
-    #[ORM\JoinColumn(nullable: false, referencedColumnName: 'ldhname')]
+    #[ORM\JoinColumn(referencedColumnName: 'ldhname', nullable: false)]
     private ?Domain $domain = null;
 
     public function getAction(): ?string

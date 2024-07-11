@@ -11,15 +11,15 @@ class DomainEntity
 {
     #[ORM\Id]
     #[ORM\ManyToOne(inversedBy: 'domainEntities')]
-    #[ORM\JoinColumn(nullable: false, referencedColumnName: 'ldhname')]
+    #[ORM\JoinColumn(referencedColumnName: 'ldhname', nullable: false)]
     private ?Domain $domain = null;
 
     #[ORM\Id]
     #[ORM\ManyToOne(inversedBy: 'domainEntities')]
-    #[ORM\JoinColumn(nullable: false, referencedColumnName: 'handle')]
+    #[ORM\JoinColumn(referencedColumnName: 'handle', nullable: false)]
     private ?Entity $entity = null;
 
-    #[ORM\Column(type: Types::ARRAY)]
+    #[ORM\Column(type: Types::SIMPLE_ARRAY)]
     private array $roles = [];
 
     public function getDomain(): ?Domain

@@ -18,7 +18,7 @@ class Domain
     #[ORM\Column(length: 255)]
     private ?string $handle = null;
 
-    #[ORM\Column(type: Types::ARRAY)]
+    #[ORM\Column(type: Types::SIMPLE_ARRAY)]
     private array $status = [];
 
     /**

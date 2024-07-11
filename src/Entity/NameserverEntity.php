@@ -11,18 +11,18 @@ class NameserverEntity
 {
     #[ORM\Id]
     #[ORM\ManyToOne(inversedBy: 'nameserverEntities')]
-    #[ORM\JoinColumn(nullable: false, referencedColumnName: 'handle')]
+    #[ORM\JoinColumn(referencedColumnName: 'handle', nullable: false)]
     private ?Nameserver $nameserver = null;
 
     #[ORM\Id]
     #[ORM\ManyToOne(inversedBy: 'nameserverEntities')]
-    #[ORM\JoinColumn(nullable: false, referencedColumnName: 'handle')]
+    #[ORM\JoinColumn(referencedColumnName: 'handle', nullable: false)]
     private ?Entity $entity = null;
 
-    #[ORM\Column(type: Types::ARRAY)]
+    #[ORM\Column(type: Types::SIMPLE_ARRAY)]
     private array $roles = [];
 
-    #[ORM\Column(type: Types::ARRAY)]
+    #[ORM\Column(type: Types::SIMPLE_ARRAY)]
     private array $status = [];
 
     public function getNameserver(): ?Nameserver
