@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 class EntityEvent extends Event
 {
 
+    #[ORM\Id]
     #[ORM\ManyToOne(targetEntity: Entity::class, inversedBy: 'events')]
     #[ORM\JoinColumn(referencedColumnName: 'handle', nullable: false)]
     private ?Entity $entity = null;

@@ -8,7 +8,8 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Entity(repositoryClass: DomainEventRepository::class)]
 class DomainEvent extends Event
 {
-    #[ORM\ManyToOne(targetEntity: Domain::class, inversedBy: 'events')]
+    #[ORM\Id]
+    #[ORM\ManyToOne(targetEntity: Domain::class, cascade: ['persist'], inversedBy: 'events')]
     #[ORM\JoinColumn(referencedColumnName: 'handle', nullable: false)]
     private ?Domain $domain = null;
 
