@@ -2,6 +2,9 @@
 
 namespace App\Config;
 
+/**
+ * @see https://www.iana.org/assignments/rdap-json-values/rdap-json-values.xhtml
+ */
 enum DomainStatus: string
 {
     case Validated = 'validated';
