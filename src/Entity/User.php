@@ -34,14 +34,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $password = null;
 
     /**
-     * @var Collection<int, BookmarkList>
+     * @var Collection<int, WatchList>
      */
-    #[ORM\OneToMany(targetEntity: BookmarkList::class, mappedBy: 'user', orphanRemoval: true)]
-    private Collection $bookmarkDomainLists;
+    #[ORM\OneToMany(targetEntity: WatchList::class, mappedBy: 'user', orphanRemoval: true)]
+    private Collection $watchLists;
 
     public function __construct()
     {
-        $this->bookmarkDomainLists = new ArrayCollection();
+        $this->watchLists = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -121,29 +121,29 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     /**
-     * @return Collection<int, BookmarkList>
+     * @return Collection<int, WatchList>
      */
-    public function getBookmarkDomainLists(): Collection
+    public function getWatchLists(): Collection
     {
-        return $this->bookmarkDomainLists;
+        return $this->watchLists;
     }
 
-    public function addBookmarkDomainList(BookmarkList $bookmarkDomainList): static
+    public function addWatchList(WatchList $watchList): static
     {
-        if (!$this->bookmarkDomainLists->contains($bookmarkDomainList)) {
-            $this->bookmarkDomainLists->add($bookmarkDomainList);
-            $bookmarkDomainList->setUser($this);
+        if (!$this->watchLists->contains($watchList)) {
+            $this->watchLists->add($watchList);
+            $watchList->setUser($this);
         }
 
         return $this;
     }
 
-    public function removeBookmarkDomainList(BookmarkList $bookmarkDomainList): static
+    public function removeWatchList(WatchList $watchList): static
     {
-        if ($this->bookmarkDomainLists->removeElement($bookmarkDomainList)) {
+        if ($this->watchLists->removeElement($watchList)) {
             // set the owning side to null (unless already changed)
-            if ($bookmarkDomainList->getUser() === $this) {
-                $bookmarkDomainList->setUser(null);
+            if ($watchList->getUser() === $this) {
+                $watchList->setUser(null);
             }
         }
 

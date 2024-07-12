@@ -2,22 +2,22 @@
 
 namespace App\Repository;
 
-use App\Entity\BookmarkList;
+use App\Entity\WatchList;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceEntityRepository<BookmarkList>
+ * @extends ServiceEntityRepository<WatchList>
  */
-class BookmarkListRepository extends ServiceEntityRepository
+class WatchListRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, BookmarkList::class);
+        parent::__construct($registry, WatchList::class);
     }
 
     //    /**
-    //     * @return BookmarkList[] Returns an array of BookmarkList objects
+    //     * @return WatchList[] Returns an array of WatchList objects
     //     */
     //    public function findByExampleField($value): array
     //    {
@@ -31,7 +31,7 @@ class BookmarkListRepository extends ServiceEntityRepository
     //        ;
     //    }
 
-    //    public function findOneBySomeField($value): ?BookmarkList
+    //    public function findOneBySomeField($value): ?WatchList
     //    {
     //        return $this->createQueryBuilder('b')
     //            ->andWhere('b.exampleField = :val')

@@ -52,10 +52,8 @@ class TestController extends AbstractController
         } catch (ClientExceptionInterface $e) {
             return new Response(null, Response::HTTP_INTERNAL_SERVER_ERROR);
         }
-        /**
-         * Création du domaine
-         */
-        $domain = $em->getRepository(Domain::class)->findOneBy(["handle" => $res['handle']]);
+
+        $domain = $domainRepository->findOneBy(["handle" => $res['handle']]);
         if ($domain === null) $domain = new Domain();
 
         $domain->setLdhName($res['ldhName'])
@@ -64,9 +62,6 @@ class TestController extends AbstractController
             ->setWhoisStatus($res['whoisStatus']);
 
 
-        /**
-         * Hydratation des événements
-         */
         foreach ($res['events'] as $rdapEvent) {
             $event = $domainEventRepository->findOneBy([
                 "action" => EventAction::from($rdapEvent["eventAction"]),
@@ -81,9 +76,7 @@ class TestController extends AbstractController
 
         }
 
-        /**
-         * Hydratation des entités
-         */
+
         foreach ($res['entities'] as $rdapEntity) {
             $entity = $entityRepository->findOneBy([
                 "handle" => $rdapEntity['handle']
@@ -187,4 +180,5 @@ class TestController extends AbstractController
 
         return new Response(null, Response::HTTP_OK);
     }
+
 }

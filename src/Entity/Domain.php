@@ -38,10 +38,10 @@ class Domain
     private array $status = [];
 
     /**
-     * @var Collection<int, BookmarkList>
+     * @var Collection<int, WatchList>
      */
-    #[ORM\ManyToMany(targetEntity: BookmarkList::class, mappedBy: 'domains', cascade: ['persist'])]
-    private Collection $bookmarkLists;
+    #[ORM\ManyToMany(targetEntity: WatchList::class, mappedBy: 'domains', cascade: ['persist'])]
+    private Collection $watchLists;
 
     /**
      * @var Collection<int, Nameserver>
@@ -57,7 +57,7 @@ class Domain
     {
         $this->events = new ArrayCollection();
         $this->domainEntities = new ArrayCollection();
-        $this->bookmarkLists = new ArrayCollection();
+        $this->watchLists = new ArrayCollection();
         $this->nameservers = new ArrayCollection();
     }
 
@@ -173,27 +173,27 @@ class Domain
     }
 
     /**
-     * @return Collection<int, BookmarkList>
+     * @return Collection<int, WatchList>
      */
-    public function getBookmarkLists(): Collection
+    public function getWatchLists(): Collection
     {
-        return $this->bookmarkLists;
+        return $this->watchLists;
     }
 
-    public function addBookmarkList(BookmarkList $bookmarkList): static
+    public function addWatchList(WatchList $watchList): static
     {
-        if (!$this->bookmarkLists->contains($bookmarkList)) {
-            $this->bookmarkLists->add($bookmarkList);
-            $bookmarkList->addDomain($this);
+        if (!$this->watchLists->contains($watchList)) {
+            $this->watchLists->add($watchList);
+            $watchList->addDomain($this);
         }
 
         return $this;
     }
 
-    public function removeBookmarkList(BookmarkList $bookmarkList): static
+    public function removeWatchList(WatchList $watchList): static
     {
-        if ($this->bookmarkLists->removeElement($bookmarkList)) {
-            $bookmarkList->removeDomain($this);
+        if ($this->watchLists->removeElement($watchList)) {
+            $watchList->removeDomain($this);
         }
 
         return $this;

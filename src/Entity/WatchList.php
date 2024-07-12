@@ -2,29 +2,29 @@
 
 namespace App\Entity;
 
-use App\Repository\BookmarkListRepository;
+use App\Repository\WatchListRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Uid\Uuid;
 
-#[ORM\Entity(repositoryClass: BookmarkListRepository::class)]
-class BookmarkList
+#[ORM\Entity(repositoryClass: WatchListRepository::class)]
+class WatchList
 {
     #[ORM\Id]
     #[ORM\Column(length: 36)]
     private string $token;
 
-    #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'bookmarkDomainLists')]
+    #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'watchLists')]
     #[ORM\JoinColumn(nullable: false)]
     private ?User $user = null;
 
     /**
      * @var Collection<int, Domain>
      */
-    #[ORM\ManyToMany(targetEntity: Domain::class, inversedBy: 'bookmarkLists')]
-    #[ORM\JoinTable(name: 'bookmark_lists_domains',
-        joinColumns: [new ORM\JoinColumn(name: 'bookmark_token', referencedColumnName: 'token')],
+    #[ORM\ManyToMany(targetEntity: Domain::class, inversedBy: 'watchLists')]
+    #[ORM\JoinTable(name: 'watch_lists_domains',
+        joinColumns: [new ORM\JoinColumn(name: 'watch_list_token', referencedColumnName: 'token')],
         inverseJoinColumns: [new ORM\JoinColumn(name: 'domain_handle', referencedColumnName: 'handle')])]
     private Collection $domains;
 
