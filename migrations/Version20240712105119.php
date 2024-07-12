@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20240711233813 extends AbstractMigration
+final class Version20240712105119 extends AbstractMigration
 {
     public function getDescription(): string
     {
@@ -34,12 +34,12 @@ final class Version20240711233813 extends AbstractMigration
         , PRIMARY KEY(domain_id, entity_id), CONSTRAINT FK_614B48A1115F0EE5 FOREIGN KEY (domain_id) REFERENCES domain (handle) NOT DEFERRABLE INITIALLY IMMEDIATE, CONSTRAINT FK_614B48A181257D5D FOREIGN KEY (entity_id) REFERENCES entity (handle) NOT DEFERRABLE INITIALLY IMMEDIATE)');
         $this->addSql('CREATE INDEX IDX_614B48A1115F0EE5 ON domain_entity (domain_id)');
         $this->addSql('CREATE INDEX IDX_614B48A181257D5D ON domain_entity (entity_id)');
-        $this->addSql('CREATE TABLE domain_event ("action" VARCHAR(255) NOT NULL, domain_id VARCHAR(255) NOT NULL, date DATETIME NOT NULL --(DC2Type:datetime_immutable)
-        , PRIMARY KEY("action", domain_id), CONSTRAINT FK_E8D52271115F0EE5 FOREIGN KEY (domain_id) REFERENCES domain (handle) NOT DEFERRABLE INITIALLY IMMEDIATE)');
+        $this->addSql('CREATE TABLE domain_event (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, domain_id VARCHAR(255) NOT NULL, "action" VARCHAR(255) NOT NULL, date DATETIME NOT NULL --(DC2Type:datetime_immutable)
+        , CONSTRAINT FK_E8D52271115F0EE5 FOREIGN KEY (domain_id) REFERENCES domain (handle) NOT DEFERRABLE INITIALLY IMMEDIATE)');
         $this->addSql('CREATE INDEX IDX_E8D52271115F0EE5 ON domain_event (domain_id)');
         $this->addSql('CREATE TABLE entity (handle VARCHAR(255) NOT NULL, PRIMARY KEY(handle))');
-        $this->addSql('CREATE TABLE entity_event ("action" VARCHAR(255) NOT NULL, entity_id VARCHAR(255) NOT NULL, date DATETIME NOT NULL --(DC2Type:datetime_immutable)
-        , PRIMARY KEY("action", entity_id), CONSTRAINT FK_975A3F5E81257D5D FOREIGN KEY (entity_id) REFERENCES entity (handle) NOT DEFERRABLE INITIALLY IMMEDIATE)');
+        $this->addSql('CREATE TABLE entity_event (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, entity_id VARCHAR(255) NOT NULL, "action" VARCHAR(255) NOT NULL, date DATETIME NOT NULL --(DC2Type:datetime_immutable)
+        , CONSTRAINT FK_975A3F5E81257D5D FOREIGN KEY (entity_id) REFERENCES entity (handle) NOT DEFERRABLE INITIALLY IMMEDIATE)');
         $this->addSql('CREATE INDEX IDX_975A3F5E81257D5D ON entity_event (entity_id)');
         $this->addSql('CREATE TABLE nameserver (handle VARCHAR(255) NOT NULL, ldh_name VARCHAR(255) NOT NULL, status CLOB NOT NULL --(DC2Type:simple_array)
         , PRIMARY KEY(handle))');
