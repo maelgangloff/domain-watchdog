@@ -33,18 +33,20 @@ use Symfony\Component\Routing\Attribute\Route;
 class TestController extends AbstractController
 {
 
+    public function __construct(private EntityRepository           $entityRepository,
+                                private DomainRepository           $domainRepository,
+                                private DomainEventRepository      $domainEventRepository,
+                                private NameserverRepository       $nameserverRepository,
+                                private NameserverEntityRepository $nameserverEntityRepository,
+                                private EntityEventRepository      $entityEventRepository,
+                                private DomainEntityRepository     $domainEntityRepository,
+                                private EntityManagerInterface     $em)
+    {
+
+    }
+
     #[Route(path: '/test/{fqdn}', name: 'test')]
-    public function testRoute(
-        string                     $fqdn,
-        EntityRepository           $entityRepository,
-        DomainRepository           $domainRepository,
-        DomainEventRepository      $domainEventRepository,
-        NameserverRepository       $nameserverRepository,
-        NameserverEntityRepository $nameserverEntityRepository,
-        EntityEventRepository      $entityEventRepository,
-        DomainEntityRepository     $domainEntityRepository,
-        EntityManagerInterface     $em
-    ): Response
+    public function testRoute(string $fqdn): Response
     {
         $rdap = new RDAPClient(['domain' => 'https://rdap.nic.fr/domain/']);
         try {
@@ -55,7 +57,7 @@ class TestController extends AbstractController
             return new Response(null, Response::HTTP_INTERNAL_SERVER_ERROR);
         }
 
-        $domain = $domainRepository->findOneBy(["handle" => $res['handle']]);
+        $domain = $this->domainRepository->findOneBy(["handle" => $res['handle']]);
         if ($domain === null) $domain = new Domain();
 
         $domain->setLdhName($res['ldhName'])
@@ -65,7 +67,7 @@ class TestController extends AbstractController
 
 
         foreach ($res['events'] as $rdapEvent) {
-            $event = $domainEventRepository->findOneBy([
+            $event = $this->domainEventRepository->findOneBy([
                 "action" => EventAction::from($rdapEvent["eventAction"]),
                 "date" => new DateTimeImmutable($rdapEvent["eventDate"]),
                 "domain" => $res['handle']
@@ -80,33 +82,9 @@ class TestController extends AbstractController
 
 
         foreach ($res['entities'] as $rdapEntity) {
-            $entity = $entityRepository->findOneBy([
-                "handle" => $rdapEntity['handle']
-            ]);
+            $entity = $this->processEntity($rdapEntity);
 
-            if ($entity === null) $entity = new Entity();
-            $entity
-                ->setHandle($rdapEntity['handle'])
-                ->setJCard($rdapEntity['vcardArray']);
-
-
-            foreach ($rdapEntity['events'] as $rdapEntityEvent) {
-                $event = $entityEventRepository->findOneBy([
-                    "action" => EventAction::from($rdapEntityEvent["eventAction"]),
-                    "date" => new DateTimeImmutable($rdapEntityEvent["eventDate"]),
-                    "entity" => $entity
-                ]);
-
-                if ($event !== null) continue;
-                $entity->addEvent(
-                    (new EntityEvent())
-                        ->setEntity($entity)
-                        ->setAction(EventAction::from($rdapEntityEvent['eventAction']))
-                        ->setDate(new DateTimeImmutable($rdapEntityEvent['eventDate'])));
-
-            }
-
-            $domainEntity = $domainEntityRepository->findOneBy([
+            $domainEntity = $this->domainEntityRepository->findOneBy([
                 "domain" => $domain,
                 "entity" => $entity
             ]);
@@ -119,16 +97,16 @@ class TestController extends AbstractController
                 ->setEntity($entity)
                 ->setRoles(array_map(fn($str): DomainRole => DomainRole::from($str), $rdapEntity['roles'])));
 
-            $em->persist($entity);
-            $em->flush();
+            $this->em->persist($entity);
+            $this->em->flush();
         }
 
-        $em->persist($domain);
-        $em->flush();
+        $this->em->persist($domain);
+        $this->em->flush();
 
 
         foreach ($res['nameservers'] as $rdapNameserver) {
-            $nameserver = $nameserverRepository->findOneBy([
+            $nameserver = $this->nameserverRepository->findOneBy([
                 "handle" => $rdapNameserver['handle']
             ]);
             if ($nameserver === null) $nameserver = new Nameserver();
@@ -139,36 +117,9 @@ class TestController extends AbstractController
                 ->setStatus(array_map(fn($str): DomainStatus => DomainStatus::from($str), $rdapNameserver['status']));
 
             foreach ($rdapNameserver['entities'] as $rdapEntity) {
-                $entity = $entityRepository->findOneBy([
-                    "handle" => $rdapEntity['handle']
-                ]);
+                $entity = $this->processEntity($rdapEntity);
 
-                if ($entity === null) $entity = new Entity();
-                $entity
-                    ->setHandle($rdapEntity['handle'])
-                    ->setJCard($rdapEntity['vcardArray']);
-
-
-                foreach ($rdapEntity['events'] as $rdapEntityEvent) {
-                    $event = $entityEventRepository->findOneBy([
-                        "action" => EventAction::from($rdapEntityEvent["eventAction"]),
-                        "date" => new DateTimeImmutable($rdapEntityEvent["eventDate"]),
-                        "entity" => $entity
-                    ]);
-
-                    if ($event !== null) continue;
-                    $entity->addEvent(
-                        (new EntityEvent())
-                            ->setEntity($entity)
-                            ->setAction(EventAction::from($rdapEntityEvent['eventAction']))
-                            ->setDate(new DateTimeImmutable($rdapEntityEvent['eventDate'])));
-                    $em->persist($entity);
-                    $em->flush();
-
-                }
-
-
-                $nameserverEntity = $nameserverEntityRepository->findOneBy([
+                $nameserverEntity = $this->nameserverEntityRepository->findOneBy([
                     "nameserver" => $nameserver,
                     "entity" => $entity
                 ]);
@@ -186,10 +137,40 @@ class TestController extends AbstractController
         }
 
 
-        $em->persist($domain);
-        $em->flush();
+        $this->em->persist($domain);
+        $this->em->flush();
 
         return new Response(null, Response::HTTP_OK);
+    }
+
+    private function processEntity(array $rdapEntity): Entity
+    {
+        $entity = $this->entityRepository->findOneBy([
+            "handle" => $rdapEntity['handle']
+        ]);
+
+        if ($entity === null) $entity = new Entity();
+        $entity
+            ->setHandle($rdapEntity['handle'])
+            ->setJCard($rdapEntity['vcardArray']);
+
+
+        foreach ($rdapEntity['events'] as $rdapEntityEvent) {
+            $event = $this->entityEventRepository->findOneBy([
+                "action" => EventAction::from($rdapEntityEvent["eventAction"]),
+                "date" => new DateTimeImmutable($rdapEntityEvent["eventDate"]),
+                "entity" => $entity
+            ]);
+
+            if ($event !== null) continue;
+            $entity->addEvent(
+                (new EntityEvent())
+                    ->setEntity($entity)
+                    ->setAction(EventAction::from($rdapEntityEvent['eventAction']))
+                    ->setDate(new DateTimeImmutable($rdapEntityEvent['eventDate'])));
+
+        }
+        return $entity;
     }
 
 }
