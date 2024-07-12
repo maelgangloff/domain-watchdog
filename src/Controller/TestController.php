@@ -46,7 +46,7 @@ class TestController extends AbstractController
     {
         $rdap = new RDAPClient(['domain' => 'https://rdap.nic.fr/domain/']);
         try {
-            $res = $rdap->domainLookup('nic.fr', RDAPClient::ARRAY_OUTPUT);
+            $res = $rdap->domainLookup('maelgangloff.fr', RDAPClient::ARRAY_OUTPUT);
         } catch (RDAPWrongRequest $e) {
             return new Response(null, Response::HTTP_BAD_REQUEST);
         } catch (ClientExceptionInterface $e) {
@@ -124,6 +124,7 @@ class TestController extends AbstractController
         }
 
         $em->persist($domain);
+        $em->flush();
 
 
         foreach ($res['nameservers'] as $rdapNameserver) {
