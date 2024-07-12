@@ -32,6 +32,9 @@ class Entity
     #[ORM\OneToMany(targetEntity: EntityEvent::class, mappedBy: 'entity', cascade: ['persist'], orphanRemoval: true)]
     private Collection $events;
 
+    #[ORM\Column]
+    private array $jCard = [];
+
     public function __construct()
     {
         $this->domainEntities = new ArrayCollection();
@@ -137,6 +140,18 @@ class Entity
                 $event->setEntity(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getJCard(): array
+    {
+        return $this->jCard;
+    }
+
+    public function setJCard(array $jCard): static
+    {
+        $this->jCard = $jCard;
 
         return $this;
     }

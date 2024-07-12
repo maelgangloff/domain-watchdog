@@ -85,7 +85,9 @@ class TestController extends AbstractController
             ]);
 
             if ($entity === null) $entity = new Entity();
-            $entity->setHandle($rdapEntity['handle']);
+            $entity
+                ->setHandle($rdapEntity['handle'])
+                ->setJCard($rdapEntity['vcardArray']);
 
 
             foreach ($rdapEntity['events'] as $rdapEntityEvent) {
@@ -142,7 +144,9 @@ class TestController extends AbstractController
                 ]);
 
                 if ($entity === null) $entity = new Entity();
-                $entity->setHandle($rdapEntity['handle']);
+                $entity
+                    ->setHandle($rdapEntity['handle'])
+                    ->setJCard($rdapEntity['vcardArray']);
 
 
                 foreach ($rdapEntity['events'] as $rdapEntityEvent) {
@@ -158,6 +162,8 @@ class TestController extends AbstractController
                             ->setEntity($entity)
                             ->setAction(EventAction::from($rdapEntityEvent['eventAction']))
                             ->setDate(new DateTimeImmutable($rdapEntityEvent['eventDate'])));
+                    $em->persist($entity);
+                    $em->flush();
 
                 }
 
