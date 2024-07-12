@@ -33,20 +33,22 @@ use Symfony\Component\Routing\Attribute\Route;
 class TestController extends AbstractController
 {
 
-    #[Route(path: '/test', name: 'test')]
-    public function testRoute(EntityRepository           $entityRepository,
-                              DomainRepository           $domainRepository,
-                              DomainEventRepository      $domainEventRepository,
-                              NameserverRepository       $nameserverRepository,
-                              NameserverEntityRepository $nameserverEntityRepository,
-                              EntityEventRepository      $entityEventRepository,
-                              DomainEntityRepository     $domainEntityRepository,
-                              EntityManagerInterface     $em
+    #[Route(path: '/test/{fqdn}', name: 'test')]
+    public function testRoute(
+        string                     $fqdn,
+        EntityRepository           $entityRepository,
+        DomainRepository           $domainRepository,
+        DomainEventRepository      $domainEventRepository,
+        NameserverRepository       $nameserverRepository,
+        NameserverEntityRepository $nameserverEntityRepository,
+        EntityEventRepository      $entityEventRepository,
+        DomainEntityRepository     $domainEntityRepository,
+        EntityManagerInterface     $em
     ): Response
     {
         $rdap = new RDAPClient(['domain' => 'https://rdap.nic.fr/domain/']);
         try {
-            $res = $rdap->domainLookup('maelgangloff.fr', RDAPClient::ARRAY_OUTPUT);
+            $res = $rdap->domainLookup($fqdn, RDAPClient::ARRAY_OUTPUT);
         } catch (RDAPWrongRequest $e) {
             return new Response(null, Response::HTTP_BAD_REQUEST);
         } catch (ClientExceptionInterface $e) {
@@ -106,6 +108,7 @@ class TestController extends AbstractController
                 "domain" => $domain,
                 "entity" => $entity
             ]);
+
             if ($domainEntity === null) $domainEntity = new DomainEntity();
 
 
@@ -114,6 +117,8 @@ class TestController extends AbstractController
                 ->setEntity($entity)
                 ->setRoles(array_map(fn($str): DomainRole => DomainRole::from($str), $rdapEntity['roles'])));
 
+            $em->persist($entity);
+            $em->flush();
         }
 
         $em->persist($domain);
