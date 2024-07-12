@@ -39,6 +39,7 @@ enum DomainStatus: string
     case ServerRenewProhibited = 'server renew prohibited';
     case ServerTransferProhibited = 'server transfer prohibited';
     case ServerUpdateProhibited = 'server update prohibited';
+    case ServerRecoverProhibited = 'server recover prohibited';
     case ServerHold = 'server hold';
     case TransferPeriod = 'transfer period';
     case Administrative = 'administrative';

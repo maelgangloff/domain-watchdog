@@ -31,9 +31,6 @@ class Domain
     #[ORM\OneToMany(targetEntity: DomainEntity::class, mappedBy: 'domain', cascade: ['persist'], orphanRemoval: true)]
     private Collection $domainEntities;
 
-    #[ORM\Column(length: 255)]
-    private ?string $whoisStatus = null;
-
     #[ORM\Column(type: Types::SIMPLE_ARRAY, enumType: DomainStatus::class)]
     private array $status = [];
 
@@ -49,7 +46,7 @@ class Domain
     #[ORM\ManyToMany(targetEntity: Nameserver::class, inversedBy: 'domains', cascade: ['persist'])]
     #[ORM\JoinTable(name: 'domain_nameservers',
         joinColumns: [new ORM\JoinColumn(name: 'domain_handle', referencedColumnName: 'handle')],
-        inverseJoinColumns: [new ORM\JoinColumn(name: 'nameserver_handle', referencedColumnName: 'handle')]
+        inverseJoinColumns: [new ORM\JoinColumn(name: 'nameserver_ldh_name', referencedColumnName: 'ldh_name')]
     )]
     private Collection $nameservers;
 
@@ -68,7 +65,7 @@ class Domain
 
     public function setLdhName(string $ldhName): static
     {
-        $this->ldhName = $ldhName;
+        $this->ldhName = strtolower($ldhName);
 
         return $this;
     }
@@ -141,18 +138,6 @@ class Domain
                 $domainEntity->setDomain(null);
             }
         }
-
-        return $this;
-    }
-
-    public function getWhoisStatus(): ?string
-    {
-        return $this->whoisStatus;
-    }
-
-    public function setWhoisStatus(string $whoisStatus): static
-    {
-        $this->whoisStatus = $whoisStatus;
 
         return $this;
     }

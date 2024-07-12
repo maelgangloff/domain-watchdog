@@ -22,25 +22,25 @@ use App\Repository\NameserverEntityRepository;
 use App\Repository\NameserverRepository;
 use DateTimeImmutable;
 use Doctrine\ORM\EntityManagerInterface;
-use Juanparati\RDAPLib\Exceptions\RDAPWrongRequest;
-use Juanparati\RDAPLib\RDAPClient;
-use Psr\Http\Client\ClientExceptionInterface;
+use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 
 class TestController extends AbstractController
 {
 
-    public function __construct(private EntityRepository           $entityRepository,
-                                private DomainRepository           $domainRepository,
-                                private DomainEventRepository      $domainEventRepository,
-                                private NameserverRepository       $nameserverRepository,
-                                private NameserverEntityRepository $nameserverEntityRepository,
-                                private EntityEventRepository      $entityEventRepository,
-                                private DomainEntityRepository     $domainEntityRepository,
-                                private EntityManagerInterface     $em)
+    public function __construct(private HttpClientInterface                 $client,
+                                private readonly EntityRepository           $entityRepository,
+                                private readonly DomainRepository           $domainRepository,
+                                private readonly DomainEventRepository      $domainEventRepository,
+                                private readonly NameserverRepository       $nameserverRepository,
+                                private readonly NameserverEntityRepository $nameserverEntityRepository,
+                                private readonly EntityEventRepository      $entityEventRepository,
+                                private readonly DomainEntityRepository     $domainEntityRepository,
+                                private readonly EntityManagerInterface     $em)
     {
 
     }
@@ -48,22 +48,19 @@ class TestController extends AbstractController
     #[Route(path: '/test/{fqdn}', name: 'test')]
     public function testRoute(string $fqdn): Response
     {
-        $rdap = new RDAPClient(['domain' => 'https://rdap.nic.fr/domain/']);
-        try {
-            $res = $rdap->domainLookup($fqdn, RDAPClient::ARRAY_OUTPUT);
-        } catch (RDAPWrongRequest $e) {
-            return new Response(null, Response::HTTP_BAD_REQUEST);
-        } catch (ClientExceptionInterface $e) {
-            return new Response(null, Response::HTTP_INTERNAL_SERVER_ERROR);
-        }
+        $rdapServer = $this->getRdapServer($fqdn);
+
+        $res = $this->client->request(
+            'GET', $rdapServer . 'domain/' . $fqdn
+        )->toArray();
 
         $domain = $this->domainRepository->findOneBy(["handle" => $res['handle']]);
         if ($domain === null) $domain = new Domain();
 
-        $domain->setLdhName($res['ldhName'])
+        $domain
+            ->setLdhName($res['ldhName'])
             ->setHandle($res['handle'])
-            ->setStatus(array_map(fn($str): DomainStatus => DomainStatus::from($str), $res['status']))
-            ->setWhoisStatus($res['whoisStatus']);
+            ->setStatus(array_map(fn($str): DomainStatus => DomainStatus::from($str), $res['status']));
 
 
         foreach ($res['events'] as $rdapEvent) {
@@ -80,8 +77,8 @@ class TestController extends AbstractController
 
         }
 
-
         foreach ($res['entities'] as $rdapEntity) {
+            if (!array_key_exists('handle', $rdapEntity)) continue;
             $entity = $this->processEntity($rdapEntity);
 
             $domainEntity = $this->domainEntityRepository->findOneBy([
@@ -107,16 +104,20 @@ class TestController extends AbstractController
 
         foreach ($res['nameservers'] as $rdapNameserver) {
             $nameserver = $this->nameserverRepository->findOneBy([
-                "handle" => $rdapNameserver['handle']
+                "ldhName" => strtolower($rdapNameserver['ldhName'])
             ]);
             if ($nameserver === null) $nameserver = new Nameserver();
 
-            $nameserver
-                ->setHandle($rdapNameserver['handle'])
-                ->setLdhName($rdapNameserver['ldhName'])
-                ->setStatus(array_map(fn($str): DomainStatus => DomainStatus::from($str), $rdapNameserver['status']));
+            $nameserver->setLdhName($rdapNameserver['ldhName']);
+
+            if (!array_key_exists('entities', $rdapNameserver)) {
+                $domain->addNameserver($nameserver);
+                continue;
+            }
 
             foreach ($rdapNameserver['entities'] as $rdapEntity) {
+                if (!array_key_exists('handle', $rdapEntity)) continue;
+
                 $entity = $this->processEntity($rdapEntity);
 
                 $nameserverEntity = $this->nameserverEntityRepository->findOneBy([
@@ -132,6 +133,8 @@ class TestController extends AbstractController
                     ->setEntity($entity)
                     ->setRoles(array_map(fn($str): DomainRole => DomainRole::from($str), $rdapEntity['roles'])));
 
+                $this->em->persist($entity);
+                $this->em->flush();
             }
             $domain->addNameserver($nameserver);
         }
@@ -141,6 +144,26 @@ class TestController extends AbstractController
         $this->em->flush();
 
         return new Response(null, Response::HTTP_OK);
+    }
+
+    private function getRdapServer(string $fqdn)
+    {
+        $tld = $this->getTld($fqdn);
+
+        $dnsRoot = json_decode(file_get_contents($this->getParameter('kernel.project_dir') . '/src/Config/dns.json'))->services;
+        foreach ($dnsRoot as $dns) {
+            if (in_array($tld, $dns[0])) return $dns[1][0];
+        }
+        throw new Exception("This TLD ($tld) is not supported.");
+    }
+
+    private function getTld($domain)
+    {
+        $lastDotPosition = strrpos($domain, '.');
+        if ($lastDotPosition === false) {
+            throw new Exception("Domain must contain at least one dot.");
+        }
+        return substr($domain, $lastDotPosition + 1);
     }
 
     private function processEntity(array $rdapEntity): Entity
@@ -154,6 +177,7 @@ class TestController extends AbstractController
             ->setHandle($rdapEntity['handle'])
             ->setJCard($rdapEntity['vcardArray']);
 
+        if (!array_key_exists('events', $rdapEntity)) return $entity;
 
         foreach ($rdapEntity['events'] as $rdapEntityEvent) {
             $event = $this->entityEventRepository->findOneBy([

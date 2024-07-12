@@ -12,10 +12,8 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Entity(repositoryClass: NameserverRepository::class)]
 class Nameserver
 {
-    #[ORM\Id]
-    #[ORM\Column(length: 255)]
-    private ?string $handle = null;
 
+    #[ORM\Id]
     #[ORM\Column(length: 255)]
     private ?string $ldhName = null;
 
@@ -24,9 +22,6 @@ class Nameserver
      */
     #[ORM\OneToMany(targetEntity: NameserverEntity::class, mappedBy: 'nameserver', cascade: ['persist'], orphanRemoval: true)]
     private Collection $nameserverEntities;
-
-    #[ORM\Column(type: Types::SIMPLE_ARRAY, enumType: DomainStatus::class)]
-    private array $status = [];
 
     /**
      * @var Collection<int, Domain>
@@ -40,18 +35,6 @@ class Nameserver
         $this->domains = new ArrayCollection();
     }
 
-    public function getHandle(): ?string
-    {
-        return $this->handle;
-    }
-
-    public function setHandle(string $handle): static
-    {
-        $this->handle = $handle;
-
-        return $this;
-    }
-
     public function getLdhName(): ?string
     {
         return $this->ldhName;
@@ -59,7 +42,7 @@ class Nameserver
 
     public function setLdhName(string $ldhName): static
     {
-        $this->ldhName = $ldhName;
+        $this->ldhName = strtolower($ldhName);
 
         return $this;
     }
@@ -90,21 +73,6 @@ class Nameserver
                 $nameserverEntity->setNameserver(null);
             }
         }
-
-        return $this;
-    }
-
-    /**
-     * @return DomainStatus[]
-     */
-    public function getStatus(): array
-    {
-        return $this->status;
-    }
-
-    public function setStatus(array $status): static
-    {
-        $this->status = $status;
 
         return $this;
     }

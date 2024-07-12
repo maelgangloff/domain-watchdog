@@ -13,7 +13,7 @@ class NameserverEntity
 {
     #[ORM\Id]
     #[ORM\ManyToOne(targetEntity: Nameserver::class, cascade: ['persist'], inversedBy: 'nameserverEntities')]
-    #[ORM\JoinColumn(referencedColumnName: 'handle', nullable: false)]
+    #[ORM\JoinColumn(referencedColumnName: 'ldh_name', nullable: false)]
     private ?Nameserver $nameserver = null;
 
     #[ORM\Id]
