@@ -32,7 +32,7 @@ use Symfony\Contracts\HttpClient\HttpClientInterface;
 class TestController extends AbstractController
 {
 
-    public function __construct(private HttpClientInterface                 $client,
+    public function __construct(private readonly HttpClientInterface        $client,
                                 private readonly EntityRepository           $entityRepository,
                                 private readonly DomainRepository           $domainRepository,
                                 private readonly DomainEventRepository      $domainEventRepository,
@@ -45,11 +45,10 @@ class TestController extends AbstractController
 
     }
 
-    #[Route(path: '/test/{fqdn}', name: 'test')]
-    public function testRoute(string $fqdn): Response
+    #[Route(path: '/test/register/{fqdn}', name: 'test_register_domain')]
+    public function testRegisterDomain(string $fqdn): Response
     {
-        $tld = $this->getTld($fqdn);
-        $rdapServer = $this->getRDAPServer($tld);
+        $rdapServer = $this->getRDAPServer($this->getTld($fqdn));
 
         $res = $this->client->request(
             'GET', $rdapServer . 'domain/' . $fqdn
@@ -147,15 +146,6 @@ class TestController extends AbstractController
         return new Response(null, Response::HTTP_OK);
     }
 
-    private function getTld($domain): string
-    {
-        $lastDotPosition = strrpos($domain, '.');
-        if ($lastDotPosition === false) {
-            throw new Exception("Domain must contain at least one dot.");
-        }
-        return strtolower(substr($domain, $lastDotPosition + 1));
-    }
-
     private function getRDAPServer(string $tld)
     {
 
@@ -166,6 +156,15 @@ class TestController extends AbstractController
         throw new Exception("This TLD ($tld) is not supported.");
     }
 
+    private function getTld($domain): string
+    {
+        $lastDotPosition = strrpos($domain, '.');
+        if ($lastDotPosition === false) {
+            throw new Exception("Domain must contain at least one dot.");
+        }
+        return strtolower(substr($domain, $lastDotPosition + 1));
+    }
+
     private function processEntity(array $rdapEntity): Entity
     {
         $entity = $this->entityRepository->findOneBy([
@@ -173,9 +172,22 @@ class TestController extends AbstractController
         ]);
 
         if ($entity === null) $entity = new Entity();
-        $entity
-            ->setHandle($rdapEntity['handle'])
-            ->setJCard($rdapEntity['vcardArray']);
+
+        $entity->setHandle($rdapEntity['handle']);
+
+        if (empty($entity->getJCard())) {
+            $entity->setJCard($rdapEntity['vcardArray']);
+        } else {
+            $properties = [];
+            foreach ($rdapEntity['vcardArray'][1] as $prop) {
+                $properties[$prop[0]] = $prop;
+            }
+            foreach ($entity->getJCard()[1] as $prop) {
+                $properties[$prop[0]] = $prop;
+            }
+            $entity->setJCard(["vcard", array_values($properties)]);
+        }
+
 
         if (!array_key_exists('events', $rdapEntity)) return $entity;
 
