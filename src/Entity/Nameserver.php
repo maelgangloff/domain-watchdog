@@ -15,9 +15,6 @@ class Nameserver
     #[ORM\Column(length: 255)]
     private ?string $ldhName = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $handle = null;
-
     /**
      * @var Collection<int, NameserverEntity>
      */
@@ -44,18 +41,6 @@ class Nameserver
     public function setLdhName(string $ldhName): static
     {
         $this->ldhName = strtolower($ldhName);
-
-        return $this;
-    }
-
-    public function getHandle(): ?string
-    {
-        return $this->handle;
-    }
-
-    public function setHandle(string $handle): static
-    {
-        $this->handle = $handle;
 
         return $this;
     }

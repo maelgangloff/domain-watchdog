@@ -18,8 +18,9 @@ class NameserverEntity
 
     #[ORM\Id]
     #[ORM\ManyToOne(targetEntity: Entity::class, cascade: ['persist'], inversedBy: 'nameserverEntities')]
-    #[ORM\JoinColumn(referencedColumnName: 'handle', nullable: false)]
+    #[ORM\JoinColumn(referencedColumnName: 'id', nullable: false)]
     private ?Entity $entity = null;
+
 
     #[ORM\Column(type: Types::SIMPLE_ARRAY, enumType: DomainRole::class)]
     private array $roles = [];
