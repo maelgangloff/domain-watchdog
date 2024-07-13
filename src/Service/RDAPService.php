@@ -81,7 +81,7 @@ class RDAPService
 
         foreach ($res['entities'] as $rdapEntity) {
             if (!array_key_exists('handle', $rdapEntity)) continue;
-            $entity = $this->processEntity($rdapEntity);
+            $entity = $this->registerEntity($rdapEntity);
 
             $this->em->persist($entity);
             $this->em->flush();
@@ -119,7 +119,7 @@ class RDAPService
 
             foreach ($rdapNameserver['entities'] as $rdapEntity) {
                 if (!array_key_exists('handle', $rdapEntity)) continue;
-                $entity = $this->processEntity($rdapEntity);
+                $entity = $this->registerEntity($rdapEntity);
 
                 $this->em->persist($entity);
                 $this->em->flush();
@@ -168,7 +168,7 @@ class RDAPService
         return strtolower(substr($domain, $lastDotPosition + 1));
     }
 
-    private function processEntity(array $rdapEntity): Entity
+    private function registerEntity(array $rdapEntity): Entity
     {
         $entity = $this->entityRepository->findOneBy([
             "handle" => $rdapEntity['handle']
