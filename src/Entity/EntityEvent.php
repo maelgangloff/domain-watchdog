@@ -10,7 +10,7 @@ class EntityEvent extends Event
 {
 
     #[ORM\ManyToOne(targetEntity: Entity::class, inversedBy: 'events')]
-    #[ORM\JoinColumn(referencedColumnName: 'id', nullable: false)]
+    #[ORM\JoinColumn(referencedColumnName: 'handle', nullable: false)]
     private ?Entity $entity = null;
 
 

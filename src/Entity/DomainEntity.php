@@ -17,7 +17,7 @@ class DomainEntity
 
     #[ORM\Id]
     #[ORM\ManyToOne(targetEntity: Entity::class, cascade: ['persist'], inversedBy: 'domainEntities')]
-    #[ORM\JoinColumn(referencedColumnName: 'id', nullable: false)]
+    #[ORM\JoinColumn(referencedColumnName: 'handle', nullable: false)]
     private ?Entity $entity = null;
 
     #[ORM\Column(type: Types::SIMPLE_ARRAY, enumType: DomainRole::class)]

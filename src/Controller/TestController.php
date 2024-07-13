@@ -49,7 +49,7 @@ class TestController extends AbstractController
     public function testRoute(string $fqdn): Response
     {
         $tld = $this->getTld($fqdn);
-        $rdapServer = $this->getRdapServer($tld);
+        $rdapServer = $this->getRDAPServer($tld);
 
         $res = $this->client->request(
             'GET', $rdapServer . 'domain/' . $fqdn
@@ -80,7 +80,7 @@ class TestController extends AbstractController
 
         foreach ($res['entities'] as $rdapEntity) {
             if (!array_key_exists('handle', $rdapEntity)) continue;
-            $entity = $this->processEntity($rdapEntity, $tld);
+            $entity = $this->processEntity($rdapEntity);
 
             $this->em->persist($entity);
             $this->em->flush();
@@ -118,8 +118,7 @@ class TestController extends AbstractController
 
             foreach ($rdapNameserver['entities'] as $rdapEntity) {
                 if (!array_key_exists('handle', $rdapEntity)) continue;
-
-                $entity = $this->processEntity($rdapEntity, $tld);
+                $entity = $this->processEntity($rdapEntity);
 
                 $this->em->persist($entity);
                 $this->em->flush();
@@ -133,8 +132,8 @@ class TestController extends AbstractController
 
                 $nameserver->addNameserverEntity($nameserverEntity
                     ->setNameserver($nameserver)
-                    ->setStatus(array_map(fn($str): DomainStatus => DomainStatus::from($str), $rdapNameserver['status']))
                     ->setEntity($entity)
+                    ->setStatus(array_map(fn($str): DomainStatus => DomainStatus::from($str), $rdapNameserver['status']))
                     ->setRoles(array_map(fn($str): DomainRole => DomainRole::from($str), $rdapEntity['roles'])));
             }
 
@@ -157,7 +156,7 @@ class TestController extends AbstractController
         return strtolower(substr($domain, $lastDotPosition + 1));
     }
 
-    private function getRdapServer(string $tld)
+    private function getRDAPServer(string $tld)
     {
 
         $dnsRoot = json_decode(file_get_contents($this->getParameter('kernel.project_dir') . '/src/Config/dns.json'))->services;
@@ -167,16 +166,14 @@ class TestController extends AbstractController
         throw new Exception("This TLD ($tld) is not supported.");
     }
 
-    private function processEntity(array $rdapEntity, string $tld): Entity
+    private function processEntity(array $rdapEntity): Entity
     {
         $entity = $this->entityRepository->findOneBy([
-            "handle" => $rdapEntity['handle'],
-            "tld" => $tld
+            "handle" => $rdapEntity['handle']
         ]);
 
         if ($entity === null) $entity = new Entity();
         $entity
-            ->setTld($tld)
             ->setHandle($rdapEntity['handle'])
             ->setJCard($rdapEntity['vcardArray']);
 

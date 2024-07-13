@@ -11,17 +11,10 @@ use Doctrine\ORM\Mapping as ORM;
 class Entity
 {
 
+
     #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column]
-    private ?int $id = null;
-
-
     #[ORM\Column(length: 255)]
     private ?string $handle = null;
-
-    #[ORM\Column(length: 255)]
-    private ?string $tld = null;
 
     /**
      * @var Collection<int, DomainEntity>
@@ -51,11 +44,6 @@ class Entity
         $this->events = new ArrayCollection();
     }
 
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
-
     public function getHandle(): ?string
     {
         return $this->handle;
@@ -64,18 +52,6 @@ class Entity
     public function setHandle(string $handle): static
     {
         $this->handle = $handle;
-
-        return $this;
-    }
-
-    public function getTld(): ?string
-    {
-        return $this->tld;
-    }
-
-    public function setTld(string $tld): static
-    {
-        $this->tld = $tld;
 
         return $this;
     }
