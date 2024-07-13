@@ -9,7 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 class DomainEvent extends Event
 {
     #[ORM\ManyToOne(targetEntity: Domain::class, cascade: ['persist'], inversedBy: 'events')]
-    #[ORM\JoinColumn(referencedColumnName: 'handle', nullable: false)]
+    #[ORM\JoinColumn(referencedColumnName: 'ldh_name', nullable: false)]
     private ?Domain $domain = null;
 
     public function getDomain(): ?Domain

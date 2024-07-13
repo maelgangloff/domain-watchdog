@@ -54,7 +54,7 @@ class TestController extends AbstractController
             'GET', $rdapServer . 'domain/' . $fqdn
         )->toArray();
 
-        $domain = $this->domainRepository->findOneBy(["handle" => $res['handle']]);
+        $domain = $this->domainRepository->findOneBy(["ldhName" => strtolower($res['ldhName'])]);
         if ($domain === null) $domain = new Domain();
 
         $domain
@@ -109,6 +109,7 @@ class TestController extends AbstractController
             if ($nameserver === null) $nameserver = new Nameserver();
 
             $nameserver->setLdhName($rdapNameserver['ldhName']);
+            if (array_key_exists('handle', $rdapNameserver)) $nameserver->setHandle($rdapNameserver['handle']);
 
             if (!array_key_exists('entities', $rdapNameserver)) {
                 $domain->addNameserver($nameserver);

@@ -12,10 +12,10 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Entity(repositoryClass: DomainRepository::class)]
 class Domain
 {
+    #[ORM\Id]
     #[ORM\Column(length: 255)]
     private ?string $ldhName = null;
 
-    #[ORM\Id]
     #[ORM\Column(length: 255)]
     private ?string $handle = null;
 

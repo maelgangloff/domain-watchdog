@@ -2,11 +2,9 @@
 
 namespace App\Entity;
 
-use App\Config\DomainStatus;
 use App\Repository\NameserverRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
-use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: NameserverRepository::class)]
@@ -16,6 +14,9 @@ class Nameserver
     #[ORM\Id]
     #[ORM\Column(length: 255)]
     private ?string $ldhName = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $handle = null;
 
     /**
      * @var Collection<int, NameserverEntity>
@@ -43,6 +44,18 @@ class Nameserver
     public function setLdhName(string $ldhName): static
     {
         $this->ldhName = strtolower($ldhName);
+
+        return $this;
+    }
+
+    public function getHandle(): ?string
+    {
+        return $this->handle;
+    }
+
+    public function setHandle(string $handle): static
+    {
+        $this->handle = $handle;
 
         return $this;
     }

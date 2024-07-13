@@ -12,7 +12,7 @@ class DomainEntity
 {
     #[ORM\Id]
     #[ORM\ManyToOne(targetEntity: Domain::class, cascade: ['persist'], inversedBy: 'domainEntities')]
-    #[ORM\JoinColumn(referencedColumnName: 'handle', nullable: false)]
+    #[ORM\JoinColumn(referencedColumnName: 'ldh_name', nullable: false)]
     private ?Domain $domain = null;
 
     #[ORM\Id]

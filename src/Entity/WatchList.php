@@ -25,7 +25,7 @@ class WatchList
     #[ORM\ManyToMany(targetEntity: Domain::class, inversedBy: 'watchLists')]
     #[ORM\JoinTable(name: 'watch_lists_domains',
         joinColumns: [new ORM\JoinColumn(name: 'watch_list_token', referencedColumnName: 'token')],
-        inverseJoinColumns: [new ORM\JoinColumn(name: 'domain_handle', referencedColumnName: 'handle')])]
+        inverseJoinColumns: [new ORM\JoinColumn(name: 'domain_ldh_name', referencedColumnName: 'ldh_name')])]
     private Collection $domains;
 
     public function __construct()
