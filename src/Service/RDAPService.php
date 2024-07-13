@@ -46,10 +46,11 @@ class RDAPService
 
     public function registerDomain(string $fqdn): Domain
     {
-        $rdapServer = $this->getRDAPServer(RDAPService::getTld($fqdn));
+        $idnDomain = idn_to_ascii($fqdn);
+        $rdapServer = $this->getRDAPServer(RDAPService::getTld($idnDomain));
 
         $res = $this->client->request(
-            'GET', $rdapServer . 'domain/' . $fqdn
+            'GET', $rdapServer . 'domain/' . $idnDomain
         )->toArray();
 
         $domain = $this->domainRepository->findOneBy(["ldhName" => strtolower($res['ldhName'])]);
