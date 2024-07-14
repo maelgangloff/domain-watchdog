@@ -47,11 +47,22 @@ readonly class RDAPService
     /**
      * @throws Exception
      */
-    public function registerDomain(string $fqdn): Domain
+    public function registerDomains(array $domains): void
+    {
+        $dnsRoot = json_decode(file_get_contents($this->params->get('kernel.project_dir') . '/src/Config/dns.json'))->services;
+        foreach ($domains as $fqdn) {
+            $this->registerDomain($dnsRoot, $fqdn);
+        }
+    }
+
+    /**
+     * @throws Exception
+     */
+    private function registerDomain(array $dnsRoot, string $fqdn): void
     {
         $idnDomain = idn_to_ascii($fqdn);
         try {
-            $rdapServer = $this->getRDAPServer(RDAPService::getTld($idnDomain));
+            $rdapServer = $this->getRDAPServer($dnsRoot, RDAPService::getTld($idnDomain));
         } catch (Exception) {
             throw new Exception("Unable to determine which RDAP server to contact");
         }
@@ -156,17 +167,15 @@ readonly class RDAPService
         $this->em->persist($domain);
         $this->em->flush();
 
-        return $domain;
     }
 
 
     /**
      * @throws Exception
      */
-    private function getRDAPServer(string $tld)
+    private function getRDAPServer(array $dnsRoot, string $tld)
     {
 
-        $dnsRoot = json_decode(file_get_contents($this->params->get('kernel.project_dir') . '/src/Config/dns.json'))->services;
         foreach ($dnsRoot as $dns) {
             if (in_array($tld, $dns[0])) return $dns[1][0];
         }
