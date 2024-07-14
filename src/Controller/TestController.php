@@ -4,6 +4,7 @@
 namespace App\Controller;
 
 use App\Service\RDAPService;
+use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -22,7 +23,11 @@ class TestController extends AbstractController
     #[Route(path: '/test/register/{fqdn}', name: 'test_register_domain')]
     public function testRegisterDomain(string $fqdn): Response
     {
-        $this->RDAPService->registerDomain($fqdn);
+        try {
+            $this->RDAPService->registerDomain($fqdn);
+        } catch (Exception $e) {
+            return new Response($e->getMessage(), Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
         return new Response();
     }
 

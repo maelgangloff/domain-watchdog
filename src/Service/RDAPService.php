@@ -25,6 +25,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Exception;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
+use Throwable;
 
 class RDAPService
 {
@@ -44,14 +45,25 @@ class RDAPService
 
     }
 
+    /**
+     * @throws Exception
+     */
     public function registerDomain(string $fqdn): Domain
     {
         $idnDomain = idn_to_ascii($fqdn);
-        $rdapServer = $this->getRDAPServer(RDAPService::getTld($idnDomain));
+        try {
+            $rdapServer = $this->getRDAPServer(RDAPService::getTld($idnDomain));
+        } catch (Exception $e) {
+            throw new Exception("Unable to determine which RDAP server to contact");
+        }
 
-        $res = $this->client->request(
-            'GET', $rdapServer . 'domain/' . $idnDomain
-        )->toArray();
+        try {
+            $res = $this->client->request(
+                'GET', $rdapServer . 'domain/' . $idnDomain
+            )->toArray();
+        } catch (Throwable $e) {
+            throw new Exception("Unable to contact RDAP server");
+        }
 
         $domain = $this->domainRepository->findOneBy(["ldhName" => strtolower($res['ldhName'])]);
         if ($domain === null) $domain = new Domain();
@@ -149,6 +161,9 @@ class RDAPService
     }
 
 
+    /**
+     * @throws Exception
+     */
     private function getRDAPServer(string $tld)
     {
 
@@ -156,18 +171,21 @@ class RDAPService
         foreach ($dnsRoot as $dns) {
             if (in_array($tld, $dns[0])) return $dns[1][0];
         }
-        throw new Exception("This TLD ($tld) is not supported.");
+        throw new Exception("This TLD ($tld) is not supported");
     }
 
     private static function getTld($domain): string
     {
         $lastDotPosition = strrpos($domain, '.');
         if ($lastDotPosition === false) {
-            throw new Exception("Domain must contain at least one dot.");
+            throw new Exception("Domain must contain at least one dot");
         }
         return strtolower(substr($domain, $lastDotPosition + 1));
     }
 
+    /**
+     * @throws Exception
+     */
     private function registerEntity(array $rdapEntity): Entity
     {
         $entity = $this->entityRepository->findOneBy([
