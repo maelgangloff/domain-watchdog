@@ -2,7 +2,6 @@
 
 namespace App\Entity;
 
-use App\Config\DomainStatus;
 use App\Repository\DomainRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -31,7 +30,7 @@ class Domain
     #[ORM\OneToMany(targetEntity: DomainEntity::class, mappedBy: 'domain', cascade: ['persist'], orphanRemoval: true)]
     private Collection $domainEntities;
 
-    #[ORM\Column(type: Types::SIMPLE_ARRAY, enumType: DomainStatus::class)]
+    #[ORM\Column(type: Types::SIMPLE_ARRAY)]
     private array $status = [];
 
     /**
@@ -142,9 +141,6 @@ class Domain
         return $this;
     }
 
-    /**
-     * @return DomainStatus[]
-     */
     public function getStatus(): array
     {
         return $this->status;

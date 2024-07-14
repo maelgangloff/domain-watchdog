@@ -4,7 +4,6 @@
 namespace App\Service;
 
 use App\Config\DomainRole;
-use App\Config\DomainStatus;
 use App\Config\EventAction;
 use App\Entity\Domain;
 use App\Entity\DomainEntity;
@@ -27,19 +26,19 @@ use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 use Throwable;
 
-class RDAPService
+readonly class RDAPService
 {
 
-    public function __construct(private readonly HttpClientInterface        $client,
-                                private readonly EntityRepository           $entityRepository,
-                                private readonly DomainRepository           $domainRepository,
-                                private readonly DomainEventRepository      $domainEventRepository,
-                                private readonly NameserverRepository       $nameserverRepository,
-                                private readonly NameserverEntityRepository $nameserverEntityRepository,
-                                private readonly EntityEventRepository      $entityEventRepository,
-                                private readonly DomainEntityRepository     $domainEntityRepository,
-                                private readonly EntityManagerInterface     $em,
-                                private readonly ParameterBagInterface      $params
+    public function __construct(private HttpClientInterface        $client,
+                                private EntityRepository           $entityRepository,
+                                private DomainRepository           $domainRepository,
+                                private DomainEventRepository      $domainEventRepository,
+                                private NameserverRepository       $nameserverRepository,
+                                private NameserverEntityRepository $nameserverEntityRepository,
+                                private EntityEventRepository      $entityEventRepository,
+                                private DomainEntityRepository     $domainEntityRepository,
+                                private EntityManagerInterface     $em,
+                                private ParameterBagInterface      $params
     )
     {
 
@@ -53,7 +52,7 @@ class RDAPService
         $idnDomain = idn_to_ascii($fqdn);
         try {
             $rdapServer = $this->getRDAPServer(RDAPService::getTld($idnDomain));
-        } catch (Exception $e) {
+        } catch (Exception) {
             throw new Exception("Unable to determine which RDAP server to contact");
         }
 
@@ -61,7 +60,7 @@ class RDAPService
             $res = $this->client->request(
                 'GET', $rdapServer . 'domain/' . $idnDomain
             )->toArray();
-        } catch (Throwable $e) {
+        } catch (Throwable) {
             throw new Exception("Unable to contact RDAP server");
         }
 
@@ -71,7 +70,7 @@ class RDAPService
         $domain
             ->setLdhName($res['ldhName'])
             ->setHandle($res['handle'])
-            ->setStatus(array_map(fn($str): DomainStatus => DomainStatus::from($str), $res['status']));
+            ->setStatus($res['status']);
 
 
         foreach ($res['events'] as $rdapEvent) {
@@ -79,7 +78,7 @@ class RDAPService
             if ($eventAction === EventAction::LastUpdateOfRDAPDatabase) continue;
 
             $event = $this->domainEventRepository->findOneBy([
-                "action" => EventAction::from($rdapEvent["eventAction"]),
+                "action" => $eventAction,
                 "date" => new DateTimeImmutable($rdapEvent["eventDate"]),
                 "domain" => $domain
             ]);
@@ -146,7 +145,7 @@ class RDAPService
                 $nameserver->addNameserverEntity($nameserverEntity
                     ->setNameserver($nameserver)
                     ->setEntity($entity)
-                    ->setStatus(array_map(fn($str): DomainStatus => DomainStatus::from($str), $rdapNameserver['status']))
+                    ->setStatus($rdapNameserver['status'])
                     ->setRoles(array_map(fn($str): DomainRole => DomainRole::from($str), $rdapEntity['roles'])));
             }
 
@@ -174,6 +173,9 @@ class RDAPService
         throw new Exception("This TLD ($tld) is not supported");
     }
 
+    /**
+     * @throws Exception
+     */
     private static function getTld($domain): string
     {
         $lastDotPosition = strrpos($domain, '.');
