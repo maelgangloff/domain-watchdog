@@ -19,6 +19,7 @@ use Eluceo\iCal\Presentation\Factory\CalendarFactory;
 use Exception;
 use Sabre\VObject\Reader;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
@@ -34,11 +35,11 @@ class TestController extends AbstractController
 
     }
 
-    #[Route(path: '/test/register/{fqdn}', name: 'test_register_domain')]
-    public function testRegisterDomain(string $fqdn): Response
+    #[Route(path: '/test/register', name: 'test_register_domain')]
+    public function testRegisterDomain(Request $request): Response
     {
         try {
-            $this->RDAPService->registerDomains([$fqdn]);
+            $this->RDAPService->registerDomains(explode(',', $request->query->get('domains')));
         } catch (Exception $e) {
             return new Response($e->getMessage(), Response::HTTP_INTERNAL_SERVER_ERROR);
         }
