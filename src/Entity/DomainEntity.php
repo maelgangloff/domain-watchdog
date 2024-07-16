@@ -6,6 +6,7 @@ use App\Config\DomainRole;
 use App\Repository\DomainEntityRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Attribute\Groups;
 
 #[ORM\Entity(repositoryClass: DomainEntityRepository::class)]
 class DomainEntity
@@ -13,14 +14,17 @@ class DomainEntity
     #[ORM\Id]
     #[ORM\ManyToOne(targetEntity: Domain::class, cascade: ['persist'], inversedBy: 'domainEntities')]
     #[ORM\JoinColumn(referencedColumnName: 'ldh_name', nullable: false)]
+    #[Groups('domain-entity:domain')]
     private ?Domain $domain = null;
 
     #[ORM\Id]
     #[ORM\ManyToOne(targetEntity: Entity::class, cascade: ['persist'], inversedBy: 'domainEntities')]
     #[ORM\JoinColumn(referencedColumnName: 'handle', nullable: false)]
+    #[Groups(['domain-entity:entity'])]
     private ?Entity $entity = null;
 
     #[ORM\Column(type: Types::SIMPLE_ARRAY, enumType: DomainRole::class)]
+    #[Groups(['domain-entity:entity', 'domain-entity:domain'])]
     private array $roles = [];
 
 

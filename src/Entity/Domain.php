@@ -2,35 +2,60 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\Get;
 use App\Repository\DomainRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Serializer\Attribute\Groups;
 
 #[ORM\Entity(repositoryClass: DomainRepository::class)]
+#[UniqueEntity('handle')]
+#[ApiResource(
+    operations: [
+        new Get(
+            uriTemplate: '/domains/{ldhName}',
+            normalizationContext: ['groups' => [
+                'domain:item',
+                'event:list',
+                'entity:list',
+                'domain-entity:entity',
+                'nameserver-entity:nameserver',
+                'nameserver:item',
+            ]]
+        )
+    ]
+)]
 class Domain
 {
     #[ORM\Id]
     #[ORM\Column(length: 255)]
+    #[Groups(['domain:item'])]
     private ?string $ldhName = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(['domain:item'])]
     private ?string $handle = null;
 
     /**
      * @var Collection<int, DomainEvent>
      */
     #[ORM\OneToMany(targetEntity: DomainEvent::class, mappedBy: 'domain', cascade: ['persist'], orphanRemoval: true)]
+    #[Groups(['domain:item'])]
     private Collection $events;
 
     /**
      * @var Collection<int, DomainEntity>
      */
     #[ORM\OneToMany(targetEntity: DomainEntity::class, mappedBy: 'domain', cascade: ['persist'], orphanRemoval: true)]
+    #[Groups(['domain:item'])]
     private Collection $domainEntities;
 
     #[ORM\Column(type: Types::SIMPLE_ARRAY)]
+    #[Groups(['domain:item'])]
     private array $status = [];
 
     /**
@@ -47,6 +72,7 @@ class Domain
         joinColumns: [new ORM\JoinColumn(name: 'domain_ldh_name', referencedColumnName: 'ldh_name')],
         inverseJoinColumns: [new ORM\JoinColumn(name: 'nameserver_ldh_name', referencedColumnName: 'ldh_name')]
     )]
+    #[Groups(['domain:item'])]
     private Collection $nameservers;
 
     public function __construct()

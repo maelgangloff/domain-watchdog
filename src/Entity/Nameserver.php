@@ -2,23 +2,42 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\Get;
 use App\Repository\NameserverRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Attribute\Groups;
 
 #[ORM\Entity(repositoryClass: NameserverRepository::class)]
+#[ApiResource(
+    operations: [
+        new Get(
+            uriTemplate: '/nameservers/{ldhName}',
+            normalizationContext: [
+                'groups' => [
+                    'nameserver:item',
+                    'entity:list',
+                    'nameserver-entity:entity'
+                ]
+            ]
+        )
+    ]
+)]
 class Nameserver
 {
 
     #[ORM\Id]
     #[ORM\Column(length: 255)]
+    #[Groups(['nameserver:item'])]
     private ?string $ldhName = null;
 
     /**
      * @var Collection<int, NameserverEntity>
      */
     #[ORM\OneToMany(targetEntity: NameserverEntity::class, mappedBy: 'nameserver', cascade: ['persist'], orphanRemoval: true)]
+    #[Groups(['nameserver:item'])]
     private Collection $nameserverEntities;
 
     /**

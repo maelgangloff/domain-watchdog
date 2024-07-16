@@ -2,39 +2,67 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\GetCollection;
 use App\Repository\EntityRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Attribute\Groups;
 
 #[ORM\Entity(repositoryClass: EntityRepository::class)]
+#[ApiResource(
+    operations: [
+        new GetCollection(
+            uriTemplate: '/entities',
+            normalizationContext: ['groups' => ['entity:list', 'event:list']]
+        ),
+        new Get(
+            uriTemplate: '/entities/{handle}',
+            normalizationContext: [
+                'groups' => [
+                    'event:list',
+                    'entity:item',
+                    'domain-entity:domain',
+                    'nameserver-entity:nameserver'
+                ]
+            ]
+        )
+    ]
+)]
 class Entity
 {
 
 
     #[ORM\Id]
     #[ORM\Column(length: 255)]
+    #[Groups(['entity:list', 'entity:item'])]
     private ?string $handle = null;
 
     /**
      * @var Collection<int, DomainEntity>
      */
     #[ORM\OneToMany(targetEntity: DomainEntity::class, mappedBy: 'entity', orphanRemoval: true)]
+    #[Groups(['entity:item'])]
     private Collection $domainEntities;
 
     /**
      * @var Collection<int, NameserverEntity>
      */
     #[ORM\OneToMany(targetEntity: NameserverEntity::class, mappedBy: 'entity')]
+    #[Groups(['entity:item'])]
     private Collection $nameserverEntities;
 
     /**
      * @var Collection<int, EntityEvent>
      */
     #[ORM\OneToMany(targetEntity: EntityEvent::class, mappedBy: 'entity', cascade: ['persist'], orphanRemoval: true)]
+    #[Groups(['entity:list', 'entity:item'])]
     private Collection $events;
 
     #[ORM\Column]
+    #[Groups(['entity:item'])]
     private array $jCard = [];
 
     public function __construct()

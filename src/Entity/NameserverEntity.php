@@ -6,6 +6,7 @@ use App\Config\DomainRole;
 use App\Repository\NameserverEntityRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Attribute\Groups;
 
 #[ORM\Entity(repositoryClass: NameserverEntityRepository::class)]
 class NameserverEntity
@@ -13,18 +14,22 @@ class NameserverEntity
     #[ORM\Id]
     #[ORM\ManyToOne(targetEntity: Nameserver::class, cascade: ['persist'], inversedBy: 'nameserverEntities')]
     #[ORM\JoinColumn(referencedColumnName: 'ldh_name', nullable: false)]
+    #[Groups(['nameserver-entity:nameserver'])]
     private ?Nameserver $nameserver = null;
 
     #[ORM\Id]
     #[ORM\ManyToOne(targetEntity: Entity::class, cascade: ['persist'], inversedBy: 'nameserverEntities')]
     #[ORM\JoinColumn(referencedColumnName: 'handle', nullable: false)]
+    #[Groups(['nameserver-entity:entity'])]
     private ?Entity $entity = null;
 
 
     #[ORM\Column(type: Types::SIMPLE_ARRAY, enumType: DomainRole::class)]
+    #[Groups(['nameserver-entity:entity', 'nameserver-entity:nameserver'])]
     private array $roles = [];
 
     #[ORM\Column(type: Types::SIMPLE_ARRAY)]
+    #[Groups(['nameserver-entity:entity', 'nameserver-entity:nameserver'])]
     private array $status = [];
 
     public function getNameserver(): ?Nameserver

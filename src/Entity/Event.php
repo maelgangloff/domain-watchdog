@@ -2,9 +2,12 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\Get;
 use App\Config\EventAction;
 use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Attribute\Groups;
 
 #[ORM\MappedSuperclass]
 class Event
@@ -15,9 +18,11 @@ class Event
     private ?int $id = null;
 
     #[ORM\Column(enumType: EventAction::class)]
+    #[Groups(['event:list'])]
     private ?EventAction $action = null;
 
     #[ORM\Column(type: 'datetime_immutable')]
+    #[Groups(['event:list'])]
     private ?DateTimeImmutable $date = null;
 
 
