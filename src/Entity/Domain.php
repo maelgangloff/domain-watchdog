@@ -5,6 +5,8 @@ namespace App\Entity;
 use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\GetCollection;
+use ApiPlatform\Metadata\Post;
+use App\Controller\DomainRefreshController;
 use App\Repository\DomainRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -33,10 +35,20 @@ use Symfony\Component\Serializer\Attribute\Groups;
                     'event:list',
                     'entity:list',
                     'domain-entity:entity',
-                    'nameserver-entity:nameserver',
-                    'nameserver:item',
+                    'nameserver-entity:nameserver'
                 ]
             ]
+        ),
+        new Post(
+            uriTemplate: '/domains/{ldhName}',
+            status: 204,
+            controller: DomainRefreshController::class,
+            openapiContext: [
+                'summary' => 'Request an update of domain name data',
+                'description' => 'Triggers a refresh of the domain information.',
+                'requestBody' => false
+            ],
+            deserialize: false
         )
     ]
 )]

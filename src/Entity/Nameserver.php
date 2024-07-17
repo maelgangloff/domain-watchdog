@@ -2,6 +2,9 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\GetCollection;
 use App\Repository\NameserverRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -9,24 +12,50 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Attribute\Groups;
 
 #[ORM\Entity(repositoryClass: NameserverRepository::class)]
+#[ApiResource(
+    operations: [
+        new GetCollection(
+            uriTemplate: '/nameservers',
+            normalizationContext: [
+                'groups' => [
+                    'nameserver:list'
+                ]
+            ]
+        ),
+        new Get(
+            uriTemplate: '/nameservers/{ldhName}',
+            normalizationContext: [
+                'groups' => [
+                    'nameserver:item',
+                    'domain:list',
+                    'nameserver-entity:entity',
+                    'entity:list',
+                    "event:list"
+                ]
+            ]
+        )
+    ]
+)]
 class Nameserver
 {
 
     #[ORM\Id]
     #[ORM\Column(length: 255)]
-    #[Groups(['nameserver:item'])]
+    #[Groups(['nameserver:item', 'nameserver:list', 'domain:item'])]
     private ?string $ldhName = null;
 
     /**
      * @var Collection<int, NameserverEntity>
      */
     #[ORM\OneToMany(targetEntity: NameserverEntity::class, mappedBy: 'nameserver', cascade: ['persist'], orphanRemoval: true)]
+    #[Groups(['nameserver:item', 'domain:item'])]
     private Collection $nameserverEntities;
 
     /**
      * @var Collection<int, Domain>
      */
     #[ORM\ManyToMany(targetEntity: Domain::class, mappedBy: 'nameservers')]
+    #[Groups(['nameserver:item'])]
     private Collection $domains;
 
     public function __construct()

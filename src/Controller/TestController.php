@@ -28,22 +28,10 @@ class TestController extends AbstractController
 {
 
     public function __construct(
-        private readonly RDAPService      $RDAPService,
         private readonly DomainRepository $domainRepository
     )
     {
 
-    }
-
-    #[Route(path: '/test/register', name: 'test_register_domain')]
-    public function testRegisterDomain(Request $request): Response
-    {
-        try {
-            $this->RDAPService->registerDomains(explode(',', $request->query->get('domains')));
-        } catch (Exception $e) {
-            return new Response($e->getMessage(), Response::HTTP_INTERNAL_SERVER_ERROR);
-        }
-        return new Response();
     }
 
     #[Route(path: '/test/publish/calendar', name: 'test_publish_calendar')]
