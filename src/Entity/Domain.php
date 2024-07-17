@@ -111,6 +111,8 @@ class Domain
         $this->domainEntities = new ArrayCollection();
         $this->watchLists = new ArrayCollection();
         $this->nameservers = new ArrayCollection();
+        $this->createdAt = new DateTimeImmutable('now');
+        $this->updatedAt = new DateTimeImmutable('now');
     }
 
     public function getLdhName(): ?string

@@ -48,6 +48,7 @@
     "symfony/validator": "7.1.*",
     "symfony/web-link": "7.1.*",
     "symfony/yaml": "7.1.*",
+    "symfonycasts/verify-email-bundle": "^1.17",
     "twig/extra-bundle": "^2.12|^3.0",
     "twig/twig": "^2.12|^3.0"
   },

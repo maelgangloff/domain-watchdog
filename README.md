@@ -38,35 +38,33 @@ on [How to deploy a Symfony application](https://symfony.com/doc/current/deploym
 ### Steps
 
 1. Clone the repository:
-
-```shell
-git clone https://github.com/maelgangloff/domain-watchdog.git
-```
+    ```shell
+    git clone https://github.com/maelgangloff/domain-watchdog.git
+    ```
 2. Navigate to the project directory:
-
-```shell
-cd domain-watchdog
-```
+    ```shell
+    cd domain-watchdog
+    ```
 3. Install dependencies:
-
-```shell
-composer install
-```
+    ```shell
+    composer install
+    ```
 4. Set up your environment variables:
-
-```shell
-cp .env .env.local
-```
-5. Run database migrations:
-
-```shell
-php bin/console doctrine:migrations:migrate
-```
-6. Start the Symfony server:
-
-```shell
-symfony server:start
-```
+    ```shell
+    cp .env .env.local
+    ```
+5. Generate the cryptographic key pair for the JWT signature
+    ```shell
+    php bin/console lexik:jwt:generate-keypair
+    ```
+6. Run database migrations:
+    ```shell
+    php bin/console doctrine:migrations:migrate
+    ```
+7. Start the Symfony server:
+    ```shell
+    symfony server:start
+    ```
 
 > [!NOTE]
 > ## Useful documentation
