@@ -2,24 +2,10 @@
 
 namespace App\Entity;
 
-use ApiPlatform\Metadata\ApiResource;
-use ApiPlatform\Metadata\Get;
 use App\Repository\EntityEventRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: EntityEventRepository::class)]
-#[ApiResource(
-    operations: [
-        new Get(
-            uriTemplate: '/events/entity/{id}',
-            shortName: 'Entity Event',
-            class: EntityEvent::class,
-            normalizationContext: [
-                'groups' => ['event:list']
-            ]
-        )
-    ]
-)]
 class EntityEvent extends Event
 {
 

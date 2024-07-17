@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\GetCollection;
 use App\Repository\DomainRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -16,16 +17,26 @@ use Symfony\Component\Serializer\Attribute\Groups;
 #[UniqueEntity('handle')]
 #[ApiResource(
     operations: [
+        new GetCollection(
+            uriTemplate: '/domains',
+            normalizationContext: [
+                'groups' => [
+                    'domain:list'
+                ]
+            ]
+        ),
         new Get(
             uriTemplate: '/domains/{ldhName}',
-            normalizationContext: ['groups' => [
-                'domain:item',
-                'event:list',
-                'entity:list',
-                'domain-entity:entity',
-                'nameserver-entity:nameserver',
-                'nameserver:item',
-            ]]
+            normalizationContext: [
+                'groups' => [
+                    'domain:item',
+                    'event:list',
+                    'entity:list',
+                    'domain-entity:entity',
+                    'nameserver-entity:nameserver',
+                    'nameserver:item',
+                ]
+            ]
         )
     ]
 )]
@@ -33,11 +44,11 @@ class Domain
 {
     #[ORM\Id]
     #[ORM\Column(length: 255)]
-    #[Groups(['domain:item'])]
+    #[Groups(['domain:item', 'domain:list'])]
     private ?string $ldhName = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['domain:item'])]
+    #[Groups(['domain:item', 'domain:list'])]
     private ?string $handle = null;
 
     /**

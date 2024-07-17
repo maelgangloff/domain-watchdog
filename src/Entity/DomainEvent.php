@@ -2,22 +2,10 @@
 
 namespace App\Entity;
 
-use ApiPlatform\Metadata\ApiResource;
-use ApiPlatform\Metadata\Get;
 use App\Repository\DomainEventRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: DomainEventRepository::class)]
-#[ApiResource(
-    operations: [
-        new Get(
-            uriTemplate: '/events/domain/{id}',
-            shortName: 'Domain Event',
-            class: DomainEvent::class,
-            normalizationContext: ['groups' => ['event:list']]
-        )
-    ]
-)]
 class DomainEvent extends Event
 {
     #[ORM\ManyToOne(targetEntity: Domain::class, cascade: ['persist'], inversedBy: 'events')]

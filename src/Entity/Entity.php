@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Doctrine\Orm\Filter\SearchFilter;
+use ApiPlatform\Metadata\ApiFilter;
 use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\GetCollection;
@@ -12,6 +14,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Attribute\Groups;
 
 #[ORM\Entity(repositoryClass: EntityRepository::class)]
+#[ApiFilter(SearchFilter::class, properties: ['jCard' => 'partial'])]
 #[ApiResource(
     operations: [
         new GetCollection(
@@ -58,7 +61,7 @@ class Entity
      * @var Collection<int, EntityEvent>
      */
     #[ORM\OneToMany(targetEntity: EntityEvent::class, mappedBy: 'entity', cascade: ['persist'], orphanRemoval: true)]
-    #[Groups(['entity:list', 'entity:item'])]
+    #[Groups(['entity:list', 'entity:item', 'entity:list'])]
     private Collection $events;
 
     #[ORM\Column]

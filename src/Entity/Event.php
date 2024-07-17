@@ -2,8 +2,6 @@
 
 namespace App\Entity;
 
-use ApiPlatform\Metadata\ApiResource;
-use ApiPlatform\Metadata\Get;
 use App\Config\EventAction;
 use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
