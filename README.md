@@ -43,31 +43,31 @@ on [How to deploy a Symfony application](https://symfony.com/doc/current/deploym
 git clone https://github.com/maelgangloff/domain-watchdog.git
 ```
 
-1. Navigate to the project directory:
+2. Navigate to the project directory:
 
 ```shell
 cd domain-watchdog
 ```
 
-1. Install dependencies:
+3.Install dependencies:
 
 ```shell
 composer install
 ```
 
-1. Set up your environment variables:
+4. Set up your environment variables:
 
 ```shell
 cp .env .env.local
 ```
 
-1. Run database migrations:
+5. Run database migrations:
 
 ```shell
 php bin/console doctrine:migrations:migrate
 ```
 
-1. Start the Symfony server:
+6. Start the Symfony server:
 
 ```shell
 symfony server:start
