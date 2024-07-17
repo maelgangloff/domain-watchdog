@@ -18,7 +18,7 @@ detailed history of events (ownership changes, renewals, etc.) is not feasible w
 The latest version of the WHOIS protocol was standardized in 2004 by RFC 3912.[^1] This protocol allows anyone to
 retrieve key information concerning a domain name, an IP address, or an entity registered with a registry.
 
-ICANN launched a global vote in 2023 to propose replacing the WHOIS protocol with RDAP.[^2] As a result, registries and
+ICANN launched a global vote in 2023 to propose replacing the WHOIS protocol with RDAP. As a result, registries and
 registrars will no longer be required to support WHOIS from 2025 (*WHOIS Sunset Date*).[^2]
 
 Domain Watchdog uses the RDAP protocol, which will soon be the new standard for retrieving information concerning domain
