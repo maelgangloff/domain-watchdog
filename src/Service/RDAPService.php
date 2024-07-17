@@ -163,7 +163,7 @@ readonly class RDAPService
             $domain->addNameserver($nameserver);
         }
 
-
+        $domain->updateTimestamps();
         $this->em->persist($domain);
         $this->em->flush();
 

@@ -8,6 +8,7 @@ use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Metadata\Post;
 use App\Controller\DomainRefreshController;
 use App\Repository\DomainRepository;
+use DateTimeImmutable;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
@@ -97,6 +98,12 @@ class Domain
     )]
     #[Groups(['domain:item'])]
     private Collection $nameservers;
+
+    #[ORM\Column(type: Types::DATE_IMMUTABLE)]
+    private ?DateTimeImmutable $createdAt = null;
+
+    #[ORM\Column(type: Types::DATE_IMMUTABLE)]
+    private ?DateTimeImmutable $updatedAt = null;
 
     public function __construct()
     {
@@ -251,5 +258,37 @@ class Domain
         $this->nameservers->removeElement($nameserver);
 
         return $this;
+    }
+
+    public function getUpdatedAt(): ?DateTimeImmutable
+    {
+        return $this->updatedAt;
+    }
+
+    #[ORM\PrePersist]
+    #[ORM\PreUpdate]
+    public function updateTimestamps(): void
+    {
+        $this->setUpdatedAt(new DateTimeImmutable('now'));
+        if ($this->getCreatedAt() === null) {
+            $this->setCreatedAt(new DateTimeImmutable('now'));
+        }
+    }
+
+    private function setUpdatedAt(?DateTimeImmutable $updatedAt): void
+    {
+        $this->updatedAt = $updatedAt;
+
+    }
+
+    public function getCreatedAt(): ?DateTimeImmutable
+    {
+        return $this->createdAt;
+    }
+
+    private function setCreatedAt(?DateTimeImmutable $createdAt): void
+    {
+        $this->createdAt = $createdAt;
+
     }
 }
