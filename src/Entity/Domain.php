@@ -28,6 +28,7 @@ use Symfony\Component\Serializer\Attribute\Groups;
             ]
         ),
         new Get(
+            uriTemplate: '/domains/{ldhName}', # Do not delete this line, otherwise Symfony interprets the TLD of the domain name as a return type
             normalizationContext: [
                 'groups' => [
                     'domain:item',
