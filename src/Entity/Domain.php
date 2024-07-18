@@ -21,7 +21,6 @@ use Symfony\Component\Serializer\Attribute\Groups;
 #[ApiResource(
     operations: [
         new GetCollection(
-            uriTemplate: '/domains',
             normalizationContext: [
                 'groups' => [
                     'domain:list'
@@ -29,7 +28,6 @@ use Symfony\Component\Serializer\Attribute\Groups;
             ]
         ),
         new Get(
-            uriTemplate: '/domains/{ldhName}',
             normalizationContext: [
                 'groups' => [
                     'domain:item',
@@ -42,7 +40,6 @@ use Symfony\Component\Serializer\Attribute\Groups;
             ]
         ),
         new Post(
-            uriTemplate: '/domains/{ldhName}',
             status: 204,
             controller: DomainRefreshController::class,
             openapiContext: [
