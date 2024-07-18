@@ -13,7 +13,7 @@ Although the RDAP and WHOIS protocols allow you to obtain precise information ab
 perform a reverse search to discover a list of domain names associated with an entity. Additionally, accessing a
 detailed history of events (ownership changes, renewals, etc.) is not feasible with these protocols.
 
-## General Description of Operation
+## How it works?
 
 The latest version of the WHOIS protocol was standardized in 2004 by RFC 3912.[^1] This protocol allows anyone to
 retrieve key information concerning a domain name, an IP address, or an entity registered with a registry.
