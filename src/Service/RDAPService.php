@@ -12,6 +12,7 @@ use App\Entity\Entity;
 use App\Entity\EntityEvent;
 use App\Entity\Nameserver;
 use App\Entity\NameserverEntity;
+use App\Entity\RdapServer;
 use App\Repository\DomainEntityRepository;
 use App\Repository\DomainEventRepository;
 use App\Repository\DomainRepository;
@@ -19,10 +20,10 @@ use App\Repository\EntityEventRepository;
 use App\Repository\EntityRepository;
 use App\Repository\NameserverEntityRepository;
 use App\Repository\NameserverRepository;
+use App\Repository\RdapServerRepository;
 use DateTimeImmutable;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
-use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 use Throwable;
 
@@ -37,8 +38,8 @@ readonly class RDAPService
                                 private NameserverEntityRepository $nameserverEntityRepository,
                                 private EntityEventRepository      $entityEventRepository,
                                 private DomainEntityRepository     $domainEntityRepository,
-                                private EntityManagerInterface     $em,
-                                private ParameterBagInterface      $params
+                                private RdapServerRepository       $rdapServerRepository,
+                                private EntityManagerInterface     $em
     )
     {
 
@@ -49,27 +50,26 @@ readonly class RDAPService
      */
     public function registerDomains(array $domains): void
     {
-        $dnsRoot = json_decode(file_get_contents($this->params->get('kernel.project_dir') . '/src/Config/dns.json'))->services;
         foreach ($domains as $fqdn) {
-            $this->registerDomain($dnsRoot, $fqdn);
+            $this->registerDomain($fqdn);
         }
     }
 
     /**
      * @throws Exception
      */
-    private function registerDomain(array $dnsRoot, string $fqdn): void
+    private function registerDomain(string $fqdn): void
     {
         $idnDomain = idn_to_ascii($fqdn);
-        try {
-            $rdapServer = $this->getRDAPServer($dnsRoot, RDAPService::getTld($idnDomain));
-        } catch (Exception) {
-            throw new Exception("Unable to determine which RDAP server to contact");
-        }
+
+        /** @var RdapServer|null $rdapServer */
+        $rdapServer = $this->rdapServerRepository->findOneBy(["tld" => RDAPService::getTld($idnDomain)]);
+
+        if ($rdapServer === null) throw new Exception("Unable to determine which RDAP server to contact");
 
         try {
             $res = $this->client->request(
-                'GET', $rdapServer . 'domain/' . $idnDomain
+                'GET', $rdapServer->getUrl() . 'domain/' . $idnDomain
             )->toArray();
         } catch (Throwable) {
             throw new Exception("Unable to contact RDAP server");
@@ -173,18 +173,6 @@ readonly class RDAPService
     /**
      * @throws Exception
      */
-    private function getRDAPServer(array $dnsRoot, string $tld)
-    {
-
-        foreach ($dnsRoot as $dns) {
-            if (in_array($tld, $dns[0])) return $dns[1][0];
-        }
-        throw new Exception("This TLD ($tld) is not supported");
-    }
-
-    /**
-     * @throws Exception
-     */
     private static function getTld($domain): string
     {
         $lastDotPosition = strrpos($domain, '.');
@@ -239,5 +227,28 @@ readonly class RDAPService
 
         }
         return $entity;
+    }
+
+    public function updateRDAPServers(): void
+    {
+        $dnsRoot = $this->client->request(
+            'GET', 'https://data.iana.org/rdap/dns.json'
+        )->toArray();
+
+        foreach ($dnsRoot['services'] as $service) {
+
+            foreach ($service[0] as $tld) {
+                foreach ($service[1] as $rdapServerUrl) {
+                    $server = $this->rdapServerRepository->findOneBy(["tld" => $tld, "url" => $rdapServerUrl]);
+                    if ($server === null) $server = new RdapServer();
+
+                    $server->setTld($tld)->setUrl($rdapServerUrl)->updateTimestamps();
+
+                    $this->em->persist($server);
+                }
+            }
+
+        }
+        $this->em->flush();
     }
 }
