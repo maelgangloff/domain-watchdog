@@ -3,6 +3,7 @@ api_platform:
     version: 1.0.0
     formats:
         jsonld: [ 'application/ld+json' ]
+        xml: [ 'application/xml' ]
         json: [ 'application/json' ]
     docs_formats:
         jsonld: [ 'application/ld+json' ]

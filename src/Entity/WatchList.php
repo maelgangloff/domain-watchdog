@@ -3,8 +3,10 @@
 namespace App\Entity;
 
 use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\Delete;
 use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\GetCollection;
+use ApiPlatform\Metadata\Patch;
 use ApiPlatform\Metadata\Post;
 use App\Repository\WatchListRepository;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -28,7 +30,12 @@ use Symfony\Component\Uid\Uuid;
             routeName: 'watchlist_create', normalizationContext: ['groups' => 'watchlist:list'],
             denormalizationContext: ['groups' => 'watchlist:create'],
             name: 'create'
-        )
+        ),
+        new Patch(
+            normalizationContext: ['groups' => 'watchlist:item'],
+            denormalizationContext: ['groups' => 'watchlist:update']
+        ),
+        new Delete()
     ],
 )]
 class WatchList
@@ -49,7 +56,7 @@ class WatchList
     #[ORM\JoinTable(name: 'watch_lists_domains',
         joinColumns: [new ORM\JoinColumn(name: 'watch_list_token', referencedColumnName: 'token')],
         inverseJoinColumns: [new ORM\JoinColumn(name: 'domain_ldh_name', referencedColumnName: 'ldh_name')])]
-    #[Groups(['watchlist:item', 'watchlist:create'])]
+    #[Groups(['watchlist:item', 'watchlist:create', 'watchlist:update'])]
     private Collection $domains;
 
     public function __construct()

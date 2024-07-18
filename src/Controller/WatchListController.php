@@ -53,7 +53,6 @@ class WatchListController extends AbstractController
         $this->em->flush();
 
         return $watchList;
-
     }
 
 }
