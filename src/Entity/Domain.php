@@ -40,6 +40,7 @@ use Symfony\Component\Serializer\Attribute\Groups;
             ]
         ),
         new Post(
+            uriTemplate: '/domains/{ldhName}',
             status: 204,
             controller: DomainRefreshController::class,
             openapiContext: [
