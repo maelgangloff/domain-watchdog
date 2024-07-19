@@ -22,7 +22,7 @@ final readonly class UpdateRdapServersSchedule implements ScheduleProviderInterf
     {
         return (new Schedule())
             ->add(
-                RecurringMessage::every('30 seconds', new UpdateRdapServers()),
+                RecurringMessage::every('1 month', new UpdateRdapServers()),
             )->stateful($this->cache);
     }
 }
