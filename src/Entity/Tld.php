@@ -2,18 +2,36 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\GetCollection;
 use App\Repository\TldRepository;
 use DateTimeImmutable;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Attribute\Groups;
 
+#[ApiResource(
+    shortName: 'Top Level Domain',
+    operations: [
+        new GetCollection(
+            uriTemplate: '/tld',
+            normalizationContext: ['groups' => ['tld:list']]
+        ),
+        new Get(
+            uriTemplate: '/tld/{tld}',
+            normalizationContext: ['groups' => ['tld:item']]
+        )
+    ]
+)]
 #[ORM\Entity(repositoryClass: TldRepository::class)]
 class Tld
 {
     #[ORM\Id]
     #[ORM\Column(length: 63)]
+    #[Groups(["tld:list", "tld:item"])]
     private ?string $tld = null;
     /**
      * @var Collection<int, RdapServer>
@@ -22,21 +40,27 @@ class Tld
     private Collection $rdapServers;
 
     #[ORM\Column(nullable: true)]
+    #[Groups(["tld:list", "tld:item"])]
     private ?bool $contractTerminated = null;
 
     #[ORM\Column(type: Types::DATE_IMMUTABLE, nullable: true)]
+    #[Groups(["tld:item"])]
     private ?DateTimeImmutable $dateOfContractSignature = null;
 
     #[ORM\Column(type: Types::DATE_IMMUTABLE, nullable: true)]
+    #[Groups(["tld:item"])]
     private ?DateTimeImmutable $delegationDate = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(["tld:item"])]
     private ?string $registryOperator = null;
 
     #[ORM\Column(type: Types::DATE_IMMUTABLE, nullable: true)]
+    #[Groups(["tld:item"])]
     private ?DateTimeImmutable $removalDate = null;
 
     #[ORM\Column(nullable: true)]
+    #[Groups(["tld:item"])]
     private ?bool $specification13 = null;
 
     public function __construct()

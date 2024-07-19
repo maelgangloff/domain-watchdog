@@ -259,6 +259,7 @@ readonly class RDAPService
         foreach ($dnsRoot['services'] as $service) {
 
             foreach ($service[0] as $tld) {
+                if ($tld === "") continue;
                 $tldReference = $this->em->getReference(Tld::class, $tld);
                 foreach ($service[1] as $rdapServerUrl) {
                     $server = $this->rdapServerRepository->findOneBy(["tld" => $tldReference, "url" => $rdapServerUrl]); //ICI
@@ -293,6 +294,7 @@ readonly class RDAPService
 
 
         foreach (array_diff($tldList, $storedTldList) as $tld) {
+            if ($tld === "") continue;
             $this->em->persist((new Tld())->setTld($tld));
         }
         $this->em->flush();
@@ -313,6 +315,7 @@ readonly class RDAPService
         )->toArray()['gTLDs'];
 
         foreach ($gTldList as $gTld) {
+            if ($gTld['gTLD'] === "") continue;
             $gtTldEntity = $this->tldRepository->findOneBy(['tld' => $gTld['gTLD']]);
             if ($gtTldEntity === null) $gtTldEntity = new Tld();
 

@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20240719124300 extends AbstractMigration
+final class Version20240719183550 extends AbstractMigration
 {
     public function getDescription(): string
     {
@@ -49,7 +49,10 @@ final class Version20240719124300 extends AbstractMigration
         $this->addSql('CREATE TABLE rdap_server (url VARCHAR(255) NOT NULL, tld_id VARCHAR(63) NOT NULL, updated_at DATE NOT NULL --(DC2Type:date_immutable)
         , PRIMARY KEY(url, tld_id), CONSTRAINT FK_CCBF17A850F7084E FOREIGN KEY (tld_id) REFERENCES tld (tld) NOT DEFERRABLE INITIALLY IMMEDIATE)');
         $this->addSql('CREATE INDEX IDX_CCBF17A850F7084E ON rdap_server (tld_id)');
-        $this->addSql('CREATE TABLE tld (tld VARCHAR(63) NOT NULL, PRIMARY KEY(tld))');
+        $this->addSql('CREATE TABLE tld (tld VARCHAR(63) NOT NULL, contract_terminated BOOLEAN DEFAULT NULL, date_of_contract_signature DATE DEFAULT NULL --(DC2Type:date_immutable)
+        , delegation_date DATE DEFAULT NULL --(DC2Type:date_immutable)
+        , registry_operator VARCHAR(255) DEFAULT NULL, removal_date DATE DEFAULT NULL --(DC2Type:date_immutable)
+        , specification13 BOOLEAN DEFAULT NULL, PRIMARY KEY(tld))');
         $this->addSql('CREATE TABLE user (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, email VARCHAR(180) NOT NULL, roles CLOB NOT NULL --(DC2Type:json)
         , password VARCHAR(255) NOT NULL)');
         $this->addSql('CREATE UNIQUE INDEX UNIQ_IDENTIFIER_EMAIL ON user (email)');
