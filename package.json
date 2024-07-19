@@ -11,7 +11,10 @@
     "@babel/preset-env": "^7.16.0",
     "@babel/preset-react": "^7.24.7",
     "@symfony/webpack-encore": "^4.6.1",
+    "@types/react": "latest",
+    "@types/react-dom": "latest",
     "core-js": "^3.23.0",
+    "react-scripts": "^5.0.1",
     "regenerator-runtime": "^0.13.9",
     "ts-loader": "^9.5.1",
     "typescript": "^5.5.3",
@@ -36,6 +39,9 @@
     "API"
   ],
   "dependencies": {
+    "@emotion/react": "^11.12.0",
+    "@emotion/styled": "^11.12.0",
+    "@mui/material": "^5.16.4",
     "react": "^18.3.1",
     "react-dom": "^18.3.1"
   }
