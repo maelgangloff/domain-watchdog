@@ -13,6 +13,7 @@ use App\Entity\EntityEvent;
 use App\Entity\Nameserver;
 use App\Entity\NameserverEntity;
 use App\Entity\RdapServer;
+use App\Entity\Tld;
 use App\Repository\DomainEntityRepository;
 use App\Repository\DomainEventRepository;
 use App\Repository\DomainRepository;
@@ -21,8 +22,10 @@ use App\Repository\EntityRepository;
 use App\Repository\NameserverEntityRepository;
 use App\Repository\NameserverRepository;
 use App\Repository\RdapServerRepository;
+use App\Repository\TldRepository;
 use DateTimeImmutable;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\Exception\ORMException;
 use Exception;
 use Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\DecodingExceptionInterface;
@@ -44,6 +47,7 @@ readonly class RDAPService
                                 private EntityEventRepository      $entityEventRepository,
                                 private DomainEntityRepository     $domainEntityRepository,
                                 private RdapServerRepository       $rdapServerRepository,
+                                private TldRepository              $tldRepository,
                                 private EntityManagerInterface     $em
     )
     {
@@ -66,9 +70,10 @@ readonly class RDAPService
     private function registerDomain(string $fqdn): void
     {
         $idnDomain = idn_to_ascii($fqdn);
+        $tld = $this->getTld($idnDomain);
 
         /** @var RdapServer|null $rdapServer */
-        $rdapServer = $this->rdapServerRepository->findOneBy(["tld" => RDAPService::getTld($idnDomain)]);
+        $rdapServer = $this->rdapServerRepository->findOneBy(["tld" => $tld], ["updatedAt" => "DESC"]);
 
         if ($rdapServer === null) throw new Exception("Unable to determine which RDAP server to contact");
 
@@ -84,6 +89,7 @@ readonly class RDAPService
         if ($domain === null) $domain = new Domain();
 
         $domain
+            ->setTld($tld)
             ->setLdhName($res['ldhName'])
             ->setHandle($res['handle'])
             ->setStatus($res['status']);
@@ -178,13 +184,15 @@ readonly class RDAPService
     /**
      * @throws Exception
      */
-    private static function getTld($domain): string
+    private function getTld($domain): ?object
     {
         $lastDotPosition = strrpos($domain, '.');
         if ($lastDotPosition === false) {
             throw new Exception("Domain must contain at least one dot");
         }
-        return strtolower(substr($domain, $lastDotPosition + 1));
+        $tld = strtolower(substr($domain, $lastDotPosition + 1));
+
+        return $this->tldRepository->findOneBy(["tld" => $tld]);
     }
 
     /**
@@ -240,6 +248,7 @@ readonly class RDAPService
      * @throws RedirectionExceptionInterface
      * @throws DecodingExceptionInterface
      * @throws ClientExceptionInterface
+     * @throws ORMException
      */
     public function updateRDAPServers(): void
     {
@@ -250,16 +259,72 @@ readonly class RDAPService
         foreach ($dnsRoot['services'] as $service) {
 
             foreach ($service[0] as $tld) {
+                $tldReference = $this->em->getReference(Tld::class, $tld);
                 foreach ($service[1] as $rdapServerUrl) {
-                    $server = $this->rdapServerRepository->findOneBy(["tld" => $tld, "url" => $rdapServerUrl]);
+                    $server = $this->rdapServerRepository->findOneBy(["tld" => $tldReference, "url" => $rdapServerUrl]); //ICI
                     if ($server === null) $server = new RdapServer();
-
-                    $server->setTld($tld)->setUrl($rdapServerUrl)->updateTimestamps();
+                    $server->setTld($tldReference)->setUrl($rdapServerUrl)->updateTimestamps();
 
                     $this->em->persist($server);
                 }
             }
 
+        }
+        $this->em->flush();
+    }
+
+    /**
+     * @throws TransportExceptionInterface
+     * @throws ServerExceptionInterface
+     * @throws RedirectionExceptionInterface
+     * @throws ClientExceptionInterface
+     */
+    public function updateTldListIANA(): void
+    {
+        $tldList = array_map(
+            fn($tld) => strtolower($tld),
+            explode(PHP_EOL,
+                $this->client->request(
+                    'GET', 'https://data.iana.org/TLD/tlds-alpha-by-domain.txt'
+                )->getContent()
+            ));
+        array_shift($tldList);
+        $storedTldList = array_map(fn($tld) => $tld->getTld(), $this->tldRepository->findAll());
+
+
+        foreach (array_diff($tldList, $storedTldList) as $tld) {
+            $this->em->persist((new Tld())->setTld($tld));
+        }
+        $this->em->flush();
+    }
+
+    /**
+     * @throws TransportExceptionInterface
+     * @throws ServerExceptionInterface
+     * @throws RedirectionExceptionInterface
+     * @throws ClientExceptionInterface
+     * @throws DecodingExceptionInterface
+     * @throws Exception
+     */
+    public function updateGTldListICANN(): void
+    {
+        $gTldList = $this->client->request(
+            'GET', 'https://www.icann.org/resources/registries/gtlds/v2/gtlds.json'
+        )->toArray()['gTLDs'];
+
+        foreach ($gTldList as $gTld) {
+            $gtTldEntity = $this->tldRepository->findOneBy(['tld' => $gTld['gTLD']]);
+            if ($gtTldEntity === null) $gtTldEntity = new Tld();
+
+            $gtTldEntity
+                ->setTld($gTld['gTLD'])
+                ->setContractTerminated($gTld['contractTerminated'])
+                ->setRegistryOperator($gTld['registryOperator'])
+                ->setSpecification13($gTld['specification13']);
+            if ($gTld['removalDate'] !== null) $gtTldEntity->setRemovalDate(new DateTimeImmutable($gTld['removalDate']));
+            if ($gTld['delegationDate'] !== null) $gtTldEntity->setDelegationDate(new DateTimeImmutable($gTld['delegationDate']));
+            if ($gTld['dateOfContractSignature'] !== null) $gtTldEntity->setDateOfContractSignature(new DateTimeImmutable($gTld['dateOfContractSignature']));
+            $this->em->persist($gtTldEntity);
         }
         $this->em->flush();
     }

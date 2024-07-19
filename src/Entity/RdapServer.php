@@ -10,9 +10,6 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Entity(repositoryClass: RdapServerRepository::class)]
 class RdapServer
 {
-    #[ORM\Id]
-    #[ORM\Column(length: 63)]
-    private ?string $tld = null;
 
     #[ORM\Id]
     #[ORM\Column(length: 255)]
@@ -21,21 +18,15 @@ class RdapServer
     #[ORM\Column(type: Types::DATE_IMMUTABLE)]
     private ?DateTimeImmutable $updatedAt = null;
 
+    #[ORM\Id]
+    #[ORM\ManyToOne(inversedBy: 'rdapServers')]
+    #[ORM\JoinColumn(referencedColumnName: 'tld', nullable: false)]
+    private ?Tld $tld = null;
+
+
     public function __construct()
     {
         $this->updatedAt = new DateTimeImmutable('now');
-    }
-
-    public function getTld(): ?string
-    {
-        return $this->tld;
-    }
-
-    public function setTld(string $tld): static
-    {
-        $this->tld = $tld;
-
-        return $this;
     }
 
     public function getUrl(): ?string
@@ -67,5 +58,17 @@ class RdapServer
     public function updateTimestamps(): void
     {
         $this->setUpdatedAt(new DateTimeImmutable('now'));
+    }
+
+    public function getTld(): ?Tld
+    {
+        return $this->tld;
+    }
+
+    public function setTld(?Tld $tld): static
+    {
+        $this->tld = $tld;
+
+        return $this;
     }
 }

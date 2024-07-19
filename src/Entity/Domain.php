@@ -105,6 +105,10 @@ class Domain
     #[ORM\Column(type: Types::DATE_IMMUTABLE)]
     private ?DateTimeImmutable $updatedAt = null;
 
+    #[ORM\ManyToOne]
+    #[ORM\JoinColumn(referencedColumnName: 'tld', nullable: false)]
+    private ?Tld $tld = null;
+
     public function __construct()
     {
         $this->events = new ArrayCollection();
@@ -292,5 +296,17 @@ class Domain
     {
         $this->createdAt = $createdAt;
 
+    }
+
+    public function getTld(): ?Tld
+    {
+        return $this->tld;
+    }
+
+    public function setTld(?Tld $tld): static
+    {
+        $this->tld = $tld;
+
+        return $this;
     }
 }

@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20240713145845 extends AbstractMigration
+final class Version20240719124300 extends AbstractMigration
 {
     public function getDescription(): string
     {
@@ -20,8 +20,11 @@ final class Version20240713145845 extends AbstractMigration
     public function up(Schema $schema): void
     {
         // this up() migration is auto-generated, please modify it to your needs
-        $this->addSql('CREATE TABLE domain (ldh_name VARCHAR(255) NOT NULL, handle VARCHAR(255) NOT NULL, status CLOB NOT NULL --(DC2Type:simple_array)
-        , PRIMARY KEY(ldh_name))');
+        $this->addSql('CREATE TABLE domain (ldh_name VARCHAR(255) NOT NULL, tld_id VARCHAR(63) NOT NULL, handle VARCHAR(255) NOT NULL, status CLOB NOT NULL --(DC2Type:simple_array)
+        , created_at DATE NOT NULL --(DC2Type:date_immutable)
+        , updated_at DATE NOT NULL --(DC2Type:date_immutable)
+        , PRIMARY KEY(ldh_name), CONSTRAINT FK_A7A91E0B50F7084E FOREIGN KEY (tld_id) REFERENCES tld (tld) NOT DEFERRABLE INITIALLY IMMEDIATE)');
+        $this->addSql('CREATE INDEX IDX_A7A91E0B50F7084E ON domain (tld_id)');
         $this->addSql('CREATE TABLE domain_nameservers (domain_ldh_name VARCHAR(255) NOT NULL, nameserver_ldh_name VARCHAR(255) NOT NULL, PRIMARY KEY(domain_ldh_name, nameserver_ldh_name), CONSTRAINT FK_B6E6B63AAF923913 FOREIGN KEY (domain_ldh_name) REFERENCES domain (ldh_name) NOT DEFERRABLE INITIALLY IMMEDIATE, CONSTRAINT FK_B6E6B63AA6496BFE FOREIGN KEY (nameserver_ldh_name) REFERENCES nameserver (ldh_name) NOT DEFERRABLE INITIALLY IMMEDIATE)');
         $this->addSql('CREATE INDEX IDX_B6E6B63AAF923913 ON domain_nameservers (domain_ldh_name)');
         $this->addSql('CREATE INDEX IDX_B6E6B63AA6496BFE ON domain_nameservers (nameserver_ldh_name)');
@@ -43,6 +46,10 @@ final class Version20240713145845 extends AbstractMigration
         , PRIMARY KEY(nameserver_id, entity_id), CONSTRAINT FK_A269AFB41A555619 FOREIGN KEY (nameserver_id) REFERENCES nameserver (ldh_name) NOT DEFERRABLE INITIALLY IMMEDIATE, CONSTRAINT FK_A269AFB481257D5D FOREIGN KEY (entity_id) REFERENCES entity (handle) NOT DEFERRABLE INITIALLY IMMEDIATE)');
         $this->addSql('CREATE INDEX IDX_A269AFB41A555619 ON nameserver_entity (nameserver_id)');
         $this->addSql('CREATE INDEX IDX_A269AFB481257D5D ON nameserver_entity (entity_id)');
+        $this->addSql('CREATE TABLE rdap_server (url VARCHAR(255) NOT NULL, tld_id VARCHAR(63) NOT NULL, updated_at DATE NOT NULL --(DC2Type:date_immutable)
+        , PRIMARY KEY(url, tld_id), CONSTRAINT FK_CCBF17A850F7084E FOREIGN KEY (tld_id) REFERENCES tld (tld) NOT DEFERRABLE INITIALLY IMMEDIATE)');
+        $this->addSql('CREATE INDEX IDX_CCBF17A850F7084E ON rdap_server (tld_id)');
+        $this->addSql('CREATE TABLE tld (tld VARCHAR(63) NOT NULL, PRIMARY KEY(tld))');
         $this->addSql('CREATE TABLE user (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, email VARCHAR(180) NOT NULL, roles CLOB NOT NULL --(DC2Type:json)
         , password VARCHAR(255) NOT NULL)');
         $this->addSql('CREATE UNIQUE INDEX UNIQ_IDENTIFIER_EMAIL ON user (email)');
@@ -71,6 +78,8 @@ final class Version20240713145845 extends AbstractMigration
         $this->addSql('DROP TABLE entity_event');
         $this->addSql('DROP TABLE nameserver');
         $this->addSql('DROP TABLE nameserver_entity');
+        $this->addSql('DROP TABLE rdap_server');
+        $this->addSql('DROP TABLE tld');
         $this->addSql('DROP TABLE user');
         $this->addSql('DROP TABLE watch_list');
         $this->addSql('DROP TABLE watch_lists_domains');
