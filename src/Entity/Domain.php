@@ -36,7 +36,8 @@ use Symfony\Component\Serializer\Attribute\Groups;
                     'entity:list',
                     'domain-entity:entity',
                     'nameserver-entity:nameserver',
-                    'nameserver-entity:entity'
+                    'nameserver-entity:entity',
+                    'tld:item'
                 ]
             ]
         ),
@@ -107,6 +108,7 @@ class Domain
 
     #[ORM\ManyToOne]
     #[ORM\JoinColumn(referencedColumnName: 'tld', nullable: false)]
+    #[Groups(['domain:item'])]
     private ?Tld $tld = null;
 
     public function __construct()

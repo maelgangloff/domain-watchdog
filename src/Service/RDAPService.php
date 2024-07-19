@@ -225,7 +225,8 @@ readonly class RDAPService
         if (!array_key_exists('events', $rdapEntity)) return $entity;
 
         foreach ($rdapEntity['events'] as $rdapEntityEvent) {
-            if ($rdapEntityEvent["eventAction"] === EventAction::LastChanged->value) continue;
+            $eventAction = $rdapEntityEvent["eventAction"];
+            if ($eventAction === EventAction::LastChanged->value || $eventAction === EventAction::LastUpdateOfRDAPDatabase) continue;
             $event = $this->entityEventRepository->findOneBy([
                 "action" => EventAction::from($rdapEntityEvent["eventAction"]),
                 "date" => new DateTimeImmutable($rdapEntityEvent["eventDate"])
