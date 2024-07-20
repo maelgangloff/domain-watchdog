@@ -72,6 +72,10 @@ on [How to deploy a Symfony application](https://symfony.com/doc/current/deploym
 > - [RFC 7483 : JSON Responses for the Registration Data Access Protocol (RDAP)](https://datatracker.ietf.org/doc/html/rfc7483)
 > - [RFC 7484 : Finding the Authoritative Registration Data (RDAP) Service](https://datatracker.ietf.org/doc/html/rfc7484)
 
+## Licensing
+This entire project is licensed under *GNU Affero General Public License v3.0 or later*.
+Contributions are welcome as long as they do not contravene the Code of Conduct.
+
 
 [^1]: RFC 3912 : WHOIS Protocol Specification. (2004). IETF Datatracker. https://datatracker.ietf.org/doc/html/rfc3912
 [^2]: 2023 Global Amendments to the Base gTLD Registry Agreement (RA), Specification 13, and 2013 Registrar
