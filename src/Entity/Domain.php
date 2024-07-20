@@ -29,6 +29,7 @@ use Symfony\Component\Serializer\Attribute\Groups;
         ),
         new Get(
             uriTemplate: '/domains/{ldhName}', # Do not delete this line, otherwise Symfony interprets the TLD of the domain name as a return type
+            controller: DomainRefreshController::class,
             normalizationContext: [
                 'groups' => [
                     'domain:item',
@@ -39,18 +40,8 @@ use Symfony\Component\Serializer\Attribute\Groups;
                     'nameserver-entity:entity',
                     'tld:item'
                 ]
-            ]
-        ),
-        new Post(
-            uriTemplate: '/domains/{ldhName}',
-            status: 204,
-            controller: DomainRefreshController::class,
-            openapiContext: [
-                'summary' => 'Request an update of domain name data',
-                'description' => 'Triggers a refresh of the domain information.',
-                'requestBody' => false
             ],
-            deserialize: false
+            read: false
         )
     ]
 )]

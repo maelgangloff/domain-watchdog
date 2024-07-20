@@ -67,7 +67,7 @@ readonly class RDAPService
     /**
      * @throws Exception
      */
-    private function registerDomain(string $fqdn): void
+    public function registerDomain(string $fqdn): Domain
     {
         $idnDomain = idn_to_ascii($fqdn);
         $tld = $this->getTld($idnDomain);
@@ -178,6 +178,7 @@ readonly class RDAPService
         $this->em->persist($domain);
         $this->em->flush();
 
+        return $domain;
     }
 
 
