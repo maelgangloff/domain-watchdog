@@ -28,7 +28,9 @@ use Symfony\Component\Serializer\Attribute\Groups;
                     'event:list',
                     'entity:item',
                     'domain-entity:domain',
-                    'nameserver-entity:nameserver'
+                    'domain:list',
+                    'nameserver-entity:nameserver',
+                    'nameserver:list'
                 ]
             ]
         )
