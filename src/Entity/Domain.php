@@ -49,7 +49,7 @@ class Domain
 {
     #[ORM\Id]
     #[ORM\Column(length: 255)]
-    #[Groups(['domain:item', 'domain:list', 'watchlist:item', 'watchlist:create'])]
+    #[Groups(['domain:item', 'domain:list', 'watchlist:item'])]
     private ?string $ldhName = null;
 
     #[ORM\Column(length: 255)]

@@ -13,6 +13,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Attribute\Groups;
+use Symfony\Component\Serializer\Attribute\SerializedName;
 use Symfony\Component\Uid\Uuid;
 
 #[ORM\Entity(repositoryClass: WatchListRepository::class)]
@@ -59,10 +60,19 @@ class WatchList
     #[Groups(['watchlist:item', 'watchlist:create', 'watchlist:update'])]
     private Collection $domains;
 
+    /**
+     * @var Collection<int, WatchListTrigger>
+     */
+    #[ORM\OneToMany(targetEntity: WatchListTrigger::class, mappedBy: 'watchList', cascade: ['persist'], orphanRemoval: true)]
+    #[Groups(['watchlist:item', 'watchlist:create', 'watchlist:update'])]
+    #[SerializedName("triggers")]
+    private Collection $watchListTriggers;
+
     public function __construct()
     {
         $this->token = Uuid::v4();
         $this->domains = new ArrayCollection();
+        $this->watchListTriggers = new ArrayCollection();
     }
 
     public function getToken(): ?string
@@ -102,6 +112,36 @@ class WatchList
     public function removeDomain(Domain $domain): static
     {
         $this->domains->removeElement($domain);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, WatchListTrigger>
+     */
+    public function getWatchListTriggers(): Collection
+    {
+        return $this->watchListTriggers;
+    }
+
+    public function addWatchListTrigger(WatchListTrigger $watchListTrigger): static
+    {
+        if (!$this->watchListTriggers->contains($watchListTrigger)) {
+            $this->watchListTriggers->add($watchListTrigger);
+            $watchListTrigger->setWatchList($this);
+        }
+
+        return $this;
+    }
+
+    public function removeWatchListTrigger(WatchListTrigger $watchListTrigger): static
+    {
+        if ($this->watchListTriggers->removeElement($watchListTrigger)) {
+            // set the owning side to null (unless already changed)
+            if ($watchListTrigger->getWatchList() === $this) {
+                $watchListTrigger->setWatchList(null);
+            }
+        }
 
         return $this;
     }
