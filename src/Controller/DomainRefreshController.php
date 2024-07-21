@@ -11,6 +11,7 @@ use DateTimeImmutable;
 use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpKernel\Exception\TooManyRequestsHttpException;
+use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Component\Messenger\Exception\ExceptionInterface;
 use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\RateLimiter\RateLimiterFactory;
@@ -29,20 +30,21 @@ class DomainRefreshController extends AbstractController
      * @throws Exception
      * @throws ExceptionInterface
      */
-    public function __invoke(string $ldhName,): ?Domain
+    public function __invoke(string $ldhName, KernelInterface $kernel): ?Domain
     {
         /** @var Domain $domain */
         $domain = $this->domainRepository->findOneBy(["ldhName" => $ldhName]);
         if ($domain !== null && $domain->getUpdatedAt()->diff(new DateTimeImmutable('now'))->days < 7) return $domain;
 
-        if ($this->container->getParameter('kernel.environment') !== 'dev') {
+        if (false === $kernel->isDebug()) {
             $limiter = $this->authenticatedApiLimiter->create($this->getUser()->getUserIdentifier());
             if (false === $limiter->consume()->isAccepted()) throw new TooManyRequestsHttpException();
         }
 
+        if ($domain === null) return $this->RDAPService->registerDomain($ldhName);
+
         $updatedAt = $domain->getUpdatedAt();
         $domain = $this->RDAPService->registerDomain($ldhName);
-
         /** @var WatchList $watchList */
         foreach ($domain->getWatchLists()->getIterator() as $watchList) {
             $this->bus->dispatch(new ProcessDomainTrigger($watchList->getToken(), $domain->getLdhName(), $updatedAt));
