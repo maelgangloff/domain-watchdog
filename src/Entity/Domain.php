@@ -15,6 +15,7 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Serializer\Attribute\Groups;
+use Symfony\Component\Serializer\Attribute\SerializedName;
 
 #[ORM\Entity(repositoryClass: DomainRepository::class)]
 #[UniqueEntity('handle')]
@@ -68,6 +69,7 @@ class Domain
      */
     #[ORM\OneToMany(targetEntity: DomainEntity::class, mappedBy: 'domain', cascade: ['persist'], orphanRemoval: true)]
     #[Groups(['domain:item'])]
+    #[SerializedName('entities')]
     private Collection $domainEntities;
 
     #[ORM\Column(type: Types::SIMPLE_ARRAY)]

@@ -113,7 +113,7 @@ readonly class RDAPService
         }
 
         foreach ($res['entities'] as $rdapEntity) {
-            if (!array_key_exists('handle', $rdapEntity)) continue;
+            if (!array_key_exists('handle', $rdapEntity) || $rdapEntity['handle'] === '') continue;
             $entity = $this->registerEntity($rdapEntity);
 
             $this->em->persist($entity);
@@ -151,7 +151,7 @@ readonly class RDAPService
             }
 
             foreach ($rdapNameserver['entities'] as $rdapEntity) {
-                if (!array_key_exists('handle', $rdapEntity)) continue;
+                if (!array_key_exists('handle', $rdapEntity) || $rdapEntity['handle'] === '') continue;
                 $entity = $this->registerEntity($rdapEntity);
 
                 $this->em->persist($entity);

@@ -12,6 +12,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Attribute\Groups;
+use Symfony\Component\Serializer\Attribute\SerializedName;
 
 #[ORM\Entity(repositoryClass: EntityRepository::class)]
 #[ApiFilter(SearchFilter::class, properties: ['jCard' => 'partial'])]
@@ -50,6 +51,7 @@ class Entity
      */
     #[ORM\OneToMany(targetEntity: DomainEntity::class, mappedBy: 'entity', orphanRemoval: true)]
     #[Groups(['entity:item'])]
+    #[SerializedName('domains')]
     private Collection $domainEntities;
 
     /**
@@ -57,6 +59,7 @@ class Entity
      */
     #[ORM\OneToMany(targetEntity: NameserverEntity::class, mappedBy: 'entity')]
     #[Groups(['entity:item'])]
+    #[SerializedName('nameservers')]
     private Collection $nameserverEntities;
 
     /**

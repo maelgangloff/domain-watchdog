@@ -10,6 +10,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Attribute\Groups;
+use Symfony\Component\Serializer\Attribute\SerializedName;
 
 #[ORM\Entity(repositoryClass: NameserverRepository::class)]
 #[ApiResource(
@@ -49,6 +50,7 @@ class Nameserver
      */
     #[ORM\OneToMany(targetEntity: NameserverEntity::class, mappedBy: 'nameserver', cascade: ['persist'], orphanRemoval: true)]
     #[Groups(['nameserver:item', 'domain:item'])]
+    #[SerializedName('entities')]
     private Collection $nameserverEntities;
 
     /**
