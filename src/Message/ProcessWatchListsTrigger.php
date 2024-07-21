@@ -2,7 +2,7 @@
 
 namespace App\Message;
 
-final class SendNotifWatchListTrigger
+final class ProcessWatchListsTrigger
 {
     /*
      * Add whatever properties and methods you need

@@ -2,7 +2,7 @@
 
 namespace App\Scheduler;
 
-use App\Message\SendNotifWatchListTrigger;
+use App\Message\ProcessWatchListsTrigger;
 use Symfony\Component\Scheduler\Attribute\AsSchedule;
 use Symfony\Component\Scheduler\RecurringMessage;
 use Symfony\Component\Scheduler\Schedule;
@@ -14,16 +14,16 @@ final readonly class SendNotifWatchListTriggerSchedule implements ScheduleProvid
 {
     public function __construct(
         private CacheInterface $cache,
-    ) {
+    )
+    {
     }
 
     public function getSchedule(): Schedule
     {
         return (new Schedule())
             ->add(
-                RecurringMessage::every('10 seconds', new SendNotifWatchListTrigger()),
+                RecurringMessage::every('10 seconds', new ProcessWatchListsTrigger()),
             )
-            ->stateful($this->cache)
-        ;
+            ->stateful($this->cache);
     }
 }
