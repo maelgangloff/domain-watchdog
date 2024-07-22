@@ -14,6 +14,12 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 class HomeController extends AbstractController
 {
 
+    #[Route(path: "/", name: "index")]
+    public function index(): Response
+    {
+        return $this->render('base.html.twig');
+    }
+
     #[Route(path: "/login/oauth", name: "oauth_connect")]
     public function connectAction(ClientRegistry $clientRegistry): Response
     {

@@ -1,20 +1,34 @@
 {
-  "name": "domain-watchdog-front",
+  "name": "domain-watchdog",
   "author": {
     "name": "Maël Gangloff",
     "email": "contact@maelgangloff.fr"
   },
-  "readme": "https://github.com/maelgangloff/domain-watchdog",
   "homepage": "https://github.com/maelgangloff/domain-watchdog",
+  "readme": "https://github.com/maelgangloff/domain-watchdog",
+  "keywords": [
+    "Domain",
+    "RDAP",
+    "WHOIS"
+  ],
+  "bugs": {
+    "url": "https://github.com/maelgangloff/domain-watchdog/issues"
+  },
   "devDependencies": {
     "@babel/core": "^7.17.0",
     "@babel/preset-env": "^7.16.0",
     "@babel/preset-react": "^7.24.7",
-    "@symfony/webpack-encore": "^4.6.1",
-    "@types/react": "latest",
-    "@types/react-dom": "latest",
+    "@emotion/react": "^11.13.0",
+    "@emotion/styled": "^11.13.0",
+    "@mui/icons-material": "^5.16.4",
+    "@mui/material": "^5.16.4",
+    "@symfony/webpack-encore": "^4.0.0",
+    "@types/react": "^18.3.3",
+    "@types/react-dom": "^18.3.0",
     "core-js": "^3.23.0",
-    "react-scripts": "^5.0.1",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-router-dom": "^6.25.1",
     "regenerator-runtime": "^0.13.9",
     "ts-loader": "^9.5.1",
     "typescript": "^5.5.3",
@@ -29,20 +43,5 @@
     "dev": "encore dev",
     "watch": "encore dev --watch",
     "build": "encore production --progress"
-  },
-  "keywords": [
-    "domain",
-    "RDAP",
-    "WHOIS",
-    "tracking",
-    "watchdog",
-    "API"
-  ],
-  "dependencies": {
-    "@emotion/react": "^11.12.0",
-    "@emotion/styled": "^11.12.0",
-    "@mui/material": "^5.16.4",
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1"
   }
 }

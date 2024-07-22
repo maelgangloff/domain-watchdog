@@ -67,7 +67,7 @@ class OAuthAuthenticator extends OAuth2Authenticator implements AuthenticationEn
 
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $firewallName): RedirectResponse
     {
-        return new RedirectResponse($this->router->generate('api_doc'));
+        return new RedirectResponse($this->router->generate('index'));
     }
 
     public function onAuthenticationFailure(Request $request, AuthenticationException $exception): ?Response
