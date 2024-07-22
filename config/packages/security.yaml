@@ -13,7 +13,8 @@ security:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
-        login:
+
+        api_login:
             pattern: ^/api/login
             stateless: true
             json_login:
@@ -25,6 +26,10 @@ security:
             pattern: ^/api
             stateless: true
             jwt: ~
+
+        main:
+            custom_authenticators:
+                - App\Security\OAuthAuthenticator
 
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#the-firewall

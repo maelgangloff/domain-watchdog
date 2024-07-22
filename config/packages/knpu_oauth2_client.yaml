@@ -1,0 +1,14 @@
+knpu_oauth2_client:
+    clients:
+        oauth:
+            type: generic
+            provider_class: App\Security\OAuthProvider
+            client_id: '%env(OAUTH_CLIENT_ID)%'
+            client_secret: '%env(OAUTH_CLIENT_SECRET)%'
+            redirect_route: oauth_connect_check
+            redirect_params: {}
+            provider_options:
+                baseAuthorizationUrl: '%env(OAUTH_AUTHORIZATION_URL)%'
+                baseAccessTokenUrl: '%env(OAUTH_TOKEN_URL)%'
+                resourceOwnerDetailsUrl: '%env(OAUTH_USERINFO_URL)%'
+                scope: '%env(OAUTH_SCOPE)%'
