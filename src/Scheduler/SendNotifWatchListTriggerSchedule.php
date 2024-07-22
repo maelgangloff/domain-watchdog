@@ -22,7 +22,7 @@ final readonly class SendNotifWatchListTriggerSchedule implements ScheduleProvid
     {
         return (new Schedule())
             ->add(
-                RecurringMessage::every('10 seconds', new ProcessWatchListsTrigger()),
+                RecurringMessage::every('1 week', new ProcessWatchListsTrigger()),
             )
             ->stateful($this->cache);
     }
