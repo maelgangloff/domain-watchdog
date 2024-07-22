@@ -15,7 +15,7 @@ security:
             security: false
 
         api_login:
-            pattern: ^/api/login
+            pattern: ^/api/login$
             stateless: true
             json_login:
                 check_path: api_login
@@ -30,6 +30,9 @@ security:
         main:
             custom_authenticators:
                 - App\Security\OAuthAuthenticator
+            logout:
+                path: /logout
+                target: /
 
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#the-firewall
