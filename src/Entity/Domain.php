@@ -18,7 +18,6 @@ use Symfony\Component\Serializer\Attribute\Groups;
 use Symfony\Component\Serializer\Attribute\SerializedName;
 
 #[ORM\Entity(repositoryClass: DomainRepository::class)]
-#[UniqueEntity('handle')]
 #[ApiResource(
     operations: [
         new GetCollection(
@@ -53,7 +52,7 @@ class Domain
     #[Groups(['domain:item', 'domain:list', 'watchlist:item'])]
     private ?string $ldhName = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, nullable: true)]
     #[Groups(['domain:item', 'domain:list', 'watchlist:item'])]
     private ?string $handle = null;
 

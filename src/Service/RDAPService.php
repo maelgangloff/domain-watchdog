@@ -91,8 +91,9 @@ readonly class RDAPService
         $domain
             ->setTld($tld)
             ->setLdhName($res['ldhName'])
-            ->setHandle($res['handle'])
             ->setStatus($res['status']);
+
+        if (array_key_exists('handle', $res)) $domain->setHandle($res['handle']);
 
 
         foreach ($res['events'] as $rdapEvent) {
