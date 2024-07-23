@@ -1,7 +1,5 @@
 import React, {useEffect, useState} from "react";
 import ReactDOM from "react-dom/client";
-
-import LandingPage from "./pages/LandingPage";
 import TextPage from "./pages/TextPage";
 import {HashRouter, Route, Routes} from "react-router-dom";
 
@@ -36,15 +34,14 @@ function App() {
                 <CssBaseline/>
                 <AppAppBar mode={mode} toggleColorMode={toggleColorMode} isAuthenticated={isAuthenticated}/>
                 <Routes>
-                    <Route path="/" element={<LandingPage/>}/>
+                    {isAuthenticated ?
+                        <Route path="/" element={<DashboardPage/>}/>
+                        :
+                        <Route path="*" element={<LoginPage setIsAuthenticated={setIsAuthenticated}/>}/>
+                    }
                     <Route path="/tos" element={<TextPage content={tosContent}/>}/>
                     <Route path="/privacy" element={<TextPage content={privacyContent}/>}/>
-                    {isAuthenticated ?
-                        <Route path="/dashboard" element={<DashboardPage/>}/>
-                        :
-                        <Route path="*" element={<LoginPage isAuthenticated={isAuthenticated}
-                                                            setIsAuthenticated={setIsAuthenticated}/>}/>
-                    }
+
                 </Routes>
             </HashRouter>
         </ThemeProvider>

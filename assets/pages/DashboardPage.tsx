@@ -1,12 +1,10 @@
 import React from 'react';
 
 
-const DashboardPage = () => {
+export default function DashboardPage() {
     return (
         <>
             <p>Dashboard</p>
         </>
     );
 };
-
-export default DashboardPage;

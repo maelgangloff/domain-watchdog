@@ -1,4 +1,5 @@
 import * as React from 'react';
+import {useState} from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
@@ -10,28 +11,28 @@ import Footer from "../components/Footer";
 import Link from "@mui/material/Link";
 import {login} from "../utils/api";
 import {useNavigate} from "react-router-dom";
+import {Alert} from "@mui/material";
 
 interface Props {
     setIsAuthenticated: (val: boolean) => void
-    isAuthenticated: boolean
 }
 
-export default function LoginPage({setIsAuthenticated, isAuthenticated}: Props) {
-    const navigate = useNavigate();
+export default function LoginPage({setIsAuthenticated}: Props) {
+    const navigate = useNavigate()
+
+    const [error, setError] = useState<string>('')
+    const [credentials, setCredentials] = useState({email: "", password: ""})
 
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-        event.preventDefault();
-        const data = new FormData(event.currentTarget);
-
+        event.preventDefault()
         try {
-            await login(data.get('email') as string, data.get('password') as string);
+            await login(credentials.email, credentials.password);
             setIsAuthenticated(true)
+            navigate('/');
 
-            navigate('/dashboard');
-
-        } catch (e) {
-            //TODO: handle error
-            setIsAuthenticated(false)
+        } catch (e: any) {
+            setCredentials({email: "", password: ""})
+            setError(e.response.data.message)
         }
     };
 
@@ -53,6 +54,9 @@ export default function LoginPage({setIsAuthenticated, isAuthenticated}: Props) 
                         Sign in
                     </Typography>
                     <Box component="form" onSubmit={handleSubmit} noValidate sx={{mt: 1}}>
+                        {
+                            error !== "" && <Alert variant="outlined" severity="error">{error}</Alert>
+                        }
                         <TextField
                             margin="normal"
                             required
@@ -62,6 +66,8 @@ export default function LoginPage({setIsAuthenticated, isAuthenticated}: Props) 
                             name="email"
                             autoComplete="email"
                             autoFocus
+                            value={credentials.email}
+                            onChange={(e) => setCredentials({...credentials, email: e.currentTarget.value})}
                         />
                         <TextField
                             margin="normal"
@@ -71,7 +77,9 @@ export default function LoginPage({setIsAuthenticated, isAuthenticated}: Props) 
                             label="Password"
                             type="password"
                             id="password"
+                            value={credentials.password}
                             autoComplete="current-password"
+                            onChange={(e) => setCredentials({...credentials, password: e.currentTarget.value})}
                         />
                         <Button
                             type="submit"

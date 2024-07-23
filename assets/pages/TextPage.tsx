@@ -8,31 +8,29 @@ interface Props {
 
 export default function Index({content}: Props) {
     return (
-        <>
-            <Container
+        <Container
+            sx={{
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                gap: {xs: 4, sm: 8},
+                py: {xs: 8, sm: 10},
+                textAlign: {sm: 'center', md: 'left'},
+            }}
+        >
+            <Box
                 sx={{
                     display: 'flex',
-                    flexDirection: 'column',
-                    alignItems: 'center',
-                    gap: {xs: 4, sm: 8},
-                    py: {xs: 8, sm: 10},
-                    textAlign: {sm: 'center', md: 'left'},
+                    justifyContent: 'space-between',
+                    pt: {xs: 4, sm: 8},
+                    width: '100%',
+                    borderTop: '1px solid',
+                    borderColor: 'divider',
                 }}
             >
-                <Box
-                    sx={{
-                        display: 'flex',
-                        justifyContent: 'space-between',
-                        pt: {xs: 4, sm: 8},
-                        width: '100%',
-                        borderTop: '1px solid',
-                        borderColor: 'divider',
-                    }}
-                >
-                    <div dangerouslySetInnerHTML={{__html: content}}></div>
-                </Box>
-            </Container>
-        </>
+                <div dangerouslySetInnerHTML={{__html: content}}></div>
+            </Box>
+        </Container>
     )
 
 }

@@ -4,12 +4,11 @@ import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
-
-import Sitemark from './SitemarkIcon';
 import {NavLink} from "react-router-dom";
 import ToggleColorMode from "./ToggleColorMode";
 import {PaletteMode} from "@mui/material";
 import Link from "@mui/material/Link";
+import {Pets} from "@mui/icons-material";
 
 interface AppAppBarProps {
     mode: PaletteMode;
@@ -47,30 +46,9 @@ export default function AppAppBar({mode, toggleColorMode, isAuthenticated}: AppA
                     })}
                 >
                     <Box sx={{flexGrow: 1, display: 'flex', alignItems: 'center', px: 0}}>
-                        <Sitemark/>
-                        <Box sx={{display: {xs: 'none', md: 'flex'}}}>
-                            <NavLink to='/'>
-                                <Button
-                                    variant="text"
-                                    color="info"
-                                    size="small"
-                                >
-                                    Presentation
-                                </Button>
-                            </NavLink>
-                        </Box>
-                        <Box sx={{display: {xs: 'none', md: 'flex'}}}>
-                            <NavLink to="/dashboard">
-                                <Button
-                                    variant="text"
-                                    color="info"
-                                    size="small"
-                                >
-                                    Dashboard
-                                </Button>
-                            </NavLink>
-                        </Box>
+                        <Pets color="secondary"/>
                     </Box>
+
                     <Box
                         sx={{
                             display: {xs: 'none', md: 'flex'},
@@ -100,5 +78,6 @@ export default function AppAppBar({mode, toggleColorMode, isAuthenticated}: AppA
                 </Toolbar>
             </Container>
         </AppBar>
-    );
+    )
+
 }
