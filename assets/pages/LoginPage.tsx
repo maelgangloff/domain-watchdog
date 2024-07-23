@@ -6,12 +6,11 @@ import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
-import Container from '@mui/material/Container';
-import Footer from "../components/Footer";
 import Link from "@mui/material/Link";
 import {login} from "../utils/api";
 import {useNavigate} from "react-router-dom";
 import {Alert} from "@mui/material";
+import Container from "@mui/material/Container";
 
 interface Props {
     setIsAuthenticated: (val: boolean) => void
@@ -103,7 +102,6 @@ export default function LoginPage({setIsAuthenticated}: Props) {
                         Single Sign-On
                     </Button>
                 </Link>
-                <Footer/>
             </Container>
         </>
     );

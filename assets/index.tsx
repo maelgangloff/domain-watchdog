@@ -11,6 +11,9 @@ import CssBaseline from "@mui/material/CssBaseline";
 import AppAppBar from "./components/AppAppBar";
 import DashboardPage from "./pages/DashboardPage";
 import {getUser} from "./utils/api";
+import Footer from "./components/Footer";
+import DrawerBox from "./components/DrawerBox";
+import Box from "@mui/material/Box";
 
 
 const root = ReactDOM.createRoot(document.getElementById("root") as HTMLElement);
@@ -31,18 +34,23 @@ function App() {
     return <React.StrictMode>
         <ThemeProvider theme={createTheme({palette: {mode: mode}})}>
             <HashRouter>
-                <CssBaseline/>
-                <AppAppBar mode={mode} toggleColorMode={toggleColorMode} isAuthenticated={isAuthenticated}/>
-                <Routes>
-                    {isAuthenticated ?
-                        <Route path="/" element={<DashboardPage/>}/>
-                        :
-                        <Route path="*" element={<LoginPage setIsAuthenticated={setIsAuthenticated}/>}/>
-                    }
-                    <Route path="/tos" element={<TextPage content={tosContent}/>}/>
-                    <Route path="/privacy" element={<TextPage content={privacyContent}/>}/>
+                <Box sx={{display: 'flex'}}>
+                    <CssBaseline/>
+                    {isAuthenticated && <DrawerBox/>}
 
-                </Routes>
+                    <AppAppBar mode={mode} toggleColorMode={toggleColorMode} isAuthenticated={isAuthenticated}/>
+                    <Routes>
+                        {isAuthenticated ?
+                            <Route path="/" element={<DashboardPage/>}/>
+                            :
+                            <Route path="*" element={<LoginPage setIsAuthenticated={setIsAuthenticated}/>}/>
+                        }
+                        <Route path="/tos" element={<TextPage content={tosContent}/>}/>
+                        <Route path="/privacy" element={<TextPage content={privacyContent}/>}/>
+
+                    </Routes>
+                </Box>
+                <Footer/>
             </HashRouter>
         </ThemeProvider>
     </React.StrictMode>
