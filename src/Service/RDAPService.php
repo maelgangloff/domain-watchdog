@@ -113,86 +113,90 @@ readonly class RDAPService
 
         }
 
-        foreach ($res['entities'] as $rdapEntity) {
-            if (!array_key_exists('handle', $rdapEntity) || $rdapEntity['handle'] === '') continue;
+        if (array_key_exists('entities', $res) && is_array($res['entities'])) {
 
-            $entity = $this->registerEntity($rdapEntity);
-
-            $this->em->persist($entity);
-            $this->em->flush();
-
-            $domainEntity = $this->domainEntityRepository->findOneBy([
-                "domain" => $domain,
-                "entity" => $entity
-            ]);
-
-            if ($domainEntity === null) $domainEntity = new DomainEntity();
-
-            $roles = array_map(
-                fn($e) => $e['roles'],
-                array_filter(
-                    $res['entities'],
-                    fn($e) => array_key_exists('handle', $e) && $e['handle'] === $rdapEntity['handle']
-                )
-            );
-
-            if (count($roles) !== count($roles, COUNT_RECURSIVE)) $roles = array_merge(...$roles);
-
-            $domain->addDomainEntity($domainEntity
-                ->setDomain($domain)
-                ->setEntity($entity)
-                ->setRoles($roles));
-
-            $this->em->persist($domainEntity);
-            $this->em->flush();
-        }
-
-
-        foreach ($res['nameservers'] as $rdapNameserver) {
-            $nameserver = $this->nameserverRepository->findOneBy([
-                "ldhName" => strtolower($rdapNameserver['ldhName'])
-            ]);
-            if ($nameserver === null) $nameserver = new Nameserver();
-
-            $nameserver->setLdhName($rdapNameserver['ldhName']);
-
-            if (!array_key_exists('entities', $rdapNameserver)) {
-                $domain->addNameserver($nameserver);
-                continue;
-            }
-
-            foreach ($rdapNameserver['entities'] as $rdapEntity) {
+            foreach ($res['entities'] as $rdapEntity) {
                 if (!array_key_exists('handle', $rdapEntity) || $rdapEntity['handle'] === '') continue;
+
                 $entity = $this->registerEntity($rdapEntity);
 
                 $this->em->persist($entity);
                 $this->em->flush();
 
-                $nameserverEntity = $this->nameserverEntityRepository->findOneBy([
-                    "nameserver" => $nameserver,
+                $domainEntity = $this->domainEntityRepository->findOneBy([
+                    "domain" => $domain,
                     "entity" => $entity
                 ]);
-                if ($nameserverEntity === null) $nameserverEntity = new NameserverEntity();
 
-                $roles = array_merge(
-                    ...array_map(
-                        fn(array $e): array => $e['roles'],
-                        array_filter(
-                            $rdapNameserver['entities'],
-                            fn($e) => array_key_exists('handle', $e) && $e['handle'] === $rdapEntity['handle']
-                        )
+                if ($domainEntity === null) $domainEntity = new DomainEntity();
+
+                $roles = array_map(
+                    fn($e) => $e['roles'],
+                    array_filter(
+                        $res['entities'],
+                        fn($e) => array_key_exists('handle', $e) && $e['handle'] === $rdapEntity['handle']
                     )
                 );
 
+                if (count($roles) !== count($roles, COUNT_RECURSIVE)) $roles = array_merge(...$roles);
 
-                $nameserver->addNameserverEntity($nameserverEntity
-                    ->setNameserver($nameserver)
+                $domain->addDomainEntity($domainEntity
+                    ->setDomain($domain)
                     ->setEntity($entity)
-                    ->setStatus($rdapNameserver['status'])
                     ->setRoles($roles));
-            }
 
-            $domain->addNameserver($nameserver);
+                $this->em->persist($domainEntity);
+                $this->em->flush();
+            }
+        }
+
+        if (array_key_exists('nameservers', $res) && is_array($res['nameservers'])) {
+            foreach ($res['nameservers'] as $rdapNameserver) {
+                $nameserver = $this->nameserverRepository->findOneBy([
+                    "ldhName" => strtolower($rdapNameserver['ldhName'])
+                ]);
+                if ($nameserver === null) $nameserver = new Nameserver();
+
+                $nameserver->setLdhName($rdapNameserver['ldhName']);
+
+                if (!array_key_exists('entities', $rdapNameserver) || !is_array($rdapNameserver['entities'])) {
+                    $domain->addNameserver($nameserver);
+                    continue;
+                }
+
+                foreach ($rdapNameserver['entities'] as $rdapEntity) {
+                    if (!array_key_exists('handle', $rdapEntity) || $rdapEntity['handle'] === '') continue;
+                    $entity = $this->registerEntity($rdapEntity);
+
+                    $this->em->persist($entity);
+                    $this->em->flush();
+
+                    $nameserverEntity = $this->nameserverEntityRepository->findOneBy([
+                        "nameserver" => $nameserver,
+                        "entity" => $entity
+                    ]);
+                    if ($nameserverEntity === null) $nameserverEntity = new NameserverEntity();
+
+                    $roles = array_merge(
+                        ...array_map(
+                            fn(array $e): array => $e['roles'],
+                            array_filter(
+                                $rdapNameserver['entities'],
+                                fn($e) => array_key_exists('handle', $e) && $e['handle'] === $rdapEntity['handle']
+                            )
+                        )
+                    );
+
+
+                    $nameserver->addNameserverEntity($nameserverEntity
+                        ->setNameserver($nameserver)
+                        ->setEntity($entity)
+                        ->setStatus($rdapNameserver['status'])
+                        ->setRoles($roles));
+                }
+
+                $domain->addNameserver($nameserver);
+            }
         }
 
         $domain->updateTimestamps();
