@@ -36,7 +36,6 @@ final readonly class UpdateRdapServersHandler
         } catch (Throwable $throwable) {
             $throws[] = $throwable;
         }
-
         try {
             $this->RDAPService->updateGTldListICANN();
         } catch (Throwable $throwable) {
@@ -47,6 +46,6 @@ final readonly class UpdateRdapServersHandler
         } catch (Throwable $throwable) {
             $throws[] = $throwable;
         }
-        if (!empty($throwable)) throw $throws[0];
+        if (!empty($throws)) throw $throws[0];
     }
 }

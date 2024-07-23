@@ -22,7 +22,6 @@ use Symfony\Component\Serializer\Attribute\Groups;
         new Get(
             uriTemplate: '/me',
             controller: MeController::class,
-            paginationEnabled: false,
             normalizationContext: ["groups" => "user:list"],
             read: false
         )
