@@ -7,6 +7,8 @@ use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use KnpU\OAuth2ClientBundle\Client\ClientRegistry;
 use KnpU\OAuth2ClientBundle\Security\Authenticator\OAuth2Authenticator;
+use Lexik\Bundle\JWTAuthenticationBundle\Services\JWTTokenManagerInterface;
+use Symfony\Component\HttpFoundation\Cookie;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -22,10 +24,11 @@ class OAuthAuthenticator extends OAuth2Authenticator implements AuthenticationEn
 {
 
     public function __construct(
-        private readonly ClientRegistry         $clientRegistry,
-        private readonly UserRepository         $userRepository,
-        private readonly EntityManagerInterface $em,
-        private readonly RouterInterface        $router
+        private readonly ClientRegistry           $clientRegistry,
+        private readonly UserRepository           $userRepository,
+        private readonly EntityManagerInterface   $em,
+        private readonly RouterInterface          $router,
+        private readonly JWTTokenManagerInterface $JWTManager
     )
     {
     }
@@ -67,7 +70,22 @@ class OAuthAuthenticator extends OAuth2Authenticator implements AuthenticationEn
 
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $firewallName): RedirectResponse
     {
-        return new RedirectResponse($this->router->generate('index'));
+        $token = $this->JWTManager->create($token->getUser());
+        $response = new RedirectResponse($this->router->generate('index'));
+        $response->headers->setCookie(
+            new Cookie(
+                'BEARER',
+                $token,
+                time() + 3600, // expiration
+                '/',
+                null,
+                true,
+                true,
+                false,
+                'strict'
+            )
+        );
+        return $response;
     }
 
     public function onAuthenticationFailure(Request $request, AuthenticationException $exception): ?Response
