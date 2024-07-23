@@ -3,7 +3,6 @@
 
 namespace App\Service;
 
-use App\Config\DomainRole;
 use App\Config\EventAction;
 use App\Entity\Domain;
 use App\Entity\DomainEntity;
@@ -99,18 +98,17 @@ readonly class RDAPService
         $this->em->flush();
 
         foreach ($res['events'] as $rdapEvent) {
-            $eventAction = EventAction::from($rdapEvent['eventAction']);
-            if ($eventAction === EventAction::LastUpdateOfRDAPDatabase) continue;
+            if ($rdapEvent['eventAction'] === EventAction::LastUpdateOfRDAPDatabase->value) continue;
 
             $event = $this->domainEventRepository->findOneBy([
-                "action" => $eventAction,
+                "action" => $rdapEvent['eventAction'],
                 "date" => new DateTimeImmutable($rdapEvent["eventDate"]),
                 "domain" => $domain
             ]);
 
             if ($event === null) $event = new DomainEvent();
             $domain->addEvent($event
-                ->setAction($eventAction)
+                ->setAction($rdapEvent['eventAction'])
                 ->setDate(new DateTimeImmutable($rdapEvent['eventDate'])));
 
         }
@@ -130,20 +128,20 @@ readonly class RDAPService
 
             if ($domainEntity === null) $domainEntity = new DomainEntity();
 
-            $roles = array_merge(
-                ...array_map(
-                    fn(array $e): array => $e['roles'],
-                    array_filter(
-                        $res['entities'],
-                        fn($e) => array_key_exists('handle', $e) && $e['handle'] === $rdapEntity['handle']
-                    )
+            $roles = array_map(
+                fn($e) => $e['roles'],
+                array_filter(
+                    $res['entities'],
+                    fn($e) => array_key_exists('handle', $e) && $e['handle'] === $rdapEntity['handle']
                 )
             );
+
+            if (count($roles) !== count($roles, COUNT_RECURSIVE)) $roles = array_merge(...$roles);
 
             $domain->addDomainEntity($domainEntity
                 ->setDomain($domain)
                 ->setEntity($entity)
-                ->setRoles(array_map(fn($str): DomainRole => DomainRole::from($str), $roles)));
+                ->setRoles($roles));
 
             $this->em->persist($domainEntity);
             $this->em->flush();
@@ -191,7 +189,7 @@ readonly class RDAPService
                     ->setNameserver($nameserver)
                     ->setEntity($entity)
                     ->setStatus($rdapNameserver['status'])
-                    ->setRoles(array_map(fn($str): DomainRole => DomainRole::from($str), $roles)));
+                    ->setRoles($roles));
             }
 
             $domain->addNameserver($nameserver);
@@ -232,19 +230,20 @@ readonly class RDAPService
 
         $entity->setHandle($rdapEntity['handle']);
 
-        if (empty($entity->getJCard())) {
-            $entity->setJCard($rdapEntity['vcardArray']);
-        } else {
-            $properties = [];
-            foreach ($rdapEntity['vcardArray'][1] as $prop) {
-                $properties[$prop[0]] = $prop;
+        if (array_key_exists('vcardArray', $rdapEntity)) {
+            if (empty($entity->getJCard())) {
+                $entity->setJCard($rdapEntity['vcardArray']);
+            } else {
+                $properties = [];
+                foreach ($rdapEntity['vcardArray'][1] as $prop) {
+                    $properties[$prop[0]] = $prop;
+                }
+                foreach ($entity->getJCard()[1] as $prop) {
+                    $properties[$prop[0]] = $prop;
+                }
+                $entity->setJCard(["vcard", array_values($properties)]);
             }
-            foreach ($entity->getJCard()[1] as $prop) {
-                $properties[$prop[0]] = $prop;
-            }
-            $entity->setJCard(["vcard", array_values($properties)]);
         }
-
 
         if (!array_key_exists('events', $rdapEntity)) return $entity;
 
@@ -252,7 +251,7 @@ readonly class RDAPService
             $eventAction = $rdapEntityEvent["eventAction"];
             if ($eventAction === EventAction::LastChanged->value || $eventAction === EventAction::LastUpdateOfRDAPDatabase->value) continue;
             $event = $this->entityEventRepository->findOneBy([
-                "action" => EventAction::from($rdapEntityEvent["eventAction"]),
+                "action" => $rdapEntityEvent["eventAction"],
                 "date" => new DateTimeImmutable($rdapEntityEvent["eventDate"])
             ]);
 
@@ -260,7 +259,7 @@ readonly class RDAPService
             $entity->addEvent(
                 (new EntityEvent())
                     ->setEntity($entity)
-                    ->setAction(EventAction::from($rdapEntityEvent['eventAction']))
+                    ->setAction($rdapEntityEvent["eventAction"])
                     ->setDate(new DateTimeImmutable($rdapEntityEvent['eventDate'])));
 
         }

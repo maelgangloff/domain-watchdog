@@ -12,9 +12,9 @@ use Symfony\Component\Serializer\Attribute\Groups;
 class WatchListTrigger
 {
     #[ORM\Id]
-    #[ORM\Column(enumType: EventAction::class)]
+    #[ORM\Column(length: 255)]
     #[Groups(['watchlist:item', 'watchlist:create', 'watchlist:update'])]
-    private ?EventAction $event = null;
+    private ?string $event = null;
 
     #[ORM\Id]
     #[ORM\ManyToOne(targetEntity: WatchList::class, inversedBy: 'watchListTriggers')]
@@ -26,12 +26,12 @@ class WatchListTrigger
     #[Groups(['watchlist:item', 'watchlist:create', 'watchlist:update'])]
     private ?TriggerAction $action = null;
 
-    public function getEvent(): ?EventAction
+    public function getEvent(): ?string
     {
         return $this->event;
     }
 
-    public function setEvent(EventAction $event): static
+    public function setEvent(string $event): static
     {
         $this->event = $event;
 

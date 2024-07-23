@@ -15,9 +15,9 @@ class Event
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(enumType: EventAction::class)]
+    #[ORM\Column(length: 255)]
     #[Groups(['event:list'])]
-    private ?EventAction $action = null;
+    private ?string $action = null;
 
     #[ORM\Column(type: 'datetime_immutable')]
     #[Groups(['event:list'])]
@@ -29,12 +29,12 @@ class Event
         return $this->id;
     }
 
-    public function getAction(): ?EventAction
+    public function getAction(): ?string
     {
         return $this->action;
     }
 
-    public function setAction(EventAction $action): static
+    public function setAction(string $action): static
     {
         $this->action = $action;
 

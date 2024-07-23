@@ -24,7 +24,7 @@ class NameserverEntity
     private ?Entity $entity = null;
 
 
-    #[ORM\Column(type: Types::SIMPLE_ARRAY, enumType: DomainRole::class)]
+    #[ORM\Column(type: Types::SIMPLE_ARRAY)]
     #[Groups(['nameserver-entity:entity', 'nameserver-entity:nameserver'])]
     private array $roles = [];
 
