@@ -87,11 +87,9 @@ readonly class RDAPService
         $domain = $this->domainRepository->findOneBy(["ldhName" => strtolower($res['ldhName'])]);
         if ($domain === null) $domain = new Domain();
 
-        $domain
-            ->setTld($tld)
-            ->setLdhName($res['ldhName'])
-            ->setStatus($res['status']);
+        $domain->setTld($tld)->setLdhName($res['ldhName']);
 
+        if (array_key_exists('status', $res)) $domain->setStatus($res['status']);
         if (array_key_exists('handle', $res)) $domain->setHandle($res['handle']);
 
         $this->em->persist($domain);

@@ -71,7 +71,7 @@ class Domain
     #[SerializedName('entities')]
     private Collection $domainEntities;
 
-    #[ORM\Column(type: Types::SIMPLE_ARRAY)]
+    #[ORM\Column(type: Types::SIMPLE_ARRAY, nullable: true)]
     #[Groups(['domain:item'])]
     private array $status = [];
 
