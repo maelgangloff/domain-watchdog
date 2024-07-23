@@ -3,7 +3,15 @@ lexik_jwt_authentication:
     public_key: '%env(resolve:JWT_PUBLIC_KEY)%'
     pass_phrase: '%env(JWT_PASSPHRASE)%'
     token_ttl: 3600 # in seconds, default is 3600
-
+    token_extractors:
+        authorization_header:
+            enabled: true
+        cookie:
+            enabled: true
+            name: BEARER
+    set_cookies:
+        BEARER: ~
+    remove_token_from_body_when_cookies_used: false
     api_platform:
         check_path: /api/login
         username_path: email
