@@ -5,8 +5,7 @@ import IconButton from '@mui/material/IconButton';
 import Link from '@mui/material/Link';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
-
-import FacebookIcon from '@mui/icons-material/GitHub';
+import {NavLink} from "react-router-dom";
 
 function Copyright() {
     return (
@@ -41,15 +40,19 @@ export default function Footer() {
                 }}
             >
                 <div>
-                    <Link color="text.secondary" variant="body2" href="#">
-                        Privacy Policy
-                    </Link>
+                    <NavLink to="/privacy">
+                        <Link color="text.secondary" variant="body2">
+                            Privacy Policy
+                        </Link>
+                    </NavLink>
                     <Typography sx={{display: 'inline', mx: 0.5, opacity: 0.5}}>
                         &nbsp;•&nbsp;
                     </Typography>
-                    <Link color="text.secondary" variant="body2" href="#">
-                        Terms of Service
-                    </Link>
+                    <NavLink to="/tos">
+                        <Link color="text.secondary" variant="body2">
+                            Terms of Service
+                        </Link>
+                    </NavLink>
                     <Copyright/>
                 </div>
                 <Stack
@@ -64,7 +67,6 @@ export default function Footer() {
                         aria-label="GitHub"
                         sx={{alignSelf: 'center'}}
                     >
-                        <FacebookIcon/>
                     </IconButton>
                 </Stack>
             </Box>
