@@ -95,6 +95,8 @@ readonly class RDAPService
 
         if (array_key_exists('handle', $res)) $domain->setHandle($res['handle']);
 
+        $this->em->persist($domain);
+        $this->em->flush();
 
         foreach ($res['events'] as $rdapEvent) {
             $eventAction = EventAction::from($rdapEvent['eventAction']);
@@ -115,6 +117,7 @@ readonly class RDAPService
 
         foreach ($res['entities'] as $rdapEntity) {
             if (!array_key_exists('handle', $rdapEntity) || $rdapEntity['handle'] === '') continue;
+
             $entity = $this->registerEntity($rdapEntity);
 
             $this->em->persist($entity);
@@ -127,11 +130,20 @@ readonly class RDAPService
 
             if ($domainEntity === null) $domainEntity = new DomainEntity();
 
+            $roles = array_merge(
+                ...array_map(
+                    fn(array $e): array => $e['roles'],
+                    array_filter(
+                        $res['entities'],
+                        fn($e) => array_key_exists('handle', $e) && $e['handle'] === $rdapEntity['handle']
+                    )
+                )
+            );
 
             $domain->addDomainEntity($domainEntity
                 ->setDomain($domain)
                 ->setEntity($entity)
-                ->setRoles(array_map(fn($str): DomainRole => DomainRole::from($str), $rdapEntity['roles'])));
+                ->setRoles(array_map(fn($str): DomainRole => DomainRole::from($str), $roles)));
 
             $this->em->persist($domainEntity);
             $this->em->flush();
@@ -164,12 +176,22 @@ readonly class RDAPService
                 ]);
                 if ($nameserverEntity === null) $nameserverEntity = new NameserverEntity();
 
+                $roles = array_merge(
+                    ...array_map(
+                        fn(array $e): array => $e['roles'],
+                        array_filter(
+                            $rdapNameserver['entities'],
+                            fn($e) => array_key_exists('handle', $e) && $e['handle'] === $rdapEntity['handle']
+                        )
+                    )
+                );
+
 
                 $nameserver->addNameserverEntity($nameserverEntity
                     ->setNameserver($nameserver)
                     ->setEntity($entity)
                     ->setStatus($rdapNameserver['status'])
-                    ->setRoles(array_map(fn($str): DomainRole => DomainRole::from($str), $rdapEntity['roles'])));
+                    ->setRoles(array_map(fn($str): DomainRole => DomainRole::from($str), $roles)));
             }
 
             $domain->addNameserver($nameserver);
