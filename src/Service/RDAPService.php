@@ -37,9 +37,27 @@ use Throwable;
 
 readonly class RDAPService
 {
+    /**
+     * @see https://www.iana.org/domains/root/db
+     */
     const ISO_TLD_EXCEPTION = ['ac', 'eu', 'uk', 'su', 'tp'];
     const INFRA_TLD = ['arpa'];
-    const SPONSORED_TLD = ['edu', 'gov', 'int', 'mil'];
+    const SPONSORED_TLD = [
+        'aero',
+        'asia',
+        'cat',
+        'coop',
+        'edu',
+        'gov',
+        'int',
+        'jobs',
+        'mil',
+        'museum',
+        'post',
+        'tel',
+        'travel',
+        'xxx',
+    ];
     const TEST_TLD = [
         'xn--kgbechtv',
         'xn--hgbk6aj7f53bba',
