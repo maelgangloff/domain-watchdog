@@ -4,6 +4,7 @@ namespace App\MessageHandler;
 
 use App\Message\UpdateRdapServers;
 use App\Service\RDAPService;
+use Symfony\Component\Intl\Countries;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 use Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\DecodingExceptionInterface;
@@ -33,10 +34,6 @@ final readonly class UpdateRdapServersHandler
         $throws = [];
         try {
             $this->RDAPService->updateTldListIANA();
-        } catch (Throwable $throwable) {
-            $throws[] = $throwable;
-        }
-        try {
             $this->RDAPService->updateGTldListICANN();
         } catch (Throwable $throwable) {
             $throws[] = $throwable;

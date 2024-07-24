@@ -4,6 +4,7 @@
 namespace App\Service;
 
 use App\Config\EventAction;
+use App\Config\TldType;
 use App\Entity\Domain;
 use App\Entity\DomainEntity;
 use App\Entity\DomainEvent;
@@ -26,6 +27,7 @@ use DateTimeImmutable;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Exception\ORMException;
 use Exception;
+use Symfony\Component\Intl\Countries;
 use Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\DecodingExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\RedirectionExceptionInterface;
@@ -36,6 +38,22 @@ use Throwable;
 
 readonly class RDAPService
 {
+    const ISO_TLD_EXCEPTION = ['ac', 'eu', 'uk', 'su', 'tp'];
+    const INFRA_TLD = ['arpa'];
+    const SPONSORED_TLD = ['edu', 'gov', 'int', 'mil'];
+    const TEST_TLD = [
+        'xn--kgbechtv',
+        'xn--hgbk6aj7f53bba',
+        'xn--0zwm56d',
+        'xn--g6w251d',
+        'xn--80akhbyknj4f',
+        'xn--11b5bs3a9aj6g',
+        'xn--jxalpdlp',
+        'xn--9t4b11yi5a',
+        'xn--deba0ad',
+        'xn--zckzah',
+        'xn--hlcj6aya9esc7a'
+    ];
 
     public function __construct(private HttpClientInterface        $client,
                                 private EntityRepository           $entityRepository,
@@ -288,7 +306,7 @@ readonly class RDAPService
                 if ($tld === "") continue;
                 $tldReference = $this->em->getReference(Tld::class, $tld);
                 foreach ($service[1] as $rdapServerUrl) {
-                    $server = $this->rdapServerRepository->findOneBy(["tld" => $tldReference, "url" => $rdapServerUrl]); //ICI
+                    $server = $this->rdapServerRepository->findOneBy(["tld" => $tldReference, "url" => $rdapServerUrl]);
                     if ($server === null) $server = new RdapServer();
                     $server->setTld($tldReference)->setUrl($rdapServerUrl)->updateTimestamps();
 
@@ -316,14 +334,29 @@ readonly class RDAPService
                 )->getContent()
             ));
         array_shift($tldList);
-        $storedTldList = array_map(fn($tld) => $tld->getTld(), $this->tldRepository->findAll());
 
-
-        foreach (array_diff($tldList, $storedTldList) as $tld) {
+        foreach ($tldList as $tld) {
             if ($tld === "") continue;
-            $this->em->persist((new Tld())->setTld($tld));
+            $tldEntity = $this->tldRepository->findOneBy(['tld' => $tld]);
+            if ($tldEntity === null) $tldEntity = new Tld();
+
+            $tldEntity->setTld($tld)->setType($this->getTldType($tld));
+            if ($tldEntity->getRegistryOperator() === NULL) $tldEntity->setType(TldType::ccTLD);
+
+            $this->em->persist($tldEntity);
         }
         $this->em->flush();
+    }
+
+    private function getTldType(string $tld): ?TldType
+    {
+
+        if (Countries::exists(strtoupper($tld)) || in_array($tld, self::ISO_TLD_EXCEPTION)) return TldType::ccTLD;
+        if (in_array(strtolower($tld), self::INFRA_TLD)) return TldType::iTLD;
+        if (in_array(strtolower($tld), self::SPONSORED_TLD)) return TldType::sTLD;
+        if (in_array(strtolower($tld), self::TEST_TLD)) return TldType::tTLD;
+
+        return TldType::gTLD;
     }
 
     /**
@@ -333,6 +366,7 @@ readonly class RDAPService
      * @throws ClientExceptionInterface
      * @throws DecodingExceptionInterface
      * @throws Exception
+     * @throws ORMException
      */
     public function updateGTldListICANN(): void
     {
@@ -342,14 +376,13 @@ readonly class RDAPService
 
         foreach ($gTldList as $gTld) {
             if ($gTld['gTLD'] === "") continue;
-            $gtTldEntity = $this->tldRepository->findOneBy(['tld' => $gTld['gTLD']]);
-            if ($gtTldEntity === null) $gtTldEntity = new Tld();
+            /** @var Tld $gtTldEntity */
+            $gtTldEntity = $this->em->getReference(Tld::class, $gTld['gTLD']);
 
-            $gtTldEntity
-                ->setTld($gTld['gTLD'])
-                ->setContractTerminated($gTld['contractTerminated'])
+            $gtTldEntity->setContractTerminated($gTld['contractTerminated'])
                 ->setRegistryOperator($gTld['registryOperator'])
                 ->setSpecification13($gTld['specification13']);
+
             if ($gTld['removalDate'] !== null) $gtTldEntity->setRemovalDate(new DateTimeImmutable($gTld['removalDate']));
             if ($gTld['delegationDate'] !== null) $gtTldEntity->setDelegationDate(new DateTimeImmutable($gTld['delegationDate']));
             if ($gTld['dateOfContractSignature'] !== null) $gtTldEntity->setDateOfContractSignature(new DateTimeImmutable($gTld['dateOfContractSignature']));

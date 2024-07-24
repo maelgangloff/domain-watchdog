@@ -5,6 +5,7 @@ namespace App\Entity;
 use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\GetCollection;
+use App\Config\TldType;
 use App\Repository\TldRepository;
 use DateTimeImmutable;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -62,6 +63,9 @@ class Tld
     #[ORM\Column(nullable: true)]
     #[Groups(["tld:item"])]
     private ?bool $specification13 = null;
+
+    #[ORM\Column(length: 10, nullable: true, enumType: TldType::class)]
+    private ?TldType $type = null;
 
     public function __construct()
     {
@@ -178,6 +182,18 @@ class Tld
     public function setSpecification13(?bool $specification13): static
     {
         $this->specification13 = $specification13;
+
+        return $this;
+    }
+
+    public function getType(): ?TldType
+    {
+        return $this->type;
+    }
+
+    public function setType(TldType $type): static
+    {
+        $this->type = $type;
 
         return $this;
     }
