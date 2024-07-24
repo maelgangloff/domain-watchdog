@@ -27,7 +27,6 @@ use DateTimeImmutable;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Exception\ORMException;
 use Exception;
-use Symfony\Component\Intl\Countries;
 use Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\DecodingExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\RedirectionExceptionInterface;
@@ -340,8 +339,16 @@ readonly class RDAPService
             $tldEntity = $this->tldRepository->findOneBy(['tld' => $tld]);
             if ($tldEntity === null) $tldEntity = new Tld();
 
-            $tldEntity->setTld($tld)->setType($this->getTldType($tld));
-            if ($tldEntity->getRegistryOperator() === NULL) $tldEntity->setType(TldType::ccTLD);
+            if ($tldEntity->getType() === null) {
+                $type = $this->getTldType($tld);
+                if ($type !== null) {
+                    $tldEntity->setType($type);
+                } elseif ($tldEntity->isContractTerminated() === null) {
+                    $tldEntity->setType(TldType::ccTLD);
+                } else {
+                    $tldEntity->setType(TldType::gTLD);
+                }
+            }
 
             $this->em->persist($tldEntity);
         }
@@ -351,12 +358,12 @@ readonly class RDAPService
     private function getTldType(string $tld): ?TldType
     {
 
-        if (Countries::exists(strtoupper($tld)) || in_array($tld, self::ISO_TLD_EXCEPTION)) return TldType::ccTLD;
+        if (in_array($tld, self::ISO_TLD_EXCEPTION)) return TldType::ccTLD;
         if (in_array(strtolower($tld), self::INFRA_TLD)) return TldType::iTLD;
         if (in_array(strtolower($tld), self::SPONSORED_TLD)) return TldType::sTLD;
         if (in_array(strtolower($tld), self::TEST_TLD)) return TldType::tTLD;
 
-        return TldType::gTLD;
+        return null;
     }
 
     /**
@@ -379,7 +386,8 @@ readonly class RDAPService
             /** @var Tld $gtTldEntity */
             $gtTldEntity = $this->em->getReference(Tld::class, $gTld['gTLD']);
 
-            $gtTldEntity->setContractTerminated($gTld['contractTerminated'])
+            $gtTldEntity
+                ->setContractTerminated($gTld['contractTerminated'])
                 ->setRegistryOperator($gTld['registryOperator'])
                 ->setSpecification13($gTld['specification13']);
 

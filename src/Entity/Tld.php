@@ -21,6 +21,7 @@ use Symfony\Component\Serializer\Attribute\Groups;
     operations: [
         new GetCollection(
             uriTemplate: '/tld',
+            paginationItemsPerPage: 200,
             normalizationContext: ['groups' => ['tld:list']]
         ),
         new Get(
@@ -56,7 +57,7 @@ class Tld
     private ?DateTimeImmutable $delegationDate = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    #[Groups(["tld:item"])]
+    #[Groups(["tld:list", "tld:item"])]
     private ?string $registryOperator = null;
 
     #[ORM\Column(type: Types::DATE_IMMUTABLE, nullable: true)]
@@ -64,7 +65,7 @@ class Tld
     private ?DateTimeImmutable $removalDate = null;
 
     #[ORM\Column(nullable: true)]
-    #[Groups(["tld:item"])]
+    #[Groups(["tld:list", "tld:item"])]
     private ?bool $specification13 = null;
 
     #[ORM\Column(length: 10, nullable: true, enumType: TldType::class)]
@@ -195,10 +196,8 @@ class Tld
         return $this->type;
     }
 
-    public function setType(TldType $type): static
+    public function setType(?TldType $type): void
     {
         $this->type = $type;
-
-        return $this;
     }
 }

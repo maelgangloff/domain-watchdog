@@ -6,7 +6,7 @@ controllers:
 
 api_login:
     path: /api/login
-#    methods: [ 'POST' ]
+    methods: [ 'POST' ]
 
 oauth_connect_check:
     path: /login/oauth/check
