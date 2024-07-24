@@ -1,17 +1,77 @@
-<p>
-    Hello,<br />
-    <br />
-    We would like to inform you that an error occurred while updating the information for the following domain name.
-    <br/>
-    Domain name : <b>{{ domain.ldhName }}</b><br/>
-    <br/>
-    Here are some possible explanations:<br/>
-    * It is likely that the domain will be available for registration again.<br/>
-    * A temporary outage affects the provision of domain name information.<br/>
-    <br/>
-    <br/>
-    Thank you for your understanding,<br/>
-    Sincerely<br/>
-    <br/>
-    Domain Watchdog
-</p>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .header h1 {
+            font-size: 24px;
+            color: #d9534f;
+        }
+
+        .content {
+            margin-bottom: 20px;
+        }
+
+        .content p {
+            margin: 0 0 10px;
+        }
+
+        .footer {
+            text-align: center;
+            color: #777;
+        }
+
+        ul {
+            padding-left: 20px;
+        }
+
+        ul li {
+            margin-bottom: 10px;
+        }
+    </style>
+    <title>Domain Watchdog Error</title>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <h1>Domain Watchdog Error</h1>
+    </div>
+    <div class="content">
+        <p>Hello,</p>
+        <p>We would like to inform you that an error occurred while updating the information for the following domain
+            name:</p>
+        <p><strong>Domain name:</strong> {{ domain.ldhName }}</p>
+        <p>Here are some possible explanations:</p>
+        <ul>
+            <li>It is likely that the domain will be available for registration again.</li>
+            <li>A temporary outage affects the provision of domain name information.</li>
+        </ul>
+        <p>Thank you for your understanding,</p>
+        <p>Sincerely,</p>
+        <p>Domain Watchdog</p>
+    </div>
+    <div class="footer">
+        <p>&copy; Domain Watchdog</p>
+    </div>
+</div>
+</body>
+</html>

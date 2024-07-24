@@ -1,14 +1,66 @@
-<p>
-    Hello,<br />
-    <br />
-    We are pleased to inform you that a new action has been detected on a domain name in your watchlist.<br />
-    Domain name : <b>{{ event.domain.ldhName }}</b><br />
-    Action : <b>{{ event.action.value }}</b><br />
-    Effective Date : <b>{{ event.date | date("c") }}</b><br />
-    <br />
-    <br />
-    Thank you for your understanding,<br />
-    Sincerely<br />
-    <br />
-    Domain Watchdog
-</p>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .header h1 {
+            font-size: 24px;
+            color: #0056b3;
+        }
+
+        .content {
+            margin-bottom: 20px;
+        }
+
+        .content p {
+            margin: 0 0 10px;
+        }
+
+        .footer {
+            text-align: center;
+            color: #777;
+        }
+    </style>
+    <title>Domain Watchdog Alert</title>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <h1>Domain Watchdog Alert</h1>
+    </div>
+    <div class="content">
+        <p>Hello,</p>
+        <p>We are pleased to inform you that a new action has been detected on a domain name in your watchlist.</p>
+        <p><strong>Domain name:</strong> {{ event.domain.ldhName }}</p>
+        <p><strong>Action:</strong> {{ event.action.value }}</p>
+        <p><strong>Effective Date:</strong> {{ event.date | date("c") }}</p>
+        <br/>
+        <p>Thank you for your understanding,</p>
+        <p>Sincerely,</p>
+        <p>Domain Watchdog</p>
+    </div>
+    <div class="footer">
+        <p>&copy; Domain Watchdog</p>
+    </div>
+</div>
+</body>
+</html>

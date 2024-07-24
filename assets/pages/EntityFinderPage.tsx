@@ -3,9 +3,7 @@ import Container from "@mui/material/Container";
 import {Grid, Paper} from "@mui/material";
 
 
-export default function DashboardPage() {
-
-
+export default function DomainFinderPage() {
     return (
         <>
             <Container maxWidth="lg" sx={{mt: 4, mb: 4}}>
@@ -19,6 +17,7 @@ export default function DashboardPage() {
                                 height: 240,
                             }}
                         >
+
                         </Paper>
                     </Grid>
                 </Grid>

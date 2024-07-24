@@ -18,6 +18,7 @@ use Symfony\Component\Serializer\Attribute\SerializedName;
 #[ORM\Entity(repositoryClass: DomainRepository::class)]
 #[ApiResource(
     operations: [
+        /*
         new GetCollection(
             normalizationContext: [
                 'groups' => [
@@ -25,6 +26,7 @@ use Symfony\Component\Serializer\Attribute\SerializedName;
                 ]
             ]
         ),
+        */
         new Get(
             uriTemplate: '/domains/{ldhName}', # Do not delete this line, otherwise Symfony interprets the TLD of the domain name as a return type
             controller: DomainRefreshController::class,
