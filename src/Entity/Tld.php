@@ -68,7 +68,7 @@ class Tld
     #[Groups(["tld:list", "tld:item"])]
     private ?bool $specification13 = null;
 
-    #[ORM\Column(length: 10, nullable: true, enumType: TldType::class)]
+    #[ORM\Column(length: 10, enumType: TldType::class)]
     #[Groups(["tld:item"])]
     private ?TldType $type = null;
 

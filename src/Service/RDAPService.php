@@ -339,15 +339,13 @@ readonly class RDAPService
             $tldEntity = $this->tldRepository->findOneBy(['tld' => $tld]);
             if ($tldEntity === null) $tldEntity = new Tld();
 
-            if ($tldEntity->getType() === null) {
-                $type = $this->getTldType($tld);
-                if ($type !== null) {
-                    $tldEntity->setType($type);
-                } elseif ($tldEntity->isContractTerminated() === null) {
-                    $tldEntity->setType(TldType::ccTLD);
-                } else {
-                    $tldEntity->setType(TldType::gTLD);
-                }
+            $type = $this->getTldType($tld);
+            if ($type !== null) {
+                $tldEntity->setType($type);
+            } elseif ($tldEntity->isContractTerminated() === null) {
+                $tldEntity->setType(TldType::ccTLD);
+            } else {
+                $tldEntity->setType(TldType::gTLD);
             }
 
             $this->em->persist($tldEntity);
