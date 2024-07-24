@@ -4,7 +4,6 @@ namespace App\Entity;
 
 use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\Get;
-use ApiPlatform\Metadata\GetCollection;
 use App\Controller\DomainRefreshController;
 use App\Repository\DomainRepository;
 use DateTimeImmutable;

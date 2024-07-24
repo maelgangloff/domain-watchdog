@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Doctrine\Orm\Filter\SearchFilter;
+use ApiPlatform\Metadata\ApiFilter;
 use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\GetCollection;
@@ -27,6 +29,7 @@ use Symfony\Component\Serializer\Attribute\Groups;
         )
     ]
 )]
+#[ApiFilter(SearchFilter::class)]
 #[ORM\Entity(repositoryClass: TldRepository::class)]
 class Tld
 {
@@ -65,6 +68,7 @@ class Tld
     private ?bool $specification13 = null;
 
     #[ORM\Column(length: 10, nullable: true, enumType: TldType::class)]
+    #[Groups(["tld:item"])]
     private ?TldType $type = null;
 
     public function __construct()

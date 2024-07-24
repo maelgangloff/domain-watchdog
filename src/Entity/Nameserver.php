@@ -28,7 +28,6 @@ use Symfony\Component\Serializer\Attribute\SerializedName;
             normalizationContext: [
                 'groups' => [
                     'nameserver:item',
-                    'domain:list',
                     'nameserver-entity:entity',
                     'entity:list',
                     "event:list"
