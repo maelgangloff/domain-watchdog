@@ -15,6 +15,9 @@ use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Component\Messenger\Exception\ExceptionInterface;
 use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\RateLimiter\RateLimiterFactory;
+use Symfony\Contracts\HttpClient\Exception\DecodingExceptionInterface;
+use Symfony\Contracts\HttpClient\Exception\HttpExceptionInterface;
+use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 
 class DomainRefreshController extends AbstractController
 {
@@ -27,8 +30,11 @@ class DomainRefreshController extends AbstractController
     }
 
     /**
-     * @throws Exception
+     * @throws TransportExceptionInterface
+     * @throws HttpExceptionInterface
+     * @throws DecodingExceptionInterface
      * @throws ExceptionInterface
+     * @throws Exception
      */
     public function __invoke(string $ldhName, KernelInterface $kernel): ?Domain
     {

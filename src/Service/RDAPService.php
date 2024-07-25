@@ -126,11 +126,10 @@ readonly class RDAPService
             )->toArray();
         } catch (HttpExceptionInterface $e) {
             if ($domain !== null) {
-                $domain->setDeleted(true);
+                $domain->setDeleted(true)
+                    ->updateTimestamps();
                 $this->em->persist($domain);
                 $this->em->flush();
-
-                return $domain;
             }
             throw $e;
         }
@@ -421,7 +420,7 @@ readonly class RDAPService
         foreach ($gTldList as $gTld) {
             if ($gTld['gTLD'] === "") continue;
             /** @var Tld $gtTldEntity */
-            $gtTldEntity = $this->tldRepository->findOneBy([ 'tld' => $gTld['gTLD'] ]);
+            $gtTldEntity = $this->tldRepository->findOneBy(['tld' => $gTld['gTLD']]);
 
             if (null == $gtTldEntity) {
                 $gtTldEntity = new Tld();
