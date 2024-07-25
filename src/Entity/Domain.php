@@ -102,6 +102,9 @@ class Domain
     #[Groups(['domain:item'])]
     private ?Tld $tld = null;
 
+    #[ORM\Column]
+    private ?bool $deleted = null;
+
     public function __construct()
     {
         $this->events = new ArrayCollection();
@@ -110,6 +113,8 @@ class Domain
         $this->nameservers = new ArrayCollection();
         $this->createdAt = new DateTimeImmutable('now');
         $this->updatedAt = new DateTimeImmutable('now');
+
+        $this->deleted = false;
     }
 
     public function getLdhName(): ?string
@@ -299,6 +304,18 @@ class Domain
     public function setTld(?Tld $tld): static
     {
         $this->tld = $tld;
+
+        return $this;
+    }
+
+    public function getDeleted(): ?bool
+    {
+        return $this->deleted;
+    }
+
+    public function setDeleted(?bool $deleted): static
+    {
+        $this->deleted = $deleted;
 
         return $this;
     }

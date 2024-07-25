@@ -29,11 +29,11 @@ use Doctrine\ORM\Exception\ORMException;
 use Exception;
 use Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\DecodingExceptionInterface;
+use Symfony\Contracts\HttpClient\Exception\HttpExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\RedirectionExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\ServerExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
-use Throwable;
 
 readonly class RDAPService
 {
@@ -89,7 +89,9 @@ readonly class RDAPService
     }
 
     /**
-     * @throws Exception
+     * @throws HttpExceptionInterface
+     * @throws TransportExceptionInterface
+     * @throws DecodingExceptionInterface
      */
     public function registerDomains(array $domains): void
     {
@@ -100,6 +102,9 @@ readonly class RDAPService
 
     /**
      * @throws Exception
+     * @throws TransportExceptionInterface
+     * @throws DecodingExceptionInterface
+     * @throws HttpExceptionInterface
      */
     public function registerDomain(string $fqdn): Domain
     {
@@ -111,18 +116,28 @@ readonly class RDAPService
 
         if ($rdapServer === null) throw new Exception("Unable to determine which RDAP server to contact");
 
+        /** @var ?Domain $domain */
+        $domain = $this->domainRepository->findOneBy(["ldhName" => strtolower($idnDomain)]);
+
+
         try {
             $res = $this->client->request(
                 'GET', $rdapServer->getUrl() . 'domain/' . $idnDomain
             )->toArray();
-        } catch (Throwable) {
-            throw new Exception("Unable to contact RDAP server");
+        } catch (HttpExceptionInterface $e) {
+            if ($domain !== null) {
+                $domain->setDeleted(true);
+                $this->em->persist($domain);
+                $this->em->flush();
+
+                return $domain;
+            }
+            throw $e;
         }
 
-        $domain = $this->domainRepository->findOneBy(["ldhName" => strtolower($res['ldhName'])]);
-        if ($domain === null) $domain = new Domain();
 
-        $domain->setTld($tld)->setLdhName($res['ldhName']);
+        if ($domain === null) $domain = new Domain();
+        $domain->setTld($tld)->setLdhName($res['ldhName'])->setDeleted(false);
 
         if (array_key_exists('status', $res)) $domain->setStatus($res['status']);
         if (array_key_exists('handle', $res)) $domain->setHandle($res['handle']);
