@@ -40,17 +40,18 @@ class DomainRefreshController extends AbstractController
     {
         /** @var Domain $domain */
         $domain = $this->domainRepository->findOneBy(["ldhName" => $ldhName]);
-        if ($domain !== null && $domain->getUpdatedAt()->diff(new DateTimeImmutable('now'))->days < 7) return $domain;
+
+        // If the domain name exists in the database, recently updated and not important, we return the stored Domain
+        if ($domain !== null && ($domain->getUpdatedAt()->diff(new DateTimeImmutable('now'))->days < 7) && !$this->RDAPService::isToBeWatchClosely($domain, $domain->getUpdatedAt())) return $domain;
 
         if (false === $kernel->isDebug()) {
             $limiter = $this->authenticatedApiLimiter->create($this->getUser()->getUserIdentifier());
             if (false === $limiter->consume()->isAccepted()) throw new TooManyRequestsHttpException();
         }
 
-        if ($domain === null) return $this->RDAPService->registerDomain($ldhName);
-
-        $updatedAt = $domain->getUpdatedAt();
+        $updatedAt = $domain === null ? new DateTimeImmutable('now') : $domain->getUpdatedAt();
         $domain = $this->RDAPService->registerDomain($ldhName);
+
         /** @var WatchList $watchList */
         foreach ($domain->getWatchLists()->getIterator() as $watchList) {
             $this->bus->dispatch(new ProcessDomainTrigger($watchList->getToken(), $domain->getLdhName(), $updatedAt));

@@ -72,6 +72,8 @@ readonly class RDAPService
         'xn--hlcj6aya9esc7a'
     ];
 
+    const IMPORTANT_EVENTS = [EventAction::Deletion->value, EventAction::Expiration->value];
+
     public function __construct(private HttpClientInterface        $client,
                                 private EntityRepository           $entityRepository,
                                 private DomainRepository           $domainRepository,
@@ -86,6 +88,25 @@ readonly class RDAPService
     )
     {
 
+    }
+
+    /**
+     * Determines if a domain name needs special attention.
+     * These domain names are those whose last event was expiration or deletion.
+     * @throws Exception
+     */
+    public static function isToBeWatchClosely(Domain $domain, DateTimeImmutable $updatedAt): bool
+    {
+        if ($updatedAt->diff(new DateTimeImmutable('now'))->days < 1) return false;
+
+        /** @var DomainEvent[] $events */
+        $events = $domain->getEvents()
+            ->filter(fn(DomainEvent $e) => $e->getDate() <= new DateTimeImmutable('now'))
+            ->toArray();
+
+        usort($events, fn(DomainEvent $e1, DomainEvent $e2) => $e2->getDate() > $e1->getDate());
+
+        return !empty($events) && in_array($events[0]->getAction(), self::IMPORTANT_EVENTS);
     }
 
     /**
@@ -253,7 +274,6 @@ readonly class RDAPService
         return $domain;
     }
 
-
     /**
      * @throws Exception
      */
@@ -409,7 +429,6 @@ readonly class RDAPService
      * @throws ClientExceptionInterface
      * @throws DecodingExceptionInterface
      * @throws Exception
-     * @throws ORMException
      */
     public function updateGTldListICANN(): void
     {
