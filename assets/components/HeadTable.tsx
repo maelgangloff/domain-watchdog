@@ -6,18 +6,10 @@ interface Column {
     label: string;
     minWidth?: number;
     align?: 'right';
-    format?: (value: number) => string;
+    format?: (value: any) => any;
 }
 
-interface Data {
-    name: string;
-    code: string;
-    population: number;
-    size: number;
-    density: number;
-}
-
-export default function StickyHeadTable({columns, rows}: { rows: Data[], columns: Column[] }) {
+export default function HeadTable({columns, rows}: { rows: any[], columns: Column[] }) {
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
@@ -32,8 +24,8 @@ export default function StickyHeadTable({columns, rows}: { rows: Data[], columns
 
     return (
         <Paper sx={{width: '100%', overflow: 'hidden'}}>
-            <TableContainer sx={{maxHeight: 440}}>
-                <Table stickyHeader aria-label="sticky table">
+            <TableContainer>
+                <Table size="small">
                     <TableHead>
                         <TableRow>
                             {columns.map((column) => (
@@ -50,16 +42,15 @@ export default function StickyHeadTable({columns, rows}: { rows: Data[], columns
                     <TableBody>
                         {rows
                             .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                            .map((row: Data) => {
+                            .map((row: any) => {
                                 return (
-                                    <TableRow hover role="checkbox" tabIndex={-1} key={row.code}>
+                                    <TableRow hover sx={{'&:last-child td, &:last-child th': {border: 0}}}
+                                              role="checkbox" tabIndex={-1} key={row.code}>
                                         {columns.map((column) => {
                                             const value = row[column.id as keyof typeof row]
                                             return (
                                                 <TableCell key={column.id} align={column.align}>
-                                                    {column.format && typeof value === 'number'
-                                                        ? column.format(value)
-                                                        : value}
+                                                    {column.format ? column.format(value) : value}
                                                 </TableCell>
                                             );
                                         })}

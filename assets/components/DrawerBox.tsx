@@ -4,6 +4,7 @@ import {Bookmark, ChevronLeft, Dns, Explore, LocalPolice, MenuBook, People} from
 import {Divider, List, ListItemButton, ListItemIcon, ListItemText, ListSubheader, styled} from "@mui/material";
 import React from "react";
 import MuiDrawer from "@mui/material/Drawer";
+import {useNavigate} from "react-router-dom";
 
 
 const Drawer = styled(MuiDrawer, {shouldForwardProp: (prop) => prop !== 'open'})(
@@ -37,6 +38,8 @@ export default function DrawerBox() {
     const toggleDrawer = () => {
         setOpen(!open);
     };
+    const navigate = useNavigate()
+
     return <Drawer variant="permanent" open={open}>
         <Toolbar
             sx={{
@@ -56,19 +59,19 @@ export default function DrawerBox() {
             <ListSubheader component="div" inset>
                 Domain names
             </ListSubheader>
-            <ListItemButton>
+            <ListItemButton onClick={() => navigate('/finder/domain')}>
                 <ListItemIcon>
                     <Explore/>
                 </ListItemIcon>
                 <ListItemText primary="Domain finder"/>
             </ListItemButton>
-            <ListItemButton>
+            <ListItemButton onClick={() => navigate('/tld')}>
                 <ListItemIcon>
                     <LocalPolice/>
                 </ListItemIcon>
                 <ListItemText primary="Top Level Domain"/>
             </ListItemButton>
-            <ListItemButton>
+            <ListItemButton onClick={() => navigate('/finder/nameserver')}>
                 <ListItemIcon>
                     <Dns/>
                 </ListItemIcon>
@@ -79,13 +82,13 @@ export default function DrawerBox() {
             <ListSubheader component="div" inset>
                 Entities
             </ListSubheader>
-            <ListItemButton>
+            <ListItemButton onClick={() => navigate('/finder/entity')}>
                 <ListItemIcon>
                     <People/>
                 </ListItemIcon>
                 <ListItemText primary="Entity finder"/>
             </ListItemButton>
-            <ListItemButton>
+            <ListItemButton onClick={() => navigate('/reverse')}>
                 <ListItemIcon>
                     <MenuBook/>
                 </ListItemIcon>
@@ -96,7 +99,7 @@ export default function DrawerBox() {
             <ListSubheader component="div" inset>
                 Tracking
             </ListSubheader>
-            <ListItemButton>
+            <ListItemButton onClick={() => navigate('/watchlist')}>
                 <ListItemIcon>
                     <Bookmark/>
                 </ListItemIcon>

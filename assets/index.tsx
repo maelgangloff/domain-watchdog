@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import ReactDOM from "react-dom/client";
 import TextPage from "./pages/TextPage";
-import {HashRouter, Route, Routes} from "react-router-dom";
+import {HashRouter, Navigate, Route, Routes} from "react-router-dom";
 
 import tosContent from "./content/tos.md"
 import privacyContent from "./content/privacy.md"
@@ -9,11 +9,15 @@ import LoginPage from "./pages/LoginPage";
 import {createTheme, PaletteMode, ThemeProvider} from "@mui/material";
 import CssBaseline from "@mui/material/CssBaseline";
 import AppAppBar from "./components/AppAppBar";
-import DashboardPage from "./pages/DashboardPage";
-import {getUser} from "./utils/api";
-import Footer from "./components/Footer";
+import {getUser} from "./utils/api/user";
 import DrawerBox from "./components/DrawerBox";
 import Box from "@mui/material/Box";
+import DomainFinderPage from "./pages/DomainFinderPage";
+import EntityFinderPage from "./pages/EntityFinderPage";
+import NameserverFinderPage from "./pages/NameserverFinderPage";
+import ReverseDirectoryPage from "./pages/ReverseDirectoryPage";
+import TldPage from "./pages/TldPage";
+import WatchlistsPage from "./pages/WatchlistsPage";
 
 
 const root = ReactDOM.createRoot(document.getElementById("root") as HTMLElement);
@@ -41,7 +45,15 @@ function App() {
                     <AppAppBar mode={mode} toggleColorMode={toggleColorMode} isAuthenticated={isAuthenticated}/>
                     <Routes>
                         {isAuthenticated ?
-                            <Route path="/" element={<DashboardPage/>}/>
+                            <>
+                                <Route path="/" element={<Navigate to="/finder/domain"/>}/>
+                                <Route path="/finder/domain" element={<DomainFinderPage/>}/>
+                                <Route path="/finder/entity" element={<EntityFinderPage/>}/>
+                                <Route path="/finder/nameserver" element={<NameserverFinderPage/>}/>
+                                <Route path="/reverse" element={<ReverseDirectoryPage/>}/>
+                                <Route path="/tld" element={<TldPage/>}/>
+                                <Route path="/watchlist" element={<WatchlistsPage/>}/>
+                            </>
                             :
                             <Route path="*" element={<LoginPage setIsAuthenticated={setIsAuthenticated}/>}/>
                         }
@@ -50,7 +62,6 @@ function App() {
 
                     </Routes>
                 </Box>
-                <Footer/>
             </HashRouter>
         </ThemeProvider>
     </React.StrictMode>

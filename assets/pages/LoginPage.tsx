@@ -11,6 +11,7 @@ import {login} from "../utils/api";
 import {useNavigate} from "react-router-dom";
 import {Alert} from "@mui/material";
 import Container from "@mui/material/Container";
+import Footer from "../components/Footer";
 
 interface Props {
     setIsAuthenticated: (val: boolean) => void
@@ -30,7 +31,7 @@ export default function LoginPage({setIsAuthenticated}: Props) {
             navigate('/');
 
         } catch (e: any) {
-            setCredentials({email: "", password: ""})
+            setCredentials({...credentials, password: ""})
             setError(e.response.data.message)
         }
     };
@@ -102,6 +103,7 @@ export default function LoginPage({setIsAuthenticated}: Props) {
                         Single Sign-On
                     </Button>
                 </Link>
+                <Footer/>
             </Container>
         </>
     );

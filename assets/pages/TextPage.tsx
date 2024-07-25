@@ -1,6 +1,7 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import Container from "@mui/material/Container";
+import Footer from "../components/Footer";
 
 interface Props {
     content: string
@@ -30,6 +31,7 @@ export default function Index({content}: Props) {
             >
                 <div dangerouslySetInnerHTML={{__html: content}}></div>
             </Box>
+            <Footer/>
         </Container>
     )
 
