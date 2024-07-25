@@ -17,7 +17,6 @@ use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 use Symfony\Component\Messenger\Exception\ExceptionInterface;
 use Symfony\Component\Messenger\MessageBusInterface;
-use Symfony\Component\Messenger\Stamp\DelayStamp;
 use Throwable;
 
 #[AsMessageHandler]
@@ -60,13 +59,18 @@ final readonly class ProcessWatchListTriggerHandler
                 continue;
             }
 
-            /**
-             * If the domain name must be consulted regularly, we reschedule an update in one day
-             */
-            if ($this->RDAPService::isToBeWatchClosely($domain, $updatedAt)) {
-                $this->bus->dispatch(new ProcessWatchListTrigger($message->watchListToken), [
-                    new DelayStamp(24 * 60 * 60 * 1e3)]);
-            }
+            /*
+             * This code is deliberately commented to avoid unwanted side effects.
+             * Indeed, although it is useful and relevant to schedule a new update every day,
+             * there is a risk that the messages will get carried away by chain reaction.
+             * In theory, a new message chain would be generated every week.
+             *
+             * if ($this->RDAPService::isToBeWatchClosely($domain, $updatedAt)) {
+             *     $this->bus->dispatch(new ProcessWatchListTrigger($message->watchListToken), [
+             *         new DelayStamp(24 * 60 * 60 * 1e3)
+             *     ]);
+             * }
+            */
 
             $this->bus->dispatch(new ProcessDomainTrigger($watchList->getToken(), $domain->getLdhName(), $updatedAt));
         }
