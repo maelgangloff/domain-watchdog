@@ -2,7 +2,9 @@
 
 namespace App\MessageHandler;
 
+use App\Config\EventAction;
 use App\Entity\Domain;
+use App\Entity\DomainEvent;
 use App\Entity\User;
 use App\Entity\WatchList;
 use App\Message\ProcessDomainTrigger;
@@ -17,11 +19,13 @@ use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 use Symfony\Component\Messenger\Exception\ExceptionInterface;
 use Symfony\Component\Messenger\MessageBusInterface;
+use Symfony\Component\Messenger\Stamp\DelayStamp;
 use Throwable;
 
 #[AsMessageHandler]
 final readonly class ProcessWatchListTriggerHandler
 {
+    const IMPORTANT_EVENTS = [EventAction::Deletion->value, EventAction::Expiration->value];
 
     public function __construct(
         private RDAPService         $RDAPService,
@@ -45,7 +49,10 @@ final readonly class ProcessWatchListTriggerHandler
         /** @var Domain $domain */
         foreach ($watchList->getDomains()
                      ->filter(fn($domain) => $domain->getUpdatedAt()
-                             ->diff(new DateTimeImmutable('now'))->days >= 7) as $domain
+                             ->diff(
+                                 new DateTimeImmutable('now'))->days >= 7
+                         || self::isToBeWatchClosely($domain, $domain->getUpdatedAt())
+                     ) as $domain
         ) {
             $updatedAt = $domain->getUpdatedAt();
 
@@ -56,10 +63,34 @@ final readonly class ProcessWatchListTriggerHandler
                 continue;
             }
 
+            /**
+             * If the domain name must be consulted regularly, we reschedule an update in one day
+             */
+            if (self::isToBeWatchClosely($domain, $updatedAt)) {
+                $this->bus->dispatch(new ProcessWatchListTrigger($message->watchListToken), [
+                    new DelayStamp(24 * 60 * 60 * 1e3)]);
+            }
+
             $this->bus->dispatch(new ProcessDomainTrigger($watchList->getToken(), $domain->getLdhName(), $updatedAt));
         }
     }
 
+    /**
+     * Determines if a domain name needs special attention.
+     * These domain names are those whose last event was expiration or deletion.
+     * @throws Exception
+     */
+    public static function isToBeWatchClosely(Domain $domain, DateTimeImmutable $updatedAt): bool
+    {
+        if ($updatedAt->diff(new DateTimeImmutable('now'))->days < 1) return false;
+
+        /** @var DomainEvent[] $events */
+        $events = $domain->getEvents()->toArray();
+
+        usort($events, fn(DomainEvent $e1, DomainEvent $e2) => $e2->getDate() - $e1->getDate());
+
+        return !empty($events) && in_array($events[0]->getAction(), self::IMPORTANT_EVENTS);
+    }
 
     /**
      * @throws TransportExceptionInterface
@@ -78,5 +109,4 @@ final readonly class ProcessWatchListTriggerHandler
 
         $this->mailer->send($email);
     }
-
 }
