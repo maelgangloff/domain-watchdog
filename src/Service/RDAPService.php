@@ -369,13 +369,19 @@ readonly class RDAPService
 
         foreach ($tldList as $tld) {
             if ($tld === "") continue;
+
             $tldEntity = $this->tldRepository->findOneBy(['tld' => $tld]);
-            if ($tldEntity === null) $tldEntity = new Tld();
+
+            if ($tldEntity === null) {
+                $tldEntity = new Tld();
+                $tldEntity->setTld($tld);
+            }
 
             $type = $this->getTldType($tld);
+
             if ($type !== null) {
                 $tldEntity->setType($type);
-            } elseif ($tldEntity->isContractTerminated() === null) {
+            } elseif ($tldEntity->isContractTerminated() === null) { // ICANN managed, must be a ccTLD
                 $tldEntity->setType(TldType::ccTLD);
             } else {
                 $tldEntity->setType(TldType::gTLD);
@@ -415,18 +421,25 @@ readonly class RDAPService
         foreach ($gTldList as $gTld) {
             if ($gTld['gTLD'] === "") continue;
             /** @var Tld $gtTldEntity */
-            $gtTldEntity = $this->em->getReference(Tld::class, $gTld['gTLD']);
+            $gtTldEntity = $this->tldRepository->findOneBy([ 'tld' => $gTld['gTLD'] ]);
+
+            if (null == $gtTldEntity) {
+                $gtTldEntity = new Tld();
+                $gtTldEntity->setTld($gTld['gTLD']);
+            }
 
             $gtTldEntity
                 ->setContractTerminated($gTld['contractTerminated'])
                 ->setRegistryOperator($gTld['registryOperator'])
-                ->setSpecification13($gTld['specification13']);
+                ->setSpecification13($gTld['specification13'])
+                ->setType(TldType::gTLD);
 
             if ($gTld['removalDate'] !== null) $gtTldEntity->setRemovalDate(new DateTimeImmutable($gTld['removalDate']));
             if ($gTld['delegationDate'] !== null) $gtTldEntity->setDelegationDate(new DateTimeImmutable($gTld['delegationDate']));
             if ($gTld['dateOfContractSignature'] !== null) $gtTldEntity->setDateOfContractSignature(new DateTimeImmutable($gTld['dateOfContractSignature']));
             $this->em->persist($gtTldEntity);
         }
+
         $this->em->flush();
     }
 }
