@@ -103,6 +103,7 @@ class Domain
     private ?Tld $tld = null;
 
     #[ORM\Column]
+    #[Groups(['domain:item'])]
     private ?bool $deleted = null;
 
     public function __construct()

@@ -1,5 +1,6 @@
 import {Badge, Layout, Menu, theme} from "antd";
 import {
+    CompassOutlined,
     ApiOutlined,
     BankOutlined,
     CloudServerOutlined,
@@ -68,11 +69,11 @@ export default function App() {
         {
             key: '1',
             label: 'Search',
-            icon: <SearchOutlined/>,
+            icon: <SearchOutlined />,
             children: [
                 {
                     key: '1-1',
-                    icon: <SearchOutlined/>,
+                    icon: <CompassOutlined/>,
                     label: 'Domain',
                     title: 'Domain Finder',
                     disabled: !isAuthenticated,

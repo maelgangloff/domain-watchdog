@@ -21,6 +21,7 @@
     "@symfony/webpack-encore": "^4.0.0",
     "@types/axios": "^0.14.0",
     "@types/jsonld": "^1.5.15",
+    "@types/punycode": "^2.1.4",
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
     "antd": "^5.19.3",
@@ -28,6 +29,7 @@
     "core-js": "^3.23.0",
     "html-loader": "^5.1.0",
     "jsonld": "^8.3.2",
+    "punycode": "^2.3.1",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-router-dom": "^6.25.1",
@@ -46,5 +48,8 @@
     "dev": "encore dev",
     "watch": "encore dev --watch",
     "build": "encore production --progress"
+  },
+  "dependencies": {
+    "remove": "^0.1.5"
   }
 }
