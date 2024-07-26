@@ -129,7 +129,7 @@ readonly class RDAPService
      */
     public function registerDomain(string $fqdn): Domain
     {
-        $idnDomain = idn_to_ascii($fqdn);
+        $idnDomain = strtolower(idn_to_ascii($fqdn));
         $tld = $this->getTld($idnDomain);
 
         /** @var RdapServer|null $rdapServer */
@@ -138,7 +138,7 @@ readonly class RDAPService
         if ($rdapServer === null) throw new Exception("Unable to determine which RDAP server to contact");
 
         /** @var ?Domain $domain */
-        $domain = $this->domainRepository->findOneBy(["ldhName" => strtolower($idnDomain)]);
+        $domain = $this->domainRepository->findOneBy(["ldhName" => $idnDomain]);
 
 
         try {
@@ -157,7 +157,7 @@ readonly class RDAPService
 
 
         if ($domain === null) $domain = new Domain();
-        $domain->setTld($tld)->setLdhName($res['ldhName'])->setDeleted(false);
+        $domain->setTld($tld)->setLdhName($idnDomain)->setDeleted(false);
 
         if (array_key_exists('status', $res)) $domain->setStatus($res['status']);
         if (array_key_exists('handle', $res)) $domain->setHandle($res['handle']);

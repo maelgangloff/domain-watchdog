@@ -42,7 +42,7 @@ use Symfony\Component\Uid\Uuid;
 class WatchList
 {
     #[ORM\Id]
-    #[ORM\Column(length: 36)]
+    #[ORM\Column(type: 'uuid')]
     #[Groups(['watchlist:item', 'watchlist:list'])]
     private string $token;
 
