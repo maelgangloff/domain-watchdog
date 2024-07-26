@@ -14,7 +14,7 @@ import {
     TeamOutlined,
     UserOutlined
 } from "@ant-design/icons";
-import {Navigate, Route, Routes, useLocation, useNavigate} from "react-router-dom";
+import {Link, Navigate, Route, Routes, useLocation, useNavigate} from "react-router-dom";
 import TextPage from "./pages/TextPage";
 import tos from "./content/tos.md";
 import privacy from "./content/privacy.md";
@@ -24,7 +24,7 @@ import NameserverSearchPage from "./pages/search/NameserverSearchPage";
 import TldPage from "./pages/info/TldPage";
 import StatisticsPage from "./pages/info/StatisticsPage";
 import WatchlistsPage from "./pages/tracking/WatchlistsPage";
-import UserPage from "./pages/UserPage";
+import UserPage from "./pages/watchdog/UserPage";
 import React, {useCallback, useEffect, useMemo, useState} from "react";
 import {getUser} from "./utils/api";
 import FAQPage from "./pages/FAQPage";
@@ -38,8 +38,11 @@ export default function App() {
     } = theme.useToken()
 
     const navigate = useNavigate()
-    const [isAuthenticated, setIsAuthenticated] = useState(false)
     const location = useLocation()
+
+
+    const [isAuthenticated, setIsAuthenticated] = useState(false)
+
 
     const authenticated = useCallback((authenticated: boolean) => {
         setIsAuthenticated(authenticated)
@@ -65,6 +68,7 @@ export default function App() {
         {
             key: '1',
             label: 'Search',
+            icon: <SearchOutlined/>,
             children: [
                 {
                     key: '1-1',
@@ -95,11 +99,13 @@ export default function App() {
         {
             key: '2',
             label: 'Information',
+            icon: <InfoCircleOutlined/>,
             children: [
                 {
                     key: '2-1',
                     icon: <BankOutlined/>,
                     label: 'TLD',
+                    title: 'TLD list',
                     disabled: !isAuthenticated,
                     onClick: () => navigate('/info/tld')
                 },
@@ -115,11 +121,11 @@ export default function App() {
         {
             key: '3',
             label: 'Tracking',
+            icon: <FileSearchOutlined/>,
             children: [
                 {
                     key: '3-1',
-                    icon: <Badge count={0} size="small"><FileSearchOutlined
-                        shape="square"/></Badge>,
+                    icon: <Badge count={0} size="small"><FileSearchOutlined/></Badge>,
                     label: 'My Watchlists',
                     disabled: !isAuthenticated,
                     onClick: () => navigate('/tracking/watchlist')
@@ -135,10 +141,29 @@ export default function App() {
         },
         {
             key: '4',
+            label: 'My Watchdog',
             icon: <UserOutlined/>,
-            label: 'My Account',
-            disabled: !isAuthenticated,
-            onClick: () => navigate('/user')
+            children: [
+                {
+                    key: '4-1',
+                    icon: <UserOutlined/>,
+                    label: 'My Account',
+                    disabled: !isAuthenticated,
+                    onClick: () => navigate('/user')
+                },
+                {
+                    key: '4-2',
+                    icon: <InfoCircleOutlined/>,
+                    label: 'TOS',
+                    onClick: () => navigate('/tos')
+                },
+                {
+                    key: '4-3',
+                    icon: <FileProtectOutlined/>,
+                    label: 'Privacy Policy',
+                    onClick: () => navigate('/privacy')
+                }
+            ]
         },
         {
             key: '5',
@@ -146,27 +171,16 @@ export default function App() {
             label: 'FAQ',
             onClick: () => navigate('/faq')
         },
-        {
-            key: '6',
-            icon: <InfoCircleOutlined/>,
-            label: 'TOS',
-            onClick: () => navigate('/tos')
-        },
-        {
-            key: '7',
-            icon: <FileProtectOutlined/>,
-            label: 'Privacy Policy',
-            onClick: () => navigate('/privacy')
-        }
+
     ]
 
 
     return <AuthenticatedContext.Provider value={contextValue}>
         <Layout hasSider style={{minHeight: '100vh'}}>
-            <Layout.Sider>
+            <Layout.Sider collapsible>
                 <Menu
                     defaultSelectedKeys={['1-1']}
-                    defaultOpenKeys={['1', '2', '3']}
+                    defaultOpenKeys={['1', '2', '3', '4']}
                     mode="inline"
                     theme="dark"
                     items={[...menuItems, isAuthenticated ? {
@@ -220,7 +234,8 @@ export default function App() {
                     </div>
                 </Layout.Content>
                 <Layout.Footer style={{textAlign: 'center'}}>
-                    Domain Watchdog ©{new Date().getFullYear()} Created by Maël Gangloff
+                    <Link to='https://github.com/maelgangloff/domain-watchdog'>Domain
+                        Watchdog</Link> ©{new Date().getFullYear()} Created by Maël Gangloff
                 </Layout.Footer>
             </Layout>
         </Layout>

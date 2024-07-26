@@ -1,4 +1,4 @@
-import React, {createContext, useContext, useEffect, useState} from "react";
+import React, {createContext, useContext, useState} from "react";
 import {Alert, Button, Card, Flex, Form, Input} from "antd";
 import {login} from "../utils/api";
 import {useNavigate} from "react-router-dom";
@@ -28,7 +28,6 @@ export default function Page() {
 
     return <Flex gap="middle" align="center" justify="center" vertical><Card
         title="Log in"
-        style={{width: 500}}
     >
         {error &&
             <Alert
@@ -66,6 +65,11 @@ export default function Page() {
             <Form.Item wrapperCol={{offset: 8, span: 16}}>
                 <Button type="primary" htmlType="submit">
                     Submit
+                </Button>
+            </Form.Item>
+            <Form.Item wrapperCol={{offset: 8, span: 16}}>
+                <Button type="primary" htmlType="button" href="/login/oauth">
+                    Log in with SSO
                 </Button>
             </Form.Item>
         </Form>

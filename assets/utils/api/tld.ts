@@ -7,7 +7,7 @@ interface Tld {
     specification13: boolean
 }
 
-export async function getTldList(params: object): Promise<Tld[]> {
+export async function getTldList(params: object): Promise<any> {
     return (await request<Tld[]>({
         url: 'tld',
         params,

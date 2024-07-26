@@ -21,7 +21,6 @@ use Symfony\Component\Serializer\Attribute\Groups;
     operations: [
         new GetCollection(
             uriTemplate: '/tld',
-            paginationItemsPerPage: 200,
             normalizationContext: ['groups' => ['tld:list']]
         ),
         new Get(

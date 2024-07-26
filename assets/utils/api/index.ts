@@ -55,7 +55,7 @@ export async function request<T = any, R = AxiosResponse<T>, D = any>(config: Ax
         withCredentials: true,
         headers: {
             ...config.headers,
-            Accept: 'application/json'
+            Accept: 'application/ld+json'
         }
     }
     return await axios.request<T, R, D>(axiosConfig)
