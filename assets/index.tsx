@@ -14,7 +14,6 @@ function Index() {
         <HashRouter>
             <App/>
         </HashRouter>
-
     );
 }
 

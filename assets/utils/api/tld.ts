@@ -8,21 +8,8 @@ interface Tld {
 }
 
 export async function getTldList(params: object): Promise<Tld[]> {
-    let page = 1
-    let response = (await request<Tld[]>({
+    return (await request<Tld[]>({
         url: 'tld',
-        params: {...params, page},
+        params,
     })).data
-    const tldList: Tld[] = response;
-
-    while (response.length !== 0) {
-        page++
-        response = (await request<Tld[]>({
-            url: 'tld',
-            params: {...params, page},
-        })).data
-
-        tldList.push(...response)
-    }
-    return tldList
 }
