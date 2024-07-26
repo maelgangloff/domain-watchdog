@@ -67,10 +67,7 @@ Encore
         use: [
             {
                 loader: "html-loader",
-            },
-            {
-                loader: "markdown-loader"
-            },
+            }
         ],
     })
 

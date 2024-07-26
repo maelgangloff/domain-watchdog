@@ -1,7 +1,7 @@
 import React from "react";
 
-export default function Page() {
+export default function TldPage() {
     return <p>
-        Login Page
+        Tld
     </p>
 }
