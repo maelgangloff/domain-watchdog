@@ -32,8 +32,7 @@ on [How to deploy a Symfony application](https://symfony.com/doc/current/deploym
 ### Prerequisites
 
 - PHP 8.2 or higher
-- Symfony 5.9 or higher
-- A SQL-compatible database (e.g., MariaDB, MySQL, PostgreSQL)
+- PostgreSQL
 
 ### Steps
 

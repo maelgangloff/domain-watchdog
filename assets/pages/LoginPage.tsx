@@ -19,7 +19,7 @@ export default function Page() {
     const onFinish = (data: FieldType) => {
         login(data.username, data.password).then(() => {
             setIsAuthenticated(true)
-            navigate('/search/domain')
+            navigate('/home')
         }).catch((e) => {
             setIsAuthenticated(false)
             setError(e.response.data.message)

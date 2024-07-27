@@ -1,11 +1,12 @@
 import {Badge, Layout, Menu, theme} from "antd";
 import {
-    CompassOutlined,
     ApiOutlined,
     BankOutlined,
     CloudServerOutlined,
+    CompassOutlined,
     FileProtectOutlined,
     FileSearchOutlined,
+    HomeOutlined,
     InfoCircleOutlined,
     LineChartOutlined,
     LoginOutlined,
@@ -17,8 +18,6 @@ import {
 } from "@ant-design/icons";
 import {Link, Navigate, Route, Routes, useLocation, useNavigate} from "react-router-dom";
 import TextPage from "./pages/TextPage";
-import tos from "./content/tos.md";
-import privacy from "./content/privacy.md";
 import DomainSearchPage from "./pages/search/DomainSearchPage";
 import EntitySearchPage from "./pages/search/EntitySearchPage";
 import NameserverSearchPage from "./pages/search/NameserverSearchPage";
@@ -32,6 +31,11 @@ import FAQPage from "./pages/FAQPage";
 import LoginPage, {AuthenticatedContext} from "./pages/LoginPage";
 import ConnectorsPage from "./pages/tracking/ConnectorsPage";
 import NotFoundPage from "./pages/NotFoundPage";
+
+import tos from "./content/tos.md";
+import privacy from "./content/privacy.md";
+import home from './content/home.md'
+import {ItemType, MenuItemType} from "antd/lib/menu/interface";
 
 export default function App() {
     const {
@@ -60,19 +64,25 @@ export default function App() {
             if (location.pathname === '/login') navigate('/search/domain')
         }).catch(() => {
             setIsAuthenticated(false)
-            if (location.pathname !== '/login') navigate('/login')
+            navigate('/home')
         })
     }, []);
 
 
-    const menuItems = [
+    const menuItems: ItemType<MenuItemType>[] = [
         {
-            key: '1',
+            key: 'home',
+            label: 'Home',
+            icon: <HomeOutlined/>,
+            onClick: () => navigate('/home')
+        },
+        {
+            key: 'search',
             label: 'Search',
-            icon: <SearchOutlined />,
+            icon: <SearchOutlined/>,
             children: [
                 {
-                    key: '1-1',
+                    key: 'domain-finder',
                     icon: <CompassOutlined/>,
                     label: 'Domain',
                     title: 'Domain Finder',
@@ -80,7 +90,7 @@ export default function App() {
                     onClick: () => navigate('/search/domain')
                 },
                 {
-                    key: '1-2',
+                    key: 'entity-finder',
                     icon: <TeamOutlined/>,
                     label: 'Entity',
                     title: 'Entity Finder',
@@ -88,7 +98,7 @@ export default function App() {
                     onClick: () => navigate('/search/entity')
                 },
                 {
-                    key: '1-3',
+                    key: 'ns-finder',
                     icon: <CloudServerOutlined/>,
                     label: 'Nameserver',
                     title: 'Nameserver Finder',
@@ -98,12 +108,12 @@ export default function App() {
             ]
         },
         {
-            key: '2',
+            key: 'info',
             label: 'Information',
             icon: <InfoCircleOutlined/>,
             children: [
                 {
-                    key: '2-1',
+                    key: 'tld-list',
                     icon: <BankOutlined/>,
                     label: 'TLD',
                     title: 'TLD list',
@@ -111,7 +121,7 @@ export default function App() {
                     onClick: () => navigate('/info/tld')
                 },
                 {
-                    key: '2-2',
+                    key: 'stats',
                     icon: <LineChartOutlined/>,
                     label: 'Statistics',
                     disabled: !isAuthenticated,
@@ -120,19 +130,19 @@ export default function App() {
             ]
         },
         {
-            key: '3',
+            key: 'tracking',
             label: 'Tracking',
             icon: <FileSearchOutlined/>,
             children: [
                 {
-                    key: '3-1',
+                    key: 'watchlist',
                     icon: <Badge count={0} size="small"><FileSearchOutlined/></Badge>,
                     label: 'My Watchlists',
                     disabled: !isAuthenticated,
                     onClick: () => navigate('/tracking/watchlist')
                 },
                 {
-                    key: '3-2',
+                    key: 'connectors',
                     icon: <ApiOutlined/>,
                     label: 'My connectors',
                     disabled: !isAuthenticated,
@@ -141,25 +151,25 @@ export default function App() {
             ]
         },
         {
-            key: '4',
+            key: 'watchdog',
             label: 'My Watchdog',
             icon: <UserOutlined/>,
             children: [
                 {
-                    key: '4-1',
+                    key: 'account',
                     icon: <UserOutlined/>,
                     label: 'My Account',
                     disabled: !isAuthenticated,
                     onClick: () => navigate('/user')
                 },
                 {
-                    key: '4-2',
+                    key: 'tos',
                     icon: <InfoCircleOutlined/>,
                     label: 'TOS',
                     onClick: () => navigate('/tos')
                 },
                 {
-                    key: '4-3',
+                    key: 'privacy',
                     icon: <FileProtectOutlined/>,
                     label: 'Privacy Policy',
                     onClick: () => navigate('/privacy')
@@ -180,8 +190,8 @@ export default function App() {
         <Layout hasSider style={{minHeight: '100vh'}}>
             <Layout.Sider collapsible>
                 <Menu
-                    defaultSelectedKeys={['1-1']}
-                    defaultOpenKeys={['1', '2', '3', '4']}
+                    defaultSelectedKeys={['home']}
+                    defaultOpenKeys={['search', 'info', 'tracking', 'watchdog']}
                     mode="inline"
                     theme="dark"
                     items={[...menuItems, isAuthenticated ? {
@@ -210,7 +220,8 @@ export default function App() {
                     }}>
 
                         <Routes>
-                            <Route path="/" element={<Navigate to="/search/domain"/>}/>
+                            <Route path="/" element={<Navigate to="/login"/>}/>
+                            <Route path="/home" element={<TextPage markdown={home}/>}/>
 
                             <Route path="/search/domain" element={<DomainSearchPage/>}/>
                             <Route path="/search/entity" element={<EntitySearchPage/>}/>
