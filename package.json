@@ -24,6 +24,7 @@
     "@types/punycode": "^2.1.4",
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
+    "@types/vcf": "^2.0.7",
     "antd": "^5.19.3",
     "axios": "^1.7.2",
     "core-js": "^3.23.0",
@@ -37,6 +38,7 @@
     "snarkdown": "^2.0.0",
     "ts-loader": "^9.5.1",
     "typescript": "^5.5.3",
+    "vcf": "^2.1.2",
     "webpack": "^5.74.0",
     "webpack-cli": "^4.10.0",
     "webpack-notifier": "^1.15.0"

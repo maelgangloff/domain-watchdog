@@ -43,7 +43,7 @@ class Entity
 
     #[ORM\Id]
     #[ORM\Column(length: 255)]
-    #[Groups(['entity:list', 'entity:item'])]
+    #[Groups(['entity:list', 'entity:item', 'domain:item'])]
     private ?string $handle = null;
 
     /**
@@ -66,11 +66,11 @@ class Entity
      * @var Collection<int, EntityEvent>
      */
     #[ORM\OneToMany(targetEntity: EntityEvent::class, mappedBy: 'entity', cascade: ['persist'], orphanRemoval: true)]
-    #[Groups(['entity:list', 'entity:item', 'entity:list'])]
+    #[Groups(['entity:list', 'entity:item', 'entity:list', 'domain:item'])]
     private Collection $events;
 
     #[ORM\Column]
-    #[Groups(['entity:item'])]
+    #[Groups(['entity:item', 'domain:item'])]
     private array $jCard = [];
 
     public function __construct()

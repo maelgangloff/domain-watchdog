@@ -33,7 +33,6 @@ use Symfony\Component\Serializer\Attribute\SerializedName;
                 'groups' => [
                     'domain:item',
                     'event:list',
-                    'entity:list',
                     'domain-entity:entity',
                     'nameserver-entity:nameserver',
                     'nameserver-entity:entity',

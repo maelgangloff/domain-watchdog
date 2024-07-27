@@ -23,8 +23,7 @@ export interface Event {
 
 export interface Entity {
     handle: string
-    events: Event[]
-    roles: string[]
+    jCard: any
 }
 
 export interface Nameserver {
@@ -55,6 +54,7 @@ export interface Domain {
     }[]
     nameservers: Nameserver[]
     tld: Tld
+    deleted: boolean
 }
 
 export interface User {

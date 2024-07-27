@@ -42,7 +42,11 @@ class DomainRefreshController extends AbstractController
         $domain = $this->domainRepository->findOneBy(["ldhName" => $ldhName]);
 
         // If the domain name exists in the database, recently updated and not important, we return the stored Domain
-        if ($domain !== null && ($domain->getUpdatedAt()->diff(new DateTimeImmutable('now'))->days < 7) && !$this->RDAPService::isToBeWatchClosely($domain, $domain->getUpdatedAt())) return $domain;
+        if ($domain !== null &&
+            !$domain->getDeleted() &&
+            ($domain->getUpdatedAt()->diff(new DateTimeImmutable('now'))->days < 7) &&
+            !$this->RDAPService::isToBeWatchClosely($domain, $domain->getUpdatedAt())
+        ) return $domain;
 
         if (false === $kernel->isDebug()) {
             $limiter = $this->authenticatedApiLimiter->create($this->getUser()->getUserIdentifier());
