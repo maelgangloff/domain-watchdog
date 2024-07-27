@@ -7,7 +7,6 @@ export default function TextPage({resource}: { resource: string }) {
     const [markdown, setMarkdown] = useState<string>()
 
     useEffect(() => {
-        console.log('heyyy')
         axios.get('/content/' + resource).then(res => setMarkdown(res.data))
     }, [resource])
 
