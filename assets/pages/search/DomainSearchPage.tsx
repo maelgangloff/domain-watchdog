@@ -1,12 +1,30 @@
 import React, {useState} from "react";
-import {Badge, Card, Divider, Flex, Form, FormProps, Input, message, Space, Tag, Timeline, Typography} from "antd";
 import {
+    Avatar,
+    Badge,
+    Card,
+    Divider,
+    Flex,
+    Form,
+    FormProps,
+    Input,
+    message,
+    Segmented,
+    Space,
+    Tag,
+    Timeline,
+    Typography
+} from "antd";
+import {
+    BankOutlined,
     ClockCircleOutlined,
     DeleteOutlined,
     SearchOutlined,
     ShareAltOutlined,
     SignatureOutlined,
-    SyncOutlined
+    SyncOutlined,
+    ToolOutlined,
+    UserOutlined
 } from "@ant-design/icons";
 import {Domain, getDomain} from "../../utils/api";
 import {AxiosError} from "axios"
@@ -117,6 +135,27 @@ export default function DomainSearchPage() {
                                     )
                                 }
                             />
+                            {
+                                domain.entities.length > 0 && <>
+                                    <Divider orientation="left">Entities</Divider>
+                                    <Segmented
+                                        options={domain.entities.map(e => ({
+                                            label: (
+                                                <div style={{padding: 4}}>
+                                                    <Avatar style={{backgroundColor: '#87d068'}}
+                                                            icon={e.roles.includes('registrant') ?
+                                                                <SignatureOutlined/> : e.roles.includes('registrar') ?
+                                                                    <BankOutlined/> :
+                                                                    e.roles.includes('technical') ? <ToolOutlined/> :
+                                                                        <UserOutlined/>}/>
+                                                    <div>{e.entity.handle}</div>
+                                                </div>
+                                            ),
+                                            value: e.entity.handle
+                                        }))}
+                                    />
+                                </>
+                            }
                         </Card>
                     </Badge.Ribbon>
                 </Space>

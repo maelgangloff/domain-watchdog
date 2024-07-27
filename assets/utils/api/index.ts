@@ -48,7 +48,11 @@ export interface Domain {
     handle: string
     status: string[]
     events: Event[]
-    entities: Entity[]
+    entities: {
+        entity: Entity
+        events: Event[]
+        roles: string[]
+    }[]
     nameservers: Nameserver[]
     tld: Tld
 }
