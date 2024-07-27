@@ -61,16 +61,6 @@ Encore
 
     // uncomment if you use React
     .enableReactPreset()
-
-    .addLoader({
-        test: /\.md$/,
-        use: [
-            {
-                loader: "html-loader",
-            }
-        ],
-    })
-
 // uncomment to get integrity="..." attributes on your script & link tags
 // requires WebpackEncoreBundle 1.4 or higher
 //.enableIntegrityHashes(Encore.isProduction())

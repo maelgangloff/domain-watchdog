@@ -32,12 +32,6 @@ import ConnectorsPage from "./pages/tracking/ConnectorsPage";
 import NotFoundPage from "./pages/NotFoundPage";
 import {ItemType, MenuItemType} from "antd/lib/menu/interface";
 
-import tos from "./content/tos.md";
-import privacy from "./content/privacy.md";
-import home from './content/home.md'
-import faq from './content/faq.md'
-
-
 export default function App() {
     const {
         token: {colorBgContainer, borderRadiusLG},
@@ -222,7 +216,7 @@ export default function App() {
 
                         <Routes>
                             <Route path="/" element={<Navigate to="/login"/>}/>
-                            <Route path="/home" element={<TextPage markdown={home}/>}/>
+                            <Route path="/home" element={<TextPage resource='home.md'/>}/>
 
                             <Route path="/search/domain" element={<DomainSearchPage/>}/>
                             <Route path="/search/entity" element={<EntitySearchPage/>}/>
@@ -236,9 +230,9 @@ export default function App() {
 
                             <Route path="/user" element={<UserPage/>}/>
 
-                            <Route path="/faq" element={<TextPage markdown={faq}/>}/>
-                            <Route path="/tos" element={<TextPage markdown={tos}/>}/>
-                            <Route path="/privacy" element={<TextPage markdown={privacy}/>}/>
+                            <Route path="/faq" element={<TextPage resource='faq.md'/>}/>
+                            <Route path="/tos" element={<TextPage resource='tos.md'/>}/>
+                            <Route path="/privacy" element={<TextPage resource='privacy.md'/>}/>
 
                             <Route path="/login" element={<LoginPage/>}/>
 
