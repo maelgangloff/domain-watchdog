@@ -26,35 +26,35 @@ const formItemLayoutWithOutLabel = {
 
 const triggerEventItems: { label: string, value: EventAction }[] = [
     {
-        label: 'When the domain is expired',
+        label: 'When a domain is expired',
         value: 'expiration'
     },
     {
-        label: 'When the domain is updated',
+        label: 'When a domain is updated',
         value: 'last changed'
     },
     {
-        label: 'When the domain is deleted',
+        label: 'When a domain is deleted',
         value: 'deletion'
     },
     {
-        label: 'When the domain is transferred',
+        label: 'When a domain is transferred',
         value: 'transfer'
     },
     {
-        label: 'When the domain is locked',
+        label: 'When a domain is locked',
         value: 'locked'
     },
     {
-        label: 'When the domain is unlocked',
+        label: 'When a domain is unlocked',
         value: 'unlocked'
     },
     {
-        label: 'When the domain is reregistered',
+        label: 'When a domain is reregistered',
         value: 'reregistration'
     },
     {
-        label: 'When the domain is reinstantiated',
+        label: 'When a domain is reinstantiated',
         value: 'reinstantiation'
     }
 ]
