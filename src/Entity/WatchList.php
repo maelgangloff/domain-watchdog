@@ -58,14 +58,14 @@ class WatchList
     #[ORM\JoinTable(name: 'watch_lists_domains',
         joinColumns: [new ORM\JoinColumn(name: 'watch_list_token', referencedColumnName: 'token')],
         inverseJoinColumns: [new ORM\JoinColumn(name: 'domain_ldh_name', referencedColumnName: 'ldh_name')])]
-    #[Groups(['watchlist:item', 'watchlist:create', 'watchlist:update'])]
+    #[Groups(['watchlist:list', 'watchlist:item', 'watchlist:create', 'watchlist:update'])]
     private Collection $domains;
 
     /**
      * @var Collection<int, WatchListTrigger>
      */
     #[ORM\OneToMany(targetEntity: WatchListTrigger::class, mappedBy: 'watchList', cascade: ['persist'], orphanRemoval: true)]
-    #[Groups(['watchlist:item', 'watchlist:create', 'watchlist:update'])]
+    #[Groups(['watchlist:list', 'watchlist:item', 'watchlist:create', 'watchlist:update'])]
     #[SerializedName("triggers")]
     private Collection $watchListTriggers;
 

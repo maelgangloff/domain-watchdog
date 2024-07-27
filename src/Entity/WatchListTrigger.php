@@ -13,7 +13,7 @@ class WatchListTrigger
 {
     #[ORM\Id]
     #[ORM\Column(length: 255)]
-    #[Groups(['watchlist:item', 'watchlist:create', 'watchlist:update'])]
+    #[Groups(['watchlist:list', 'watchlist:item', 'watchlist:create', 'watchlist:update'])]
     private ?string $event = null;
 
     #[ORM\Id]
@@ -23,7 +23,7 @@ class WatchListTrigger
 
     #[ORM\Id]
     #[ORM\Column(enumType: TriggerAction::class)]
-    #[Groups(['watchlist:item', 'watchlist:create', 'watchlist:update'])]
+    #[Groups(['watchlist:list', 'watchlist:item', 'watchlist:create', 'watchlist:update'])]
     private ?TriggerAction $action = null;
 
     public function getEvent(): ?string

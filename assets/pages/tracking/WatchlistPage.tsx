@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
-import {Button, Card, Divider, Flex, Form, Input, message, Select, Skeleton, Space} from "antd";
+import {Button, Card, Divider, Flex, Form, Input, message, Popconfirm, Select, Skeleton, Space, Typography} from "antd";
 
-import {CloseOutlined, DeleteFilled, MinusCircleOutlined, PlusOutlined, ThunderboltFilled} from "@ant-design/icons";
+import {DeleteFilled, MinusCircleOutlined, PlusOutlined, ThunderboltFilled} from "@ant-design/icons";
 import {deleteWatchlist, EventAction, getWatchlists, postWatchlist} from "../../utils/api";
 import {AxiosError} from "axios";
 
@@ -66,14 +66,15 @@ const trigerActionItems = [
     }
 ]
 
+type Watchlist = { token: string, domains: { ldhName: string }[], triggers?: { event: EventAction, action: string }[] }
+
 export default function WatchlistPage() {
     const [form] = Form.useForm()
     const [messageApi, contextHolder] = message.useMessage()
-    const [watchlists, setWatchlists] = useState<{ token: string }[] | null>()
+    const [watchlists, setWatchlists] = useState<Watchlist[] | null>()
 
     const onCreateWatchlist = (values: { domains: string[], triggers: { event: string, action: string }[] }) => {
         const domainsURI = values.domains.map(d => '/api/domains/' + d)
-
         postWatchlist(domainsURI, values.triggers).then((w) => {
             form.resetFields()
             refreshWatchlists()
@@ -159,36 +160,61 @@ export default function WatchlistPage() {
                         </>
                     )}
                 </Form.List>
-                <Form.List name="trigers">
-                    {(fields, {add, remove}) => (
+                <Form.List
+                    name="triggers"
+                    rules={[
+                        {
+                            validator: async (_, domains) => {
+                                if (!domains || domains.length < 1) {
+                                    return Promise.reject(new Error('At least one domain trigger'));
+                                }
+                            },
+                        },
+                    ]}
+                >
+                    {(fields, {add, remove}, {errors}) => (
                         <>
-                            {fields.map((field) => (
-                                <Card
-                                    size="small"
-                                    title={`Trigger ${field.name + 1}`}
+                            {fields.map((field, index) => (
+                                <Form.Item
+                                    {...(index === 0 ? formItemLayout : formItemLayoutWithOutLabel)}
+                                    label={index === 0 ? 'Domain trigger' : ''}
+                                    required={true}
                                     key={field.key}
-                                    extra={
-                                        <CloseOutlined
-                                            onClick={() => {
-                                                remove(field.name);
-                                            }}
-                                        />
-                                    }
                                 >
-                                    <Form.Item name={[field.name, 'event']}>
-                                        <Select
-                                            status="warning"
-                                            options={triggerEventItems}
+
+                                    <Space wrap>
+                                        <Form.Item {...field}
+                                                   validateTrigger={['onChange', 'onBlur']}
+                                                   rules={[{
+                                                       required: true,
+                                                       message: 'Required'
+                                                   }]}
+                                                   noStyle name={[field.name, 'event']}>
+                                            <Select style={{minWidth: 300}} options={triggerEventItems} showSearch
+                                                    placeholder="If this happens" optionFilterProp="label"/>
+                                        </Form.Item>
+                                        <Form.Item {...field}
+                                                   validateTrigger={['onChange', 'onBlur']}
+                                                   rules={[{
+                                                       required: true,
+                                                       message: 'Required'
+                                                   }]}
+                                                   noStyle name={[field.name, 'action']}>
+                                            <Select style={{minWidth: 300}} options={trigerActionItems} showSearch
+                                                    placeholder="Then do that"
+                                                    optionFilterProp="label"/>
+                                        </Form.Item>
+                                    </Space>
+
+
+                                    {fields.length > 1 ? (
+                                        <MinusCircleOutlined
+                                            className="dynamic-delete-button"
+                                            onClick={() => remove(field.name)}
                                         />
-                                    </Form.Item>
-                                    <Form.Item name={[field.name, 'action']}>
-                                        <Select
-                                            options={trigerActionItems}
-                                        />
-                                    </Form.Item>
-                                </Card>
+                                    ) : null}
+                                </Form.Item>
                             ))}
-                            <Divider/>
                             <Form.Item>
                                 <Button
                                     type="dashed"
@@ -196,8 +222,9 @@ export default function WatchlistPage() {
                                     style={{width: '60%'}}
                                     icon={<ThunderboltFilled/>}
                                 >
-                                    Add a trigger
+                                    Add a Trigger
                                 </Button>
+                                <Form.ErrorList errors={errors}/>
                             </Form.Item>
                         </>
                     )}
@@ -215,18 +242,32 @@ export default function WatchlistPage() {
             </Form>
         </Card>
 
-        <Card title="My Watchlists" style={{width: '100%'}}>
-            <Skeleton loading={watchlists === undefined} active>
-                {watchlists && watchlists.map(watchlist =>
+
+        <Skeleton loading={watchlists === undefined} active>
+            {watchlists && watchlists.length > 0 && <Card title="My Watchlists" style={{width: '100%'}}>
+                {watchlists.map(watchlist =>
                     <>
-                        <Divider/>
-                        <Card title={"Watchlist " + watchlist.token} extra={<DeleteFilled onClick={() => {
-                            deleteWatchlist(watchlist.token).then(refreshWatchlists)
-                        }}/>}>
+                        <Card title={"Watchlist " + watchlist.token} extra={<Popconfirm
+                            title="Delete the Watchlist"
+                            description="Are you sure to delete this Watchlist ?"
+                            onConfirm={() => deleteWatchlist(watchlist.token).then(refreshWatchlists)}
+                            okText="Yes"
+                            cancelText="No"
+                        ><DeleteFilled/> </Popconfirm>}>
+                            <Typography.Paragraph>
+                                Domains : {watchlist?.domains.map(d => d.ldhName).join(',')}
+                            </Typography.Paragraph>
+                            {
+                                watchlist.triggers && <Typography.Paragraph>
+                                    Triggers : {watchlist.triggers.map(t => `${t.event} => ${t.action}`).join(',')}
+                                </Typography.Paragraph>
+                            }
                         </Card>
+                        <Divider/>
                     </>
                 )}
-            </Skeleton>
-        </Card>
+            </Card>
+            }
+        </Skeleton>
     </Flex>
 }
