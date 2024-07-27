@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import {Badge, Card, Divider, Flex, Form, FormProps, Input, message, Space, Timeline, Typography} from "antd";
+import {Badge, Card, Divider, Flex, Form, FormProps, Input, message, Space, Tag, Timeline, Typography} from "antd";
 import {
     ClockCircleOutlined,
     DeleteOutlined,
@@ -31,7 +31,6 @@ export default function DomainSearchPage() {
         })
     }
 
-
     return <Flex gap="middle" align="center" justify="center" vertical>
         <Card title="Domain finder">
             {contextHolder}
@@ -60,57 +59,67 @@ export default function DomainSearchPage() {
             </Form>
 
             {
-                domain && <>
-                    <Divider/>
-                    <Space direction="vertical" size="middle" style={{width: '100%'}}>
-                        <Badge.Ribbon text={`.${domain.tld.tld.toUpperCase()} (${domain.tld.type})`}
-                                      color={
-                                          domain.tld.type === 'ccTLD' ? 'purple' :
-                                              (domain.tld.type === 'gTLD' && domain.tld.specification13) ? "volcano" :
-                                                  domain.tld.type === 'gTLD' ? "green"
-                                                      : "cyan"
-                                      }>
-                            <Card title={`${domain.ldhName}${domain.handle ? ' (' + domain.handle + ')' : ''}`}
-                                  size="small">
+                domain &&
+                <Space direction="vertical" size="middle" style={{width: '100%'}}>
+                    <Badge.Ribbon text={`.${domain.tld.tld.toUpperCase()} (${domain.tld.type})`}
+                                  color={
+                                      domain.tld.type === 'ccTLD' ? 'purple' :
+                                          (domain.tld.type === 'gTLD' && domain.tld.specification13) ? "volcano" :
+                                              domain.tld.type === 'gTLD' ? "green"
+                                                  : "cyan"
+                                  }>
+                        <Card title={`${domain.ldhName}${domain.handle ? ' (' + domain.handle + ')' : ''}`}
+                              size="small">
+                            {domain.status.length > 0 &&
+                                <>
+                                    <Divider orientation="left">EPP Status Codes</Divider>
+                                    <Flex gap="4px 0" wrap>
+                                        {
+                                            domain.status.map(s =>
+                                                <Tag color={s === 'active' ? 'green' : 'blue'}>{s}</Tag>
+                                            )
+                                        }
+                                    </Flex>
+                                </>
+                            }
+                            <Divider orientation="left">Timeline</Divider>
+                            <Timeline
+                                mode="right"
+                                items={domain.events
+                                    .sort((e1, e2) => new Date(e2.date).getTime() - new Date(e1.date).getTime())
+                                    .map(({action, date}) => {
 
-                                <Timeline
-                                    mode="right"
-                                    items={domain.events
-                                        .sort((e1, e2) => new Date(e2.date).getTime() - new Date(e1.date).getTime())
-                                        .map(({action, date}) => {
-
-                                                let color, dot
-                                                if (action === 'registration') {
-                                                    color = 'green'
-                                                    dot = <SignatureOutlined style={{fontSize: '16px'}}/>
-                                                } else if (action === 'expiration') {
-                                                    color = 'red'
-                                                    dot = <ClockCircleOutlined style={{fontSize: '16px'}}/>
-                                                } else if (action === 'transfer') {
-                                                    color = 'orange'
-                                                    dot = <ShareAltOutlined style={{fontSize: '16px'}}/>
-                                                } else if (action === 'last changed') {
-                                                    color = 'blue'
-                                                    dot = <SyncOutlined style={{fontSize: '16px'}}/>
-                                                } else if (action === 'deletion') {
-                                                    color = 'red'
-                                                    dot = <DeleteOutlined style={{fontSize: '16px'}}/>
-                                                }
-                                                return {
-                                                    label: new Date(date).toUTCString(),
-                                                    children: action,
-                                                    color,
-                                                    dot,
-                                                    pending: new Date(date).getTime() > new Date().getTime()
-                                                }
+                                            let color, dot
+                                            if (action === 'registration') {
+                                                color = 'green'
+                                                dot = <SignatureOutlined style={{fontSize: '16px'}}/>
+                                            } else if (action === 'expiration') {
+                                                color = 'red'
+                                                dot = <ClockCircleOutlined style={{fontSize: '16px'}}/>
+                                            } else if (action === 'transfer') {
+                                                color = 'orange'
+                                                dot = <ShareAltOutlined style={{fontSize: '16px'}}/>
+                                            } else if (action === 'last changed') {
+                                                color = 'blue'
+                                                dot = <SyncOutlined style={{fontSize: '16px'}}/>
+                                            } else if (action === 'deletion') {
+                                                color = 'red'
+                                                dot = <DeleteOutlined style={{fontSize: '16px'}}/>
                                             }
-                                        )
-                                    }
-                                />
-                            </Card>
-                        </Badge.Ribbon>
-                    </Space>
-                </>
+                                            return {
+                                                label: new Date(date).toUTCString(),
+                                                children: action,
+                                                color,
+                                                dot,
+                                                pending: new Date(date).getTime() > new Date().getTime()
+                                            }
+                                        }
+                                    )
+                                }
+                            />
+                        </Card>
+                    </Badge.Ribbon>
+                </Space>
             }
         </Card>
     </Flex>
