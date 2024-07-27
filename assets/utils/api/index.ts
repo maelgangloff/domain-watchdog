@@ -1,7 +1,7 @@
 import axios, {AxiosRequestConfig, AxiosResponse} from "axios";
 
 
-type EventAction =
+export type EventAction =
     'registration'
     | 'reregistration'
     | 'last changed'

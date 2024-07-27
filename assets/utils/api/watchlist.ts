@@ -1,7 +1,7 @@
-import {Event, request, Watchlist} from "./index";
+import {Event, EventAction, request, Watchlist} from "./index";
 
 export async function getWatchlists() {
-    const response = await request<{ token: string }[]>({
+    const response = await request({
         url: 'watchlists'
     })
     return response.data
@@ -14,7 +14,7 @@ export async function getWatchlist(token: string) {
     return response.data
 }
 
-export async function postWatchlist(domains: string[], triggers: Event[]) {
+export async function postWatchlist(domains: string[], triggers: { action: string, event: EventAction }[]) {
     const response = await request<{ token: string }>({
         method: 'POST',
         url: 'watchlists',

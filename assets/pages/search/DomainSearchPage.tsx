@@ -34,7 +34,6 @@ import {Domain, getDomain} from "../../utils/api";
 import {AxiosError} from "axios"
 import vCard from 'vcf'
 
-const {Title} = Typography
 
 type FieldType = {
     ldhName: string
@@ -58,13 +57,12 @@ export default function DomainSearchPage() {
     }
 
     return <Flex gap="middle" align="center" justify="center" vertical>
-        <Card title="Domain finder">
+        <Card title="Domain finder" style={{width: '100%'}}>
             {contextHolder}
             <Form
                 name="basic"
                 labelCol={{span: 8}}
                 wrapperCol={{span: 16}}
-                style={{width: '50em'}}
                 onFinish={onFinish}
                 autoComplete="off"
             >

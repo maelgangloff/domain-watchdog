@@ -21,7 +21,8 @@ use Symfony\Component\Uid\Uuid;
     shortName: 'Watchlist',
     operations: [
         new GetCollection(
-            routeName: 'watchlist_get_all_mine', normalizationContext: ['groups' => 'watchlist:list'],
+            routeName: 'watchlist_get_all_mine',
+            normalizationContext: ['groups' => 'watchlist:list'],
             name: 'get_all_mine',
         ),
         new Get(
