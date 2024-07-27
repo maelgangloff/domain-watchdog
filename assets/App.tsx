@@ -23,19 +23,20 @@ import EntitySearchPage from "./pages/search/EntitySearchPage";
 import NameserverSearchPage from "./pages/search/NameserverSearchPage";
 import TldPage from "./pages/info/TldPage";
 import StatisticsPage from "./pages/info/StatisticsPage";
-import WatchlistsPage from "./pages/tracking/WatchlistsPage";
+import WatchlistPage from "./pages/tracking/WatchlistPage";
 import UserPage from "./pages/watchdog/UserPage";
 import React, {useCallback, useEffect, useMemo, useState} from "react";
 import {getUser} from "./utils/api";
-import FAQPage from "./pages/FAQPage";
 import LoginPage, {AuthenticatedContext} from "./pages/LoginPage";
 import ConnectorsPage from "./pages/tracking/ConnectorsPage";
 import NotFoundPage from "./pages/NotFoundPage";
+import {ItemType, MenuItemType} from "antd/lib/menu/interface";
 
 import tos from "./content/tos.md";
 import privacy from "./content/privacy.md";
 import home from './content/home.md'
-import {ItemType, MenuItemType} from "antd/lib/menu/interface";
+import faq from './content/faq.md'
+
 
 export default function App() {
     const {
@@ -230,12 +231,12 @@ export default function App() {
                             <Route path="/info/tld" element={<TldPage/>}/>
                             <Route path="/info/stats" element={<StatisticsPage/>}/>
 
-                            <Route path="/tracking/watchlist" element={<WatchlistsPage/>}/>
+                            <Route path="/tracking/watchlist" element={<WatchlistPage/>}/>
                             <Route path="/tracking/connectors" element={<ConnectorsPage/>}/>
 
                             <Route path="/user" element={<UserPage/>}/>
 
-                            <Route path="/faq" element={<FAQPage/>}/>
+                            <Route path="/faq" element={<TextPage markdown={faq}/>}/>
                             <Route path="/tos" element={<TextPage markdown={tos}/>}/>
                             <Route path="/privacy" element={<TextPage markdown={privacy}/>}/>
 

@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function ConnectorsPage() {
+export default function WatchlistPage() {
     return <p>
         Not implemented
     </p>

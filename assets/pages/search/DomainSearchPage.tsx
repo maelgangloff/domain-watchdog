@@ -156,7 +156,10 @@ export default function DomainSearchPage() {
                                             <List
                                                 className="demo-loadmore-list"
                                                 itemLayout="horizontal"
-                                                dataSource={domain.entities}
+                                                dataSource={domain.entities.sort((e1, e2) => {
+                                                    const p = (r: string[]) => r.includes('registrant') ? 4 : r.includes('administrative') ? 3 : r.includes('billing') ? 2 : 1
+                                                    return p(e2.roles) - p(e1.roles)
+                                                })}
                                                 renderItem={(e) => {
                                                     const jCard = vCard.fromJSON(e.entity.jCard)
                                                     let name = ''
