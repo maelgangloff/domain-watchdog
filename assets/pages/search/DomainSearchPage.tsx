@@ -1,6 +1,13 @@
 import React, {useState} from "react";
-import {Card, Flex, Form, FormProps, Input, message} from "antd";
-import {SearchOutlined} from "@ant-design/icons";
+import {Card, Divider, Flex, Form, FormProps, Input, message, Timeline} from "antd";
+import {
+    ClockCircleOutlined,
+    DeleteOutlined,
+    SearchOutlined,
+    ShareAltOutlined,
+    SignatureOutlined,
+    SyncOutlined
+} from "@ant-design/icons";
 import {Domain, getDomain} from "../../utils/api";
 import {AxiosError} from "axios"
 
@@ -48,10 +55,47 @@ export default function DomainSearchPage() {
                 >
                     <Input size="large" prefix={<SearchOutlined/>} placeholder="example.com"/>
                 </Form.Item>
-
             </Form>
-        </Card>
-        <Card>
+            <Divider/>
+            {
+                domainData && <>
+                    <Timeline
+                        mode="right"
+                        items={domainData.events
+                            .sort((e1, e2) => new Date(e2.date).getTime() - new Date(e1.date).getTime())
+                            .map(({action, date}) => {
+
+                                    let color, dot
+                                    if (action === 'registration') {
+                                        color = 'green'
+                                        dot = <SignatureOutlined style={{fontSize: '16px'}}/>
+                                    } else if (action === 'expiration') {
+                                        color = 'red'
+                                        dot = <ClockCircleOutlined style={{fontSize: '16px'}}/>
+                                    } else if (action === 'transfer') {
+                                        color = 'orange'
+                                        dot = <ShareAltOutlined style={{fontSize: '16px'}}/>
+                                    } else if (action === 'last changed') {
+                                        color = 'blue'
+                                        dot = <SyncOutlined style={{fontSize: '16px'}}/>
+                                    } else if (action === 'deletion') {
+                                        color = 'red'
+                                        dot = <DeleteOutlined style={{fontSize: '16px'}}/>
+                                    }
+
+                                    return {
+                                        label: new Date(date).toUTCString(),
+                                        children: action,
+                                        color,
+                                        dot,
+                                        pending: new Date(date).getTime() > new Date().getTime()
+                                    }
+                                }
+                            )
+                        }
+                    />
+                </>
+            }
         </Card>
     </Flex>
 }

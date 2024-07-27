@@ -1,8 +1,23 @@
 import axios, {AxiosRequestConfig, AxiosResponse} from "axios";
 
 
+type EventAction =
+    'registration'
+    | 'reregistration'
+    | 'last changed'
+    | 'expiration'
+    | 'deletion'
+    | 'reinstantiation'
+    | 'transfer'
+    | 'locked'
+    | 'unlocked'
+    | 'last update of RDAP database'
+    | 'registrar expiration'
+    | 'enum validation expiration'
+    | string
+
 export interface Event {
-    action: string
+    action: EventAction
     date: string
 }
 
