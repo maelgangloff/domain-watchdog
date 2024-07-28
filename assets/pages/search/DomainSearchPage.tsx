@@ -69,6 +69,8 @@ const domainEvent = {
     'enum validation expiration': () => t`ENUM validation expiration`
 }
 
+const locale = navigator.language.split('-')[0]
+
 export default function DomainSearchPage() {
 
     const [domain, setDomain] = useState<Domain | null>()
@@ -167,7 +169,7 @@ export default function DomainSearchPage() {
                                                     }
 
                                                     return {
-                                                        label: new Date(date).toUTCString(),
+                                                        label: new Date(date).toLocaleString(locale),
                                                         children: Object.keys(domainEvent).includes(action) ? domainEvent[action as keyof typeof domainEvent]() : action,
                                                         color,
                                                         dot,
