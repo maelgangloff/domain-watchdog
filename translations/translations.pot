@@ -74,6 +74,18 @@ msgstr ""
 msgid "This domain name does not appear to be valid"
 msgstr ""
 
+#: assets/pages/search/DomainSearchPage.tsx:117
+msgid "EPP Status Codes"
+msgstr ""
+
+#: assets/pages/search/DomainSearchPage.tsx:127
+msgid "Timeline"
+msgstr ""
+
+#: assets/pages/search/DomainSearchPage.tsx:169
+msgid "Entities"
+msgstr ""
+
 #: assets/pages/search/DomainSearchPage.tsx:208
 msgid ""
 "Although the domain exists in my database, it has been deleted from the "

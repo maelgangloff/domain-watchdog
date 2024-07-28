@@ -114,7 +114,7 @@ export default function DomainSearchPage() {
                                       size="small">
                                     {domain.status.length > 0 &&
                                         <>
-                                            <Divider orientation="left">EPP Status Codes</Divider>
+                                            <Divider orientation="left">{t`EPP Status Codes`}</Divider>
                                             <Flex gap="4px 0" wrap>
                                                 {
                                                     domain.status.map(s =>
@@ -124,7 +124,7 @@ export default function DomainSearchPage() {
                                             </Flex>
                                         </>
                                     }
-                                    <Divider orientation="left">Timeline</Divider>
+                                    <Divider orientation="left">{t`Timeline`}</Divider>
                                     <Timeline
                                         mode="right"
                                         items={domain.events
@@ -166,7 +166,7 @@ export default function DomainSearchPage() {
                                     {
                                         domain.entities.length > 0 &&
                                         <>
-                                            <Divider orientation="left">Entities</Divider>
+                                            <Divider orientation="left">{t`Entities`}</Divider>
                                             <List
                                                 className="demo-loadmore-list"
                                                 itemLayout="horizontal"
