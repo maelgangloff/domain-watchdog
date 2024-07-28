@@ -99,45 +99,45 @@ msgstr "Expiration du registraire"
 msgid "ENUM validation expiration"
 msgstr "Expiration de la validation ENUM"
 
-#: assets/pages/search/DomainSearchPage.tsx:81
+#: assets/pages/search/DomainSearchPage.tsx:83
 msgid "Found !"
 msgstr "Trouvé !"
 
-#: assets/pages/search/DomainSearchPage.tsx:85
+#: assets/pages/search/DomainSearchPage.tsx:87
 #: assets/pages/tracking/WatchlistPage.tsx:89
 msgid "An error occurred"
 msgstr "Une erreur s'est produite"
 
-#: assets/pages/search/DomainSearchPage.tsx:90
+#: assets/pages/search/DomainSearchPage.tsx:92
 msgid "Domain finder"
 msgstr "Rechercher un domaine"
 
 #: assets/pages/LoginPage.tsx:53 assets/pages/LoginPage.tsx:61
-#: assets/pages/search/DomainSearchPage.tsx:103
+#: assets/pages/search/DomainSearchPage.tsx:105
 #: assets/pages/tracking/WatchlistPage.tsx:135
 #: assets/pages/tracking/WatchlistPage.tsx:195
 #: assets/pages/tracking/WatchlistPage.tsx:205
 msgid "Required"
 msgstr "Requis"
 
-#: assets/pages/search/DomainSearchPage.tsx:106
+#: assets/pages/search/DomainSearchPage.tsx:108
 #: assets/pages/tracking/WatchlistPage.tsx:138
 msgid "This domain name does not appear to be valid"
 msgstr "Ce nom de domaine ne semble pas être valide"
 
-#: assets/pages/search/DomainSearchPage.tsx:131
+#: assets/pages/search/DomainSearchPage.tsx:133
 msgid "EPP Status Codes"
 msgstr "Codes de statut EPP"
 
-#: assets/pages/search/DomainSearchPage.tsx:141
+#: assets/pages/search/DomainSearchPage.tsx:143
 msgid "Timeline"
 msgstr "Chronologie"
 
-#: assets/pages/search/DomainSearchPage.tsx:183
+#: assets/pages/search/DomainSearchPage.tsx:185
 msgid "Entities"
 msgstr "Entités"
 
-#: assets/pages/search/DomainSearchPage.tsx:222
+#: assets/pages/search/DomainSearchPage.tsx:224
 msgid ""
 "Although the domain exists in my database, it has been deleted from the "
 "WHOIS by its registrar."
