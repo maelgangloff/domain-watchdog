@@ -40,6 +40,21 @@ type FieldType = {
     ldhName: string
 }
 
+
+const domainRole = {
+    registrant: () => t`Registrant`,
+    technical: () => t`Technical`,
+    administrative: () => t`Administrative`,
+    abuse: () => t`Abuse`,
+    billing: () => t`Billing`,
+    registrar: () => t`Registrar`,
+    reseller: () => t`Reseller`,
+    sponsor: () => t`Sponsor`,
+    proxy: () => t`Proxy`,
+    notifications: () => t`Notifications`,
+    noc: () => t`Noc`
+}
+
 export default function DomainSearchPage() {
 
     const [domain, setDomain] = useState<Domain | null>()
@@ -178,7 +193,7 @@ export default function DomainSearchPage() {
                                                             title={e.entity.handle}
                                                             description={name}
                                                         />
-                                                        <div>{e.roles.join(', ')}</div>
+                                                        <div>{e.roles.map((r) => Object.keys(domainRole).includes(r) ? domainRole[r as keyof typeof domainRole]() : r).join(', ')}</div>
                                                     </List.Item>
                                                 }}
                                             />

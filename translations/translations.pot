@@ -3,61 +3,105 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Plural-Forms: nplurals=2; plural=(n!=1);\n"
 
+#: assets/pages/search/DomainSearchPage.tsx:45
+msgid "Registrant"
+msgstr ""
+
+#: assets/pages/search/DomainSearchPage.tsx:46
+msgid "Technical"
+msgstr ""
+
+#: assets/pages/search/DomainSearchPage.tsx:47
+msgid "Administrative"
+msgstr ""
+
+#: assets/pages/search/DomainSearchPage.tsx:48
+msgid "Abuse"
+msgstr ""
+
+#: assets/pages/search/DomainSearchPage.tsx:49
+msgid "Billing"
+msgstr ""
+
+#: assets/pages/search/DomainSearchPage.tsx:50
+msgid "Registrar"
+msgstr ""
+
+#: assets/pages/search/DomainSearchPage.tsx:51
+msgid "Reseller"
+msgstr ""
+
 #: assets/pages/search/DomainSearchPage.tsx:52
+msgid "Sponsor"
+msgstr ""
+
+#: assets/pages/search/DomainSearchPage.tsx:53
+msgid "Proxy"
+msgstr ""
+
+#: assets/pages/search/DomainSearchPage.tsx:54
+msgid "Notifications"
+msgstr ""
+
+#: assets/pages/search/DomainSearchPage.tsx:55
+msgid "Noc"
+msgstr ""
+
+#: assets/pages/search/DomainSearchPage.tsx:67
 msgid "Found !"
 msgstr ""
 
-#: assets/pages/search/DomainSearchPage.tsx:56
+#: assets/pages/search/DomainSearchPage.tsx:71
 #: assets/pages/tracking/WatchlistPage.tsx:89
 msgid "An error occurred"
 msgstr ""
 
-#: assets/pages/search/DomainSearchPage.tsx:61
+#: assets/pages/search/DomainSearchPage.tsx:76
 msgid "Domain finder"
 msgstr ""
 
 #: assets/pages/LoginPage.tsx:53
 #: assets/pages/LoginPage.tsx:61
-#: assets/pages/search/DomainSearchPage.tsx:74
+#: assets/pages/search/DomainSearchPage.tsx:89
 #: assets/pages/tracking/WatchlistPage.tsx:135
 #: assets/pages/tracking/WatchlistPage.tsx:195
 #: assets/pages/tracking/WatchlistPage.tsx:205
 msgid "Required"
 msgstr ""
 
-#: assets/pages/search/DomainSearchPage.tsx:77
+#: assets/pages/search/DomainSearchPage.tsx:92
 #: assets/pages/tracking/WatchlistPage.tsx:138
 msgid "This domain name does not appear to be valid"
 msgstr ""
 
-#: assets/pages/search/DomainSearchPage.tsx:193
+#: assets/pages/search/DomainSearchPage.tsx:208
 msgid ""
 "Although the domain exists in my database, it has been deleted from the "
 "WHOIS by its registrar."
 msgstr ""
 
 #: assets/App.tsx:114
-#: assets/pages/info/TldPage.tsx:64
+#: assets/pages/info/TldPage.tsx:65
 msgid "TLD"
 msgstr ""
 
-#: assets/pages/info/TldPage.tsx:71
+#: assets/pages/info/TldPage.tsx:72
 msgid "Flag"
 msgstr ""
 
-#: assets/pages/info/TldPage.tsx:75
+#: assets/pages/info/TldPage.tsx:76
 msgid "Country"
 msgstr ""
 
-#: assets/pages/info/TldPage.tsx:81
+#: assets/pages/info/TldPage.tsx:82
 msgid "Registry Operator"
 msgstr ""
 
-#: assets/pages/info/TldPage.tsx:106
+#: assets/pages/info/TldPage.tsx:107
 msgid "This page presents all active TLDs in the root zone database."
 msgstr ""
 
-#: assets/pages/info/TldPage.tsx:109
+#: assets/pages/info/TldPage.tsx:110
 msgid ""
 "IANA provides the list of currently active TLDs, regardless of their type, "
 "and ICANN provides the list of gTLDs.\n"
@@ -69,42 +113,42 @@ msgid ""
 "At the same time, the list of root RDAP servers is updated."
 msgstr ""
 
-#: assets/pages/info/TldPage.tsx:120
+#: assets/pages/info/TldPage.tsx:121
 msgid "Sponsored Top-Level-Domains"
 msgstr ""
 
-#: assets/pages/info/TldPage.tsx:122
+#: assets/pages/info/TldPage.tsx:123
 msgid ""
 "Top-level domains sponsored by specific organizations that set rules for "
 "registration and use, often related to particular interest groups or "
 "industries."
 msgstr ""
 
-#: assets/pages/info/TldPage.tsx:129
+#: assets/pages/info/TldPage.tsx:130
 msgid "Generic Top-Level-Domains"
 msgstr ""
 
-#: assets/pages/info/TldPage.tsx:131
+#: assets/pages/info/TldPage.tsx:132
 msgid ""
 "Generic top-level domains open to everyone, not restricted by specific "
 "criteria, representing various themes or industries."
 msgstr ""
 
-#: assets/pages/info/TldPage.tsx:138
+#: assets/pages/info/TldPage.tsx:139
 msgid "Brand Generic Top-Level-Domains"
 msgstr ""
 
-#: assets/pages/info/TldPage.tsx:140
+#: assets/pages/info/TldPage.tsx:141
 msgid ""
 "Generic top-level domains associated with specific brands, allowing "
 "companies to use their own brand names as domains."
 msgstr ""
 
-#: assets/pages/info/TldPage.tsx:147
+#: assets/pages/info/TldPage.tsx:148
 msgid "Country-Code Top-Level-Domains"
 msgstr ""
 
-#: assets/pages/info/TldPage.tsx:149
+#: assets/pages/info/TldPage.tsx:150
 msgid ""
 "Top-level domains based on country codes, identifying websites according to "
 "their country of origin."
