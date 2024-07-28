@@ -58,9 +58,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(targetEntity: WatchList::class, mappedBy: 'user', orphanRemoval: true)]
     private Collection $watchLists;
 
+    /**
+     * @var Collection<int, Connector>
+     */
+    #[ORM\OneToMany(targetEntity: Connector::class, mappedBy: 'userr', orphanRemoval: true)]
+    private Collection $connectors;
+
     public function __construct()
     {
         $this->watchLists = new ArrayCollection();
+        $this->connectors = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -163,6 +170,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             // set the owning side to null (unless already changed)
             if ($watchList->getUser() === $this) {
                 $watchList->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Connector>
+     */
+    public function getConnectors(): Collection
+    {
+        return $this->connectors;
+    }
+
+    public function addConnector(Connector $connector): static
+    {
+        if (!$this->connectors->contains($connector)) {
+            $this->connectors->add($connector);
+            $connector->setUserr($this);
+        }
+
+        return $this;
+    }
+
+    public function removeConnector(Connector $connector): static
+    {
+        if ($this->connectors->removeElement($connector)) {
+            // set the owning side to null (unless already changed)
+            if ($connector->getUserr() === $this) {
+                $connector->setUserr(null);
             }
         }
 
