@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2024-07-28 18:39+0000\n"
+"PO-Revision-Date: 2024-07-28 19:37+0000\n"
 "Last-Translator: Maël Gangloff <contact@maelgangloff.fr>\n"
 "Language-Team: French <https://weblate.vinceh121.me/projects/domain-watchdog/"
 "domain-watchdog-dashboard/fr/>\n"
@@ -115,7 +115,7 @@ msgstr ""
 
 #: assets/pages/info/TldPage.tsx:138
 msgid "Brand Generic Top-Level-Domains"
-msgstr "Domaines génériques de premier niveau de marque"
+msgstr "Domaine de premier niveau générique de marque"
 
 #: assets/pages/info/TldPage.tsx:140
 msgid ""
