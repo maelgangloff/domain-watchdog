@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "67ad51bfb7e55fe789bbf6ae425a3d8c",
+    "content-hash": "8de1bd3d79398ff0a64f41526ff80de9",
     "packages": [
         {
             "name": "api-platform/core",
@@ -2497,6 +2497,56 @@
                 "source": "https://github.com/nelmio/NelmioCorsBundle/tree/2.5.0"
             },
             "time": "2024-06-24T21:25:28+00:00"
+        },
+        {
+            "name": "ovh/ovh",
+            "version": "v3.3.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ovh/php-ovh.git",
+                "reference": "a5241f84111bc8c108ab78480a3141353389cc49"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ovh/php-ovh/zipball/a5241f84111bc8c108ab78480a3141353389cc49",
+                "reference": "a5241f84111bc8c108ab78480a3141353389cc49",
+                "shasum": ""
+            },
+            "require": {
+                "ext-json": "*",
+                "guzzlehttp/guzzle": "^6.0||^7.0",
+                "php": ">=7.4"
+            },
+            "require-dev": {
+                "php-parallel-lint/php-parallel-lint": "^1.3.1",
+                "phpdocumentor/shim": "^3",
+                "phpunit/phpunit": "^9.5",
+                "squizlabs/php_codesniffer": "^3.6"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Ovh\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "description": "Wrapper for OVHcloud APIs",
+            "keywords": [
+                "api",
+                "authorisation",
+                "authorization",
+                "client",
+                "ovh",
+                "ovhcloud"
+            ],
+            "support": {
+                "issues": "https://github.com/ovh/php-ovh/issues",
+                "source": "https://github.com/ovh/php-ovh/tree/v3.3.0"
+            },
+            "time": "2023-10-20T15:21:31+00:00"
         },
         {
             "name": "paragonie/random_compat",

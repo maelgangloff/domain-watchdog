@@ -31,12 +31,12 @@ const triggerEventItems: { label: string, value: EventAction }[] = [
         value: 'expiration'
     },
     {
-        label: t`When a domain is updated`,
-        value: 'last changed'
-    },
-    {
         label: t`When a domain is deleted`,
         value: 'deletion'
+    },
+    {
+        label: t`When a domain is updated`,
+        value: 'last changed'
     },
     {
         label: t`When a domain is transferred`,
@@ -57,6 +57,10 @@ const triggerEventItems: { label: string, value: EventAction }[] = [
     {
         label: t`When a domain is reinstantiated`,
         value: 'reinstantiation'
+    },
+    {
+        label: t`When a domain is registered`,
+        value: 'registration'
     }
 ]
 
