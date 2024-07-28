@@ -11,33 +11,85 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
 "X-Generator: Weblate 5.6\n"
 
+#: assets/pages/search/DomainSearchPage.tsx:45
+#, fuzzy
+#| msgid "Registry Operator"
+msgid "Registrant"
+msgstr "Opérateur de registre"
+
+#: assets/pages/search/DomainSearchPage.tsx:46
+msgid "Technical"
+msgstr ""
+
+#: assets/pages/search/DomainSearchPage.tsx:47
+msgid "Administrative"
+msgstr ""
+
+#: assets/pages/search/DomainSearchPage.tsx:48
+msgid "Abuse"
+msgstr ""
+
+#: assets/pages/search/DomainSearchPage.tsx:49
+msgid "Billing"
+msgstr ""
+
+#: assets/pages/search/DomainSearchPage.tsx:50
+#, fuzzy
+#| msgid "Registry Operator"
+msgid "Registrar"
+msgstr "Opérateur de registre"
+
+#: assets/pages/search/DomainSearchPage.tsx:51
+#, fuzzy
+#| msgid "Reset"
+msgid "Reseller"
+msgstr "Réinitialiser"
+
 #: assets/pages/search/DomainSearchPage.tsx:52
+msgid "Sponsor"
+msgstr ""
+
+#: assets/pages/search/DomainSearchPage.tsx:53
+msgid "Proxy"
+msgstr ""
+
+#: assets/pages/search/DomainSearchPage.tsx:54
+msgid "Notifications"
+msgstr ""
+
+#: assets/pages/search/DomainSearchPage.tsx:55
+#, fuzzy
+#| msgid "No"
+msgid "Noc"
+msgstr "Non"
+
+#: assets/pages/search/DomainSearchPage.tsx:67
 msgid "Found !"
 msgstr "Trouvé !"
 
-#: assets/pages/search/DomainSearchPage.tsx:56
+#: assets/pages/search/DomainSearchPage.tsx:71
 #: assets/pages/tracking/WatchlistPage.tsx:89
 msgid "An error occurred"
 msgstr "Une erreur s'est produite"
 
-#: assets/pages/search/DomainSearchPage.tsx:61
+#: assets/pages/search/DomainSearchPage.tsx:76
 msgid "Domain finder"
 msgstr "Rechercher un domaine"
 
 #: assets/pages/LoginPage.tsx:53 assets/pages/LoginPage.tsx:61
-#: assets/pages/search/DomainSearchPage.tsx:74
+#: assets/pages/search/DomainSearchPage.tsx:89
 #: assets/pages/tracking/WatchlistPage.tsx:135
 #: assets/pages/tracking/WatchlistPage.tsx:195
 #: assets/pages/tracking/WatchlistPage.tsx:205
 msgid "Required"
 msgstr "Requis"
 
-#: assets/pages/search/DomainSearchPage.tsx:77
+#: assets/pages/search/DomainSearchPage.tsx:92
 #: assets/pages/tracking/WatchlistPage.tsx:138
 msgid "This domain name does not appear to be valid"
 msgstr "Ce nom de domaine ne semble pas être valide"
 
-#: assets/pages/search/DomainSearchPage.tsx:193
+#: assets/pages/search/DomainSearchPage.tsx:208
 msgid ""
 "Although the domain exists in my database, it has been deleted from the "
 "WHOIS by its registrar."
@@ -45,27 +97,27 @@ msgstr ""
 "Bien que le domaine existe dans ma base de données, il a été supprimé du "
 "WHOIS par son bureau d'enregistrement."
 
-#: assets/App.tsx:114 assets/pages/info/TldPage.tsx:64
+#: assets/App.tsx:114 assets/pages/info/TldPage.tsx:65
 msgid "TLD"
 msgstr "TLD"
 
-#: assets/pages/info/TldPage.tsx:71
+#: assets/pages/info/TldPage.tsx:72
 msgid "Flag"
 msgstr "Drapeau"
 
-#: assets/pages/info/TldPage.tsx:75
+#: assets/pages/info/TldPage.tsx:76
 msgid "Country"
 msgstr "Pays"
 
-#: assets/pages/info/TldPage.tsx:81
+#: assets/pages/info/TldPage.tsx:82
 msgid "Registry Operator"
 msgstr "Opérateur de registre"
 
-#: assets/pages/info/TldPage.tsx:106
+#: assets/pages/info/TldPage.tsx:107
 msgid "This page presents all active TLDs in the root zone database."
 msgstr "Cette page présente tous les TLD actifs dans la zone racine."
 
-#: assets/pages/info/TldPage.tsx:109
+#: assets/pages/info/TldPage.tsx:110
 msgid ""
 "IANA provides the list of currently active TLDs, regardless of their type, "
 "and ICANN provides the list of gTLDs.\n"
@@ -85,11 +137,11 @@ msgstr ""
 "requêtes à l'IANA et une à l'ICANN).\n"
 "Parallèlement, la liste des serveurs RDAP racine est mise à jour."
 
-#: assets/pages/info/TldPage.tsx:120
+#: assets/pages/info/TldPage.tsx:121
 msgid "Sponsored Top-Level-Domains"
 msgstr "Domaines de premier niveau parrainés"
 
-#: assets/pages/info/TldPage.tsx:122
+#: assets/pages/info/TldPage.tsx:123
 msgid ""
 "Top-level domains sponsored by specific organizations that set rules for "
 "registration and use, often related to particular interest groups or "
@@ -99,11 +151,11 @@ msgstr ""
 "établissent des règles d'enregistrement et d'utilisation, souvent liées à "
 "des groupes d'intérêt ou à des secteurs particuliers."
 
-#: assets/pages/info/TldPage.tsx:129
+#: assets/pages/info/TldPage.tsx:130
 msgid "Generic Top-Level-Domains"
 msgstr "Domaine de premier niveau générique"
 
-#: assets/pages/info/TldPage.tsx:131
+#: assets/pages/info/TldPage.tsx:132
 #, fuzzy
 msgid ""
 "Generic top-level domains open to everyone, not restricted by specific "
@@ -113,11 +165,11 @@ msgstr ""
 "critères spécifiques, représentant des thèmes ou des secteurs d'activité "
 "variés."
 
-#: assets/pages/info/TldPage.tsx:138
+#: assets/pages/info/TldPage.tsx:139
 msgid "Brand Generic Top-Level-Domains"
 msgstr "Domaine de premier niveau générique de marque"
 
-#: assets/pages/info/TldPage.tsx:140
+#: assets/pages/info/TldPage.tsx:141
 msgid ""
 "Generic top-level domains associated with specific brands, allowing "
 "companies to use their own brand names as domains."
@@ -126,9 +178,15 @@ msgstr ""
 "permettant aux entreprises d'utiliser leurs propres noms de marque comme "
 "domaines."
 
-#: assets/pages/info/TldPage.tsx:147
+#: assets/pages/info/TldPage.tsx:148
 msgid "Country-Code Top-Level-Domains"
 msgstr "Domaine de premier niveau national"
+
+#: assets/pages/info/TldPage.tsx:150
+msgid ""
+"Top-level domains based on country codes, identifying websites according to "
+"their country of origin."
+msgstr ""
 
 #: assets/pages/tracking/WatchlistPage.tsx:30
 msgid "When a domain is expired"
