@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2024-07-28 16:06+0000\n"
+"PO-Revision-Date: 2024-07-28 16:48+0000\n"
 "Last-Translator: Maël Gangloff <contact@maelgangloff.fr>\n"
 "Language-Team: French <https://weblate.vinceh121.me/projects/domain-watchdog/"
 "domain-watchdog-dashboard/fr/>\n"
@@ -13,7 +13,7 @@ msgstr ""
 
 #: assets/pages/NotFoundPage.tsx:10
 msgid "Sorry, the page you visited does not exist."
-msgstr ""
+msgstr "Désolé, la page que vous avez visitée n'existe pas."
 
 #: assets/App.tsx:114
 #: assets/pages/info/TldPage.tsx:64
@@ -30,23 +30,35 @@ msgstr "Pays"
 
 #: assets/pages/info/TldPage.tsx:81
 msgid "Registry Operator"
-msgstr ""
+msgstr "Opérateur de registre"
 
 #: assets/pages/info/TldPage.tsx:106
+#, fuzzy
 msgid "This page presents all active TLDs in the root zone database."
 msgstr ""
+"Cette page présente tous les TLD actifs dans la base de données de la zone "
+"racine."
 
 #: assets/pages/info/TldPage.tsx:109
+#, fuzzy
 msgid ""
 "IANA provides the list of currently active TLDs, regardless of their type, and ICANN provides the list of gTLDs.\n"
 "In most cases, the two-letter ccTLD assigned to a country is made in accordance with the ISO 3166-1 standard.\n"
 "This data is updated every month. Three HTTP requests are needed for the complete update of TLDs in Domain Watchdog (two requests to IANA and one to ICANN).\n"
 "At the same time, the list of root RDAP servers is updated."
 msgstr ""
+"L'IANA fournit la liste des TLD actuellement actifs, quel que soit leur "
+"type, et l'ICANN fournit la liste des gTLD.\n"
+"Dans la plupart des cas, le ccTLD à deux lettres attribué à un pays est "
+"établi conformément à la norme ISO 3166-1.\n"
+"Ces données sont mises à jour tous les mois. Trois requêtes HTTP sont "
+"nécessaires pour la mise à jour complète des TLD dans Domain Watchdog (deux "
+"requêtes à l'IANA et une à l'ICANN).\n"
+"Parallèlement, la liste des serveurs RDAP racine est mise à jour."
 
 #: assets/pages/info/TldPage.tsx:120
 msgid "Sponsored Top-Level-Domains"
-msgstr ""
+msgstr "Domaines de premier niveau parrainés"
 
 #: assets/pages/info/TldPage.tsx:122
 msgid "Top - level domains sponsored by specific organizations that set rules for registration and use, often related to particular interest groups or industries."
@@ -54,7 +66,7 @@ msgstr ""
 
 #: assets/pages/info/TldPage.tsx:129
 msgid "Generic Top-Level-Domains"
-msgstr ""
+msgstr "Domaine de premier niveau générique"
 
 #: assets/pages/info/TldPage.tsx:131
 msgid "Generic top-level domains open to everyone, not restricted by specific criteria, representing various themes or industries."
@@ -70,7 +82,7 @@ msgstr ""
 
 #: assets/pages/info/TldPage.tsx:147
 msgid "Country-Code Top-Level-Domains"
-msgstr ""
+msgstr "Domaine de premier niveau national"
 
 #: assets/App.tsx:202
 #: assets/pages/LoginPage.tsx:31
@@ -127,6 +139,8 @@ msgstr ""
 #: assets/pages/search/DomainSearchPage.tsx:193
 msgid "Although the domain exists in my database, it has been deleted from the WHOIS by its registrar."
 msgstr ""
+"Bien que le domaine existe dans ma base de données, il a été supprimé du "
+"WHOIS par son bureau d'enregistrement."
 
 #: assets/pages/tracking/WatchlistPage.tsx:30
 msgid "When a domain is expired"
@@ -174,7 +188,7 @@ msgstr ""
 
 #: assets/pages/tracking/WatchlistPage.tsx:111
 msgid "At least one domain name"
-msgstr ""
+msgstr "Au moins un nom de domaine"
 
 #: assets/pages/tracking/WatchlistPage.tsx:122
 msgid "Domain names"
@@ -199,15 +213,15 @@ msgstr ""
 
 #: assets/pages/tracking/WatchlistPage.tsx:195
 msgid "If this happens"
-msgstr ""
+msgstr "Si ça arrive"
 
 #: assets/pages/tracking/WatchlistPage.tsx:205
 msgid "Then do that"
-msgstr ""
+msgstr "Alors fais ça"
 
 #: assets/pages/tracking/WatchlistPage.tsx:226
 msgid "Add a Trigger"
-msgstr ""
+msgstr "Ajouter un déclencheur"
 
 #: assets/pages/tracking/WatchlistPage.tsx:236
 msgid "Create"
