@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "PO-Revision-Date: 2024-07-28 16:48+0000\n"
-"Last-Translator: Maël Gangloff <contact@maelgangloff.fr>\n"
+"Last-Translator: Aurélien <Aurelien@users.noreply.weblate.vinceh121.me>\n"
 "Language-Team: French <https://weblate.vinceh121.me/projects/domain-watchdog/"
 "domain-watchdog-dashboard/fr/>\n"
 "Language: fr\n"
@@ -104,7 +104,7 @@ msgstr "Nom d'utilisateur"
 #: assets/pages/tracking/WatchlistPage.tsx:191
 #: assets/pages/tracking/WatchlistPage.tsx:201
 msgid "Required"
-msgstr ""
+msgstr "Requis"
 
 #: assets/pages/LoginPage.tsx:59
 msgid "Password"
@@ -112,7 +112,7 @@ msgstr "Mot de passe"
 
 #: assets/pages/LoginPage.tsx:68
 msgid "Submit"
-msgstr "Soumettre"
+msgstr "Se connecter"
 
 #: assets/pages/LoginPage.tsx:73
 msgid "Log in with SSO"
@@ -125,16 +125,16 @@ msgstr "Trouvé !"
 #: assets/pages/search/DomainSearchPage.tsx:56
 #: assets/pages/tracking/WatchlistPage.tsx:85
 msgid "An error occurred"
-msgstr ""
+msgstr "Une erreur s'est produite"
 
 #: assets/pages/search/DomainSearchPage.tsx:61
 msgid "Domain finder"
-msgstr ""
+msgstr "Rechercher un domaine"
 
 #: assets/pages/search/DomainSearchPage.tsx:77
 #: assets/pages/tracking/WatchlistPage.tsx:134
 msgid "This domain name does not appear to be valid"
-msgstr ""
+msgstr "Ce nom de domaine ne semble pas être valide"
 
 #: assets/pages/search/DomainSearchPage.tsx:193
 msgid "Although the domain exists in my database, it has been deleted from the WHOIS by its registrar."
