@@ -32,14 +32,14 @@ class Connector
     private array $authData = [];
 
     /**
-     * @var Collection<int, WatchList>
+     * @var Collection<int, WatchListTrigger>
      */
-    #[ORM\OneToMany(targetEntity: WatchList::class, mappedBy: 'connector')]
-    private Collection $watchLists;
+    #[ORM\OneToMany(targetEntity: WatchListTrigger::class, mappedBy: 'connector')]
+    private Collection $watchListTriggers;
 
     public function __construct()
     {
-        $this->watchLists = new ArrayCollection();
+        $this->watchListTriggers = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -84,29 +84,29 @@ class Connector
     }
 
     /**
-     * @return Collection<int, WatchList>
+     * @return Collection<int, WatchListTrigger>
      */
-    public function getWatchLists(): Collection
+    public function getWatchListTriggers(): Collection
     {
-        return $this->watchLists;
+        return $this->watchListTriggers;
     }
 
-    public function addWatchList(WatchList $watchList): static
+    public function addWatchListTrigger(WatchListTrigger $watchListTrigger): static
     {
-        if (!$this->watchLists->contains($watchList)) {
-            $this->watchLists->add($watchList);
-            $watchList->setConnector($this);
+        if (!$this->watchListTriggers->contains($watchListTrigger)) {
+            $this->watchListTriggers->add($watchListTrigger);
+            $watchListTrigger->setConnector($this);
         }
 
         return $this;
     }
 
-    public function removeWatchList(WatchList $watchList): static
+    public function removeWatchListTrigger(WatchListTrigger $watchListTrigger): static
     {
-        if ($this->watchLists->removeElement($watchList)) {
+        if ($this->watchListTriggers->removeElement($watchListTrigger)) {
             // set the owning side to null (unless already changed)
-            if ($watchList->getConnector() === $this) {
-                $watchList->setConnector(null);
+            if ($watchListTrigger->getConnector() === $this) {
+                $watchListTrigger->setConnector(null);
             }
         }
 
