@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2024-07-28 19:37+0000\n"
+"PO-Revision-Date: 2024-07-28 19:47+0000\n"
 "Last-Translator: Maël Gangloff <contact@maelgangloff.fr>\n"
 "Language-Team: French <https://weblate.vinceh121.me/projects/domain-watchdog/"
 "domain-watchdog-dashboard/fr/>\n"
@@ -12,56 +12,48 @@ msgstr ""
 "X-Generator: Weblate 5.6\n"
 
 #: assets/pages/search/DomainSearchPage.tsx:45
-#, fuzzy
-#| msgid "Registry Operator"
 msgid "Registrant"
-msgstr "Opérateur de registre"
+msgstr "Titulaire"
 
 #: assets/pages/search/DomainSearchPage.tsx:46
 msgid "Technical"
-msgstr ""
+msgstr "Technique"
 
 #: assets/pages/search/DomainSearchPage.tsx:47
 msgid "Administrative"
-msgstr ""
+msgstr "Administratif"
 
 #: assets/pages/search/DomainSearchPage.tsx:48
 msgid "Abuse"
-msgstr ""
+msgstr "Abus"
 
 #: assets/pages/search/DomainSearchPage.tsx:49
 msgid "Billing"
-msgstr ""
+msgstr "Facturation"
 
 #: assets/pages/search/DomainSearchPage.tsx:50
-#, fuzzy
-#| msgid "Registry Operator"
 msgid "Registrar"
-msgstr "Opérateur de registre"
+msgstr "Bureau d'enregistrement"
 
 #: assets/pages/search/DomainSearchPage.tsx:51
-#, fuzzy
-#| msgid "Reset"
 msgid "Reseller"
-msgstr "Réinitialiser"
+msgstr "Revendeur"
 
 #: assets/pages/search/DomainSearchPage.tsx:52
 msgid "Sponsor"
-msgstr ""
+msgstr "Parrain"
 
 #: assets/pages/search/DomainSearchPage.tsx:53
 msgid "Proxy"
-msgstr ""
+msgstr "Mandataire"
 
 #: assets/pages/search/DomainSearchPage.tsx:54
 msgid "Notifications"
-msgstr ""
+msgstr "Notifications"
 
 #: assets/pages/search/DomainSearchPage.tsx:55
-#, fuzzy
-#| msgid "No"
 msgid "Noc"
-msgstr "Non"
+msgstr "NOC"
 
 #: assets/pages/search/DomainSearchPage.tsx:67
 msgid "Found !"
