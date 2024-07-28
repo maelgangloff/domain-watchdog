@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2024-07-28 20:09+0000\n"
+"PO-Revision-Date: 2024-07-28 21:52+0000\n"
 "Last-Translator: Maël Gangloff <contact@maelgangloff.fr>\n"
 "Language-Team: French <https://weblate.vinceh121.me/projects/domain-watchdog/"
 "domain-watchdog-dashboard/fr/>\n"
@@ -60,10 +60,8 @@ msgid "Registration"
 msgstr "Enregistrement"
 
 #: assets/pages/search/DomainSearchPage.tsx:60
-#, fuzzy
-#| msgid "Registrant"
 msgid "Reregistration"
-msgstr "Titulaire"
+msgstr "Réenregistrement"
 
 #: assets/pages/search/DomainSearchPage.tsx:61
 msgid "Last changed"
@@ -206,7 +204,6 @@ msgid "Generic Top-Level-Domains"
 msgstr "Domaine de premier niveau générique"
 
 #: assets/pages/info/TldPage.tsx:132
-#, fuzzy
 msgid ""
 "Generic top-level domains open to everyone, not restricted by specific "
 "criteria, representing various themes or industries."
@@ -237,6 +234,8 @@ msgid ""
 "Top-level domains based on country codes, identifying websites according to "
 "their country of origin."
 msgstr ""
+"Domaines de premier niveau basés sur les codes de pays, identifiant les "
+"sites web en fonction de leur pays d'origine."
 
 #: assets/pages/tracking/WatchlistPage.tsx:30
 msgid "When a domain is expired"
@@ -268,7 +267,7 @@ msgstr ""
 
 #: assets/pages/tracking/WatchlistPage.tsx:58
 msgid "When a domain is reinstantiated"
-msgstr ""
+msgstr "Lorsqu'un domaine est réinstancié"
 
 #: assets/pages/tracking/WatchlistPage.tsx:62
 msgid "When a domain is registered"
@@ -305,11 +304,11 @@ msgstr "Ajouter un nom de domaine"
 
 #: assets/pages/tracking/WatchlistPage.tsx:174
 msgid "At least one domain trigger"
-msgstr ""
+msgstr "Au moins une action"
 
 #: assets/pages/tracking/WatchlistPage.tsx:185
 msgid "Domain trigger"
-msgstr ""
+msgstr "Action"
 
 #: assets/pages/tracking/WatchlistPage.tsx:199
 msgid "If this happens"
@@ -321,7 +320,7 @@ msgstr "Alors fais ça"
 
 #: assets/pages/tracking/WatchlistPage.tsx:230
 msgid "Add a Trigger"
-msgstr "Ajouter un déclencheur"
+msgstr "Ajouter une action"
 
 #: assets/pages/tracking/WatchlistPage.tsx:240
 msgid "Create"
@@ -354,7 +353,7 @@ msgstr "Non"
 
 #: assets/pages/tracking/WatchlistPage.tsx:267
 msgid "Domain triggers"
-msgstr ""
+msgstr "Actions"
 
 #: assets/pages/NotFoundPage.tsx:10
 msgid "Sorry, the page you visited does not exist."
