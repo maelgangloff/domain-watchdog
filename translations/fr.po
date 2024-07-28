@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "PO-Revision-Date: 2024-07-28 16:06+0000\n"
-"Last-Translator: Aurélien <Aurelien@users.noreply.weblate.vinceh121.me>\n"
+"Last-Translator: Maël Gangloff <contact@maelgangloff.fr>\n"
 "Language-Team: French <https://weblate.vinceh121.me/projects/domain-watchdog/"
 "domain-watchdog-dashboard/fr/>\n"
 "Language: fr\n"
@@ -130,27 +130,27 @@ msgstr ""
 
 #: assets/pages/tracking/WatchlistPage.tsx:30
 msgid "When a domain is expired"
-msgstr ""
+msgstr "Lorsqu'un domaine est expiré"
 
 #: assets/pages/tracking/WatchlistPage.tsx:34
 msgid "When a domain is updated"
-msgstr ""
+msgstr "Lorsqu'un domaine est mis à jour"
 
 #: assets/pages/tracking/WatchlistPage.tsx:38
 msgid "When a domain is deleted"
-msgstr ""
+msgstr "Lorsqu'un domaine est supprimé"
 
 #: assets/pages/tracking/WatchlistPage.tsx:42
 msgid "When a domain is transferred"
-msgstr ""
+msgstr "Lorsqu'un domaine est transféré"
 
 #: assets/pages/tracking/WatchlistPage.tsx:46
 msgid "When a domain is locked"
-msgstr ""
+msgstr "Lorsqu'un domaine est verrouillé"
 
 #: assets/pages/tracking/WatchlistPage.tsx:50
 msgid "When a domain is unlocked"
-msgstr ""
+msgstr "Lorsqu'un domaine est déverrouillé"
 
 #: assets/pages/tracking/WatchlistPage.tsx:54
 msgid "When a domain is reregistered"
@@ -162,7 +162,7 @@ msgstr ""
 
 #: assets/pages/tracking/WatchlistPage.tsx:65
 msgid "Send me an email"
-msgstr ""
+msgstr "Envoie-moi un email"
 
 #: assets/pages/tracking/WatchlistPage.tsx:82
 msgid "Watchlist created !"
