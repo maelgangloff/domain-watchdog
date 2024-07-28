@@ -146,7 +146,7 @@ export default function TldPage() {
                     key: 'ccTLD',
                     label: t`Country-Code Top-Level-Domains`,
                     children: <>
-                        <Text>{`Top-level domains based on country codes, identifying websites according to their country of origin.`}</Text>
+                        <Text>{t`Top-level domains based on country codes, identifying websites according to their country of origin.`}</Text>
                         <Divider/><TldTable type='ccTLD'/>
                     </>
                 }

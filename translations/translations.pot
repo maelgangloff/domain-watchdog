@@ -104,6 +104,12 @@ msgstr ""
 msgid "Country-Code Top-Level-Domains"
 msgstr ""
 
+#: assets/pages/info/TldPage.tsx:149
+msgid ""
+"Top-level domains based on country codes, identifying websites according to "
+"their country of origin."
+msgstr ""
+
 #: assets/pages/tracking/WatchlistPage.tsx:30
 msgid "When a domain is expired"
 msgstr ""
