@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "PO-Revision-Date: 2024-07-28 21:52+0000\n"
-"Last-Translator: Maël Gangloff <contact@maelgangloff.fr>\n"
+"Last-Translator: Aurélien <Aurelien@users.noreply.weblate.vinceh121.me>\n"
 "Language-Team: French <https://weblate.vinceh121.me/projects/domain-watchdog/"
 "domain-watchdog-dashboard/fr/>\n"
 "Language: fr\n"
@@ -263,7 +263,7 @@ msgstr "Lorsqu'un domaine est déverrouillé"
 
 #: assets/pages/tracking/WatchlistPage.tsx:54
 msgid "When a domain is reregistered"
-msgstr ""
+msgstr "Lorsqu'un domaine est réenregistré"
 
 #: assets/pages/tracking/WatchlistPage.tsx:58
 msgid "When a domain is reinstantiated"
