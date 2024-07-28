@@ -4,6 +4,7 @@ import {Button, Card, Divider, Flex, Form, Input, message, Popconfirm, Select, S
 import {DeleteFilled, MinusCircleOutlined, PlusOutlined, ThunderboltFilled} from "@ant-design/icons";
 import {deleteWatchlist, EventAction, getWatchlists, postWatchlist} from "../../utils/api";
 import {AxiosError} from "axios";
+import {t} from 'ttag'
 
 
 const formItemLayout = {
@@ -26,42 +27,42 @@ const formItemLayoutWithOutLabel = {
 
 const triggerEventItems: { label: string, value: EventAction }[] = [
     {
-        label: 'When a domain is expired',
+        label: t`When a domain is expired`,
         value: 'expiration'
     },
     {
-        label: 'When a domain is updated',
+        label: t`When a domain is updated`,
         value: 'last changed'
     },
     {
-        label: 'When a domain is deleted',
+        label: t`When a domain is deleted`,
         value: 'deletion'
     },
     {
-        label: 'When a domain is transferred',
+        label: t`When a domain is transferred`,
         value: 'transfer'
     },
     {
-        label: 'When a domain is locked',
+        label: t`When a domain is locked`,
         value: 'locked'
     },
     {
-        label: 'When a domain is unlocked',
+        label: t`When a domain is unlocked`,
         value: 'unlocked'
     },
     {
-        label: 'When a domain is reregistered',
+        label: t`When a domain is reregistered`,
         value: 'reregistration'
     },
     {
-        label: 'When a domain is reinstantiated',
+        label: t`When a domain is reinstantiated`,
         value: 'reinstantiation'
     }
 ]
 
 const trigerActionItems = [
     {
-        label: 'Send me an email',
+        label: t`Send me an email`,
         value: 'email'
     }
 ]
@@ -78,10 +79,10 @@ export default function WatchlistPage() {
         postWatchlist(domainsURI, values.triggers).then((w) => {
             form.resetFields()
             refreshWatchlists()
-            messageApi.success('Watchlist created !')
+            messageApi.success(t`Watchlist created !`)
         }).catch((e: AxiosError) => {
             const data = e?.response?.data as { detail: string }
-            messageApi.error(data.detail ?? 'An error occurred')
+            messageApi.error(data.detail ?? t`An error occurred`)
         })
     }
 
@@ -94,7 +95,7 @@ export default function WatchlistPage() {
     }, [])
 
     return <Flex gap="middle" align="center" justify="center" vertical>
-        <Card title="Create a watchlist" style={{width: '100%'}}>
+        <Card title={t`Create a watchlist`} style={{width: '100%'}}>
             {contextHolder}
             <Form
                 {...formItemLayoutWithOutLabel}
@@ -107,7 +108,7 @@ export default function WatchlistPage() {
                         {
                             validator: async (_, domains) => {
                                 if (!domains || domains.length < 1) {
-                                    return Promise.reject(new Error('At least one domain name'));
+                                    return Promise.reject(new Error(t`At least one domain name`));
                                 }
                             },
                         },
@@ -118,7 +119,7 @@ export default function WatchlistPage() {
                             {fields.map((field, index) => (
                                 <Form.Item
                                     {...(index === 0 ? formItemLayout : formItemLayoutWithOutLabel)}
-                                    label={index === 0 ? 'Domain names' : ''}
+                                    label={index === 0 ? t`Domain names` : ''}
                                     required={true}
                                     key={field.key}
                                 >
@@ -127,16 +128,16 @@ export default function WatchlistPage() {
                                         validateTrigger={['onChange', 'onBlur']}
                                         rules={[{
                                             required: true,
-                                            message: 'Required'
+                                            message: t`Required`
                                         }, {
                                             pattern: /^(?=.*\.)\S*[^.\s]$/,
-                                            message: 'This domain name does not appear to be valid',
+                                            message: t`This domain name does not appear to be valid`,
                                             max: 63,
                                             min: 2
                                         }]}
                                         noStyle
                                     >
-                                        <Input placeholder="Domain name" style={{width: '60%'}} autoComplete='off'/>
+                                        <Input placeholder={t`Domain name`} style={{width: '60%'}} autoComplete='off'/>
                                     </Form.Item>
                                     {fields.length > 1 ? (
                                         <MinusCircleOutlined
@@ -153,7 +154,7 @@ export default function WatchlistPage() {
                                     style={{width: '60%'}}
                                     icon={<PlusOutlined/>}
                                 >
-                                    Add a Domain name
+                                    {t`Add a Domain name`}
                                 </Button>
                                 <Form.ErrorList errors={errors}/>
                             </Form.Item>
@@ -166,7 +167,7 @@ export default function WatchlistPage() {
                         {
                             validator: async (_, domains) => {
                                 if (!domains || domains.length < 1) {
-                                    return Promise.reject(new Error('At least one domain trigger'));
+                                    return Promise.reject(new Error(t`At least one domain trigger`));
                                 }
                             },
                         },
@@ -177,7 +178,7 @@ export default function WatchlistPage() {
                             {fields.map((field, index) => (
                                 <Form.Item
                                     {...(index === 0 ? formItemLayout : formItemLayoutWithOutLabel)}
-                                    label={index === 0 ? 'Domain trigger' : ''}
+                                    label={index === 0 ? t`Domain trigger` : ''}
                                     required={true}
                                     key={field.key}
                                 >
@@ -187,21 +188,21 @@ export default function WatchlistPage() {
                                                    validateTrigger={['onChange', 'onBlur']}
                                                    rules={[{
                                                        required: true,
-                                                       message: 'Required'
+                                                       message: t`Required`
                                                    }]}
                                                    noStyle name={[field.name, 'event']}>
                                             <Select style={{minWidth: 300}} options={triggerEventItems} showSearch
-                                                    placeholder="If this happens" optionFilterProp="label"/>
+                                                    placeholder={t`If this happens`} optionFilterProp="label"/>
                                         </Form.Item>
                                         <Form.Item {...field}
                                                    validateTrigger={['onChange', 'onBlur']}
                                                    rules={[{
                                                        required: true,
-                                                       message: 'Required'
+                                                       message: t`Required`
                                                    }]}
                                                    noStyle name={[field.name, 'action']}>
                                             <Select style={{minWidth: 300}} options={trigerActionItems} showSearch
-                                                    placeholder="Then do that"
+                                                    placeholder={t`Then do that`}
                                                     optionFilterProp="label"/>
                                         </Form.Item>
                                     </Space>
@@ -222,7 +223,7 @@ export default function WatchlistPage() {
                                     style={{width: '60%'}}
                                     icon={<ThunderboltFilled/>}
                                 >
-                                    Add a Trigger
+                                    {t`Add a Trigger`}
                                 </Button>
                                 <Form.ErrorList errors={errors}/>
                             </Form.Item>
@@ -232,10 +233,10 @@ export default function WatchlistPage() {
                 <Form.Item>
                     <Space>
                         <Button type="primary" htmlType="submit">
-                            Create
+                            {t`Create`}
                         </Button>
                         <Button type="default" htmlType="reset">
-                            Reset
+                            {t`Reset`}
                         </Button>
                     </Space>
                 </Form.Item>
@@ -247,19 +248,19 @@ export default function WatchlistPage() {
             {watchlists && watchlists.length > 0 && <Card title="My Watchlists" style={{width: '100%'}}>
                 {watchlists.map(watchlist =>
                     <>
-                        <Card title={"Watchlist " + watchlist.token} extra={<Popconfirm
-                            title="Delete the Watchlist"
-                            description="Are you sure to delete this Watchlist ?"
+                        <Card title={t`Watchlist ${watchlist.token}`} extra={<Popconfirm
+                            title={t`"Delete the Watchlist"`}
+                            description={t`Are you sure to delete this Watchlist?`}
                             onConfirm={() => deleteWatchlist(watchlist.token).then(refreshWatchlists)}
-                            okText="Yes"
-                            cancelText="No"
+                            okText={t`"Yes"`}
+                            cancelText={t`No`}
                         ><DeleteFilled/> </Popconfirm>}>
                             <Typography.Paragraph>
-                                Domains : {watchlist?.domains.map(d => d.ldhName).join(',')}
+                                {t`Domain name`} : {watchlist?.domains.map(d => d.ldhName).join(',')}
                             </Typography.Paragraph>
                             {
                                 watchlist.triggers && <Typography.Paragraph>
-                                    Triggers : {watchlist.triggers.map(t => `${t.event} => ${t.action}`).join(',')}
+                                    {t`Domain triggers`} : {watchlist.triggers.map(t => `${t.event} => ${t.action}`).join(',')}
                                 </Typography.Paragraph>
                             }
                         </Card>

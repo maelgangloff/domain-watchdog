@@ -37,6 +37,7 @@
     "regenerator-runtime": "^0.13.9",
     "snarkdown": "^2.0.0",
     "ts-loader": "^9.5.1",
+    "ttag": "^1.8.7",
     "typescript": "^5.5.3",
     "vcf": "^2.1.2",
     "webpack": "^5.74.0",

@@ -2,6 +2,7 @@ import React, {createContext, useContext, useState} from "react";
 import {Alert, Button, Card, Flex, Form, Input} from "antd";
 import {login} from "../utils/api";
 import {useNavigate} from "react-router-dom";
+import {t} from 'ttag'
 
 type FieldType = {
     username: string;
@@ -14,7 +15,7 @@ export default function Page() {
 
     const [error, setError] = useState()
     const navigate = useNavigate()
-    const {isAuthenticated, setIsAuthenticated} = useContext(AuthenticatedContext)
+    const {setIsAuthenticated} = useContext(AuthenticatedContext)
 
     const onFinish = (data: FieldType) => {
         login(data.username, data.password).then(() => {
@@ -27,12 +28,12 @@ export default function Page() {
     }
 
     return <Flex gap="middle" align="center" justify="center" vertical><Card
-        title="Log in"
+        title={t`Log in`}
     >
         {error &&
             <Alert
                 type='error'
-                message='Error'
+                message={t`Error`}
                 banner={true}
                 role='role'
                 description={error}
@@ -47,29 +48,29 @@ export default function Page() {
             autoComplete="off"
         >
             <Form.Item
-                label="Username"
+                label={t`Username`}
                 name="username"
-                rules={[{required: true, message: 'Required'}]}
+                rules={[{required: true, message: t`Required`}]}
             >
                 <Input/>
             </Form.Item>
 
             <Form.Item<FieldType>
-                label="Password"
+                label={t`Password`}
                 name="password"
-                rules={[{required: true, message: 'Required'}]}
+                rules={[{required: true, message: t`Required`}]}
             >
                 <Input.Password/>
             </Form.Item>
 
             <Form.Item wrapperCol={{offset: 8, span: 16}}>
                 <Button type="primary" htmlType="submit">
-                    Submit
+                    {t`Submit`}
                 </Button>
             </Form.Item>
             <Form.Item wrapperCol={{offset: 8, span: 16}}>
                 <Button type="primary" htmlType="button" href="/login/oauth">
-                    Log in with SSO
+                    {t`Log in with SSO`}
                 </Button>
             </Form.Item>
         </Form>

@@ -33,6 +33,7 @@ import {
 import {Domain, getDomain} from "../../utils/api";
 import {AxiosError} from "axios"
 import vCard from 'vcf'
+import {t} from 'ttag'
 
 
 type FieldType = {
@@ -48,16 +49,16 @@ export default function DomainSearchPage() {
         setDomain(null)
         getDomain(values.ldhName).then(d => {
             setDomain(d)
-            messageApi.success('Found !')
+            messageApi.success(t`Found !`)
         }).catch((e: AxiosError) => {
             const data = e?.response?.data as { detail: string }
             setDomain(undefined)
-            messageApi.error(data.detail ?? 'An error occurred')
+            messageApi.error(data.detail ?? t`An error occurred`)
         })
     }
 
     return <Flex gap="middle" align="center" justify="center" vertical>
-        <Card title="Domain finder" style={{width: '100%'}}>
+        <Card title={t`Domain finder`} style={{width: '100%'}}>
             {contextHolder}
             <Form
                 name="basic"
@@ -70,10 +71,10 @@ export default function DomainSearchPage() {
                     name="ldhName"
                     rules={[{
                         required: true,
-                        message: 'Required'
+                        message: t`Required`
                     }, {
                         pattern: /^(?=.*\.)\S*[^.\s]$/,
-                        message: 'This domain name does not appear to be valid',
+                        message: t`This domain name does not appear to be valid`,
                         max: 63,
                         min: 2
                     }]}
@@ -189,8 +190,7 @@ export default function DomainSearchPage() {
                         : <Empty
                             description={
                                 <Typography.Text>
-                                    Although the domain exists in my database, it has been deleted from the WHOIS by its
-                                    registrar.
+                                    {t`Although the domain exists in my database, it has been deleted from the WHOIS by its registrar.`}
                                 </Typography.Text>
                             }/>)
                 }

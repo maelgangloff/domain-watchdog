@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from "react";
 import {Collapse, Divider, Table, Typography} from "antd";
 import {getTldList, Tld} from "../../utils/api";
+import {t} from 'ttag'
 
 const {Text, Paragraph} = Typography
 
@@ -60,24 +61,24 @@ function TldTable(filters: FiltersType) {
 
     let columns = [
         {
-            title: "TLD",
+            title: t`TLD`,
             dataIndex: "TLD",
             width: 20
         }
     ]
 
     if (filters.type === 'ccTLD') columns = [...columns, {
-        title: "Flag",
+        title: t`Flag`,
         dataIndex: "Flag",
         width: 20
     }, {
-        title: "Country",
+        title: t`Country`,
         dataIndex: "Country",
         width: 200
     }]
 
     if (filters.type === 'gTLD') columns = [...columns, {
-        title: "Registry Operator",
+        title: t`Registry Operator`,
         dataIndex: "Operator",
         width: 50
     }]
@@ -102,16 +103,13 @@ function TldTable(filters: FiltersType) {
 export default function TldPage() {
     return <>
         <Paragraph>
-            This page presents all active TLDs in the root zone database.
+            {t`This page presents all active TLDs in the root zone database.`}
         </Paragraph>
         <Paragraph>
-            IANA provides the list of currently active
-            TLDs, regardless of their type, and ICANN provides the list of gTLDs.
-            In most cases, the two-letter ccTLD assigned to a country is made in accordance with the ISO 3166-1
-            standard.
-            This data is updated every month. Three HTTP requests are needed for the complete update of TLDs in Domain
-            Watchdog (two requests to IANA and one to ICANN).
-            At the same time, the list of root RDAP servers is updated.
+            {t`IANA provides the list of currently active TLDs, regardless of their type, and ICANN provides the list of gTLDs.
+            In most cases, the two-letter ccTLD assigned to a country is made in accordance with the ISO 3166-1 standard.
+            This data is updated every month. Three HTTP requests are needed for the complete update of TLDs in Domain Watchdog (two requests to IANA and one to ICANN).
+            At the same time, the list of root RDAP servers is updated.`}
         </Paragraph>
         <Divider/>
         <Collapse
@@ -119,41 +117,36 @@ export default function TldPage() {
             items={[
                 {
                     key: 'sTLD',
-                    label: 'Sponsored Top-Level-Domains',
+                    label: t`Sponsored Top-Level-Domains`,
                     children: <>
-                        <Text>Top-level domains sponsored by specific organizations that set rules for
-                            registration and use, often related to particular interest groups or
-                            industries.</Text>
+                        <Text>{t`Top - level domains sponsored by specific organizations that set rules for registration and use, often related to particular interest groups or industries.`}</Text>
                         <Divider/>
                         <TldTable type='sTLD'/>
                     </>
                 },
                 {
                     key: 'gTLD',
-                    label: 'Generic Top-Level-Domains',
+                    label: t`Generic Top-Level-Domains`,
                     children: <>
-                        <Text>Generic top-level domains open to everyone, not restricted by specific
-                            criteria, representing various themes or industries.</Text>
+                        <Text>{t`Generic top-level domains open to everyone, not restricted by specific criteria, representing various themes or industries.`}</Text>
                         <Divider/>
                         <TldTable type='gTLD' contractTerminated={false} specification13={false}/>
                     </>
                 },
                 {
                     key: 'ngTLD',
-                    label: 'Brand Generic Top-Level-Domains',
+                    label: t`Brand Generic Top-Level-Domains`,
                     children: <>
-                        <Text>Generic top-level domains associated with specific brands, allowing companies
-                            to use their own brand names as domains.</Text>
+                        <Text>{t`Generic top-level domains associated with specific brands, allowing companies to use their own brand names as domains.`}</Text>
                         <Divider/>
                         <TldTable type='gTLD' contractTerminated={false} specification13={true}/>
                     </>
                 },
                 {
                     key: 'ccTLD',
-                    label: 'Country-Code Top-Level-Domains',
+                    label: t`Country-Code Top-Level-Domains`,
                     children: <>
-                        <Text>Top-level domains based on country codes, identifying websites according to
-                            their country of origin.</Text>
+                        <Text>{`Top-level domains based on country codes, identifying websites according to their country of origin.`}</Text>
                         <Divider/><TldTable type='ccTLD'/>
                     </>
                 }

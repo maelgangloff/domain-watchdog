@@ -31,6 +31,7 @@ import LoginPage, {AuthenticatedContext} from "./pages/LoginPage";
 import ConnectorsPage from "./pages/tracking/ConnectorsPage";
 import NotFoundPage from "./pages/NotFoundPage";
 import {ItemType, MenuItemType} from "antd/lib/menu/interface";
+import {t} from 'ttag'
 
 export default function App() {
     const {
@@ -67,36 +68,36 @@ export default function App() {
     const menuItems: ItemType<MenuItemType>[] = [
         {
             key: 'home',
-            label: 'Home',
+            label: t`Home`,
             icon: <HomeOutlined/>,
             onClick: () => navigate('/home')
         },
         {
             key: 'search',
-            label: 'Search',
+            label: t`Search`,
             icon: <SearchOutlined/>,
             children: [
                 {
                     key: 'domain-finder',
                     icon: <CompassOutlined/>,
-                    label: 'Domain',
-                    title: 'Domain Finder',
+                    label: t`Domain`,
+                    title: t`Domain Finder`,
                     disabled: !isAuthenticated,
                     onClick: () => navigate('/search/domain')
                 },
                 {
                     key: 'entity-finder',
                     icon: <TeamOutlined/>,
-                    label: 'Entity',
-                    title: 'Entity Finder',
+                    label: t`Entity`,
+                    title: t`Entity Finder`,
                     disabled: !isAuthenticated,
                     onClick: () => navigate('/search/entity')
                 },
                 {
                     key: 'ns-finder',
                     icon: <CloudServerOutlined/>,
-                    label: 'Nameserver',
-                    title: 'Nameserver Finder',
+                    label: t`Nameserver`,
+                    title: t`Nameserver Finder`,
                     disabled: !isAuthenticated,
                     onClick: () => navigate('/search/nameserver')
                 }
@@ -104,21 +105,21 @@ export default function App() {
         },
         {
             key: 'info',
-            label: 'Information',
+            label: t`Information`,
             icon: <InfoCircleOutlined/>,
             children: [
                 {
                     key: 'tld-list',
                     icon: <BankOutlined/>,
-                    label: 'TLD',
-                    title: 'TLD list',
+                    label: t`TLD`,
+                    title: t`TLD list`,
                     disabled: !isAuthenticated,
                     onClick: () => navigate('/info/tld')
                 },
                 {
                     key: 'stats',
                     icon: <LineChartOutlined/>,
-                    label: 'Statistics',
+                    label: t`Statistics`,
                     disabled: !isAuthenticated,
                     onClick: () => navigate('/info/stats')
                 }
@@ -126,20 +127,20 @@ export default function App() {
         },
         {
             key: 'tracking',
-            label: 'Tracking',
+            label: t`Tracking`,
             icon: <FileSearchOutlined/>,
             children: [
                 {
                     key: 'watchlist',
                     icon: <Badge count={0} size="small"><FileSearchOutlined/></Badge>,
-                    label: 'My Watchlists',
+                    label: t`My Watchlists`,
                     disabled: !isAuthenticated,
                     onClick: () => navigate('/tracking/watchlist')
                 },
                 {
                     key: 'connectors',
                     icon: <ApiOutlined/>,
-                    label: 'My connectors',
+                    label: t`My connectors`,
                     disabled: !isAuthenticated,
                     onClick: () => navigate('/tracking/connectors')
                 }
@@ -147,26 +148,26 @@ export default function App() {
         },
         {
             key: 'watchdog',
-            label: 'My Watchdog',
+            label: t`My Watchdog`,
             icon: <UserOutlined/>,
             children: [
                 {
                     key: 'account',
                     icon: <UserOutlined/>,
-                    label: 'My Account',
+                    label: t`My Account`,
                     disabled: !isAuthenticated,
                     onClick: () => navigate('/user')
                 },
                 {
                     key: 'tos',
                     icon: <InfoCircleOutlined/>,
-                    label: 'TOS',
+                    label: t`TOS`,
                     onClick: () => navigate('/tos')
                 },
                 {
                     key: 'privacy',
                     icon: <FileProtectOutlined/>,
-                    label: 'Privacy Policy',
+                    label: t`Privacy Policy`,
                     onClick: () => navigate('/privacy')
                 }
             ]
@@ -174,7 +175,7 @@ export default function App() {
         {
             key: '5',
             icon: <QuestionCircleOutlined/>,
-            label: 'FAQ',
+            label: t`FAQ`,
             onClick: () => navigate('/faq')
         },
 
@@ -192,13 +193,13 @@ export default function App() {
                     items={[...menuItems, isAuthenticated ? {
                         key: '8',
                         icon: <LogoutOutlined/>,
-                        label: 'Log out',
+                        label: t`Log out`,
                         danger: true,
                         onClick: () => window.location.replace("/logout")
                     } : {
                         key: '8',
                         icon: <LoginOutlined/>,
-                        label: 'Log in',
+                        label: t`Log in`,
                         onClick: () => navigate('/login')
                     }]}
                 />

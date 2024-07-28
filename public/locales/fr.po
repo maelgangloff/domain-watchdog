@@ -1,0 +1,318 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=utf-8\n"
+"Plural-Forms: nplurals = 2; plural = (n > 1);\n"
+"Language: fr\n"
+"MIME-Version: 1.0\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: assets/pages/NotFoundPage.tsx:10
+msgid "Sorry, the page you visited does not exist."
+msgstr ""
+
+#: assets/App.tsx:114
+#: assets/pages/info/TldPage.tsx:64
+msgid "TLD"
+msgstr ""
+
+#: assets/pages/info/TldPage.tsx:71
+msgid "Flag"
+msgstr ""
+
+#: assets/pages/info/TldPage.tsx:75
+msgid "Country"
+msgstr ""
+
+#: assets/pages/info/TldPage.tsx:81
+msgid "Registry Operator"
+msgstr ""
+
+#: assets/pages/info/TldPage.tsx:106
+msgid "This page presents all active TLDs in the root zone database."
+msgstr ""
+
+#: assets/pages/info/TldPage.tsx:109
+msgid ""
+"IANA provides the list of currently active TLDs, regardless of their type, and ICANN provides the list of gTLDs.\n"
+"In most cases, the two-letter ccTLD assigned to a country is made in accordance with the ISO 3166-1 standard.\n"
+"This data is updated every month. Three HTTP requests are needed for the complete update of TLDs in Domain Watchdog (two requests to IANA and one to ICANN).\n"
+"At the same time, the list of root RDAP servers is updated."
+msgstr ""
+
+#: assets/pages/info/TldPage.tsx:120
+msgid "Sponsored Top-Level-Domains"
+msgstr ""
+
+#: assets/pages/info/TldPage.tsx:122
+msgid "Top - level domains sponsored by specific organizations that set rules for registration and use, often related to particular interest groups or industries."
+msgstr ""
+
+#: assets/pages/info/TldPage.tsx:129
+msgid "Generic Top-Level-Domains"
+msgstr ""
+
+#: assets/pages/info/TldPage.tsx:131
+msgid "Generic top-level domains open to everyone, not restricted by specific criteria, representing various themes or industries."
+msgstr ""
+
+#: assets/pages/info/TldPage.tsx:138
+msgid "Brand Generic Top-Level-Domains"
+msgstr ""
+
+#: assets/pages/info/TldPage.tsx:140
+msgid "Generic top-level domains associated with specific brands, allowing companies to use their own brand names as domains."
+msgstr ""
+
+#: assets/pages/info/TldPage.tsx:147
+msgid "Country-Code Top-Level-Domains"
+msgstr ""
+
+#: assets/App.tsx:202
+#: assets/pages/LoginPage.tsx:31
+msgid "Log in"
+msgstr ""
+
+#: assets/pages/LoginPage.tsx:36
+msgid "Error"
+msgstr ""
+
+#: assets/pages/LoginPage.tsx:51
+msgid "Username"
+msgstr ""
+
+#: assets/pages/LoginPage.tsx:53
+#: assets/pages/LoginPage.tsx:61
+#: assets/pages/search/DomainSearchPage.tsx:74
+#: assets/pages/tracking/WatchlistPage.tsx:131
+#: assets/pages/tracking/WatchlistPage.tsx:191
+#: assets/pages/tracking/WatchlistPage.tsx:201
+msgid "Required"
+msgstr ""
+
+#: assets/pages/LoginPage.tsx:59
+msgid "Password"
+msgstr ""
+
+#: assets/pages/LoginPage.tsx:68
+msgid "Submit"
+msgstr ""
+
+#: assets/pages/LoginPage.tsx:73
+msgid "Log in with SSO"
+msgstr ""
+
+#: assets/pages/search/DomainSearchPage.tsx:52
+msgid "Found !"
+msgstr ""
+
+#: assets/pages/search/DomainSearchPage.tsx:56
+#: assets/pages/tracking/WatchlistPage.tsx:85
+msgid "An error occurred"
+msgstr ""
+
+#: assets/pages/search/DomainSearchPage.tsx:61
+msgid "Domain finder"
+msgstr ""
+
+#: assets/pages/search/DomainSearchPage.tsx:77
+#: assets/pages/tracking/WatchlistPage.tsx:134
+msgid "This domain name does not appear to be valid"
+msgstr ""
+
+#: assets/pages/search/DomainSearchPage.tsx:193
+msgid "Although the domain exists in my database, it has been deleted from the WHOIS by its registrar."
+msgstr ""
+
+#: assets/pages/tracking/WatchlistPage.tsx:30
+msgid "When a domain is expired"
+msgstr ""
+
+#: assets/pages/tracking/WatchlistPage.tsx:34
+msgid "When a domain is updated"
+msgstr ""
+
+#: assets/pages/tracking/WatchlistPage.tsx:38
+msgid "When a domain is deleted"
+msgstr ""
+
+#: assets/pages/tracking/WatchlistPage.tsx:42
+msgid "When a domain is transferred"
+msgstr ""
+
+#: assets/pages/tracking/WatchlistPage.tsx:46
+msgid "When a domain is locked"
+msgstr ""
+
+#: assets/pages/tracking/WatchlistPage.tsx:50
+msgid "When a domain is unlocked"
+msgstr ""
+
+#: assets/pages/tracking/WatchlistPage.tsx:54
+msgid "When a domain is reregistered"
+msgstr ""
+
+#: assets/pages/tracking/WatchlistPage.tsx:58
+msgid "When a domain is reinstantiated"
+msgstr ""
+
+#: assets/pages/tracking/WatchlistPage.tsx:65
+msgid "Send me an email"
+msgstr ""
+
+#: assets/pages/tracking/WatchlistPage.tsx:82
+msgid "Watchlist created !"
+msgstr ""
+
+#: assets/pages/tracking/WatchlistPage.tsx:98
+msgid "Create a watchlist"
+msgstr ""
+
+#: assets/pages/tracking/WatchlistPage.tsx:111
+msgid "At least one domain name"
+msgstr ""
+
+#: assets/pages/tracking/WatchlistPage.tsx:122
+msgid "Domain names"
+msgstr ""
+
+#: assets/pages/tracking/WatchlistPage.tsx:140
+#: assets/pages/tracking/WatchlistPage.tsx:259
+msgid "Domain name"
+msgstr ""
+
+#: assets/pages/tracking/WatchlistPage.tsx:157
+msgid "Add a Domain name"
+msgstr ""
+
+#: assets/pages/tracking/WatchlistPage.tsx:170
+msgid "At least one domain trigger"
+msgstr ""
+
+#: assets/pages/tracking/WatchlistPage.tsx:181
+msgid "Domain trigger"
+msgstr ""
+
+#: assets/pages/tracking/WatchlistPage.tsx:195
+msgid "If this happens"
+msgstr ""
+
+#: assets/pages/tracking/WatchlistPage.tsx:205
+msgid "Then do that"
+msgstr ""
+
+#: assets/pages/tracking/WatchlistPage.tsx:226
+msgid "Add a Trigger"
+msgstr ""
+
+#: assets/pages/tracking/WatchlistPage.tsx:236
+msgid "Create"
+msgstr ""
+
+#: assets/pages/tracking/WatchlistPage.tsx:239
+msgid "Reset"
+msgstr ""
+
+#: assets/pages/tracking/WatchlistPage.tsx:251
+#, javascript-format
+msgid "Watchlist ${ watchlist.token }"
+msgstr ""
+
+#: assets/pages/tracking/WatchlistPage.tsx:252
+msgid "\"Delete the Watchlist\""
+msgstr ""
+
+#: assets/pages/tracking/WatchlistPage.tsx:253
+msgid "Are you sure to delete this Watchlist?"
+msgstr ""
+
+#: assets/pages/tracking/WatchlistPage.tsx:255
+msgid "\"Yes\""
+msgstr ""
+
+#: assets/pages/tracking/WatchlistPage.tsx:256
+msgid "No"
+msgstr ""
+
+#: assets/pages/tracking/WatchlistPage.tsx:263
+msgid "Domain triggers"
+msgstr ""
+
+#: assets/App.tsx:71
+msgid "Home"
+msgstr ""
+
+#: assets/App.tsx:77
+msgid "Search"
+msgstr ""
+
+#: assets/App.tsx:83
+msgid "Domain"
+msgstr ""
+
+#: assets/App.tsx:84
+msgid "Domain Finder"
+msgstr ""
+
+#: assets/App.tsx:91
+msgid "Entity"
+msgstr ""
+
+#: assets/App.tsx:92
+msgid "Entity Finder"
+msgstr ""
+
+#: assets/App.tsx:99
+msgid "Nameserver"
+msgstr ""
+
+#: assets/App.tsx:100
+msgid "Nameserver Finder"
+msgstr ""
+
+#: assets/App.tsx:108
+msgid "Information"
+msgstr ""
+
+#: assets/App.tsx:115
+msgid "TLD list"
+msgstr ""
+
+#: assets/App.tsx:122
+msgid "Statistics"
+msgstr ""
+
+#: assets/App.tsx:130
+msgid "Tracking"
+msgstr ""
+
+#: assets/App.tsx:136
+msgid "My Watchlists"
+msgstr ""
+
+#: assets/App.tsx:143
+msgid "My connectors"
+msgstr ""
+
+#: assets/App.tsx:151
+msgid "My Watchdog"
+msgstr ""
+
+#: assets/App.tsx:157
+msgid "My Account"
+msgstr ""
+
+#: assets/App.tsx:164
+msgid "TOS"
+msgstr ""
+
+#: assets/App.tsx:170
+msgid "Privacy Policy"
+msgstr ""
+
+#: assets/App.tsx:178
+msgid "FAQ"
+msgstr ""
+
+#: assets/App.tsx:196
+msgid "Log out"
+msgstr ""
