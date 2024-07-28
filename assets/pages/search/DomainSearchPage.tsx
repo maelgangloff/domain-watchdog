@@ -55,6 +55,20 @@ const domainRole = {
     noc: () => t`Noc`
 }
 
+const domainEvent = {
+    registration: () => t`Registration`,
+    reregistration: () => t`Reregistration`,
+    'last changed': () => t`Last changed`,
+    expiration: () => t`Expiration`,
+    deletion: () => t`Deletion`,
+    reinstantiation: () => t`Reinstantiation`,
+    transfer: () => t`Transfer`,
+    locked: () => t`Locked`,
+    unlocked: () => t`Unlocked`,
+    'registrar expiration': () => t`Registrar expiration`,
+    'enum validation expiration': () => t`ENUM validation expiration`
+}
+
 export default function DomainSearchPage() {
 
     const [domain, setDomain] = useState<Domain | null>()
@@ -154,7 +168,7 @@ export default function DomainSearchPage() {
 
                                                     return {
                                                         label: new Date(date).toUTCString(),
-                                                        children: action,
+                                                        children: Object.keys(domainEvent).includes(action) ? domainEvent[action as keyof typeof domainEvent]() : action,
                                                         color,
                                                         dot,
                                                         pending: new Date(date).getTime() > new Date().getTime()
