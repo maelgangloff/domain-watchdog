@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2024-07-28 19:47+0000\n"
+"PO-Revision-Date: 2024-07-28 20:06+0000\n"
 "Last-Translator: Maël Gangloff <contact@maelgangloff.fr>\n"
 "Language-Team: French <https://weblate.vinceh121.me/projects/domain-watchdog/"
 "domain-watchdog-dashboard/fr/>\n"
@@ -56,10 +56,8 @@ msgid "Noc"
 msgstr "NOC"
 
 #: assets/pages/search/DomainSearchPage.tsx:59
-#, fuzzy
-#| msgid "Registrant"
 msgid "Registration"
-msgstr "Titulaire"
+msgstr "Enregistrement"
 
 #: assets/pages/search/DomainSearchPage.tsx:60
 #, fuzzy
@@ -73,37 +71,35 @@ msgstr ""
 
 #: assets/pages/search/DomainSearchPage.tsx:62
 msgid "Expiration"
-msgstr ""
+msgstr "Expiration"
 
 #: assets/pages/search/DomainSearchPage.tsx:63
 msgid "Deletion"
-msgstr ""
+msgstr "Suppression"
 
 #: assets/pages/search/DomainSearchPage.tsx:64
 msgid "Reinstantiation"
-msgstr ""
+msgstr "Réinstanciation"
 
 #: assets/pages/search/DomainSearchPage.tsx:65
 msgid "Transfer"
-msgstr ""
+msgstr "Transfert"
 
 #: assets/pages/search/DomainSearchPage.tsx:66
 msgid "Locked"
-msgstr ""
+msgstr "Bloqué"
 
 #: assets/pages/search/DomainSearchPage.tsx:67
 msgid "Unlocked"
-msgstr ""
+msgstr "Débloqué"
 
 #: assets/pages/search/DomainSearchPage.tsx:68
-#, fuzzy
-#| msgid "Registry Operator"
 msgid "Registrar expiration"
-msgstr "Opérateur de registre"
+msgstr "Expiration du registraire"
 
 #: assets/pages/search/DomainSearchPage.tsx:69
 msgid "ENUM validation expiration"
-msgstr ""
+msgstr "Expiration de la validation ENUM"
 
 #: assets/pages/search/DomainSearchPage.tsx:81
 msgid "Found !"
@@ -133,17 +129,15 @@ msgstr "Ce nom de domaine ne semble pas être valide"
 
 #: assets/pages/search/DomainSearchPage.tsx:131
 msgid "EPP Status Codes"
-msgstr ""
+msgstr "Codes de statut EPP"
 
 #: assets/pages/search/DomainSearchPage.tsx:141
 msgid "Timeline"
-msgstr ""
+msgstr "Chronologie"
 
 #: assets/pages/search/DomainSearchPage.tsx:183
-#, fuzzy
-#| msgid "Entity"
 msgid "Entities"
-msgstr "Entité"
+msgstr "Entités"
 
 #: assets/pages/search/DomainSearchPage.tsx:222
 msgid ""
