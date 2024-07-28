@@ -4,6 +4,8 @@ namespace App\Entity;
 
 use App\Config\ConnectorProvider;
 use App\Repository\ConnectorRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\DiscriminatorColumn;
 use Doctrine\ORM\Mapping\DiscriminatorMap;
@@ -28,6 +30,17 @@ class Connector
 
     #[ORM\Column]
     private array $authData = [];
+
+    /**
+     * @var Collection<int, WatchList>
+     */
+    #[ORM\OneToMany(targetEntity: WatchList::class, mappedBy: 'connector')]
+    private Collection $watchLists;
+
+    public function __construct()
+    {
+        $this->watchLists = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -66,6 +79,36 @@ class Connector
     public function setAuthData(array $authData): static
     {
         $this->authData = $authData;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, WatchList>
+     */
+    public function getWatchLists(): Collection
+    {
+        return $this->watchLists;
+    }
+
+    public function addWatchList(WatchList $watchList): static
+    {
+        if (!$this->watchLists->contains($watchList)) {
+            $this->watchLists->add($watchList);
+            $watchList->setConnector($this);
+        }
+
+        return $this;
+    }
+
+    public function removeWatchList(WatchList $watchList): static
+    {
+        if ($this->watchLists->removeElement($watchList)) {
+            // set the owning side to null (unless already changed)
+            if ($watchList->getConnector() === $this) {
+                $watchList->setConnector(null);
+            }
+        }
 
         return $this;
     }

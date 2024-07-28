@@ -69,6 +69,9 @@ class WatchList
     #[SerializedName("triggers")]
     private Collection $watchListTriggers;
 
+    #[ORM\ManyToOne(inversedBy: 'watchLists')]
+    private ?Connector $connector = null;
+
     public function __construct()
     {
         $this->token = Uuid::v4();
@@ -143,6 +146,18 @@ class WatchList
                 $watchListTrigger->setWatchList(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getConnector(): ?Connector
+    {
+        return $this->connector;
+    }
+
+    public function setConnector(?Connector $connector): static
+    {
+        $this->connector = $connector;
 
         return $this;
     }
