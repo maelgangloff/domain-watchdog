@@ -342,6 +342,10 @@ msgstr "Créer"
 msgid "Reset"
 msgstr "Réinitialiser"
 
+#: assets/App.tsx:136 assets/pages/tracking/WatchlistPage.tsx:254
+msgid "My Watchlists"
+msgstr "Mes Watchlists"
+
 #: assets/pages/tracking/WatchlistPage.tsx:257
 #, javascript-format
 msgid "Watchlist ${ watchlist.token }"
@@ -438,10 +442,6 @@ msgstr "Statistiques"
 #: assets/App.tsx:130
 msgid "Tracking"
 msgstr "Suivi"
-
-#: assets/App.tsx:136
-msgid "My Watchlists"
-msgstr "Mes Watchlists"
 
 #: assets/App.tsx:143
 msgid "My connectors"
