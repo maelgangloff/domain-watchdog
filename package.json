@@ -50,7 +50,9 @@
     "dev-server": "encore dev-server",
     "dev": "encore dev",
     "watch": "encore dev --watch",
-    "build": "encore production --progress"
+    "build": "encore production --progress",
+    "ttag:po2json": "cd translations; for i in $(find . -name \"*.po\"); do ttag po2json $i > ../public/locales/$i.json; done; cd ..",
+    "ttag:extract": "ttag extract assets/**/*.{ts,tsx} -o translations/translations.pot"
   },
   "dependencies": {
     "remove": "^0.1.5"
