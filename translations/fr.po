@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2024-07-28 21:52+0000\n"
-"Last-Translator: Aurélien <Aurelien@users.noreply.weblate.vinceh121.me>\n"
+"PO-Revision-Date: 2024-07-28 22:10+0000\n"
+"Last-Translator: Maël Gangloff <contact@maelgangloff.fr>\n"
 "Language-Team: French <https://weblate.vinceh121.me/projects/domain-watchdog/"
 "domain-watchdog-dashboard/fr/>\n"
 "Language: fr\n"
@@ -247,7 +247,7 @@ msgstr "Nom d'utilisateur"
 
 #: assets/pages/watchdog/UserPage.tsx:21
 msgid "Roles"
-msgstr ""
+msgstr "Rôles"
 
 #: assets/pages/tracking/WatchlistPage.tsx:34
 msgid "When a domain is expired"
