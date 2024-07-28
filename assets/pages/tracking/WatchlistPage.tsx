@@ -25,55 +25,57 @@ const formItemLayoutWithOutLabel = {
     },
 };
 
-const triggerEventItems: { label: string, value: EventAction }[] = [
-    {
-        label: t`When a domain is expired`,
-        value: 'expiration'
-    },
-    {
-        label: t`When a domain is deleted`,
-        value: 'deletion'
-    },
-    {
-        label: t`When a domain is updated`,
-        value: 'last changed'
-    },
-    {
-        label: t`When a domain is transferred`,
-        value: 'transfer'
-    },
-    {
-        label: t`When a domain is locked`,
-        value: 'locked'
-    },
-    {
-        label: t`When a domain is unlocked`,
-        value: 'unlocked'
-    },
-    {
-        label: t`When a domain is reregistered`,
-        value: 'reregistration'
-    },
-    {
-        label: t`When a domain is reinstantiated`,
-        value: 'reinstantiation'
-    },
-    {
-        label: t`When a domain is registered`,
-        value: 'registration'
-    }
-]
-
-const trigerActionItems = [
-    {
-        label: t`Send me an email`,
-        value: 'email'
-    }
-]
-
 type Watchlist = { token: string, domains: { ldhName: string }[], triggers?: { event: EventAction, action: string }[] }
 
 export default function WatchlistPage() {
+
+    const triggerEventItems: { label: string, value: EventAction }[] = [
+        {
+            label: t`When a domain is expired`,
+            value: 'expiration'
+        },
+        {
+            label: t`When a domain is deleted`,
+            value: 'deletion'
+        },
+        {
+            label: t`When a domain is updated`,
+            value: 'last changed'
+        },
+        {
+            label: t`When a domain is transferred`,
+            value: 'transfer'
+        },
+        {
+            label: t`When a domain is locked`,
+            value: 'locked'
+        },
+        {
+            label: t`When a domain is unlocked`,
+            value: 'unlocked'
+        },
+        {
+            label: t`When a domain is reregistered`,
+            value: 'reregistration'
+        },
+        {
+            label: t`When a domain is reinstantiated`,
+            value: 'reinstantiation'
+        },
+        {
+            label: t`When a domain is registered`,
+            value: 'registration'
+        }
+    ]
+
+    const trigerActionItems = [
+        {
+            label: t`Send me an email`,
+            value: 'email'
+        }
+    ]
+
+
     const [form] = Form.useForm()
     const [messageApi, contextHolder] = message.useMessage()
     const [watchlists, setWatchlists] = useState<Watchlist[] | null>()

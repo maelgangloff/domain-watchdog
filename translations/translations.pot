@@ -3,134 +3,134 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Plural-Forms: nplurals=2; plural=(n!=1);\n"
 
-#: assets/pages/search/DomainSearchPage.tsx:45
+#: assets/pages/search/DomainSearchPage.tsx:48
 msgid "Registrant"
 msgstr ""
 
-#: assets/pages/search/DomainSearchPage.tsx:46
+#: assets/pages/search/DomainSearchPage.tsx:49
 msgid "Technical"
 msgstr ""
 
-#: assets/pages/search/DomainSearchPage.tsx:47
+#: assets/pages/search/DomainSearchPage.tsx:50
 msgid "Administrative"
 msgstr ""
 
-#: assets/pages/search/DomainSearchPage.tsx:48
+#: assets/pages/search/DomainSearchPage.tsx:51
 msgid "Abuse"
 msgstr ""
 
-#: assets/pages/search/DomainSearchPage.tsx:49
+#: assets/pages/search/DomainSearchPage.tsx:52
 msgid "Billing"
 msgstr ""
 
-#: assets/pages/search/DomainSearchPage.tsx:50
+#: assets/pages/search/DomainSearchPage.tsx:53
 msgid "Registrar"
 msgstr ""
 
-#: assets/pages/search/DomainSearchPage.tsx:51
+#: assets/pages/search/DomainSearchPage.tsx:54
 msgid "Reseller"
 msgstr ""
 
-#: assets/pages/search/DomainSearchPage.tsx:52
+#: assets/pages/search/DomainSearchPage.tsx:55
 msgid "Sponsor"
 msgstr ""
 
-#: assets/pages/search/DomainSearchPage.tsx:53
+#: assets/pages/search/DomainSearchPage.tsx:56
 msgid "Proxy"
 msgstr ""
 
-#: assets/pages/search/DomainSearchPage.tsx:54
+#: assets/pages/search/DomainSearchPage.tsx:57
 msgid "Notifications"
 msgstr ""
 
-#: assets/pages/search/DomainSearchPage.tsx:55
+#: assets/pages/search/DomainSearchPage.tsx:58
 msgid "Noc"
 msgstr ""
 
-#: assets/pages/search/DomainSearchPage.tsx:59
+#: assets/pages/search/DomainSearchPage.tsx:62
 msgid "Registration"
 msgstr ""
 
-#: assets/pages/search/DomainSearchPage.tsx:60
+#: assets/pages/search/DomainSearchPage.tsx:63
 msgid "Reregistration"
 msgstr ""
 
-#: assets/pages/search/DomainSearchPage.tsx:61
+#: assets/pages/search/DomainSearchPage.tsx:64
 msgid "Last changed"
 msgstr ""
 
-#: assets/pages/search/DomainSearchPage.tsx:62
+#: assets/pages/search/DomainSearchPage.tsx:65
 msgid "Expiration"
 msgstr ""
 
-#: assets/pages/search/DomainSearchPage.tsx:63
+#: assets/pages/search/DomainSearchPage.tsx:66
 msgid "Deletion"
 msgstr ""
 
-#: assets/pages/search/DomainSearchPage.tsx:64
+#: assets/pages/search/DomainSearchPage.tsx:67
 msgid "Reinstantiation"
 msgstr ""
 
-#: assets/pages/search/DomainSearchPage.tsx:65
+#: assets/pages/search/DomainSearchPage.tsx:68
 msgid "Transfer"
 msgstr ""
 
-#: assets/pages/search/DomainSearchPage.tsx:66
+#: assets/pages/search/DomainSearchPage.tsx:69
 msgid "Locked"
 msgstr ""
 
-#: assets/pages/search/DomainSearchPage.tsx:67
+#: assets/pages/search/DomainSearchPage.tsx:70
 msgid "Unlocked"
 msgstr ""
 
-#: assets/pages/search/DomainSearchPage.tsx:68
+#: assets/pages/search/DomainSearchPage.tsx:71
 msgid "Registrar expiration"
 msgstr ""
 
-#: assets/pages/search/DomainSearchPage.tsx:69
+#: assets/pages/search/DomainSearchPage.tsx:72
 msgid "ENUM validation expiration"
 msgstr ""
 
-#: assets/pages/search/DomainSearchPage.tsx:83
+#: assets/pages/search/DomainSearchPage.tsx:82
 msgid "Found !"
 msgstr ""
 
-#: assets/pages/search/DomainSearchPage.tsx:87
-#: assets/pages/tracking/WatchlistPage.tsx:89
+#: assets/pages/search/DomainSearchPage.tsx:86
+#: assets/pages/tracking/WatchlistPage.tsx:91
 msgid "An error occurred"
 msgstr ""
 
-#: assets/pages/search/DomainSearchPage.tsx:92
+#: assets/pages/search/DomainSearchPage.tsx:91
 msgid "Domain finder"
 msgstr ""
 
 #: assets/pages/LoginPage.tsx:53
 #: assets/pages/LoginPage.tsx:61
-#: assets/pages/search/DomainSearchPage.tsx:105
-#: assets/pages/tracking/WatchlistPage.tsx:135
-#: assets/pages/tracking/WatchlistPage.tsx:195
-#: assets/pages/tracking/WatchlistPage.tsx:205
+#: assets/pages/search/DomainSearchPage.tsx:104
+#: assets/pages/tracking/WatchlistPage.tsx:137
+#: assets/pages/tracking/WatchlistPage.tsx:197
+#: assets/pages/tracking/WatchlistPage.tsx:207
 msgid "Required"
 msgstr ""
 
-#: assets/pages/search/DomainSearchPage.tsx:108
-#: assets/pages/tracking/WatchlistPage.tsx:138
+#: assets/pages/search/DomainSearchPage.tsx:107
+#: assets/pages/tracking/WatchlistPage.tsx:140
 msgid "This domain name does not appear to be valid"
 msgstr ""
 
-#: assets/pages/search/DomainSearchPage.tsx:133
+#: assets/pages/search/DomainSearchPage.tsx:132
 msgid "EPP Status Codes"
 msgstr ""
 
-#: assets/pages/search/DomainSearchPage.tsx:143
+#: assets/pages/search/DomainSearchPage.tsx:142
 msgid "Timeline"
 msgstr ""
 
-#: assets/pages/search/DomainSearchPage.tsx:185
+#: assets/pages/search/DomainSearchPage.tsx:184
 msgid "Entities"
 msgstr ""
 
-#: assets/pages/search/DomainSearchPage.tsx:224
+#: assets/pages/search/DomainSearchPage.tsx:223
 msgid ""
 "Although the domain exists in my database, it has been deleted from the "
 "WHOIS by its registrar."
@@ -210,121 +210,135 @@ msgid ""
 "their country of origin."
 msgstr ""
 
-#: assets/pages/tracking/WatchlistPage.tsx:30
-msgid "When a domain is expired"
+#: assets/App.tsx:157
+#: assets/pages/watchdog/UserPage.tsx:16
+msgid "My Account"
+msgstr ""
+
+#: assets/pages/LoginPage.tsx:51
+#: assets/pages/watchdog/UserPage.tsx:18
+msgid "Username"
+msgstr ""
+
+#: assets/pages/watchdog/UserPage.tsx:21
+msgid "Roles"
 msgstr ""
 
 #: assets/pages/tracking/WatchlistPage.tsx:34
-msgid "When a domain is deleted"
+msgid "When a domain is expired"
 msgstr ""
 
 #: assets/pages/tracking/WatchlistPage.tsx:38
-msgid "When a domain is updated"
+msgid "When a domain is deleted"
 msgstr ""
 
 #: assets/pages/tracking/WatchlistPage.tsx:42
-msgid "When a domain is transferred"
+msgid "When a domain is updated"
 msgstr ""
 
 #: assets/pages/tracking/WatchlistPage.tsx:46
-msgid "When a domain is locked"
+msgid "When a domain is transferred"
 msgstr ""
 
 #: assets/pages/tracking/WatchlistPage.tsx:50
-msgid "When a domain is unlocked"
+msgid "When a domain is locked"
 msgstr ""
 
 #: assets/pages/tracking/WatchlistPage.tsx:54
-msgid "When a domain is reregistered"
+msgid "When a domain is unlocked"
 msgstr ""
 
 #: assets/pages/tracking/WatchlistPage.tsx:58
-msgid "When a domain is reinstantiated"
+msgid "When a domain is reregistered"
 msgstr ""
 
 #: assets/pages/tracking/WatchlistPage.tsx:62
+msgid "When a domain is reinstantiated"
+msgstr ""
+
+#: assets/pages/tracking/WatchlistPage.tsx:66
 msgid "When a domain is registered"
 msgstr ""
 
-#: assets/pages/tracking/WatchlistPage.tsx:69
+#: assets/pages/tracking/WatchlistPage.tsx:73
 msgid "Send me an email"
 msgstr ""
 
-#: assets/pages/tracking/WatchlistPage.tsx:86
+#: assets/pages/tracking/WatchlistPage.tsx:88
 msgid "Watchlist created !"
 msgstr ""
 
-#: assets/pages/tracking/WatchlistPage.tsx:102
+#: assets/pages/tracking/WatchlistPage.tsx:104
 msgid "Create a watchlist"
 msgstr ""
 
-#: assets/pages/tracking/WatchlistPage.tsx:115
+#: assets/pages/tracking/WatchlistPage.tsx:117
 msgid "At least one domain name"
 msgstr ""
 
-#: assets/pages/tracking/WatchlistPage.tsx:126
+#: assets/pages/tracking/WatchlistPage.tsx:128
 msgid "Domain names"
 msgstr ""
 
-#: assets/pages/tracking/WatchlistPage.tsx:144
-#: assets/pages/tracking/WatchlistPage.tsx:263
+#: assets/pages/tracking/WatchlistPage.tsx:146
+#: assets/pages/tracking/WatchlistPage.tsx:265
 msgid "Domain name"
 msgstr ""
 
-#: assets/pages/tracking/WatchlistPage.tsx:161
+#: assets/pages/tracking/WatchlistPage.tsx:163
 msgid "Add a Domain name"
 msgstr ""
 
-#: assets/pages/tracking/WatchlistPage.tsx:174
+#: assets/pages/tracking/WatchlistPage.tsx:176
 msgid "At least one domain trigger"
 msgstr ""
 
-#: assets/pages/tracking/WatchlistPage.tsx:185
+#: assets/pages/tracking/WatchlistPage.tsx:187
 msgid "Domain trigger"
 msgstr ""
 
-#: assets/pages/tracking/WatchlistPage.tsx:199
+#: assets/pages/tracking/WatchlistPage.tsx:201
 msgid "If this happens"
 msgstr ""
 
-#: assets/pages/tracking/WatchlistPage.tsx:209
+#: assets/pages/tracking/WatchlistPage.tsx:211
 msgid "Then do that"
 msgstr ""
 
-#: assets/pages/tracking/WatchlistPage.tsx:230
+#: assets/pages/tracking/WatchlistPage.tsx:232
 msgid "Add a Trigger"
 msgstr ""
 
-#: assets/pages/tracking/WatchlistPage.tsx:240
+#: assets/pages/tracking/WatchlistPage.tsx:242
 msgid "Create"
 msgstr ""
 
-#: assets/pages/tracking/WatchlistPage.tsx:243
+#: assets/pages/tracking/WatchlistPage.tsx:245
 msgid "Reset"
 msgstr ""
 
-#: assets/pages/tracking/WatchlistPage.tsx:255
+#: assets/pages/tracking/WatchlistPage.tsx:257
 #, javascript-format
 msgid "Watchlist ${ watchlist.token }"
 msgstr ""
 
-#: assets/pages/tracking/WatchlistPage.tsx:256
+#: assets/pages/tracking/WatchlistPage.tsx:258
 msgid "Delete the Watchlist"
 msgstr ""
 
-#: assets/pages/tracking/WatchlistPage.tsx:257
+#: assets/pages/tracking/WatchlistPage.tsx:259
 msgid "Are you sure to delete this Watchlist?"
 msgstr ""
 
-#: assets/pages/tracking/WatchlistPage.tsx:259
+#: assets/pages/tracking/WatchlistPage.tsx:261
 msgid "Yes"
 msgstr ""
 
-#: assets/pages/tracking/WatchlistPage.tsx:260
+#: assets/pages/tracking/WatchlistPage.tsx:262
 msgid "No"
 msgstr ""
 
-#: assets/pages/tracking/WatchlistPage.tsx:267
+#: assets/pages/tracking/WatchlistPage.tsx:269
 msgid "Domain triggers"
 msgstr ""
 
@@ -339,10 +353,6 @@ msgstr ""
 
 #: assets/pages/LoginPage.tsx:36
 msgid "Error"
-msgstr ""
-
-#: assets/pages/LoginPage.tsx:51
-msgid "Username"
 msgstr ""
 
 #: assets/pages/LoginPage.tsx:59
@@ -415,10 +425,6 @@ msgstr ""
 
 #: assets/App.tsx:151
 msgid "My Watchdog"
-msgstr ""
-
-#: assets/App.tsx:157
-msgid "My Account"
 msgstr ""
 
 #: assets/App.tsx:164

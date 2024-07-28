@@ -41,37 +41,36 @@ type FieldType = {
 }
 
 
-const domainRole = {
-    registrant: () => t`Registrant`,
-    technical: () => t`Technical`,
-    administrative: () => t`Administrative`,
-    abuse: () => t`Abuse`,
-    billing: () => t`Billing`,
-    registrar: () => t`Registrar`,
-    reseller: () => t`Reseller`,
-    sponsor: () => t`Sponsor`,
-    proxy: () => t`Proxy`,
-    notifications: () => t`Notifications`,
-    noc: () => t`Noc`
-}
-
-const domainEvent = {
-    registration: () => t`Registration`,
-    reregistration: () => t`Reregistration`,
-    'last changed': () => t`Last changed`,
-    expiration: () => t`Expiration`,
-    deletion: () => t`Deletion`,
-    reinstantiation: () => t`Reinstantiation`,
-    transfer: () => t`Transfer`,
-    locked: () => t`Locked`,
-    unlocked: () => t`Unlocked`,
-    'registrar expiration': () => t`Registrar expiration`,
-    'enum validation expiration': () => t`ENUM validation expiration`
-}
-
 const locale = navigator.language.split('-')[0]
 
 export default function DomainSearchPage() {
+    const domainRole = {
+        registrant: t`Registrant`,
+        technical: t`Technical`,
+        administrative: t`Administrative`,
+        abuse: t`Abuse`,
+        billing: t`Billing`,
+        registrar: t`Registrar`,
+        reseller: t`Reseller`,
+        sponsor: t`Sponsor`,
+        proxy: t`Proxy`,
+        notifications: t`Notifications`,
+        noc: t`Noc`
+    }
+
+    const domainEvent = {
+        registration: t`Registration`,
+        reregistration: t`Reregistration`,
+        'last changed': t`Last changed`,
+        expiration: t`Expiration`,
+        deletion: t`Deletion`,
+        reinstantiation: t`Reinstantiation`,
+        transfer: t`Transfer`,
+        locked: t`Locked`,
+        unlocked: t`Unlocked`,
+        'registrar expiration': t`Registrar expiration`,
+        'enum validation expiration': t`ENUM validation expiration`
+    }
 
     const [domain, setDomain] = useState<Domain | null>()
     const [messageApi, contextHolder] = message.useMessage()
@@ -170,7 +169,7 @@ export default function DomainSearchPage() {
 
                                                     return {
                                                         label: new Date(date).toLocaleString(locale),
-                                                        children: Object.keys(domainEvent).includes(action) ? domainEvent[action as keyof typeof domainEvent]() : action,
+                                                        children: Object.keys(domainEvent).includes(action) ? domainEvent[action as keyof typeof domainEvent] : action,
                                                         color,
                                                         dot,
                                                         pending: new Date(date).getTime() > new Date().getTime()
@@ -209,7 +208,7 @@ export default function DomainSearchPage() {
                                                             title={e.entity.handle}
                                                             description={name}
                                                         />
-                                                        <div>{e.roles.map((r) => Object.keys(domainRole).includes(r) ? domainRole[r as keyof typeof domainRole]() : r).join(', ')}</div>
+                                                        <div>{e.roles.map((r) => Object.keys(domainRole).includes(r) ? domainRole[r as keyof typeof domainRole] : r).join(', ')}</div>
                                                     </List.Item>
                                                 }}
                                             />
