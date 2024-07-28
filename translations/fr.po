@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "PO-Revision-Date: 2024-07-28 16:06+0000\n"
-"Last-Translator: vinceh121 <contact@vinceh121.me>\n"
+"Last-Translator: Aurélien <Aurelien@users.noreply.weblate.vinceh121.me>\n"
 "Language-Team: French <https://weblate.vinceh121.me/projects/domain-watchdog/"
 "domain-watchdog-dashboard/fr/>\n"
 "Language: fr\n"
@@ -22,7 +22,7 @@ msgstr ""
 
 #: assets/pages/info/TldPage.tsx:71
 msgid "Flag"
-msgstr ""
+msgstr "Drapeau"
 
 #: assets/pages/info/TldPage.tsx:75
 msgid "Country"
@@ -75,15 +75,15 @@ msgstr ""
 #: assets/App.tsx:202
 #: assets/pages/LoginPage.tsx:31
 msgid "Log in"
-msgstr ""
+msgstr "Se connecter"
 
 #: assets/pages/LoginPage.tsx:36
 msgid "Error"
-msgstr ""
+msgstr "Erreur"
 
 #: assets/pages/LoginPage.tsx:51
 msgid "Username"
-msgstr ""
+msgstr "Nom d'utilisateur"
 
 #: assets/pages/LoginPage.tsx:53
 #: assets/pages/LoginPage.tsx:61
@@ -96,11 +96,11 @@ msgstr ""
 
 #: assets/pages/LoginPage.tsx:59
 msgid "Password"
-msgstr ""
+msgstr "Mot de passe"
 
 #: assets/pages/LoginPage.tsx:68
 msgid "Submit"
-msgstr ""
+msgstr "Soumettre"
 
 #: assets/pages/LoginPage.tsx:73
 msgid "Log in with SSO"
@@ -108,7 +108,7 @@ msgstr ""
 
 #: assets/pages/search/DomainSearchPage.tsx:52
 msgid "Found !"
-msgstr ""
+msgstr "Trouvé !"
 
 #: assets/pages/search/DomainSearchPage.tsx:56
 #: assets/pages/tracking/WatchlistPage.tsx:85
@@ -178,16 +178,16 @@ msgstr ""
 
 #: assets/pages/tracking/WatchlistPage.tsx:122
 msgid "Domain names"
-msgstr ""
+msgstr "Noms de domaines"
 
 #: assets/pages/tracking/WatchlistPage.tsx:140
 #: assets/pages/tracking/WatchlistPage.tsx:259
 msgid "Domain name"
-msgstr ""
+msgstr "Nom de domaine"
 
 #: assets/pages/tracking/WatchlistPage.tsx:157
 msgid "Add a Domain name"
-msgstr ""
+msgstr "Ajouter un nom de domaine"
 
 #: assets/pages/tracking/WatchlistPage.tsx:170
 msgid "At least one domain trigger"
@@ -211,11 +211,11 @@ msgstr ""
 
 #: assets/pages/tracking/WatchlistPage.tsx:236
 msgid "Create"
-msgstr ""
+msgstr "Créer"
 
 #: assets/pages/tracking/WatchlistPage.tsx:239
 msgid "Reset"
-msgstr ""
+msgstr "Réinitialiser"
 
 #: assets/pages/tracking/WatchlistPage.tsx:251
 #, javascript-format
@@ -232,11 +232,11 @@ msgstr ""
 
 #: assets/pages/tracking/WatchlistPage.tsx:255
 msgid "\"Yes\""
-msgstr ""
+msgstr "\"Oui\""
 
 #: assets/pages/tracking/WatchlistPage.tsx:256
 msgid "No"
-msgstr ""
+msgstr "Non"
 
 #: assets/pages/tracking/WatchlistPage.tsx:263
 msgid "Domain triggers"
@@ -244,15 +244,15 @@ msgstr ""
 
 #: assets/App.tsx:71
 msgid "Home"
-msgstr ""
+msgstr "Accueil"
 
 #: assets/App.tsx:77
 msgid "Search"
-msgstr ""
+msgstr "Rechercher"
 
 #: assets/App.tsx:83
 msgid "Domain"
-msgstr ""
+msgstr "Domaine"
 
 #: assets/App.tsx:84
 msgid "Domain Finder"
@@ -276,7 +276,7 @@ msgstr ""
 
 #: assets/App.tsx:108
 msgid "Information"
-msgstr ""
+msgstr "Information"
 
 #: assets/App.tsx:115
 msgid "TLD list"
@@ -284,7 +284,7 @@ msgstr ""
 
 #: assets/App.tsx:122
 msgid "Statistics"
-msgstr ""
+msgstr "Statistiques"
 
 #: assets/App.tsx:130
 msgid "Tracking"
@@ -304,7 +304,7 @@ msgstr ""
 
 #: assets/App.tsx:157
 msgid "My Account"
-msgstr ""
+msgstr "Mon compte"
 
 #: assets/App.tsx:164
 msgid "TOS"
@@ -312,7 +312,7 @@ msgstr ""
 
 #: assets/App.tsx:170
 msgid "Privacy Policy"
-msgstr ""
+msgstr "Politique de confidentialité"
 
 #: assets/App.tsx:178
 msgid "FAQ"
@@ -320,4 +320,4 @@ msgstr ""
 
 #: assets/App.tsx:196
 msgid "Log out"
-msgstr ""
+msgstr "Se déconnecter"
