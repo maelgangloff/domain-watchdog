@@ -253,10 +253,10 @@ export default function WatchlistPage() {
                 {watchlists.map(watchlist =>
                     <>
                         <Card title={t`Watchlist ${watchlist.token}`} extra={<Popconfirm
-                            title={t`"Delete the Watchlist"`}
+                            title={t`Delete the Watchlist`}
                             description={t`Are you sure to delete this Watchlist?`}
                             onConfirm={() => deleteWatchlist(watchlist.token).then(refreshWatchlists)}
-                            okText={t`"Yes"`}
+                            okText={t`Yes`}
                             cancelText={t`No`}
                         ><DeleteFilled/> </Popconfirm>}>
                             <Typography.Paragraph>
