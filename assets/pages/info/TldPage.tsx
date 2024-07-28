@@ -23,7 +23,8 @@ const getCountryCode = (tld: string): string => {
     return tld
 }
 
-const regionNames = new Intl.DisplayNames(['en'], {type: 'region'})
+const locale = navigator.language.split('-')[0]
+const regionNames = new Intl.DisplayNames([locale], {type: 'region'})
 
 
 function TldTable(filters: FiltersType) {
