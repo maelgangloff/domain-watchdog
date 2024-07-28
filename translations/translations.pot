@@ -317,6 +317,11 @@ msgstr ""
 msgid "Reset"
 msgstr ""
 
+#: assets/App.tsx:136
+#: assets/pages/tracking/WatchlistPage.tsx:254
+msgid "My Watchlists"
+msgstr ""
+
 #: assets/pages/tracking/WatchlistPage.tsx:257
 #, javascript-format
 msgid "Watchlist ${ watchlist.token }"
@@ -413,10 +418,6 @@ msgstr ""
 
 #: assets/App.tsx:130
 msgid "Tracking"
-msgstr ""
-
-#: assets/App.tsx:136
-msgid "My Watchlists"
 msgstr ""
 
 #: assets/App.tsx:143

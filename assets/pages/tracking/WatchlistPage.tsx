@@ -251,7 +251,7 @@ export default function WatchlistPage() {
 
 
         <Skeleton loading={watchlists === undefined} active>
-            {watchlists && watchlists.length > 0 && <Card title="My Watchlists" style={{width: '100%'}}>
+            {watchlists && watchlists.length > 0 && <Card title={t`My Watchlists`} style={{width: '100%'}}>
                 {watchlists.map(watchlist =>
                     <>
                         <Card title={t`Watchlist ${watchlist.token}`} extra={<Popconfirm
