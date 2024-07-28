@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2024-07-28 16:48+0000\n"
-"Last-Translator: Aurélien <Aurelien@users.noreply.weblate.vinceh121.me>\n"
+"PO-Revision-Date: 2024-07-28 17:53+0000\n"
+"Last-Translator: Maël Gangloff <contact@maelgangloff.fr>\n"
 "Language-Team: French <https://weblate.vinceh121.me/projects/domain-watchdog/"
 "domain-watchdog-dashboard/fr/>\n"
 "Language: fr\n"
@@ -13,7 +13,7 @@ msgstr ""
 
 #: assets/pages/NotFoundPage.tsx:10
 msgid "Sorry, the page you visited does not exist."
-msgstr "Désolé, la page que vous avez visitée n'existe pas."
+msgstr "Désolé, cette page n'existe pas."
 
 #: assets/App.tsx:114
 #: assets/pages/info/TldPage.tsx:64
@@ -116,7 +116,7 @@ msgstr "Se connecter"
 
 #: assets/pages/LoginPage.tsx:73
 msgid "Log in with SSO"
-msgstr ""
+msgstr "Se connecter par SSO"
 
 #: assets/pages/search/DomainSearchPage.tsx:52
 msgid "Found !"
