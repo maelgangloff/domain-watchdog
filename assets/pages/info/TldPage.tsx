@@ -119,7 +119,7 @@ export default function TldPage() {
                     key: 'sTLD',
                     label: t`Sponsored Top-Level-Domains`,
                     children: <>
-                        <Text>{t`Top - level domains sponsored by specific organizations that set rules for registration and use, often related to particular interest groups or industries.`}</Text>
+                        <Text>{t`Top-level domains sponsored by specific organizations that set rules for registration and use, often related to particular interest groups or industries.`}</Text>
                         <Divider/>
                         <TldTable type='sTLD'/>
                     </>
