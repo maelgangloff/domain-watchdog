@@ -4,17 +4,24 @@ namespace App\Entity;
 
 use App\Config\ConnectorProvider;
 use App\Repository\ConnectorRepository;
-use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\DiscriminatorColumn;
+use Doctrine\ORM\Mapping\DiscriminatorMap;
+use Doctrine\ORM\Mapping\InheritanceType;
 
 #[ORM\Entity(repositoryClass: ConnectorRepository::class)]
+#[InheritanceType('SINGLE_TABLE')]
+#[DiscriminatorColumn(name: 'provider', enumType: ConnectorProvider::class)]
+#[DiscriminatorMap([ConnectorProvider::OVH->value => OVHConnector::class])]
 class Connector
 {
     #[ORM\Id]
-    #[ORM\Column(enumType: ConnectorProvider::class)]
-    private ?ConnectorProvider $provider = null;
+    #[ORM\GeneratedValue]
+    #[ORM\Column]
+    private ?int $id = null;
 
-    #[ORM\Id]
+    private ?string $provider = null;
+
     #[ORM\ManyToOne(inversedBy: 'connectors')]
     #[ORM\JoinColumn(nullable: false)]
     private ?User $user = null;
@@ -22,13 +29,17 @@ class Connector
     #[ORM\Column]
     private array $authData = [];
 
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
 
-    public function getProvider(): ?ConnectorProvider
+    public function getProvider(): ?string
     {
         return $this->provider;
     }
 
-    public function setProvider(ConnectorProvider $provider): static
+    public function setProvider(?string $provider): static
     {
         $this->provider = $provider;
 
