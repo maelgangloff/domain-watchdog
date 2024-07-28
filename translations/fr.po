@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2024-07-28 17:53+0000\n"
+"PO-Revision-Date: 2024-07-28 18:39+0000\n"
 "Last-Translator: Maël Gangloff <contact@maelgangloff.fr>\n"
 "Language-Team: French <https://weblate.vinceh121.me/projects/domain-watchdog/"
 "domain-watchdog-dashboard/fr/>\n"
@@ -47,7 +47,7 @@ msgstr ""
 
 #: assets/App.tsx:114 assets/pages/info/TldPage.tsx:64
 msgid "TLD"
-msgstr ""
+msgstr "TLD"
 
 #: assets/pages/info/TldPage.tsx:71
 msgid "Flag"
@@ -62,14 +62,10 @@ msgid "Registry Operator"
 msgstr "Opérateur de registre"
 
 #: assets/pages/info/TldPage.tsx:106
-#, fuzzy
 msgid "This page presents all active TLDs in the root zone database."
-msgstr ""
-"Cette page présente tous les TLD actifs dans la base de données de la zone "
-"racine."
+msgstr "Cette page présente tous les TLD actifs dans la zone racine."
 
 #: assets/pages/info/TldPage.tsx:109
-#, fuzzy
 msgid ""
 "IANA provides the list of currently active TLDs, regardless of their type, "
 "and ICANN provides the list of gTLDs.\n"
@@ -99,26 +95,36 @@ msgid ""
 "registration and use, often related to particular interest groups or "
 "industries."
 msgstr ""
+"Domaines de premier niveau sponsorisés par des organisations spécifiques qui "
+"établissent des règles d'enregistrement et d'utilisation, souvent liées à "
+"des groupes d'intérêt ou à des secteurs particuliers."
 
 #: assets/pages/info/TldPage.tsx:129
 msgid "Generic Top-Level-Domains"
 msgstr "Domaine de premier niveau générique"
 
 #: assets/pages/info/TldPage.tsx:131
+#, fuzzy
 msgid ""
 "Generic top-level domains open to everyone, not restricted by specific "
 "criteria, representing various themes or industries."
 msgstr ""
+"Domaines génériques de premier niveau ouverts à tous, non restreints par des "
+"critères spécifiques, représentant des thèmes ou des secteurs d'activité "
+"variés."
 
 #: assets/pages/info/TldPage.tsx:138
 msgid "Brand Generic Top-Level-Domains"
-msgstr ""
+msgstr "Domaines génériques de premier niveau de marque"
 
 #: assets/pages/info/TldPage.tsx:140
 msgid ""
 "Generic top-level domains associated with specific brands, allowing "
 "companies to use their own brand names as domains."
 msgstr ""
+"Domaines génériques de premier niveau associés à des marques spécifiques, "
+"permettant aux entreprises d'utiliser leurs propres noms de marque comme "
+"domaines."
 
 #: assets/pages/info/TldPage.tsx:147
 msgid "Country-Code Top-Level-Domains"
@@ -157,10 +163,8 @@ msgid "When a domain is reinstantiated"
 msgstr ""
 
 #: assets/pages/tracking/WatchlistPage.tsx:62
-#, fuzzy
-#| msgid "When a domain is expired"
 msgid "When a domain is registered"
-msgstr "Lorsqu'un domaine est expiré"
+msgstr "Lorsqu'un domaine est enregistré"
 
 #: assets/pages/tracking/WatchlistPage.tsx:69
 msgid "Send me an email"
@@ -168,11 +172,11 @@ msgstr "Envoie-moi un email"
 
 #: assets/pages/tracking/WatchlistPage.tsx:86
 msgid "Watchlist created !"
-msgstr ""
+msgstr "Watchlist créée !"
 
 #: assets/pages/tracking/WatchlistPage.tsx:102
 msgid "Create a watchlist"
-msgstr ""
+msgstr "Créer une Watchlist"
 
 #: assets/pages/tracking/WatchlistPage.tsx:115
 msgid "At least one domain name"
@@ -222,21 +226,19 @@ msgstr "Réinitialiser"
 #: assets/pages/tracking/WatchlistPage.tsx:255
 #, javascript-format
 msgid "Watchlist ${ watchlist.token }"
-msgstr ""
+msgstr "Watchlist ${ watchlist.token }"
 
 #: assets/pages/tracking/WatchlistPage.tsx:256
 msgid "Delete the Watchlist"
-msgstr ""
+msgstr "Supprimer la Watchlist"
 
 #: assets/pages/tracking/WatchlistPage.tsx:257
 msgid "Are you sure to delete this Watchlist?"
-msgstr ""
+msgstr "Êtes-vous sûr de vouloir supprimer cette Watchlist ?"
 
 #: assets/pages/tracking/WatchlistPage.tsx:259
-#, fuzzy
-#| msgid "\"Yes\""
 msgid "Yes"
-msgstr "\"Oui\""
+msgstr "Oui"
 
 #: assets/pages/tracking/WatchlistPage.tsx:260
 msgid "No"
@@ -288,23 +290,23 @@ msgstr "Domaine"
 
 #: assets/App.tsx:84
 msgid "Domain Finder"
-msgstr ""
+msgstr "Rechercher un domaine"
 
 #: assets/App.tsx:91
 msgid "Entity"
-msgstr ""
+msgstr "Entité"
 
 #: assets/App.tsx:92
 msgid "Entity Finder"
-msgstr ""
+msgstr "Rechercher une entité"
 
 #: assets/App.tsx:99
 msgid "Nameserver"
-msgstr ""
+msgstr "Serveur DNS"
 
 #: assets/App.tsx:100
 msgid "Nameserver Finder"
-msgstr ""
+msgstr "Rechercher un serveur DNS"
 
 #: assets/App.tsx:108
 msgid "Information"
@@ -312,7 +314,7 @@ msgstr "Information"
 
 #: assets/App.tsx:115
 msgid "TLD list"
-msgstr ""
+msgstr "Liste des TLD"
 
 #: assets/App.tsx:122
 msgid "Statistics"
@@ -320,19 +322,19 @@ msgstr "Statistiques"
 
 #: assets/App.tsx:130
 msgid "Tracking"
-msgstr ""
+msgstr "Suivi"
 
 #: assets/App.tsx:136
 msgid "My Watchlists"
-msgstr ""
+msgstr "Mes Watchlists"
 
 #: assets/App.tsx:143
 msgid "My connectors"
-msgstr ""
+msgstr "Mes connecteurs"
 
 #: assets/App.tsx:151
 msgid "My Watchdog"
-msgstr ""
+msgstr "Mon Watchdog"
 
 #: assets/App.tsx:157
 msgid "My Account"
@@ -340,7 +342,7 @@ msgstr "Mon compte"
 
 #: assets/App.tsx:164
 msgid "TOS"
-msgstr ""
+msgstr "Conditions d'utilisation"
 
 #: assets/App.tsx:170
 msgid "Privacy Policy"
@@ -348,7 +350,7 @@ msgstr "Politique de confidentialité"
 
 #: assets/App.tsx:178
 msgid "FAQ"
-msgstr ""
+msgstr "FAQ"
 
 #: assets/App.tsx:196
 msgid "Log out"
