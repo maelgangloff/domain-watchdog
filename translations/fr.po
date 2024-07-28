@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2024-07-28 20:06+0000\n"
+"PO-Revision-Date: 2024-07-28 20:09+0000\n"
 "Last-Translator: Maël Gangloff <contact@maelgangloff.fr>\n"
 "Language-Team: French <https://weblate.vinceh121.me/projects/domain-watchdog/"
 "domain-watchdog-dashboard/fr/>\n"
@@ -67,7 +67,7 @@ msgstr "Titulaire"
 
 #: assets/pages/search/DomainSearchPage.tsx:61
 msgid "Last changed"
-msgstr ""
+msgstr "Dernière modification"
 
 #: assets/pages/search/DomainSearchPage.tsx:62
 msgid "Expiration"
