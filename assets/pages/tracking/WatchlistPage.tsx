@@ -29,14 +29,18 @@ export default function WatchlistPage() {
 
     const refreshWatchlists = () => getWatchlists().then(w => {
         setWatchlists(w['hydra:member'])
-    }).catch(() => setWatchlists(undefined))
+    }).catch((e: AxiosError) => {
+        const data = e?.response?.data as { detail: string }
+        messageApi.error(data.detail ?? t`An error occurred`)
+        setWatchlists(undefined)
+    })
 
     useEffect(() => {
         refreshWatchlists()
     }, [])
 
     return <Flex gap="middle" align="center" justify="center" vertical>
-        <Card title={t`Create a watchlist`} style={{width: '100%'}}>
+        <Card title={t`Create a Watchlist`} style={{width: '100%'}}>
             {contextHolder}
             <WatchlistForm form={form} onCreateWatchlist={onCreateWatchlist}/>
         </Card>

@@ -203,10 +203,12 @@ msgstr ""
 msgid "Are you sure to delete this Watchlist?"
 msgstr ""
 
+#: assets/components/tracking/ConnectorsList.tsx:17
 #: assets/components/tracking/WatchlistsList.tsx:18
 msgid "Yes"
 msgstr ""
 
+#: assets/components/tracking/ConnectorsList.tsx:18
 #: assets/components/tracking/WatchlistsList.tsx:19
 msgid "No"
 msgstr ""
@@ -215,12 +217,31 @@ msgstr ""
 msgid "Domain triggers"
 msgstr ""
 
+#: assets/components/tracking/ConnectorsList.tsx:13
+#, javascript-format
+msgid "Connector ${ connector.id }"
+msgstr ""
+
+#: assets/components/tracking/ConnectorsList.tsx:14
+msgid "Delete the Connector"
+msgstr ""
+
+#: assets/components/tracking/ConnectorsList.tsx:15
+msgid "Are you sure to delete this Connector?"
+msgstr ""
+
+#: assets/components/tracking/ConnectorsList.tsx:21
+msgid "Provider"
+msgstr ""
+
 #: assets/pages/search/DomainSearchPage.tsx:19
 msgid "Found !"
 msgstr ""
 
 #: assets/pages/search/DomainSearchPage.tsx:23
+#: assets/pages/tracking/ConnectorsPage.tsx:21
 #: assets/pages/tracking/WatchlistPage.tsx:26
+#: assets/pages/tracking/WatchlistPage.tsx:34
 msgid "An error occurred"
 msgstr ""
 
@@ -334,16 +355,24 @@ msgstr ""
 msgid "Roles"
 msgstr ""
 
+#: assets/pages/tracking/ConnectorsPage.tsx:31
+msgid "Create a Connector"
+msgstr ""
+
+#: assets/pages/tracking/ConnectorsPage.tsx:39
+msgid "My Connectors"
+msgstr ""
+
 #: assets/pages/tracking/WatchlistPage.tsx:23
 msgid "Watchlist created !"
 msgstr ""
 
-#: assets/pages/tracking/WatchlistPage.tsx:39
-msgid "Create a watchlist"
+#: assets/pages/tracking/WatchlistPage.tsx:43
+msgid "Create a Watchlist"
 msgstr ""
 
 #: assets/App.tsx:136
-#: assets/pages/tracking/WatchlistPage.tsx:46
+#: assets/pages/tracking/WatchlistPage.tsx:50
 msgid "My Watchlists"
 msgstr ""
 
