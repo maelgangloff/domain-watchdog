@@ -46,33 +46,36 @@ final readonly class ProcessDomainTriggerHandler
         /** @var Domain $domain */
         $domain = $this->domainRepository->findOneBy(["ldhName" => $message->ldhName]);
 
-        /** @var DomainEvent $event */
-        foreach ($domain->getEvents()->filter(fn($event) => $message->updatedAt < $event->getDate()) as $event) {
-            $watchListTriggers = $watchList->getWatchListTriggers()
-                ->filter(fn($trigger) => $trigger->getEvent() === $event->getAction());
+        $watchListTriggers = $watchList->getWatchListTriggers();
 
-            /** @var WatchListTrigger $watchListTrigger */
-            foreach ($watchListTriggers->getIterator() as $watchListTrigger) {
+        /** @var WatchListTrigger $watchListTrigger */
+        foreach ($watchListTriggers->getIterator() as $watchListTrigger) {
 
-                switch ($watchListTrigger->getAction()) {
-                    case TriggerAction::SendEmail:
-                        $this->sendEmailDomainUpdated($event, $watchList->getUser());
-                        break;
-                    case TriggerAction::BuyDomain :
-                        if ($watchListTrigger->getConnector() === null) throw new Exception('Connector is missing');
-                        $connector = $watchListTrigger->getConnector();
-                        if ($connector->getProvider() === ConnectorProvider::OVH) {
-                            $ovh = new OVHConnector($connector->getAuthData());
-                            $isDebug = $this->kernel->isDebug();
-                            $ovh->orderDomain(
-                                $domain,
-                                true,
-                                true,
-                                true,
-                                $isDebug
-                            );
+            if ($watchListTrigger->getAction() === TriggerAction::BuyDomain) {
 
-                        } else throw new Exception("Unknown provider");
+                if ($watchListTrigger->getConnector() === null) throw new Exception('Connector is missing');
+
+                $connector = $watchListTrigger->getConnector();
+
+                if ($connector->getProvider() === ConnectorProvider::OVH) {
+                    $ovh = new OVHConnector($connector->getAuthData());
+                    $isDebug = $this->kernel->isDebug();
+
+                    $ovh->orderDomain(
+                        $domain,
+                        true,
+                        true,
+                        true,
+                        $isDebug
+                    );
+
+                } else throw new Exception("Unknown provider");
+            }
+
+            /** @var DomainEvent $event */
+            foreach ($domain->getEvents()->filter(fn($event) => $message->updatedAt < $event->getDate()) as $event) {
+                if ($watchListTrigger->getAction() == TriggerAction::SendEmail) {
+                    $this->sendEmailDomainUpdated($event, $watchList->getUser());
                 }
             }
         }
