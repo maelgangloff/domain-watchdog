@@ -56,7 +56,7 @@ final readonly class ProcessWatchListTriggerHandler
                 $domain = $this->RDAPService->registerDomain($domain->getLdhName());
             } catch (Throwable) {
                 $this->sendEmailDomainUpdateError($domain, $watchList->getUser());
-                continue;
+                //continue; // This line is commented out to allow the purchase of expired domains
             }
 
             /*
