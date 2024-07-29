@@ -14,7 +14,7 @@ export function WatchlistsList({watchlists, onDelete}: { watchlists: Watchlist[]
                 <Card title={t`Watchlist ${watchlist.token}`} extra={<Popconfirm
                     title={t`Delete the Watchlist`}
                     description={t`Are you sure to delete this Watchlist?`}
-                    onConfirm={() => deleteWatchlist(watchlist.token).then()}
+                    onConfirm={() => deleteWatchlist(watchlist.token).then(onDelete)}
                     okText={t`Yes`}
                     cancelText={t`No`}
                 ><DeleteFilled/> </Popconfirm>}>

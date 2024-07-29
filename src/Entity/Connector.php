@@ -27,7 +27,7 @@ use Symfony\Component\Uid\Uuid;
             normalizationContext: ['groups' => 'connector:list']
         ),
         new Post(
-            routeName: 'connector_create', normalizationContext: ['groups' => 'connector:create'],
+            routeName: 'connector_create', normalizationContext: ['groups' => ['connector:create', 'connector:list']],
             denormalizationContext: ['groups' => 'connector:create'],
             name: 'create'
         ),
