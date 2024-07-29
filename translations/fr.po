@@ -210,10 +210,12 @@ msgstr "Supprimer la Watchlist"
 msgid "Are you sure to delete this Watchlist?"
 msgstr "Êtes-vous sûr de vouloir supprimer cette Watchlist ?"
 
+#: assets/components/tracking/ConnectorsList.tsx:17
 #: assets/components/tracking/WatchlistsList.tsx:18
 msgid "Yes"
 msgstr "Oui"
 
+#: assets/components/tracking/ConnectorsList.tsx:18
 #: assets/components/tracking/WatchlistsList.tsx:19
 msgid "No"
 msgstr "Non"
@@ -222,12 +224,35 @@ msgstr "Non"
 msgid "Domain triggers"
 msgstr "Actions"
 
+#: assets/components/tracking/ConnectorsList.tsx:13
+#, javascript-format
+msgid "Connector ${ connector.id }"
+msgstr ""
+
+#: assets/components/tracking/ConnectorsList.tsx:14
+#, fuzzy
+#| msgid "Delete the Watchlist"
+msgid "Delete the Connector"
+msgstr "Supprimer la Watchlist"
+
+#: assets/components/tracking/ConnectorsList.tsx:15
+#, fuzzy
+#| msgid "Are you sure to delete this Watchlist?"
+msgid "Are you sure to delete this Connector?"
+msgstr "Êtes-vous sûr de vouloir supprimer cette Watchlist ?"
+
+#: assets/components/tracking/ConnectorsList.tsx:21
+msgid "Provider"
+msgstr ""
+
 #: assets/pages/search/DomainSearchPage.tsx:19
 msgid "Found !"
 msgstr "Trouvé !"
 
 #: assets/pages/search/DomainSearchPage.tsx:23
+#: assets/pages/tracking/ConnectorsPage.tsx:21
 #: assets/pages/tracking/WatchlistPage.tsx:26
+#: assets/pages/tracking/WatchlistPage.tsx:34
 msgid "An error occurred"
 msgstr "Une erreur s'est produite"
 
@@ -359,15 +384,29 @@ msgstr "Nom d'utilisateur"
 msgid "Roles"
 msgstr "Rôles"
 
+#: assets/pages/tracking/ConnectorsPage.tsx:31
+#, fuzzy
+#| msgid "Create a watchlist"
+msgid "Create a Connector"
+msgstr "Créer une Watchlist"
+
+#: assets/pages/tracking/ConnectorsPage.tsx:39
+#, fuzzy
+#| msgid "My connectors"
+msgid "My Connectors"
+msgstr "Mes connecteurs"
+
 #: assets/pages/tracking/WatchlistPage.tsx:23
 msgid "Watchlist created !"
 msgstr "Watchlist créée !"
 
-#: assets/pages/tracking/WatchlistPage.tsx:39
-msgid "Create a watchlist"
+#: assets/pages/tracking/WatchlistPage.tsx:43
+#, fuzzy
+#| msgid "Create a watchlist"
+msgid "Create a Watchlist"
 msgstr "Créer une Watchlist"
 
-#: assets/App.tsx:136 assets/pages/tracking/WatchlistPage.tsx:46
+#: assets/App.tsx:136 assets/pages/tracking/WatchlistPage.tsx:50
 msgid "My Watchlists"
 msgstr "Mes Watchlists"
 
