@@ -1,6 +1,6 @@
 import {Result} from "antd";
 import React from "react";
-import { t } from 'ttag'
+import {t} from 'ttag'
 
 
 export default function NotFoundPage() {

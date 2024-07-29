@@ -48,16 +48,16 @@ msgid "ENUM validation expiration"
 msgstr ""
 
 #: assets/components/search/DomainSearchBar.tsx:23
+#: assets/components/tracking/WatchlistForm.tsx:108
+#: assets/components/tracking/WatchlistForm.tsx:168
+#: assets/components/tracking/WatchlistForm.tsx:178
 #: assets/pages/LoginPage.tsx:53
 #: assets/pages/LoginPage.tsx:61
-#: assets/pages/tracking/WatchlistPage.tsx:137
-#: assets/pages/tracking/WatchlistPage.tsx:197
-#: assets/pages/tracking/WatchlistPage.tsx:207
 msgid "Required"
 msgstr ""
 
 #: assets/components/search/DomainSearchBar.tsx:26
-#: assets/pages/tracking/WatchlistPage.tsx:140
+#: assets/components/tracking/WatchlistForm.tsx:111
 msgid "This domain name does not appear to be valid"
 msgstr ""
 
@@ -105,12 +105,122 @@ msgstr ""
 msgid "Noc"
 msgstr ""
 
+#: assets/components/tracking/WatchlistForm.tsx:33
+msgid "When a domain is expired"
+msgstr ""
+
+#: assets/components/tracking/WatchlistForm.tsx:37
+msgid "When a domain is deleted"
+msgstr ""
+
+#: assets/components/tracking/WatchlistForm.tsx:41
+msgid "When a domain is updated"
+msgstr ""
+
+#: assets/components/tracking/WatchlistForm.tsx:45
+msgid "When a domain is transferred"
+msgstr ""
+
+#: assets/components/tracking/WatchlistForm.tsx:49
+msgid "When a domain is locked"
+msgstr ""
+
+#: assets/components/tracking/WatchlistForm.tsx:53
+msgid "When a domain is unlocked"
+msgstr ""
+
+#: assets/components/tracking/WatchlistForm.tsx:57
+msgid "When a domain is reregistered"
+msgstr ""
+
+#: assets/components/tracking/WatchlistForm.tsx:61
+msgid "When a domain is reinstantiated"
+msgstr ""
+
+#: assets/components/tracking/WatchlistForm.tsx:65
+msgid "When a domain is registered"
+msgstr ""
+
+#: assets/components/tracking/WatchlistForm.tsx:72
+msgid "Send me an email"
+msgstr ""
+
+#: assets/components/tracking/WatchlistForm.tsx:88
+msgid "At least one domain name"
+msgstr ""
+
+#: assets/components/tracking/WatchlistForm.tsx:99
+msgid "Domain names"
+msgstr ""
+
+#: assets/components/tracking/WatchlistForm.tsx:117
+#: assets/components/tracking/WatchlistsList.tsx:22
+msgid "Domain name"
+msgstr ""
+
+#: assets/components/tracking/WatchlistForm.tsx:134
+msgid "Add a Domain name"
+msgstr ""
+
+#: assets/components/tracking/WatchlistForm.tsx:147
+msgid "At least one domain trigger"
+msgstr ""
+
+#: assets/components/tracking/WatchlistForm.tsx:158
+msgid "Domain trigger"
+msgstr ""
+
+#: assets/components/tracking/WatchlistForm.tsx:172
+msgid "If this happens"
+msgstr ""
+
+#: assets/components/tracking/WatchlistForm.tsx:182
+msgid "Then do that"
+msgstr ""
+
+#: assets/components/tracking/WatchlistForm.tsx:203
+msgid "Add a Trigger"
+msgstr ""
+
+#: assets/components/tracking/WatchlistForm.tsx:213
+msgid "Create"
+msgstr ""
+
+#: assets/components/tracking/WatchlistForm.tsx:216
+msgid "Reset"
+msgstr ""
+
+#: assets/components/tracking/WatchlistsList.tsx:14
+#, javascript-format
+msgid "Watchlist ${ watchlist.token }"
+msgstr ""
+
+#: assets/components/tracking/WatchlistsList.tsx:15
+msgid "Delete the Watchlist"
+msgstr ""
+
+#: assets/components/tracking/WatchlistsList.tsx:16
+msgid "Are you sure to delete this Watchlist?"
+msgstr ""
+
+#: assets/components/tracking/WatchlistsList.tsx:18
+msgid "Yes"
+msgstr ""
+
+#: assets/components/tracking/WatchlistsList.tsx:19
+msgid "No"
+msgstr ""
+
+#: assets/components/tracking/WatchlistsList.tsx:26
+msgid "Domain triggers"
+msgstr ""
+
 #: assets/pages/search/DomainSearchPage.tsx:19
 msgid "Found !"
 msgstr ""
 
 #: assets/pages/search/DomainSearchPage.tsx:23
-#: assets/pages/tracking/WatchlistPage.tsx:91
+#: assets/pages/tracking/WatchlistPage.tsx:26
 msgid "An error occurred"
 msgstr ""
 
@@ -224,127 +334,17 @@ msgstr ""
 msgid "Roles"
 msgstr ""
 
-#: assets/pages/tracking/WatchlistPage.tsx:34
-msgid "When a domain is expired"
-msgstr ""
-
-#: assets/pages/tracking/WatchlistPage.tsx:38
-msgid "When a domain is deleted"
-msgstr ""
-
-#: assets/pages/tracking/WatchlistPage.tsx:42
-msgid "When a domain is updated"
-msgstr ""
-
-#: assets/pages/tracking/WatchlistPage.tsx:46
-msgid "When a domain is transferred"
-msgstr ""
-
-#: assets/pages/tracking/WatchlistPage.tsx:50
-msgid "When a domain is locked"
-msgstr ""
-
-#: assets/pages/tracking/WatchlistPage.tsx:54
-msgid "When a domain is unlocked"
-msgstr ""
-
-#: assets/pages/tracking/WatchlistPage.tsx:58
-msgid "When a domain is reregistered"
-msgstr ""
-
-#: assets/pages/tracking/WatchlistPage.tsx:62
-msgid "When a domain is reinstantiated"
-msgstr ""
-
-#: assets/pages/tracking/WatchlistPage.tsx:66
-msgid "When a domain is registered"
-msgstr ""
-
-#: assets/pages/tracking/WatchlistPage.tsx:73
-msgid "Send me an email"
-msgstr ""
-
-#: assets/pages/tracking/WatchlistPage.tsx:88
+#: assets/pages/tracking/WatchlistPage.tsx:23
 msgid "Watchlist created !"
 msgstr ""
 
-#: assets/pages/tracking/WatchlistPage.tsx:104
+#: assets/pages/tracking/WatchlistPage.tsx:39
 msgid "Create a watchlist"
 msgstr ""
 
-#: assets/pages/tracking/WatchlistPage.tsx:117
-msgid "At least one domain name"
-msgstr ""
-
-#: assets/pages/tracking/WatchlistPage.tsx:128
-msgid "Domain names"
-msgstr ""
-
-#: assets/pages/tracking/WatchlistPage.tsx:146
-#: assets/pages/tracking/WatchlistPage.tsx:265
-msgid "Domain name"
-msgstr ""
-
-#: assets/pages/tracking/WatchlistPage.tsx:163
-msgid "Add a Domain name"
-msgstr ""
-
-#: assets/pages/tracking/WatchlistPage.tsx:176
-msgid "At least one domain trigger"
-msgstr ""
-
-#: assets/pages/tracking/WatchlistPage.tsx:187
-msgid "Domain trigger"
-msgstr ""
-
-#: assets/pages/tracking/WatchlistPage.tsx:201
-msgid "If this happens"
-msgstr ""
-
-#: assets/pages/tracking/WatchlistPage.tsx:211
-msgid "Then do that"
-msgstr ""
-
-#: assets/pages/tracking/WatchlistPage.tsx:232
-msgid "Add a Trigger"
-msgstr ""
-
-#: assets/pages/tracking/WatchlistPage.tsx:242
-msgid "Create"
-msgstr ""
-
-#: assets/pages/tracking/WatchlistPage.tsx:245
-msgid "Reset"
-msgstr ""
-
 #: assets/App.tsx:136
-#: assets/pages/tracking/WatchlistPage.tsx:254
+#: assets/pages/tracking/WatchlistPage.tsx:46
 msgid "My Watchlists"
-msgstr ""
-
-#: assets/pages/tracking/WatchlistPage.tsx:257
-#, javascript-format
-msgid "Watchlist ${ watchlist.token }"
-msgstr ""
-
-#: assets/pages/tracking/WatchlistPage.tsx:258
-msgid "Delete the Watchlist"
-msgstr ""
-
-#: assets/pages/tracking/WatchlistPage.tsx:259
-msgid "Are you sure to delete this Watchlist?"
-msgstr ""
-
-#: assets/pages/tracking/WatchlistPage.tsx:261
-msgid "Yes"
-msgstr ""
-
-#: assets/pages/tracking/WatchlistPage.tsx:262
-msgid "No"
-msgstr ""
-
-#: assets/pages/tracking/WatchlistPage.tsx:269
-msgid "Domain triggers"
 msgstr ""
 
 #: assets/pages/NotFoundPage.tsx:10

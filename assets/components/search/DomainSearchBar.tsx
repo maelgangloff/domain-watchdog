@@ -7,7 +7,7 @@ export type FieldType = {
     ldhName: string
 }
 
-export function DomainSearchBar({onFinish}: { onFinish: any }) {
+export function DomainSearchBar({onFinish}: { onFinish: (values: FieldType) => void }) {
 
     return <Form
         name="basic"
