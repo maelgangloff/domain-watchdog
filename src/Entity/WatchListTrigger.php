@@ -25,6 +25,9 @@ class WatchListTrigger
     #[Groups(['watchlist:list', 'watchlist:item', 'watchlist:create', 'watchlist:update'])]
     private ?TriggerAction $action = null;
 
+    #[ORM\ManyToOne(inversedBy: 'watchListTriggers')]
+    private ?Connector $connector = null;
+
     public function getEvent(): ?string
     {
         return $this->event;
@@ -57,6 +60,18 @@ class WatchListTrigger
     public function setAction(TriggerAction $action): static
     {
         $this->action = $action;
+
+        return $this;
+    }
+
+    public function getConnector(): ?Connector
+    {
+        return $this->connector;
+    }
+
+    public function setConnector(?Connector $connector): static
+    {
+        $this->connector = $connector;
 
         return $this;
     }
