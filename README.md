@@ -36,33 +36,55 @@ on [How to deploy a Symfony application](https://symfony.com/doc/current/deploym
 
 ### Steps
 
-1. Clone the repository:
-    ```shell
-    git clone https://github.com/maelgangloff/domain-watchdog.git
-    ```
-2. Navigate to the project directory:
-    ```shell
-    cd domain-watchdog
-    ```
-3. Install dependencies:
+Clone the repository:
+
+```shell
+git clone https://github.com/maelgangloff/domain-watchdog.git
+ ```
+
+Navigate to the project directory:
+
+```shell
+cd domain-watchdog
+ ```
+
+#### Backend
+
+1. Install dependencies:
     ```shell
     composer install
     ```
-4. Set up your environment variables:
+2. Set up your environment variables:
     ```shell
     cp .env .env.local
     ```
-5. Generate the cryptographic key pair for the JWT signature
+3. Generate the cryptographic key pair for the JWT signature
     ```shell
     php bin/console lexik:jwt:generate-keypair
     ```
-6. Run database migrations:
+4. Run database migrations:
     ```shell
     php bin/console doctrine:migrations:migrate
     ```
-7. Start the Symfony server:
+   ```
+5. Start the Symfony server:
     ```shell
     symfony server:start
+    ```
+
+#### Frontend
+
+1. Install dependencies:
+    ```shell
+    yarn install
+    ```
+2. Generate language files:
+    ```shell
+    yarn run ttag:po2json
+    ```
+3. Make the final build:
+    ```shell
+    yarn build
     ```
 
 > [!NOTE]
@@ -72,9 +94,9 @@ on [How to deploy a Symfony application](https://symfony.com/doc/current/deploym
 > - [RFC 7484 : Finding the Authoritative Registration Data (RDAP) Service](https://datatracker.ietf.org/doc/html/rfc7484)
 
 ## Licensing
+
 This entire project is licensed under *GNU Affero General Public License v3.0 or later*.
 Contributions are welcome as long as they do not contravene the Code of Conduct.
-
 
 [^1]: RFC 3912 : WHOIS Protocol Specification. (2004). IETF Datatracker. https://datatracker.ietf.org/doc/html/rfc3912
 [^2]: 2023 Global Amendments to the Base gTLD Registry Agreement (RA), Specification 13, and 2013 Registrar
