@@ -14,7 +14,11 @@ export async function getWatchlist(token: string) {
     return response.data
 }
 
-export async function postWatchlist(domains: string[], triggers: { action: string, event: EventAction }[]) {
+export async function postWatchlist(domains: string[], triggers: {
+    action: string,
+    event: EventAction,
+    connector?: string
+}[]) {
     const response = await request<{ token: string }>({
         method: 'POST',
         url: 'watchlists',

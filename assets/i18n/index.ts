@@ -1,6 +1,7 @@
 import {addLocale, useLocale} from 'ttag'
 
-const locale = navigator.language.split('-')[0];
+const locale = navigator.language.split('-')[0]
+export const regionNames = new Intl.DisplayNames([locale], {type: 'region'})
 
 if (locale !== 'en') {
     fetch(`/locales/${locale}.po.json`).then(response => {

@@ -2,6 +2,7 @@ import React, {useEffect, useState} from "react";
 import {Collapse, Divider, Table, Typography} from "antd";
 import {getTldList, Tld} from "../../utils/api";
 import {t} from 'ttag'
+import {regionNames} from "../../i18n";
 
 const {Text, Paragraph} = Typography
 
@@ -22,10 +23,6 @@ const getCountryCode = (tld: string): string => {
     if (tld in exceptions) return exceptions[tld as keyof typeof exceptions]
     return tld
 }
-
-const locale = navigator.language.split('-')[0]
-const regionNames = new Intl.DisplayNames([locale], {type: 'region'})
-
 
 function TldTable(filters: FiltersType) {
     const [dataTable, setDataTable] = useState<Tld[]>([])

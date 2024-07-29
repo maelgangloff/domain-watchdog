@@ -5,6 +5,7 @@ import {AxiosError} from "axios";
 import {t} from 'ttag'
 import {WatchlistForm} from "../../components/tracking/WatchlistForm";
 import {WatchlistsList} from "../../components/tracking/WatchlistsList";
+import {Connector, getConnectors} from "../../utils/api/connectors";
 
 
 type Watchlist = { token: string, domains: { ldhName: string }[], triggers?: { event: EventAction, action: string }[] }
@@ -14,10 +15,18 @@ export default function WatchlistPage() {
     const [form] = Form.useForm()
     const [messageApi, contextHolder] = message.useMessage()
     const [watchlists, setWatchlists] = useState<Watchlist[] | null>()
+    const [connectors, setConnectors] = useState<(Connector & { id: string })[] | null>()
 
-    const onCreateWatchlist = (values: { domains: string[], triggers: { event: string, action: string }[] }) => {
+    const onCreateWatchlist = (values: {
+        domains: string[],
+        triggers: { event: string, action: string, connector?: string }[]
+    }) => {
         const domainsURI = values.domains.map(d => '/api/domains/' + d)
-        postWatchlist(domainsURI, values.triggers).then((w) => {
+        postWatchlist(domainsURI, values.triggers.map(({action, event, connector}) => ({
+            action,
+            event,
+            connector: connector !== undefined ? '/api/connectors/' + connector : undefined
+        }))).then((w) => {
             form.resetFields()
             refreshWatchlists()
             messageApi.success(t`Watchlist created !`)
@@ -37,12 +46,16 @@ export default function WatchlistPage() {
 
     useEffect(() => {
         refreshWatchlists()
+        getConnectors().then(c => setConnectors(c['hydra:member']))
     }, [])
 
     return <Flex gap="middle" align="center" justify="center" vertical>
         <Card title={t`Create a Watchlist`} style={{width: '100%'}}>
             {contextHolder}
-            <WatchlistForm form={form} onCreateWatchlist={onCreateWatchlist}/>
+            {
+                connectors &&
+                <WatchlistForm form={form} onCreateWatchlist={onCreateWatchlist} connectors={connectors}/>
+            }
         </Card>
 
 

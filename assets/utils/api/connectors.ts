@@ -1,6 +1,6 @@
 import {request} from "./index";
 
-enum ConnectorProvider {
+export enum ConnectorProvider {
     OVH = 'ovh'
 }
 

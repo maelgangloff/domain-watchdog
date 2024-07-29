@@ -1,8 +1,9 @@
 import {Button, Form, FormInstance, Input, Select, Space} from "antd";
 import {t} from "ttag";
 import {MinusCircleOutlined, PlusOutlined, ThunderboltFilled} from "@ant-design/icons";
-import React from "react";
+import React, {useState} from "react";
 import {EventAction} from "../../utils/api";
+import {Connector} from "../../utils/api/connectors";
 
 
 const formItemLayout = {
@@ -23,8 +24,9 @@ const formItemLayoutWithOutLabel = {
     },
 };
 
-export function WatchlistForm({form, onCreateWatchlist}: {
+export function WatchlistForm({form, connectors, onCreateWatchlist}: {
     form: FormInstance,
+    connectors: (Connector & { id: string })[]
     onCreateWatchlist: (values: { domains: string[], triggers: { event: string, action: string }[] }) => void
 }) {
 
@@ -67,12 +69,17 @@ export function WatchlistForm({form, onCreateWatchlist}: {
         }
     ]
 
-    const trigerActionItems = [
+    const triggerActionItems = [
         {
             label: t`Send me an email`,
             value: 'email'
+        },
+        {
+            label: t`Buy the domain if available`,
+            value: 'buy'
         }
     ]
+    const [actionsSelect, setActionsSelect] = useState<{ [key: number]: string }>({})
 
     return <Form
         {...formItemLayoutWithOutLabel}
@@ -159,7 +166,6 @@ export function WatchlistForm({form, onCreateWatchlist}: {
                             required={true}
                             key={field.key}
                         >
-
                             <Space wrap>
                                 <Form.Item {...field}
                                            validateTrigger={['onChange', 'onBlur']}
@@ -178,12 +184,30 @@ export function WatchlistForm({form, onCreateWatchlist}: {
                                                message: t`Required`
                                            }]}
                                            noStyle name={[field.name, 'action']}>
-                                    <Select style={{minWidth: 300}} options={trigerActionItems} showSearch
+                                    <Select style={{minWidth: 300}} options={triggerActionItems} showSearch
                                             placeholder={t`Then do that`}
-                                            optionFilterProp="label"/>
+                                            optionFilterProp="label" value={actionsSelect[field.key]}
+                                            onChange={(e) => setActionsSelect({...actionsSelect, [field.key]: e})}/>
                                 </Form.Item>
+                                {actionsSelect[field.key] === 'buy' && <Form.Item {...field}
+                                                                                  validateTrigger={['onChange', 'onBlur']}
+                                                                                  rules={[{
+                                                                                      required: true,
+                                                                                      message: t`Required`
+                                                                                  }]}
+                                                                                  noStyle
+                                                                                  name={[field.name, 'connector']}>
+                                    <Select style={{minWidth: 500}} showSearch
+                                            placeholder={t`Connector`}
+                                            optionFilterProp="label"
+                                            options={connectors.map(c => ({
+                                                label: `${c.provider} (${c.id})`,
+                                                value: c.id
+                                            }))}
+                                    />
+                                </Form.Item>
+                                }
                             </Space>
-
 
                             {fields.length > 1 ? (
                                 <MinusCircleOutlined

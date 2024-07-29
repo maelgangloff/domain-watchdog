@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import {Card, Flex, Form, message, Skeleton} from "antd";
 import {t} from "ttag";
-import {Connector, getConnectors} from "../../utils/api/connectors";
+import {Connector, getConnectors, postConnector} from "../../utils/api/connectors";
 import {ConnectorForm} from "../../components/tracking/ConnectorForm";
 import {AxiosError} from "axios";
 import {ConnectorsList} from "../../components/tracking/ConnectorsList";
@@ -13,6 +13,16 @@ export default function ConnectorsPage() {
     const [messageApi, contextHolder] = message.useMessage()
     const [connectors, setConnectors] = useState<ConnectorElement[] | null>()
 
+    const onCreateConnector = (values: Connector) => {
+        postConnector(values).then((w) => {
+            form.resetFields()
+            refreshConnectors()
+            messageApi.success(t`Connector created !`)
+        }).catch((e: AxiosError) => {
+            const data = e?.response?.data as { detail: string }
+            messageApi.error(data.detail ?? t`An error occurred`)
+        })
+    }
 
     const refreshConnectors = () => getConnectors().then(c => {
         setConnectors(c['hydra:member'])
@@ -28,10 +38,9 @@ export default function ConnectorsPage() {
 
 
     return <Flex gap="middle" align="center" justify="center" vertical>
-        <Card title={t`Create a Connector`} style={{width: '100%'}} loading={true}>
+        <Card title={t`Create a Connector`} style={{width: '100%'}}>
             {contextHolder}
-            <ConnectorForm form={form} onCreate={() => {
-            }}/>
+            <ConnectorForm form={form} onCreate={onCreateConnector}/>
         </Card>
 
 

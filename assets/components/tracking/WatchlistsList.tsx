@@ -17,7 +17,7 @@ export function WatchlistsList({watchlists, onDelete}: { watchlists: Watchlist[]
                     onConfirm={() => deleteWatchlist(watchlist.token).then(onDelete)}
                     okText={t`Yes`}
                     cancelText={t`No`}
-                ><DeleteFilled/> </Popconfirm>}>
+                ><DeleteFilled/></Popconfirm>}>
                     <Typography.Paragraph>
                         {t`Domain name`} : {watchlist?.domains.map(d => d.ldhName).join(',')}
                     </Typography.Paragraph>

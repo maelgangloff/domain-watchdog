@@ -63,12 +63,11 @@ final readonly class ProcessDomainTriggerHandler
                         $ovh = new OVHConnector($connector->getAuthData());
                         $isDebug = $this->kernel->isDebug();
 
-
                         $ovh->orderDomain(
                             $domain,
-                            true,
-                            true,
-                            true,
+                            true, // TODO: Infer from the user
+                            true, // TODO: Infer from the user
+                            true, // TODO: Infer from the user
                             $isDebug
                         );
                         $this->sendEmailDomainOrdered($domain, $connector, $watchList->getUser());
