@@ -2,32 +2,61 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\Delete;
+use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\GetCollection;
+use ApiPlatform\Metadata\Patch;
+use ApiPlatform\Metadata\Post;
 use App\Config\ConnectorProvider;
 use App\Repository\ConnectorRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\ORM\Mapping\DiscriminatorColumn;
-use Doctrine\ORM\Mapping\DiscriminatorMap;
-use Doctrine\ORM\Mapping\InheritanceType;
+use Symfony\Component\Serializer\Attribute\Groups;
+use Symfony\Component\Uid\Uuid;
 
+#[ApiResource(
+    shortName: 'Connector',
+    operations: [
+        new GetCollection(
+            routeName: 'connector_get_all_mine',
+            normalizationContext: ['groups' => 'connector:list'],
+            name: 'get_all_mine',
+        ),
+        new Get(
+            normalizationContext: ['groups' => 'connector:list']
+        ),
+        new Post(
+            routeName: 'connector_create', normalizationContext: ['groups' => 'connector:create'],
+            denormalizationContext: ['groups' => 'connector:create'],
+            name: 'create'
+        ),
+        new Patch(
+            normalizationContext: ['groups' => 'connector:list'],
+            denormalizationContext: ['groups' => 'connector:create']
+        ),
+        new Delete()
+    ]
+)]
 #[ORM\Entity(repositoryClass: ConnectorRepository::class)]
-#[InheritanceType('SINGLE_TABLE')]
-#[DiscriminatorColumn(name: 'provider', enumType: ConnectorProvider::class)]
-#[DiscriminatorMap([ConnectorProvider::OVH->value => OVHConnector::class])]
 class Connector
 {
     #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column]
-    private ?int $id = null;
-
-    private ?string $provider = null;
+    #[ORM\Column(type: 'uuid')]
+    #[Groups(['connector:list'])]
+    private ?string $id;
 
     #[ORM\ManyToOne(inversedBy: 'connectors')]
     #[ORM\JoinColumn(nullable: false)]
     private ?User $user = null;
 
+
+    #[Groups(['connector:list', 'connector:create'])]
+    #[ORM\Column(enumType: ConnectorProvider::class)]
+    private ?ConnectorProvider $provider = null;
+
+    #[Groups(['connector:create'])]
     #[ORM\Column]
     private array $authData = [];
 
@@ -37,26 +66,16 @@ class Connector
     #[ORM\OneToMany(targetEntity: WatchListTrigger::class, mappedBy: 'connector')]
     private Collection $watchListTriggers;
 
+
     public function __construct()
     {
+        $this->id = Uuid::v4();
         $this->watchListTriggers = new ArrayCollection();
     }
 
-    public function getId(): ?int
+    public function getId(): ?string
     {
         return $this->id;
-    }
-
-    public function getProvider(): ?string
-    {
-        return $this->provider;
-    }
-
-    public function setProvider(?string $provider): static
-    {
-        $this->provider = $provider;
-
-        return $this;
     }
 
     public function getUser(): ?User
@@ -109,6 +128,18 @@ class Connector
                 $watchListTrigger->setConnector(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getProvider(): ?ConnectorProvider
+    {
+        return $this->provider;
+    }
+
+    public function setProvider(ConnectorProvider $provider): static
+    {
+        $this->provider = $provider;
 
         return $this;
     }

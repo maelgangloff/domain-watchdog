@@ -2,10 +2,11 @@
 
 namespace App\MessageHandler;
 
+use App\Config\Connector\OvhConnector;
+use App\Config\ConnectorProvider;
 use App\Config\TriggerAction;
 use App\Entity\Domain;
 use App\Entity\DomainEvent;
-use App\Entity\OVHConnector;
 use App\Entity\User;
 use App\Entity\WatchList;
 use App\Entity\WatchListTrigger;
@@ -14,6 +15,7 @@ use App\Repository\DomainRepository;
 use App\Repository\WatchListRepository;
 use Exception;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
+use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
@@ -27,6 +29,7 @@ final readonly class ProcessDomainTriggerHandler
         private MailerInterface     $mailer,
         private WatchListRepository $watchListRepository,
         private DomainRepository    $domainRepository,
+        private KernelInterface     $kernel
 
     )
     {
@@ -58,9 +61,18 @@ final readonly class ProcessDomainTriggerHandler
                     case TriggerAction::BuyDomain :
                         if ($watchListTrigger->getConnector() === null) throw new Exception('Connector is missing');
                         $connector = $watchListTrigger->getConnector();
-                        if ($connector::class === OVHConnector::class) {
-                            $connector->orderDomain($domain, true, true, true, true);
-                        }
+                        if ($connector->getProvider() === ConnectorProvider::OVH) {
+                            $ovh = new OVHConnector($connector->getAuthData());
+                            $isDebug = $this->kernel->isDebug();
+                            $ovh->orderDomain(
+                                $domain,
+                                true,
+                                true,
+                                true,
+                                $isDebug
+                            );
+
+                        } else throw new Exception("Unknown provider");
                 }
             }
         }

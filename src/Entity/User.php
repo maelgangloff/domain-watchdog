@@ -61,7 +61,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @var Collection<int, Connector>
      */
-    #[ORM\OneToMany(targetEntity: Connector::class, mappedBy: 'userr', orphanRemoval: true)]
+    #[ORM\OneToMany(targetEntity: Connector::class, mappedBy: 'user', orphanRemoval: true)]
     private Collection $connectors;
 
     public function __construct()
@@ -188,7 +188,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         if (!$this->connectors->contains($connector)) {
             $this->connectors->add($connector);
-            $connector->setUserr($this);
+            $connector->setUser($this);
         }
 
         return $this;
@@ -198,8 +198,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         if ($this->connectors->removeElement($connector)) {
             // set the owning side to null (unless already changed)
-            if ($connector->getUserr() === $this) {
-                $connector->setUserr(null);
+            if ($connector->getUser() === $this) {
+                $connector->setUser(null);
             }
         }
 
