@@ -32,10 +32,6 @@ use Symfony\Component\Uid\Uuid;
             denormalizationContext: ['groups' => 'connector:create'],
             name: 'create'
         ),
-        new Patch(
-            normalizationContext: ['groups' => 'connector:list'],
-            denormalizationContext: ['groups' => 'connector:create']
-        ),
         new Delete()
     ]
 )]
