@@ -21,6 +21,7 @@ use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 use Symfony\Component\Mime\Email;
+use Throwable;
 
 #[AsMessageHandler]
 final readonly class ProcessDomainTriggerHandler
@@ -54,24 +55,27 @@ final readonly class ProcessDomainTriggerHandler
 
             if ($watchListTrigger->getAction() === TriggerAction::BuyDomain) {
 
-                if ($watchListTrigger->getConnector() === null) throw new Exception('Connector is missing');
+                try {
+                    if ($watchListTrigger->getConnector() === null) throw new Exception('Connector is missing');
+                    $connector = $watchListTrigger->getConnector();
 
-                $connector = $watchListTrigger->getConnector();
+                    if ($connector->getProvider() === ConnectorProvider::OVH) {
+                        $ovh = new OVHConnector($connector->getAuthData());
+                        $isDebug = $this->kernel->isDebug();
 
-                if ($connector->getProvider() === ConnectorProvider::OVH) {
-                    $ovh = new OVHConnector($connector->getAuthData());
-                    $isDebug = $this->kernel->isDebug();
 
-                    $ovh->orderDomain(
-                        $domain,
-                        true,
-                        true,
-                        true,
-                        $isDebug
-                    );
-                    $this->sendEmailDomainOrdered($domain, $connector, $watchList->getUser());
-
-                } else throw new Exception("Unknown provider");
+                        $ovh->orderDomain(
+                            $domain,
+                            true,
+                            true,
+                            true,
+                            $isDebug
+                        );
+                        $this->sendEmailDomainOrdered($domain, $connector, $watchList->getUser());
+                    } else throw new Exception("Unknown provider");
+                } catch (Throwable) {
+                    $this->sendEmailDomainOrderError($domain, $watchList->getUser());
+                }
             }
 
             /** @var DomainEvent $event */
@@ -98,6 +102,24 @@ final readonly class ProcessDomainTriggerHandler
             ->context([
                 "domain" => $domain,
                 "provider" => $connector->getProvider()->value
+            ]);
+
+        $this->mailer->send($email);
+    }
+
+    /**
+     * @throws TransportExceptionInterface
+     */
+    private function sendEmailDomainOrderError(Domain $domain, User $user): void
+    {
+        $email = (new TemplatedEmail())
+            ->from($this->mailerSenderEmail)
+            ->to($user->getEmail())
+            ->subject('An error occurred while ordering a domain name')
+            ->htmlTemplate('emails/errors/domain_order.html.twig')
+            ->locale('en')
+            ->context([
+                "domain" => $domain
             ]);
 
         $this->mailer->send($email);

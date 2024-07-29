@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .header h1 {
+            font-size: 24px;
+            color: #d9534f;
+        }
+
+        .content {
+            margin-bottom: 20px;
+        }
+
+        .content p {
+            margin: 0 0 10px;
+        }
+
+        .footer {
+            text-align: center;
+            color: #777;
+        }
+
+        ul {
+            padding-left: 20px;
+        }
+
+        ul li {
+            margin-bottom: 10px;
+        }
+    </style>
+    <title>Domain Watchdog Error</title>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <h1>Domain Watchdog Error</h1>
+    </div>
+    <div class="content">
+        <p>Hello,</p>
+        <p>We would like to inform you that an error occurred while ordering the following domain name:</p>
+        <p><strong>Domain name:</strong> {{ domain.ldhName }}</p>
+        <p>Here are some possible explanations:</p>
+        <ul>
+            <li>The Connector configuration you provided is no longer valid.</li>
+            <li>It is likely that the domain is no longer available for registration.</li>
+            <li>A temporary interruption is affecting the registration of this domain name.</li>
+        </ul>
+        <p>Thank you for your understanding,</p>
+        <p>Sincerely,</p>
+        <p>Domain Watchdog</p>
+    </div>
+    <div class="footer">
+        <p>&copy; Domain Watchdog</p>
+    </div>
+</div>
+</body>
+</html>
