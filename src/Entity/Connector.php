@@ -4,8 +4,6 @@ namespace App\Entity;
 
 use App\Config\ConnectorProvider;
 use App\Repository\ConnectorRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\DiscriminatorColumn;
 use Doctrine\ORM\Mapping\DiscriminatorMap;
@@ -30,17 +28,6 @@ class Connector
 
     #[ORM\Column]
     private array $authData = [];
-
-    /**
-     * @var Collection<int, WatchListTrigger>
-     */
-    #[ORM\OneToMany(targetEntity: WatchListTrigger::class, mappedBy: 'connector')]
-    private Collection $watchListTriggers;
-
-    public function __construct()
-    {
-        $this->watchListTriggers = new ArrayCollection();
-    }
 
     public function getId(): ?int
     {
@@ -79,36 +66,6 @@ class Connector
     public function setAuthData(array $authData): static
     {
         $this->authData = $authData;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, WatchListTrigger>
-     */
-    public function getWatchListTriggers(): Collection
-    {
-        return $this->watchListTriggers;
-    }
-
-    public function addWatchListTrigger(WatchListTrigger $watchListTrigger): static
-    {
-        if (!$this->watchListTriggers->contains($watchListTrigger)) {
-            $this->watchListTriggers->add($watchListTrigger);
-            $watchListTrigger->setConnector($this);
-        }
-
-        return $this;
-    }
-
-    public function removeWatchListTrigger(WatchListTrigger $watchListTrigger): static
-    {
-        if ($this->watchListTriggers->removeElement($watchListTrigger)) {
-            // set the owning side to null (unless already changed)
-            if ($watchListTrigger->getConnector() === $this) {
-                $watchListTrigger->setConnector(null);
-            }
-        }
 
         return $this;
     }
