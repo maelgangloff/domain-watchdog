@@ -1,77 +1,14 @@
 import React, {useState} from "react";
-import {
-    Avatar,
-    Badge,
-    Card,
-    Divider,
-    Empty,
-    Flex,
-    Form,
-    FormProps,
-    Input,
-    List,
-    message,
-    Skeleton,
-    Space,
-    Tag,
-    Timeline,
-    Typography
-} from "antd";
-import {
-    BankOutlined,
-    ClockCircleOutlined,
-    DeleteOutlined,
-    IdcardOutlined,
-    ReloadOutlined,
-    SearchOutlined,
-    ShareAltOutlined,
-    SignatureOutlined,
-    SyncOutlined,
-    ToolOutlined,
-    UserOutlined
-} from "@ant-design/icons";
+import {Badge, Card, Divider, Empty, Flex, FormProps, message, Skeleton, Space, Tag} from "antd";
 import {Domain, getDomain} from "../../utils/api";
 import {AxiosError} from "axios"
-import vCard from 'vcf'
 import {t} from 'ttag'
+import {DomainSearchBar, FieldType} from "../../components/search/DomainSearchBar";
+import {EventTimeline} from "../../components/search/EventTimeline";
+import {EntitiesList} from "../../components/search/EntitiesList";
 
-
-type FieldType = {
-    ldhName: string
-}
-
-
-const locale = navigator.language.split('-')[0]
 
 export default function DomainSearchPage() {
-    const domainRole = {
-        registrant: t`Registrant`,
-        technical: t`Technical`,
-        administrative: t`Administrative`,
-        abuse: t`Abuse`,
-        billing: t`Billing`,
-        registrar: t`Registrar`,
-        reseller: t`Reseller`,
-        sponsor: t`Sponsor`,
-        proxy: t`Proxy`,
-        notifications: t`Notifications`,
-        noc: t`Noc`
-    }
-
-    const domainEvent = {
-        registration: t`Registration`,
-        reregistration: t`Reregistration`,
-        'last changed': t`Last changed`,
-        expiration: t`Expiration`,
-        deletion: t`Deletion`,
-        reinstantiation: t`Reinstantiation`,
-        transfer: t`Transfer`,
-        locked: t`Locked`,
-        unlocked: t`Unlocked`,
-        'registrar expiration': t`Registrar expiration`,
-        'enum validation expiration': t`ENUM validation expiration`
-    }
-
     const [domain, setDomain] = useState<Domain | null>()
     const [messageApi, contextHolder] = message.useMessage()
 
@@ -90,29 +27,7 @@ export default function DomainSearchPage() {
     return <Flex gap="middle" align="center" justify="center" vertical>
         <Card title={t`Domain finder`} style={{width: '100%'}}>
             {contextHolder}
-            <Form
-                name="basic"
-                labelCol={{span: 8}}
-                wrapperCol={{span: 16}}
-                onFinish={onFinish}
-                autoComplete="off"
-            >
-                <Form.Item<FieldType>
-                    name="ldhName"
-                    rules={[{
-                        required: true,
-                        message: t`Required`
-                    }, {
-                        pattern: /^(?=.*\.)\S*[^.\s]$/,
-                        message: t`This domain name does not appear to be valid`,
-                        max: 63,
-                        min: 2
-                    }]}
-                >
-                    <Input size="large" prefix={<SearchOutlined/>} placeholder="example.com" autoFocus={true}
-                           autoComplete='off'/>
-                </Form.Item>
-            </Form>
+            <DomainSearchBar onFinish={onFinish}/>
 
             <Skeleton loading={domain === null} active>
                 {
@@ -140,89 +55,19 @@ export default function DomainSearchPage() {
                                         </>
                                     }
                                     <Divider orientation="left">{t`Timeline`}</Divider>
-                                    <Timeline
-                                        mode="right"
-                                        items={domain.events
-                                            .sort((e1, e2) => new Date(e2.date).getTime() - new Date(e1.date).getTime())
-                                            .map(({action, date}) => {
-
-                                                    let color, dot
-                                                    if (action === 'registration') {
-                                                        color = 'green'
-                                                        dot = <SignatureOutlined style={{fontSize: '16px'}}/>
-                                                    } else if (action === 'expiration') {
-                                                        color = 'red'
-                                                        dot = <ClockCircleOutlined style={{fontSize: '16px'}}/>
-                                                    } else if (action === 'transfer') {
-                                                        color = 'orange'
-                                                        dot = <ShareAltOutlined style={{fontSize: '16px'}}/>
-                                                    } else if (action === 'last changed') {
-                                                        color = 'blue'
-                                                        dot = <SyncOutlined style={{fontSize: '16px'}}/>
-                                                    } else if (action === 'deletion') {
-                                                        color = 'red'
-                                                        dot = <DeleteOutlined style={{fontSize: '16px'}}/>
-                                                    } else if (action === 'reregistration') {
-                                                        color = 'green'
-                                                        dot = <ReloadOutlined style={{fontSize: '16px'}}/>
-                                                    }
-
-                                                    return {
-                                                        label: new Date(date).toLocaleString(locale),
-                                                        children: Object.keys(domainEvent).includes(action) ? domainEvent[action as keyof typeof domainEvent] : action,
-                                                        color,
-                                                        dot,
-                                                        pending: new Date(date).getTime() > new Date().getTime()
-                                                    }
-                                                }
-                                            )
-                                        }
-                                    />
+                                    <EventTimeline domain={domain}/>
                                     {
                                         domain.entities.length > 0 &&
                                         <>
                                             <Divider orientation="left">{t`Entities`}</Divider>
-                                            <List
-                                                className="demo-loadmore-list"
-                                                itemLayout="horizontal"
-                                                dataSource={domain.entities.sort((e1, e2) => {
-                                                    const p = (r: string[]) => r.includes('registrant') ? 4 : r.includes('administrative') ? 3 : r.includes('billing') ? 2 : 1
-                                                    return p(e2.roles) - p(e1.roles)
-                                                })}
-                                                renderItem={(e) => {
-                                                    const jCard = vCard.fromJSON(e.entity.jCard)
-                                                    let name = ''
-                                                    if (jCard.data.fn !== undefined && !Array.isArray(jCard.data.fn)) name = jCard.data.fn.valueOf()
-
-                                                    return <List.Item>
-                                                        <List.Item.Meta
-                                                            avatar={<Avatar style={{backgroundColor: '#87d068'}}
-                                                                            icon={e.roles.includes('registrant') ?
-                                                                                <SignatureOutlined/> : e.roles.includes('registrar') ?
-                                                                                    <BankOutlined/> :
-                                                                                    e.roles.includes('technical') ?
-                                                                                        <ToolOutlined/> :
-                                                                                        e.roles.includes('administrative') ?
-                                                                                            <IdcardOutlined/> :
-                                                                                            <UserOutlined/>}/>}
-                                                            title={e.entity.handle}
-                                                            description={name}
-                                                        />
-                                                        <div>{e.roles.map((r) => Object.keys(domainRole).includes(r) ? domainRole[r as keyof typeof domainRole] : r).join(', ')}</div>
-                                                    </List.Item>
-                                                }}
-                                            />
+                                            <EntitiesList domain={domain}/>
                                         </>
                                     }
                                 </Card>
                             </Badge.Ribbon>
                         </Space>
                         : <Empty
-                            description={
-                                <Typography.Text>
-                                    {t`Although the domain exists in my database, it has been deleted from the WHOIS by its registrar.`}
-                                </Typography.Text>
-                            }/>)
+                            description={t`Although the domain exists in my database, it has been deleted from the WHOIS by its registrar.`}/>)
                 }
             </Skeleton>
         </Card>

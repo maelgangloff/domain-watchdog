@@ -3,134 +3,134 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Plural-Forms: nplurals=2; plural=(n!=1);\n"
 
-#: assets/pages/search/DomainSearchPage.tsx:48
-msgid "Registrant"
-msgstr ""
-
-#: assets/pages/search/DomainSearchPage.tsx:49
-msgid "Technical"
-msgstr ""
-
-#: assets/pages/search/DomainSearchPage.tsx:50
-msgid "Administrative"
-msgstr ""
-
-#: assets/pages/search/DomainSearchPage.tsx:51
-msgid "Abuse"
-msgstr ""
-
-#: assets/pages/search/DomainSearchPage.tsx:52
-msgid "Billing"
-msgstr ""
-
-#: assets/pages/search/DomainSearchPage.tsx:53
-msgid "Registrar"
-msgstr ""
-
-#: assets/pages/search/DomainSearchPage.tsx:54
-msgid "Reseller"
-msgstr ""
-
-#: assets/pages/search/DomainSearchPage.tsx:55
-msgid "Sponsor"
-msgstr ""
-
-#: assets/pages/search/DomainSearchPage.tsx:56
-msgid "Proxy"
-msgstr ""
-
-#: assets/pages/search/DomainSearchPage.tsx:57
-msgid "Notifications"
-msgstr ""
-
-#: assets/pages/search/DomainSearchPage.tsx:58
-msgid "Noc"
-msgstr ""
-
-#: assets/pages/search/DomainSearchPage.tsx:62
+#: assets/components/search/EventTimeline.tsx:17
 msgid "Registration"
 msgstr ""
 
-#: assets/pages/search/DomainSearchPage.tsx:63
+#: assets/components/search/EventTimeline.tsx:18
 msgid "Reregistration"
 msgstr ""
 
-#: assets/pages/search/DomainSearchPage.tsx:64
+#: assets/components/search/EventTimeline.tsx:19
 msgid "Last changed"
 msgstr ""
 
-#: assets/pages/search/DomainSearchPage.tsx:65
+#: assets/components/search/EventTimeline.tsx:20
 msgid "Expiration"
 msgstr ""
 
-#: assets/pages/search/DomainSearchPage.tsx:66
+#: assets/components/search/EventTimeline.tsx:21
 msgid "Deletion"
 msgstr ""
 
-#: assets/pages/search/DomainSearchPage.tsx:67
+#: assets/components/search/EventTimeline.tsx:22
 msgid "Reinstantiation"
 msgstr ""
 
-#: assets/pages/search/DomainSearchPage.tsx:68
+#: assets/components/search/EventTimeline.tsx:23
 msgid "Transfer"
 msgstr ""
 
-#: assets/pages/search/DomainSearchPage.tsx:69
+#: assets/components/search/EventTimeline.tsx:24
 msgid "Locked"
 msgstr ""
 
-#: assets/pages/search/DomainSearchPage.tsx:70
+#: assets/components/search/EventTimeline.tsx:25
 msgid "Unlocked"
 msgstr ""
 
-#: assets/pages/search/DomainSearchPage.tsx:71
+#: assets/components/search/EventTimeline.tsx:26
 msgid "Registrar expiration"
 msgstr ""
 
-#: assets/pages/search/DomainSearchPage.tsx:72
+#: assets/components/search/EventTimeline.tsx:27
 msgid "ENUM validation expiration"
 msgstr ""
 
-#: assets/pages/search/DomainSearchPage.tsx:82
-msgid "Found !"
-msgstr ""
-
-#: assets/pages/search/DomainSearchPage.tsx:86
-#: assets/pages/tracking/WatchlistPage.tsx:91
-msgid "An error occurred"
-msgstr ""
-
-#: assets/pages/search/DomainSearchPage.tsx:91
-msgid "Domain finder"
-msgstr ""
-
+#: assets/components/search/DomainSearchBar.tsx:23
 #: assets/pages/LoginPage.tsx:53
 #: assets/pages/LoginPage.tsx:61
-#: assets/pages/search/DomainSearchPage.tsx:104
 #: assets/pages/tracking/WatchlistPage.tsx:137
 #: assets/pages/tracking/WatchlistPage.tsx:197
 #: assets/pages/tracking/WatchlistPage.tsx:207
 msgid "Required"
 msgstr ""
 
-#: assets/pages/search/DomainSearchPage.tsx:107
+#: assets/components/search/DomainSearchBar.tsx:26
 #: assets/pages/tracking/WatchlistPage.tsx:140
 msgid "This domain name does not appear to be valid"
 msgstr ""
 
-#: assets/pages/search/DomainSearchPage.tsx:132
+#: assets/components/search/EntitiesList.tsx:10
+msgid "Registrant"
+msgstr ""
+
+#: assets/components/search/EntitiesList.tsx:11
+msgid "Technical"
+msgstr ""
+
+#: assets/components/search/EntitiesList.tsx:12
+msgid "Administrative"
+msgstr ""
+
+#: assets/components/search/EntitiesList.tsx:13
+msgid "Abuse"
+msgstr ""
+
+#: assets/components/search/EntitiesList.tsx:14
+msgid "Billing"
+msgstr ""
+
+#: assets/components/search/EntitiesList.tsx:15
+msgid "Registrar"
+msgstr ""
+
+#: assets/components/search/EntitiesList.tsx:16
+msgid "Reseller"
+msgstr ""
+
+#: assets/components/search/EntitiesList.tsx:17
+msgid "Sponsor"
+msgstr ""
+
+#: assets/components/search/EntitiesList.tsx:18
+msgid "Proxy"
+msgstr ""
+
+#: assets/components/search/EntitiesList.tsx:19
+msgid "Notifications"
+msgstr ""
+
+#: assets/components/search/EntitiesList.tsx:20
+msgid "Noc"
+msgstr ""
+
+#: assets/pages/search/DomainSearchPage.tsx:19
+msgid "Found !"
+msgstr ""
+
+#: assets/pages/search/DomainSearchPage.tsx:23
+#: assets/pages/tracking/WatchlistPage.tsx:91
+msgid "An error occurred"
+msgstr ""
+
+#: assets/pages/search/DomainSearchPage.tsx:28
+msgid "Domain finder"
+msgstr ""
+
+#: assets/pages/search/DomainSearchPage.tsx:47
 msgid "EPP Status Codes"
 msgstr ""
 
-#: assets/pages/search/DomainSearchPage.tsx:142
+#: assets/pages/search/DomainSearchPage.tsx:57
 msgid "Timeline"
 msgstr ""
 
-#: assets/pages/search/DomainSearchPage.tsx:184
+#: assets/pages/search/DomainSearchPage.tsx:62
 msgid "Entities"
 msgstr ""
 
-#: assets/pages/search/DomainSearchPage.tsx:223
+#: assets/pages/search/DomainSearchPage.tsx:70
 msgid ""
 "Although the domain exists in my database, it has been deleted from the "
 "WHOIS by its registrar."
