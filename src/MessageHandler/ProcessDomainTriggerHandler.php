@@ -5,6 +5,7 @@ namespace App\MessageHandler;
 use App\Config\Connector\OvhConnector;
 use App\Config\ConnectorProvider;
 use App\Config\TriggerAction;
+use App\Entity\Connector;
 use App\Entity\Domain;
 use App\Entity\DomainEvent;
 use App\Entity\User;
@@ -68,6 +69,7 @@ final readonly class ProcessDomainTriggerHandler
                         true,
                         $isDebug
                     );
+                    $this->sendEmailDomainOrdered($domain, $connector, $watchList->getUser());
 
                 } else throw new Exception("Unknown provider");
             }
@@ -81,6 +83,25 @@ final readonly class ProcessDomainTriggerHandler
         }
     }
 
+    /**
+     * @throws TransportExceptionInterface
+     */
+    private function sendEmailDomainOrdered(Domain $domain, Connector $connector, User $user): void
+    {
+        $email = (new TemplatedEmail())
+            ->from($this->mailerSenderEmail)
+            ->to($user->getEmail())
+            ->priority(Email::PRIORITY_HIGHEST)
+            ->subject('A domain name has been ordered')
+            ->htmlTemplate('emails/success/domain_ordered.html.twig')
+            ->locale('en')
+            ->context([
+                "domain" => $domain,
+                "provider" => $connector->getProvider()->value
+            ]);
+
+        $this->mailer->send($email);
+    }
 
     /**
      * @throws TransportExceptionInterface
@@ -92,7 +113,7 @@ final readonly class ProcessDomainTriggerHandler
             ->to($user->getEmail())
             ->priority(Email::PRIORITY_HIGHEST)
             ->subject('A domain name has been changed')
-            ->htmlTemplate('emails/domain_updated.html.twig')
+            ->htmlTemplate('emails/success/domain_updated.html.twig')
             ->locale('en')
             ->context([
                 "event" => $domainEvent

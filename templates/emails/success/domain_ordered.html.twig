@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .header h1 {
+            font-size: 24px;
+            color: #0056b3;
+        }
+
+        .content {
+            margin-bottom: 20px;
+        }
+
+        .content p {
+            margin: 0 0 10px;
+        }
+
+        .footer {
+            text-align: center;
+            color: #777;
+        }
+    </style>
+    <title>Domain Watchdog - Domain Ordered</title>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <h1>Domain Watchdog - Domain Ordered</h1>
+    </div>
+    <div class="content">
+        <p>Hello,</p>
+        <p>We are pleased to inform you that a domain name present in your Watchlist has been ordered using the
+            connector you have chosen.</p>
+        <p><strong>Domain name:</strong> {{ domain.ldhName }}</p>
+        <p><strong>Connector provider :</strong> {{ provider }}</p>
+        <br/>
+        <p>Thank you for your understanding,</p>
+        <p>Sincerely,</p>
+        <p>Domain Watchdog</p>
+    </div>
+    <div class="footer">
+        <p>&copy; Domain Watchdog</p>
+    </div>
+</div>
+</body>
+</html>
