@@ -26,6 +26,7 @@ class WatchListTrigger
     private ?TriggerAction $action = null;
 
     #[ORM\ManyToOne(inversedBy: 'watchListTriggers')]
+    #[Groups(['watchlist:list', 'watchlist:item', 'watchlist:create', 'watchlist:update'])]
     private ?Connector $connector = null;
 
     public function getEvent(): ?string

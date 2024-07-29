@@ -6,7 +6,6 @@ use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\Delete;
 use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\GetCollection;
-use ApiPlatform\Metadata\Patch;
 use ApiPlatform\Metadata\Post;
 use App\Config\ConnectorProvider;
 use App\Repository\ConnectorRepository;
@@ -40,7 +39,7 @@ class Connector
 {
     #[ORM\Id]
     #[ORM\Column(type: 'uuid')]
-    #[Groups(['connector:list'])]
+    #[Groups(['connector:list', 'watchlist:list'])]
     private ?string $id;
 
     #[ORM\ManyToOne(inversedBy: 'connectors')]
@@ -48,7 +47,7 @@ class Connector
     private ?User $user = null;
 
 
-    #[Groups(['connector:list', 'connector:create'])]
+    #[Groups(['connector:list', 'connector:create', 'watchlist:list'])]
     #[ORM\Column(enumType: ConnectorProvider::class)]
     private ?ConnectorProvider $provider = null;
 
