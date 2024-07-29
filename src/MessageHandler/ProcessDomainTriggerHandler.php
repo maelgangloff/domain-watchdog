@@ -5,6 +5,7 @@ namespace App\MessageHandler;
 use App\Config\TriggerAction;
 use App\Entity\Domain;
 use App\Entity\DomainEvent;
+use App\Entity\OVHConnector;
 use App\Entity\User;
 use App\Entity\WatchList;
 use App\Entity\WatchListTrigger;
@@ -53,6 +54,13 @@ final readonly class ProcessDomainTriggerHandler
                 switch ($watchListTrigger->getAction()) {
                     case TriggerAction::SendEmail:
                         $this->sendEmailDomainUpdated($event, $watchList->getUser());
+                        break;
+                    case TriggerAction::BuyDomain :
+                        if ($watchListTrigger->getConnector() === null) throw new Exception('Connector is missing');
+                        $connector = $watchListTrigger->getConnector();
+                        if ($connector::class === OVHConnector::class) {
+                            $connector->orderDomain($domain, true, true, true, true);
+                        }
                 }
             }
         }

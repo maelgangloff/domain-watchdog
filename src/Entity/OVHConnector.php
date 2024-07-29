@@ -13,10 +13,18 @@ class OVHConnector extends Connector implements ConnectorInterface
 {
 
     /**
+     * Order a domain name with the OVH API
      * @throws Exception
      */
-    public function orderDomain(Domain $domain, bool $acceptConditions, bool $ownerLegalAge, bool $waiveRetractationPeriod): void
+    public function orderDomain(Domain $domain,
+                                bool   $acceptConditions,
+                                bool   $ownerLegalAge,
+                                bool   $waiveRetractationPeriod,
+                                bool   $dryRyn = false
+    ): void
     {
+        if (!$domain->getDeleted()) throw new Exception('The domain name still appears in the WHOIS database.');
+
         $ldhName = $domain->getLdhName();
         if (!$ldhName) throw new Exception("Domain name cannot be null.");
 
@@ -83,11 +91,11 @@ class OVHConnector extends Connector implements ConnectorInterface
             ]);
         }
         $conn->get("/order/cart/{$cartId}/checkout");
-        /*
+
+        if ($dryRyn) return;
         $conn->post("/order/cart/{$cartId}/checkout", [
             "autoPayWithPreferredPaymentMethod" => true,
             "waiveRetractationPeriod" => $waiveRetractationPeriod
         ]);
-        */
     }
 }
