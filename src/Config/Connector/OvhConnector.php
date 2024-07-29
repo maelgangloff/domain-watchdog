@@ -59,7 +59,10 @@ readonly class OvhConnector implements ConnectorInterface
             $offer['orderable'] === true &&
             $offer['pricingMode'] === $pricingMode
         );
-        if (empty($offer)) throw new Exception('Cannot buy this domain name');
+        if (empty($offer)) {
+            $conn->delete("/order/cart/{$cartId}");
+            throw new Exception('Cannot buy this domain name');
+        }
 
         $item = $conn->post("/order/cart/{$cartId}/domain", [
             "domain" => $ldhName,
