@@ -57,7 +57,7 @@ readonly class OvhConnector implements ConnectorInterface
         ]);
         $offer = array_filter($offers, fn($offer) => $offer['action'] === 'create' &&
             $offer['orderable'] === true &&
-            $offers['pricingMode'] === $pricingMode
+            $offer['pricingMode'] === $pricingMode
         );
         if (empty($offer)) throw new Exception('Cannot buy this domain name');
 
