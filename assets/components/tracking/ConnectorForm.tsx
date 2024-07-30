@@ -52,6 +52,7 @@ export function ConnectorForm({form, onCreate}: { form: FormInstance, onCreate: 
                 }))}
                 value={provider}
                 onChange={setProvider}
+                autoFocus
             />
         </Form.Item>
 
@@ -63,7 +64,7 @@ export function ConnectorForm({form, onCreate}: { form: FormInstance, onCreate: 
                         name={['authData', fieldName]}
                         rules={[{required: true, message: t`Required`}]}
                     >
-                        <Input/>
+                        <Input autoComplete='off'/>
                     </Form.Item>)
                 }
                 <Form.Item
