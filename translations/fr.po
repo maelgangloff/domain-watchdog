@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2024-07-29 23:01+0000\n"
+"PO-Revision-Date: 2024-07-30 00:46+0000\n"
 "Last-Translator: Maël Gangloff <contact@maelgangloff.fr>\n"
 "Language-Team: French <https://weblate.vinceh121.me/projects/domain-watchdog/"
 "domain-watchdog-dashboard/fr/>\n"
@@ -160,7 +160,7 @@ msgstr "Envoie-moi un email"
 
 #: assets/components/tracking/WatchlistForm.tsx:78
 msgid "Buy the domain if available"
-msgstr ""
+msgstr "Acheter le domaine s'il est disponible"
 
 #: assets/components/tracking/WatchlistForm.tsx:95
 msgid "At least one domain name"
@@ -196,10 +196,8 @@ msgid "Then do that"
 msgstr "Alors fais ça"
 
 #: assets/components/tracking/WatchlistForm.tsx:201
-#, fuzzy
-#| msgid "My Connectors"
 msgid "Connector"
-msgstr "Mes Connecteurs"
+msgstr "Connecteur"
 
 #: assets/components/tracking/WatchlistForm.tsx:227
 msgid "Add a Trigger"
@@ -217,33 +215,35 @@ msgstr "Réinitialiser"
 
 #: assets/components/tracking/ConnectorForm.tsx:19
 msgid "Application key"
-msgstr ""
+msgstr "Clé d'application"
 
 #: assets/components/tracking/ConnectorForm.tsx:20
 msgid "Application secret"
-msgstr ""
+msgstr "Clé secrète d'application"
 
 #: assets/components/tracking/ConnectorForm.tsx:21
 msgid "Consumer key"
-msgstr ""
+msgstr "Clé d'utilisateur"
 
 #: assets/components/tracking/ConnectorForm.tsx:26
 msgid "European Region"
-msgstr ""
+msgstr "Continent Européen"
 
 #: assets/components/tracking/ConnectorForm.tsx:31
 msgid "Europa"
-msgstr ""
+msgstr "Europe"
 
 #: assets/components/tracking/ConnectorForm.tsx:36
 msgid "The domain is free and at the standard price"
-msgstr ""
+msgstr "Le domaine est libre et au prix standard"
 
 #: assets/components/tracking/ConnectorForm.tsx:39
 msgid ""
 "The domain is free but is a premium. Its price varies from one domain to "
 "another"
 msgstr ""
+"Le domaine est libre mais est un premium. Son prix est variable d'un domaine "
+"à l'autre"
 
 #: assets/components/tracking/ConnectorForm.tsx:52
 #: assets/components/tracking/ConnectorsList.tsx:21
@@ -252,19 +252,19 @@ msgstr "Fournisseur"
 
 #: assets/components/tracking/ConnectorForm.tsx:57
 msgid "Please select a Provider"
-msgstr ""
+msgstr "Veuillez sélectionner un fournisseur"
 
 #: assets/components/tracking/ConnectorForm.tsx:88
 msgid "OVH Endpoint"
-msgstr ""
+msgstr "Endpoint OVH"
 
 #: assets/components/tracking/ConnectorForm.tsx:95
 msgid "OVH subsidiary"
-msgstr ""
+msgstr "Filiale d'OVH"
 
 #: assets/components/tracking/ConnectorForm.tsx:103
 msgid "OVH pricing mode"
-msgstr ""
+msgstr "Mode de tarification OVH"
 
 #: assets/components/tracking/WatchlistsList.tsx:14
 #, javascript-format
@@ -447,10 +447,8 @@ msgid "Roles"
 msgstr "Rôles"
 
 #: assets/pages/tracking/ConnectorsPage.tsx:20
-#, fuzzy
-#| msgid "Connector ${ connector.id }"
 msgid "Connector created !"
-msgstr "Connecteur ${ connector.id }"
+msgstr "Connecteur créé !"
 
 #: assets/pages/tracking/ConnectorsPage.tsx:41
 msgid "Create a Connector"
