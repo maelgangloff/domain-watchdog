@@ -56,16 +56,16 @@ class Connector
     private array $authData = [];
 
     /**
-     * @var Collection<int, WatchListTrigger>
+     * @var Collection<int, WatchList>
      */
-    #[ORM\OneToMany(targetEntity: WatchListTrigger::class, mappedBy: 'connector')]
-    private Collection $watchListTriggers;
+    #[ORM\OneToMany(targetEntity: WatchList::class, mappedBy: 'connector')]
+    private Collection $watchLists;
 
 
     public function __construct()
     {
         $this->id = Uuid::v4();
-        $this->watchListTriggers = new ArrayCollection();
+        $this->watchLists = new ArrayCollection();
     }
 
     public function getId(): ?string
@@ -97,36 +97,6 @@ class Connector
         return $this;
     }
 
-    /**
-     * @return Collection<int, WatchListTrigger>
-     */
-    public function getWatchListTriggers(): Collection
-    {
-        return $this->watchListTriggers;
-    }
-
-    public function addWatchListTrigger(WatchListTrigger $watchListTrigger): static
-    {
-        if (!$this->watchListTriggers->contains($watchListTrigger)) {
-            $this->watchListTriggers->add($watchListTrigger);
-            $watchListTrigger->setConnector($this);
-        }
-
-        return $this;
-    }
-
-    public function removeWatchListTrigger(WatchListTrigger $watchListTrigger): static
-    {
-        if ($this->watchListTriggers->removeElement($watchListTrigger)) {
-            // set the owning side to null (unless already changed)
-            if ($watchListTrigger->getConnector() === $this) {
-                $watchListTrigger->setConnector(null);
-            }
-        }
-
-        return $this;
-    }
-
     public function getProvider(): ?ConnectorProvider
     {
         return $this->provider;
@@ -135,6 +105,36 @@ class Connector
     public function setProvider(ConnectorProvider $provider): static
     {
         $this->provider = $provider;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, WatchList>
+     */
+    public function getWatchLists(): Collection
+    {
+        return $this->watchLists;
+    }
+
+    public function addWatchList(WatchList $watchList): static
+    {
+        if (!$this->watchLists->contains($watchList)) {
+            $this->watchLists->add($watchList);
+            $watchList->setConnector($this);
+        }
+
+        return $this;
+    }
+
+    public function removeWatchList(WatchList $watchList): static
+    {
+        if ($this->watchLists->removeElement($watchList)) {
+            // set the owning side to null (unless already changed)
+            if ($watchList->getConnector() === $this) {
+                $watchList->setConnector(null);
+            }
+        }
 
         return $this;
     }

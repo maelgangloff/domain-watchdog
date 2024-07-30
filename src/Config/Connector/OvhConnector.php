@@ -3,6 +3,7 @@
 namespace App\Config\Connector;
 
 use App\Entity\Domain;
+use DateTime;
 use Exception;
 use Ovh\Api;
 
@@ -18,11 +19,7 @@ readonly class OvhConnector implements ConnectorInterface
      * Order a domain name with the OVH API
      * @throws Exception
      */
-    public function orderDomain(Domain $domain,
-                                bool   $acceptConditions,
-                                bool   $ownerLegalAge,
-                                bool   $waiveRetractationPeriod,
-                                bool   $dryRyn = false
+    public function orderDomain(Domain $domain, bool $dryRun = false
     ): void
     {
         if (!$domain->getDeleted()) throw new Exception('The domain name still appears in the WHOIS database');
@@ -32,22 +29,19 @@ readonly class OvhConnector implements ConnectorInterface
 
         $authData = self::verifyAuthData($this->authData);
 
-        $appKey = $authData['appKey'];
-        $appSecret = $authData['appSecret'];
-        $apiEndpoint = $authData['apiEndpoint'];
-        $consumerKey = $authData['consumerKey'];
-        $ovhSubsidiary = $authData['ovhSubsidiary'];
-        $pricingMode = $authData['pricingMode'];
+        $acceptConditions = $authData['acceptConditions'];
+        $ownerLegalAge = $authData['ownerLegalAge'];
+        $waiveRetractationPeriod = $authData['waiveRetractationPeriod'];
 
         $conn = new Api(
-            $appKey,
-            $appSecret,
-            $apiEndpoint,
-            $consumerKey
+            $authData['appKey'],
+            $authData['appSecret'],
+            $authData['apiEndpoint'],
+            $authData['consumerKey']
         );
 
         $cart = $conn->post('/order/cart', [
-            "ovhSubsidiary" => $ovhSubsidiary,
+            "ovhSubsidiary" => $authData['ovhSubsidiary'],
             "description" => "Domain Watchdog"
         ]);
         $cartId = $cart['cartId'];
@@ -57,7 +51,7 @@ readonly class OvhConnector implements ConnectorInterface
         ]);
         $offer = array_filter($offers, fn($offer) => $offer['action'] === 'create' &&
             $offer['orderable'] === true &&
-            $offer['pricingMode'] === $pricingMode
+            $offer['pricingMode'] === $authData['pricingMode']
         );
         if (empty($offer)) {
             $conn->delete("/order/cart/{$cartId}");
@@ -89,7 +83,7 @@ readonly class OvhConnector implements ConnectorInterface
         }
         $conn->get("/order/cart/{$cartId}/checkout");
 
-        if ($dryRyn) return;
+        if ($dryRun) return;
         $conn->post("/order/cart/{$cartId}/checkout", [
             "autoPayWithPreferredPaymentMethod" => true,
             "waiveRetractationPeriod" => $waiveRetractationPeriod
@@ -108,13 +102,36 @@ readonly class OvhConnector implements ConnectorInterface
         $ovhSubsidiary = $authData['ovhSubsidiary'];
         $pricingMode = $authData['pricingMode'];
 
+        $acceptConditions = $authData['acceptConditions'];
+        $ownerLegalAge = $authData['ownerLegalAge'];
+        $waiveRetractationPeriod = $authData['waiveRetractationPeriod'];
+
         if (!is_string($appKey) || empty($appKey) ||
             !is_string($appSecret) || empty($appSecret) ||
             !is_string($consumerKey) || empty($consumerKey) ||
             !is_string($apiEndpoint) || empty($apiEndpoint) ||
             !is_string($ovhSubsidiary) || empty($ovhSubsidiary) ||
-            !is_string($pricingMode) || empty($pricingMode)
-        ) throw new Exception("Bad data schema.");
+            !is_string($pricingMode) || empty($pricingMode) ||
+
+            true !== $acceptConditions ||
+            true !== $ownerLegalAge ||
+            true !== $waiveRetractationPeriod
+
+        ) throw new Exception("Bad authData schema");
+
+        $conn = new Api(
+            $appKey,
+            $appSecret,
+            $apiEndpoint,
+            $consumerKey
+        );
+
+        $res = $conn->get('/auth/currentCredential');
+        if ($res['expiration'] !== null && new DateTime($res['expiration']) < new DateTime())
+            throw new Exception('These credentials have expired');
+
+        $status = $res['status'];
+        if ($status !== 'validated') throw new Exception("The status of these credentials is not valid ($status)");
 
         return [
             "appKey" => $appKey,
@@ -122,7 +139,10 @@ readonly class OvhConnector implements ConnectorInterface
             "apiEndpoint" => $apiEndpoint,
             "consumerKey" => $consumerKey,
             "ovhSubsidiary" => $ovhSubsidiary,
-            "pricingMode" => $pricingMode
+            "pricingMode" => $pricingMode,
+            "acceptConditions" => $acceptConditions,
+            "ownerLegalAge" => $ownerLegalAge,
+            "waiveRetractationPeriod" => $waiveRetractationPeriod
         ];
     }
 }

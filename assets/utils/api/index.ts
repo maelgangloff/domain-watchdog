@@ -16,6 +16,8 @@ export type EventAction =
     | 'enum validation expiration'
     | string
 
+export type TriggerAction = 'email' | string
+
 export interface Event {
     action: EventAction
     date: string
@@ -62,9 +64,10 @@ export interface User {
     roles: string[]
 }
 
-export interface Watchlist {
-    domains: string[]
-    triggers: Event[]
+export interface Watchlist  {
+    domains: string[],
+    triggers: { event: EventAction, action: TriggerAction }[],
+    connector?: string
 }
 
 export async function request<T = any, R = AxiosResponse<T>, D = any>(config: AxiosRequestConfig): Promise<R> {

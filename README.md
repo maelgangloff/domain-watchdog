@@ -42,12 +42,6 @@ Clone the repository:
 git clone https://github.com/maelgangloff/domain-watchdog.git
  ```
 
-Navigate to the project directory:
-
-```shell
-cd domain-watchdog
- ```
-
 #### Backend
 
 1. Install dependencies:
@@ -66,13 +60,52 @@ cd domain-watchdog
     ```shell
     php bin/console doctrine:migrations:migrate
     ```
-   ```
 5. Start the Symfony server:
     ```shell
     symfony server:start
     ```
 
 #### Frontend
+
+1. Install dependencies:
+    ```shell
+    yarn install
+    ```
+2. Generate language files:
+    ```shell
+    yarn run ttag:po2json
+    ```
+3. Make the final build:
+    ```shell
+    yarn build
+    ```
+
+## Update
+
+**Any updates are your responsibility. Make a backup of the data if necessary.**
+
+Fetch updates from the remote repository:
+
+```shell
+git pull origin master
+ ```
+
+### Backend
+
+1. Install dependencies:
+    ```shell
+    composer install
+    ```
+2. Run database migrations:
+    ```shell
+    php bin/console doctrine:migrations:migrate
+    ```
+3. Clearing the Symfony cache:
+   ```shell
+   php bin/console cache:clear
+    ```
+
+### Frontend
 
 1. Install dependencies:
     ```shell

@@ -8,10 +8,5 @@ interface ConnectorInterface
 {
     public static function verifyAuthData(array $authData): array;
 
-    public function orderDomain(Domain $domain,
-                                bool   $acceptConditions,
-                                bool   $ownerLegalAge,
-                                bool   $waiveRetractationPeriod,
-                                bool   $dryRyn
-    ): void;
+    public function orderDomain(Domain $domain, bool $dryRun): void;
 }

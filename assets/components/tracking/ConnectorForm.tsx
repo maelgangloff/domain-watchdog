@@ -1,9 +1,15 @@
-import {Button, Form, FormInstance, Input, Select, Space, Typography} from "antd";
+import {Button, Checkbox, Form, FormInstance, Input, Select, Space, Typography} from "antd";
 import React, {useState} from "react";
 import {Connector, ConnectorProvider} from "../../utils/api/connectors";
 import {t} from "ttag";
 import {BankOutlined} from "@ant-design/icons";
-import {regionNames} from "../../i18n";
+import {
+    ovhEndpointList as ovhEndpointListFunction,
+    ovhFields as ovhFieldsFunction,
+    ovhPricingMode as ovhPricingModeFunction,
+    ovhSubsidiaryList as ovhSubsidiaryListFunction
+} from "../../utils/providers/ovh";
+import {helpGetTokenLink, tosHyperlink} from "../../utils/providers";
 
 const formItemLayoutWithOutLabel = {
     wrapperCol: {
@@ -14,31 +20,10 @@ const formItemLayoutWithOutLabel = {
 
 export function ConnectorForm({form, onCreate}: { form: FormInstance, onCreate: (values: Connector) => void }) {
     const [provider, setProvider] = useState<string>()
-
-    const ovhFields = {
-        appKey: t`Application key`,
-        appSecret: t`Application secret`,
-        consumerKey: t`Consumer key`
-    }
-
-    const ovhEndpointList = [
-        {
-            label: t`European Region`,
-            value: 'ovh-eu'
-        }
-    ]
-
-    const ovhSubsidiaryList = [{value: 'EU', label: t`Europa`}, ...[
-        'CZ', 'DE', 'ES', 'FI', 'FR', 'GB', 'IE', 'IT', 'LT', 'MA', 'NL', 'PL', 'PT', 'SN', 'TN'
-    ].map(c => ({value: c, label: regionNames.of(c) ?? c}))]
-
-    const ovhPricingMode = [
-        {value: 'create-default', label: t`The domain is free and at the standard price`},
-        {
-            value: 'create-premium',
-            label: t`The domain is free but is a premium. Its price varies from one domain to another`
-        }
-    ]
+    const ovhFields = ovhFieldsFunction()
+    const ovhEndpointList = ovhEndpointListFunction()
+    const ovhSubsidiaryList = ovhSubsidiaryListFunction()
+    const ovhPricingMode = ovhPricingModeFunction()
 
     return <Form
         {...formItemLayoutWithOutLabel}
@@ -51,9 +36,11 @@ export function ConnectorForm({form, onCreate}: { form: FormInstance, onCreate: 
         <Form.Item
             label={t`Provider`}
             name="provider"
+            help={helpGetTokenLink(provider)}
             rules={[{required: true, message: t`Required`}]}
         >
             <Select
+                allowClear
                 placeholder={t`Please select a Provider`}
                 suffixIcon={<BankOutlined/>}
                 options={Object.keys(ConnectorProvider).map((c) => ({
@@ -66,22 +53,19 @@ export function ConnectorForm({form, onCreate}: { form: FormInstance, onCreate: 
                 }))}
                 value={provider}
                 onChange={setProvider}
+                autoFocus
             />
         </Form.Item>
 
         {
             provider === ConnectorProvider.OVH && <>
-                <Typography.Link target='_blank'
-                                 href="https://api.ovh.com/createToken/index.cgi?GET=/*&PUT=/*&POST=/*&DELETE=/*">
-                    Retrieve a token set from the OVH API
-                </Typography.Link>
                 {
                     Object.keys(ovhFields).map(fieldName => <Form.Item
                         label={ovhFields[fieldName as keyof typeof ovhFields]}
                         name={['authData', fieldName]}
                         rules={[{required: true, message: t`Required`}]}
                     >
-                        <Input/>
+                        <Input autoComplete='off'/>
                     </Form.Item>)
                 }
                 <Form.Item
@@ -105,6 +89,37 @@ export function ConnectorForm({form, onCreate}: { form: FormInstance, onCreate: 
                     rules={[{required: true, message: t`Required`}]}
                 >
                     <Select options={ovhPricingMode} optionFilterProp="label"/>
+                </Form.Item>
+                <Form.Item
+                    valuePropName="checked"
+                    label={t`API Terms of Service`}
+                    name={['authData', 'acceptConditions']}
+                    rules={[{required: true, message: t`Required`}]}
+                >
+                    <Checkbox
+                        required={true}>
+                        <Typography.Link target='_blank' href={tosHyperlink(provider)}>
+                            {t`I certify that I have read and accepted the conditions of use of the Provider API, accessible from this hyperlink`}
+                        </Typography.Link>
+                    </Checkbox>
+                </Form.Item>
+                <Form.Item
+                    valuePropName="checked"
+                    label={t`Legal age`}
+                    name={['authData', 'ownerLegalAge']}
+                    rules={[{required: true, message: t`Required`}]}
+                >
+                    <Checkbox
+                        required={true}>{t`I certify on my honor that I am of the minimum age required to consent to these conditions`}</Checkbox>
+                </Form.Item>
+                <Form.Item
+                    valuePropName="checked"
+                    label={t`Withdrawal period`}
+                    name={['authData', 'waiveRetractationPeriod']}
+                    rules={[{required: true, message: t`Required`}]}
+                >
+                    <Checkbox
+                        required={true}>{t`I expressly waive my right of withdrawal regarding the purchase of domain names via the Provider's API`}</Checkbox>
                 </Form.Item>
             </>
         }

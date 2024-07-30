@@ -48,37 +48,28 @@ final readonly class ProcessDomainTriggerHandler
         /** @var Domain $domain */
         $domain = $this->domainRepository->findOneBy(["ldhName" => $message->ldhName]);
 
-        $watchListTriggers = $watchList->getWatchListTriggers();
+        $connector = $watchList->getConnector();
+        if (null !== $connector && $domain->getDeleted()) {
+            try {
+                if ($connector->getProvider() === ConnectorProvider::OVH) {
+                    $ovh = new OVHConnector($connector->getAuthData());
+                    $isDebug = $this->kernel->isDebug();
 
-        /** @var WatchListTrigger $watchListTrigger */
-        foreach ($watchListTriggers->getIterator() as $watchListTrigger) {
-
-            if ($watchListTrigger->getAction() === TriggerAction::BuyDomain) {
-
-                try {
-                    if ($watchListTrigger->getConnector() === null) throw new Exception('Connector is missing');
-                    $connector = $watchListTrigger->getConnector();
-
-                    if ($connector->getProvider() === ConnectorProvider::OVH) {
-                        $ovh = new OVHConnector($connector->getAuthData());
-                        $isDebug = $this->kernel->isDebug();
-
-                        $ovh->orderDomain(
-                            $domain,
-                            true, // TODO: Infer from the user
-                            true, // TODO: Infer from the user
-                            true, // TODO: Infer from the user
-                            $isDebug
-                        );
-                        $this->sendEmailDomainOrdered($domain, $connector, $watchList->getUser());
-                    } else throw new Exception("Unknown provider");
-                } catch (Throwable) {
-                    $this->sendEmailDomainOrderError($domain, $watchList->getUser());
-                }
+                    $ovh->orderDomain($domain, $isDebug);
+                    $this->sendEmailDomainOrdered($domain, $connector, $watchList->getUser());
+                } else throw new Exception("Unknown provider");
+            } catch (Throwable) {
+                $this->sendEmailDomainOrderError($domain, $watchList->getUser());
             }
+        }
 
-            /** @var DomainEvent $event */
-            foreach ($domain->getEvents()->filter(fn($event) => $message->updatedAt < $event->getDate()) as $event) {
+        /** @var DomainEvent $event */
+        foreach ($domain->getEvents()->filter(fn($event) => $message->updatedAt < $event->getDate()) as $event) {
+            $watchListTriggers = $watchList->getWatchListTriggers()
+                ->filter(fn($trigger) => $trigger->getEvent() === $event->getAction());
+
+            /** @var WatchListTrigger $watchListTrigger */
+            foreach ($watchListTriggers->getIterator() as $watchListTrigger) {
                 if ($watchListTrigger->getAction() == TriggerAction::SendEmail) {
                     $this->sendEmailDomainUpdated($event, $watchList->getUser());
                 }

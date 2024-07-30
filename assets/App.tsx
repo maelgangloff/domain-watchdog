@@ -142,7 +142,7 @@ export default function App() {
                 {
                     key: 'connectors',
                     icon: <ApiOutlined/>,
-                    label: t`My connectors`,
+                    label: t`My Connectors`,
                     disabled: !isAuthenticated,
                     onClick: () => navigate('/tracking/connectors')
                 }
