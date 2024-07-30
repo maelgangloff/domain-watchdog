@@ -12,6 +12,6 @@ interface ConnectorInterface
                                 bool   $acceptConditions,
                                 bool   $ownerLegalAge,
                                 bool   $waiveRetractationPeriod,
-                                bool   $dryRyn
+                                bool   $dryRun
     ): void;
 }

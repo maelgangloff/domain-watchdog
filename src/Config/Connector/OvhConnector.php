@@ -3,6 +3,7 @@
 namespace App\Config\Connector;
 
 use App\Entity\Domain;
+use DateTime;
 use Exception;
 use Ovh\Api;
 
@@ -22,7 +23,7 @@ readonly class OvhConnector implements ConnectorInterface
                                 bool   $acceptConditions,
                                 bool   $ownerLegalAge,
                                 bool   $waiveRetractationPeriod,
-                                bool   $dryRyn = false
+                                bool   $dryRun = false
     ): void
     {
         if (!$domain->getDeleted()) throw new Exception('The domain name still appears in the WHOIS database');
@@ -89,7 +90,7 @@ readonly class OvhConnector implements ConnectorInterface
         }
         $conn->get("/order/cart/{$cartId}/checkout");
 
-        if ($dryRyn) return;
+        if ($dryRun) return;
         $conn->post("/order/cart/{$cartId}/checkout", [
             "autoPayWithPreferredPaymentMethod" => true,
             "waiveRetractationPeriod" => $waiveRetractationPeriod
@@ -114,7 +115,21 @@ readonly class OvhConnector implements ConnectorInterface
             !is_string($apiEndpoint) || empty($apiEndpoint) ||
             !is_string($ovhSubsidiary) || empty($ovhSubsidiary) ||
             !is_string($pricingMode) || empty($pricingMode)
-        ) throw new Exception("Bad data schema.");
+        ) throw new Exception("Bad authData schema");
+
+        $conn = new Api(
+            $appKey,
+            $appSecret,
+            $apiEndpoint,
+            $consumerKey
+        );
+
+        $res = $conn->get('/auth/currentCredential');
+        if ($res['expiration'] !== null && new DateTime($res['expiration']) < new DateTime())
+            throw new Exception('These credentials have expired');
+
+        $status = $res['status'];
+        if ($status !== 'validated') throw new Exception("The status of these credentials is not valid ($status)");
 
         return [
             "appKey" => $appKey,
