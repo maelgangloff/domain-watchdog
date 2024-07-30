@@ -49,24 +49,23 @@ msgstr ""
 
 #: assets/components/search/DomainSearchBar.tsx:23
 #: assets/components/tracking/ConnectorForm.tsx:40
-#: assets/components/tracking/ConnectorForm.tsx:65
-#: assets/components/tracking/ConnectorForm.tsx:73
-#: assets/components/tracking/ConnectorForm.tsx:80
-#: assets/components/tracking/ConnectorForm.tsx:88
-#: assets/components/tracking/ConnectorForm.tsx:96
-#: assets/components/tracking/ConnectorForm.tsx:109
-#: assets/components/tracking/ConnectorForm.tsx:118
-#: assets/components/tracking/WatchlistForm.tsx:115
-#: assets/components/tracking/WatchlistForm.tsx:174
-#: assets/components/tracking/WatchlistForm.tsx:184
-#: assets/components/tracking/WatchlistForm.tsx:196
+#: assets/components/tracking/ConnectorForm.tsx:66
+#: assets/components/tracking/ConnectorForm.tsx:74
+#: assets/components/tracking/ConnectorForm.tsx:81
+#: assets/components/tracking/ConnectorForm.tsx:89
+#: assets/components/tracking/ConnectorForm.tsx:97
+#: assets/components/tracking/ConnectorForm.tsx:110
+#: assets/components/tracking/ConnectorForm.tsx:119
+#: assets/components/tracking/WatchlistForm.tsx:110
+#: assets/components/tracking/WatchlistForm.tsx:169
+#: assets/components/tracking/WatchlistForm.tsx:179
 #: assets/pages/LoginPage.tsx:53
 #: assets/pages/LoginPage.tsx:61
 msgid "Required"
 msgstr ""
 
 #: assets/components/search/DomainSearchBar.tsx:26
-#: assets/components/tracking/WatchlistForm.tsx:118
+#: assets/components/tracking/WatchlistForm.tsx:113
 msgid "This domain name does not appear to be valid"
 msgstr ""
 
@@ -154,58 +153,55 @@ msgstr ""
 msgid "Send me an email"
 msgstr ""
 
-#: assets/components/tracking/WatchlistForm.tsx:78
-msgid "Buy the domain if available"
-msgstr ""
-
-#: assets/components/tracking/WatchlistForm.tsx:95
+#: assets/components/tracking/WatchlistForm.tsx:90
 msgid "At least one domain name"
 msgstr ""
 
-#: assets/components/tracking/WatchlistForm.tsx:106
+#: assets/components/tracking/WatchlistForm.tsx:101
 msgid "Domain names"
 msgstr ""
 
-#: assets/components/tracking/WatchlistForm.tsx:124
+#: assets/components/tracking/WatchlistForm.tsx:119
 #: assets/components/tracking/WatchlistsList.tsx:22
 msgid "Domain name"
 msgstr ""
 
-#: assets/components/tracking/WatchlistForm.tsx:141
+#: assets/components/tracking/WatchlistForm.tsx:136
 msgid "Add a Domain name"
 msgstr ""
 
-#: assets/components/tracking/WatchlistForm.tsx:154
+#: assets/components/tracking/WatchlistForm.tsx:149
 msgid "At least one domain trigger"
 msgstr ""
 
-#: assets/components/tracking/WatchlistForm.tsx:165
+#: assets/components/tracking/WatchlistForm.tsx:160
 msgid "Domain trigger"
 msgstr ""
 
-#: assets/components/tracking/WatchlistForm.tsx:178
+#: assets/components/tracking/WatchlistForm.tsx:173
 msgid "If this happens"
 msgstr ""
 
-#: assets/components/tracking/WatchlistForm.tsx:188
+#: assets/components/tracking/WatchlistForm.tsx:183
 msgid "Then do that"
 msgstr ""
 
-#: assets/components/tracking/WatchlistForm.tsx:201
-msgid "Connector"
-msgstr ""
-
-#: assets/components/tracking/WatchlistForm.tsx:227
+#: assets/components/tracking/WatchlistForm.tsx:203
 msgid "Add a Trigger"
 msgstr ""
 
-#: assets/components/tracking/ConnectorForm.tsx:130
-#: assets/components/tracking/WatchlistForm.tsx:237
+#: assets/components/tracking/WatchlistForm.tsx:210
+#: assets/components/tracking/WatchlistForm.tsx:216
+msgid "Connector"
+msgstr ""
+
+#: assets/components/tracking/ConnectorForm.tsx:131
+#: assets/components/tracking/WatchlistForm.tsx:228
 msgid "Create"
 msgstr ""
 
-#: assets/components/tracking/ConnectorForm.tsx:133
-#: assets/components/tracking/WatchlistForm.tsx:240
+#: assets/components/tracking/ConnectorForm.tsx:134
+#: assets/components/tracking/WatchlistForm.tsx:231
 msgid "Reset"
 msgstr ""
 
@@ -214,47 +210,47 @@ msgstr ""
 msgid "Provider"
 msgstr ""
 
-#: assets/components/tracking/ConnectorForm.tsx:43
+#: assets/components/tracking/ConnectorForm.tsx:44
 msgid "Please select a Provider"
 msgstr ""
 
-#: assets/components/tracking/ConnectorForm.tsx:71
+#: assets/components/tracking/ConnectorForm.tsx:72
 msgid "OVH Endpoint"
 msgstr ""
 
-#: assets/components/tracking/ConnectorForm.tsx:78
+#: assets/components/tracking/ConnectorForm.tsx:79
 msgid "OVH subsidiary"
 msgstr ""
 
-#: assets/components/tracking/ConnectorForm.tsx:86
+#: assets/components/tracking/ConnectorForm.tsx:87
 msgid "OVH pricing mode"
 msgstr ""
 
-#: assets/components/tracking/ConnectorForm.tsx:94
+#: assets/components/tracking/ConnectorForm.tsx:95
 msgid "API Terms of Service"
 msgstr ""
 
-#: assets/components/tracking/ConnectorForm.tsx:101
+#: assets/components/tracking/ConnectorForm.tsx:102
 msgid ""
 "I certify that I have read and accepted the conditions of use of the "
 "Provider API, accessible from this hyperlink"
 msgstr ""
 
-#: assets/components/tracking/ConnectorForm.tsx:107
+#: assets/components/tracking/ConnectorForm.tsx:108
 msgid "Legal age"
 msgstr ""
 
-#: assets/components/tracking/ConnectorForm.tsx:112
+#: assets/components/tracking/ConnectorForm.tsx:113
 msgid ""
 "I certify on my honor that I am of the minimum age required to consent to "
 "these conditions"
 msgstr ""
 
-#: assets/components/tracking/ConnectorForm.tsx:116
+#: assets/components/tracking/ConnectorForm.tsx:117
 msgid "Withdrawal period"
 msgstr ""
 
-#: assets/components/tracking/ConnectorForm.tsx:121
+#: assets/components/tracking/ConnectorForm.tsx:122
 msgid ""
 "I expressly waive my right of withdrawal regarding the purchase of domain "
 "names via the Provider's API"
@@ -307,8 +303,8 @@ msgstr ""
 #: assets/pages/search/DomainSearchPage.tsx:23
 #: assets/pages/tracking/ConnectorsPage.tsx:23
 #: assets/pages/tracking/ConnectorsPage.tsx:31
-#: assets/pages/tracking/WatchlistPage.tsx:35
-#: assets/pages/tracking/WatchlistPage.tsx:43
+#: assets/pages/tracking/WatchlistPage.tsx:36
+#: assets/pages/tracking/WatchlistPage.tsx:44
 msgid "An error occurred"
 msgstr ""
 
@@ -435,16 +431,16 @@ msgstr ""
 msgid "My Connectors"
 msgstr ""
 
-#: assets/pages/tracking/WatchlistPage.tsx:32
+#: assets/pages/tracking/WatchlistPage.tsx:33
 msgid "Watchlist created !"
 msgstr ""
 
-#: assets/pages/tracking/WatchlistPage.tsx:53
+#: assets/pages/tracking/WatchlistPage.tsx:54
 msgid "Create a Watchlist"
 msgstr ""
 
 #: assets/App.tsx:136
-#: assets/pages/tracking/WatchlistPage.tsx:63
+#: assets/pages/tracking/WatchlistPage.tsx:64
 msgid "My Watchlists"
 msgstr ""
 
