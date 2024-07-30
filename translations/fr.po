@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2024-07-30 13:56+0000\n"
+"PO-Revision-Date: 2024-07-30 15:49+0000\n"
 "Last-Translator: Maël Gangloff <contact@maelgangloff.fr>\n"
 "Language-Team: French <https://weblate.vinceh121.me/projects/domain-watchdog/"
 "domain-watchdog-dashboard/fr/>\n"
@@ -249,10 +249,8 @@ msgstr ""
 "à l'autre"
 
 #: assets/components/tracking/ConnectorForm.tsx:48
-#, fuzzy
-#| msgid "Retrieve a set of tokens from the provider's website"
 msgid "Retrieve a set of tokens from your OVH account"
-msgstr "Récupérer un ensemble de jetons sur le site Web du fournisseur"
+msgstr "Récupérer un ensemble de jetons depuis votre compte OVH"
 
 #: assets/components/tracking/ConnectorForm.tsx:74
 #: assets/components/tracking/ConnectorsList.tsx:21
@@ -277,13 +275,15 @@ msgstr "Mode de tarification OVH"
 
 #: assets/components/tracking/ConnectorForm.tsx:130
 msgid "API Terms of Service"
-msgstr ""
+msgstr "Conditions d'utilisation de l'API"
 
 #: assets/components/tracking/ConnectorForm.tsx:137
 msgid ""
 "I certify that I have read and accepted the conditions of use of the "
 "Provider API, accessible from this hyperlink"
 msgstr ""
+"Je certifie avoir lu et accepté les conditions d'utilisation de l'API du "
+"Fournisseur, accessibles à partir de ce lien hypertexte"
 
 #: assets/components/tracking/ConnectorForm.tsx:143
 msgid "Legal age"
@@ -294,16 +294,20 @@ msgid ""
 "I certify on my honor that I am of the minimum age required to consent to "
 "these conditions"
 msgstr ""
+"Je certifie sur l'honneur que j'ai l'âge minimum requis pour consentir à ces "
+"conditions"
 
 #: assets/components/tracking/ConnectorForm.tsx:152
 msgid "Withdrawal period"
-msgstr ""
+msgstr "Délai de rétractation"
 
 #: assets/components/tracking/ConnectorForm.tsx:157
 msgid ""
 "I expressly waive my right of withdrawal regarding the purchase of domain "
 "names via the Provider's API."
 msgstr ""
+"Je renonce expressément à mon droit de rétractation concernant l'achat de "
+"noms de domaine via l'API du Fournisseur."
 
 #: assets/components/tracking/WatchlistsList.tsx:14
 #, javascript-format
