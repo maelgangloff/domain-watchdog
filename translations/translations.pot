@@ -48,14 +48,14 @@ msgid "ENUM validation expiration"
 msgstr ""
 
 #: assets/components/search/DomainSearchBar.tsx:23
-#: assets/components/tracking/ConnectorForm.tsx:54
-#: assets/components/tracking/ConnectorForm.tsx:82
-#: assets/components/tracking/ConnectorForm.tsx:90
-#: assets/components/tracking/ConnectorForm.tsx:97
-#: assets/components/tracking/ConnectorForm.tsx:105
-#: assets/components/tracking/ConnectorForm.tsx:113
-#: assets/components/tracking/ConnectorForm.tsx:122
-#: assets/components/tracking/ConnectorForm.tsx:131
+#: assets/components/tracking/ConnectorForm.tsx:77
+#: assets/components/tracking/ConnectorForm.tsx:101
+#: assets/components/tracking/ConnectorForm.tsx:109
+#: assets/components/tracking/ConnectorForm.tsx:116
+#: assets/components/tracking/ConnectorForm.tsx:124
+#: assets/components/tracking/ConnectorForm.tsx:132
+#: assets/components/tracking/ConnectorForm.tsx:145
+#: assets/components/tracking/ConnectorForm.tsx:154
 #: assets/components/tracking/WatchlistForm.tsx:115
 #: assets/components/tracking/WatchlistForm.tsx:174
 #: assets/components/tracking/WatchlistForm.tsx:184
@@ -199,12 +199,12 @@ msgstr ""
 msgid "Add a Trigger"
 msgstr ""
 
-#: assets/components/tracking/ConnectorForm.tsx:143
+#: assets/components/tracking/ConnectorForm.tsx:166
 #: assets/components/tracking/WatchlistForm.tsx:237
 msgid "Create"
 msgstr ""
 
-#: assets/components/tracking/ConnectorForm.tsx:146
+#: assets/components/tracking/ConnectorForm.tsx:169
 #: assets/components/tracking/WatchlistForm.tsx:240
 msgid "Reset"
 msgstr ""
@@ -239,60 +239,59 @@ msgid ""
 "another"
 msgstr ""
 
-#: assets/components/tracking/ConnectorForm.tsx:52
+#: assets/components/tracking/ConnectorForm.tsx:48
+msgid "Retrieve a set of tokens from your OVH account"
+msgstr ""
+
+#: assets/components/tracking/ConnectorForm.tsx:74
 #: assets/components/tracking/ConnectorsList.tsx:21
 msgid "Provider"
 msgstr ""
 
-#: assets/components/tracking/ConnectorForm.tsx:57
+#: assets/components/tracking/ConnectorForm.tsx:80
 msgid "Please select a Provider"
 msgstr ""
 
-#: assets/components/tracking/ConnectorForm.tsx:76
-msgid "Retrieve a set of tokens from the provider's website"
-msgstr ""
-
-#: assets/components/tracking/ConnectorForm.tsx:88
+#: assets/components/tracking/ConnectorForm.tsx:107
 msgid "OVH Endpoint"
 msgstr ""
 
-#: assets/components/tracking/ConnectorForm.tsx:95
+#: assets/components/tracking/ConnectorForm.tsx:114
 msgid "OVH subsidiary"
 msgstr ""
 
-#: assets/components/tracking/ConnectorForm.tsx:103
+#: assets/components/tracking/ConnectorForm.tsx:122
 msgid "OVH pricing mode"
 msgstr ""
 
-#: assets/App.tsx:164
-#: assets/components/tracking/ConnectorForm.tsx:111
-msgid "TOS"
+#: assets/components/tracking/ConnectorForm.tsx:130
+msgid "API Terms of Service"
 msgstr ""
 
-#: assets/components/tracking/ConnectorForm.tsx:116
+#: assets/components/tracking/ConnectorForm.tsx:137
 msgid ""
-"I accept the terms of use of the OVH provider API and those of Domain "
-"Watchdog"
+"I certify that I have read and accepted the conditions of use of the "
+"Provider API, accessible from this hyperlink"
 msgstr ""
 
-#: assets/components/tracking/ConnectorForm.tsx:120
+#: assets/components/tracking/ConnectorForm.tsx:143
 msgid "Legal age"
 msgstr ""
 
-#: assets/components/tracking/ConnectorForm.tsx:125
+#: assets/components/tracking/ConnectorForm.tsx:148
 msgid ""
 "I certify on my honor that I am of the minimum age required to consent to "
 "these conditions"
 msgstr ""
 
-#: assets/components/tracking/ConnectorForm.tsx:129
+#: assets/components/tracking/ConnectorForm.tsx:152
 msgid "Withdrawal period"
 msgstr ""
 
-#: assets/components/tracking/ConnectorForm.tsx:134
+#: assets/components/tracking/ConnectorForm.tsx:157
 msgid ""
-"I expressly waive my right of withdrawal concerning the purchase of domain "
-"names via the OVH API"
+"I expressly waive my right of withdrawal regarding the purchase of domain "
+"names via the Provider's API."
 msgstr ""
 
 #: assets/components/tracking/WatchlistsList.tsx:14
@@ -561,6 +560,10 @@ msgstr ""
 
 #: assets/App.tsx:151
 msgid "My Watchdog"
+msgstr ""
+
+#: assets/App.tsx:164
+msgid "TOS"
 msgstr ""
 
 #: assets/App.tsx:170

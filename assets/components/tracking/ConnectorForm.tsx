@@ -40,6 +40,28 @@ export function ConnectorForm({form, onCreate}: { form: FormInstance, onCreate: 
         }
     ]
 
+    const helpGetTokenLink = (provider?: string) => {
+        switch (provider) {
+            case ConnectorProvider.OVH:
+                return <Typography.Link target='_blank'
+                                        href="https://api.ovh.com/createToken/index.cgi?GET=/order/cart/*&POST=/order/cart&POST=/order/cart/*&DELETE=/order/cart/*">
+                    {t`Retrieve a set of tokens from your OVH account`}
+                </Typography.Link>
+            default:
+                return <></>
+        }
+    }
+
+    const tosHyperlink = (provider?: string) => {
+        switch (provider) {
+            case ConnectorProvider.OVH:
+                return 'https://storage.gra.cloud.ovh.net/v1/AUTH_325716a587c64897acbef9a4a4726e38/contracts/9973515-contrat_genServices-FR-15.1.pdf'
+            default:
+                return ''
+        }
+    }
+
+
     return <Form
         {...formItemLayoutWithOutLabel}
         form={form}
@@ -51,6 +73,7 @@ export function ConnectorForm({form, onCreate}: { form: FormInstance, onCreate: 
         <Form.Item
             label={t`Provider`}
             name="provider"
+            help={helpGetTokenLink(provider)}
             rules={[{required: true, message: t`Required`}]}
         >
             <Select
@@ -71,10 +94,6 @@ export function ConnectorForm({form, onCreate}: { form: FormInstance, onCreate: 
 
         {
             provider === ConnectorProvider.OVH && <>
-                <Typography.Link target='_blank'
-                                 href="https://api.ovh.com/createToken/index.cgi?GET=/order/cart/*&POST=/order/cart&POST=/order/cart/*&DELETE=/order/cart/*">
-                    {t`Retrieve a set of tokens from the provider's website`}
-                </Typography.Link>
                 {
                     Object.keys(ovhFields).map(fieldName => <Form.Item
                         label={ovhFields[fieldName as keyof typeof ovhFields]}
@@ -108,12 +127,16 @@ export function ConnectorForm({form, onCreate}: { form: FormInstance, onCreate: 
                 </Form.Item>
                 <Form.Item
                     valuePropName="checked"
-                    label={t`TOS`}
+                    label={t`API Terms of Service`}
                     name={['authData', 'acceptConditions']}
                     rules={[{required: true, message: t`Required`}]}
                 >
                     <Checkbox
-                        required={true}>{t`I accept the terms of use of the OVH provider API and those of Domain Watchdog`}</Checkbox>
+                        required={true}>
+                        <Typography.Link target='_blank' href={tosHyperlink(provider)}>
+                            {t`I certify that I have read and accepted the conditions of use of the Provider API, accessible from this hyperlink`}
+                        </Typography.Link>
+                    </Checkbox>
                 </Form.Item>
                 <Form.Item
                     valuePropName="checked"
@@ -131,7 +154,7 @@ export function ConnectorForm({form, onCreate}: { form: FormInstance, onCreate: 
                     rules={[{required: true, message: t`Required`}]}
                 >
                     <Checkbox
-                        required={true}>{t`I expressly waive my right of withdrawal concerning the purchase of domain names via the OVH API`}</Checkbox>
+                        required={true}>{t`I expressly waive my right of withdrawal regarding the purchase of domain names via the Provider's API.`}</Checkbox>
                 </Form.Item>
             </>
         }
