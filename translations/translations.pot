@@ -49,13 +49,13 @@ msgstr ""
 
 #: assets/components/search/DomainSearchBar.tsx:23
 #: assets/components/tracking/ConnectorForm.tsx:40
-#: assets/components/tracking/ConnectorForm.tsx:64
-#: assets/components/tracking/ConnectorForm.tsx:72
-#: assets/components/tracking/ConnectorForm.tsx:79
-#: assets/components/tracking/ConnectorForm.tsx:87
-#: assets/components/tracking/ConnectorForm.tsx:95
-#: assets/components/tracking/ConnectorForm.tsx:108
-#: assets/components/tracking/ConnectorForm.tsx:117
+#: assets/components/tracking/ConnectorForm.tsx:65
+#: assets/components/tracking/ConnectorForm.tsx:73
+#: assets/components/tracking/ConnectorForm.tsx:80
+#: assets/components/tracking/ConnectorForm.tsx:88
+#: assets/components/tracking/ConnectorForm.tsx:96
+#: assets/components/tracking/ConnectorForm.tsx:109
+#: assets/components/tracking/ConnectorForm.tsx:118
 #: assets/components/tracking/WatchlistForm.tsx:115
 #: assets/components/tracking/WatchlistForm.tsx:174
 #: assets/components/tracking/WatchlistForm.tsx:184
@@ -199,12 +199,12 @@ msgstr ""
 msgid "Add a Trigger"
 msgstr ""
 
-#: assets/components/tracking/ConnectorForm.tsx:129
+#: assets/components/tracking/ConnectorForm.tsx:130
 #: assets/components/tracking/WatchlistForm.tsx:237
 msgid "Create"
 msgstr ""
 
-#: assets/components/tracking/ConnectorForm.tsx:132
+#: assets/components/tracking/ConnectorForm.tsx:133
 #: assets/components/tracking/WatchlistForm.tsx:240
 msgid "Reset"
 msgstr ""
@@ -218,43 +218,43 @@ msgstr ""
 msgid "Please select a Provider"
 msgstr ""
 
-#: assets/components/tracking/ConnectorForm.tsx:70
+#: assets/components/tracking/ConnectorForm.tsx:71
 msgid "OVH Endpoint"
 msgstr ""
 
-#: assets/components/tracking/ConnectorForm.tsx:77
+#: assets/components/tracking/ConnectorForm.tsx:78
 msgid "OVH subsidiary"
 msgstr ""
 
-#: assets/components/tracking/ConnectorForm.tsx:85
+#: assets/components/tracking/ConnectorForm.tsx:86
 msgid "OVH pricing mode"
 msgstr ""
 
-#: assets/components/tracking/ConnectorForm.tsx:93
+#: assets/components/tracking/ConnectorForm.tsx:94
 msgid "API Terms of Service"
 msgstr ""
 
-#: assets/components/tracking/ConnectorForm.tsx:100
+#: assets/components/tracking/ConnectorForm.tsx:101
 msgid ""
 "I certify that I have read and accepted the conditions of use of the "
 "Provider API, accessible from this hyperlink"
 msgstr ""
 
-#: assets/components/tracking/ConnectorForm.tsx:106
+#: assets/components/tracking/ConnectorForm.tsx:107
 msgid "Legal age"
 msgstr ""
 
-#: assets/components/tracking/ConnectorForm.tsx:111
+#: assets/components/tracking/ConnectorForm.tsx:112
 msgid ""
 "I certify on my honor that I am of the minimum age required to consent to "
 "these conditions"
 msgstr ""
 
-#: assets/components/tracking/ConnectorForm.tsx:115
+#: assets/components/tracking/ConnectorForm.tsx:116
 msgid "Withdrawal period"
 msgstr ""
 
-#: assets/components/tracking/ConnectorForm.tsx:120
+#: assets/components/tracking/ConnectorForm.tsx:121
 msgid ""
 "I expressly waive my right of withdrawal regarding the purchase of domain "
 "names via the Provider's API"
@@ -430,6 +430,7 @@ msgstr ""
 msgid "Create a Connector"
 msgstr ""
 
+#: assets/App.tsx:143
 #: assets/pages/tracking/ConnectorsPage.tsx:48
 msgid "My Connectors"
 msgstr ""
@@ -554,10 +555,6 @@ msgstr ""
 
 #: assets/App.tsx:130
 msgid "Tracking"
-msgstr ""
-
-#: assets/App.tsx:143
-msgid "My connectors"
 msgstr ""
 
 #: assets/App.tsx:151
