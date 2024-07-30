@@ -32,6 +32,7 @@ import ConnectorsPage from "./pages/tracking/ConnectorsPage";
 import NotFoundPage from "./pages/NotFoundPage";
 import {ItemType, MenuItemType} from "antd/lib/menu/interface";
 import {t} from 'ttag'
+import useBreakpoint from "./hooks/useBreakpoint";
 
 export default function App() {
     const {
@@ -40,6 +41,7 @@ export default function App() {
 
     const navigate = useNavigate()
     const location = useLocation()
+    const sm = useBreakpoint('sm')
 
 
     const [isAuthenticated, setIsAuthenticated] = useState(false)
@@ -184,7 +186,8 @@ export default function App() {
 
     return <AuthenticatedContext.Provider value={contextValue}>
         <Layout hasSider style={{minHeight: '100vh'}}>
-            <Layout.Sider collapsible>
+            {/* Ant will use a break-off tab to toggle the collapse of the sider when collapseWidth = 0*/}
+            <Layout.Sider collapsible breakpoint="sm" {...(sm ? {collapsedWidth: 0} : {})}>
                 <Menu
                     defaultSelectedKeys={['home']}
                     defaultOpenKeys={['search', 'info', 'tracking', 'watchdog']}
@@ -203,7 +206,6 @@ export default function App() {
                         onClick: () => navigate('/login')
                     }]}
                 />
-                <div className="demo-logo-vertical"></div>
             </Layout.Sider>
             <Layout>
                 <Layout.Header style={{padding: 0, background: colorBgContainer}}/>
@@ -243,7 +245,7 @@ export default function App() {
                 </Layout.Content>
                 <Layout.Footer style={{textAlign: 'center'}}>
                     <Link to='https://github.com/maelgangloff/domain-watchdog'>Domain
-                        Watchdog</Link> ©{new Date().getFullYear()} Created by Maël Gangloff
+                        Watchdog</Link> &copy; {new Date().getFullYear()} Created by Maël Gangloff
                 </Layout.Footer>
             </Layout>
         </Layout>
