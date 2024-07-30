@@ -5,6 +5,7 @@ namespace App\Config\Connector;
 use App\Entity\Domain;
 use DateTime;
 use Exception;
+use Ovh\Api;
 
 readonly class OvhConnector implements ConnectorInterface
 {
@@ -118,7 +119,7 @@ readonly class OvhConnector implements ConnectorInterface
 
         ) throw new Exception("Bad authData schema");
 
-        $conn = new \Ovh\Api(
+        $conn = new Api(
             $appKey,
             $appSecret,
             $apiEndpoint,
