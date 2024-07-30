@@ -9,7 +9,6 @@ use App\Entity\User;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
-use Ovh\Api;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Attribute\Route;
@@ -59,14 +58,6 @@ class ConnectorController extends AbstractController
         if ($connector->getProvider() === ConnectorProvider::OVH) {
             $authData = OvhConnector::verifyAuthData($connector->getAuthData());
             $connector->setAuthData($authData);
-            $ovh = new Api(
-                $authData['appKey'],
-                $authData['appSecret'],
-                $authData['apiEndpoint'],
-                $authData['consumerKey']
-            );
-
-
         } else throw new Exception('Unknown provider');
 
         $this->em->persist($connector);
