@@ -19,11 +19,7 @@ readonly class OvhConnector implements ConnectorInterface
      * Order a domain name with the OVH API
      * @throws Exception
      */
-    public function orderDomain(Domain $domain,
-                                bool   $acceptConditions,
-                                bool   $ownerLegalAge,
-                                bool   $waiveRetractationPeriod,
-                                bool   $dryRun = false
+    public function orderDomain(Domain $domain, bool $dryRun = false
     ): void
     {
         if (!$domain->getDeleted()) throw new Exception('The domain name still appears in the WHOIS database');
@@ -33,22 +29,19 @@ readonly class OvhConnector implements ConnectorInterface
 
         $authData = self::verifyAuthData($this->authData);
 
-        $appKey = $authData['appKey'];
-        $appSecret = $authData['appSecret'];
-        $apiEndpoint = $authData['apiEndpoint'];
-        $consumerKey = $authData['consumerKey'];
-        $ovhSubsidiary = $authData['ovhSubsidiary'];
-        $pricingMode = $authData['pricingMode'];
+        $acceptConditions = $authData['acceptConditions'];
+        $ownerLegalAge = $authData['ownerLegalAge'];
+        $waiveRetractationPeriod = $authData['waiveRetractationPeriod'];
 
         $conn = new Api(
-            $appKey,
-            $appSecret,
-            $apiEndpoint,
-            $consumerKey
+            $authData['appKey'],
+            $authData['appSecret'],
+            $authData['apiEndpoint'],
+            $authData['consumerKey']
         );
 
         $cart = $conn->post('/order/cart', [
-            "ovhSubsidiary" => $ovhSubsidiary,
+            "ovhSubsidiary" => $authData['ovhSubsidiary'],
             "description" => "Domain Watchdog"
         ]);
         $cartId = $cart['cartId'];
@@ -58,7 +51,7 @@ readonly class OvhConnector implements ConnectorInterface
         ]);
         $offer = array_filter($offers, fn($offer) => $offer['action'] === 'create' &&
             $offer['orderable'] === true &&
-            $offer['pricingMode'] === $pricingMode
+            $offer['pricingMode'] === $authData['pricingMode']
         );
         if (empty($offer)) {
             $conn->delete("/order/cart/{$cartId}");
@@ -109,12 +102,21 @@ readonly class OvhConnector implements ConnectorInterface
         $ovhSubsidiary = $authData['ovhSubsidiary'];
         $pricingMode = $authData['pricingMode'];
 
+        $acceptConditions = $authData['acceptConditions'];
+        $ownerLegalAge = $authData['ownerLegalAge'];
+        $waiveRetractationPeriod = $authData['waiveRetractationPeriod'];
+
         if (!is_string($appKey) || empty($appKey) ||
             !is_string($appSecret) || empty($appSecret) ||
             !is_string($consumerKey) || empty($consumerKey) ||
             !is_string($apiEndpoint) || empty($apiEndpoint) ||
             !is_string($ovhSubsidiary) || empty($ovhSubsidiary) ||
-            !is_string($pricingMode) || empty($pricingMode)
+            !is_string($pricingMode) || empty($pricingMode) ||
+
+            true !== $acceptConditions ||
+            true !== $ownerLegalAge ||
+            true !== $waiveRetractationPeriod
+
         ) throw new Exception("Bad authData schema");
 
         $conn = new Api(
@@ -137,7 +139,10 @@ readonly class OvhConnector implements ConnectorInterface
             "apiEndpoint" => $apiEndpoint,
             "consumerKey" => $consumerKey,
             "ovhSubsidiary" => $ovhSubsidiary,
-            "pricingMode" => $pricingMode
+            "pricingMode" => $pricingMode,
+            "acceptConditions" => $acceptConditions,
+            "ownerLegalAge" => $ownerLegalAge,
+            "waiveRetractationPeriod" => $waiveRetractationPeriod
         ];
     }
 }

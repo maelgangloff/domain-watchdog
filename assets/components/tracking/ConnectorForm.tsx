@@ -1,4 +1,4 @@
-import {Button, Form, FormInstance, Input, Select, Space, Typography} from "antd";
+import {Button, Checkbox, Form, FormInstance, Input, Select, Space, Typography} from "antd";
 import React, {useState} from "react";
 import {Connector, ConnectorProvider} from "../../utils/api/connectors";
 import {t} from "ttag";
@@ -105,6 +105,33 @@ export function ConnectorForm({form, onCreate}: { form: FormInstance, onCreate: 
                     rules={[{required: true, message: t`Required`}]}
                 >
                     <Select options={ovhPricingMode} optionFilterProp="label"/>
+                </Form.Item>
+                <Form.Item
+                    valuePropName="checked"
+                    label={t`TOS`}
+                    name={['authData', 'acceptConditions']}
+                    rules={[{required: true, message: t`Required`}]}
+                >
+                    <Checkbox
+                        required={true}>{t`I accept the terms of use of the OVH provider API and those of Domain Watchdog`}</Checkbox>
+                </Form.Item>
+                <Form.Item
+                    valuePropName="checked"
+                    label={t`Legal age`}
+                    name={['authData', 'ownerLegalAge']}
+                    rules={[{required: true, message: t`Required`}]}
+                >
+                    <Checkbox
+                        required={true}>{t`I certify on my honor that I am of the minimum age required to consent to these conditions`}</Checkbox>
+                </Form.Item>
+                <Form.Item
+                    valuePropName="checked"
+                    label={t`Withdrawal period`}
+                    name={['authData', 'waiveRetractationPeriod']}
+                    rules={[{required: true, message: t`Required`}]}
+                >
+                    <Checkbox
+                        required={true}>{t`I expressly waive my right of withdrawal concerning the purchase of domain names via the OVH API`}</Checkbox>
                 </Form.Item>
             </>
         }
