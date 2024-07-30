@@ -245,6 +245,10 @@ msgstr ""
 msgid "Please select a Provider"
 msgstr ""
 
+#: assets/components/tracking/ConnectorForm.tsx:76
+msgid "Retrieve a set of tokens from the provider's website"
+msgstr ""
+
 #: assets/components/tracking/ConnectorForm.tsx:88
 msgid "OVH Endpoint"
 msgstr ""

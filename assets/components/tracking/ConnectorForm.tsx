@@ -72,8 +72,8 @@ export function ConnectorForm({form, onCreate}: { form: FormInstance, onCreate: 
         {
             provider === ConnectorProvider.OVH && <>
                 <Typography.Link target='_blank'
-                                 href="https://api.ovh.com/createToken/index.cgi?GET=/*&PUT=/*&POST=/*&DELETE=/*">
-                    Retrieve a token set from the OVH API
+                                 href="https://api.ovh.com/createToken/index.cgi?GET=/order/cart/*&POST=/order/cart&POST=/order/cart/*&DELETE=/order/cart/*">
+                    {t`Retrieve a set of tokens from the provider's website`}
                 </Typography.Link>
                 {
                     Object.keys(ovhFields).map(fieldName => <Form.Item
