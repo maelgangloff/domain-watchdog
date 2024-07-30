@@ -52,7 +52,7 @@ export default function Page() {
                 name="username"
                 rules={[{required: true, message: t`Required`}]}
             >
-                <Input/>
+                <Input autoFocus/>
             </Form.Item>
 
             <Form.Item<FieldType>

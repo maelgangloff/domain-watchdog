@@ -3,7 +3,13 @@ import React, {useState} from "react";
 import {Connector, ConnectorProvider} from "../../utils/api/connectors";
 import {t} from "ttag";
 import {BankOutlined} from "@ant-design/icons";
-import {regionNames} from "../../i18n";
+import {
+    ovhEndpointList as ovhEndpointListFunction,
+    ovhFields as ovhFieldsFunction,
+    ovhPricingMode as ovhPricingModeFunction,
+    ovhSubsidiaryList as ovhSubsidiaryListFunction
+} from "../../utils/providers/ovh";
+import {helpGetTokenLink, tosHyperlink} from "../../utils/providers";
 
 const formItemLayoutWithOutLabel = {
     wrapperCol: {
@@ -14,53 +20,10 @@ const formItemLayoutWithOutLabel = {
 
 export function ConnectorForm({form, onCreate}: { form: FormInstance, onCreate: (values: Connector) => void }) {
     const [provider, setProvider] = useState<string>()
-
-    const ovhFields = {
-        appKey: t`Application key`,
-        appSecret: t`Application secret`,
-        consumerKey: t`Consumer key`
-    }
-
-    const ovhEndpointList = [
-        {
-            label: t`European Region`,
-            value: 'ovh-eu'
-        }
-    ]
-
-    const ovhSubsidiaryList = [{value: 'EU', label: t`Europa`}, ...[
-        'CZ', 'DE', 'ES', 'FI', 'FR', 'GB', 'IE', 'IT', 'LT', 'MA', 'NL', 'PL', 'PT', 'SN', 'TN'
-    ].map(c => ({value: c, label: regionNames.of(c) ?? c}))]
-
-    const ovhPricingMode = [
-        {value: 'create-default', label: t`The domain is free and at the standard price`},
-        {
-            value: 'create-premium',
-            label: t`The domain is free but is a premium. Its price varies from one domain to another`
-        }
-    ]
-
-    const helpGetTokenLink = (provider?: string) => {
-        switch (provider) {
-            case ConnectorProvider.OVH:
-                return <Typography.Link target='_blank'
-                                        href="https://api.ovh.com/createToken/index.cgi?GET=/order/cart/*&POST=/order/cart&POST=/order/cart/*&DELETE=/order/cart/*">
-                    {t`Retrieve a set of tokens from your OVH account`}
-                </Typography.Link>
-            default:
-                return <></>
-        }
-    }
-
-    const tosHyperlink = (provider?: string) => {
-        switch (provider) {
-            case ConnectorProvider.OVH:
-                return 'https://storage.gra.cloud.ovh.net/v1/AUTH_325716a587c64897acbef9a4a4726e38/contracts/9973515-contrat_genServices-FR-15.1.pdf'
-            default:
-                return ''
-        }
-    }
-
+    const ovhFields = ovhFieldsFunction()
+    const ovhEndpointList = ovhEndpointListFunction()
+    const ovhSubsidiaryList = ovhSubsidiaryListFunction()
+    const ovhPricingMode = ovhPricingModeFunction()
 
     return <Form
         {...formItemLayoutWithOutLabel}
@@ -154,7 +117,7 @@ export function ConnectorForm({form, onCreate}: { form: FormInstance, onCreate: 
                     rules={[{required: true, message: t`Required`}]}
                 >
                     <Checkbox
-                        required={true}>{t`I expressly waive my right of withdrawal regarding the purchase of domain names via the Provider's API.`}</Checkbox>
+                        required={true}>{t`I expressly waive my right of withdrawal regarding the purchase of domain names via the Provider's API`}</Checkbox>
                 </Form.Item>
             </>
         }
