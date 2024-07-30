@@ -8,12 +8,16 @@ track the history and changes associated with domain names.
 - **Historical Tracking**: Know the history of a domain name, from its inception to its release into the public domain.
 - **Detailed Monitoring**: Follow the evolution of a domain name and the entities that manage it in detail.
 - **Reverse Directory**: Discover domain names associated with an entity registered with a registrar.
+- **Auto-purchase Domain**: You want the domain name of your dreams, but it is already taken? Domain Watchdog detects
+  the deletion of the domain name on WHOIS and can trigger the purchase of the domain name via a provider's API
 
 Although the RDAP and WHOIS protocols allow you to obtain precise information about a domain, it is not possible to
 perform a reverse search to discover a list of domain names associated with an entity. Additionally, accessing a
 detailed history of events (ownership changes, renewals, etc.) is not feasible with these protocols.
 
 ## How it works?
+
+### RDAP search
 
 The latest version of the WHOIS protocol was standardized in 2004 by RFC 3912.[^1] This protocol allows anyone to
 retrieve key information concerning a domain name, an IP address, or an entity registered with a registry.
@@ -24,101 +28,18 @@ registrars will no longer be required to support WHOIS from 2025 (*WHOIS Sunset 
 Domain Watchdog uses the RDAP protocol, which will soon be the new standard for retrieving information concerning domain
 names. The data is organized in a SQL database to minimize space by ensuring an entity is not repeated.
 
-## Installation
+### Watchlist
 
-To deploy a Domain Watchdog instance, please refer to the Symfony documentation
-on [How to deploy a Symfony application](https://symfony.com/doc/current/deployment.html).
+A watchlist is a list of domain names, triggers and possibly an API connector from a provider.
+They allow you to follow the life of the listed domain names and send you a notification when a change has been
+detected.
 
-### Prerequisites
+If a domain has expired and a connector is listed on the Watchlist, then Domain Watchdog will try to order it via the
+connector provider's API.
 
-- PHP 8.2 or higher
-- PostgreSQL
+Note: If the same domain name is present on several Watchlists, on the same principle as the raise condition, it is not
+possible to predict in advance which user will win the domain name. The choice is left to chance.
 
-### Steps
-
-Clone the repository:
-
-```shell
-git clone https://github.com/maelgangloff/domain-watchdog.git
- ```
-
-#### Backend
-
-1. Install dependencies:
-    ```shell
-    composer install
-    ```
-2. Set up your environment variables:
-    ```shell
-    cp .env .env.local
-    ```
-3. Generate the cryptographic key pair for the JWT signature
-    ```shell
-    php bin/console lexik:jwt:generate-keypair
-    ```
-4. Run database migrations:
-    ```shell
-    php bin/console doctrine:migrations:migrate
-    ```
-5. Start the Symfony server:
-    ```shell
-    symfony server:start
-    ```
-
-#### Frontend
-
-1. Install dependencies:
-    ```shell
-    yarn install
-    ```
-2. Generate language files:
-    ```shell
-    yarn run ttag:po2json
-    ```
-3. Make the final build:
-    ```shell
-    yarn build
-    ```
-
-## Update
-
-**Any updates are your responsibility. Make a backup of the data if necessary.**
-
-Fetch updates from the remote repository:
-
-```shell
-git pull origin master
- ```
-
-### Backend
-
-1. Install dependencies:
-    ```shell
-    composer install
-    ```
-2. Run database migrations:
-    ```shell
-    php bin/console doctrine:migrations:migrate
-    ```
-3. Clearing the Symfony cache:
-   ```shell
-   php bin/console cache:clear
-    ```
-
-### Frontend
-
-1. Install dependencies:
-    ```shell
-    yarn install
-    ```
-2. Generate language files:
-    ```shell
-    yarn run ttag:po2json
-    ```
-3. Make the final build:
-    ```shell
-    yarn build
-    ```
 
 > [!NOTE]
 > ## Useful documentation
@@ -128,7 +49,7 @@ git pull origin master
 
 ## Licensing
 
-This entire project is licensed under *GNU Affero General Public License v3.0 or later*.
+This source code of this project is licensed under *GNU Affero General Public License v3.0 or later*.
 Contributions are welcome as long as they do not contravene the Code of Conduct.
 
 [^1]: RFC 3912 : WHOIS Protocol Specification. (2004). IETF Datatracker. https://datatracker.ietf.org/doc/html/rfc3912
