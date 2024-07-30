@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2024-07-30 16:12+0000\n"
+"PO-Revision-Date: 2024-07-30 18:40+0000\n"
 "Last-Translator: Maël Gangloff <contact@maelgangloff.fr>\n"
 "Language-Team: French <https://weblate.vinceh121.me/projects/domain-watchdog/"
 "domain-watchdog-dashboard/fr/>\n"
@@ -231,7 +231,7 @@ msgstr "Endpoint OVH"
 
 #: assets/components/tracking/ConnectorForm.tsx:77
 msgid "OVH subsidiary"
-msgstr "Filiale d'OVH"
+msgstr "Filiale OVH"
 
 #: assets/components/tracking/ConnectorForm.tsx:85
 msgid "OVH pricing mode"
