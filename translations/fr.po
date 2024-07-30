@@ -56,14 +56,14 @@ msgid "ENUM validation expiration"
 msgstr "Expiration de la validation ENUM"
 
 #: assets/components/search/DomainSearchBar.tsx:23
-#: assets/components/tracking/ConnectorForm.tsx:77
-#: assets/components/tracking/ConnectorForm.tsx:101
-#: assets/components/tracking/ConnectorForm.tsx:109
-#: assets/components/tracking/ConnectorForm.tsx:116
-#: assets/components/tracking/ConnectorForm.tsx:124
-#: assets/components/tracking/ConnectorForm.tsx:132
-#: assets/components/tracking/ConnectorForm.tsx:145
-#: assets/components/tracking/ConnectorForm.tsx:154
+#: assets/components/tracking/ConnectorForm.tsx:40
+#: assets/components/tracking/ConnectorForm.tsx:64
+#: assets/components/tracking/ConnectorForm.tsx:72
+#: assets/components/tracking/ConnectorForm.tsx:79
+#: assets/components/tracking/ConnectorForm.tsx:87
+#: assets/components/tracking/ConnectorForm.tsx:95
+#: assets/components/tracking/ConnectorForm.tsx:108
+#: assets/components/tracking/ConnectorForm.tsx:117
 #: assets/components/tracking/WatchlistForm.tsx:115
 #: assets/components/tracking/WatchlistForm.tsx:174
 #: assets/components/tracking/WatchlistForm.tsx:184
@@ -206,78 +206,42 @@ msgstr "Connecteur"
 msgid "Add a Trigger"
 msgstr "Ajouter une action"
 
-#: assets/components/tracking/ConnectorForm.tsx:166
+#: assets/components/tracking/ConnectorForm.tsx:129
 #: assets/components/tracking/WatchlistForm.tsx:237
 msgid "Create"
 msgstr "Créer"
 
-#: assets/components/tracking/ConnectorForm.tsx:169
+#: assets/components/tracking/ConnectorForm.tsx:132
 #: assets/components/tracking/WatchlistForm.tsx:240
 msgid "Reset"
 msgstr "Réinitialiser"
 
-#: assets/components/tracking/ConnectorForm.tsx:19
-msgid "Application key"
-msgstr "Clé d'application"
-
-#: assets/components/tracking/ConnectorForm.tsx:20
-msgid "Application secret"
-msgstr "Clé secrète d'application"
-
-#: assets/components/tracking/ConnectorForm.tsx:21
-msgid "Consumer key"
-msgstr "Clé d'utilisateur"
-
-#: assets/components/tracking/ConnectorForm.tsx:26
-msgid "European Region"
-msgstr "Continent Européen"
-
-#: assets/components/tracking/ConnectorForm.tsx:31
-msgid "Europa"
-msgstr "Europe"
-
-#: assets/components/tracking/ConnectorForm.tsx:36
-msgid "The domain is free and at the standard price"
-msgstr "Le domaine est libre et au prix standard"
-
-#: assets/components/tracking/ConnectorForm.tsx:39
-msgid ""
-"The domain is free but is a premium. Its price varies from one domain to "
-"another"
-msgstr ""
-"Le domaine est libre mais est un premium. Son prix est variable d'un domaine "
-"à l'autre"
-
-#: assets/components/tracking/ConnectorForm.tsx:48
-msgid "Retrieve a set of tokens from your OVH account"
-msgstr "Récupérer un ensemble de jetons depuis votre compte OVH"
-
-#: assets/components/tracking/ConnectorForm.tsx:74
+#: assets/components/tracking/ConnectorForm.tsx:37
 #: assets/components/tracking/ConnectorsList.tsx:21
 msgid "Provider"
 msgstr "Fournisseur"
 
-#: assets/components/tracking/ConnectorForm.tsx:80
+#: assets/components/tracking/ConnectorForm.tsx:43
 msgid "Please select a Provider"
 msgstr "Veuillez sélectionner un fournisseur"
 
-#: assets/components/tracking/ConnectorForm.tsx:107
+#: assets/components/tracking/ConnectorForm.tsx:70
 msgid "OVH Endpoint"
 msgstr "Endpoint OVH"
 
-#: assets/components/tracking/ConnectorForm.tsx:114
+#: assets/components/tracking/ConnectorForm.tsx:77
 msgid "OVH subsidiary"
 msgstr "Filiale d'OVH"
 
-#: assets/components/tracking/ConnectorForm.tsx:122
+#: assets/components/tracking/ConnectorForm.tsx:85
 msgid "OVH pricing mode"
 msgstr "Mode de tarification OVH"
 
-#: assets/components/tracking/ConnectorForm.tsx:130
+#: assets/components/tracking/ConnectorForm.tsx:93
 msgid "API Terms of Service"
 msgstr "Conditions d'utilisation de l'API"
 
-#: assets/components/tracking/ConnectorForm.tsx:137
+#: assets/components/tracking/ConnectorForm.tsx:100
 msgid ""
 "I certify that I have read and accepted the conditions of use of the "
 "Provider API, accessible from this hyperlink"
@@ -285,11 +249,11 @@ msgstr ""
 "Je certifie avoir lu et accepté les conditions d'utilisation de l'API du "
 "Fournisseur, accessibles à partir de ce lien hypertexte"
 
-#: assets/components/tracking/ConnectorForm.tsx:143
+#: assets/components/tracking/ConnectorForm.tsx:106
 msgid "Legal age"
 msgstr ""
 
-#: assets/components/tracking/ConnectorForm.tsx:148
+#: assets/components/tracking/ConnectorForm.tsx:111
 msgid ""
 "I certify on my honor that I am of the minimum age required to consent to "
 "these conditions"
@@ -297,14 +261,18 @@ msgstr ""
 "Je certifie sur l'honneur que j'ai l'âge minimum requis pour consentir à ces "
 "conditions"
 
-#: assets/components/tracking/ConnectorForm.tsx:152
+#: assets/components/tracking/ConnectorForm.tsx:115
 msgid "Withdrawal period"
 msgstr "Délai de rétractation"
 
-#: assets/components/tracking/ConnectorForm.tsx:157
+#: assets/components/tracking/ConnectorForm.tsx:120
+#, fuzzy
+#| msgid ""
+#| "I expressly waive my right of withdrawal regarding the purchase of domain "
+#| "names via the Provider's API."
 msgid ""
 "I expressly waive my right of withdrawal regarding the purchase of domain "
-"names via the Provider's API."
+"names via the Provider's API"
 msgstr ""
 "Je renonce expressément à mon droit de rétractation concernant l'achat de "
 "noms de domaine via l'API du Fournisseur."
@@ -536,6 +504,47 @@ msgstr "Se connecter"
 #: assets/pages/LoginPage.tsx:73
 msgid "Log in with SSO"
 msgstr "Se connecter par SSO"
+
+#: assets/utils/providers/index.tsx:11
+#, fuzzy
+#| msgid "Retrieve a set of tokens from your OVH account"
+msgid ""
+"Retrieve a set of tokens from your customer account on the Provider's website"
+msgstr "Récupérer un ensemble de jetons depuis votre compte OVH"
+
+#: assets/utils/providers/ovh.tsx:5
+msgid "Application key"
+msgstr "Clé d'application"
+
+#: assets/utils/providers/ovh.tsx:6
+msgid "Application secret"
+msgstr "Clé secrète d'application"
+
+#: assets/utils/providers/ovh.tsx:7
+msgid "Consumer key"
+msgstr "Clé d'utilisateur"
+
+#: assets/utils/providers/ovh.tsx:12
+msgid "European Region"
+msgstr "Continent Européen"
+
+#: assets/utils/providers/ovh.tsx:19
+#, fuzzy
+#| msgid "Europa"
+msgid "Europe"
+msgstr "Europe"
+
+#: assets/utils/providers/ovh.tsx:22
+msgid "The domain is free and at the standard price"
+msgstr "Le domaine est libre et au prix standard"
+
+#: assets/utils/providers/ovh.tsx:25
+msgid ""
+"The domain is free but is a premium. Its price varies from one domain to "
+"another"
+msgstr ""
+"Le domaine est libre mais est un premium. Son prix est variable d'un domaine "
+"à l'autre"
 
 #: assets/App.tsx:71
 msgid "Home"
