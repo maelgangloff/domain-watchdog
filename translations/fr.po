@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2024-07-30 15:49+0000\n"
+"PO-Revision-Date: 2024-07-30 16:12+0000\n"
 "Last-Translator: Maël Gangloff <contact@maelgangloff.fr>\n"
 "Language-Team: French <https://weblate.vinceh121.me/projects/domain-watchdog/"
 "domain-watchdog-dashboard/fr/>\n"
@@ -251,7 +251,7 @@ msgstr ""
 
 #: assets/components/tracking/ConnectorForm.tsx:106
 msgid "Legal age"
-msgstr ""
+msgstr "Âge minimum légal"
 
 #: assets/components/tracking/ConnectorForm.tsx:111
 msgid ""
@@ -266,16 +266,12 @@ msgid "Withdrawal period"
 msgstr "Délai de rétractation"
 
 #: assets/components/tracking/ConnectorForm.tsx:120
-#, fuzzy
-#| msgid ""
-#| "I expressly waive my right of withdrawal regarding the purchase of domain "
-#| "names via the Provider's API."
 msgid ""
 "I expressly waive my right of withdrawal regarding the purchase of domain "
 "names via the Provider's API"
 msgstr ""
 "Je renonce expressément à mon droit de rétractation concernant l'achat de "
-"noms de domaine via l'API du Fournisseur."
+"noms de domaine via l'API du Fournisseur"
 
 #: assets/components/tracking/WatchlistsList.tsx:14
 #, javascript-format
@@ -506,11 +502,11 @@ msgid "Log in with SSO"
 msgstr "Se connecter par SSO"
 
 #: assets/utils/providers/index.tsx:11
-#, fuzzy
-#| msgid "Retrieve a set of tokens from your OVH account"
 msgid ""
 "Retrieve a set of tokens from your customer account on the Provider's website"
-msgstr "Récupérer un ensemble de jetons depuis votre compte OVH"
+msgstr ""
+"Récupérer un ensemble de jetons à partir de votre compte client sur le site "
+"web du Fournisseur"
 
 #: assets/utils/providers/ovh.tsx:5
 msgid "Application key"
@@ -529,8 +525,6 @@ msgid "European Region"
 msgstr "Continent Européen"
 
 #: assets/utils/providers/ovh.tsx:19
-#, fuzzy
-#| msgid "Europa"
 msgid "Europe"
 msgstr "Europe"
 
