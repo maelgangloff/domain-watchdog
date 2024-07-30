@@ -106,7 +106,7 @@ function TldTable(filters: FiltersType) {
             }
         }}
 
-        {...(sm ? {scroll: {y: 'mex-content'}} : {scroll: {y: 240}})}
+        {...(sm ? {scroll: {y: 'max-content'}} : {scroll: {y: 240}})}
     />
 }
 
