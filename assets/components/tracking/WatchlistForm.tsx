@@ -1,7 +1,7 @@
 import {Button, Form, FormInstance, Input, Select, Space} from "antd";
 import {t} from "ttag";
-import {MinusCircleOutlined, PlusOutlined, ThunderboltFilled} from "@ant-design/icons";
-import React, {useState} from "react";
+import {ApiOutlined, MinusCircleOutlined, PlusOutlined, ThunderboltFilled} from "@ant-design/icons";
+import React from "react";
 import {EventAction} from "../../utils/api";
 import {Connector} from "../../utils/api/connectors";
 
@@ -73,13 +73,8 @@ export function WatchlistForm({form, connectors, onCreateWatchlist}: {
         {
             label: t`Send me an email`,
             value: 'email'
-        },
-        {
-            label: t`Buy the domain if available`,
-            value: 'buy'
         }
     ]
-    const [actionsSelect, setActionsSelect] = useState<{ [key: number]: string }>({})
 
     return <Form
         {...formItemLayoutWithOutLabel}
@@ -186,27 +181,8 @@ export function WatchlistForm({form, connectors, onCreateWatchlist}: {
                                            noStyle name={[field.name, 'action']}>
                                     <Select style={{minWidth: 300}} options={triggerActionItems} showSearch
                                             placeholder={t`Then do that`}
-                                            optionFilterProp="label" value={actionsSelect[field.key]}
-                                            onChange={(e) => setActionsSelect({...actionsSelect, [field.key]: e})}/>
+                                            optionFilterProp="label"/>
                                 </Form.Item>
-                                {actionsSelect[field.key] === 'buy' && <Form.Item {...field}
-                                                                                  validateTrigger={['onChange', 'onBlur']}
-                                                                                  rules={[{
-                                                                                      required: true,
-                                                                                      message: t`Required`
-                                                                                  }]}
-                                                                                  noStyle
-                                                                                  name={[field.name, 'connector']}>
-                                    <Select style={{minWidth: 500}} showSearch
-                                            placeholder={t`Connector`}
-                                            optionFilterProp="label"
-                                            options={connectors.map(c => ({
-                                                label: `${c.provider} (${c.id})`,
-                                                value: c.id
-                                            }))}
-                                    />
-                                </Form.Item>
-                                }
                             </Space>
 
                             {fields.length > 1 ? (
@@ -231,6 +207,21 @@ export function WatchlistForm({form, connectors, onCreateWatchlist}: {
                 </>
             )}
         </Form.List>
+        <Form.Item label={t`Connector`}
+                   name='connector'
+        >
+            <Select showSearch
+                    allowClear
+                    style={{width: '60%'}}
+                    placeholder={t`Connector`}
+                    suffixIcon={<ApiOutlined/>}
+                    optionFilterProp="label"
+                    options={connectors.map(c => ({
+                        label: `${c.provider} (${c.id})`,
+                        value: c.id
+                    }))}
+            />
+        </Form.Item>
         <Form.Item>
             <Space>
                 <Button type="primary" htmlType="submit">

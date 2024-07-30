@@ -40,6 +40,7 @@ export function ConnectorForm({form, onCreate}: { form: FormInstance, onCreate: 
             rules={[{required: true, message: t`Required`}]}
         >
             <Select
+                allowClear
                 placeholder={t`Please select a Provider`}
                 suffixIcon={<BankOutlined/>}
                 options={Object.keys(ConnectorProvider).map((c) => ({

@@ -20,13 +20,14 @@ export default function WatchlistPage() {
     const onCreateWatchlist = (values: {
         domains: string[],
         triggers: { event: string, action: string, connector?: string }[]
+        connector?: string
     }) => {
         const domainsURI = values.domains.map(d => '/api/domains/' + d)
-        postWatchlist(domainsURI, values.triggers.map(({action, event, connector}) => ({
-            action,
-            event,
-            connector: connector !== undefined ? '/api/connectors/' + connector : undefined
-        }))).then((w) => {
+        postWatchlist({
+            domains: domainsURI,
+            triggers: values.triggers,
+            connector: values.connector !== undefined ? '/api/connectors/' + values.connector : undefined
+        }).then((w) => {
             form.resetFields()
             refreshWatchlists()
             messageApi.success(t`Watchlist created !`)
