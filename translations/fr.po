@@ -61,6 +61,9 @@ msgstr "Expiration de la validation ENUM"
 #: assets/components/tracking/ConnectorForm.tsx:90
 #: assets/components/tracking/ConnectorForm.tsx:97
 #: assets/components/tracking/ConnectorForm.tsx:105
+#: assets/components/tracking/ConnectorForm.tsx:113
+#: assets/components/tracking/ConnectorForm.tsx:122
+#: assets/components/tracking/ConnectorForm.tsx:131
 #: assets/components/tracking/WatchlistForm.tsx:115
 #: assets/components/tracking/WatchlistForm.tsx:174
 #: assets/components/tracking/WatchlistForm.tsx:184
@@ -203,12 +206,12 @@ msgstr "Connecteur"
 msgid "Add a Trigger"
 msgstr "Ajouter une action"
 
-#: assets/components/tracking/ConnectorForm.tsx:116
+#: assets/components/tracking/ConnectorForm.tsx:143
 #: assets/components/tracking/WatchlistForm.tsx:237
 msgid "Create"
 msgstr "Créer"
 
-#: assets/components/tracking/ConnectorForm.tsx:119
+#: assets/components/tracking/ConnectorForm.tsx:146
 #: assets/components/tracking/WatchlistForm.tsx:240
 msgid "Reset"
 msgstr "Réinitialiser"
@@ -269,6 +272,36 @@ msgstr "Filiale d'OVH"
 #: assets/components/tracking/ConnectorForm.tsx:103
 msgid "OVH pricing mode"
 msgstr "Mode de tarification OVH"
+
+#: assets/App.tsx:164 assets/components/tracking/ConnectorForm.tsx:111
+msgid "TOS"
+msgstr "CGU"
+
+#: assets/components/tracking/ConnectorForm.tsx:116
+msgid ""
+"I accept the terms of use of the OVH provider API and those of Domain "
+"Watchdog"
+msgstr ""
+
+#: assets/components/tracking/ConnectorForm.tsx:120
+msgid "Legal age"
+msgstr ""
+
+#: assets/components/tracking/ConnectorForm.tsx:125
+msgid ""
+"I certify on my honor that I am of the minimum age required to consent to "
+"these conditions"
+msgstr ""
+
+#: assets/components/tracking/ConnectorForm.tsx:129
+msgid "Withdrawal period"
+msgstr ""
+
+#: assets/components/tracking/ConnectorForm.tsx:134
+msgid ""
+"I expressly waive my right of withdrawal concerning the purchase of domain "
+"names via the OVH API"
+msgstr ""
 
 #: assets/components/tracking/WatchlistsList.tsx:14
 #, javascript-format
@@ -553,10 +586,6 @@ msgstr "Mes connecteurs"
 #: assets/App.tsx:151
 msgid "My Watchdog"
 msgstr "Mon Watchdog"
-
-#: assets/App.tsx:164
-msgid "TOS"
-msgstr "CGU"
 
 #: assets/App.tsx:170
 msgid "Privacy Policy"
