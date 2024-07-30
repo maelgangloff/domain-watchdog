@@ -209,7 +209,7 @@ export default function App() {
             </Layout.Sider>
             <Layout>
                 <Layout.Header style={{padding: 0, background: colorBgContainer}}/>
-                <Layout.Content style={{margin: '24px 16px 0'}}>
+                <Layout.Content style={sm ? {margin: '24px 0'} : {margin: '24px 16px 0'}}>
                     <div style={{
                         padding: 24,
                         minHeight: 360,
