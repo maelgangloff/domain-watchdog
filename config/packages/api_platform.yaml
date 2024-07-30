@@ -1,6 +1,7 @@
 api_platform:
     title: Domain Watchdog API
     version: 1.0.0
+        
     formats:
         jsonld: [ 'application/ld+json' ]
         xml: [ 'application/xml' ]
@@ -13,6 +14,7 @@ api_platform:
         stateless: true
         cache_headers:
             vary: [ 'Content-Type', 'Authorization', 'Origin' ]
+        pagination_client_items_per_page: true
         extra_properties:
             standard_put: true
             rfc_7807_compliant_errors: true

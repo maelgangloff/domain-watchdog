@@ -3,49 +3,65 @@ import {Collapse, Divider, Table, Typography} from "antd";
 import {getTldList, Tld} from "../../utils/api";
 import {t} from 'ttag'
 import {regionNames} from "../../i18n";
+import useBreakpoint from "../../hooks/useBreakpoint";
+import { ColumnType } from "antd/es/table";
 
 const {Text, Paragraph} = Typography
 
 type TldType = 'iTLD' | 'sTLD' | 'gTLD' | 'ccTLD'
 type FiltersType = { type: TldType, contractTerminated?: boolean, specification13?: boolean }
 
+const toEmoji = (tld: string) => {
+    if (tld.startsWith('xn--')) return '-'
 
-const toEmoji = (tld: string) => String.fromCodePoint(
-    ...getCountryCode(tld)
-        .toUpperCase()
-        .split('')
-        .map((char) => 127397 + char.charCodeAt(0)
-        )
-)
+    return String.fromCodePoint(
+        ...getCountryCode(tld)
+            .toUpperCase()
+            .split('')
+            .map((char) => 127397 + char.charCodeAt(0))
+    )
+}
 
 const getCountryCode = (tld: string): string => {
     const exceptions = {uk: 'gb', su: 'ru', tp: 'tl'}
     if (tld in exceptions) return exceptions[tld as keyof typeof exceptions]
-    return tld
+    return tld.toUpperCase()
 }
 
 function TldTable(filters: FiltersType) {
+    const sm = useBreakpoint('sm')
     const [dataTable, setDataTable] = useState<Tld[]>([])
     const [total, setTotal] = useState(0)
 
-    const fetchData = (params: FiltersType & { page: number }) => {
+    const fetchData = (params: FiltersType & { page: number, itemsPerPage: number }) => {
         getTldList(params).then((data) => {
             setTotal(data['hydra:totalItems'])
             setDataTable(data['hydra:member'].map((tld: Tld) => {
                 switch (filters.type) {
                     case 'ccTLD':
+                        let countryName
+
+                        try {
+                            countryName = regionNames.of(getCountryCode(tld.tld))
+                        } catch(e) {
+                            countryName = '-'
+                        }
+
                         return {
+                            key: tld.tld,
                             TLD: tld.tld,
                             Flag: toEmoji(tld.tld),
-                            Country: regionNames.of(getCountryCode(tld.tld)) ?? '-'
+                            Country: countryName
                         }
                     case 'gTLD':
                         return {
+                            key: tld.tld,
                             TLD: tld.tld,
                             Operator: tld.registryOperator
                         }
                     default:
                         return {
+                            key: tld.tld,
                             TLD: tld.tld
                         }
                 }
@@ -54,31 +70,27 @@ function TldTable(filters: FiltersType) {
     }
 
     useEffect(() => {
-        fetchData({...filters, page: 1})
+        fetchData({...filters, page: 1, itemsPerPage: 30})
     }, [])
 
-    let columns = [
+    let columns: ColumnType<any>[] = [
         {
             title: t`TLD`,
-            dataIndex: "TLD",
-            width: 20
+            dataIndex: "TLD"
         }
     ]
 
     if (filters.type === 'ccTLD') columns = [...columns, {
         title: t`Flag`,
         dataIndex: "Flag",
-        width: 20
     }, {
         title: t`Country`,
-        dataIndex: "Country",
-        width: 200
+        dataIndex: "Country"
     }]
 
     if (filters.type === 'gTLD') columns = [...columns, {
         title: t`Registry Operator`,
-        dataIndex: "Operator",
-        width: 50
+        dataIndex: "Operator"
     }]
 
 
@@ -87,18 +99,21 @@ function TldTable(filters: FiltersType) {
         dataSource={dataTable}
         pagination={{
             total,
-            pageSize: 30,
             hideOnSinglePage: true,
-            onChange: (page, pageSize) => {
-                fetchData({...filters, page})
+            defaultPageSize: 30,
+            onChange: (page, itemsPerPage) => {
+                fetchData({...filters, page, itemsPerPage})
             }
         }}
-        scroll={{y: 240}}
+
+        {...(sm ? {scroll: {y: 'mex-content'}} : {scroll: {y: 240}})}
     />
 }
 
 
 export default function TldPage() {
+    const sm = useBreakpoint('sm')
+
     return <>
         <Paragraph>
             {t`This page presents all active TLDs in the root zone database.`}
@@ -111,7 +126,7 @@ export default function TldPage() {
         </Paragraph>
         <Divider/>
         <Collapse
-            size="large"
+            size={sm ? 'small' : 'large'}
             items={[
                 {
                     key: 'sTLD',
