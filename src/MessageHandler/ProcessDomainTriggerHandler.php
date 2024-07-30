@@ -63,13 +63,7 @@ final readonly class ProcessDomainTriggerHandler
                         $ovh = new OVHConnector($connector->getAuthData());
                         $isDebug = $this->kernel->isDebug();
 
-                        $ovh->orderDomain(
-                            $domain,
-                            true, // TODO: Infer from the user
-                            true, // TODO: Infer from the user
-                            true, // TODO: Infer from the user
-                            $isDebug
-                        );
+                        $ovh->orderDomain($domain, $isDebug);
                         $this->sendEmailDomainOrdered($domain, $connector, $watchList->getUser());
                     } else throw new Exception("Unknown provider");
                 } catch (Throwable) {
