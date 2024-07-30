@@ -10,8 +10,10 @@ import {Timeline} from "antd";
 import React from "react";
 import {Domain} from "../../utils/api";
 import {t} from "ttag";
+import useBreakpoint from "../../hooks/useBreakpoint";
 
 export function EventTimeline({domain}: { domain: Domain }) {
+    const sm = useBreakpoint('sm')
 
     const domainEvent = {
         registration: t`Registration`,
@@ -30,7 +32,7 @@ export function EventTimeline({domain}: { domain: Domain }) {
     const locale = navigator.language.split('-')[0]
 
     return <Timeline
-        mode="right"
+        mode={sm ? "left" : "right"}
         items={domain.events
             .sort((e1, e2) => new Date(e2.date).getTime() - new Date(e1.date).getTime())
             .map(({action, date}) => {
@@ -56,12 +58,21 @@ export function EventTimeline({domain}: { domain: Domain }) {
                         dot = <ReloadOutlined style={{fontSize: '16px'}}/>
                     }
 
+                    const eventName = Object.keys(domainEvent).includes(action) ? domainEvent[action as keyof typeof domainEvent] : action
+                    const dateStr = new Date(date).toLocaleString(locale)
+
+                    const text = sm ? {
+                        children: <>{eventName}&emsp;{dateStr}</>
+                    } : {
+                        label: dateStr,
+                        children: eventName,
+                    }
+
                     return {
-                        label: new Date(date).toLocaleString(locale),
-                        children: Object.keys(domainEvent).includes(action) ? domainEvent[action as keyof typeof domainEvent] : action,
                         color,
                         dot,
-                        pending: new Date(date).getTime() > new Date().getTime()
+                        pending: new Date(date).getTime() > new Date().getTime(),
+                        ...text
                     }
                 }
             )
