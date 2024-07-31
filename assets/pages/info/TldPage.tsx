@@ -50,20 +50,20 @@ function TldTable(filters: FiltersType) {
 
                         return {
                             key: tld.tld,
-                            TLD: tld.tld.startsWith('xn--') ? punycode.toUnicode(tld.tld) : tld.tld,
+                            TLD: punycode.toUnicode(tld.tld),
                             Flag: toEmoji(tld.tld),
                             Country: countryName
                         }
                     case 'gTLD':
                         return {
                             key: tld.tld,
-                            TLD: tld.tld.startsWith('xn--') ? punycode.toUnicode(tld.tld) : tld.tld,
+                            TLD: punycode.toUnicode(tld.tld),
                             Operator: tld.registryOperator
                         }
                     default:
                         return {
                             key: tld.tld,
-                            TLD: tld.tld.startsWith('xn--') ? punycode.toUnicode(tld.tld) : tld.tld
+                            TLD: punycode.toUnicode(tld.tld)
                         }
                 }
             }))
