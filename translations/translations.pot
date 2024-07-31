@@ -3,47 +3,47 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Plural-Forms: nplurals=2; plural=(n!=1);\n"
 
-#: assets/components/search/EventTimeline.tsx:17
+#: assets/components/search/EventTimeline.tsx:19
 msgid "Registration"
 msgstr ""
 
-#: assets/components/search/EventTimeline.tsx:18
+#: assets/components/search/EventTimeline.tsx:20
 msgid "Reregistration"
 msgstr ""
 
-#: assets/components/search/EventTimeline.tsx:19
+#: assets/components/search/EventTimeline.tsx:21
 msgid "Last changed"
 msgstr ""
 
-#: assets/components/search/EventTimeline.tsx:20
+#: assets/components/search/EventTimeline.tsx:22
 msgid "Expiration"
 msgstr ""
 
-#: assets/components/search/EventTimeline.tsx:21
+#: assets/components/search/EventTimeline.tsx:23
 msgid "Deletion"
 msgstr ""
 
-#: assets/components/search/EventTimeline.tsx:22
+#: assets/components/search/EventTimeline.tsx:24
 msgid "Reinstantiation"
 msgstr ""
 
-#: assets/components/search/EventTimeline.tsx:23
+#: assets/components/search/EventTimeline.tsx:25
 msgid "Transfer"
 msgstr ""
 
-#: assets/components/search/EventTimeline.tsx:24
+#: assets/components/search/EventTimeline.tsx:26
 msgid "Locked"
 msgstr ""
 
-#: assets/components/search/EventTimeline.tsx:25
+#: assets/components/search/EventTimeline.tsx:27
 msgid "Unlocked"
 msgstr ""
 
-#: assets/components/search/EventTimeline.tsx:26
+#: assets/components/search/EventTimeline.tsx:28
 msgid "Registrar expiration"
 msgstr ""
 
-#: assets/components/search/EventTimeline.tsx:27
+#: assets/components/search/EventTimeline.tsx:29
 msgid "ENUM validation expiration"
 msgstr ""
 
@@ -162,7 +162,7 @@ msgid "Domain names"
 msgstr ""
 
 #: assets/components/tracking/WatchlistForm.tsx:119
-#: assets/components/tracking/WatchlistsList.tsx:22
+#: assets/components/tracking/WatchlistsList.tsx:28
 msgid "Domain name"
 msgstr ""
 
@@ -191,17 +191,17 @@ msgid "Add a Trigger"
 msgstr ""
 
 #: assets/components/tracking/WatchlistForm.tsx:210
-#: assets/components/tracking/WatchlistForm.tsx:216
+#: assets/components/tracking/WatchlistForm.tsx:223
 msgid "Connector"
 msgstr ""
 
 #: assets/components/tracking/ConnectorForm.tsx:131
-#: assets/components/tracking/WatchlistForm.tsx:228
+#: assets/components/tracking/WatchlistForm.tsx:235
 msgid "Create"
 msgstr ""
 
 #: assets/components/tracking/ConnectorForm.tsx:134
-#: assets/components/tracking/WatchlistForm.tsx:231
+#: assets/components/tracking/WatchlistForm.tsx:238
 msgid "Reset"
 msgstr ""
 
@@ -256,30 +256,29 @@ msgid ""
 "names via the Provider's API"
 msgstr ""
 
-#: assets/components/tracking/WatchlistsList.tsx:14
-#, javascript-format
-msgid "Watchlist ${ watchlist.token }"
+#: assets/components/tracking/WatchlistsList.tsx:18
+msgid "Watchlist"
 msgstr ""
 
-#: assets/components/tracking/WatchlistsList.tsx:15
+#: assets/components/tracking/WatchlistsList.tsx:19
 msgid "Delete the Watchlist"
 msgstr ""
 
-#: assets/components/tracking/WatchlistsList.tsx:16
+#: assets/components/tracking/WatchlistsList.tsx:20
 msgid "Are you sure to delete this Watchlist?"
 msgstr ""
 
 #: assets/components/tracking/ConnectorsList.tsx:17
-#: assets/components/tracking/WatchlistsList.tsx:18
+#: assets/components/tracking/WatchlistsList.tsx:22
 msgid "Yes"
 msgstr ""
 
 #: assets/components/tracking/ConnectorsList.tsx:18
-#: assets/components/tracking/WatchlistsList.tsx:19
+#: assets/components/tracking/WatchlistsList.tsx:23
 msgid "No"
 msgstr ""
 
-#: assets/components/tracking/WatchlistsList.tsx:26
+#: assets/components/tracking/WatchlistsList.tsx:32
 msgid "Domain triggers"
 msgstr ""
 
@@ -296,62 +295,63 @@ msgstr ""
 msgid "Are you sure to delete this Connector?"
 msgstr ""
 
-#: assets/pages/search/DomainSearchPage.tsx:19
+#: assets/pages/search/DomainSearchPage.tsx:20
 msgid "Found !"
 msgstr ""
 
-#: assets/pages/search/DomainSearchPage.tsx:23
+#: assets/pages/search/DomainSearchPage.tsx:24
 #: assets/pages/tracking/ConnectorsPage.tsx:23
 #: assets/pages/tracking/ConnectorsPage.tsx:31
 #: assets/pages/tracking/WatchlistPage.tsx:36
 #: assets/pages/tracking/WatchlistPage.tsx:44
+#: assets/pages/tracking/WatchlistPage.tsx:54
 msgid "An error occurred"
 msgstr ""
 
-#: assets/pages/search/DomainSearchPage.tsx:28
+#: assets/pages/search/DomainSearchPage.tsx:29
 msgid "Domain finder"
 msgstr ""
 
-#: assets/pages/search/DomainSearchPage.tsx:47
+#: assets/pages/search/DomainSearchPage.tsx:49
 msgid "EPP Status Codes"
 msgstr ""
 
-#: assets/pages/search/DomainSearchPage.tsx:57
+#: assets/pages/search/DomainSearchPage.tsx:59
 msgid "Timeline"
 msgstr ""
 
-#: assets/pages/search/DomainSearchPage.tsx:62
+#: assets/pages/search/DomainSearchPage.tsx:64
 msgid "Entities"
 msgstr ""
 
-#: assets/pages/search/DomainSearchPage.tsx:70
+#: assets/pages/search/DomainSearchPage.tsx:72
 msgid ""
 "Although the domain exists in my database, it has been deleted from the "
 "WHOIS by its registrar."
 msgstr ""
 
-#: assets/App.tsx:114
-#: assets/pages/info/TldPage.tsx:62
+#: assets/App.tsx:116
+#: assets/pages/info/TldPage.tsx:78
 msgid "TLD"
 msgstr ""
 
-#: assets/pages/info/TldPage.tsx:69
+#: assets/pages/info/TldPage.tsx:84
 msgid "Flag"
 msgstr ""
 
-#: assets/pages/info/TldPage.tsx:73
+#: assets/pages/info/TldPage.tsx:87
 msgid "Country"
 msgstr ""
 
-#: assets/pages/info/TldPage.tsx:79
+#: assets/pages/info/TldPage.tsx:92
 msgid "Registry Operator"
 msgstr ""
 
-#: assets/pages/info/TldPage.tsx:104
+#: assets/pages/info/TldPage.tsx:119
 msgid "This page presents all active TLDs in the root zone database."
 msgstr ""
 
-#: assets/pages/info/TldPage.tsx:107
+#: assets/pages/info/TldPage.tsx:122
 msgid ""
 "IANA provides the list of currently active TLDs, regardless of their type, "
 "and ICANN provides the list of gTLDs.\n"
@@ -363,48 +363,48 @@ msgid ""
 "At the same time, the list of root RDAP servers is updated."
 msgstr ""
 
-#: assets/pages/info/TldPage.tsx:118
+#: assets/pages/info/TldPage.tsx:133
 msgid "Sponsored Top-Level-Domains"
 msgstr ""
 
-#: assets/pages/info/TldPage.tsx:120
+#: assets/pages/info/TldPage.tsx:135
 msgid ""
 "Top-level domains sponsored by specific organizations that set rules for "
 "registration and use, often related to particular interest groups or "
 "industries."
 msgstr ""
 
-#: assets/pages/info/TldPage.tsx:127
+#: assets/pages/info/TldPage.tsx:142
 msgid "Generic Top-Level-Domains"
 msgstr ""
 
-#: assets/pages/info/TldPage.tsx:129
+#: assets/pages/info/TldPage.tsx:144
 msgid ""
 "Generic top-level domains open to everyone, not restricted by specific "
 "criteria, representing various themes or industries."
 msgstr ""
 
-#: assets/pages/info/TldPage.tsx:136
+#: assets/pages/info/TldPage.tsx:151
 msgid "Brand Generic Top-Level-Domains"
 msgstr ""
 
-#: assets/pages/info/TldPage.tsx:138
+#: assets/pages/info/TldPage.tsx:153
 msgid ""
 "Generic top-level domains associated with specific brands, allowing "
 "companies to use their own brand names as domains."
 msgstr ""
 
-#: assets/pages/info/TldPage.tsx:145
+#: assets/pages/info/TldPage.tsx:160
 msgid "Country-Code Top-Level-Domains"
 msgstr ""
 
-#: assets/pages/info/TldPage.tsx:147
+#: assets/pages/info/TldPage.tsx:162
 msgid ""
 "Top-level domains based on country codes, identifying websites according to "
 "their country of origin."
 msgstr ""
 
-#: assets/App.tsx:157
+#: assets/App.tsx:159
 #: assets/pages/watchdog/UserPage.tsx:16
 msgid "My Account"
 msgstr ""
@@ -426,7 +426,7 @@ msgstr ""
 msgid "Create a Connector"
 msgstr ""
 
-#: assets/App.tsx:143
+#: assets/App.tsx:145
 #: assets/pages/tracking/ConnectorsPage.tsx:48
 msgid "My Connectors"
 msgstr ""
@@ -435,12 +435,12 @@ msgstr ""
 msgid "Watchlist created !"
 msgstr ""
 
-#: assets/pages/tracking/WatchlistPage.tsx:54
+#: assets/pages/tracking/WatchlistPage.tsx:59
 msgid "Create a Watchlist"
 msgstr ""
 
-#: assets/App.tsx:136
-#: assets/pages/tracking/WatchlistPage.tsx:64
+#: assets/App.tsx:138
+#: assets/pages/tracking/WatchlistPage.tsx:69
 msgid "My Watchlists"
 msgstr ""
 
@@ -448,7 +448,7 @@ msgstr ""
 msgid "Sorry, the page you visited does not exist."
 msgstr ""
 
-#: assets/App.tsx:202
+#: assets/App.tsx:205
 #: assets/pages/LoginPage.tsx:31
 msgid "Log in"
 msgstr ""
@@ -505,70 +505,70 @@ msgid ""
 "another"
 msgstr ""
 
-#: assets/App.tsx:71
+#: assets/App.tsx:73
 msgid "Home"
 msgstr ""
 
-#: assets/App.tsx:77
+#: assets/App.tsx:79
 msgid "Search"
 msgstr ""
 
-#: assets/App.tsx:83
+#: assets/App.tsx:85
 msgid "Domain"
 msgstr ""
 
-#: assets/App.tsx:84
+#: assets/App.tsx:86
 msgid "Domain Finder"
 msgstr ""
 
-#: assets/App.tsx:91
+#: assets/App.tsx:93
 msgid "Entity"
 msgstr ""
 
-#: assets/App.tsx:92
+#: assets/App.tsx:94
 msgid "Entity Finder"
 msgstr ""
 
-#: assets/App.tsx:99
+#: assets/App.tsx:101
 msgid "Nameserver"
 msgstr ""
 
-#: assets/App.tsx:100
+#: assets/App.tsx:102
 msgid "Nameserver Finder"
 msgstr ""
 
-#: assets/App.tsx:108
+#: assets/App.tsx:110
 msgid "Information"
 msgstr ""
 
-#: assets/App.tsx:115
+#: assets/App.tsx:117
 msgid "TLD list"
 msgstr ""
 
-#: assets/App.tsx:122
+#: assets/App.tsx:124
 msgid "Statistics"
 msgstr ""
 
-#: assets/App.tsx:130
+#: assets/App.tsx:132
 msgid "Tracking"
 msgstr ""
 
-#: assets/App.tsx:151
+#: assets/App.tsx:153
 msgid "My Watchdog"
 msgstr ""
 
-#: assets/App.tsx:164
+#: assets/App.tsx:166
 msgid "TOS"
 msgstr ""
 
-#: assets/App.tsx:170
+#: assets/App.tsx:172
 msgid "Privacy Policy"
 msgstr ""
 
-#: assets/App.tsx:178
+#: assets/App.tsx:180
 msgid "FAQ"
 msgstr ""
 
-#: assets/App.tsx:196
+#: assets/App.tsx:199
 msgid "Log out"
 msgstr ""

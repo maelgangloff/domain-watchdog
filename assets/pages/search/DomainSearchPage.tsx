@@ -7,7 +7,7 @@ import {DomainSearchBar, FieldType} from "../../components/search/DomainSearchBa
 import {EventTimeline} from "../../components/search/EventTimeline";
 import {EntitiesList} from "../../components/search/EntitiesList";
 
-const { Text } = Typography;
+const {Text} = Typography;
 
 export default function DomainSearchPage() {
     const [domain, setDomain] = useState<Domain | null>()
@@ -41,7 +41,8 @@ export default function DomainSearchPage() {
                                                       domain.tld.type === 'gTLD' ? "green"
                                                           : "cyan"
                                           }>
-                                <Card title={<>{domain.ldhName}{domain.handle ? <> (<Text code>{domain.handle}</Text>)</>: undefined}</>}
+                                <Card title={<>{domain.ldhName}{domain.handle ? <> (<Text
+                                    code>{domain.handle}</Text>)</> : undefined}</>}
                                       size="small">
                                     {domain.status.length > 0 &&
                                         <>

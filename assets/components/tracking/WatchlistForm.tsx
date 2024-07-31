@@ -210,12 +210,12 @@ export function WatchlistForm({form, connectors, onCreateWatchlist}: {
         <Form.Item label={t`Connector`}
                    name='connector'
                    labelCol={{
-                        xs: {span: 24},
-                        sm: {span: 4},
+                       xs: {span: 24},
+                       sm: {span: 4},
                    }}
                    wrapperCol={{
-                        md: {span: 12},
-                        sm: {span: 20},
+                       md: {span: 12},
+                       sm: {span: 20},
                    }}
         >
             <Select showSearch

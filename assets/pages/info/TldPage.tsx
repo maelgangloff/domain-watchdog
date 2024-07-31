@@ -4,7 +4,7 @@ import {getTldList, Tld} from "../../utils/api";
 import {t} from 'ttag'
 import {regionNames} from "../../i18n";
 import useBreakpoint from "../../hooks/useBreakpoint";
-import { ColumnType } from "antd/es/table";
+import {ColumnType} from "antd/es/table";
 
 const {Text, Paragraph} = Typography
 
@@ -43,7 +43,7 @@ function TldTable(filters: FiltersType) {
 
                         try {
                             countryName = regionNames.of(getCountryCode(tld.tld))
-                        } catch(e) {
+                        } catch (e) {
                             countryName = '-'
                         }
 

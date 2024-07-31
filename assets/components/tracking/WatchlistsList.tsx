@@ -1,16 +1,16 @@
-import {Card, Divider, Popconfirm, Typography, theme} from "antd";
+import {Card, Divider, Popconfirm, theme, Typography} from "antd";
 import {t} from "ttag";
 import {deleteWatchlist, EventAction} from "../../utils/api";
 import {DeleteFilled} from "@ant-design/icons";
 import React from "react";
 
-const { useToken } = theme;
+const {useToken} = theme;
 
 type Watchlist = { token: string, domains: { ldhName: string }[], triggers?: { event: EventAction, action: string }[] }
 
 
 export function WatchlistsList({watchlists, onDelete}: { watchlists: Watchlist[], onDelete: () => void }) {
-    const { token } = useToken()
+    const {token} = useToken()
 
     return <>
         {watchlists.map(watchlist =>
@@ -22,8 +22,8 @@ export function WatchlistsList({watchlists, onDelete}: { watchlists: Watchlist[]
                     okText={t`Yes`}
                     cancelText={t`No`}
                     okButtonProps={{danger: true}}
-                ><DeleteFilled style={{color: token.colorError}} /></Popconfirm>}>
-                    <Card.Meta description={watchlist.token} style={{marginBottom: '1em'}} />
+                ><DeleteFilled style={{color: token.colorError}}/></Popconfirm>}>
+                    <Card.Meta description={watchlist.token} style={{marginBottom: '1em'}}/>
                     <Typography.Paragraph>
                         {t`Domain name`} : {watchlist?.domains.map(d => d.ldhName).join(',')}
                     </Typography.Paragraph>

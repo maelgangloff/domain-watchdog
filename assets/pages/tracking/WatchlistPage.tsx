@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {Card, Divider, Flex, Form, message, Skeleton} from "antd";
+import {Card, Divider, Flex, Form, message} from "antd";
 import {EventAction, getWatchlists, postWatchlist} from "../../utils/api";
 import {AxiosError} from "axios";
 import {t} from 'ttag'
@@ -64,10 +64,11 @@ export default function WatchlistPage() {
             }
         </Card>
 
-        <Divider />
+        <Divider/>
 
         <Card size="small" loading={!watchlists} title={t`My Watchlists`} style={{width: '100%'}}>
-            {watchlists && watchlists.length > 0 && <WatchlistsList watchlists={watchlists} onDelete={refreshWatchlists}/>}
+            {watchlists && watchlists.length > 0 &&
+                <WatchlistsList watchlists={watchlists} onDelete={refreshWatchlists}/>}
         </Card>
     </Flex>
 }
