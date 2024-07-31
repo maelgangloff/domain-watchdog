@@ -5,6 +5,7 @@ import {t} from 'ttag'
 import {regionNames} from "../../i18n";
 import useBreakpoint from "../../hooks/useBreakpoint";
 import {ColumnType} from "antd/es/table";
+import punycode from "punycode/punycode";
 
 const {Text, Paragraph} = Typography
 
@@ -49,20 +50,20 @@ function TldTable(filters: FiltersType) {
 
                         return {
                             key: tld.tld,
-                            TLD: tld.tld,
+                            TLD: tld.tld.startsWith('xn--') ? punycode.toUnicode(tld.tld) : tld.tld,
                             Flag: toEmoji(tld.tld),
                             Country: countryName
                         }
                     case 'gTLD':
                         return {
                             key: tld.tld,
-                            TLD: tld.tld,
+                            TLD: tld.tld.startsWith('xn--') ? punycode.toUnicode(tld.tld) : tld.tld,
                             Operator: tld.registryOperator
                         }
                     default:
                         return {
                             key: tld.tld,
-                            TLD: tld.tld
+                            TLD: tld.tld.startsWith('xn--') ? punycode.toUnicode(tld.tld) : tld.tld
                         }
                 }
             }))
