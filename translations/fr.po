@@ -345,27 +345,27 @@ msgstr ""
 "Bien que le domaine existe dans ma base de données, il a été supprimé du "
 "WHOIS par son bureau d'enregistrement."
 
-#: assets/App.tsx:116 assets/pages/info/TldPage.tsx:78
+#: assets/App.tsx:116 assets/pages/info/TldPage.tsx:79
 msgid "TLD"
 msgstr "TLD"
 
-#: assets/pages/info/TldPage.tsx:84
+#: assets/pages/info/TldPage.tsx:85
 msgid "Flag"
 msgstr "Drapeau"
 
-#: assets/pages/info/TldPage.tsx:87
+#: assets/pages/info/TldPage.tsx:88
 msgid "Country"
 msgstr "Pays"
 
-#: assets/pages/info/TldPage.tsx:92
+#: assets/pages/info/TldPage.tsx:93
 msgid "Registry Operator"
 msgstr "Opérateur de registre"
 
-#: assets/pages/info/TldPage.tsx:119
+#: assets/pages/info/TldPage.tsx:120
 msgid "This page presents all active TLDs in the root zone database."
 msgstr "Cette page présente tous les TLD actifs dans la zone racine."
 
-#: assets/pages/info/TldPage.tsx:122
+#: assets/pages/info/TldPage.tsx:123
 msgid ""
 "IANA provides the list of currently active TLDs, regardless of their type, "
 "and ICANN provides the list of gTLDs.\n"
@@ -385,11 +385,11 @@ msgstr ""
 "requêtes à l'IANA et une à l'ICANN).\n"
 "Parallèlement, la liste des serveurs RDAP racine est mise à jour."
 
-#: assets/pages/info/TldPage.tsx:133
+#: assets/pages/info/TldPage.tsx:134
 msgid "Sponsored Top-Level-Domains"
 msgstr "Domaines de premier niveau parrainés"
 
-#: assets/pages/info/TldPage.tsx:135
+#: assets/pages/info/TldPage.tsx:136
 msgid ""
 "Top-level domains sponsored by specific organizations that set rules for "
 "registration and use, often related to particular interest groups or "
@@ -399,11 +399,11 @@ msgstr ""
 "établissent des règles d'enregistrement et d'utilisation, souvent liées à "
 "des groupes d'intérêt ou à des secteurs particuliers."
 
-#: assets/pages/info/TldPage.tsx:142
+#: assets/pages/info/TldPage.tsx:143
 msgid "Generic Top-Level-Domains"
 msgstr "Domaine de premier niveau générique"
 
-#: assets/pages/info/TldPage.tsx:144
+#: assets/pages/info/TldPage.tsx:145
 msgid ""
 "Generic top-level domains open to everyone, not restricted by specific "
 "criteria, representing various themes or industries."
@@ -412,11 +412,11 @@ msgstr ""
 "critères spécifiques, représentant des thèmes ou des secteurs d'activité "
 "variés."
 
-#: assets/pages/info/TldPage.tsx:151
+#: assets/pages/info/TldPage.tsx:152
 msgid "Brand Generic Top-Level-Domains"
 msgstr "Domaine de premier niveau générique de marque"
 
-#: assets/pages/info/TldPage.tsx:153
+#: assets/pages/info/TldPage.tsx:154
 msgid ""
 "Generic top-level domains associated with specific brands, allowing "
 "companies to use their own brand names as domains."
@@ -425,11 +425,11 @@ msgstr ""
 "permettant aux entreprises d'utiliser leurs propres noms de marque comme "
 "domaines."
 
-#: assets/pages/info/TldPage.tsx:160
+#: assets/pages/info/TldPage.tsx:161
 msgid "Country-Code Top-Level-Domains"
 msgstr "Domaine de premier niveau national"
 
-#: assets/pages/info/TldPage.tsx:162
+#: assets/pages/info/TldPage.tsx:163
 msgid ""
 "Top-level domains based on country codes, identifying websites according to "
 "their country of origin."
