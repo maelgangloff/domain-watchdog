@@ -17,6 +17,7 @@ use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 use Symfony\Component\Messenger\Exception\ExceptionInterface;
 use Symfony\Component\Messenger\MessageBusInterface;
+use Symfony\Contracts\HttpClient\Exception\HttpExceptionInterface;
 use Throwable;
 
 #[AsMessageHandler]
@@ -54,9 +55,11 @@ final readonly class ProcessWatchListTriggerHandler
 
             try {
                 $domain = $this->RDAPService->registerDomain($domain->getLdhName());
+            } catch (HttpExceptionInterface) { // To allow the purchase of expired domains
+                $this->sendEmailDomainUpdateError($domain, $watchList->getUser());
             } catch (Throwable) {
                 $this->sendEmailDomainUpdateError($domain, $watchList->getUser());
-                //continue; // This line is commented out to allow the purchase of expired domains
+                continue;
             }
 
             /*
