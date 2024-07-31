@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {Card, Flex, Form, message, Skeleton} from "antd";
+import {Card, Divider, Flex, Form, message, Skeleton} from "antd";
 import {EventAction, getWatchlists, postWatchlist} from "../../utils/api";
 import {AxiosError} from "axios";
 import {t} from 'ttag'
@@ -33,7 +33,7 @@ export default function WatchlistPage() {
             messageApi.success(t`Watchlist created !`)
         }).catch((e: AxiosError) => {
             const data = e?.response?.data as { detail: string }
-            messageApi.error(data.detail ?? t`An error occurred`)
+            messageApi.error(data?.detail ?? t`An error occurred`)
         })
     }
 
@@ -41,13 +41,18 @@ export default function WatchlistPage() {
         setWatchlists(w['hydra:member'])
     }).catch((e: AxiosError) => {
         const data = e?.response?.data as { detail: string }
-        messageApi.error(data.detail ?? t`An error occurred`)
+        messageApi.error(data?.detail ?? t`An error occurred`)
         setWatchlists(undefined)
     })
 
     useEffect(() => {
         refreshWatchlists()
-        getConnectors().then(c => setConnectors(c['hydra:member']))
+        getConnectors()
+            .then(c => setConnectors(c['hydra:member']))
+            .catch((e: AxiosError) => {
+                const data = e?.response?.data as { detail: string }
+                messageApi.error(data?.detail ?? t`An error occurred`)
+            })
     }, [])
 
     return <Flex gap="middle" align="center" justify="center" vertical>
@@ -59,12 +64,10 @@ export default function WatchlistPage() {
             }
         </Card>
 
+        <Divider />
 
-        <Skeleton loading={watchlists === undefined} active>
-            {watchlists && watchlists.length > 0 && <Card title={t`My Watchlists`} style={{width: '100%'}}>
-                <WatchlistsList watchlists={watchlists} onDelete={refreshWatchlists}/>
-            </Card>
-            }
-        </Skeleton>
+        <Card size="small" loading={!watchlists} title={t`My Watchlists`} style={{width: '100%'}}>
+            {watchlists && watchlists.length > 0 && <WatchlistsList watchlists={watchlists} onDelete={refreshWatchlists}/>}
+        </Card>
     </Flex>
 }
