@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2024-07-30 18:40+0000\n"
+"PO-Revision-Date: 2024-07-31 20:41+0000\n"
 "Last-Translator: Maël Gangloff <contact@maelgangloff.fr>\n"
 "Language-Team: French <https://weblate.vinceh121.me/projects/domain-watchdog/"
 "domain-watchdog-dashboard/fr/>\n"
@@ -270,10 +270,8 @@ msgstr ""
 "noms de domaine via l'API du Fournisseur"
 
 #: assets/components/tracking/WatchlistsList.tsx:18
-#, fuzzy
-#| msgid "My Watchlists"
 msgid "Watchlist"
-msgstr "Mes Watchlists"
+msgstr "Watchlist"
 
 #: assets/components/tracking/WatchlistsList.tsx:19
 msgid "Delete the Watchlist"
