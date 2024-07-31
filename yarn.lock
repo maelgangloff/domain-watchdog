@@ -1499,6 +1499,11 @@
   resolved "https://registry.yarnpkg.com/@fastify/busboy/-/busboy-2.1.1.tgz#b9da6a878a371829a0502c9b6c1c143ef6663f4d"
   integrity sha512-vBZP4NlzfOlerQTnba4aqZoMhE/a9HY7HRqoOPaETQcSQuWEIyZMHGfVu6w9wGtGK5fED5qRs2DteVCjOH60sA==
 
+"@fontsource/noto-color-emoji@^5.0.27":
+  version "5.0.27"
+  resolved "https://registry.yarnpkg.com/@fontsource/noto-color-emoji/-/noto-color-emoji-5.0.27.tgz#61e40657bea980553bde8fd2d566104bd2859ad6"
+  integrity sha512-gsIMN5o8qoRLrA+XyDNKKnMNpTbwpNbINisJqirLOLXl83arOV2sHRnNOkVht2gzUcImUxEUBGektp56G3Vj9w==
+
 "@jest/schemas@^29.6.3":
   version "29.6.3"
   resolved "https://registry.yarnpkg.com/@jest/schemas/-/schemas-29.6.3.tgz#430b5ce8a4e0044a7e3819663305a7b3091c8e03"

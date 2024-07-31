@@ -6,6 +6,8 @@ import {HashRouter} from "react-router-dom";
 import 'antd/dist/reset.css';
 import './i18n'
 
+import './index.css'
+
 
 const root = ReactDOM.createRoot(document.getElementById("root") as HTMLElement)
 

@@ -18,6 +18,7 @@
     "@babel/core": "^7.17.0",
     "@babel/preset-env": "^7.16.0",
     "@babel/preset-react": "^7.24.7",
+    "@fontsource/noto-color-emoji": "^5.0.27",
     "@symfony/webpack-encore": "^4.0.0",
     "@types/axios": "^0.14.0",
     "@types/jsonld": "^1.5.15",
