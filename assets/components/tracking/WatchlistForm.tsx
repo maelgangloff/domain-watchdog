@@ -209,10 +209,17 @@ export function WatchlistForm({form, connectors, onCreateWatchlist}: {
         </Form.List>
         <Form.Item label={t`Connector`}
                    name='connector'
+                   labelCol={{
+                        xs: {span: 24},
+                        sm: {span: 4},
+                   }}
+                   wrapperCol={{
+                        md: {span: 12},
+                        sm: {span: 20},
+                   }}
         >
             <Select showSearch
                     allowClear
-                    style={{width: '60%'}}
                     placeholder={t`Connector`}
                     suffixIcon={<ApiOutlined/>}
                     optionFilterProp="label"
