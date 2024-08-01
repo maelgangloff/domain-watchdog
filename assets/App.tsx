@@ -245,7 +245,7 @@ export default function App() {
                 </Layout.Content>
                 <Layout.Footer style={{textAlign: 'center'}}>
                     <Link to='https://github.com/maelgangloff/domain-watchdog'>Domain
-                        Watchdog</Link> &copy; {new Date().getFullYear()} {t`Created by Maël Gangloff`}
+                        Watchdog</Link> &copy; {new Date().getFullYear()} Maël Gangloff
                 </Layout.Footer>
             </Layout>
         </Layout>
