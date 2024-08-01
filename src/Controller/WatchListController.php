@@ -25,7 +25,6 @@ use Sabre\VObject\Reader;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Serializer\SerializerInterface;
 
@@ -67,6 +66,7 @@ class WatchListController extends AbstractController
      * @throws ParseException
      * @throws EofException
      * @throws InvalidDataException
+     * @throws Exception
      */
     #[Route(
         path: '/api/watchlists/{token}/calendar',
@@ -78,10 +78,8 @@ class WatchListController extends AbstractController
     )]
     public function getWatchlistCalendar(string $token): Response
     {
+        /** @var WatchList $watchList */
         $watchList = $this->watchListRepository->findOneBy(["token" => $token]);
-        /** @var User $user */
-        $user = $this->getUser();
-        if (!$user->getWatchLists()->contains($watchList)) throw new UnauthorizedHttpException('');
 
         $calendar = new Calendar();
 

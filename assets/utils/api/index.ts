@@ -64,7 +64,7 @@ export interface User {
     roles: string[]
 }
 
-export interface Watchlist  {
+export interface Watchlist {
     domains: string[],
     triggers: { event: EventAction, action: TriggerAction }[],
     connector?: string
@@ -76,8 +76,8 @@ export async function request<T = any, R = AxiosResponse<T>, D = any>(config: Ax
         baseURL: '/api',
         withCredentials: true,
         headers: {
+            Accept: 'application/ld+json',
             ...config.headers,
-            Accept: 'application/ld+json'
         }
     }
     return await axios.request<T, R, D>(axiosConfig)
