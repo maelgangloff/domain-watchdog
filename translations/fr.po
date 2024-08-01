@@ -604,6 +604,10 @@ msgstr "FAQ"
 msgid "Log out"
 msgstr "Se déconnecter"
 
+#: assets/App.tsx:248
+msgid "Created by Maël Gangloff"
+msgstr ""
+
 #, javascript-format
 #~ msgid "Watchlist ${ watchlist.token }"
 #~ msgstr "Watchlist ${ watchlist.token }"
