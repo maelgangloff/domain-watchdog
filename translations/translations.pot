@@ -572,7 +572,3 @@ msgstr ""
 #: assets/App.tsx:199
 msgid "Log out"
 msgstr ""
-
-#: assets/App.tsx:248
-msgid "Created by Maël Gangloff"
-msgstr ""
