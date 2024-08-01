@@ -8,6 +8,7 @@ use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Metadata\Patch;
 use ApiPlatform\Metadata\Post;
+use App\Controller\WatchListController;
 use App\Repository\WatchListRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -27,6 +28,29 @@ use Symfony\Component\Uid\Uuid;
         ),
         new Get(
             normalizationContext: ['groups' => 'watchlist:item']
+        ),
+        new Get(
+            routeName: 'watchlist_calendar',
+            controller: WatchListController::class,
+            openapiContext: [
+                'responses' => [
+                    '200' => [
+                        'description' => 'Watchlist iCalendar',
+                        'content' => [
+                            'text/calendar' => [
+                                'schema' => [
+                                    'type' => 'string',
+                                    'format' => 'text'
+                                ]
+                            ]
+                        ]
+                    ]
+                ]
+            ],
+            read: false,
+            deserialize: false,
+            serialize: false,
+            name: 'calendar'
         ),
         new Post(
             routeName: 'watchlist_create', normalizationContext: ['groups' => 'watchlist:list'],
