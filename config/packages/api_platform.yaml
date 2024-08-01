@@ -6,6 +6,7 @@ api_platform:
         jsonld: [ 'application/ld+json' ]
         xml: [ 'application/xml' ]
         json: [ 'application/json' ]
+        text: [ 'text/calendar' ]
     docs_formats:
         jsonld: [ 'application/ld+json' ]
         jsonopenapi: [ 'application/vnd.openapi+json' ]
