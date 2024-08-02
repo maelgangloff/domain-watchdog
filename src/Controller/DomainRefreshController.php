@@ -54,7 +54,7 @@ class DomainRefreshController extends AbstractController
             }
         }
 
-        $updatedAt = null === $domain ? new \DateTimeImmutable('now') : $domain->getUpdatedAt();
+        $updatedAt = null === $domain->getUpdatedAt() ? new \DateTimeImmutable('now') : $domain->getUpdatedAt();
         $domain = $this->RDAPService->registerDomain($ldhName);
 
         /** @var WatchList $watchList */

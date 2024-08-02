@@ -52,7 +52,9 @@ class ConnectorController extends AbstractController
     public function createConnector(Request $request): Connector
     {
         $connector = $this->serializer->deserialize($request->getContent(), Connector::class, 'json', ['groups' => 'connector:create']);
-        $connector->setUser($this->getUser());
+        /** @var User $user */
+        $user = $this->getUser();
+        $connector->setUser($user);
 
         if (ConnectorProvider::OVH === $connector->getProvider()) {
             $authData = OvhConnector::verifyAuthData($connector->getAuthData());

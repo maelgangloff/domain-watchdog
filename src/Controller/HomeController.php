@@ -25,7 +25,7 @@ class HomeController extends AbstractController
     #[Route(path: '/login/oauth', name: 'oauth_connect')]
     public function connectAction(ClientRegistry $clientRegistry): Response
     {
-        return $clientRegistry->getClient('oauth')->redirect();
+        return $clientRegistry->getClient('oauth')->redirect([], []);
     }
 
     #[Route(path: '/logout', name: 'logout')]

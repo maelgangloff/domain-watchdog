@@ -102,7 +102,7 @@ readonly class RDAPService
             ->filter(fn (DomainEvent $e) => $e->getDate() <= new \DateTimeImmutable('now'))
             ->toArray();
 
-        usort($events, fn (DomainEvent $e1, DomainEvent $e2) => $e2->getDate() > $e1->getDate());
+        usort($events, fn (DomainEvent $e1, DomainEvent $e2) => $e2->getDate() <=> $e1->getDate());
 
         return !empty($events) && in_array($events[0]->getAction(), self::IMPORTANT_EVENTS);
     }

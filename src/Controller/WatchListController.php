@@ -51,7 +51,9 @@ class WatchListController extends AbstractController
     public function createWatchList(Request $request): WatchList
     {
         $watchList = $this->serializer->deserialize($request->getContent(), WatchList::class, 'json', ['groups' => 'watchlist:create']);
-        $watchList->setUser($this->getUser());
+        /** @var User $user */
+        $user = $this->getUser();
+        $watchList->setUser($user);
 
         $this->em->persist($watchList);
         $this->em->flush();
@@ -86,12 +88,13 @@ class WatchListController extends AbstractController
             /** @var DomainEntity $entity */
             foreach ($domain->getDomainEntities()->toArray() as $entity) {
                 $vCard = Reader::readJson($entity->getEntity()->getJCard());
-                $email = (string) $vCard->EMAIL;
-                if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-                    continue;
+                if (isset($vCard->EMAIL) && isset($vCard->FN)) {
+                    $email = (string) $vCard->EMAIL;
+                    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                        continue;
+                    }
+                    $attendees[] = (new Attendee(new EmailAddress($email)))->setDisplayName((string) $vCard->FN);
                 }
-
-                $attendees[] = (new Attendee(new EmailAddress($email)))->setDisplayName((string) $vCard->FN);
             }
 
             /** @var DomainEvent $event */
