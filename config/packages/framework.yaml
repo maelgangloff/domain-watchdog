@@ -13,6 +13,11 @@ framework:
             policy: 'sliding_window'
             limit: 25
             interval: '1 day'
+    assets:
+        base_path: '/'
+        packages:
+            api_platform:
+                base_path: '/'
 
 when@test:
     framework:

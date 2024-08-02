@@ -1,7 +1,7 @@
 api_platform:
     title: Domain Watchdog API
     version: 1.0.0
-        
+    asset_package: 'api_platform'
     formats:
         jsonld: [ 'application/ld+json' ]
         xml: [ 'application/xml' ]
