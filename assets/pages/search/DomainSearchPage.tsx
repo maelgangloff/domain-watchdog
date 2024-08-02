@@ -41,8 +41,9 @@ export default function DomainSearchPage() {
                                                       domain.tld.type === 'gTLD' ? "green"
                                                           : "cyan"
                                           }>
-                                <Card title={<>{domain.ldhName}{domain.handle ? <> (<Text
-                                    code>{domain.handle}</Text>)</> : undefined}</>}
+                                <Card title={<>
+                                    {domain.ldhName}{domain.handle && <Text code>{domain.handle}</Text>}
+                                </>}
                                       size="small">
                                     {domain.status.length > 0 &&
                                         <>

@@ -37,15 +37,17 @@ export function WatchlistsList({watchlists, onDelete}: { watchlists: Watchlist[]
                         onConfirm={() => deleteWatchlist(watchlist.token).then(onDelete)}
                         okText={t`Yes`}
                         cancelText={t`No`}
-                        okButtonProps={{danger: true}}
-                    ><DeleteFilled style={{color: token.colorError}}/></Popconfirm>}>
+                        okButtonProps={{danger: true}}>
+                        <DeleteFilled style={{color: token.colorError}}/>
+                    </Popconfirm>}
+                >
                     <Card.Meta description={watchlist.token} style={{marginBottom: '1em'}}/>
                     <Table
                         columns={columns}
                         pagination={false}
                         dataSource={[{
                             domains: watchlist.domains.map(d =>
-                                <Typography.Paragraph>{d.ldhName}</Typography.Paragraph>),
+                                <><Typography.Text code>{d.ldhName}</Typography.Text><br/></>),
                             events: watchlist.triggers?.filter(t => t.action === 'email')
                                 .map(t => <Tag color={actionToColor(t.event)}>{t.event}</Tag>)
                         }]}

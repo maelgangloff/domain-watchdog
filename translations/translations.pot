@@ -308,19 +308,19 @@ msgstr ""
 msgid "Domain finder"
 msgstr ""
 
-#: assets/pages/search/DomainSearchPage.tsx:49
+#: assets/pages/search/DomainSearchPage.tsx:50
 msgid "EPP Status Codes"
 msgstr ""
 
-#: assets/pages/search/DomainSearchPage.tsx:59
+#: assets/pages/search/DomainSearchPage.tsx:60
 msgid "Timeline"
 msgstr ""
 
-#: assets/pages/search/DomainSearchPage.tsx:64
+#: assets/pages/search/DomainSearchPage.tsx:65
 msgid "Entities"
 msgstr ""
 
-#: assets/pages/search/DomainSearchPage.tsx:72
+#: assets/pages/search/DomainSearchPage.tsx:73
 msgid ""
 "Although the domain exists in my database, it has been deleted from the "
 "WHOIS by its registrar."
