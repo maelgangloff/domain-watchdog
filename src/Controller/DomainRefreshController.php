@@ -35,7 +35,7 @@ class DomainRefreshController extends AbstractController
      */
     public function __invoke(string $ldhName, KernelInterface $kernel): ?Domain
     {
-        /** @var Domain $domain */
+        /** @var ?Domain $domain */
         $domain = $this->domainRepository->findOneBy(['ldhName' => $ldhName]);
 
         // If the domain name exists in the database, recently updated and not important, we return the stored Domain
@@ -54,7 +54,7 @@ class DomainRefreshController extends AbstractController
             }
         }
 
-        $updatedAt = null === $domain->getUpdatedAt() ? new \DateTimeImmutable('now') : $domain->getUpdatedAt();
+        $updatedAt = null === $domain ? new \DateTimeImmutable('now') : $domain->getUpdatedAt();
         $domain = $this->RDAPService->registerDomain($ldhName);
 
         /** @var WatchList $watchList */
