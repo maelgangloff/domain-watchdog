@@ -97,11 +97,20 @@ class WatchList
     #[Groups(['watchlist:list', 'watchlist:item', 'watchlist:create', 'watchlist:update'])]
     private ?Connector $connector = null;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(['watchlist:list', 'watchlist:item', 'watchlist:create', 'watchlist:update'])]
+    private ?string $name = null;
+
+    #[ORM\Column]
+    #[Groups(['watchlist:list', 'watchlist:item'])]
+    private ?\DateTimeImmutable $createdAt = null;
+
     public function __construct()
     {
         $this->token = Uuid::v4();
         $this->domains = new ArrayCollection();
         $this->watchListTriggers = new ArrayCollection();
+        $this->createdAt = new \DateTimeImmutable('now');
     }
 
     public function getToken(): ?string
@@ -183,6 +192,30 @@ class WatchList
     public function setConnector(?Connector $connector): static
     {
         $this->connector = $connector;
+
+        return $this;
+    }
+
+    public function getName(): ?string
+    {
+        return $this->name;
+    }
+
+    public function setName(?string $name): static
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    public function getCreatedAt(): ?\DateTimeImmutable
+    {
+        return $this->createdAt;
+    }
+
+    public function setCreatedAt(\DateTimeImmutable $createdAt): static
+    {
+        $this->createdAt = $createdAt;
 
         return $this;
     }

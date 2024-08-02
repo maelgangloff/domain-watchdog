@@ -60,6 +60,10 @@ class Connector
     #[ORM\OneToMany(targetEntity: WatchList::class, mappedBy: 'connector')]
     private Collection $watchLists;
 
+    #[Groups(['connector:list', 'watchlist:list'])]
+    #[ORM\Column]
+    private ?\DateTimeImmutable $createdAt = null;
+
     public function __construct()
     {
         $this->id = Uuid::v4();
@@ -133,6 +137,18 @@ class Connector
                 $watchList->setConnector(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getCreatedAt(): ?\DateTimeImmutable
+    {
+        return $this->createdAt;
+    }
+
+    public function setCreatedAt(\DateTimeImmutable $createdAt): static
+    {
+        $this->createdAt = $createdAt;
 
         return $this;
     }
