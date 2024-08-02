@@ -1,4 +1,4 @@
-import {Card, Divider, Popconfirm, Table, Tag, theme, Typography} from "antd";
+import {Card, Divider, Popconfirm, Table, Tag, theme} from "antd";
 import {t} from "ttag";
 import {deleteWatchlist} from "../../utils/api";
 import {DeleteFilled} from "@ant-design/icons";
@@ -46,8 +46,7 @@ export function WatchlistsList({watchlists, onDelete}: { watchlists: Watchlist[]
                         columns={columns}
                         pagination={false}
                         dataSource={[{
-                            domains: watchlist.domains.map(d =>
-                                <><Typography.Text code>{d.ldhName}</Typography.Text><br/></>),
+                            domains: watchlist.domains.map(d => <Tag>{d.ldhName}</Tag>),
                             events: watchlist.triggers?.filter(t => t.action === 'email')
                                 .map(t => <Tag color={actionToColor(t.event)}>{t.event}</Tag>)
                         }]}
