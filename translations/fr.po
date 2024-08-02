@@ -321,19 +321,19 @@ msgstr "Une erreur s'est produite"
 msgid "Domain finder"
 msgstr "Rechercher un domaine"
 
-#: assets/pages/search/DomainSearchPage.tsx:49
+#: assets/pages/search/DomainSearchPage.tsx:50
 msgid "EPP Status Codes"
 msgstr "Codes de statut EPP"
 
-#: assets/pages/search/DomainSearchPage.tsx:59
+#: assets/pages/search/DomainSearchPage.tsx:60
 msgid "Timeline"
 msgstr "Chronologie"
 
-#: assets/pages/search/DomainSearchPage.tsx:64
+#: assets/pages/search/DomainSearchPage.tsx:65
 msgid "Entities"
 msgstr "Entités"
 
-#: assets/pages/search/DomainSearchPage.tsx:72
+#: assets/pages/search/DomainSearchPage.tsx:73
 msgid ""
 "Although the domain exists in my database, it has been deleted from the "
 "WHOIS by its registrar."
