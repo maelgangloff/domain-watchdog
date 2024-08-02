@@ -38,6 +38,11 @@ function TldTable(filters: FiltersType) {
         getTldList(params).then((data) => {
             setTotal(data['hydra:totalItems'])
             setDataTable(data['hydra:member'].map((tld: Tld) => {
+
+                const rowData = {
+                    key: tld.tld,
+                    TLD: <Typography.Text code>{punycode.toUnicode(tld.tld)}</Typography.Text>
+                }
                 switch (filters.type) {
                     case 'ccTLD':
                         let countryName
@@ -49,22 +54,17 @@ function TldTable(filters: FiltersType) {
                         }
 
                         return {
-                            key: tld.tld,
-                            TLD: punycode.toUnicode(tld.tld),
+                            ...rowData,
                             Flag: toEmoji(tld.tld),
                             Country: countryName
                         }
                     case 'gTLD':
                         return {
-                            key: tld.tld,
-                            TLD: punycode.toUnicode(tld.tld),
+                            ...rowData,
                             Operator: tld.registryOperator
                         }
                     default:
-                        return {
-                            key: tld.tld,
-                            TLD: punycode.toUnicode(tld.tld)
-                        }
+                        return rowData
                 }
             }))
         })
