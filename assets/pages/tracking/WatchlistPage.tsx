@@ -8,7 +8,12 @@ import {WatchlistsList} from "../../components/tracking/WatchlistsList";
 import {Connector, getConnectors} from "../../utils/api/connectors";
 
 
-type Watchlist = { token: string, domains: { ldhName: string }[], triggers?: { event: EventAction, action: string }[] }
+export type Watchlist = {
+    token: string,
+    domains: { ldhName: string }[],
+    triggers?: { event: EventAction, action: string }[],
+    connector?: string
+}
 
 export default function WatchlistPage() {
 
@@ -66,9 +71,7 @@ export default function WatchlistPage() {
 
         <Divider/>
 
-        <Card size="small" loading={!watchlists} title={t`My Watchlists`} style={{width: '100%'}}>
-            {watchlists && watchlists.length > 0 &&
-                <WatchlistsList watchlists={watchlists} onDelete={refreshWatchlists}/>}
-        </Card>
+        {watchlists && watchlists.length > 0 &&
+            <WatchlistsList watchlists={watchlists} onDelete={refreshWatchlists}/>}
     </Flex>
 }

@@ -45,9 +45,8 @@ export default function ConnectorsPage() {
 
 
         <Skeleton loading={connectors === undefined} active>
-            {connectors && connectors.length > 0 && <Card title={t`My Connectors`} style={{width: '100%'}}>
+            {connectors && connectors.length > 0 &&
                 <ConnectorsList connectors={connectors} onDelete={refreshConnectors}/>
-            </Card>
             }
         </Skeleton>
     </Flex>

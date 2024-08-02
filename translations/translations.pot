@@ -3,47 +3,47 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Plural-Forms: nplurals=2; plural=(n!=1);\n"
 
-#: assets/components/search/EventTimeline.tsx:19
+#: assets/components/search/EventTimeline.tsx:28
 msgid "Registration"
 msgstr ""
 
-#: assets/components/search/EventTimeline.tsx:20
+#: assets/components/search/EventTimeline.tsx:29
 msgid "Reregistration"
 msgstr ""
 
-#: assets/components/search/EventTimeline.tsx:21
+#: assets/components/search/EventTimeline.tsx:30
 msgid "Last changed"
 msgstr ""
 
-#: assets/components/search/EventTimeline.tsx:22
+#: assets/components/search/EventTimeline.tsx:31
 msgid "Expiration"
 msgstr ""
 
-#: assets/components/search/EventTimeline.tsx:23
+#: assets/components/search/EventTimeline.tsx:32
 msgid "Deletion"
 msgstr ""
 
-#: assets/components/search/EventTimeline.tsx:24
+#: assets/components/search/EventTimeline.tsx:33
 msgid "Reinstantiation"
 msgstr ""
 
-#: assets/components/search/EventTimeline.tsx:25
+#: assets/components/search/EventTimeline.tsx:34
 msgid "Transfer"
 msgstr ""
 
-#: assets/components/search/EventTimeline.tsx:26
+#: assets/components/search/EventTimeline.tsx:35
 msgid "Locked"
 msgstr ""
 
-#: assets/components/search/EventTimeline.tsx:27
+#: assets/components/search/EventTimeline.tsx:36
 msgid "Unlocked"
 msgstr ""
 
-#: assets/components/search/EventTimeline.tsx:28
+#: assets/components/search/EventTimeline.tsx:37
 msgid "Registrar expiration"
 msgstr ""
 
-#: assets/components/search/EventTimeline.tsx:29
+#: assets/components/search/EventTimeline.tsx:38
 msgid "ENUM validation expiration"
 msgstr ""
 
@@ -59,8 +59,8 @@ msgstr ""
 #: assets/components/tracking/WatchlistForm.tsx:110
 #: assets/components/tracking/WatchlistForm.tsx:169
 #: assets/components/tracking/WatchlistForm.tsx:179
-#: assets/pages/LoginPage.tsx:53
-#: assets/pages/LoginPage.tsx:61
+#: assets/pages/LoginPage.tsx:60
+#: assets/pages/LoginPage.tsx:68
 msgid "Required"
 msgstr ""
 
@@ -158,11 +158,11 @@ msgid "At least one domain name"
 msgstr ""
 
 #: assets/components/tracking/WatchlistForm.tsx:101
+#: assets/components/tracking/WatchlistsList.tsx:19
 msgid "Domain names"
 msgstr ""
 
 #: assets/components/tracking/WatchlistForm.tsx:119
-#: assets/components/tracking/WatchlistsList.tsx:28
 msgid "Domain name"
 msgstr ""
 
@@ -190,6 +190,7 @@ msgstr ""
 msgid "Add a Trigger"
 msgstr ""
 
+#: assets/components/tracking/ConnectorsList.tsx:28
 #: assets/components/tracking/WatchlistForm.tsx:210
 #: assets/components/tracking/WatchlistForm.tsx:223
 msgid "Connector"
@@ -206,7 +207,7 @@ msgid "Reset"
 msgstr ""
 
 #: assets/components/tracking/ConnectorForm.tsx:37
-#: assets/components/tracking/ConnectorsList.tsx:21
+#: assets/components/tracking/ConnectorsList.tsx:20
 msgid "Provider"
 msgstr ""
 
@@ -256,42 +257,37 @@ msgid ""
 "names via the Provider's API"
 msgstr ""
 
-#: assets/components/tracking/WatchlistsList.tsx:18
-msgid "Watchlist"
-msgstr ""
-
-#: assets/components/tracking/WatchlistsList.tsx:19
-msgid "Delete the Watchlist"
-msgstr ""
-
-#: assets/components/tracking/WatchlistsList.tsx:20
-msgid "Are you sure to delete this Watchlist?"
-msgstr ""
-
-#: assets/components/tracking/ConnectorsList.tsx:17
-#: assets/components/tracking/WatchlistsList.tsx:22
-msgid "Yes"
-msgstr ""
-
-#: assets/components/tracking/ConnectorsList.tsx:18
 #: assets/components/tracking/WatchlistsList.tsx:23
-msgid "No"
+msgid "Tracked events"
 msgstr ""
 
 #: assets/components/tracking/WatchlistsList.tsx:32
-msgid "Domain triggers"
+msgid "Watchlist"
 msgstr ""
 
-#: assets/components/tracking/ConnectorsList.tsx:13
-#, javascript-format
-msgid "Connector ${ connector.id }"
+#: assets/components/tracking/WatchlistsList.tsx:35
+msgid "Delete the Watchlist"
 msgstr ""
 
-#: assets/components/tracking/ConnectorsList.tsx:14
+#: assets/components/tracking/WatchlistsList.tsx:36
+msgid "Are you sure to delete this Watchlist?"
+msgstr ""
+
+#: assets/components/tracking/ConnectorsList.tsx:33
+#: assets/components/tracking/WatchlistsList.tsx:38
+msgid "Yes"
+msgstr ""
+
+#: assets/components/tracking/ConnectorsList.tsx:34
+#: assets/components/tracking/WatchlistsList.tsx:39
+msgid "No"
+msgstr ""
+
+#: assets/components/tracking/ConnectorsList.tsx:30
 msgid "Delete the Connector"
 msgstr ""
 
-#: assets/components/tracking/ConnectorsList.tsx:15
+#: assets/components/tracking/ConnectorsList.tsx:31
 msgid "Are you sure to delete this Connector?"
 msgstr ""
 
@@ -302,9 +298,9 @@ msgstr ""
 #: assets/pages/search/DomainSearchPage.tsx:24
 #: assets/pages/tracking/ConnectorsPage.tsx:23
 #: assets/pages/tracking/ConnectorsPage.tsx:31
-#: assets/pages/tracking/WatchlistPage.tsx:36
-#: assets/pages/tracking/WatchlistPage.tsx:44
-#: assets/pages/tracking/WatchlistPage.tsx:54
+#: assets/pages/tracking/WatchlistPage.tsx:41
+#: assets/pages/tracking/WatchlistPage.tsx:49
+#: assets/pages/tracking/WatchlistPage.tsx:59
 msgid "An error occurred"
 msgstr ""
 
@@ -409,7 +405,7 @@ msgstr ""
 msgid "My Account"
 msgstr ""
 
-#: assets/pages/LoginPage.tsx:51
+#: assets/pages/LoginPage.tsx:58
 #: assets/pages/watchdog/UserPage.tsx:18
 msgid "Username"
 msgstr ""
@@ -426,22 +422,12 @@ msgstr ""
 msgid "Create a Connector"
 msgstr ""
 
-#: assets/App.tsx:145
-#: assets/pages/tracking/ConnectorsPage.tsx:48
-msgid "My Connectors"
-msgstr ""
-
-#: assets/pages/tracking/WatchlistPage.tsx:33
+#: assets/pages/tracking/WatchlistPage.tsx:38
 msgid "Watchlist created !"
 msgstr ""
 
-#: assets/pages/tracking/WatchlistPage.tsx:59
+#: assets/pages/tracking/WatchlistPage.tsx:64
 msgid "Create a Watchlist"
-msgstr ""
-
-#: assets/App.tsx:138
-#: assets/pages/tracking/WatchlistPage.tsx:69
-msgid "My Watchlists"
 msgstr ""
 
 #: assets/pages/NotFoundPage.tsx:10
@@ -449,23 +435,23 @@ msgid "Sorry, the page you visited does not exist."
 msgstr ""
 
 #: assets/App.tsx:205
-#: assets/pages/LoginPage.tsx:31
+#: assets/pages/LoginPage.tsx:38
 msgid "Log in"
 msgstr ""
 
-#: assets/pages/LoginPage.tsx:36
+#: assets/pages/LoginPage.tsx:43
 msgid "Error"
 msgstr ""
 
-#: assets/pages/LoginPage.tsx:59
+#: assets/pages/LoginPage.tsx:66
 msgid "Password"
 msgstr ""
 
-#: assets/pages/LoginPage.tsx:68
+#: assets/pages/LoginPage.tsx:75
 msgid "Submit"
 msgstr ""
 
-#: assets/pages/LoginPage.tsx:73
+#: assets/pages/LoginPage.tsx:80
 msgid "Log in with SSO"
 msgstr ""
 
@@ -551,6 +537,14 @@ msgstr ""
 
 #: assets/App.tsx:132
 msgid "Tracking"
+msgstr ""
+
+#: assets/App.tsx:138
+msgid "My Watchlists"
+msgstr ""
+
+#: assets/App.tsx:145
+msgid "My Connectors"
 msgstr ""
 
 #: assets/App.tsx:153

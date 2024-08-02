@@ -8,9 +8,18 @@ import {
 } from "@ant-design/icons";
 import {Timeline} from "antd";
 import React from "react";
-import {Domain} from "../../utils/api";
+import {Domain, EventAction} from "../../utils/api";
 import {t} from "ttag";
 import useBreakpoint from "../../hooks/useBreakpoint";
+
+export function actionToColor(a: EventAction) {
+    return a === 'registration' ? 'green' :
+        a === 'reregistration' ? 'cyan' :
+            a === 'expiration' ? 'red' :
+                a === 'deletion' ? 'magenta' :
+                    a === 'transfer' ? 'orange' :
+                        a === 'last changed' ? 'blue' : 'default'
+}
 
 export function EventTimeline({domain}: { domain: Domain }) {
     const sm = useBreakpoint('sm')
@@ -37,24 +46,18 @@ export function EventTimeline({domain}: { domain: Domain }) {
             .sort((e1, e2) => new Date(e2.date).getTime() - new Date(e1.date).getTime())
             .map(({action, date}) => {
 
-                    let color, dot
+                    let dot
                     if (action === 'registration') {
-                        color = 'green'
                         dot = <SignatureOutlined style={{fontSize: '16px'}}/>
                     } else if (action === 'expiration') {
-                        color = 'red'
                         dot = <ClockCircleOutlined style={{fontSize: '16px'}}/>
                     } else if (action === 'transfer') {
-                        color = 'orange'
                         dot = <ShareAltOutlined style={{fontSize: '16px'}}/>
                     } else if (action === 'last changed') {
-                        color = 'blue'
                         dot = <SyncOutlined style={{fontSize: '16px'}}/>
                     } else if (action === 'deletion') {
-                        color = 'red'
                         dot = <DeleteOutlined style={{fontSize: '16px'}}/>
                     } else if (action === 'reregistration') {
-                        color = 'green'
                         dot = <ReloadOutlined style={{fontSize: '16px'}}/>
                     }
 
@@ -69,7 +72,7 @@ export function EventTimeline({domain}: { domain: Domain }) {
                     }
 
                     return {
-                        color,
+                        color: actionToColor(action),
                         dot,
                         pending: new Date(date).getTime() > new Date().getTime(),
                         ...text
