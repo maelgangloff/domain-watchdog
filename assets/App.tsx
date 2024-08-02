@@ -59,7 +59,7 @@ export default function App() {
     useEffect(() => {
         getUser().then(() => {
             setIsAuthenticated(true)
-            if (location.pathname === '/login') navigate('/search/domain')
+            if (location.pathname === '/login') navigate('/home')
         }).catch(() => {
             setIsAuthenticated(false)
             navigate('/home')

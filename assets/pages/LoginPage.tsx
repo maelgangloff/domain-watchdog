@@ -1,6 +1,6 @@
-import React, {createContext, useContext, useState} from "react";
+import React, {createContext, useContext, useEffect, useState} from "react";
 import {Alert, Button, Card, Flex, Form, Input} from "antd";
-import {login} from "../utils/api";
+import {getUser, login} from "../utils/api";
 import {useNavigate} from "react-router-dom";
 import {t} from 'ttag'
 
@@ -11,7 +11,7 @@ type FieldType = {
 
 export const AuthenticatedContext = createContext<any>(null)
 
-export default function Page() {
+export default function LoginPage() {
 
     const [error, setError] = useState()
     const navigate = useNavigate()
@@ -26,6 +26,13 @@ export default function Page() {
             setError(e.response.data.message)
         })
     }
+
+    useEffect(() => {
+        getUser().then(() => {
+            setIsAuthenticated(true)
+            navigate('/home')
+        })
+    }, [])
 
     return <Flex gap="middle" align="center" justify="center" vertical><Card
         title={t`Log in`}
