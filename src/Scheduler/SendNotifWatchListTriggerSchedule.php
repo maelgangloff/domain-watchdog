@@ -14,8 +14,7 @@ final readonly class SendNotifWatchListTriggerSchedule implements ScheduleProvid
 {
     public function __construct(
         private CacheInterface $cache,
-    )
-    {
+    ) {
     }
 
     public function getSchedule(): Schedule

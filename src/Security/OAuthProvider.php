@@ -13,11 +13,9 @@ class OAuthProvider extends AbstractProvider
 {
     use BearerAuthorizationTrait;
 
-
     public function __construct(private readonly array $options = [], array $collaborators = [])
     {
         parent::__construct($options, $collaborators);
-
     }
 
     public function getBaseAuthorizationUrl(): string
@@ -43,11 +41,7 @@ class OAuthProvider extends AbstractProvider
     protected function checkResponse(ResponseInterface $response, $data): void
     {
         if ($response->getStatusCode() >= 400) {
-            throw new IdentityProviderException(
-                $data['error'] ?? 'Unknown error',
-                $response->getStatusCode(),
-                $response
-            );
+            throw new IdentityProviderException($data['error'] ?? 'Unknown error', $response->getStatusCode(), $response);
         }
     }
 

@@ -9,7 +9,6 @@ use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\GetCollection;
 use App\Config\TldType;
 use App\Repository\TldRepository;
-use DateTimeImmutable;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
@@ -26,7 +25,7 @@ use Symfony\Component\Serializer\Attribute\Groups;
         new Get(
             uriTemplate: '/tld/{tld}',
             normalizationContext: ['groups' => ['tld:item']]
-        )
+        ),
     ]
 )]
 #[ApiFilter(SearchFilter::class)]
@@ -35,7 +34,7 @@ class Tld
 {
     #[ORM\Id]
     #[ORM\Column(length: 63)]
-    #[Groups(["tld:list", "tld:item"])]
+    #[Groups(['tld:list', 'tld:item'])]
     private ?string $tld = null;
     /**
      * @var Collection<int, RdapServer>
@@ -44,31 +43,31 @@ class Tld
     private Collection $rdapServers;
 
     #[ORM\Column(nullable: true)]
-    #[Groups(["tld:list", "tld:item"])]
+    #[Groups(['tld:list', 'tld:item'])]
     private ?bool $contractTerminated = null;
 
     #[ORM\Column(type: Types::DATE_IMMUTABLE, nullable: true)]
-    #[Groups(["tld:item"])]
-    private ?DateTimeImmutable $dateOfContractSignature = null;
+    #[Groups(['tld:item'])]
+    private ?\DateTimeImmutable $dateOfContractSignature = null;
 
     #[ORM\Column(type: Types::DATE_IMMUTABLE, nullable: true)]
-    #[Groups(["tld:item"])]
-    private ?DateTimeImmutable $delegationDate = null;
+    #[Groups(['tld:item'])]
+    private ?\DateTimeImmutable $delegationDate = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    #[Groups(["tld:list", "tld:item"])]
+    #[Groups(['tld:list', 'tld:item'])]
     private ?string $registryOperator = null;
 
     #[ORM\Column(type: Types::DATE_IMMUTABLE, nullable: true)]
-    #[Groups(["tld:item"])]
-    private ?DateTimeImmutable $removalDate = null;
+    #[Groups(['tld:item'])]
+    private ?\DateTimeImmutable $removalDate = null;
 
     #[ORM\Column(nullable: true)]
-    #[Groups(["tld:list", "tld:item"])]
+    #[Groups(['tld:list', 'tld:item'])]
     private ?bool $specification13 = null;
 
     #[ORM\Column(length: 10, enumType: TldType::class)]
-    #[Groups(["tld:item"])]
+    #[Groups(['tld:item'])]
     private ?TldType $type = null;
 
     public function __construct()
@@ -130,24 +129,24 @@ class Tld
         return $this;
     }
 
-    public function getDateOfContractSignature(): ?DateTimeImmutable
+    public function getDateOfContractSignature(): ?\DateTimeImmutable
     {
         return $this->dateOfContractSignature;
     }
 
-    public function setDateOfContractSignature(?DateTimeImmutable $dateOfContractSignature): static
+    public function setDateOfContractSignature(?\DateTimeImmutable $dateOfContractSignature): static
     {
         $this->dateOfContractSignature = $dateOfContractSignature;
 
         return $this;
     }
 
-    public function getDelegationDate(): ?DateTimeImmutable
+    public function getDelegationDate(): ?\DateTimeImmutable
     {
         return $this->delegationDate;
     }
 
-    public function setDelegationDate(?DateTimeImmutable $delegationDate): static
+    public function setDelegationDate(?\DateTimeImmutable $delegationDate): static
     {
         $this->delegationDate = $delegationDate;
 
@@ -166,12 +165,12 @@ class Tld
         return $this;
     }
 
-    public function getRemovalDate(): ?DateTimeImmutable
+    public function getRemovalDate(): ?\DateTimeImmutable
     {
         return $this->removalDate;
     }
 
-    public function setRemovalDate(?DateTimeImmutable $removalDate): static
+    public function setRemovalDate(?\DateTimeImmutable $removalDate): static
     {
         $this->removalDate = $removalDate;
 

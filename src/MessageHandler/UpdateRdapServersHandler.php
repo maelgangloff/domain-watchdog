@@ -10,14 +10,12 @@ use Symfony\Contracts\HttpClient\Exception\DecodingExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\RedirectionExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\ServerExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
-use Throwable;
 
 #[AsMessageHandler]
 final readonly class UpdateRdapServersHandler
 {
     public function __construct(private RDAPService $RDAPService)
     {
-
     }
 
     /**
@@ -25,23 +23,25 @@ final readonly class UpdateRdapServersHandler
      * @throws ServerExceptionInterface
      * @throws RedirectionExceptionInterface
      * @throws DecodingExceptionInterface
-     * @throws ClientExceptionInterface|Throwable
+     * @throws ClientExceptionInterface|\Throwable
      */
     public function __invoke(UpdateRdapServers $message): void
     {
-        /** @var Throwable[] $throws */
+        /** @var \Throwable[] $throws */
         $throws = [];
         try {
             $this->RDAPService->updateTldListIANA();
             $this->RDAPService->updateGTldListICANN();
-        } catch (Throwable $throwable) {
+        } catch (\Throwable $throwable) {
             $throws[] = $throwable;
         }
         try {
             $this->RDAPService->updateRDAPServers();
-        } catch (Throwable $throwable) {
+        } catch (\Throwable $throwable) {
             $throws[] = $throwable;
         }
-        if (!empty($throws)) throw $throws[0];
+        if (!empty($throws)) {
+            throw $throws[0];
+        }
     }
 }

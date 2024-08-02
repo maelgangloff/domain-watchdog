@@ -16,16 +16,16 @@ use Symfony\Component\Serializer\Attribute\Groups;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\UniqueConstraint(name: 'UNIQ_IDENTIFIER_EMAIL', fields: ['email'])]
-#[ORM\Table(name: "`user`")]
+#[ORM\Table(name: '`user`')]
 #[UniqueEntity(fields: ['email'], message: 'There is already an account with this email')]
 #[ApiResource(
     operations: [
         new Get(
             uriTemplate: '/me',
             controller: MeController::class,
-            normalizationContext: ["groups" => "user:list"],
+            normalizationContext: ['groups' => 'user:list'],
             read: false
-        )
+        ),
     ]
 )]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
@@ -94,13 +94,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     public function getUserIdentifier(): string
     {
-        return (string)$this->email;
+        return (string) $this->email;
     }
 
     /**
      * @return list<string>
-     * @see UserInterface
      *
+     * @see UserInterface
      */
     public function getRoles(): array
     {
@@ -112,7 +112,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     /**
-     * @param array $roles
      * @return User
      */
     public function setRoles(array $roles): static

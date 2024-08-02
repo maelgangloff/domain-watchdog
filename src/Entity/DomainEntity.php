@@ -27,7 +27,6 @@ class DomainEntity
     #[Groups(['domain-entity:entity', 'domain-entity:domain'])]
     private array $roles = [];
 
-
     public function getDomain(): ?Domain
     {
         return $this->domain;
@@ -66,5 +65,4 @@ class DomainEntity
 
         return $this;
     }
-
 }

@@ -11,14 +11,12 @@ use Symfony\Component\Messenger\Exception\ExceptionInterface;
 use Symfony\Component\Messenger\MessageBusInterface;
 
 #[AsMessageHandler]
-readonly final class ProcessWatchListsTriggerHandler
+final readonly class ProcessWatchListsTriggerHandler
 {
-
     public function __construct(
         private WatchListRepository $watchListRepository,
         private MessageBusInterface $bus
-    )
-    {
+    ) {
     }
 
     /**
@@ -31,5 +29,4 @@ readonly final class ProcessWatchListsTriggerHandler
             $this->bus->dispatch(new ProcessWatchListTrigger($watchList->getToken()));
         }
     }
-
 }

@@ -6,7 +6,6 @@ use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\Get;
 use App\Controller\DomainRefreshController;
 use App\Repository\DomainRepository;
-use DateTimeImmutable;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
@@ -27,7 +26,7 @@ use Symfony\Component\Serializer\Attribute\SerializedName;
         ),
         */
         new Get(
-            uriTemplate: '/domains/{ldhName}', # Do not delete this line, otherwise Symfony interprets the TLD of the domain name as a return type
+            uriTemplate: '/domains/{ldhName}', // Do not delete this line, otherwise Symfony interprets the TLD of the domain name as a return type
             controller: DomainRefreshController::class,
             normalizationContext: [
                 'groups' => [
@@ -36,11 +35,11 @@ use Symfony\Component\Serializer\Attribute\SerializedName;
                     'domain-entity:entity',
                     'nameserver-entity:nameserver',
                     'nameserver-entity:entity',
-                    'tld:item'
-                ]
+                    'tld:item',
+                ],
             ],
             read: false
-        )
+        ),
     ]
 )]
 class Domain
@@ -91,10 +90,10 @@ class Domain
     private Collection $nameservers;
 
     #[ORM\Column(type: Types::DATE_IMMUTABLE)]
-    private ?DateTimeImmutable $createdAt = null;
+    private ?\DateTimeImmutable $createdAt = null;
 
     #[ORM\Column(type: Types::DATE_IMMUTABLE)]
-    private ?DateTimeImmutable $updatedAt = null;
+    private ?\DateTimeImmutable $updatedAt = null;
 
     #[ORM\ManyToOne]
     #[ORM\JoinColumn(referencedColumnName: 'tld', nullable: false)]
@@ -111,8 +110,8 @@ class Domain
         $this->domainEntities = new ArrayCollection();
         $this->watchLists = new ArrayCollection();
         $this->nameservers = new ArrayCollection();
-        $this->createdAt = new DateTimeImmutable('now');
-        $this->updatedAt = new DateTimeImmutable('now');
+        $this->createdAt = new \DateTimeImmutable('now');
+        $this->updatedAt = new \DateTimeImmutable('now');
 
         $this->deleted = false;
     }
@@ -264,7 +263,7 @@ class Domain
         return $this;
     }
 
-    public function getUpdatedAt(): ?DateTimeImmutable
+    public function getUpdatedAt(): ?\DateTimeImmutable
     {
         return $this->updatedAt;
     }
@@ -273,27 +272,25 @@ class Domain
     #[ORM\PreUpdate]
     public function updateTimestamps(): void
     {
-        $this->setUpdatedAt(new DateTimeImmutable('now'));
-        if ($this->getCreatedAt() === null) {
-            $this->setCreatedAt(new DateTimeImmutable('now'));
+        $this->setUpdatedAt(new \DateTimeImmutable('now'));
+        if (null === $this->getCreatedAt()) {
+            $this->setCreatedAt(new \DateTimeImmutable('now'));
         }
     }
 
-    private function setUpdatedAt(?DateTimeImmutable $updatedAt): void
+    private function setUpdatedAt(?\DateTimeImmutable $updatedAt): void
     {
         $this->updatedAt = $updatedAt;
-
     }
 
-    public function getCreatedAt(): ?DateTimeImmutable
+    public function getCreatedAt(): ?\DateTimeImmutable
     {
         return $this->createdAt;
     }
 
-    private function setCreatedAt(?DateTimeImmutable $createdAt): void
+    private function setCreatedAt(?\DateTimeImmutable $createdAt): void
     {
         $this->createdAt = $createdAt;
-
     }
 
     public function getTld(): ?Tld

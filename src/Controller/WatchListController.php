@@ -17,7 +17,6 @@ use Eluceo\iCal\Domain\ValueObject\Date;
 use Eluceo\iCal\Domain\ValueObject\EmailAddress;
 use Eluceo\iCal\Domain\ValueObject\SingleDay;
 use Eluceo\iCal\Presentation\Factory\CalendarFactory;
-use Exception;
 use Sabre\VObject\EofException;
 use Sabre\VObject\InvalidDataException;
 use Sabre\VObject\ParseException;
@@ -30,17 +29,15 @@ use Symfony\Component\Serializer\SerializerInterface;
 
 class WatchListController extends AbstractController
 {
-
     public function __construct(
-        private readonly SerializerInterface    $serializer,
+        private readonly SerializerInterface $serializer,
         private readonly EntityManagerInterface $em,
-        private readonly WatchListRepository    $watchListRepository
-    )
-    {
+        private readonly WatchListRepository $watchListRepository
+    ) {
     }
 
     /**
-     * @throws Exception
+     * @throws \Exception
      */
     #[Route(
         path: '/api/watchlists',
@@ -66,7 +63,7 @@ class WatchListController extends AbstractController
      * @throws ParseException
      * @throws EofException
      * @throws InvalidDataException
-     * @throws Exception
+     * @throws \Exception
      */
     #[Route(
         path: '/api/watchlists/{token}/calendar',
@@ -79,7 +76,7 @@ class WatchListController extends AbstractController
     public function getWatchlistCalendar(string $token): Response
     {
         /** @var WatchList $watchList */
-        $watchList = $this->watchListRepository->findOneBy(["token" => $token]);
+        $watchList = $this->watchListRepository->findOneBy(['token' => $token]);
 
         $calendar = new Calendar();
 
@@ -89,16 +86,18 @@ class WatchListController extends AbstractController
             /** @var DomainEntity $entity */
             foreach ($domain->getDomainEntities()->toArray() as $entity) {
                 $vCard = Reader::readJson($entity->getEntity()->getJCard());
-                $email = (string)$vCard->EMAIL;
-                if (!filter_var($email, FILTER_VALIDATE_EMAIL)) continue;
+                $email = (string) $vCard->EMAIL;
+                if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                    continue;
+                }
 
-                $attendees[] = (new Attendee(new EmailAddress($email)))->setDisplayName((string)$vCard->FN);
+                $attendees[] = (new Attendee(new EmailAddress($email)))->setDisplayName((string) $vCard->FN);
             }
 
             /** @var DomainEvent $event */
             foreach ($domain->getEvents()->toArray() as $event) {
                 $calendar->addEvent((new Event())
-                    ->setSummary($domain->getLdhName() . ' (' . $event->getAction() . ')')
+                    ->setSummary($domain->getLdhName().' ('.$event->getAction().')')
                     ->addCategory(new Category($event->getAction()))
                     ->setAttendees($attendees)
                     ->setOccurrence(new SingleDay(new Date($event->getDate())))
@@ -107,7 +106,7 @@ class WatchListController extends AbstractController
         }
 
         return new Response((new CalendarFactory())->createCalendar($calendar), Response::HTTP_OK, [
-            "Content-Type" => 'text/calendar; charset=utf-8'
+            'Content-Type' => 'text/calendar; charset=utf-8',
         ]);
     }
 
@@ -124,7 +123,7 @@ class WatchListController extends AbstractController
     {
         /** @var User $user */
         $user = $this->getUser();
+
         return $user->getWatchLists();
     }
-
 }

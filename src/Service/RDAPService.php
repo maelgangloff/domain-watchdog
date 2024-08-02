@@ -1,6 +1,5 @@
 <?php
 
-
 namespace App\Service;
 
 use App\Config\EventAction;
@@ -23,10 +22,8 @@ use App\Repository\NameserverEntityRepository;
 use App\Repository\NameserverRepository;
 use App\Repository\RdapServerRepository;
 use App\Repository\TldRepository;
-use DateTimeImmutable;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Exception\ORMException;
-use Exception;
 use Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\DecodingExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\HttpExceptionInterface;
@@ -40,9 +37,9 @@ readonly class RDAPService
     /**
      * @see https://www.iana.org/domains/root/db
      */
-    const ISO_TLD_EXCEPTION = ['ac', 'eu', 'uk', 'su', 'tp'];
-    const INFRA_TLD = ['arpa'];
-    const SPONSORED_TLD = [
+    public const ISO_TLD_EXCEPTION = ['ac', 'eu', 'uk', 'su', 'tp'];
+    public const INFRA_TLD = ['arpa'];
+    public const SPONSORED_TLD = [
         'aero',
         'asia',
         'cat',
@@ -58,7 +55,7 @@ readonly class RDAPService
         'travel',
         'xxx',
     ];
-    const TEST_TLD = [
+    public const TEST_TLD = [
         'xn--kgbechtv',
         'xn--hgbk6aj7f53bba',
         'xn--0zwm56d',
@@ -69,42 +66,43 @@ readonly class RDAPService
         'xn--9t4b11yi5a',
         'xn--deba0ad',
         'xn--zckzah',
-        'xn--hlcj6aya9esc7a'
+        'xn--hlcj6aya9esc7a',
     ];
 
-    const IMPORTANT_EVENTS = [EventAction::Deletion->value, EventAction::Expiration->value];
+    public const IMPORTANT_EVENTS = [EventAction::Deletion->value, EventAction::Expiration->value];
 
-    public function __construct(private HttpClientInterface        $client,
-                                private EntityRepository           $entityRepository,
-                                private DomainRepository           $domainRepository,
-                                private DomainEventRepository      $domainEventRepository,
-                                private NameserverRepository       $nameserverRepository,
-                                private NameserverEntityRepository $nameserverEntityRepository,
-                                private EntityEventRepository      $entityEventRepository,
-                                private DomainEntityRepository     $domainEntityRepository,
-                                private RdapServerRepository       $rdapServerRepository,
-                                private TldRepository              $tldRepository,
-                                private EntityManagerInterface     $em
-    )
-    {
-
+    public function __construct(private HttpClientInterface $client,
+        private EntityRepository $entityRepository,
+        private DomainRepository $domainRepository,
+        private DomainEventRepository $domainEventRepository,
+        private NameserverRepository $nameserverRepository,
+        private NameserverEntityRepository $nameserverEntityRepository,
+        private EntityEventRepository $entityEventRepository,
+        private DomainEntityRepository $domainEntityRepository,
+        private RdapServerRepository $rdapServerRepository,
+        private TldRepository $tldRepository,
+        private EntityManagerInterface $em
+    ) {
     }
 
     /**
      * Determines if a domain name needs special attention.
      * These domain names are those whose last event was expiration or deletion.
-     * @throws Exception
+     *
+     * @throws \Exception
      */
-    public static function isToBeWatchClosely(Domain $domain, DateTimeImmutable $updatedAt): bool
+    public static function isToBeWatchClosely(Domain $domain, \DateTimeImmutable $updatedAt): bool
     {
-        if ($updatedAt->diff(new DateTimeImmutable('now'))->days < 1) return false;
+        if ($updatedAt->diff(new \DateTimeImmutable('now'))->days < 1) {
+            return false;
+        }
 
         /** @var DomainEvent[] $events */
         $events = $domain->getEvents()
-            ->filter(fn(DomainEvent $e) => $e->getDate() <= new DateTimeImmutable('now'))
+            ->filter(fn (DomainEvent $e) => $e->getDate() <= new \DateTimeImmutable('now'))
             ->toArray();
 
-        usort($events, fn(DomainEvent $e1, DomainEvent $e2) => $e2->getDate() > $e1->getDate());
+        usort($events, fn (DomainEvent $e1, DomainEvent $e2) => $e2->getDate() > $e1->getDate());
 
         return !empty($events) && in_array($events[0]->getAction(), self::IMPORTANT_EVENTS);
     }
@@ -122,7 +120,7 @@ readonly class RDAPService
     }
 
     /**
-     * @throws Exception
+     * @throws \Exception
      * @throws TransportExceptionInterface
      * @throws DecodingExceptionInterface
      * @throws HttpExceptionInterface
@@ -133,20 +131,21 @@ readonly class RDAPService
         $tld = $this->getTld($idnDomain);
 
         /** @var RdapServer|null $rdapServer */
-        $rdapServer = $this->rdapServerRepository->findOneBy(["tld" => $tld], ["updatedAt" => "DESC"]);
+        $rdapServer = $this->rdapServerRepository->findOneBy(['tld' => $tld], ['updatedAt' => 'DESC']);
 
-        if ($rdapServer === null) throw new Exception("Unable to determine which RDAP server to contact");
+        if (null === $rdapServer) {
+            throw new \Exception('Unable to determine which RDAP server to contact');
+        }
 
         /** @var ?Domain $domain */
-        $domain = $this->domainRepository->findOneBy(["ldhName" => $idnDomain]);
-
+        $domain = $this->domainRepository->findOneBy(['ldhName' => $idnDomain]);
 
         try {
             $res = $this->client->request(
-                'GET', $rdapServer->getUrl() . 'domain/' . $idnDomain
+                'GET', $rdapServer->getUrl().'domain/'.$idnDomain
             )->toArray();
         } catch (HttpExceptionInterface $e) {
-            if ($domain !== null) {
+            if (null !== $domain) {
                 $domain->setDeleted(true)
                     ->updateTimestamps();
                 $this->em->persist($domain);
@@ -155,36 +154,45 @@ readonly class RDAPService
             throw $e;
         }
 
-
-        if ($domain === null) $domain = new Domain();
+        if (null === $domain) {
+            $domain = new Domain();
+        }
         $domain->setTld($tld)->setLdhName($idnDomain)->setDeleted(false);
 
-        if (array_key_exists('status', $res)) $domain->setStatus($res['status']);
-        if (array_key_exists('handle', $res)) $domain->setHandle($res['handle']);
+        if (array_key_exists('status', $res)) {
+            $domain->setStatus($res['status']);
+        }
+        if (array_key_exists('handle', $res)) {
+            $domain->setHandle($res['handle']);
+        }
 
         $this->em->persist($domain);
         $this->em->flush();
 
         foreach ($res['events'] as $rdapEvent) {
-            if ($rdapEvent['eventAction'] === EventAction::LastUpdateOfRDAPDatabase->value) continue;
+            if ($rdapEvent['eventAction'] === EventAction::LastUpdateOfRDAPDatabase->value) {
+                continue;
+            }
 
             $event = $this->domainEventRepository->findOneBy([
-                "action" => $rdapEvent['eventAction'],
-                "date" => new DateTimeImmutable($rdapEvent["eventDate"]),
-                "domain" => $domain
+                'action' => $rdapEvent['eventAction'],
+                'date' => new \DateTimeImmutable($rdapEvent['eventDate']),
+                'domain' => $domain,
             ]);
 
-            if ($event === null) $event = new DomainEvent();
+            if (null === $event) {
+                $event = new DomainEvent();
+            }
             $domain->addEvent($event
                 ->setAction($rdapEvent['eventAction'])
-                ->setDate(new DateTimeImmutable($rdapEvent['eventDate'])));
-
+                ->setDate(new \DateTimeImmutable($rdapEvent['eventDate'])));
         }
 
         if (array_key_exists('entities', $res) && is_array($res['entities'])) {
-
             foreach ($res['entities'] as $rdapEntity) {
-                if (!array_key_exists('handle', $rdapEntity) || $rdapEntity['handle'] === '') continue;
+                if (!array_key_exists('handle', $rdapEntity) || '' === $rdapEntity['handle']) {
+                    continue;
+                }
 
                 $entity = $this->registerEntity($rdapEntity);
 
@@ -192,21 +200,25 @@ readonly class RDAPService
                 $this->em->flush();
 
                 $domainEntity = $this->domainEntityRepository->findOneBy([
-                    "domain" => $domain,
-                    "entity" => $entity
+                    'domain' => $domain,
+                    'entity' => $entity,
                 ]);
 
-                if ($domainEntity === null) $domainEntity = new DomainEntity();
+                if (null === $domainEntity) {
+                    $domainEntity = new DomainEntity();
+                }
 
                 $roles = array_map(
-                    fn($e) => $e['roles'],
+                    fn ($e) => $e['roles'],
                     array_filter(
                         $res['entities'],
-                        fn($e) => array_key_exists('handle', $e) && $e['handle'] === $rdapEntity['handle']
+                        fn ($e) => array_key_exists('handle', $e) && $e['handle'] === $rdapEntity['handle']
                     )
                 );
 
-                if (count($roles) !== count($roles, COUNT_RECURSIVE)) $roles = array_merge(...$roles);
+                if (count($roles) !== count($roles, COUNT_RECURSIVE)) {
+                    $roles = array_merge(...$roles);
+                }
 
                 $domain->addDomainEntity($domainEntity
                     ->setDomain($domain)
@@ -221,9 +233,11 @@ readonly class RDAPService
         if (array_key_exists('nameservers', $res) && is_array($res['nameservers'])) {
             foreach ($res['nameservers'] as $rdapNameserver) {
                 $nameserver = $this->nameserverRepository->findOneBy([
-                    "ldhName" => strtolower($rdapNameserver['ldhName'])
+                    'ldhName' => strtolower($rdapNameserver['ldhName']),
                 ]);
-                if ($nameserver === null) $nameserver = new Nameserver();
+                if (null === $nameserver) {
+                    $nameserver = new Nameserver();
+                }
 
                 $nameserver->setLdhName($rdapNameserver['ldhName']);
 
@@ -233,28 +247,31 @@ readonly class RDAPService
                 }
 
                 foreach ($rdapNameserver['entities'] as $rdapEntity) {
-                    if (!array_key_exists('handle', $rdapEntity) || $rdapEntity['handle'] === '') continue;
+                    if (!array_key_exists('handle', $rdapEntity) || '' === $rdapEntity['handle']) {
+                        continue;
+                    }
                     $entity = $this->registerEntity($rdapEntity);
 
                     $this->em->persist($entity);
                     $this->em->flush();
 
                     $nameserverEntity = $this->nameserverEntityRepository->findOneBy([
-                        "nameserver" => $nameserver,
-                        "entity" => $entity
+                        'nameserver' => $nameserver,
+                        'entity' => $entity,
                     ]);
-                    if ($nameserverEntity === null) $nameserverEntity = new NameserverEntity();
+                    if (null === $nameserverEntity) {
+                        $nameserverEntity = new NameserverEntity();
+                    }
 
                     $roles = array_merge(
                         ...array_map(
-                            fn(array $e): array => $e['roles'],
+                            fn (array $e): array => $e['roles'],
                             array_filter(
                                 $rdapNameserver['entities'],
-                                fn($e) => array_key_exists('handle', $e) && $e['handle'] === $rdapEntity['handle']
+                                fn ($e) => array_key_exists('handle', $e) && $e['handle'] === $rdapEntity['handle']
                             )
                         )
                     );
-
 
                     $nameserver->addNameserverEntity($nameserverEntity
                         ->setNameserver($nameserver)
@@ -275,29 +292,31 @@ readonly class RDAPService
     }
 
     /**
-     * @throws Exception
+     * @throws \Exception
      */
     private function getTld($domain): ?object
     {
         $lastDotPosition = strrpos($domain, '.');
-        if ($lastDotPosition === false) {
-            throw new Exception("Domain must contain at least one dot");
+        if (false === $lastDotPosition) {
+            throw new \Exception('Domain must contain at least one dot');
         }
         $tld = strtolower(substr($domain, $lastDotPosition + 1));
 
-        return $this->tldRepository->findOneBy(["tld" => $tld]);
+        return $this->tldRepository->findOneBy(['tld' => $tld]);
     }
 
     /**
-     * @throws Exception
+     * @throws \Exception
      */
     private function registerEntity(array $rdapEntity): Entity
     {
         $entity = $this->entityRepository->findOneBy([
-            "handle" => $rdapEntity['handle']
+            'handle' => $rdapEntity['handle'],
         ]);
 
-        if ($entity === null) $entity = new Entity();
+        if (null === $entity) {
+            $entity = new Entity();
+        }
 
         $entity->setHandle($rdapEntity['handle']);
 
@@ -312,28 +331,34 @@ readonly class RDAPService
                 foreach ($entity->getJCard()[1] as $prop) {
                     $properties[$prop[0]] = $prop;
                 }
-                $entity->setJCard(["vcard", array_values($properties)]);
+                $entity->setJCard(['vcard', array_values($properties)]);
             }
         }
 
-        if (!array_key_exists('events', $rdapEntity)) return $entity;
+        if (!array_key_exists('events', $rdapEntity)) {
+            return $entity;
+        }
 
         foreach ($rdapEntity['events'] as $rdapEntityEvent) {
-            $eventAction = $rdapEntityEvent["eventAction"];
-            if ($eventAction === EventAction::LastChanged->value || $eventAction === EventAction::LastUpdateOfRDAPDatabase->value) continue;
+            $eventAction = $rdapEntityEvent['eventAction'];
+            if ($eventAction === EventAction::LastChanged->value || $eventAction === EventAction::LastUpdateOfRDAPDatabase->value) {
+                continue;
+            }
             $event = $this->entityEventRepository->findOneBy([
-                "action" => $rdapEntityEvent["eventAction"],
-                "date" => new DateTimeImmutable($rdapEntityEvent["eventDate"])
+                'action' => $rdapEntityEvent['eventAction'],
+                'date' => new \DateTimeImmutable($rdapEntityEvent['eventDate']),
             ]);
 
-            if ($event !== null) continue;
+            if (null !== $event) {
+                continue;
+            }
             $entity->addEvent(
                 (new EntityEvent())
                     ->setEntity($entity)
-                    ->setAction($rdapEntityEvent["eventAction"])
-                    ->setDate(new DateTimeImmutable($rdapEntityEvent['eventDate'])));
-
+                    ->setAction($rdapEntityEvent['eventAction'])
+                    ->setDate(new \DateTimeImmutable($rdapEntityEvent['eventDate'])));
         }
+
         return $entity;
     }
 
@@ -352,19 +377,21 @@ readonly class RDAPService
         )->toArray();
 
         foreach ($dnsRoot['services'] as $service) {
-
             foreach ($service[0] as $tld) {
-                if ($tld === "") continue;
+                if ('' === $tld) {
+                    continue;
+                }
                 $tldReference = $this->em->getReference(Tld::class, $tld);
                 foreach ($service[1] as $rdapServerUrl) {
-                    $server = $this->rdapServerRepository->findOneBy(["tld" => $tldReference, "url" => $rdapServerUrl]);
-                    if ($server === null) $server = new RdapServer();
+                    $server = $this->rdapServerRepository->findOneBy(['tld' => $tldReference, 'url' => $rdapServerUrl]);
+                    if (null === $server) {
+                        $server = new RdapServer();
+                    }
                     $server->setTld($tldReference)->setUrl($rdapServerUrl)->updateTimestamps();
 
                     $this->em->persist($server);
                 }
             }
-
         }
         $this->em->flush();
     }
@@ -378,7 +405,7 @@ readonly class RDAPService
     public function updateTldListIANA(): void
     {
         $tldList = array_map(
-            fn($tld) => strtolower($tld),
+            fn ($tld) => strtolower($tld),
             explode(PHP_EOL,
                 $this->client->request(
                     'GET', 'https://data.iana.org/TLD/tlds-alpha-by-domain.txt'
@@ -387,20 +414,22 @@ readonly class RDAPService
         array_shift($tldList);
 
         foreach ($tldList as $tld) {
-            if ($tld === "") continue;
+            if ('' === $tld) {
+                continue;
+            }
 
             $tldEntity = $this->tldRepository->findOneBy(['tld' => $tld]);
 
-            if ($tldEntity === null) {
+            if (null === $tldEntity) {
                 $tldEntity = new Tld();
                 $tldEntity->setTld($tld);
             }
 
             $type = $this->getTldType($tld);
 
-            if ($type !== null) {
+            if (null !== $type) {
                 $tldEntity->setType($type);
-            } elseif ($tldEntity->isContractTerminated() === null) { // ICANN managed, must be a ccTLD
+            } elseif (null === $tldEntity->isContractTerminated()) { // ICANN managed, must be a ccTLD
                 $tldEntity->setType(TldType::ccTLD);
             } else {
                 $tldEntity->setType(TldType::gTLD);
@@ -413,11 +442,18 @@ readonly class RDAPService
 
     private function getTldType(string $tld): ?TldType
     {
-
-        if (in_array($tld, self::ISO_TLD_EXCEPTION)) return TldType::ccTLD;
-        if (in_array(strtolower($tld), self::INFRA_TLD)) return TldType::iTLD;
-        if (in_array(strtolower($tld), self::SPONSORED_TLD)) return TldType::sTLD;
-        if (in_array(strtolower($tld), self::TEST_TLD)) return TldType::tTLD;
+        if (in_array($tld, self::ISO_TLD_EXCEPTION)) {
+            return TldType::ccTLD;
+        }
+        if (in_array(strtolower($tld), self::INFRA_TLD)) {
+            return TldType::iTLD;
+        }
+        if (in_array(strtolower($tld), self::SPONSORED_TLD)) {
+            return TldType::sTLD;
+        }
+        if (in_array(strtolower($tld), self::TEST_TLD)) {
+            return TldType::tTLD;
+        }
 
         return null;
     }
@@ -428,7 +464,7 @@ readonly class RDAPService
      * @throws RedirectionExceptionInterface
      * @throws ClientExceptionInterface
      * @throws DecodingExceptionInterface
-     * @throws Exception
+     * @throws \Exception
      */
     public function updateGTldListICANN(): void
     {
@@ -437,7 +473,9 @@ readonly class RDAPService
         )->toArray()['gTLDs'];
 
         foreach ($gTldList as $gTld) {
-            if ($gTld['gTLD'] === "") continue;
+            if ('' === $gTld['gTLD']) {
+                continue;
+            }
             /** @var Tld $gtTldEntity */
             $gtTldEntity = $this->tldRepository->findOneBy(['tld' => $gTld['gTLD']]);
 
@@ -452,9 +490,15 @@ readonly class RDAPService
                 ->setSpecification13($gTld['specification13'])
                 ->setType(TldType::gTLD);
 
-            if ($gTld['removalDate'] !== null) $gtTldEntity->setRemovalDate(new DateTimeImmutable($gTld['removalDate']));
-            if ($gTld['delegationDate'] !== null) $gtTldEntity->setDelegationDate(new DateTimeImmutable($gTld['delegationDate']));
-            if ($gTld['dateOfContractSignature'] !== null) $gtTldEntity->setDateOfContractSignature(new DateTimeImmutable($gTld['dateOfContractSignature']));
+            if (null !== $gTld['removalDate']) {
+                $gtTldEntity->setRemovalDate(new \DateTimeImmutable($gTld['removalDate']));
+            }
+            if (null !== $gTld['delegationDate']) {
+                $gtTldEntity->setDelegationDate(new \DateTimeImmutable($gTld['delegationDate']));
+            }
+            if (null !== $gTld['dateOfContractSignature']) {
+                $gtTldEntity->setDateOfContractSignature(new \DateTimeImmutable($gTld['dateOfContractSignature']));
+            }
             $this->em->persist($gtTldEntity);
         }
 

@@ -9,8 +9,6 @@ use App\Message\ProcessDomainTrigger;
 use App\Message\ProcessWatchListTrigger;
 use App\Repository\WatchListRepository;
 use App\Service\RDAPService;
-use DateTimeImmutable;
-use Exception;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Symfony\Component\Mailer\MailerInterface;
@@ -18,36 +16,33 @@ use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 use Symfony\Component\Messenger\Exception\ExceptionInterface;
 use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Contracts\HttpClient\Exception\HttpExceptionInterface;
-use Throwable;
 
 #[AsMessageHandler]
 final readonly class ProcessWatchListTriggerHandler
 {
-
     public function __construct(
-        private RDAPService         $RDAPService,
-        private MailerInterface     $mailer,
-        private string              $mailerSenderEmail,
+        private RDAPService $RDAPService,
+        private MailerInterface $mailer,
+        private string $mailerSenderEmail,
         private MessageBusInterface $bus,
         private WatchListRepository $watchListRepository
-    )
-    {
+    ) {
     }
 
     /**
      * @throws TransportExceptionInterface
-     * @throws Exception
+     * @throws \Exception
      * @throws ExceptionInterface
      */
     public function __invoke(ProcessWatchListTrigger $message): void
     {
         /** @var WatchList $watchList */
-        $watchList = $this->watchListRepository->findOneBy(["token" => $message->watchListToken]);
+        $watchList = $this->watchListRepository->findOneBy(['token' => $message->watchListToken]);
         /** @var Domain $domain */
         foreach ($watchList->getDomains()
-                     ->filter(fn($domain) => $domain->getUpdatedAt()
+                     ->filter(fn ($domain) => $domain->getUpdatedAt()
                              ->diff(
-                                 new DateTimeImmutable('now'))->days >= 7
+                                 new \DateTimeImmutable('now'))->days >= 7
                          || $this->RDAPService::isToBeWatchClosely($domain, $domain->getUpdatedAt())
                      ) as $domain
         ) {
@@ -55,8 +50,10 @@ final readonly class ProcessWatchListTriggerHandler
 
             try {
                 $domain = $this->RDAPService->registerDomain($domain->getLdhName());
-            } catch (Throwable $e) {
-                if (!($e instanceof HttpExceptionInterface)) continue;
+            } catch (\Throwable $e) {
+                if (!($e instanceof HttpExceptionInterface)) {
+                    continue;
+                }
                 $this->sendEmailDomainUpdateError($domain, $watchList->getUser());
             }
 
@@ -77,7 +74,6 @@ final readonly class ProcessWatchListTriggerHandler
         }
     }
 
-
     /**
      * @throws TransportExceptionInterface
      */
@@ -90,7 +86,7 @@ final readonly class ProcessWatchListTriggerHandler
             ->htmlTemplate('emails/errors/domain_update.html.twig')
             ->locale('en')
             ->context([
-                "domain" => $domain
+                'domain' => $domain,
             ]);
 
         $this->mailer->send($email);

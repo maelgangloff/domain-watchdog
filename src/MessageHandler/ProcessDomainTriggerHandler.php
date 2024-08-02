@@ -14,63 +14,61 @@ use App\Entity\WatchListTrigger;
 use App\Message\ProcessDomainTrigger;
 use App\Repository\DomainRepository;
 use App\Repository\WatchListRepository;
-use Exception;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 use Symfony\Component\Mime\Email;
-use Throwable;
 
 #[AsMessageHandler]
 final readonly class ProcessDomainTriggerHandler
 {
     public function __construct(
-        private string              $mailerSenderEmail,
-        private MailerInterface     $mailer,
+        private string $mailerSenderEmail,
+        private MailerInterface $mailer,
         private WatchListRepository $watchListRepository,
-        private DomainRepository    $domainRepository,
-        private KernelInterface     $kernel
-
-    )
-    {
+        private DomainRepository $domainRepository,
+        private KernelInterface $kernel
+    ) {
     }
 
     /**
      * @throws TransportExceptionInterface
-     * @throws Exception
+     * @throws \Exception
      */
     public function __invoke(ProcessDomainTrigger $message): void
     {
         /** @var WatchList $watchList */
-        $watchList = $this->watchListRepository->findOneBy(["token" => $message->watchListToken]);
+        $watchList = $this->watchListRepository->findOneBy(['token' => $message->watchListToken]);
         /** @var Domain $domain */
-        $domain = $this->domainRepository->findOneBy(["ldhName" => $message->ldhName]);
+        $domain = $this->domainRepository->findOneBy(['ldhName' => $message->ldhName]);
 
         $connector = $watchList->getConnector();
         if (null !== $connector && $domain->getDeleted()) {
             try {
-                if ($connector->getProvider() === ConnectorProvider::OVH) {
-                    $ovh = new OVHConnector($connector->getAuthData());
+                if (ConnectorProvider::OVH === $connector->getProvider()) {
+                    $ovh = new OvhConnector($connector->getAuthData());
                     $isDebug = $this->kernel->isDebug();
 
                     $ovh->orderDomain($domain, $isDebug);
                     $this->sendEmailDomainOrdered($domain, $connector, $watchList->getUser());
-                } else throw new Exception("Unknown provider");
-            } catch (Throwable) {
+                } else {
+                    throw new \Exception('Unknown provider');
+                }
+            } catch (\Throwable) {
                 $this->sendEmailDomainOrderError($domain, $watchList->getUser());
             }
         }
 
         /** @var DomainEvent $event */
-        foreach ($domain->getEvents()->filter(fn($event) => $message->updatedAt < $event->getDate()) as $event) {
+        foreach ($domain->getEvents()->filter(fn ($event) => $message->updatedAt < $event->getDate()) as $event) {
             $watchListTriggers = $watchList->getWatchListTriggers()
-                ->filter(fn($trigger) => $trigger->getEvent() === $event->getAction());
+                ->filter(fn ($trigger) => $trigger->getEvent() === $event->getAction());
 
             /** @var WatchListTrigger $watchListTrigger */
             foreach ($watchListTriggers->getIterator() as $watchListTrigger) {
-                if ($watchListTrigger->getAction() == TriggerAction::SendEmail) {
+                if (TriggerAction::SendEmail == $watchListTrigger->getAction()) {
                     $this->sendEmailDomainUpdated($event, $watchList->getUser());
                 }
             }
@@ -90,8 +88,8 @@ final readonly class ProcessDomainTriggerHandler
             ->htmlTemplate('emails/success/domain_ordered.html.twig')
             ->locale('en')
             ->context([
-                "domain" => $domain,
-                "provider" => $connector->getProvider()->value
+                'domain' => $domain,
+                'provider' => $connector->getProvider()->value,
             ]);
 
         $this->mailer->send($email);
@@ -109,7 +107,7 @@ final readonly class ProcessDomainTriggerHandler
             ->htmlTemplate('emails/errors/domain_order.html.twig')
             ->locale('en')
             ->context([
-                "domain" => $domain
+                'domain' => $domain,
             ]);
 
         $this->mailer->send($email);
@@ -128,10 +126,9 @@ final readonly class ProcessDomainTriggerHandler
             ->htmlTemplate('emails/success/domain_updated.html.twig')
             ->locale('en')
             ->context([
-                "event" => $domainEvent
+                'event' => $domainEvent,
             ]);
 
         $this->mailer->send($email);
     }
-
 }

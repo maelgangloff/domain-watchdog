@@ -20,17 +20,15 @@ use Symfony\Component\Security\Http\Authenticator\Passport\Passport;
 use Symfony\Component\Security\Http\Authenticator\Passport\SelfValidatingPassport;
 use Symfony\Component\Security\Http\EntryPoint\AuthenticationEntryPointInterface;
 
-class OAuthAuthenticator extends OAuth2Authenticator implements AuthenticationEntrypointInterface
+class OAuthAuthenticator extends OAuth2Authenticator implements AuthenticationEntryPointInterface
 {
-
     public function __construct(
-        private readonly ClientRegistry           $clientRegistry,
-        private readonly UserRepository           $userRepository,
-        private readonly EntityManagerInterface   $em,
-        private readonly RouterInterface          $router,
+        private readonly ClientRegistry $clientRegistry,
+        private readonly UserRepository $userRepository,
+        private readonly EntityManagerInterface $em,
+        private readonly RouterInterface $router,
         private readonly JWTTokenManagerInterface $JWTManager
-    )
-    {
+    ) {
     }
 
     /**
@@ -40,7 +38,7 @@ class OAuthAuthenticator extends OAuth2Authenticator implements AuthenticationEn
      */
     public function supports(Request $request): ?bool
     {
-        return $request->attributes->get('_route') === 'oauth_connect_check';
+        return 'oauth_connect_check' === $request->attributes->get('_route');
     }
 
     public function authenticate(Request $request): Passport
@@ -50,13 +48,14 @@ class OAuthAuthenticator extends OAuth2Authenticator implements AuthenticationEn
 
         return new SelfValidatingPassport(
             new UserBadge($accessToken->getToken(), function () use ($accessToken, $client) {
-
                 /** @var OAuthResourceOwner $userFromToken */
                 $userFromToken = $client->fetchUserFromToken($accessToken);
 
                 $existingUser = $this->userRepository->findOneBy(['email' => $userFromToken->getEmail()]);
 
-                if ($existingUser) return $existingUser;
+                if ($existingUser) {
+                    return $existingUser;
+                }
 
                 $user = new User();
                 $user->setEmail($userFromToken->getEmail());
@@ -85,6 +84,7 @@ class OAuthAuthenticator extends OAuth2Authenticator implements AuthenticationEn
                 'strict'
             )
         );
+
         return $response;
     }
 

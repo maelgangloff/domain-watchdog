@@ -19,8 +19,8 @@ use Symfony\Component\Serializer\Attribute\SerializedName;
             uriTemplate: '/nameservers',
             normalizationContext: [
                 'groups' => [
-                    'nameserver:list'
-                ]
+                    'nameserver:list',
+                ],
             ]
         ),
         new Get(
@@ -30,15 +30,14 @@ use Symfony\Component\Serializer\Attribute\SerializedName;
                     'nameserver:item',
                     'nameserver-entity:entity',
                     'entity:list',
-                    "event:list"
-                ]
+                    'event:list',
+                ],
             ]
-        )
+        ),
     ]
 )]
 class Nameserver
 {
-
     #[ORM\Id]
     #[ORM\Column(length: 255)]
     #[Groups(['nameserver:item', 'nameserver:list', 'domain:item'])]
@@ -133,5 +132,4 @@ class Nameserver
 
         return $this;
     }
-
 }

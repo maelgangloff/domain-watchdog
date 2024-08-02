@@ -3,30 +3,27 @@
 namespace App\Entity;
 
 use App\Repository\RdapServerRepository;
-use DateTimeImmutable;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: RdapServerRepository::class)]
 class RdapServer
 {
-
     #[ORM\Id]
     #[ORM\Column(length: 255)]
     private ?string $url = null;
 
     #[ORM\Column(type: Types::DATE_IMMUTABLE)]
-    private ?DateTimeImmutable $updatedAt = null;
+    private ?\DateTimeImmutable $updatedAt = null;
 
     #[ORM\Id]
     #[ORM\ManyToOne(inversedBy: 'rdapServers')]
     #[ORM\JoinColumn(referencedColumnName: 'tld', nullable: false)]
     private ?Tld $tld = null;
 
-
     public function __construct()
     {
-        $this->updatedAt = new DateTimeImmutable('now');
+        $this->updatedAt = new \DateTimeImmutable('now');
     }
 
     public function getUrl(): ?string
@@ -41,12 +38,12 @@ class RdapServer
         return $this;
     }
 
-    public function getUpdatedAt(): ?DateTimeImmutable
+    public function getUpdatedAt(): ?\DateTimeImmutable
     {
         return $this->updatedAt;
     }
 
-    public function setUpdatedAt(DateTimeImmutable $updatedAt): static
+    public function setUpdatedAt(\DateTimeImmutable $updatedAt): static
     {
         $this->updatedAt = $updatedAt;
 
@@ -57,7 +54,7 @@ class RdapServer
     #[ORM\PreUpdate]
     public function updateTimestamps(): void
     {
-        $this->setUpdatedAt(new DateTimeImmutable('now'));
+        $this->setUpdatedAt(new \DateTimeImmutable('now'));
     }
 
     public function getTld(): ?Tld

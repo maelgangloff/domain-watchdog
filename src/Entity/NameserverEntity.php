@@ -23,7 +23,6 @@ class NameserverEntity
     #[Groups(['nameserver-entity:entity'])]
     private ?Entity $entity = null;
 
-
     #[ORM\Column(type: Types::SIMPLE_ARRAY)]
     #[Groups(['nameserver-entity:entity', 'nameserver-entity:nameserver'])]
     private array $roles = [];
@@ -82,5 +81,4 @@ class NameserverEntity
 
         return $this;
     }
-
 }

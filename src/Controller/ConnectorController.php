@@ -8,7 +8,6 @@ use App\Entity\Connector;
 use App\Entity\User;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\EntityManagerInterface;
-use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Attribute\Route;
@@ -18,8 +17,7 @@ class ConnectorController extends AbstractController
 {
     public function __construct(
         private readonly SerializerInterface $serializer, private readonly EntityManagerInterface $em
-    )
-    {
+    ) {
     }
 
     #[Route(
@@ -35,11 +33,12 @@ class ConnectorController extends AbstractController
     {
         /** @var User $user */
         $user = $this->getUser();
+
         return $user->getConnectors();
     }
 
     /**
-     * @throws Exception
+     * @throws \Exception
      */
     #[Route(
         path: '/api/connectors',
@@ -55,15 +54,16 @@ class ConnectorController extends AbstractController
         $connector = $this->serializer->deserialize($request->getContent(), Connector::class, 'json', ['groups' => 'connector:create']);
         $connector->setUser($this->getUser());
 
-        if ($connector->getProvider() === ConnectorProvider::OVH) {
+        if (ConnectorProvider::OVH === $connector->getProvider()) {
             $authData = OvhConnector::verifyAuthData($connector->getAuthData());
             $connector->setAuthData($authData);
-        } else throw new Exception('Unknown provider');
+        } else {
+            throw new \Exception('Unknown provider');
+        }
 
         $this->em->persist($connector);
         $this->em->flush();
 
         return $connector;
     }
-
 }

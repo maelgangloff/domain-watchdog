@@ -7,10 +7,8 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 class MeController extends AbstractController
 {
-
     public function __invoke(): UserInterface
     {
         return $this->getUser();
     }
-
 }

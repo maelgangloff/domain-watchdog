@@ -2,8 +2,6 @@
 
 namespace App\Entity;
 
-use App\Config\EventAction;
-use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Attribute\Groups;
 
@@ -21,8 +19,7 @@ class Event
 
     #[ORM\Column(type: 'datetime_immutable')]
     #[Groups(['event:list'])]
-    private ?DateTimeImmutable $date = null;
-
+    private ?\DateTimeImmutable $date = null;
 
     public function getId(): ?int
     {
@@ -41,16 +38,15 @@ class Event
         return $this;
     }
 
-    public function getDate(): ?DateTimeImmutable
+    public function getDate(): ?\DateTimeImmutable
     {
         return $this->date;
     }
 
-    public function setDate(DateTimeImmutable $date): static
+    public function setDate(\DateTimeImmutable $date): static
     {
         $this->date = $date;
 
         return $this;
     }
-
 }

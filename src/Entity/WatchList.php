@@ -40,12 +40,12 @@ use Symfony\Component\Uid\Uuid;
                             'text/calendar' => [
                                 'schema' => [
                                     'type' => 'string',
-                                    'format' => 'text'
-                                ]
-                            ]
-                        ]
-                    ]
-                ]
+                                    'format' => 'text',
+                                ],
+                            ],
+                        ],
+                    ],
+                ],
             ],
             read: false,
             deserialize: false,
@@ -61,7 +61,7 @@ use Symfony\Component\Uid\Uuid;
             normalizationContext: ['groups' => 'watchlist:item'],
             denormalizationContext: ['groups' => 'watchlist:update']
         ),
-        new Delete()
+        new Delete(),
     ],
 )]
 class WatchList
@@ -90,13 +90,12 @@ class WatchList
      */
     #[ORM\OneToMany(targetEntity: WatchListTrigger::class, mappedBy: 'watchList', cascade: ['persist'], orphanRemoval: true)]
     #[Groups(['watchlist:list', 'watchlist:item', 'watchlist:create', 'watchlist:update'])]
-    #[SerializedName("triggers")]
+    #[SerializedName('triggers')]
     private Collection $watchListTriggers;
 
     #[ORM\ManyToOne(inversedBy: 'watchLists')]
     #[Groups(['watchlist:list', 'watchlist:item', 'watchlist:create', 'watchlist:update'])]
     private ?Connector $connector = null;
-
 
     public function __construct()
     {

@@ -31,16 +31,14 @@ use Symfony\Component\Serializer\Attribute\SerializedName;
                     'domain-entity:domain',
                     'domain:list',
                     'nameserver-entity:nameserver',
-                    'nameserver:list'
-                ]
+                    'nameserver:list',
+                ],
             ]
-        )
+        ),
     ]
 )]
 class Entity
 {
-
-
     #[ORM\Id]
     #[ORM\Column(length: 255)]
     #[Groups(['entity:list', 'entity:item', 'domain:item'])]
@@ -193,5 +191,4 @@ class Entity
 
         return $this;
     }
-
 }

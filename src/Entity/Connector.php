@@ -31,7 +31,7 @@ use Symfony\Component\Uid\Uuid;
             denormalizationContext: ['groups' => 'connector:create'],
             name: 'create'
         ),
-        new Delete()
+        new Delete(),
     ]
 )]
 #[ORM\Entity(repositoryClass: ConnectorRepository::class)]
@@ -46,7 +46,6 @@ class Connector
     #[ORM\JoinColumn(nullable: false)]
     private ?User $user = null;
 
-
     #[Groups(['connector:list', 'connector:create', 'watchlist:list'])]
     #[ORM\Column(enumType: ConnectorProvider::class)]
     private ?ConnectorProvider $provider = null;
@@ -60,7 +59,6 @@ class Connector
      */
     #[ORM\OneToMany(targetEntity: WatchList::class, mappedBy: 'connector')]
     private Collection $watchLists;
-
 
     public function __construct()
     {
@@ -138,5 +136,4 @@ class Connector
 
         return $this;
     }
-
 }

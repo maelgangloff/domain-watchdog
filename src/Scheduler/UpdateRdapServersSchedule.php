@@ -14,8 +14,7 @@ final readonly class UpdateRdapServersSchedule implements ScheduleProviderInterf
 {
     public function __construct(
         private CacheInterface $cache,
-    )
-    {
+    ) {
     }
 
     public function getSchedule(): Schedule
