@@ -42,3 +42,7 @@ yarn-error.log
 ###> phpstan/phpstan ###
 phpstan.neon
 ###< phpstan/phpstan ###
+
+public/images/*.png
+public/content/*.md
+public/favicon.ico

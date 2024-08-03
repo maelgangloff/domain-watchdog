@@ -1,7 +1,16 @@
 {
   "name": "Domain Watchdog",
-  "short_name": "Domain Watch",
-  "start_url": ".",
+  "short_name": "Domain Watchdog",
+  "icons": [
+    {
+      "src": "/images/icons-512.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
+  "scope": "/",
+  "start_url": "/",
+  "orientation": "landscape",
   "display": "standalone",
   "background_color": "#fff",
   "description": "A standalone app that collects open access information about domain names, helping users track the history and changes associated with domain names. "
