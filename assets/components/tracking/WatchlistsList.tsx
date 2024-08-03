@@ -6,6 +6,7 @@ import React from "react";
 import useBreakpoint from "../../hooks/useBreakpoint";
 import {actionToColor, domainEvent} from "../search/EventTimeline";
 import {Watchlist} from "../../pages/tracking/WatchlistPage";
+import punycode from "punycode/punycode";
 
 const {useToken} = theme;
 
@@ -31,7 +32,7 @@ export function WatchlistsList({watchlists, onDelete}: { watchlists: Watchlist[]
         {watchlists.map(watchlist =>
             <>
                 <Card
-                    title={t`Watchlist`}
+                    title={t`Watchlist` + (watchlist.name ? ` (${watchlist.name})` : '')}
                     size='small'
                     extra={<Popconfirm
                         title={t`Delete the Watchlist`}
@@ -49,7 +50,7 @@ export function WatchlistsList({watchlists, onDelete}: { watchlists: Watchlist[]
                         columns={columns}
                         pagination={false}
                         dataSource={[{
-                            domains: watchlist.domains.map(d => <Tag>{d.ldhName}</Tag>),
+                            domains: watchlist.domains.map(d => <Tag>{punycode.toUnicode(d.ldhName)}</Tag>),
                             events: watchlist.triggers?.filter(t => t.action === 'email')
                                 .map(t => <Tag color={actionToColor(t.event)}>
                                         {domainEventTranslated[t.event as keyof typeof domainEventTranslated]}

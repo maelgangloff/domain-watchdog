@@ -65,6 +65,7 @@ export interface User {
 }
 
 export interface Watchlist {
+    name?: string
     domains: string[],
     triggers: { event: EventAction, action: TriggerAction }[],
     connector?: string

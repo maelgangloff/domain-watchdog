@@ -128,7 +128,7 @@ msgid "At least one domain name"
 msgstr ""
 
 #: assets/components/tracking/WatchlistForm.tsx:93
-#: assets/components/tracking/WatchlistsList.tsx:21
+#: assets/components/tracking/WatchlistsList.tsx:22
 msgid "Domain names"
 msgstr ""
 
@@ -141,7 +141,7 @@ msgid "Add a Domain name"
 msgstr ""
 
 #: assets/components/tracking/WatchlistForm.tsx:135
-#: assets/components/tracking/WatchlistsList.tsx:25
+#: assets/components/tracking/WatchlistsList.tsx:26
 msgid "Tracked events"
 msgstr ""
 
@@ -222,25 +222,25 @@ msgid ""
 "names via the Provider's API"
 msgstr ""
 
-#: assets/components/tracking/WatchlistsList.tsx:34
+#: assets/components/tracking/WatchlistsList.tsx:35
 msgid "Watchlist"
 msgstr ""
 
-#: assets/components/tracking/WatchlistsList.tsx:37
+#: assets/components/tracking/WatchlistsList.tsx:38
 msgid "Delete the Watchlist"
 msgstr ""
 
-#: assets/components/tracking/WatchlistsList.tsx:38
+#: assets/components/tracking/WatchlistsList.tsx:39
 msgid "Are you sure to delete this Watchlist?"
 msgstr ""
 
 #: assets/components/tracking/ConnectorsList.tsx:33
-#: assets/components/tracking/WatchlistsList.tsx:40
+#: assets/components/tracking/WatchlistsList.tsx:41
 msgid "Yes"
 msgstr ""
 
 #: assets/components/tracking/ConnectorsList.tsx:34
-#: assets/components/tracking/WatchlistsList.tsx:41
+#: assets/components/tracking/WatchlistsList.tsx:42
 msgid "No"
 msgstr ""
 
@@ -259,9 +259,9 @@ msgstr ""
 #: assets/pages/search/DomainSearchPage.tsx:24
 #: assets/pages/tracking/ConnectorsPage.tsx:23
 #: assets/pages/tracking/ConnectorsPage.tsx:31
-#: assets/pages/tracking/WatchlistPage.tsx:41
-#: assets/pages/tracking/WatchlistPage.tsx:49
-#: assets/pages/tracking/WatchlistPage.tsx:59
+#: assets/pages/tracking/WatchlistPage.tsx:44
+#: assets/pages/tracking/WatchlistPage.tsx:52
+#: assets/pages/tracking/WatchlistPage.tsx:62
 msgid "An error occurred"
 msgstr ""
 
@@ -383,11 +383,11 @@ msgstr ""
 msgid "Create a Connector"
 msgstr ""
 
-#: assets/pages/tracking/WatchlistPage.tsx:38
+#: assets/pages/tracking/WatchlistPage.tsx:41
 msgid "Watchlist created !"
 msgstr ""
 
-#: assets/pages/tracking/WatchlistPage.tsx:64
+#: assets/pages/tracking/WatchlistPage.tsx:67
 msgid "Create a Watchlist"
 msgstr ""
 

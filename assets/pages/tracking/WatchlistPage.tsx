@@ -9,6 +9,7 @@ import {Connector, getConnectors} from "../../utils/api/connectors";
 
 
 export type Watchlist = {
+    name?: string
     token: string,
     domains: { ldhName: string }[],
     triggers?: { event: EventAction, action: string }[],
@@ -23,12 +24,14 @@ export default function WatchlistPage() {
     const [connectors, setConnectors] = useState<(Connector & { id: string })[] | null>()
 
     const onCreateWatchlist = (values: {
+        name?: string
         domains: string[],
         emailTriggers: string[]
         connector?: string
     }) => {
         const domainsURI = values.domains.map(d => '/api/domains/' + d)
         postWatchlist({
+            name: values.name,
             domains: domainsURI,
             triggers: values.emailTriggers.map(t => ({event: t, action: 'email'})),
             connector: values.connector !== undefined ? '/api/connectors/' + values.connector : undefined
