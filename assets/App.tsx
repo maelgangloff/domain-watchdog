@@ -1,4 +1,4 @@
-import {Layout, theme} from "antd";
+import {Button, Layout, Space, theme} from "antd";
 import {Link, Navigate, Route, Routes, useLocation, useNavigate} from "react-router-dom";
 import TextPage from "./pages/TextPage";
 import DomainSearchPage from "./pages/search/DomainSearchPage";
@@ -15,6 +15,7 @@ import ConnectorsPage from "./pages/tracking/ConnectorsPage";
 import NotFoundPage from "./pages/NotFoundPage";
 import useBreakpoint from "./hooks/useBreakpoint";
 import {Sider} from "./components/Sider";
+import {t} from "ttag";
 
 export default function App() {
     const {
@@ -92,8 +93,14 @@ export default function App() {
                     </div>
                 </Layout.Content>
                 <Layout.Footer style={{textAlign: 'center'}}>
+                    <Space size='middle'>
+                        <Link to='/tos'><Button type='text'>{t`Terms of service`}</Button></Link>
+                        <Link to='/privacy'><Button type='text'>{t`Privacy Policy`}</Button></Link>
+                        <Link to='/faq'><Button type='text'>{t`FAQ`}</Button></Link>
+                    </Space>
+                    <br/><br/>
                     <Link to='https://github.com/maelgangloff/domain-watchdog'>Domain
-                        Watchdog</Link> &copy; {new Date().getFullYear()} Maël Gangloff
+                        Watchdog</Link> is an open source project distributed under AGPL-3.0-or-later license.
                 </Layout.Footer>
             </Layout>
         </Layout>

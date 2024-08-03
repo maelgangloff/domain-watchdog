@@ -252,6 +252,77 @@ msgstr ""
 msgid "Are you sure to delete this Connector?"
 msgstr ""
 
+#: assets/components/Sider.tsx:28
+msgid "Home"
+msgstr ""
+
+#: assets/components/Sider.tsx:34
+msgid "Search"
+msgstr ""
+
+#: assets/components/Sider.tsx:40
+msgid "Domain"
+msgstr ""
+
+#: assets/components/Sider.tsx:41
+msgid "Domain Finder"
+msgstr ""
+
+#: assets/components/Sider.tsx:48
+#: assets/pages/info/TldPage.tsx:79
+msgid "TLD"
+msgstr ""
+
+#: assets/components/Sider.tsx:49
+msgid "TLD list"
+msgstr ""
+
+#: assets/components/Sider.tsx:56
+msgid "Entity"
+msgstr ""
+
+#: assets/components/Sider.tsx:57
+msgid "Entity Finder"
+msgstr ""
+
+#: assets/components/Sider.tsx:64
+msgid "Nameserver"
+msgstr ""
+
+#: assets/components/Sider.tsx:65
+msgid "Nameserver Finder"
+msgstr ""
+
+#: assets/components/Sider.tsx:73
+msgid "Tracking"
+msgstr ""
+
+#: assets/components/Sider.tsx:79
+msgid "My Watchlists"
+msgstr ""
+
+#: assets/components/Sider.tsx:86
+msgid "My Connectors"
+msgstr ""
+
+#: assets/components/Sider.tsx:95
+msgid "Statistics"
+msgstr ""
+
+#: assets/components/Sider.tsx:105
+#: assets/pages/watchdog/UserPage.tsx:16
+msgid "My Account"
+msgstr ""
+
+#: assets/components/Sider.tsx:111
+msgid "Log out"
+msgstr ""
+
+#: assets/components/Sider.tsx:119
+#: assets/pages/LoginPage.tsx:38
+msgid "Log in"
+msgstr ""
+
 #: assets/pages/search/DomainSearchPage.tsx:20
 msgid "Found !"
 msgstr ""
@@ -285,11 +356,6 @@ msgstr ""
 msgid ""
 "Although the domain exists in my database, it has been deleted from the "
 "WHOIS by its registrar."
-msgstr ""
-
-#: assets/App.tsx:116
-#: assets/pages/info/TldPage.tsx:79
-msgid "TLD"
 msgstr ""
 
 #: assets/pages/info/TldPage.tsx:85
@@ -361,11 +427,6 @@ msgid ""
 "their country of origin."
 msgstr ""
 
-#: assets/App.tsx:159
-#: assets/pages/watchdog/UserPage.tsx:16
-msgid "My Account"
-msgstr ""
-
 #: assets/pages/LoginPage.tsx:58
 #: assets/pages/watchdog/UserPage.tsx:18
 msgid "Username"
@@ -393,11 +454,6 @@ msgstr ""
 
 #: assets/pages/NotFoundPage.tsx:10
 msgid "Sorry, the page you visited does not exist."
-msgstr ""
-
-#: assets/App.tsx:205
-#: assets/pages/LoginPage.tsx:38
-msgid "Log in"
 msgstr ""
 
 #: assets/pages/LoginPage.tsx:43
@@ -452,78 +508,14 @@ msgid ""
 "another"
 msgstr ""
 
-#: assets/App.tsx:73
-msgid "Home"
+#: assets/App.tsx:97
+msgid "Terms of service"
 msgstr ""
 
-#: assets/App.tsx:79
-msgid "Search"
-msgstr ""
-
-#: assets/App.tsx:85
-msgid "Domain"
-msgstr ""
-
-#: assets/App.tsx:86
-msgid "Domain Finder"
-msgstr ""
-
-#: assets/App.tsx:93
-msgid "Entity"
-msgstr ""
-
-#: assets/App.tsx:94
-msgid "Entity Finder"
-msgstr ""
-
-#: assets/App.tsx:101
-msgid "Nameserver"
-msgstr ""
-
-#: assets/App.tsx:102
-msgid "Nameserver Finder"
-msgstr ""
-
-#: assets/App.tsx:110
-msgid "Information"
-msgstr ""
-
-#: assets/App.tsx:117
-msgid "TLD list"
-msgstr ""
-
-#: assets/App.tsx:124
-msgid "Statistics"
-msgstr ""
-
-#: assets/App.tsx:132
-msgid "Tracking"
-msgstr ""
-
-#: assets/App.tsx:138
-msgid "My Watchlists"
-msgstr ""
-
-#: assets/App.tsx:145
-msgid "My Connectors"
-msgstr ""
-
-#: assets/App.tsx:153
-msgid "My Watchdog"
-msgstr ""
-
-#: assets/App.tsx:166
-msgid "TOS"
-msgstr ""
-
-#: assets/App.tsx:172
+#: assets/App.tsx:98
 msgid "Privacy Policy"
 msgstr ""
 
-#: assets/App.tsx:180
+#: assets/App.tsx:99
 msgid "FAQ"
-msgstr ""
-
-#: assets/App.tsx:199
-msgid "Log out"
 msgstr ""

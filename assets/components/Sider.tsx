@@ -5,14 +5,11 @@ import {
     BankOutlined,
     CloudServerOutlined,
     CompassOutlined,
-    FileProtectOutlined,
     FileSearchOutlined,
     HomeOutlined,
-    InfoCircleOutlined,
     LineChartOutlined,
     LoginOutlined,
     LogoutOutlined,
-    QuestionCircleOutlined,
     SearchOutlined,
     TeamOutlined,
     UserOutlined
@@ -46,6 +43,14 @@ export function Sider({isAuthenticated}: { isAuthenticated: boolean }) {
                     onClick: () => navigate('/search/domain')
                 },
                 {
+                    key: 'tld-list',
+                    icon: <BankOutlined/>,
+                    label: t`TLD`,
+                    title: t`TLD list`,
+                    disabled: !isAuthenticated,
+                    onClick: () => navigate('/info/tld')
+                },
+                {
                     key: 'entity-finder',
                     icon: <TeamOutlined/>,
                     label: t`Entity`,
@@ -60,28 +65,6 @@ export function Sider({isAuthenticated}: { isAuthenticated: boolean }) {
                     title: t`Nameserver Finder`,
                     disabled: true,
                     onClick: () => navigate('/search/nameserver')
-                }
-            ]
-        },
-        {
-            key: 'info',
-            label: t`Information`,
-            icon: <InfoCircleOutlined/>,
-            children: [
-                {
-                    key: 'tld-list',
-                    icon: <BankOutlined/>,
-                    label: t`TLD`,
-                    title: t`TLD list`,
-                    disabled: !isAuthenticated,
-                    onClick: () => navigate('/info/tld')
-                },
-                {
-                    key: 'stats',
-                    icon: <LineChartOutlined/>,
-                    label: t`Statistics`,
-                    disabled: true,
-                    onClick: () => navigate('/info/stats')
                 }
             ]
         },
@@ -107,57 +90,43 @@ export function Sider({isAuthenticated}: { isAuthenticated: boolean }) {
             ]
         },
         {
-            key: 'watchdog',
-            label: t`My Watchdog`,
-            icon: <UserOutlined/>,
-            children: [
-                {
-                    key: 'account',
-                    icon: <UserOutlined/>,
-                    label: t`My Account`,
-                    disabled: !isAuthenticated,
-                    onClick: () => navigate('/user')
-                },
-                {
-                    key: 'tos',
-                    icon: <InfoCircleOutlined/>,
-                    label: t`TOS`,
-                    onClick: () => navigate('/tos')
-                },
-                {
-                    key: 'privacy',
-                    icon: <FileProtectOutlined/>,
-                    label: t`Privacy Policy`,
-                    onClick: () => navigate('/privacy')
-                }
-            ]
-        },
-        {
-            key: '5',
-            icon: <QuestionCircleOutlined/>,
-            label: t`FAQ`,
-            onClick: () => navigate('/faq')
-        },
-
+            key: 'stats',
+            icon: <LineChartOutlined/>,
+            label: t`Statistics`,
+            disabled: true,
+            onClick: () => navigate('/info/stats')
+        }
     ]
 
-    return <Menu
-        defaultSelectedKeys={['home']}
-        defaultOpenKeys={['search', 'info', 'tracking', 'watchdog']}
-        mode="inline"
-        theme="dark"
-        items={[...menuItems, isAuthenticated ? {
-            key: '8',
+    if (isAuthenticated) {
+        menuItems.push(...[{
+            key: 'account',
+            icon: <UserOutlined/>,
+            label: t`My Account`,
+            disabled: !isAuthenticated,
+            onClick: () => navigate('/user')
+        }, {
+            key: 'logout',
             icon: <LogoutOutlined/>,
             label: t`Log out`,
             danger: true,
             onClick: () => window.location.replace("/logout")
-        } : {
-            key: '8',
+        }])
+    } else {
+        menuItems.push({
+            key: 'login',
             icon: <LoginOutlined/>,
             label: t`Log in`,
             onClick: () => navigate('/login')
-        }]}
+        })
+    }
+
+    return <Menu
+        defaultSelectedKeys={['home']}
+        defaultOpenKeys={['search', 'info', 'tracking', 'doc']}
+        mode="inline"
+        theme="dark"
+        items={menuItems}
     />
 
 }
