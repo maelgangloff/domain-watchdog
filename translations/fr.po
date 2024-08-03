@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2024-08-03 17:00+0000\n"
+"PO-Revision-Date: 2024-08-03 17:02+0000\n"
 "Last-Translator: Maël Gangloff <contact@maelgangloff.fr>\n"
 "Language-Team: French <https://weblate.vinceh121.me/projects/domain-watchdog/"
 "domain-watchdog-dashboard/fr/>\n"
@@ -129,6 +129,8 @@ msgstr "Nom de la Watchlist"
 #: assets/components/tracking/WatchlistForm.tsx:72
 msgid "Naming the Watchlist makes it easier to find in the list below."
 msgstr ""
+"Nommer la Watchlist permet de la retrouver plus facilement dans la liste ci-"
+"dessous."
 
 #: assets/components/tracking/WatchlistForm.tsx:82
 msgid "At least one domain name"
@@ -153,10 +155,8 @@ msgid "Tracked events"
 msgstr "Événements suivis"
 
 #: assets/components/tracking/WatchlistForm.tsx:137
-#, fuzzy
-#| msgid "At least one domain trigger"
 msgid "At least one trigger"
-msgstr "Au moins une action"
+msgstr "Au moins un déclencheur"
 
 #: assets/components/tracking/ConnectorsList.tsx:28
 #: assets/components/tracking/WatchlistForm.tsx:159
@@ -169,6 +169,8 @@ msgid ""
 "Please make sure the connector information is valid to purchase a domain "
 "that may be available soon."
 msgstr ""
+"Merci de vous assurer que les informations du connecteur sont valides pour "
+"acheter un domaine qui pourrait être disponible prochainement."
 
 #: assets/components/tracking/ConnectorForm.tsx:131
 #: assets/components/tracking/WatchlistForm.tsx:185
