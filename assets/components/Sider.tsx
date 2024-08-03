@@ -1,6 +1,7 @@
 import {ItemType, MenuItemType} from "antd/lib/menu/interface";
 import {t} from "ttag";
 import {
+    AimOutlined,
     ApiOutlined,
     BankOutlined,
     CloudServerOutlined,
@@ -71,7 +72,7 @@ export function Sider({isAuthenticated}: { isAuthenticated: boolean }) {
         {
             key: 'tracking',
             label: t`Tracking`,
-            icon: <FileSearchOutlined/>,
+            icon: <AimOutlined/>,
             children: [
                 {
                     key: 'watchlist',
