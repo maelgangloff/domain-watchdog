@@ -6,6 +6,7 @@ use App\Entity\WatchList;
 use App\Message\ProcessWatchListsTrigger;
 use App\Message\ProcessWatchListTrigger;
 use App\Repository\WatchListRepository;
+use Random\Randomizer;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 use Symfony\Component\Messenger\Exception\ExceptionInterface;
 use Symfony\Component\Messenger\MessageBusInterface;
@@ -24,8 +25,11 @@ final readonly class ProcessWatchListsTriggerHandler
      */
     public function __invoke(ProcessWatchListsTrigger $message): void
     {
+        $randomizer = new Randomizer();
+        $watchLists = $randomizer->shuffleArray($this->watchListRepository->findAll());
+
         /** @var WatchList $watchList */
-        foreach ($this->watchListRepository->findAll() as $watchList) {
+        foreach ($watchLists as $watchList) {
             $this->bus->dispatch(new ProcessWatchListTrigger($watchList->getToken()));
         }
     }
