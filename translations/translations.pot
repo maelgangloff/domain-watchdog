@@ -509,7 +509,7 @@ msgid ""
 msgstr ""
 
 #: assets/App.tsx:97
-msgid "Terms of service"
+msgid "TOS"
 msgstr ""
 
 #: assets/App.tsx:98
