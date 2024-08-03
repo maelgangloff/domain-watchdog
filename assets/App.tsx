@@ -94,7 +94,7 @@ export default function App() {
                 </Layout.Content>
                 <Layout.Footer style={{textAlign: 'center'}}>
                     <Space size='middle'>
-                        <Link to='/tos'><Button type='text'>{t`Terms of service`}</Button></Link>
+                        <Link to='/tos'><Button type='text'>{t`TOS`}</Button></Link>
                         <Link to='/privacy'><Button type='text'>{t`Privacy Policy`}</Button></Link>
                         <Link to='/faq'><Button type='text'>{t`FAQ`}</Button></Link>
                     </Space>
