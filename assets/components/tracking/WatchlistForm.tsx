@@ -69,7 +69,7 @@ export function WatchlistForm({form, connectors, onCreateWatchlist}: {
                    }}
         >
             <Input placeholder={t`Watchlist Name`}
-                   title={t`Naming the watchlist makes it easier to find in the list below.`}
+                   title={t`Naming the Watchlist makes it easier to find in the list below.`}
                    autoComplete='off'
             />
         </Form.Item>
