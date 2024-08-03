@@ -43,6 +43,7 @@ export function WatchlistsList({watchlists, onDelete}: { watchlists: Watchlist[]
                 >
                     <Card.Meta description={watchlist.token} style={{marginBottom: '1em'}}/>
                     <Table
+                        size='small'
                         columns={columns}
                         pagination={false}
                         dataSource={[{
