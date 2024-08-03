@@ -127,7 +127,7 @@ msgid "Watchlist Name"
 msgstr "Nom de la Watchlist"
 
 #: assets/components/tracking/WatchlistForm.tsx:72
-msgid "Naming the watchlist makes it easier to find in the list below."
+msgid "Naming the Watchlist makes it easier to find in the list below."
 msgstr ""
 
 #: assets/components/tracking/WatchlistForm.tsx:82
