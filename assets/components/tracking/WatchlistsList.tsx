@@ -4,7 +4,7 @@ import {deleteWatchlist} from "../../utils/api";
 import {DeleteFilled} from "@ant-design/icons";
 import React from "react";
 import useBreakpoint from "../../hooks/useBreakpoint";
-import {actionToColor} from "../search/EventTimeline";
+import {actionToColor, domainEvent} from "../search/EventTimeline";
 import {Watchlist} from "../../pages/tracking/WatchlistPage";
 
 const {useToken} = theme;
@@ -13,6 +13,8 @@ const {useToken} = theme;
 export function WatchlistsList({watchlists, onDelete}: { watchlists: Watchlist[], onDelete: () => void }) {
     const {token} = useToken()
     const sm = useBreakpoint('sm')
+
+    const domainEventTranslated = domainEvent()
 
     const columns = [
         {
@@ -49,7 +51,10 @@ export function WatchlistsList({watchlists, onDelete}: { watchlists: Watchlist[]
                         dataSource={[{
                             domains: watchlist.domains.map(d => <Tag>{d.ldhName}</Tag>),
                             events: watchlist.triggers?.filter(t => t.action === 'email')
-                                .map(t => <Tag color={actionToColor(t.event)}>{t.event}</Tag>)
+                                .map(t => <Tag color={actionToColor(t.event)}>
+                                        {domainEventTranslated[t.event as keyof typeof domainEventTranslated]}
+                                    </Tag>
+                                )
                         }]}
                         {...(sm ? {scroll: {y: 'max-content'}} : {scroll: {y: 240}})}
                     />

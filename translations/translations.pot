@@ -3,47 +3,47 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Plural-Forms: nplurals=2; plural=(n!=1);\n"
 
-#: assets/components/search/EventTimeline.tsx:28
+#: assets/components/search/EventTimeline.tsx:25
 msgid "Registration"
 msgstr ""
 
-#: assets/components/search/EventTimeline.tsx:29
+#: assets/components/search/EventTimeline.tsx:26
 msgid "Reregistration"
 msgstr ""
 
-#: assets/components/search/EventTimeline.tsx:30
+#: assets/components/search/EventTimeline.tsx:27
 msgid "Last changed"
 msgstr ""
 
-#: assets/components/search/EventTimeline.tsx:31
+#: assets/components/search/EventTimeline.tsx:28
 msgid "Expiration"
 msgstr ""
 
-#: assets/components/search/EventTimeline.tsx:32
+#: assets/components/search/EventTimeline.tsx:29
 msgid "Deletion"
 msgstr ""
 
-#: assets/components/search/EventTimeline.tsx:33
+#: assets/components/search/EventTimeline.tsx:30
 msgid "Reinstantiation"
 msgstr ""
 
-#: assets/components/search/EventTimeline.tsx:34
+#: assets/components/search/EventTimeline.tsx:31
 msgid "Transfer"
 msgstr ""
 
-#: assets/components/search/EventTimeline.tsx:35
+#: assets/components/search/EventTimeline.tsx:32
 msgid "Locked"
 msgstr ""
 
-#: assets/components/search/EventTimeline.tsx:36
+#: assets/components/search/EventTimeline.tsx:33
 msgid "Unlocked"
 msgstr ""
 
-#: assets/components/search/EventTimeline.tsx:37
+#: assets/components/search/EventTimeline.tsx:34
 msgid "Registrar expiration"
 msgstr ""
 
-#: assets/components/search/EventTimeline.tsx:38
+#: assets/components/search/EventTimeline.tsx:35
 msgid "ENUM validation expiration"
 msgstr ""
 
@@ -158,7 +158,7 @@ msgid "At least one domain name"
 msgstr ""
 
 #: assets/components/tracking/WatchlistForm.tsx:101
-#: assets/components/tracking/WatchlistsList.tsx:19
+#: assets/components/tracking/WatchlistsList.tsx:21
 msgid "Domain names"
 msgstr ""
 
@@ -257,29 +257,29 @@ msgid ""
 "names via the Provider's API"
 msgstr ""
 
-#: assets/components/tracking/WatchlistsList.tsx:23
+#: assets/components/tracking/WatchlistsList.tsx:25
 msgid "Tracked events"
 msgstr ""
 
-#: assets/components/tracking/WatchlistsList.tsx:32
+#: assets/components/tracking/WatchlistsList.tsx:34
 msgid "Watchlist"
 msgstr ""
 
-#: assets/components/tracking/WatchlistsList.tsx:35
+#: assets/components/tracking/WatchlistsList.tsx:37
 msgid "Delete the Watchlist"
 msgstr ""
 
-#: assets/components/tracking/WatchlistsList.tsx:36
+#: assets/components/tracking/WatchlistsList.tsx:38
 msgid "Are you sure to delete this Watchlist?"
 msgstr ""
 
 #: assets/components/tracking/ConnectorsList.tsx:33
-#: assets/components/tracking/WatchlistsList.tsx:38
+#: assets/components/tracking/WatchlistsList.tsx:40
 msgid "Yes"
 msgstr ""
 
 #: assets/components/tracking/ConnectorsList.tsx:34
-#: assets/components/tracking/WatchlistsList.tsx:39
+#: assets/components/tracking/WatchlistsList.tsx:41
 msgid "No"
 msgstr ""
 
