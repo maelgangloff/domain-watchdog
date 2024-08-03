@@ -1,10 +1,11 @@
-import {Button, Form, FormInstance, Input, Select, Space} from "antd";
+import {Button, Form, FormInstance, Input, Select, SelectProps, Space, Tag} from "antd";
 import {t} from "ttag";
-import {ApiOutlined, MinusCircleOutlined, PlusOutlined, ThunderboltFilled} from "@ant-design/icons";
+import {ApiOutlined, MinusCircleOutlined, PlusOutlined} from "@ant-design/icons";
 import React from "react";
-import {EventAction} from "../../utils/api";
 import {Connector} from "../../utils/api/connectors";
+import {actionToColor, domainEvent} from "../search/EventTimeline";
 
+type TagRender = SelectProps['tagRender'];
 
 const formItemLayout = {
     labelCol: {
@@ -27,60 +28,51 @@ const formItemLayoutWithOutLabel = {
 export function WatchlistForm({form, connectors, onCreateWatchlist}: {
     form: FormInstance,
     connectors: (Connector & { id: string })[]
-    onCreateWatchlist: (values: { domains: string[], triggers: { event: string, action: string }[] }) => void
+    onCreateWatchlist: (values: { domains: string[], emailTriggers: string[] }) => void
 }) {
+    const domainEventTranslated = domainEvent()
 
-    const triggerEventItems: { label: string, value: EventAction }[] = [
-        {
-            label: t`When a domain is expired`,
-            value: 'expiration'
-        },
-        {
-            label: t`When a domain is deleted`,
-            value: 'deletion'
-        },
-        {
-            label: t`When a domain is updated`,
-            value: 'last changed'
-        },
-        {
-            label: t`When a domain is transferred`,
-            value: 'transfer'
-        },
-        {
-            label: t`When a domain is locked`,
-            value: 'locked'
-        },
-        {
-            label: t`When a domain is unlocked`,
-            value: 'unlocked'
-        },
-        {
-            label: t`When a domain is reregistered`,
-            value: 'reregistration'
-        },
-        {
-            label: t`When a domain is reinstantiated`,
-            value: 'reinstantiation'
-        },
-        {
-            label: t`When a domain is registered`,
-            value: 'registration'
-        }
-    ]
-
-    const triggerActionItems = [
-        {
-            label: t`Send me an email`,
-            value: 'email'
-        }
-    ]
+    const triggerTagRenderer: TagRender = (props) => {
+        const {value, closable, onClose} = props;
+        const onPreventMouseDown = (event: React.MouseEvent<HTMLSpanElement>) => {
+            event.preventDefault();
+            event.stopPropagation();
+        };
+        return (
+            <Tag
+                color={actionToColor(value)}
+                onMouseDown={onPreventMouseDown}
+                closable={closable}
+                onClose={onClose}
+                style={{marginInlineEnd: 4}}
+            >
+                {domainEventTranslated[value as keyof typeof domainEventTranslated]}
+            </Tag>
+        )
+    }
 
     return <Form
         {...formItemLayoutWithOutLabel}
         form={form}
         onFinish={onCreateWatchlist}
+        initialValues={{emailTriggers: ['last changed', 'transfer', 'expiration', 'deletion']}}
     >
+        <Form.Item label={t`Name`}
+                   name='name'
+                   labelCol={{
+                       xs: {span: 24},
+                       sm: {span: 4},
+                   }}
+                   wrapperCol={{
+                       md: {span: 12},
+                       sm: {span: 20},
+                   }}
+        >
+            <Input placeholder={t`Watchlist Name`}
+                   title={t`Naming the watchlist makes it easier to find in the list below.`}
+                   autoComplete='off'
+            />
+        </Form.Item>
         <Form.List
             name="domains"
             rules={[
@@ -140,73 +132,30 @@ export function WatchlistForm({form, connectors, onCreateWatchlist}: {
                 </>
             )}
         </Form.List>
-        <Form.List
-            name="triggers"
-            rules={[
-                {
-                    validator: async (_, domains) => {
-                        if (!domains || domains.length < 1) {
-                            return Promise.reject(new Error(t`At least one domain trigger`));
-                        }
-                    },
-                },
-            ]}
+        <Form.Item label={t`Tracked events`}
+                   name='emailTriggers'
+                   rules={[{required: true, message: t`At least one trigger`, type: 'array'}]}
+                   labelCol={{
+                       xs: {span: 24},
+                       sm: {span: 4},
+                   }}
+                   wrapperCol={{
+                       md: {span: 12},
+                       sm: {span: 20},
+                   }}
+                   required
         >
-            {(fields, {add, remove}, {errors}) => (
-                <>
-                    {fields.map((field, index) => (
-                        <Form.Item
-                            {...(index === 0 ? formItemLayout : formItemLayoutWithOutLabel)}
-                            label={index === 0 ? t`Domain trigger` : ''}
-                            required={true}
-                            key={field.key}
-                        >
-                            <Space wrap>
-                                <Form.Item {...field}
-                                           validateTrigger={['onChange', 'onBlur']}
-                                           rules={[{
-                                               required: true,
-                                               message: t`Required`
-                                           }]}
-                                           noStyle name={[field.name, 'event']}>
-                                    <Select style={{minWidth: 300}} options={triggerEventItems} showSearch
-                                            placeholder={t`If this happens`} optionFilterProp="label"/>
-                                </Form.Item>
-                                <Form.Item {...field}
-                                           validateTrigger={['onChange', 'onBlur']}
-                                           rules={[{
-                                               required: true,
-                                               message: t`Required`
-                                           }]}
-                                           noStyle name={[field.name, 'action']}>
-                                    <Select style={{minWidth: 300}} options={triggerActionItems} showSearch
-                                            placeholder={t`Then do that`}
-                                            optionFilterProp="label"/>
-                                </Form.Item>
-                            </Space>
+            <Select
+                mode="multiple"
+                tagRender={triggerTagRenderer}
+                style={{width: '100%'}}
+                options={Object.keys(domainEventTranslated).map(e => ({
+                    value: e,
+                    label: domainEventTranslated[e as keyof typeof domainEventTranslated]
+                }))}
+            />
+        </Form.Item>
 
-                            {fields.length > 1 ? (
-                                <MinusCircleOutlined
-                                    className="dynamic-delete-button"
-                                    onClick={() => remove(field.name)}
-                                />
-                            ) : null}
-                        </Form.Item>
-                    ))}
-                    <Form.Item>
-                        <Button
-                            type="dashed"
-                            onClick={() => add()}
-                            style={{width: '60%'}}
-                            icon={<ThunderboltFilled/>}
-                        >
-                            {t`Add a Trigger`}
-                        </Button>
-                        <Form.ErrorList errors={errors}/>
-                    </Form.Item>
-                </>
-            )}
-        </Form.List>
         <Form.Item label={t`Connector`}
                    name='connector'
                    labelCol={{
@@ -217,6 +166,7 @@ export function WatchlistForm({form, connectors, onCreateWatchlist}: {
                        md: {span: 12},
                        sm: {span: 20},
                    }}
+                   help={t`Please make sure the connector information is valid to purchase a domain that may be available soon.`}
         >
             <Select showSearch
                     allowClear
