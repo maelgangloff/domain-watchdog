@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2024-08-02 15:24+0000\n"
+"PO-Revision-Date: 2024-08-03 17:00+0000\n"
 "Last-Translator: Maël Gangloff <contact@maelgangloff.fr>\n"
 "Language-Team: French <https://weblate.vinceh121.me/projects/domain-watchdog/"
 "domain-watchdog-dashboard/fr/>\n"
@@ -120,13 +120,11 @@ msgstr "NOC"
 
 #: assets/components/tracking/WatchlistForm.tsx:60
 msgid "Name"
-msgstr ""
+msgstr "Nom"
 
 #: assets/components/tracking/WatchlistForm.tsx:71
-#, fuzzy
-#| msgid "Watchlist"
 msgid "Watchlist Name"
-msgstr "Watchlist"
+msgstr "Nom de la Watchlist"
 
 #: assets/components/tracking/WatchlistForm.tsx:72
 msgid "Naming the watchlist makes it easier to find in the list below."
