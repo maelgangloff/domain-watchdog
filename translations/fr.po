@@ -11,47 +11,47 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
 "X-Generator: Weblate 5.6\n"
 
-#: assets/components/search/EventTimeline.tsx:28
+#: assets/components/search/EventTimeline.tsx:25
 msgid "Registration"
 msgstr "Enregistrement"
 
-#: assets/components/search/EventTimeline.tsx:29
+#: assets/components/search/EventTimeline.tsx:26
 msgid "Reregistration"
 msgstr "Réenregistrement"
 
-#: assets/components/search/EventTimeline.tsx:30
+#: assets/components/search/EventTimeline.tsx:27
 msgid "Last changed"
 msgstr "Dernière modification"
 
-#: assets/components/search/EventTimeline.tsx:31
+#: assets/components/search/EventTimeline.tsx:28
 msgid "Expiration"
 msgstr "Expiration"
 
-#: assets/components/search/EventTimeline.tsx:32
+#: assets/components/search/EventTimeline.tsx:29
 msgid "Deletion"
 msgstr "Suppression"
 
-#: assets/components/search/EventTimeline.tsx:33
+#: assets/components/search/EventTimeline.tsx:30
 msgid "Reinstantiation"
 msgstr "Réinstanciation"
 
-#: assets/components/search/EventTimeline.tsx:34
+#: assets/components/search/EventTimeline.tsx:31
 msgid "Transfer"
 msgstr "Transfert"
 
-#: assets/components/search/EventTimeline.tsx:35
+#: assets/components/search/EventTimeline.tsx:32
 msgid "Locked"
 msgstr "Bloqué"
 
-#: assets/components/search/EventTimeline.tsx:36
+#: assets/components/search/EventTimeline.tsx:33
 msgid "Unlocked"
 msgstr "Débloqué"
 
-#: assets/components/search/EventTimeline.tsx:37
+#: assets/components/search/EventTimeline.tsx:34
 msgid "Registrar expiration"
 msgstr "Expiration du registraire"
 
-#: assets/components/search/EventTimeline.tsx:38
+#: assets/components/search/EventTimeline.tsx:35
 msgid "ENUM validation expiration"
 msgstr "Expiration de la validation ENUM"
 
@@ -165,7 +165,7 @@ msgid "At least one domain name"
 msgstr "Au moins un nom de domaine"
 
 #: assets/components/tracking/WatchlistForm.tsx:101
-#: assets/components/tracking/WatchlistsList.tsx:19
+#: assets/components/tracking/WatchlistsList.tsx:21
 msgid "Domain names"
 msgstr "Noms de domaines"
 
@@ -270,29 +270,29 @@ msgstr ""
 "Je renonce expressément à mon droit de rétractation concernant l'achat de "
 "noms de domaine via l'API du Fournisseur"
 
-#: assets/components/tracking/WatchlistsList.tsx:23
+#: assets/components/tracking/WatchlistsList.tsx:25
 msgid "Tracked events"
 msgstr "Événements suivis"
 
-#: assets/components/tracking/WatchlistsList.tsx:32
+#: assets/components/tracking/WatchlistsList.tsx:34
 msgid "Watchlist"
 msgstr "Watchlist"
 
-#: assets/components/tracking/WatchlistsList.tsx:35
+#: assets/components/tracking/WatchlistsList.tsx:37
 msgid "Delete the Watchlist"
 msgstr "Supprimer la Watchlist"
 
-#: assets/components/tracking/WatchlistsList.tsx:36
+#: assets/components/tracking/WatchlistsList.tsx:38
 msgid "Are you sure to delete this Watchlist?"
 msgstr "Êtes-vous sûr de vouloir supprimer cette Watchlist ?"
 
 #: assets/components/tracking/ConnectorsList.tsx:33
-#: assets/components/tracking/WatchlistsList.tsx:38
+#: assets/components/tracking/WatchlistsList.tsx:40
 msgid "Yes"
 msgstr "Oui"
 
 #: assets/components/tracking/ConnectorsList.tsx:34
-#: assets/components/tracking/WatchlistsList.tsx:39
+#: assets/components/tracking/WatchlistsList.tsx:41
 msgid "No"
 msgstr "Non"
 
