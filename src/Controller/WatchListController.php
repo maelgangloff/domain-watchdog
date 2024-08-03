@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Domain;
 use App\Entity\DomainEntity;
 use App\Entity\DomainEvent;
 use App\Entity\User;
@@ -12,10 +13,12 @@ use Doctrine\ORM\EntityManagerInterface;
 use Eluceo\iCal\Domain\Entity\Attendee;
 use Eluceo\iCal\Domain\Entity\Calendar;
 use Eluceo\iCal\Domain\Entity\Event;
+use Eluceo\iCal\Domain\Enum\EventStatus;
 use Eluceo\iCal\Domain\ValueObject\Category;
 use Eluceo\iCal\Domain\ValueObject\Date;
 use Eluceo\iCal\Domain\ValueObject\EmailAddress;
 use Eluceo\iCal\Domain\ValueObject\SingleDay;
+use Eluceo\iCal\Domain\ValueObject\Timestamp;
 use Eluceo\iCal\Presentation\Factory\CalendarFactory;
 use Sabre\VObject\EofException;
 use Sabre\VObject\InvalidDataException;
@@ -82,6 +85,7 @@ class WatchListController extends AbstractController
 
         $calendar = new Calendar();
 
+        /** @var Domain $domain */
         foreach ($watchList->getDomains()->getIterator() as $domain) {
             $attendees = [];
 
@@ -100,6 +104,8 @@ class WatchListController extends AbstractController
             /** @var DomainEvent $event */
             foreach ($domain->getEvents()->toArray() as $event) {
                 $calendar->addEvent((new Event())
+                    ->setLastModified(new Timestamp($domain->getUpdatedAt()))
+                    ->setStatus(EventStatus::CONFIRMED())
                     ->setSummary($domain->getLdhName().' ('.$event->getAction().')')
                     ->addCategory(new Category($event->getAction()))
                     ->setAttendees($attendees)
