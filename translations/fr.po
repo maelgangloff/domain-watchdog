@@ -546,8 +546,8 @@ msgstr ""
 "à l'autre"
 
 #: assets/App.tsx:97
-msgid "Terms of service"
-msgstr "Conditions d'utilisation"
+msgid "TOS"
+msgstr "CGU"
 
 #: assets/App.tsx:98
 msgid "Privacy Policy"
@@ -557,14 +557,14 @@ msgstr "Politique de confidentialité"
 msgid "FAQ"
 msgstr "FAQ"
 
+#~ msgid "Terms of service"
+#~ msgstr "Conditions d'utilisation"
+
 #~ msgid "Information"
 #~ msgstr "Information"
 
 #~ msgid "My Watchdog"
 #~ msgstr "Mon Watchdog"
-
-#~ msgid "TOS"
-#~ msgstr "CGU"
 
 #~ msgid "When a domain is expired"
 #~ msgstr "Lorsqu'un domaine est expiré"
