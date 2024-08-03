@@ -19,6 +19,8 @@ use Eluceo\iCal\Domain\ValueObject\Date;
 use Eluceo\iCal\Domain\ValueObject\EmailAddress;
 use Eluceo\iCal\Domain\ValueObject\SingleDay;
 use Eluceo\iCal\Domain\ValueObject\Timestamp;
+use Eluceo\iCal\Presentation\Component\Property;
+use Eluceo\iCal\Presentation\Component\Property\Value\TextValue;
 use Eluceo\iCal\Presentation\Factory\CalendarFactory;
 use Sabre\VObject\EofException;
 use Sabre\VObject\InvalidDataException;
@@ -114,7 +116,13 @@ class WatchListController extends AbstractController
             }
         }
 
-        return new Response((new CalendarFactory())->createCalendar($calendar), Response::HTTP_OK, [
+        $calendarResponse = (new CalendarFactory())->createCalendar($calendar);
+        $calendarName = $watchList->getName();
+        if (null !== $calendarName) {
+            $calendarResponse->withProperty(new Property('X-WR-CALNAME', new TextValue($calendarName)));
+        }
+
+        return new Response($calendarResponse, Response::HTTP_OK, [
             'Content-Type' => 'text/calendar; charset=utf-8',
         ]);
     }
