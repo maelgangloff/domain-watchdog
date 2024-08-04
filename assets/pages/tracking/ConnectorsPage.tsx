@@ -4,9 +4,7 @@ import {t} from "ttag";
 import {Connector, getConnectors, postConnector} from "../../utils/api/connectors";
 import {ConnectorForm} from "../../components/tracking/ConnectorForm";
 import {AxiosError} from "axios";
-import {ConnectorsList} from "../../components/tracking/ConnectorsList";
-
-type ConnectorElement = Connector & { id: string }
+import {ConnectorElement, ConnectorsList} from "../../components/tracking/ConnectorsList";
 
 export default function ConnectorsPage() {
     const [form] = Form.useForm()

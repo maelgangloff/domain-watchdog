@@ -13,7 +13,12 @@ export type Watchlist = {
     token: string,
     domains: { ldhName: string }[],
     triggers?: { event: EventAction, action: string }[],
-    connector?: string
+    connector?: {
+        id: string
+        provider: string
+        createdAt: string
+    }
+    createdAt: string
 }
 
 export default function WatchlistPage() {

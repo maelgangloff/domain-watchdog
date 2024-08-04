@@ -1,7 +1,7 @@
-import {Card, Divider, Popconfirm, Table, Tag, theme} from "antd";
+import {Card, Divider, Popconfirm, Table, Tag, theme, Typography} from "antd";
 import {t} from "ttag";
 import {deleteWatchlist} from "../../utils/api";
-import {DeleteFilled} from "@ant-design/icons";
+import {DeleteFilled, DisconnectOutlined, LinkOutlined} from "@ant-design/icons";
 import React from "react";
 import useBreakpoint from "../../hooks/useBreakpoint";
 import {actionToColor, domainEvent} from "../search/EventTimeline";
@@ -9,7 +9,6 @@ import {Watchlist} from "../../pages/tracking/WatchlistPage";
 import punycode from "punycode/punycode";
 
 const {useToken} = theme;
-
 
 export function WatchlistsList({watchlists, onDelete}: { watchlists: Watchlist[], onDelete: () => void }) {
     const {token} = useToken()
@@ -32,8 +31,20 @@ export function WatchlistsList({watchlists, onDelete}: { watchlists: Watchlist[]
         {watchlists.map(watchlist =>
             <>
                 <Card
-                    title={t`Watchlist` + (watchlist.name ? ` (${watchlist.name})` : '')}
+                    title={<>
+                        {
+                            watchlist.connector ?
+                                <Tag icon={<LinkOutlined/>} color="lime-inverse" title={watchlist.connector.id}/> :
+                                <Tag icon={<DisconnectOutlined/>} color="default"
+                                     title={t`This Watchlist is not linked to a Connector.`}/>
+                        }
+                        <Typography.Text title={new Date(watchlist.createdAt).toLocaleString()}>
+                            {t`Watchlist` + (watchlist.name ? ` (${watchlist.name})` : '')}
+                        </Typography.Text>
+                    </>
+                    }
                     size='small'
+                    style={{width: '100%'}}
                     extra={<Popconfirm
                         title={t`Delete the Watchlist`}
                         description={t`Are you sure to delete this Watchlist?`}
@@ -49,6 +60,7 @@ export function WatchlistsList({watchlists, onDelete}: { watchlists: Watchlist[]
                         size='small'
                         columns={columns}
                         pagination={false}
+                        style={{width: '100%'}}
                         dataSource={[{
                             domains: watchlist.domains.map(d => <Tag>{punycode.toUnicode(d.ldhName)}</Tag>),
                             events: watchlist.triggers?.filter(t => t.action === 'email')
