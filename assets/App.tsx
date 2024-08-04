@@ -100,6 +100,8 @@ export default function App() {
                         <Link to='/tos'><Button type='text'>{t`TOS`}</Button></Link>
                         <Link to='/privacy'><Button type='text'>{t`Privacy Policy`}</Button></Link>
                         <Link to='/faq'><Button type='text'>{t`FAQ`}</Button></Link>
+                        <Typography.Link href='https://github.com/maelgangloff/domain-watchdog/wiki'><Button
+                            type='text'>{t`Documentation`}</Button></Typography.Link>
                     </Space>
                     <Typography.Paragraph>{jt`${ProjectLink} is an open source project distributed under the ${LicenseLink} license.`}</Typography.Paragraph>
                 </Layout.Footer>
