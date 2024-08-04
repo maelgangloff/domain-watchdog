@@ -8,6 +8,7 @@ use App\Message\ProcessDomainTrigger;
 use App\Repository\DomainRepository;
 use App\Service\RDAPService;
 use Psr\Log\LoggerInterface;
+use Random\Randomizer;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpKernel\Exception\TooManyRequestsHttpException;
 use Symfony\Component\HttpKernel\KernelInterface;
@@ -74,8 +75,11 @@ class DomainRefreshController extends AbstractController
         $updatedAt = null === $domain ? new \DateTimeImmutable('now') : $domain->getUpdatedAt();
         $domain = $this->RDAPService->registerDomain($idnDomain);
 
+        $randomizer = new Randomizer();
+        $watchLists = $randomizer->shuffleArray($domain->getWatchLists()->toArray());
+
         /** @var WatchList $watchList */
-        foreach ($domain->getWatchLists()->getIterator() as $watchList) {
+        foreach ($watchLists as $watchList) {
             $this->bus->dispatch(new ProcessDomainTrigger($watchList->getToken(), $domain->getLdhName(), $updatedAt));
         }
 
