@@ -64,13 +64,13 @@ msgstr "Expiration de la validation ENUM"
 #: assets/components/tracking/ConnectorForm.tsx:97
 #: assets/components/tracking/ConnectorForm.tsx:110
 #: assets/components/tracking/ConnectorForm.tsx:119
-#: assets/components/tracking/WatchlistForm.tsx:102
+#: assets/components/tracking/WatchlistForm.tsx:103
 #: assets/pages/LoginPage.tsx:62 assets/pages/LoginPage.tsx:70
 msgid "Required"
 msgstr "Requis"
 
 #: assets/components/search/DomainSearchBar.tsx:26
-#: assets/components/tracking/WatchlistForm.tsx:105
+#: assets/components/tracking/WatchlistForm.tsx:106
 msgid "This domain name does not appear to be valid"
 msgstr "Ce nom de domaine ne semble pas être valide"
 
@@ -132,38 +132,38 @@ msgstr ""
 "Nommer la Watchlist permet de la retrouver plus facilement dans la liste ci-"
 "dessous."
 
-#: assets/components/tracking/WatchlistForm.tsx:82
+#: assets/components/tracking/WatchlistForm.tsx:83
 msgid "At least one domain name"
 msgstr "Au moins un nom de domaine"
 
-#: assets/components/tracking/WatchlistForm.tsx:93
+#: assets/components/tracking/WatchlistForm.tsx:94
 #: assets/components/tracking/WatchlistsList.tsx:21
 msgid "Domain names"
 msgstr "Noms de domaines"
 
-#: assets/components/tracking/WatchlistForm.tsx:111
+#: assets/components/tracking/WatchlistForm.tsx:112
 msgid "Domain name"
 msgstr "Nom de domaine"
 
-#: assets/components/tracking/WatchlistForm.tsx:128
+#: assets/components/tracking/WatchlistForm.tsx:129
 msgid "Add a Domain name"
 msgstr "Ajouter un nom de domaine"
 
-#: assets/components/tracking/WatchlistForm.tsx:135
+#: assets/components/tracking/WatchlistForm.tsx:136
 #: assets/components/tracking/WatchlistsList.tsx:25
 msgid "Tracked events"
 msgstr "Événements suivis"
 
-#: assets/components/tracking/WatchlistForm.tsx:137
+#: assets/components/tracking/WatchlistForm.tsx:138
 msgid "At least one trigger"
 msgstr "Au moins un déclencheur"
 
-#: assets/components/tracking/WatchlistForm.tsx:159
-#: assets/components/tracking/WatchlistForm.tsx:173
+#: assets/components/tracking/WatchlistForm.tsx:160
+#: assets/components/tracking/WatchlistForm.tsx:174
 msgid "Connector"
 msgstr "Connecteur"
 
-#: assets/components/tracking/WatchlistForm.tsx:169
+#: assets/components/tracking/WatchlistForm.tsx:170
 msgid ""
 "Please make sure the connector information is valid to purchase a domain "
 "that may be available soon."
@@ -172,12 +172,12 @@ msgstr ""
 "acheter un domaine qui pourrait être disponible prochainement."
 
 #: assets/components/tracking/ConnectorForm.tsx:131
-#: assets/components/tracking/WatchlistForm.tsx:185
+#: assets/components/tracking/WatchlistForm.tsx:186
 msgid "Create"
 msgstr "Créer"
 
 #: assets/components/tracking/ConnectorForm.tsx:134
-#: assets/components/tracking/WatchlistForm.tsx:188
+#: assets/components/tracking/WatchlistForm.tsx:189
 msgid "Reset"
 msgstr "Réinitialiser"
 
@@ -565,6 +565,10 @@ msgid "FAQ"
 msgstr "FAQ"
 
 #: assets/App.tsx:104
+msgid "Documentation"
+msgstr ""
+
+#: assets/App.tsx:106
 #, javascript-format
 msgid ""
 "${ ProjectLink } is an open source project distributed under the "
