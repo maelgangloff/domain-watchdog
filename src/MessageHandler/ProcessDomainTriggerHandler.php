@@ -20,6 +20,7 @@ use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
+use Symfony\Component\Mime\Address;
 use Symfony\Component\Mime\Email;
 
 #[AsMessageHandler]
@@ -27,6 +28,7 @@ final readonly class ProcessDomainTriggerHandler
 {
     public function __construct(
         private string $mailerSenderEmail,
+        private string $mailerSenderName,
         private MailerInterface $mailer,
         private WatchListRepository $watchListRepository,
         private DomainRepository $domainRepository,
@@ -97,7 +99,7 @@ final readonly class ProcessDomainTriggerHandler
     private function sendEmailDomainOrdered(Domain $domain, Connector $connector, User $user): void
     {
         $email = (new TemplatedEmail())
-            ->from($this->mailerSenderEmail)
+            ->from(new Address($this->mailerSenderEmail, $this->mailerSenderName))
             ->to($user->getEmail())
             ->priority(Email::PRIORITY_HIGHEST)
             ->subject('A domain name has been ordered')
@@ -117,7 +119,7 @@ final readonly class ProcessDomainTriggerHandler
     private function sendEmailDomainOrderError(Domain $domain, User $user): void
     {
         $email = (new TemplatedEmail())
-            ->from($this->mailerSenderEmail)
+            ->from(new Address($this->mailerSenderEmail, $this->mailerSenderName))
             ->to($user->getEmail())
             ->subject('An error occurred while ordering a domain name')
             ->htmlTemplate('emails/errors/domain_order.html.twig')
@@ -135,7 +137,7 @@ final readonly class ProcessDomainTriggerHandler
     private function sendEmailDomainUpdated(DomainEvent $domainEvent, User $user): void
     {
         $email = (new TemplatedEmail())
-            ->from($this->mailerSenderEmail)
+            ->from(new Address($this->mailerSenderEmail, $this->mailerSenderName))
             ->to($user->getEmail())
             ->priority(Email::PRIORITY_HIGHEST)
             ->subject('A domain name has been changed')

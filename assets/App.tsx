@@ -103,7 +103,9 @@ export default function App() {
                         <Typography.Link href='https://github.com/maelgangloff/domain-watchdog/wiki'><Button
                             type='text'>{t`Documentation`}</Button></Typography.Link>
                     </Space>
-                    <Typography.Paragraph>{jt`${ProjectLink} is an open source project distributed under the ${LicenseLink} license.`}</Typography.Paragraph>
+                    <Typography.Paragraph style={{marginTop: '1em'}}>
+                        {jt`${ProjectLink} is an open source project distributed under the ${LicenseLink} license.`}
+                    </Typography.Paragraph>
                 </Layout.Footer>
             </Layout>
         </Layout>

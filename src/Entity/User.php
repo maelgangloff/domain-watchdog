@@ -4,7 +4,9 @@ namespace App\Entity;
 
 use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\Post;
 use App\Controller\MeController;
+use App\Controller\RegistrationController;
 use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -26,6 +28,14 @@ use Symfony\Component\Serializer\Attribute\Groups;
             normalizationContext: ['groups' => 'user:list'],
             read: false
         ),
+        new Post(
+            uriTemplate: '/register',
+            routeName: 'user_register',
+            controller: RegistrationController::class,
+            denormalizationContext: ['groups' => ['user:register']],
+            read: false,
+            name: 'register'
+        ),
     ]
 )]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
@@ -36,7 +46,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?int $id = null;
 
     #[ORM\Column(length: 180)]
-    #[Groups(['user:list'])]
+    #[Groups(['user:list', 'user:register'])]
     private ?string $email = null;
 
     /**
@@ -50,6 +60,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @var string|null The hashed password
      */
     #[ORM\Column(nullable: true)]
+    #[Groups(['user:register'])]
     private ?string $password = null;
 
     /**
@@ -63,6 +74,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     #[ORM\OneToMany(targetEntity: Connector::class, mappedBy: 'user', orphanRemoval: true)]
     private Collection $connectors;
+
+    #[ORM\Column]
+    private bool $isVerified = false;
 
     public function __construct()
     {
@@ -198,6 +212,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
                 $connector->setUser(null);
             }
         }
+
+        return $this;
+    }
+
+    public function isVerified(): bool
+    {
+        return $this->isVerified;
+    }
+
+    public function setVerified(bool $isVerified): static
+    {
+        $this->isVerified = $isVerified;
 
         return $this;
     }

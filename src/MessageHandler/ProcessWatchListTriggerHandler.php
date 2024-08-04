@@ -16,6 +16,7 @@ use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 use Symfony\Component\Messenger\Exception\ExceptionInterface;
 use Symfony\Component\Messenger\MessageBusInterface;
+use Symfony\Component\Mime\Address;
 use Symfony\Contracts\HttpClient\Exception\HttpExceptionInterface;
 
 #[AsMessageHandler]
@@ -25,6 +26,7 @@ final readonly class ProcessWatchListTriggerHandler
         private RDAPService $RDAPService,
         private MailerInterface $mailer,
         private string $mailerSenderEmail,
+        private string $mailerSenderName,
         private MessageBusInterface $bus,
         private WatchListRepository $watchListRepository,
         private LoggerInterface $logger
@@ -90,7 +92,7 @@ final readonly class ProcessWatchListTriggerHandler
     private function sendEmailDomainUpdateError(Domain $domain, User $user): void
     {
         $email = (new TemplatedEmail())
-            ->from($this->mailerSenderEmail)
+            ->from(new Address($this->mailerSenderEmail, $this->mailerSenderName))
             ->to($user->getEmail())
             ->subject('An error occurred while updating a domain name')
             ->htmlTemplate('emails/errors/domain_update.html.twig')

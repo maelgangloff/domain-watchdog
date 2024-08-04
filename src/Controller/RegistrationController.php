@@ -1,0 +1,119 @@
+<?php
+
+namespace App\Controller;
+
+use App\Entity\User;
+use App\Repository\UserRepository;
+use App\Security\EmailVerifier;
+use Doctrine\ORM\EntityManagerInterface;
+use Psr\Log\LoggerInterface;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
+use Symfony\Component\HttpKernel\Exception\TooManyRequestsHttpException;
+use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
+use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
+use Symfony\Component\Mime\Address;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+use Symfony\Component\RateLimiter\RateLimiterFactory;
+use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Serializer\SerializerInterface;
+
+class RegistrationController extends AbstractController
+{
+    public function __construct(
+        private readonly EmailVerifier $emailVerifier,
+        private readonly string $mailerSenderEmail,
+        private readonly string $mailerSenderName,
+        private readonly RateLimiterFactory $userRegisterLimiter,
+        private readonly EntityManagerInterface $em,
+        private readonly SerializerInterface $serializer,
+        private readonly LoggerInterface $logger,
+    ) {
+    }
+
+    /**
+     * @throws TransportExceptionInterface
+     */
+    #[Route(
+        path: '/api/register',
+        name: 'user_register',
+        defaults: [
+            '_api_resource_class' => User::class,
+            '_api_operation_name' => 'register',
+        ],
+        methods: ['POST']
+    )]
+    public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher): Response
+    {
+        if (false === $this->getParameter('registration_enabled')) {
+            throw new UnauthorizedHttpException('', 'Registration is disabled on this instance');
+        }
+
+        $limiter = $this->userRegisterLimiter->create($request->getClientIp());
+
+        if (false === $limiter->consume()->isAccepted()) {
+            $this->logger->warning('IP address {ip} was rate limited by the Registration API.', [
+                'ip' => $request->getClientIp(),
+            ]);
+
+            throw new TooManyRequestsHttpException();
+        }
+
+        $user = $this->serializer->deserialize($request->getContent(), User::class, 'json', ['groups' => 'user:register']);
+        if (null === $user->getEmail() || null === $user->getPassword()) {
+            throw new BadRequestHttpException('Bad request');
+        }
+
+        $user->setPassword(
+            $userPasswordHasher->hashPassword(
+                $user,
+                $user->getPassword()
+            )
+        );
+
+        $this->em->persist($user);
+        $this->em->flush();
+
+        $this->logger->info('A new user has registered ({username}).', [
+            'username' => $user->getUserIdentifier(),
+        ]);
+
+        $this->emailVerifier->sendEmailConfirmation('app_verify_email', $user,
+            (new TemplatedEmail())
+                ->from(new Address($this->mailerSenderEmail, $this->mailerSenderName))
+                ->to($user->getEmail())
+                ->locale('en')
+                ->subject('Please Confirm your Email')
+                ->htmlTemplate('emails/success/confirmation_email.html.twig')
+        );
+
+        return $this->redirectToRoute('index');
+    }
+
+    #[Route('/verify/email', name: 'app_verify_email')]
+    public function verifyUserEmail(Request $request, UserRepository $userRepository): Response
+    {
+        $id = $request->query->get('id');
+
+        if (null === $id) {
+            return $this->redirectToRoute('index');
+        }
+
+        $user = $userRepository->find($id);
+
+        if (null === $user) {
+            return $this->redirectToRoute('index');
+        }
+
+        $this->emailVerifier->handleEmailConfirmation($request, $user);
+
+        $this->logger->info('User {username} has validated his email address.', [
+            'username' => $user->getUserIdentifier(),
+        ]);
+
+        return $this->redirectToRoute('index');
+    }
+}

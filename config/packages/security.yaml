@@ -1,6 +1,5 @@
 framework:
     rate_limiter:
-        # define 2 rate limiters (one for username+IP, the other for IP)
         username_ip_login:
             policy: token_bucket
             limit: 5
@@ -11,8 +10,17 @@ framework:
             limit: 50
             interval: '15 minutes'
 
+        user_register:
+            policy: token_bucket
+            limit: 1
+            rate: { interval: '5 minutes' }
+
+        rdap_requests:
+            policy: sliding_window
+            limit: 10
+            interval: '1 hour'
+
 services:
-    # our custom login rate limiter
     app.login_rate_limiter:
         class: Symfony\Component\Security\Http\RateLimiter\DefaultLoginRateLimiter
         arguments:
@@ -69,6 +77,7 @@ security:
     access_control:
         - { path: ^/api$, roles: PUBLIC_ACCESS }
         - { path: ^/api/docs, roles: PUBLIC_ACCESS }
+        - { path: ^/api/register$, roles: PUBLIC_ACCESS }
         - { path: "^/api/watchlists/[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/calendar$", roles: PUBLIC_ACCESS }
         - { path: "^/api/config$", roles: PUBLIC_ACCESS }
         - { path: ^/api, roles: IS_AUTHENTICATED_FULLY }

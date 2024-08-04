@@ -58,7 +58,7 @@ class OAuthAuthenticator extends OAuth2Authenticator implements AuthenticationEn
                 }
 
                 $user = new User();
-                $user->setEmail($userFromToken->getEmail());
+                $user->setEmail($userFromToken->getEmail())->setVerified(true);
                 $this->em->persist($user);
                 $this->em->flush();
 

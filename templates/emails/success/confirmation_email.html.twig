@@ -24,7 +24,7 @@
 
         .header h1 {
             font-size: 24px;
-            color: #d9534f;
+            color: #0056b3;
         }
 
         .content {
@@ -39,39 +39,24 @@
             text-align: center;
             color: #777;
         }
-
-        ul {
-            padding-left: 20px;
-        }
-
-        ul li {
-            margin-bottom: 10px;
-        }
     </style>
-    <title>Domain Watchdog Error</title>
+    <title>Domain Watchdog - Confirm Email</title>
 </head>
 <body>
 <div class="container">
     <div class="header">
-        <h1>Domain Watchdog Error</h1>
+        <h1>Domain Watchdog - Confirm Email</h1>
     </div>
     <div class="content">
         <p>Hello, <br/>
-            We would like to inform you that an error occurred while updating the information for the following domain
-            name:<br/>
-            <strong>Domain name:</strong> {{ domain.ldhName }}<br/>
-        </p>
-        <p>Here are some possible explanations:</p>
-        <ul>
-            <li>It is likely that the domain will be available for registration again.</li>
-            <li>A temporary outage affects the provision of domain name information.</li>
-        </ul>
-        <br/><br/>
-        <p>Thank you for your understanding,<br/>
+            Please confirm your email address by clicking the following link: <br><br>
+            <a href="{{ signedUrl|raw }}">Confirm my Email</a>.
+            This link will expire in {{ expiresAtMessageKey|trans(expiresAtMessageData, 'VerifyEmailBundle') }}.
+            <br/><br/>
+            Thank you for your understanding,<br/>
             Sincerely,<br/>
             Domain Watchdog<br/>
         </p>
-
     </div>
     <div class="footer">
         <p>&copy; Domain Watchdog</p>

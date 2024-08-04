@@ -23,7 +23,7 @@ class DomainRefreshController extends AbstractController
 {
     public function __construct(private readonly DomainRepository $domainRepository,
         private readonly RDAPService $RDAPService,
-        private readonly RateLimiterFactory $authenticatedApiLimiter,
+        private readonly RateLimiterFactory $rdapRequestsLimiter,
         private readonly MessageBusInterface $bus,
         private readonly LoggerInterface $logger
     ) {
@@ -63,7 +63,8 @@ class DomainRefreshController extends AbstractController
         }
 
         if (false === $kernel->isDebug() && true === $this->getParameter('limited_features')) {
-            $limiter = $this->authenticatedApiLimiter->create($userId);
+            $limiter = $this->rdapRequestsLimiter->create($userId);
+
             if (false === $limiter->consume()->isAccepted()) {
                 $this->logger->warning('User {username} was rate limited by the API.', [
                     'username' => $this->getUser()->getUserIdentifier(),

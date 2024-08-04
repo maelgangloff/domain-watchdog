@@ -48,15 +48,16 @@
         <h1>Domain Watchdog Alert</h1>
     </div>
     <div class="content">
-        <p>Hello,</p>
-        <p>We are pleased to inform you that a new action has been detected on a domain name in your watchlist.</p>
-        <p><strong>Domain name:</strong> {{ event.domain.ldhName }}</p>
-        <p><strong>Action:</strong> {{ event.action }}</p>
-        <p><strong>Effective Date:</strong> {{ event.date | date("c") }}</p>
-        <br/>
-        <p>Thank you for your understanding,</p>
-        <p>Sincerely,</p>
-        <p>Domain Watchdog</p>
+        <p>Hello, <br/>
+            We are pleased to inform you that a new action has been detected on a domain name in your watchlist.<br/>
+            <strong>Domain name:</strong> {{ event.domain.ldhName }}<br/>
+            <strong>Action:</strong> {{ event.action }}<br/>
+            <strong>Effective Date:</strong> {{ event.date | date("c") }}<br/>
+            <br/><br/>
+            Thank you for your understanding,<br/>
+            Sincerely,<br/>
+            Domain Watchdog<br/>
+        </p>
     </div>
     <div class="footer">
         <p>&copy; Domain Watchdog</p>
