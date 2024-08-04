@@ -65,7 +65,7 @@ msgstr "Expiration de la validation ENUM"
 #: assets/components/tracking/ConnectorForm.tsx:110
 #: assets/components/tracking/ConnectorForm.tsx:119
 #: assets/components/tracking/WatchlistForm.tsx:102
-#: assets/pages/LoginPage.tsx:60 assets/pages/LoginPage.tsx:68
+#: assets/pages/LoginPage.tsx:62 assets/pages/LoginPage.tsx:70
 msgid "Required"
 msgstr "Requis"
 
@@ -137,7 +137,7 @@ msgid "At least one domain name"
 msgstr "Au moins un nom de domaine"
 
 #: assets/components/tracking/WatchlistForm.tsx:93
-#: assets/components/tracking/WatchlistsList.tsx:22
+#: assets/components/tracking/WatchlistsList.tsx:21
 msgid "Domain names"
 msgstr "Noms de domaines"
 
@@ -150,7 +150,7 @@ msgid "Add a Domain name"
 msgstr "Ajouter un nom de domaine"
 
 #: assets/components/tracking/WatchlistForm.tsx:135
-#: assets/components/tracking/WatchlistsList.tsx:26
+#: assets/components/tracking/WatchlistsList.tsx:25
 msgid "Tracked events"
 msgstr "Événements suivis"
 
@@ -158,7 +158,6 @@ msgstr "Événements suivis"
 msgid "At least one trigger"
 msgstr "Au moins un déclencheur"
 
-#: assets/components/tracking/ConnectorsList.tsx:28
 #: assets/components/tracking/WatchlistForm.tsx:159
 #: assets/components/tracking/WatchlistForm.tsx:173
 msgid "Connector"
@@ -183,7 +182,6 @@ msgid "Reset"
 msgstr "Réinitialiser"
 
 #: assets/components/tracking/ConnectorForm.tsx:37
-#: assets/components/tracking/ConnectorsList.tsx:20
 msgid "Provider"
 msgstr "Fournisseur"
 
@@ -239,33 +237,43 @@ msgstr ""
 "Je renonce expressément à mon droit de rétractation concernant l'achat de "
 "noms de domaine via l'API du Fournisseur"
 
-#: assets/components/tracking/WatchlistsList.tsx:35
+#: assets/components/tracking/WatchlistsList.tsx:39
+msgid "This Watchlist is not linked to a Connector."
+msgstr ""
+
+#: assets/components/tracking/WatchlistsList.tsx:42
 msgid "Watchlist"
 msgstr "Watchlist"
 
-#: assets/components/tracking/WatchlistsList.tsx:38
+#: assets/components/tracking/WatchlistsList.tsx:49
 msgid "Delete the Watchlist"
 msgstr "Supprimer la Watchlist"
 
-#: assets/components/tracking/WatchlistsList.tsx:39
+#: assets/components/tracking/WatchlistsList.tsx:50
 msgid "Are you sure to delete this Watchlist?"
 msgstr "Êtes-vous sûr de vouloir supprimer cette Watchlist ?"
 
-#: assets/components/tracking/ConnectorsList.tsx:33
-#: assets/components/tracking/WatchlistsList.tsx:41
+#: assets/components/tracking/ConnectorsList.tsx:25
+#: assets/components/tracking/WatchlistsList.tsx:52
 msgid "Yes"
 msgstr "Oui"
 
-#: assets/components/tracking/ConnectorsList.tsx:34
-#: assets/components/tracking/WatchlistsList.tsx:42
+#: assets/components/tracking/ConnectorsList.tsx:26
+#: assets/components/tracking/WatchlistsList.tsx:53
 msgid "No"
 msgstr "Non"
 
-#: assets/components/tracking/ConnectorsList.tsx:30
+#: assets/components/tracking/ConnectorsList.tsx:19
+#, fuzzy, javascript-format
+#| msgid "Connector ${ connector.id }"
+msgid "Connector ${ connector.provider }"
+msgstr "Connecteur ${ connector.id }"
+
+#: assets/components/tracking/ConnectorsList.tsx:22
 msgid "Delete the Connector"
 msgstr "Supprimer le Connecteur"
 
-#: assets/components/tracking/ConnectorsList.tsx:31
+#: assets/components/tracking/ConnectorsList.tsx:23
 msgid "Are you sure to delete this Connector?"
 msgstr "Êtes-vous sûr de vouloir supprimer ce Connecteur ?"
 
@@ -333,7 +341,7 @@ msgstr "Mon compte"
 msgid "Log out"
 msgstr "Se déconnecter"
 
-#: assets/components/Sider.tsx:120 assets/pages/LoginPage.tsx:38
+#: assets/components/Sider.tsx:120 assets/pages/LoginPage.tsx:40
 msgid "Log in"
 msgstr "Se connecter"
 
@@ -342,11 +350,11 @@ msgid "Found !"
 msgstr "Trouvé !"
 
 #: assets/pages/search/DomainSearchPage.tsx:24
-#: assets/pages/tracking/ConnectorsPage.tsx:23
-#: assets/pages/tracking/ConnectorsPage.tsx:31
-#: assets/pages/tracking/WatchlistPage.tsx:44
-#: assets/pages/tracking/WatchlistPage.tsx:52
-#: assets/pages/tracking/WatchlistPage.tsx:62
+#: assets/pages/tracking/ConnectorsPage.tsx:21
+#: assets/pages/tracking/ConnectorsPage.tsx:29
+#: assets/pages/tracking/WatchlistPage.tsx:49
+#: assets/pages/tracking/WatchlistPage.tsx:57
+#: assets/pages/tracking/WatchlistPage.tsx:67
 msgid "An error occurred"
 msgstr "Une erreur s'est produite"
 
@@ -462,7 +470,7 @@ msgstr ""
 "Domaines de premier niveau basés sur les codes de pays, identifiant les "
 "sites web en fonction de leur pays d'origine."
 
-#: assets/pages/LoginPage.tsx:58 assets/pages/watchdog/UserPage.tsx:18
+#: assets/pages/LoginPage.tsx:60 assets/pages/watchdog/UserPage.tsx:18
 msgid "Username"
 msgstr "Nom d'utilisateur"
 
@@ -470,19 +478,19 @@ msgstr "Nom d'utilisateur"
 msgid "Roles"
 msgstr "Rôles"
 
-#: assets/pages/tracking/ConnectorsPage.tsx:20
+#: assets/pages/tracking/ConnectorsPage.tsx:18
 msgid "Connector created !"
 msgstr "Connecteur créé !"
 
-#: assets/pages/tracking/ConnectorsPage.tsx:41
+#: assets/pages/tracking/ConnectorsPage.tsx:39
 msgid "Create a Connector"
 msgstr "Créer un Connecteur"
 
-#: assets/pages/tracking/WatchlistPage.tsx:41
+#: assets/pages/tracking/WatchlistPage.tsx:46
 msgid "Watchlist created !"
 msgstr "Watchlist créée !"
 
-#: assets/pages/tracking/WatchlistPage.tsx:67
+#: assets/pages/tracking/WatchlistPage.tsx:72
 msgid "Create a Watchlist"
 msgstr "Créer une Watchlist"
 
@@ -490,19 +498,19 @@ msgstr "Créer une Watchlist"
 msgid "Sorry, the page you visited does not exist."
 msgstr "Désolé, cette page n'existe pas."
 
-#: assets/pages/LoginPage.tsx:43
+#: assets/pages/LoginPage.tsx:45
 msgid "Error"
 msgstr "Erreur"
 
-#: assets/pages/LoginPage.tsx:66
+#: assets/pages/LoginPage.tsx:68
 msgid "Password"
 msgstr "Mot de passe"
 
-#: assets/pages/LoginPage.tsx:75
+#: assets/pages/LoginPage.tsx:77
 msgid "Submit"
 msgstr "Se connecter"
 
-#: assets/pages/LoginPage.tsx:80
+#: assets/pages/LoginPage.tsx:82
 msgid "Log in with SSO"
 msgstr "Se connecter par SSO"
 
@@ -563,8 +571,8 @@ msgid ""
 "${ ProjectLink } is an open source project distributed under the "
 "${ LicenseLink } license."
 msgstr ""
-"${ ProjectLink } est un projet open source distribué sous licence ${ "
-"LicenseLink }."
+"${ ProjectLink } est un projet open source distribué sous licence "
+"${ LicenseLink }."
 
 #~ msgid "Terms of service"
 #~ msgstr "Conditions d'utilisation"
@@ -619,10 +627,6 @@ msgstr ""
 
 #~ msgid "Domain triggers"
 #~ msgstr "Actions"
-
-#, javascript-format
-#~ msgid "Connector ${ connector.id }"
-#~ msgstr "Connecteur ${ connector.id }"
 
 #, javascript-format
 #~ msgid "Watchlist ${ watchlist.token }"
