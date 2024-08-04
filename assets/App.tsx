@@ -48,7 +48,7 @@ export default function App() {
             if (location.pathname === '/login') navigate('/home')
         }).catch(() => {
             setIsAuthenticated(false)
-            navigate('/home')
+            if (location.pathname !== '/login') navigate('/home')
         })
     }, []);
 

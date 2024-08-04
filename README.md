@@ -54,4 +54,4 @@ Contributions are welcome as long as they do not contravene the Code of Conduct.
 
 [^1]: RFC 3912 : WHOIS Protocol Specification. (2004). IETF Datatracker. https://datatracker.ietf.org/doc/html/rfc3912
 [^2]: 2023 Global Amendments to the Base gTLD Registry Agreement (RA), Specification 13, and 2013 Registrar
-Accreditation Agreement (RAA) - ICANN. (s. d.). https://www.icann.org/resources/pages/global-amendment-2023-en
+Accreditation Agreement (RAA) - ICANN. (2023). https://www.icann.org/resources/pages/global-amendment-2023-en

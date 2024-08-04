@@ -71,6 +71,11 @@ export interface Watchlist {
     connector?: string
 }
 
+export interface InstanceConfig {
+    ssoLogin: boolean
+    limtedFeatures: boolean
+}
+
 export async function request<T = any, R = AxiosResponse<T>, D = any>(config: AxiosRequestConfig): Promise<R> {
     const axiosConfig: AxiosRequestConfig = {
         ...config,
@@ -83,6 +88,7 @@ export async function request<T = any, R = AxiosResponse<T>, D = any>(config: Ax
     }
     return await axios.request<T, R, D>(axiosConfig)
 }
+
 
 export * from './domain'
 export * from './tld'

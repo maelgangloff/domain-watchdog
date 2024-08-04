@@ -24,11 +24,13 @@ use Symfony\Component\Uid\Uuid;
             name: 'get_all_mine',
         ),
         new Get(
-            normalizationContext: ['groups' => 'connector:list']
+            normalizationContext: ['groups' => 'connector:list'],
+            security: 'object.user == user'
         ),
         new Post(
-            routeName: 'connector_create', normalizationContext: ['groups' => ['connector:create', 'connector:list']],
-            denormalizationContext: ['groups' => 'connector:create'],
+            routeName: 'connector_create',
+            normalizationContext: ['groups' => ['connector:create', 'connector:list']], denormalizationContext: ['groups' => 'connector:create'],
+            security: 'object.user == user',
             name: 'create'
         ),
         new Delete(),
@@ -44,7 +46,7 @@ class Connector
 
     #[ORM\ManyToOne(inversedBy: 'connectors')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?User $user = null;
+    public ?User $user = null;
 
     #[Groups(['connector:list', 'connector:create', 'watchlist:list'])]
     #[ORM\Column(enumType: ConnectorProvider::class)]

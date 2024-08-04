@@ -27,7 +27,8 @@ use Symfony\Component\Uid\Uuid;
             name: 'get_all_mine',
         ),
         new Get(
-            normalizationContext: ['groups' => 'watchlist:item']
+            normalizationContext: ['groups' => 'watchlist:item'],
+            security: 'object.user == user'
         ),
         new Get(
             routeName: 'watchlist_calendar',
@@ -73,7 +74,7 @@ class WatchList
 
     #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'watchLists')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?User $user = null;
+    public ?User $user = null;
 
     /**
      * @var Collection<int, Domain>

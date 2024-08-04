@@ -1,6 +1,6 @@
 import React, {createContext, useContext, useEffect, useState} from "react";
 import {Alert, Button, Card, Flex, Form, Input} from "antd";
-import {getUser, login} from "../utils/api";
+import {getConfiguration, getUser, InstanceConfig, login} from "../utils/api";
 import {useNavigate} from "react-router-dom";
 import {t} from 'ttag'
 
@@ -13,7 +13,8 @@ export const AuthenticatedContext = createContext<any>(null)
 
 export default function LoginPage() {
 
-    const [error, setError] = useState()
+    const [error, setError] = useState<string>()
+    const [configuration, setConfiguration] = useState<InstanceConfig>()
     const navigate = useNavigate()
     const {setIsAuthenticated} = useContext(AuthenticatedContext)
 
@@ -32,6 +33,7 @@ export default function LoginPage() {
             setIsAuthenticated(true)
             navigate('/home')
         })
+        getConfiguration().then(setConfiguration)
     }, [])
 
     return <Flex gap="middle" align="center" justify="center" vertical><Card
@@ -75,11 +77,11 @@ export default function LoginPage() {
                     {t`Submit`}
                 </Button>
             </Form.Item>
-            <Form.Item wrapperCol={{offset: 8, span: 16}}>
+            {configuration?.ssoLogin && <Form.Item wrapperCol={{offset: 8, span: 16}}>
                 <Button type="primary" htmlType="button" href="/login/oauth">
                     {t`Log in with SSO`}
                 </Button>
-            </Form.Item>
+            </Form.Item>}
         </Form>
     </Card>
     </Flex>
