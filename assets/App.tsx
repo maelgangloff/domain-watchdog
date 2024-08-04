@@ -1,4 +1,4 @@
-import {Button, Layout, Space, theme} from "antd";
+import {Button, Layout, Space, theme, Typography} from "antd";
 import {Link, Navigate, Route, Routes, useLocation, useNavigate} from "react-router-dom";
 import TextPage from "./pages/TextPage";
 import DomainSearchPage from "./pages/search/DomainSearchPage";
@@ -15,7 +15,10 @@ import ConnectorsPage from "./pages/tracking/ConnectorsPage";
 import NotFoundPage from "./pages/NotFoundPage";
 import useBreakpoint from "./hooks/useBreakpoint";
 import {Sider} from "./components/Sider";
-import {t} from "ttag";
+import {jt, t} from "ttag";
+
+const ProjectLink = <Link to='https://github.com/maelgangloff/domain-watchdog'>Domain Watchdog</Link>
+const LicenseLink = <Link to='https://www.gnu.org/licenses/agpl-3.0.txt'>AGPL-3.0-or-later</Link>
 
 export default function App() {
     const {
@@ -98,9 +101,7 @@ export default function App() {
                         <Link to='/privacy'><Button type='text'>{t`Privacy Policy`}</Button></Link>
                         <Link to='/faq'><Button type='text'>{t`FAQ`}</Button></Link>
                     </Space>
-                    <br/><br/>
-                    <Link to='https://github.com/maelgangloff/domain-watchdog'>Domain
-                        Watchdog</Link> is an open source project distributed under AGPL-3.0-or-later license.
+                    <Typography.Paragraph>{jt`${ProjectLink} is an open source project distributed under the ${LicenseLink} license.`}</Typography.Paragraph>
                 </Layout.Footer>
             </Layout>
         </Layout>

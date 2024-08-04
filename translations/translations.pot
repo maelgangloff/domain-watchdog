@@ -508,14 +508,21 @@ msgid ""
 "another"
 msgstr ""
 
-#: assets/App.tsx:97
+#: assets/App.tsx:100
 msgid "TOS"
 msgstr ""
 
-#: assets/App.tsx:98
+#: assets/App.tsx:101
 msgid "Privacy Policy"
 msgstr ""
 
-#: assets/App.tsx:99
+#: assets/App.tsx:102
 msgid "FAQ"
+msgstr ""
+
+#: assets/App.tsx:104
+#, javascript-format
+msgid ""
+"${ ProjectLink } is an open source project distributed under the ${ "
+"LicenseLink } license."
 msgstr ""
