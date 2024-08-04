@@ -545,17 +545,24 @@ msgstr ""
 "Le domaine est libre mais est un premium. Son prix est variable d'un domaine "
 "à l'autre"
 
-#: assets/App.tsx:97
+#: assets/App.tsx:100
 msgid "TOS"
 msgstr "CGU"
 
-#: assets/App.tsx:98
+#: assets/App.tsx:101
 msgid "Privacy Policy"
 msgstr "Politique de confidentialité"
 
-#: assets/App.tsx:99
+#: assets/App.tsx:102
 msgid "FAQ"
 msgstr "FAQ"
+
+#: assets/App.tsx:104
+#, javascript-format
+msgid ""
+"${ ProjectLink } is an open source project distributed under the "
+"${ LicenseLink } license."
+msgstr ""
 
 #~ msgid "Terms of service"
 #~ msgstr "Conditions d'utilisation"
