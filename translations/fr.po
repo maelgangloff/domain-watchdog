@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2024-08-04 00:13+0000\n"
+"PO-Revision-Date: 2024-08-04 15:17+0000\n"
 "Last-Translator: Maël Gangloff <contact@maelgangloff.fr>\n"
 "Language-Team: French <https://weblate.vinceh121.me/projects/domain-watchdog/"
 "domain-watchdog-dashboard/fr/>\n"
@@ -239,7 +239,7 @@ msgstr ""
 
 #: assets/components/tracking/WatchlistsList.tsx:39
 msgid "This Watchlist is not linked to a Connector."
-msgstr ""
+msgstr "Cette Watchlist n'est pas liée à un connecteur."
 
 #: assets/components/tracking/WatchlistsList.tsx:42
 msgid "Watchlist"
@@ -264,10 +264,9 @@ msgid "No"
 msgstr "Non"
 
 #: assets/components/tracking/ConnectorsList.tsx:19
-#, fuzzy, javascript-format
-#| msgid "Connector ${ connector.id }"
+#, javascript-format
 msgid "Connector ${ connector.provider }"
-msgstr "Connecteur ${ connector.id }"
+msgstr "Connecteur ${ connector.provider }"
 
 #: assets/components/tracking/ConnectorsList.tsx:22
 msgid "Delete the Connector"
