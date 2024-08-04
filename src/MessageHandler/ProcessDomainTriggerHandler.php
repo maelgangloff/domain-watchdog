@@ -14,6 +14,7 @@ use App\Entity\WatchListTrigger;
 use App\Message\ProcessDomainTrigger;
 use App\Repository\DomainRepository;
 use App\Repository\WatchListRepository;
+use Psr\Log\LoggerInterface;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
@@ -29,7 +30,8 @@ final readonly class ProcessDomainTriggerHandler
         private MailerInterface $mailer,
         private WatchListRepository $watchListRepository,
         private DomainRepository $domainRepository,
-        private KernelInterface $kernel
+        private KernelInterface $kernel,
+        private LoggerInterface $logger
     ) {
     }
 
@@ -46,6 +48,12 @@ final readonly class ProcessDomainTriggerHandler
 
         $connector = $watchList->getConnector();
         if (null !== $connector && $domain->getDeleted()) {
+            $this->logger->notice('Watchlist {watchlist} is linked to connector {connector}. A purchase attempt will be made for domain name {ldhName} with provider {provider}.', [
+                'watchlist' => $message->watchListToken,
+                'connector' => $connector->getId(),
+                'ldhName' => $message->ldhName,
+                'provider' => $connector->getProvider()->value,
+            ]);
             try {
                 if (ConnectorProvider::OVH === $connector->getProvider()) {
                     $ovh = new OvhConnector($connector->getAuthData());
@@ -57,6 +65,9 @@ final readonly class ProcessDomainTriggerHandler
                     throw new \Exception('Unknown provider');
                 }
             } catch (\Throwable) {
+                $this->logger->warning('Unable to complete purchase. An error message is sent to user {username}.', [
+                    'username' => $watchList->getUser()->getUserIdentifier(),
+                ]);
                 $this->sendEmailDomainOrderError($domain, $watchList->getUser());
             }
         }
@@ -68,6 +79,11 @@ final readonly class ProcessDomainTriggerHandler
 
             /** @var WatchListTrigger $watchListTrigger */
             foreach ($watchListTriggers->getIterator() as $watchListTrigger) {
+                $this->logger->info('Action {event} has been detected on the domain name {ldhName}. A notification is sent to user {username}.', [
+                    'event' => $event->getAction(),
+                    'ldhName' => $message->ldhName,
+                    'username' => $watchList->getUser()->getUserIdentifier(),
+                ]);
                 if (TriggerAction::SendEmail == $watchListTrigger->getAction()) {
                     $this->sendEmailDomainUpdated($event, $watchList->getUser());
                 }

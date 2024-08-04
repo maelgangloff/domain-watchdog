@@ -7,6 +7,7 @@ use App\Entity\WatchList;
 use App\Message\ProcessDomainTrigger;
 use App\Repository\DomainRepository;
 use App\Service\RDAPService;
+use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpKernel\Exception\TooManyRequestsHttpException;
 use Symfony\Component\HttpKernel\KernelInterface;
@@ -22,8 +23,9 @@ class DomainRefreshController extends AbstractController
     public function __construct(private readonly DomainRepository $domainRepository,
         private readonly RDAPService $RDAPService,
         private readonly RateLimiterFactory $authenticatedApiLimiter,
-        private readonly MessageBusInterface $bus)
-    {
+        private readonly MessageBusInterface $bus,
+        private readonly LoggerInterface $logger
+    ) {
     }
 
     /**
@@ -36,6 +38,12 @@ class DomainRefreshController extends AbstractController
     public function __invoke(string $ldhName, KernelInterface $kernel): ?Domain
     {
         $idnDomain = strtolower(idn_to_ascii($ldhName));
+        $userId = $this->getUser()->getUserIdentifier();
+
+        $this->logger->info('User {username} wants to update the domain name {idnDomain}.', [
+            'username' => $userId,
+            'idnDomain' => $idnDomain,
+        ]);
 
         /** @var ?Domain $domain */
         $domain = $this->domainRepository->findOneBy(['ldhName' => $idnDomain]);
@@ -46,12 +54,19 @@ class DomainRefreshController extends AbstractController
             && ($domain->getUpdatedAt()->diff(new \DateTimeImmutable('now'))->days < 7)
             && !$this->RDAPService::isToBeWatchClosely($domain, $domain->getUpdatedAt())
         ) {
+            $this->logger->info('It is not necessary to update the information of the domain name {idnDomain} with the RDAP protocol.', [
+                'idnDomain' => $idnDomain,
+            ]);
+
             return $domain;
         }
 
         if (false === $kernel->isDebug()) {
-            $limiter = $this->authenticatedApiLimiter->create($this->getUser()->getUserIdentifier());
+            $limiter = $this->authenticatedApiLimiter->create($userId);
             if (false === $limiter->consume()->isAccepted()) {
+                $this->logger->warning('User {username} was rate limited by the API.', [
+                    'username' => $this->getUser()->getUserIdentifier(),
+                ]);
                 throw new TooManyRequestsHttpException();
             }
         }

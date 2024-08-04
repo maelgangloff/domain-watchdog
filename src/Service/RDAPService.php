@@ -184,9 +184,18 @@ readonly class RDAPService
 
         if (array_key_exists('status', $res)) {
             $domain->setStatus($res['status']);
+        } else {
+            $this->logger->warning('The domain name {idnDomain} has no WHOIS status.', [
+                'idnDomain' => $idnDomain,
+            ]);
         }
+
         if (array_key_exists('handle', $res)) {
             $domain->setHandle($res['handle']);
+        } else {
+            $this->logger->warning('The domain name {idnDomain} has no handle key.', [
+                'idnDomain' => $idnDomain,
+            ]);
         }
 
         $this->em->persist($domain);
@@ -239,6 +248,9 @@ readonly class RDAPService
                     )
                 );
 
+                /*
+                 * Flatten the array
+                 */
                 if (count($roles) !== count($roles, COUNT_RECURSIVE)) {
                     $roles = array_merge(...$roles);
                 }
@@ -305,6 +317,10 @@ readonly class RDAPService
 
                 $domain->addNameserver($nameserver);
             }
+        } else {
+            $this->logger->warning('The domain name {idnDomain} has no nameservers.', [
+                'idnDomain' => $idnDomain,
+            ]);
         }
 
         $domain->updateTimestamps();
@@ -339,6 +355,10 @@ readonly class RDAPService
 
         if (null === $entity) {
             $entity = new Entity();
+        } else {
+            $this->logger->info('The entity {handle} was not known to this Domain Watchdog instance.', [
+                'handle' => $rdapEntity['handle'],
+            ]);
         }
 
         $entity->setHandle($rdapEntity['handle']);

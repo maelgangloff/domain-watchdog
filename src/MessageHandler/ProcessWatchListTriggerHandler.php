@@ -9,6 +9,7 @@ use App\Message\ProcessDomainTrigger;
 use App\Message\ProcessWatchListTrigger;
 use App\Repository\WatchListRepository;
 use App\Service\RDAPService;
+use Psr\Log\LoggerInterface;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Symfony\Component\Mailer\MailerInterface;
@@ -25,7 +26,8 @@ final readonly class ProcessWatchListTriggerHandler
         private MailerInterface $mailer,
         private string $mailerSenderEmail,
         private MessageBusInterface $bus,
-        private WatchListRepository $watchListRepository
+        private WatchListRepository $watchListRepository,
+        private LoggerInterface $logger
     ) {
     }
 
@@ -38,6 +40,11 @@ final readonly class ProcessWatchListTriggerHandler
     {
         /** @var WatchList $watchList */
         $watchList = $this->watchListRepository->findOneBy(['token' => $message->watchListToken]);
+
+        $this->logger->info('Domain names from Watchlist {token} will be processed.', [
+            'token' => $message->watchListToken,
+        ]);
+
         /** @var Domain $domain */
         foreach ($watchList->getDomains()
                      ->filter(fn ($domain) => $domain->getUpdatedAt()
@@ -54,6 +61,9 @@ final readonly class ProcessWatchListTriggerHandler
                 if (!($e instanceof HttpExceptionInterface)) {
                     continue;
                 }
+                $this->logger->notice('An update error email is sent to user {username}.', [
+                    'username' => $watchList->getUser()->getUserIdentifier(),
+                ]);
                 $this->sendEmailDomainUpdateError($domain, $watchList->getUser());
             }
 

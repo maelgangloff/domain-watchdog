@@ -22,6 +22,7 @@ use Eluceo\iCal\Domain\ValueObject\Timestamp;
 use Eluceo\iCal\Presentation\Component\Property;
 use Eluceo\iCal\Presentation\Component\Property\Value\TextValue;
 use Eluceo\iCal\Presentation\Factory\CalendarFactory;
+use Psr\Log\LoggerInterface;
 use Sabre\VObject\EofException;
 use Sabre\VObject\InvalidDataException;
 use Sabre\VObject\ParseException;
@@ -37,7 +38,8 @@ class WatchListController extends AbstractController
     public function __construct(
         private readonly SerializerInterface $serializer,
         private readonly EntityManagerInterface $em,
-        private readonly WatchListRepository $watchListRepository
+        private readonly WatchListRepository $watchListRepository,
+        private readonly LoggerInterface $logger
     ) {
     }
 
@@ -59,6 +61,10 @@ class WatchListController extends AbstractController
         /** @var User $user */
         $user = $this->getUser();
         $watchList->setUser($user);
+
+        $this->logger->info('User {username} register a Watchlist.', [
+            'username' => $user->getUserIdentifier(),
+        ]);
 
         $this->em->persist($watchList);
         $this->em->flush();

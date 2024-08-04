@@ -8,6 +8,7 @@ use App\Entity\Connector;
 use App\Entity\User;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\EntityManagerInterface;
+use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Attribute\Route;
@@ -16,7 +17,9 @@ use Symfony\Component\Serializer\SerializerInterface;
 class ConnectorController extends AbstractController
 {
     public function __construct(
-        private readonly SerializerInterface $serializer, private readonly EntityManagerInterface $em
+        private readonly SerializerInterface $serializer,
+        private readonly EntityManagerInterface $em,
+        private readonly LoggerInterface $logger
     ) {
     }
 
@@ -56,12 +59,27 @@ class ConnectorController extends AbstractController
         $user = $this->getUser();
         $connector->setUser($user);
 
-        if (ConnectorProvider::OVH === $connector->getProvider()) {
+        $provider = $connector->getProvider();
+
+        $this->logger->info('User {username} wants to register a connector from provider {provider}.', [
+            'username' => $user->getUserIdentifier(),
+            'provider' => $provider->value,
+        ]);
+
+        if (ConnectorProvider::OVH === $provider) {
             $authData = OvhConnector::verifyAuthData($connector->getAuthData());
             $connector->setAuthData($authData);
+
+            $this->logger->info('User {username} authentication data with the OVH provider has been validated.', [
+                'username' => $user->getUserIdentifier(),
+            ]);
         } else {
             throw new \Exception('Unknown provider');
         }
+
+        $this->logger->info('The new API connector requested by {username} has been successfully registered.', [
+            'username' => $user->getUserIdentifier(),
+        ]);
 
         $this->em->persist($connector);
         $this->em->flush();
