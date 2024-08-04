@@ -24,6 +24,7 @@ use App\Repository\RdapServerRepository;
 use App\Repository\TldRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Exception\ORMException;
+use Psr\Log\LoggerInterface;
 use Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\DecodingExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\HttpExceptionInterface;
@@ -81,7 +82,8 @@ readonly class RDAPService
         private DomainEntityRepository $domainEntityRepository,
         private RdapServerRepository $rdapServerRepository,
         private TldRepository $tldRepository,
-        private EntityManagerInterface $em
+        private EntityManagerInterface $em,
+        private LoggerInterface $logger
     ) {
     }
 
@@ -128,7 +130,12 @@ readonly class RDAPService
     public function registerDomain(string $fqdn): Domain
     {
         $idnDomain = strtolower(idn_to_ascii($fqdn));
+
         $tld = $this->getTld($idnDomain);
+
+        $this->logger->info('An update request for domain name {idnDomain} is requested.', [
+            'idnDomain' => $idnDomain,
+        ]);
 
         /** @var RdapServer|null $rdapServer */
         $rdapServer = $this->rdapServerRepository->findOneBy(['tld' => $tld], ['updatedAt' => 'DESC']);
@@ -140,12 +147,23 @@ readonly class RDAPService
         /** @var ?Domain $domain */
         $domain = $this->domainRepository->findOneBy(['ldhName' => $idnDomain]);
 
+        $rdapServerUrl = $rdapServer->getUrl();
+
+        $this->logger->notice('An RDAP query to update the domain name {idnDomain} will be made to {server}.', [
+            'idnDomain' => $idnDomain,
+            'server' => $rdapServerUrl,
+        ]);
+
         try {
             $res = $this->client->request(
-                'GET', $rdapServer->getUrl().'domain/'.$idnDomain
+                'GET', $rdapServerUrl.'domain/'.$idnDomain
             )->toArray();
         } catch (HttpExceptionInterface $e) {
             if (null !== $domain) {
+                $this->logger->notice('The domain name {idnDomain} has been deleted from the WHOIS database.', [
+                    'idnDomain' => $idnDomain,
+                ]);
+
                 $domain->setDeleted(true)
                     ->updateTimestamps();
                 $this->em->persist($domain);
@@ -156,7 +174,12 @@ readonly class RDAPService
 
         if (null === $domain) {
             $domain = new Domain();
+
+            $this->logger->info('The domain name {idnDomain} was not known to this Domain Watchdog instance.', [
+                'idnDomain' => $idnDomain,
+            ]);
         }
+
         $domain->setTld($tld)->setLdhName($idnDomain)->setDeleted(false);
 
         if (array_key_exists('status', $res)) {
@@ -372,6 +395,8 @@ readonly class RDAPService
      */
     public function updateRDAPServers(): void
     {
+        $this->logger->info('Started updating the RDAP server list.');
+
         $dnsRoot = $this->client->request(
             'GET', 'https://data.iana.org/rdap/dns.json'
         )->toArray();
@@ -404,6 +429,7 @@ readonly class RDAPService
      */
     public function updateTldListIANA(): void
     {
+        $this->logger->info('Start of retrieval of the list of TLDs according to IANA.');
         $tldList = array_map(
             fn ($tld) => strtolower($tld),
             explode(PHP_EOL,
@@ -423,6 +449,10 @@ readonly class RDAPService
             if (null === $tldEntity) {
                 $tldEntity = new Tld();
                 $tldEntity->setTld($tld);
+
+                $this->logger->notice('New TLD detected according to IANA ({tld}).', [
+                    'tld' => $tld,
+                ]);
             }
 
             $type = $this->getTldType($tld);
@@ -468,6 +498,8 @@ readonly class RDAPService
      */
     public function updateGTldListICANN(): void
     {
+        $this->logger->info('Start of retrieval of the list of gTLDs according to ICANN.');
+
         $gTldList = $this->client->request(
             'GET', 'https://www.icann.org/resources/registries/gtlds/v2/gtlds.json'
         )->toArray()['gTLDs'];
@@ -482,6 +514,9 @@ readonly class RDAPService
             if (null == $gtTldEntity) {
                 $gtTldEntity = new Tld();
                 $gtTldEntity->setTld($gTld['gTLD']);
+                $this->logger->notice('New gTLD detected according to ICANN ({tld}).', [
+                    'tld' => $gTld['gTLD'],
+                ]);
             }
 
             $gtTldEntity
