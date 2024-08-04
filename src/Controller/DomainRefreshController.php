@@ -62,7 +62,7 @@ class DomainRefreshController extends AbstractController
             return $domain;
         }
 
-        if (false === $kernel->isDebug()) {
+        if (false === $kernel->isDebug() && true === $this->getParameter('limited_features')) {
             $limiter = $this->authenticatedApiLimiter->create($userId);
             if (false === $limiter->consume()->isAccepted()) {
                 $this->logger->warning('User {username} was rate limited by the API.', [

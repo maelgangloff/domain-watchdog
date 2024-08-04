@@ -30,6 +30,7 @@ use Sabre\VObject\Reader;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Serializer\SerializerInterface;
 
@@ -58,12 +59,35 @@ class WatchListController extends AbstractController
     public function createWatchList(Request $request): WatchList
     {
         $watchList = $this->serializer->deserialize($request->getContent(), WatchList::class, 'json', ['groups' => 'watchlist:create']);
+
         /** @var User $user */
         $user = $this->getUser();
         $watchList->setUser($user);
 
-        $this->logger->info('User {username} register a Watchlist.', [
+        /*
+         * In the limited version, we do not want a user to be able to register the same domain more than once in their watchlists.
+         * This policy guarantees the equal probability of obtaining a domain name if it is requested by several users.
+         */
+        if ($this->getParameter('limited_features')) {
+            /** @var Domain[] $trackedDomains */
+            $trackedDomains = $user->getWatchLists()->reduce(fn (array $acc, WatchList $watchList) => [...$acc, ...$watchList->getDomains()->toArray()], []);
+
+            /** @var Domain $domain */
+            foreach ($watchList->getDomains()->getIterator() as $domain) {
+                if (in_array($domain, $trackedDomains)) {
+                    $this->logger->notice('User {username} tried to create a watchlist with domain name {ldhName}. However, it is forbidden to register the same domain name twice with limited mode.', [
+                        'username' => $user->getUserIdentifier(),
+                        'ldhName' => $domain->getLdhName(),
+                    ]);
+
+                    throw new AccessDeniedHttpException('It is forbidden to register the same domain name twice in your watchlists with limited mode.');
+                }
+            }
+        }
+
+        $this->logger->info('User {username} register a Watchlist ({token}).', [
             'username' => $user->getUserIdentifier(),
+            'token' => $watchList->getToken(),
         ]);
 
         $this->em->persist($watchList);
