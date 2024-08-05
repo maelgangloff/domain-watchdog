@@ -7,6 +7,7 @@ use Lexik\Bundle\JWTAuthenticationBundle\Event\AuthenticationSuccessEvent;
 use Lexik\Bundle\JWTAuthenticationBundle\Events;
 use Lexik\Bundle\JWTAuthenticationBundle\Response\JWTAuthenticationSuccessResponse;
 use Lexik\Bundle\JWTAuthenticationBundle\Services\JWTTokenManagerInterface;
+use Symfony\Component\HttpFoundation\Cookie;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
@@ -15,13 +16,11 @@ use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationSuccessHandlerInterface;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
-readonly class JWTAuthenticator implements AuthenticationSuccessHandlerInterface
+class JWTAuthenticator implements AuthenticationSuccessHandlerInterface
 {
     public function __construct(
-        private JWTTokenManagerInterface $jwtManager,
-        private EventDispatcherInterface $dispatcher,
-        private iterable $cookieProviders = [],
-        private bool $removeTokenFromBodyWhenCookiesUsed = true
+        protected JWTTokenManagerInterface $jwtManager,
+        protected EventDispatcherInterface $dispatcher,
     ) {
     }
 
@@ -40,20 +39,25 @@ readonly class JWTAuthenticator implements AuthenticationSuccessHandlerInterface
             $jwt = $this->jwtManager->create($user);
         }
 
-        $jwtCookies = [];
-        foreach ($this->cookieProviders as $cookieProvider) {
-            $jwtCookies[] = $cookieProvider->createCookie($jwt);
-        }
+        $jwtCookies = [
+            new Cookie(
+                'BEARER',
+                $jwt,
+                time() + 7200, // expiration
+                '/',
+                null,
+                true,
+                true,
+                false,
+                'strict'
+            ),
+        ];
 
         $response = new JWTAuthenticationSuccessResponse($jwt, [], $jwtCookies);
         $event = new AuthenticationSuccessEvent(['token' => $jwt], $user, $response);
 
         $this->dispatcher->dispatch($event, Events::AUTHENTICATION_SUCCESS);
         $responseData = $event->getData();
-
-        if ($jwtCookies && $this->removeTokenFromBodyWhenCookiesUsed) {
-            unset($responseData['token']);
-        }
 
         if ($responseData) {
             $response->setData($responseData);
