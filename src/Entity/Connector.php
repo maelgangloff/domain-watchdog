@@ -30,7 +30,6 @@ use Symfony\Component\Uid\Uuid;
         new Post(
             routeName: 'connector_create',
             normalizationContext: ['groups' => ['connector:create', 'connector:list']], denormalizationContext: ['groups' => 'connector:create'],
-            security: 'object.user == user',
             name: 'create'
         ),
         new Delete(),

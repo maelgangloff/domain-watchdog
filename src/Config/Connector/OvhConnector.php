@@ -7,6 +7,28 @@ use Ovh\Api;
 
 readonly class OvhConnector implements ConnectorInterface
 {
+    public const REQUIRED_ROUTES = [
+        [
+            'method' => 'GET',
+            'path' => '/order/cart',
+        ], [
+            'method' => 'GET',
+            'path' => '/order/cart/*',
+        ],
+        [
+            'method' => 'POST',
+            'path' => '/order/cart',
+        ],
+        [
+            'method' => 'POST',
+            'path' => '/order/cart/*',
+        ],
+        [
+            'method' => 'DELETE',
+            'path' => '/order/cart/*',
+        ],
+    ];
+
     public function __construct(private array $authData)
     {
     }
@@ -137,6 +159,23 @@ readonly class OvhConnector implements ConnectorInterface
         $status = $res['status'];
         if ('validated' !== $status) {
             throw new \Exception("The status of these credentials is not valid ($status)");
+        }
+
+        foreach (self::REQUIRED_ROUTES as $requiredRoute) {
+            $ok = false;
+
+            foreach ($res['rules'] as $allowedRoute) {
+                if (
+                    $requiredRoute['method'] === $allowedRoute['method']
+                    && fnmatch($allowedRoute['path'], $requiredRoute['path'])
+                ) {
+                    $ok = true;
+                }
+            }
+
+            if (!$ok) {
+                throw new \Exception('The credentials provided do not have enough permissions to purchase a domain name.');
+            }
         }
 
         return [

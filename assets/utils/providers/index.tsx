@@ -7,7 +7,7 @@ export const helpGetTokenLink = (provider?: string) => {
     switch (provider) {
         case ConnectorProvider.OVH:
             return <Typography.Link target='_blank'
-                                    href="https://api.ovh.com/createToken/index.cgi?GET=/order/cart/*&POST=/order/cart&POST=/order/cart/*&DELETE=/order/cart/*">
+                                    href="https://api.ovh.com/createToken/index.cgi?GET=/order/cart&GET=/order/cart/*&POST=/order/cart&POST=/order/cart/*&DELETE=/order/cart/*">
                 {t`Retrieve a set of tokens from your customer account on the Provider's website`}
             </Typography.Link>
         default:

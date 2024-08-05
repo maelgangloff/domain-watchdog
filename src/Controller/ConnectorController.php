@@ -81,6 +81,7 @@ class ConnectorController extends AbstractController
             'username' => $user->getUserIdentifier(),
         ]);
 
+        $connector->setCreatedAt(new \DateTimeImmutable('now'));
         $this->em->persist($connector);
         $this->em->flush();
 
