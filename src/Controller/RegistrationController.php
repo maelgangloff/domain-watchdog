@@ -56,12 +56,16 @@ class RegistrationController extends AbstractController
 
         $limiter = $this->userRegisterLimiter->create($request->getClientIp());
 
-        if (false === $this->kernel->isDebug() && false === $limiter->consume()->isAccepted()) {
-            $this->logger->warning('IP address {ip} was rate limited by the Registration API.', [
-                'ip' => $request->getClientIp(),
-            ]);
+        if (false === $this->kernel->isDebug()) {
+            $limit = $limiter->consume();
 
-            throw new TooManyRequestsHttpException();
+            if (false === $limit->isAccepted()) {
+                $this->logger->warning('IP address {ip} was rate limited by the Registration API.', [
+                    'ip' => $request->getClientIp(),
+                ]);
+
+                throw new TooManyRequestsHttpException($limit->getRetryAfter()->getTimestamp() - time());
+            }
         }
 
         $user = $this->serializer->deserialize($request->getContent(), User::class, 'json', ['groups' => 'user:register']);

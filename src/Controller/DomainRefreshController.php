@@ -64,12 +64,13 @@ class DomainRefreshController extends AbstractController
 
         if (false === $kernel->isDebug() && true === $this->getParameter('limited_features')) {
             $limiter = $this->rdapRequestsLimiter->create($userId);
+            $limit = $limiter->consume();
 
-            if (false === $limiter->consume()->isAccepted()) {
+            if (false === $limit->isAccepted()) {
                 $this->logger->warning('User {username} was rate limited by the API.', [
                     'username' => $this->getUser()->getUserIdentifier(),
                 ]);
-                throw new TooManyRequestsHttpException();
+                throw new TooManyRequestsHttpException($limit->getRetryAfter()->getTimestamp() - time());
             }
         }
 
