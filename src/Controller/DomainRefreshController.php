@@ -14,7 +14,6 @@ use Symfony\Component\HttpKernel\Exception\TooManyRequestsHttpException;
 use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Component\Messenger\Exception\ExceptionInterface;
 use Symfony\Component\Messenger\MessageBusInterface;
-use Symfony\Component\RateLimiter\Exception\RateLimitExceededException;
 use Symfony\Component\RateLimiter\RateLimiterFactory;
 use Symfony\Contracts\HttpClient\Exception\DecodingExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\HttpExceptionInterface;
@@ -65,10 +64,10 @@ class DomainRefreshController extends AbstractController
 
         if (false === $kernel->isDebug() && true === $this->getParameter('limited_features')) {
             $limiter = $this->rdapRequestsLimiter->create($userId);
-            try {
-                $limiter->consume()->ensureAccepted();
-            } catch (RateLimitExceededException $e) {
-                throw new TooManyRequestsHttpException($e->getRetryAfter()->getTimestamp() - time(), $e->getMessage());
+            $limit = $limiter->consume();
+
+            if (!$limit->isAccepted()) {
+                throw new TooManyRequestsHttpException($limit->getRetryAfter()->getTimestamp() - time());
             }
         }
 

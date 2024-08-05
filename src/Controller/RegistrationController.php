@@ -18,7 +18,6 @@ use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Symfony\Component\Mime\Address;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
-use Symfony\Component\RateLimiter\Exception\RateLimitExceededException;
 use Symfony\Component\RateLimiter\RateLimiterFactory;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Serializer\SerializerInterface;
@@ -57,11 +56,10 @@ class RegistrationController extends AbstractController
 
         if (false === $this->kernel->isDebug()) {
             $limiter = $this->userRegisterLimiter->create($request->getClientIp());
+            $limit = $limiter->consume();
 
-            try {
-                $limiter->consume()->ensureAccepted();
-            } catch (RateLimitExceededException $e) {
-                throw new TooManyRequestsHttpException($e->getRetryAfter()->getTimestamp() - time(), $e->getMessage());
+            if (!$limit->isAccepted()) {
+                throw new TooManyRequestsHttpException($limit->getRetryAfter()->getTimestamp() - time());
             }
         }
 
