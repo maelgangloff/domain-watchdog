@@ -18,6 +18,7 @@ use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Symfony\Component\Mime\Address;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+use Symfony\Component\RateLimiter\Exception\RateLimitExceededException;
 use Symfony\Component\RateLimiter\RateLimiterFactory;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Serializer\SerializerInterface;
@@ -54,17 +55,13 @@ class RegistrationController extends AbstractController
             throw new UnauthorizedHttpException('', 'Registration is disabled on this instance');
         }
 
-        $limiter = $this->userRegisterLimiter->create($request->getClientIp());
-
         if (false === $this->kernel->isDebug()) {
-            $limit = $limiter->consume();
+            $limiter = $this->userRegisterLimiter->create($request->getClientIp());
 
-            if (false === $limit->isAccepted()) {
-                $this->logger->warning('IP address {ip} was rate limited by the Registration API.', [
-                    'ip' => $request->getClientIp(),
-                ]);
-
-                throw new TooManyRequestsHttpException($limit->getRetryAfter()->getTimestamp() - time());
+            try {
+                $limiter->consume()->ensureAccepted();
+            } catch (RateLimitExceededException $e) {
+                throw new TooManyRequestsHttpException($e->getRetryAfter()->getTimestamp() - time(), $e->getMessage());
             }
         }
 
