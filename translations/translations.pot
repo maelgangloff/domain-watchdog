@@ -10,7 +10,7 @@ msgstr ""
 
 #: assets/components/LoginForm.tsx:62
 #: assets/components/RegisterForm.tsx:48
-msgid "E-mail"
+msgid "Email address"
 msgstr ""
 
 #: assets/components/LoginForm.tsx:64

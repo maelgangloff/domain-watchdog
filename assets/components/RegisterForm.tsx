@@ -45,7 +45,7 @@ export function RegisterForm() {
             autoComplete="off"
         >
             <Form.Item
-                label={t`E-mail`}
+                label={t`Email address`}
                 name="username"
                 rules={[{required: true, message: t`Required`}]}
             >
