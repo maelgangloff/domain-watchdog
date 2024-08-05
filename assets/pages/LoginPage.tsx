@@ -38,7 +38,7 @@ export default function LoginPage() {
                         onClick={toggleWantRegister}>{wantRegister ? t`Log in` : t`Create an account`}</Button>
             }
         </Card.Grid>
-        <Card.Grid style={gridStyle} hoverable={false}>
+        <Card.Grid style={{width: '50%'}} hoverable={false}>
             <TextPage resource='ads.md'/>
         </Card.Grid>
     </Card>
