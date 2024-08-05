@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2024-08-05 01:17+0000\n"
+"PO-Revision-Date: 2024-08-05 01:44+0000\n"
 "Last-Translator: Maël Gangloff <contact@maelgangloff.fr>\n"
 "Language-Team: French <https://weblate.vinceh121.me/projects/domain-watchdog/"
 "domain-watchdog-dashboard/fr/>\n"
@@ -524,10 +524,8 @@ msgid "Sorry, the page you visited does not exist."
 msgstr "Désolé, cette page n'existe pas."
 
 #: assets/pages/LoginPage.tsx:38
-#, fuzzy
-#| msgid "Create a Connector"
 msgid "Create an account"
-msgstr "Créer un Connecteur"
+msgstr "Créer un compte"
 
 #: assets/utils/providers/index.tsx:11
 msgid ""
