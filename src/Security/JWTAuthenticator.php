@@ -33,7 +33,7 @@ readonly class JWTAuthenticator implements AuthenticationSuccessHandlerInterface
     public function handleAuthenticationSuccess(UserInterface $user, $jwt = null): Response
     {
         if (($user instanceof User) && !$user->isVerified()) {
-            throw new AccessDeniedHttpException('This user has not yet validated their email address.');
+            throw new AccessDeniedHttpException('You have not yet validated your email address.');
         }
 
         if (null === $jwt) {

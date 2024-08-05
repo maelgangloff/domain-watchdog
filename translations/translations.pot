@@ -57,8 +57,8 @@ msgstr ""
 #: assets/components/tracking/ConnectorForm.tsx:110
 #: assets/components/tracking/ConnectorForm.tsx:119
 #: assets/components/tracking/WatchlistForm.tsx:103
-#: assets/pages/LoginPage.tsx:62
-#: assets/pages/LoginPage.tsx:70
+#: assets/pages/LoginPage.tsx:71
+#: assets/pages/LoginPage.tsx:79
 msgid "Required"
 msgstr ""
 
@@ -326,7 +326,7 @@ msgid "Log out"
 msgstr ""
 
 #: assets/components/Sider.tsx:120
-#: assets/pages/LoginPage.tsx:40
+#: assets/pages/LoginPage.tsx:49
 msgid "Log in"
 msgstr ""
 
@@ -434,7 +434,7 @@ msgid ""
 "their country of origin."
 msgstr ""
 
-#: assets/pages/LoginPage.tsx:60
+#: assets/pages/LoginPage.tsx:69
 #: assets/pages/watchdog/UserPage.tsx:18
 msgid "Username"
 msgstr ""
@@ -463,19 +463,19 @@ msgstr ""
 msgid "Sorry, the page you visited does not exist."
 msgstr ""
 
-#: assets/pages/LoginPage.tsx:45
+#: assets/pages/LoginPage.tsx:54
 msgid "Error"
 msgstr ""
 
-#: assets/pages/LoginPage.tsx:68
+#: assets/pages/LoginPage.tsx:77
 msgid "Password"
 msgstr ""
 
-#: assets/pages/LoginPage.tsx:77
+#: assets/pages/LoginPage.tsx:86
 msgid "Submit"
 msgstr ""
 
-#: assets/pages/LoginPage.tsx:82
+#: assets/pages/LoginPage.tsx:91
 msgid "Log in with SSO"
 msgstr ""
 
@@ -531,7 +531,7 @@ msgstr ""
 msgid "Documentation"
 msgstr ""
 
-#: assets/App.tsx:106
+#: assets/App.tsx:107
 #, javascript-format
 msgid ""
 "${ ProjectLink } is an open source project distributed under the ${ "
