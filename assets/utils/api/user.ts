@@ -10,6 +10,16 @@ export async function login(email: string, password: string): Promise<boolean> {
     return response.status === 200
 }
 
+export async function register(email: string, password: string): Promise<boolean> {
+    const response = await request({
+        method: 'POST',
+        url: 'register',
+        data: {email, password}
+    })
+    return response.status === 201
+}
+
+
 export async function getUser(): Promise<User> {
     const response = await request<User>({
         url: 'me'

@@ -20,6 +20,8 @@ class Instance
 {
     private ?bool $oauthEnabled = null;
 
+    private ?bool $registerEnabled = null;
+
     private ?bool $limitedFeatures = null;
 
     public function isSsoLogin(): ?bool
@@ -42,6 +44,18 @@ class Instance
     public function setLimitedFeatures(bool $limitedFeatures): static
     {
         $this->limitedFeatures = $limitedFeatures;
+
+        return $this;
+    }
+
+    public function getRegisterEnabled(): ?bool
+    {
+        return $this->registerEnabled;
+    }
+
+    public function setRegisterEnabled(?bool $registerEnabled): static
+    {
+        $this->registerEnabled = $registerEnabled;
 
         return $this;
     }

@@ -13,7 +13,8 @@ class InstanceController extends AbstractController
 
         $instance
             ->setLimitedFeatures($this->getParameter('limited_features') ?? false)
-            ->setOauthEnabled($this->getParameter('oauth_enabled'));
+            ->setOauthEnabled($this->getParameter('oauth_enabled') ?? false)
+            ->setRegisterEnabled($this->getParameter('registration_enabled') ?? false);
 
         return $instance;
     }

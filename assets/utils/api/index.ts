@@ -74,6 +74,7 @@ export interface Watchlist {
 export interface InstanceConfig {
     ssoLogin: boolean
     limtedFeatures: boolean
+    registerEnabled: boolean
 }
 
 export async function request<T = any, R = AxiosResponse<T>, D = any>(config: AxiosRequestConfig): Promise<R> {

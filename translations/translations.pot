@@ -3,6 +3,46 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Plural-Forms: nplurals=2; plural=(n!=1);\n"
 
+#: assets/components/LoginForm.tsx:47
+#: assets/components/RegisterForm.tsx:33
+msgid "Error"
+msgstr ""
+
+#: assets/components/LoginForm.tsx:62
+#: assets/components/RegisterForm.tsx:48
+msgid "E-mail"
+msgstr ""
+
+#: assets/components/LoginForm.tsx:64
+#: assets/components/LoginForm.tsx:72
+#: assets/components/RegisterForm.tsx:50
+#: assets/components/RegisterForm.tsx:58
+#: assets/components/search/DomainSearchBar.tsx:23
+#: assets/components/tracking/ConnectorForm.tsx:40
+#: assets/components/tracking/ConnectorForm.tsx:66
+#: assets/components/tracking/ConnectorForm.tsx:74
+#: assets/components/tracking/ConnectorForm.tsx:81
+#: assets/components/tracking/ConnectorForm.tsx:89
+#: assets/components/tracking/ConnectorForm.tsx:97
+#: assets/components/tracking/ConnectorForm.tsx:110
+#: assets/components/tracking/ConnectorForm.tsx:119
+#: assets/components/tracking/WatchlistForm.tsx:103
+msgid "Required"
+msgstr ""
+
+#: assets/components/LoginForm.tsx:70
+#: assets/components/RegisterForm.tsx:56
+msgid "Password"
+msgstr ""
+
+#: assets/components/LoginForm.tsx:80
+msgid "Submit"
+msgstr ""
+
+#: assets/components/LoginForm.tsx:85
+msgid "Log in with SSO"
+msgstr ""
+
 #: assets/components/search/EventTimeline.tsx:25
 msgid "Registration"
 msgstr ""
@@ -45,21 +85,6 @@ msgstr ""
 
 #: assets/components/search/EventTimeline.tsx:35
 msgid "ENUM validation expiration"
-msgstr ""
-
-#: assets/components/search/DomainSearchBar.tsx:23
-#: assets/components/tracking/ConnectorForm.tsx:40
-#: assets/components/tracking/ConnectorForm.tsx:66
-#: assets/components/tracking/ConnectorForm.tsx:74
-#: assets/components/tracking/ConnectorForm.tsx:81
-#: assets/components/tracking/ConnectorForm.tsx:89
-#: assets/components/tracking/ConnectorForm.tsx:97
-#: assets/components/tracking/ConnectorForm.tsx:110
-#: assets/components/tracking/ConnectorForm.tsx:119
-#: assets/components/tracking/WatchlistForm.tsx:103
-#: assets/pages/LoginPage.tsx:71
-#: assets/pages/LoginPage.tsx:79
-msgid "Required"
 msgstr ""
 
 #: assets/components/search/DomainSearchBar.tsx:26
@@ -326,8 +351,13 @@ msgid "Log out"
 msgstr ""
 
 #: assets/components/Sider.tsx:120
-#: assets/pages/LoginPage.tsx:49
+#: assets/pages/LoginPage.tsx:30
 msgid "Log in"
+msgstr ""
+
+#: assets/components/RegisterForm.tsx:65
+#: assets/pages/LoginPage.tsx:30
+msgid "Register"
 msgstr ""
 
 #: assets/pages/search/DomainSearchPage.tsx:20
@@ -434,7 +464,6 @@ msgid ""
 "their country of origin."
 msgstr ""
 
-#: assets/pages/LoginPage.tsx:69
 #: assets/pages/watchdog/UserPage.tsx:18
 msgid "Username"
 msgstr ""
@@ -461,22 +490,6 @@ msgstr ""
 
 #: assets/pages/NotFoundPage.tsx:10
 msgid "Sorry, the page you visited does not exist."
-msgstr ""
-
-#: assets/pages/LoginPage.tsx:54
-msgid "Error"
-msgstr ""
-
-#: assets/pages/LoginPage.tsx:77
-msgid "Password"
-msgstr ""
-
-#: assets/pages/LoginPage.tsx:86
-msgid "Submit"
-msgstr ""
-
-#: assets/pages/LoginPage.tsx:91
-msgid "Log in with SSO"
 msgstr ""
 
 #: assets/utils/providers/index.tsx:11

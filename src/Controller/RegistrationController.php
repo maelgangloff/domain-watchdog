@@ -14,6 +14,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\HttpKernel\Exception\TooManyRequestsHttpException;
 use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
+use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Symfony\Component\Mime\Address;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
@@ -31,6 +32,7 @@ class RegistrationController extends AbstractController
         private readonly EntityManagerInterface $em,
         private readonly SerializerInterface $serializer,
         private readonly LoggerInterface $logger,
+        private readonly KernelInterface $kernel
     ) {
     }
 
@@ -54,7 +56,7 @@ class RegistrationController extends AbstractController
 
         $limiter = $this->userRegisterLimiter->create($request->getClientIp());
 
-        if (false === $limiter->consume()->isAccepted()) {
+        if (false === $this->kernel->isDebug() && false === $limiter->consume()->isAccepted()) {
             $this->logger->warning('IP address {ip} was rate limited by the Registration API.', [
                 'ip' => $request->getClientIp(),
             ]);
@@ -90,7 +92,7 @@ class RegistrationController extends AbstractController
                 ->htmlTemplate('emails/success/confirmation_email.html.twig')
         );
 
-        return $this->redirectToRoute('index');
+        return new Response(null, 201);
     }
 
     #[Route('/verify/email', name: 'app_verify_email')]
