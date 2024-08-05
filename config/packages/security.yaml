@@ -52,7 +52,7 @@ security:
             json_login:
                 check_path: api_login
                 username_path: email
-                success_handler: lexik_jwt_authentication.handler.authentication_success
+                success_handler: App\Security\JWTAuthenticator
                 failure_handler: lexik_jwt_authentication.handler.authentication_failure
             login_throttling:
                 limiter: app.login_rate_limiter
