@@ -11,6 +11,41 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
 "X-Generator: Weblate 5.6\n"
 
+#: assets/components/LoginForm.tsx:47 assets/components/RegisterForm.tsx:33
+msgid "Error"
+msgstr "Erreur"
+
+#: assets/components/LoginForm.tsx:62 assets/components/RegisterForm.tsx:48
+msgid "E-mail"
+msgstr ""
+
+#: assets/components/LoginForm.tsx:64 assets/components/LoginForm.tsx:72
+#: assets/components/RegisterForm.tsx:50 assets/components/RegisterForm.tsx:58
+#: assets/components/search/DomainSearchBar.tsx:23
+#: assets/components/tracking/ConnectorForm.tsx:40
+#: assets/components/tracking/ConnectorForm.tsx:66
+#: assets/components/tracking/ConnectorForm.tsx:74
+#: assets/components/tracking/ConnectorForm.tsx:81
+#: assets/components/tracking/ConnectorForm.tsx:89
+#: assets/components/tracking/ConnectorForm.tsx:97
+#: assets/components/tracking/ConnectorForm.tsx:110
+#: assets/components/tracking/ConnectorForm.tsx:119
+#: assets/components/tracking/WatchlistForm.tsx:103
+msgid "Required"
+msgstr "Requis"
+
+#: assets/components/LoginForm.tsx:70 assets/components/RegisterForm.tsx:56
+msgid "Password"
+msgstr "Mot de passe"
+
+#: assets/components/LoginForm.tsx:80
+msgid "Submit"
+msgstr "Se connecter"
+
+#: assets/components/LoginForm.tsx:85
+msgid "Log in with SSO"
+msgstr "Se connecter par SSO"
+
 #: assets/components/search/EventTimeline.tsx:25
 msgid "Registration"
 msgstr "Enregistrement"
@@ -54,20 +89,6 @@ msgstr "Expiration du registraire"
 #: assets/components/search/EventTimeline.tsx:35
 msgid "ENUM validation expiration"
 msgstr "Expiration de la validation ENUM"
-
-#: assets/components/search/DomainSearchBar.tsx:23
-#: assets/components/tracking/ConnectorForm.tsx:40
-#: assets/components/tracking/ConnectorForm.tsx:66
-#: assets/components/tracking/ConnectorForm.tsx:74
-#: assets/components/tracking/ConnectorForm.tsx:81
-#: assets/components/tracking/ConnectorForm.tsx:89
-#: assets/components/tracking/ConnectorForm.tsx:97
-#: assets/components/tracking/ConnectorForm.tsx:110
-#: assets/components/tracking/ConnectorForm.tsx:119
-#: assets/components/tracking/WatchlistForm.tsx:103
-#: assets/pages/LoginPage.tsx:62 assets/pages/LoginPage.tsx:70
-msgid "Required"
-msgstr "Requis"
 
 #: assets/components/search/DomainSearchBar.tsx:26
 #: assets/components/tracking/WatchlistForm.tsx:106
@@ -340,9 +361,15 @@ msgstr "Mon compte"
 msgid "Log out"
 msgstr "Se déconnecter"
 
-#: assets/components/Sider.tsx:120 assets/pages/LoginPage.tsx:40
+#: assets/components/Sider.tsx:120 assets/pages/LoginPage.tsx:30
 msgid "Log in"
 msgstr "Se connecter"
+
+#: assets/components/RegisterForm.tsx:65 assets/pages/LoginPage.tsx:30
+#, fuzzy
+#| msgid "Registrar"
+msgid "Register"
+msgstr "Bureau d'enregistrement"
 
 #: assets/pages/search/DomainSearchPage.tsx:20
 msgid "Found !"
@@ -469,7 +496,7 @@ msgstr ""
 "Domaines de premier niveau basés sur les codes de pays, identifiant les "
 "sites web en fonction de leur pays d'origine."
 
-#: assets/pages/LoginPage.tsx:60 assets/pages/watchdog/UserPage.tsx:18
+#: assets/pages/watchdog/UserPage.tsx:18
 msgid "Username"
 msgstr "Nom d'utilisateur"
 
@@ -496,22 +523,6 @@ msgstr "Créer une Watchlist"
 #: assets/pages/NotFoundPage.tsx:10
 msgid "Sorry, the page you visited does not exist."
 msgstr "Désolé, cette page n'existe pas."
-
-#: assets/pages/LoginPage.tsx:45
-msgid "Error"
-msgstr "Erreur"
-
-#: assets/pages/LoginPage.tsx:68
-msgid "Password"
-msgstr "Mot de passe"
-
-#: assets/pages/LoginPage.tsx:77
-msgid "Submit"
-msgstr "Se connecter"
-
-#: assets/pages/LoginPage.tsx:82
-msgid "Log in with SSO"
-msgstr "Se connecter par SSO"
 
 #: assets/utils/providers/index.tsx:11
 msgid ""
@@ -568,7 +579,7 @@ msgstr "FAQ"
 msgid "Documentation"
 msgstr "Documentation"
 
-#: assets/App.tsx:106
+#: assets/App.tsx:107
 #, javascript-format
 msgid ""
 "${ ProjectLink } is an open source project distributed under the "
