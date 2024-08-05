@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2024-08-04 20:46+0000\n"
+"PO-Revision-Date: 2024-08-05 01:17+0000\n"
 "Last-Translator: Maël Gangloff <contact@maelgangloff.fr>\n"
 "Language-Team: French <https://weblate.vinceh121.me/projects/domain-watchdog/"
 "domain-watchdog-dashboard/fr/>\n"
@@ -17,7 +17,7 @@ msgstr "Erreur"
 
 #: assets/components/LoginForm.tsx:62 assets/components/RegisterForm.tsx:48
 msgid "Email address"
-msgstr ""
+msgstr "Adresse e-mail"
 
 #: assets/components/LoginForm.tsx:64 assets/components/LoginForm.tsx:72
 #: assets/components/RegisterForm.tsx:50 assets/components/RegisterForm.tsx:58
@@ -366,10 +366,8 @@ msgid "Log in"
 msgstr "Se connecter"
 
 #: assets/components/RegisterForm.tsx:65 assets/pages/LoginPage.tsx:30
-#, fuzzy
-#| msgid "Registrar"
 msgid "Register"
-msgstr "Bureau d'enregistrement"
+msgstr "S'enregistrer"
 
 #: assets/pages/search/DomainSearchPage.tsx:20
 msgid "Found !"
