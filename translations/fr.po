@@ -362,6 +362,7 @@ msgid "Log out"
 msgstr "Se déconnecter"
 
 #: assets/components/Sider.tsx:120 assets/pages/LoginPage.tsx:30
+#: assets/pages/LoginPage.tsx:38
 msgid "Log in"
 msgstr "Se connecter"
 
@@ -521,6 +522,12 @@ msgstr "Créer une Watchlist"
 #: assets/pages/NotFoundPage.tsx:10
 msgid "Sorry, the page you visited does not exist."
 msgstr "Désolé, cette page n'existe pas."
+
+#: assets/pages/LoginPage.tsx:38
+#, fuzzy
+#| msgid "Create a Connector"
+msgid "Create an account"
+msgstr "Créer un Connecteur"
 
 #: assets/utils/providers/index.tsx:11
 msgid ""
