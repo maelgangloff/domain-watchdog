@@ -35,7 +35,7 @@ export default function LoginPage() {
                 <Button type='link'
                         block
                         style={{marginTop: '1em'}}
-                        onClick={toggleWantRegister}>{wantRegister ? 'Login' : 'Create an account'}</Button>
+                        onClick={toggleWantRegister}>{wantRegister ? t`Log in` : t`Create an account`}</Button>
             }
         </Card.Grid>
         <Card.Grid style={gridStyle} hoverable={false}>
