@@ -4,19 +4,19 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n!=1);\n"
 
 #: assets/components/LoginForm.tsx:47
-#: assets/components/RegisterForm.tsx:33
+#: assets/components/RegisterForm.tsx:40
 msgid "Error"
 msgstr ""
 
 #: assets/components/LoginForm.tsx:62
-#: assets/components/RegisterForm.tsx:48
+#: assets/components/RegisterForm.tsx:55
 msgid "Email address"
 msgstr ""
 
 #: assets/components/LoginForm.tsx:64
 #: assets/components/LoginForm.tsx:72
-#: assets/components/RegisterForm.tsx:50
-#: assets/components/RegisterForm.tsx:58
+#: assets/components/RegisterForm.tsx:57
+#: assets/components/RegisterForm.tsx:65
 #: assets/components/search/DomainSearchBar.tsx:23
 #: assets/components/tracking/ConnectorForm.tsx:40
 #: assets/components/tracking/ConnectorForm.tsx:66
@@ -31,7 +31,7 @@ msgid "Required"
 msgstr ""
 
 #: assets/components/LoginForm.tsx:70
-#: assets/components/RegisterForm.tsx:56
+#: assets/components/RegisterForm.tsx:63
 msgid "Password"
 msgstr ""
 
@@ -356,7 +356,13 @@ msgstr ""
 msgid "Log in"
 msgstr ""
 
-#: assets/components/RegisterForm.tsx:65
+#: assets/components/RegisterForm.tsx:25
+#: assets/pages/search/DomainSearchPage.tsx:26
+#, javascript-format
+msgid "Please retry after ${ duration } seconds"
+msgstr ""
+
+#: assets/components/RegisterForm.tsx:72
 #: assets/pages/LoginPage.tsx:30
 msgid "Register"
 msgstr ""
@@ -365,7 +371,7 @@ msgstr ""
 msgid "Found !"
 msgstr ""
 
-#: assets/pages/search/DomainSearchPage.tsx:24
+#: assets/pages/search/DomainSearchPage.tsx:30
 #: assets/pages/tracking/ConnectorsPage.tsx:21
 #: assets/pages/tracking/ConnectorsPage.tsx:29
 #: assets/pages/tracking/WatchlistPage.tsx:49
@@ -374,23 +380,23 @@ msgstr ""
 msgid "An error occurred"
 msgstr ""
 
-#: assets/pages/search/DomainSearchPage.tsx:29
+#: assets/pages/search/DomainSearchPage.tsx:35
 msgid "Domain finder"
 msgstr ""
 
-#: assets/pages/search/DomainSearchPage.tsx:50
+#: assets/pages/search/DomainSearchPage.tsx:56
 msgid "EPP Status Codes"
 msgstr ""
 
-#: assets/pages/search/DomainSearchPage.tsx:60
+#: assets/pages/search/DomainSearchPage.tsx:66
 msgid "Timeline"
 msgstr ""
 
-#: assets/pages/search/DomainSearchPage.tsx:65
+#: assets/pages/search/DomainSearchPage.tsx:71
 msgid "Entities"
 msgstr ""
 
-#: assets/pages/search/DomainSearchPage.tsx:73
+#: assets/pages/search/DomainSearchPage.tsx:79
 msgid ""
 "Although the domain exists in my database, it has been deleted from the "
 "WHOIS by its registrar."

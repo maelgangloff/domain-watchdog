@@ -19,6 +19,13 @@ export function RegisterForm() {
         register(data.username, data.password).then(() => {
             navigate('/home')
         }).catch((e) => {
+
+            if (e.response?.status === 429) {
+                const duration = e.response.headers['retry-after']
+                setError(t`Please retry after ${duration} seconds`)
+                return;
+            }
+
             if (e.response.data.message !== undefined) {
                 setError(e.response.data.message)
             } else {
