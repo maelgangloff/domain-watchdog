@@ -310,65 +310,71 @@ msgstr "Supprimer le Connecteur"
 msgid "Are you sure to delete this Connector?"
 msgstr "Êtes-vous sûr de vouloir supprimer ce Connecteur ?"
 
-#: assets/components/Sider.tsx:30
+#: assets/components/Sider.tsx:29
 msgid "Home"
 msgstr "Accueil"
 
-#: assets/components/Sider.tsx:36
+#: assets/components/Sider.tsx:35
 msgid "Search"
 msgstr "Rechercher"
 
-#: assets/components/Sider.tsx:42
+#: assets/components/Sider.tsx:41
 msgid "Domain"
 msgstr "Domaine"
 
-#: assets/components/Sider.tsx:43
+#: assets/components/Sider.tsx:42
 msgid "Domain Finder"
 msgstr "Rechercher un domaine"
 
-#: assets/components/Sider.tsx:50 assets/pages/info/TldPage.tsx:79
+#: assets/components/Sider.tsx:49 assets/pages/info/TldPage.tsx:79
 msgid "TLD"
 msgstr "TLD"
 
-#: assets/components/Sider.tsx:51
+#: assets/components/Sider.tsx:50
 msgid "TLD list"
 msgstr "Liste des TLD"
 
+#: assets/components/Sider.tsx:57
+msgid "Entity"
+msgstr "Entité"
+
 #: assets/components/Sider.tsx:58
-msgid "LIPI IP Finder"
-msgstr ""
+msgid "Entity Finder"
+msgstr "Rechercher une entité"
 
-#: assets/components/Sider.tsx:59
-#, fuzzy
-#| msgid "Domain Finder"
-msgid "IP Finder"
-msgstr "Rechercher un domaine"
+#: assets/components/Sider.tsx:65
+msgid "Nameserver"
+msgstr "Serveur DNS"
 
-#: assets/components/Sider.tsx:67
+#: assets/components/Sider.tsx:66
+msgid "Nameserver Finder"
+msgstr "Rechercher un serveur DNS"
+
+#: assets/components/Sider.tsx:73
 msgid "Tracking"
 msgstr "Suivi"
 
-#: assets/components/Sider.tsx:73
+#: assets/components/Sider.tsx:79
 msgid "My Watchlists"
 msgstr "Mes Watchlists"
 
-#: assets/components/Sider.tsx:80
+#: assets/components/Sider.tsx:86
 msgid "My Connectors"
 msgstr "Mes Connecteurs"
 
-#: assets/components/Sider.tsx:89
+#: assets/components/Sider.tsx:95
 msgid "Statistics"
 msgstr "Statistiques"
 
-#: assets/components/Sider.tsx:99 assets/pages/watchdog/UserPage.tsx:16
+#: assets/components/Sider.tsx:105 assets/pages/watchdog/UserPage.tsx:16
 msgid "My Account"
 msgstr "Mon compte"
 
-#: assets/components/Sider.tsx:105
+#: assets/components/Sider.tsx:111
 msgid "Log out"
 msgstr "Se déconnecter"
 
-#: assets/components/Sider.tsx:113 assets/pages/LoginPage.tsx:30
+#: assets/components/Sider.tsx:119 assets/pages/LoginPage.tsx:30
 #: assets/pages/LoginPage.tsx:38
 msgid "Log in"
 msgstr "Se connecter"
@@ -616,17 +622,10 @@ msgstr ""
 "${ ProjectLink } est un projet open source distribué sous licence "
 "${ LicenseLink }."
 
-#~ msgid "Entity"
-#~ msgstr "Entité"
-
-#~ msgid "Entity Finder"
-#~ msgstr "Rechercher une entité"
-
-#~ msgid "Nameserver"
-#~ msgstr "Serveur DNS"
-
-#~ msgid "Nameserver Finder"
-#~ msgstr "Rechercher un serveur DNS"
+#, fuzzy
+#~| msgid "Domain Finder"
+#~ msgid "IP Finder"
+#~ msgstr "Rechercher un domaine"
 
 #~ msgid "Terms of service"
 #~ msgstr "Conditions d'utilisation"
