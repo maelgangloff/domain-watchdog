@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2024-08-05 01:44+0000\n"
+"PO-Revision-Date: 2024-08-06 15:41+0000\n"
 "Last-Translator: Maël Gangloff <contact@maelgangloff.fr>\n"
 "Language-Team: French <https://weblate.vinceh121.me/projects/domain-watchdog/"
 "domain-watchdog-dashboard/fr/>\n"
@@ -11,16 +11,16 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
 "X-Generator: Weblate 5.6\n"
 
-#: assets/components/LoginForm.tsx:47 assets/components/RegisterForm.tsx:33
+#: assets/components/LoginForm.tsx:47 assets/components/RegisterForm.tsx:40
 msgid "Error"
 msgstr "Erreur"
 
-#: assets/components/LoginForm.tsx:62 assets/components/RegisterForm.tsx:48
+#: assets/components/LoginForm.tsx:62 assets/components/RegisterForm.tsx:55
 msgid "Email address"
 msgstr "Adresse e-mail"
 
 #: assets/components/LoginForm.tsx:64 assets/components/LoginForm.tsx:72
-#: assets/components/RegisterForm.tsx:50 assets/components/RegisterForm.tsx:58
+#: assets/components/RegisterForm.tsx:57 assets/components/RegisterForm.tsx:65
 #: assets/components/search/DomainSearchBar.tsx:23
 #: assets/components/tracking/ConnectorForm.tsx:40
 #: assets/components/tracking/ConnectorForm.tsx:66
@@ -34,7 +34,7 @@ msgstr "Adresse e-mail"
 msgid "Required"
 msgstr "Requis"
 
-#: assets/components/LoginForm.tsx:70 assets/components/RegisterForm.tsx:56
+#: assets/components/LoginForm.tsx:70 assets/components/RegisterForm.tsx:63
 msgid "Password"
 msgstr "Mot de passe"
 
@@ -366,7 +366,13 @@ msgstr "Se déconnecter"
 msgid "Log in"
 msgstr "Se connecter"
 
-#: assets/components/RegisterForm.tsx:65 assets/pages/LoginPage.tsx:30
+#: assets/components/RegisterForm.tsx:25
+#: assets/pages/search/DomainSearchPage.tsx:26
+#, javascript-format
+msgid "Please retry after ${ duration } seconds"
+msgstr "Merci de réessayer dans ${ duration } secondes"
+
+#: assets/components/RegisterForm.tsx:72 assets/pages/LoginPage.tsx:30
 msgid "Register"
 msgstr "S'enregistrer"
 
@@ -374,7 +380,7 @@ msgstr "S'enregistrer"
 msgid "Found !"
 msgstr "Trouvé !"
 
-#: assets/pages/search/DomainSearchPage.tsx:24
+#: assets/pages/search/DomainSearchPage.tsx:30
 #: assets/pages/tracking/ConnectorsPage.tsx:21
 #: assets/pages/tracking/ConnectorsPage.tsx:29
 #: assets/pages/tracking/WatchlistPage.tsx:49
@@ -383,23 +389,23 @@ msgstr "Trouvé !"
 msgid "An error occurred"
 msgstr "Une erreur s'est produite"
 
-#: assets/pages/search/DomainSearchPage.tsx:29
+#: assets/pages/search/DomainSearchPage.tsx:35
 msgid "Domain finder"
 msgstr "Rechercher un domaine"
 
-#: assets/pages/search/DomainSearchPage.tsx:50
+#: assets/pages/search/DomainSearchPage.tsx:56
 msgid "EPP Status Codes"
 msgstr "Codes de statut EPP"
 
-#: assets/pages/search/DomainSearchPage.tsx:60
+#: assets/pages/search/DomainSearchPage.tsx:66
 msgid "Timeline"
 msgstr "Chronologie"
 
-#: assets/pages/search/DomainSearchPage.tsx:65
+#: assets/pages/search/DomainSearchPage.tsx:71
 msgid "Entities"
 msgstr "Entités"
 
-#: assets/pages/search/DomainSearchPage.tsx:73
+#: assets/pages/search/DomainSearchPage.tsx:79
 msgid ""
 "Although the domain exists in my database, it has been deleted from the "
 "WHOIS by its registrar."
@@ -566,23 +572,23 @@ msgstr ""
 "Le domaine est libre mais est un premium. Son prix est variable d'un domaine "
 "à l'autre"
 
-#: assets/App.tsx:100
+#: assets/App.tsx:101
 msgid "TOS"
 msgstr "CGU"
 
-#: assets/App.tsx:101
+#: assets/App.tsx:102
 msgid "Privacy Policy"
 msgstr "Politique de confidentialité"
 
-#: assets/App.tsx:102
+#: assets/App.tsx:103
 msgid "FAQ"
 msgstr "FAQ"
 
-#: assets/App.tsx:104
+#: assets/App.tsx:105
 msgid "Documentation"
 msgstr "Documentation"
 
-#: assets/App.tsx:107
+#: assets/App.tsx:108
 #, javascript-format
 msgid ""
 "${ ProjectLink } is an open source project distributed under the "

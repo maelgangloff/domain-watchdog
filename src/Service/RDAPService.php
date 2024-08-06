@@ -25,6 +25,8 @@ use App\Repository\TldRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Exception\ORMException;
 use Psr\Log\LoggerInterface;
+use Symfony\Component\HttpFoundation\Exception\BadRequestException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\DecodingExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\HttpExceptionInterface;
@@ -122,10 +124,10 @@ readonly class RDAPService
     }
 
     /**
-     * @throws \Exception
      * @throws TransportExceptionInterface
      * @throws DecodingExceptionInterface
      * @throws HttpExceptionInterface
+     * @throws \Exception
      */
     public function registerDomain(string $fqdn): Domain
     {
@@ -141,7 +143,7 @@ readonly class RDAPService
         $rdapServer = $this->rdapServerRepository->findOneBy(['tld' => $tld], ['updatedAt' => 'DESC']);
 
         if (null === $rdapServer) {
-            throw new \Exception('Unable to determine which RDAP server to contact');
+            throw new NotFoundHttpException('Unable to determine which RDAP server to contact');
         }
 
         /** @var ?Domain $domain */
@@ -258,7 +260,8 @@ readonly class RDAPService
                 $domain->addDomainEntity($domainEntity
                     ->setDomain($domain)
                     ->setEntity($entity)
-                    ->setRoles($roles));
+                    ->setRoles($roles))
+                    ->updateTimestamps();
 
                 $this->em->persist($domainEntity);
                 $this->em->flush();
@@ -330,14 +333,11 @@ readonly class RDAPService
         return $domain;
     }
 
-    /**
-     * @throws \Exception
-     */
     private function getTld($domain): ?object
     {
         $lastDotPosition = strrpos($domain, '.');
         if (false === $lastDotPosition) {
-            throw new \Exception('Domain must contain at least one dot');
+            throw new BadRequestException('Domain must contain at least one dot');
         }
         $tld = strtolower(substr($domain, $lastDotPosition + 1));
 

@@ -4,6 +4,7 @@ namespace App\Config\Connector;
 
 use App\Entity\Domain;
 use Ovh\Api;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 
 readonly class OvhConnector implements ConnectorInterface
@@ -138,7 +139,7 @@ readonly class OvhConnector implements ConnectorInterface
             || !is_string($ovhSubsidiary) || empty($ovhSubsidiary)
             || !is_string($pricingMode) || empty($pricingMode)
         ) {
-            throw new \Exception('Bad authData schema');
+            throw new BadRequestHttpException('Bad authData schema');
         }
 
         if (true !== $acceptConditions
@@ -177,7 +178,7 @@ readonly class OvhConnector implements ConnectorInterface
             }
 
             if (!$ok) {
-                throw new \Exception('The credentials provided do not have enough permissions to purchase a domain name.');
+                throw new BadRequestHttpException('The credentials provided do not have enough permissions to purchase a domain name.');
             }
         }
 

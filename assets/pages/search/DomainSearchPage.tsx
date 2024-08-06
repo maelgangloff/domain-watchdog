@@ -19,9 +19,15 @@ export default function DomainSearchPage() {
             setDomain(d)
             messageApi.success(t`Found !`)
         }).catch((e: AxiosError) => {
-            const data = e?.response?.data as { detail: string }
             setDomain(undefined)
-            messageApi.error(data.detail ?? t`An error occurred`)
+
+            if (e.response?.status === 429) {
+                const duration = e.response.headers['retry-after']
+                messageApi.error(t`Please retry after ${duration} seconds`)
+                return;
+            }
+            const data = e?.response?.data as { detail: string }
+            messageApi.error(data.detail !== '' ? data.detail : t`An error occurred`)
         })
     }
 

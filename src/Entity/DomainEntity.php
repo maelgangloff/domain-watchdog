@@ -27,6 +27,15 @@ class DomainEntity
     #[Groups(['domain-entity:entity', 'domain-entity:domain'])]
     private array $roles = [];
 
+    #[ORM\Column(type: Types::DATE_IMMUTABLE)]
+    #[Groups(['domain-entity:entity', 'domain-entity:domain'])]
+    private ?\DateTimeImmutable $updatedAt = null;
+
+    public function __construct()
+    {
+        $this->updatedAt = new \DateTimeImmutable('now');
+    }
+
     public function getDomain(): ?Domain
     {
         return $this->domain;
@@ -64,5 +73,24 @@ class DomainEntity
         $this->roles = $roles;
 
         return $this;
+    }
+
+    public function getUpdatedAt(): ?\DateTimeImmutable
+    {
+        return $this->updatedAt;
+    }
+
+    public function setUpdatedAt(\DateTimeImmutable $updatedAt): static
+    {
+        $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    #[ORM\PrePersist]
+    #[ORM\PreUpdate]
+    public function updateTimestamps(): void
+    {
+        $this->setUpdatedAt(new \DateTimeImmutable('now'));
     }
 }

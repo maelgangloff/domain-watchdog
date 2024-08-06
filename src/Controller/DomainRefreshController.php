@@ -31,10 +31,10 @@ class DomainRefreshController extends AbstractController
 
     /**
      * @throws TransportExceptionInterface
-     * @throws HttpExceptionInterface
      * @throws DecodingExceptionInterface
      * @throws ExceptionInterface
      * @throws \Exception
+     * @throws HttpExceptionInterface
      */
     public function __invoke(string $ldhName, KernelInterface $kernel): ?Domain
     {
