@@ -6,6 +6,7 @@ use App\Entity\Domain;
 use Symfony\Component\HttpClient\HttpOptions;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Contracts\HttpClient\Exception\DecodingExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
@@ -102,11 +103,14 @@ readonly class GandiConnector implements ConnectorInterface
 
         if (!is_string($token) || empty($token)
             || (array_key_exists('sharingId', $authData) && !is_string($authData['sharingId']))
-            || true !== $acceptConditions
-            || true !== $ownerLegalAge
-            || true !== $waiveRetractationPeriod
         ) {
             throw new BadRequestHttpException('Bad authData schema');
+        }
+
+        if (true !== $acceptConditions
+            || true !== $ownerLegalAge
+            || true !== $waiveRetractationPeriod) {
+            throw new HttpException(451, 'The user has not given explicit consent', null, ['Link' => '<https://www.gandi.net/en/contracts/terms-of-service>; rel="blocked-by"']);
         }
 
         $response = $client->request('GET', '/v5/organization/user-info', (new HttpOptions())

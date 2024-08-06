@@ -4,6 +4,7 @@ namespace App\Config\Connector;
 
 use App\Entity\Domain;
 use Ovh\Api;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 
 readonly class OvhConnector implements ConnectorInterface
 {
@@ -136,12 +137,14 @@ readonly class OvhConnector implements ConnectorInterface
             || !is_string($apiEndpoint) || empty($apiEndpoint)
             || !is_string($ovhSubsidiary) || empty($ovhSubsidiary)
             || !is_string($pricingMode) || empty($pricingMode)
-
-            || true !== $acceptConditions
-            || true !== $ownerLegalAge
-            || true !== $waiveRetractationPeriod
         ) {
             throw new \Exception('Bad authData schema');
+        }
+
+        if (true !== $acceptConditions
+            || true !== $ownerLegalAge
+            || true !== $waiveRetractationPeriod) {
+            throw new HttpException(451, 'The user has not given explicit consent', null, ['Link' => '<https://www.ovhcloud.com/fr/terms-and-conditions/contracts/>; rel="blocked-by"']);
         }
 
         $conn = new Api(
