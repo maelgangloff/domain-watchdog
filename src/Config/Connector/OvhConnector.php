@@ -6,6 +6,7 @@ use App\Entity\Domain;
 use Ovh\Api;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\HttpKernel\Exception\HttpException;
+use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 readonly class OvhConnector implements ConnectorInterface
 {
@@ -31,7 +32,7 @@ readonly class OvhConnector implements ConnectorInterface
         ],
     ];
 
-    public function __construct(private array $authData)
+    public function __construct(private array $authData, private HttpClientInterface $client)
     {
     }
 
@@ -51,17 +52,11 @@ readonly class OvhConnector implements ConnectorInterface
             throw new \Exception('Domain name cannot be null');
         }
 
-        $authData = self::verifyAuthData($this->authData);
+        $authData = self::verifyAuthData($this->authData, $this->client);
 
         $acceptConditions = $authData['acceptConditions'];
         $ownerLegalAge = $authData['ownerLegalAge'];
         $waiveRetractationPeriod = $authData['waiveRetractationPeriod'];
-
-        if (true !== $acceptConditions
-            || true !== $ownerLegalAge
-            || true !== $waiveRetractationPeriod) {
-            throw new HttpException(451, 'The user has not given explicit consent');
-        }
 
         $conn = new Api(
             $authData['appKey'],
@@ -125,7 +120,7 @@ readonly class OvhConnector implements ConnectorInterface
     /**
      * @throws \Exception
      */
-    public static function verifyAuthData(array $authData): array
+    public static function verifyAuthData(array $authData, HttpClientInterface $client): array
     {
         $appKey = $authData['appKey'];
         $appSecret = $authData['appSecret'];
@@ -151,7 +146,7 @@ readonly class OvhConnector implements ConnectorInterface
         if (true !== $acceptConditions
             || true !== $ownerLegalAge
             || true !== $waiveRetractationPeriod) {
-            throw new HttpException(451, 'The user has not given explicit consent', null);
+            throw new HttpException(451, 'The user has not given explicit consent');
         }
 
         $conn = new Api(

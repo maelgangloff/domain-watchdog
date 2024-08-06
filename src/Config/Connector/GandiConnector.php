@@ -3,6 +3,7 @@
 namespace App\Config\Connector;
 
 use App\Entity\Domain;
+use http\Exception\InvalidArgumentException;
 use Symfony\Component\HttpClient\HttpOptions;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
@@ -29,25 +30,15 @@ readonly class GandiConnector implements ConnectorInterface
     public function orderDomain(Domain $domain, bool $dryRun = false): void
     {
         if (!$domain->getDeleted()) {
-            throw new \Exception('The domain name still appears in the WHOIS database');
+            throw new InvalidArgumentException('The domain name still appears in the WHOIS database');
         }
 
         $ldhName = $domain->getLdhName();
         if (!$ldhName) {
-            throw new \Exception('Domain name cannot be null');
+            throw new InvalidArgumentException('Domain name cannot be null');
         }
 
         $authData = self::verifyAuthData($this->authData, $this->client);
-
-        $acceptConditions = $authData['acceptConditions'];
-        $ownerLegalAge = $authData['ownerLegalAge'];
-        $waiveRetractationPeriod = $authData['waiveRetractationPeriod'];
-
-        if (true !== $acceptConditions
-            || true !== $ownerLegalAge
-            || true !== $waiveRetractationPeriod) {
-            throw new HttpException(451, 'The user has not given explicit consent');
-        }
 
         $user = $this->client->request('GET', '/v5/organization/user-info', (new HttpOptions())
             ->setAuthBearer($authData['token'])
@@ -112,7 +103,7 @@ readonly class GandiConnector implements ConnectorInterface
         if (true !== $acceptConditions
             || true !== $ownerLegalAge
             || true !== $waiveRetractationPeriod) {
-            throw new HttpException(451, 'The user has not given explicit consent', null);
+            throw new HttpException(451, 'The user has not given explicit consent');
         }
 
         $response = $client->request('GET', '/v5/organization/user-info', (new HttpOptions())

@@ -2,9 +2,7 @@
 
 namespace App\MessageHandler;
 
-use App\Config\Connector\GandiConnector;
-use App\Config\Connector\OvhConnector;
-use App\Config\ConnectorProvider;
+use App\Config\Connector\ConnectorInterface;
 use App\Config\TriggerAction;
 use App\Entity\Connector;
 use App\Entity\Domain;
@@ -60,17 +58,17 @@ final readonly class ProcessDomainTriggerHandler
                 'provider' => $connector->getProvider()->value,
             ]);
             try {
-                $isDebug = $this->kernel->isDebug();
-
-                if (ConnectorProvider::OVH === $connector->getProvider()) {
-                    $provider = new OvhConnector($connector->getAuthData());
-                } elseif (ConnectorProvider::GANDI === $connector->getProvider()) {
-                    $provider = new GandiConnector($connector->getAuthData(), $this->client);
-                } else {
-                    throw new \Exception('Unknown provider');
+                $provider = $connector->getProvider();
+                if (null === $provider) {
+                    throw new \Exception('Provider not found');
                 }
 
-                $provider->orderDomain($domain, $isDebug);
+                $connectorProviderClass = $provider->getConnectorProvider();
+
+                /** @var ConnectorInterface $connectorProvider */
+                $connectorProvider = new $connectorProviderClass($connector->getAuthData(), $this->client);
+
+                $connectorProvider->orderDomain($domain, $this->kernel->isDebug());
 
                 $this->sendEmailDomainOrdered($domain, $connector, $watchList->getUser());
             } catch (\Throwable) {

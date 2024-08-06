@@ -2,9 +2,7 @@
 
 namespace App\Controller;
 
-use App\Config\Connector\GandiConnector;
-use App\Config\Connector\OvhConnector;
-use App\Config\ConnectorProvider;
+use App\Config\Connector\ConnectorInterface;
 use App\Entity\Connector;
 use App\Entity\User;
 use Doctrine\Common\Collections\Collection;
@@ -12,7 +10,6 @@ use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
@@ -71,14 +68,14 @@ class ConnectorController extends AbstractController
             'provider' => $provider->value,
         ]);
 
-        if (ConnectorProvider::OVH === $provider) {
-            $authData = OvhConnector::verifyAuthData($connector->getAuthData());
-        } elseif (ConnectorProvider::GANDI === $provider) {
-            $authData = GandiConnector::verifyAuthData($connector->getAuthData(), $client);
-        } else {
-            throw new BadRequestHttpException('Unknown provider');
+        if (null === $provider) {
+            throw new \Exception('Provider not found');
         }
 
+        /** @var ConnectorInterface $connectorProviderClass */
+        $connectorProviderClass = $provider->getConnectorProvider();
+
+        $authData = $connectorProviderClass::verifyAuthData($connector->getAuthData(), $client);
         $connector->setAuthData($authData);
 
         $this->logger->info('User {username} authentication data with the {provider} provider has been validated.', [
