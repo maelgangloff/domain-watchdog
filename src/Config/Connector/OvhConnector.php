@@ -5,6 +5,8 @@ namespace App\Config\Connector;
 use App\Entity\Domain;
 use Ovh\Api;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
+use Symfony\Component\HttpKernel\Exception\HttpException;
+use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 readonly class OvhConnector implements ConnectorInterface
 {
@@ -30,7 +32,7 @@ readonly class OvhConnector implements ConnectorInterface
         ],
     ];
 
-    public function __construct(private array $authData)
+    public function __construct(private array $authData, private HttpClientInterface $client)
     {
     }
 
@@ -39,8 +41,8 @@ readonly class OvhConnector implements ConnectorInterface
      *
      * @throws \Exception
      */
-    public function orderDomain(Domain $domain, bool $dryRun = false
-    ): void {
+    public function orderDomain(Domain $domain, bool $dryRun = false): void
+    {
         if (!$domain->getDeleted()) {
             throw new \Exception('The domain name still appears in the WHOIS database');
         }
@@ -50,7 +52,7 @@ readonly class OvhConnector implements ConnectorInterface
             throw new \Exception('Domain name cannot be null');
         }
 
-        $authData = self::verifyAuthData($this->authData);
+        $authData = self::verifyAuthData($this->authData, $this->client);
 
         $acceptConditions = $authData['acceptConditions'];
         $ownerLegalAge = $authData['ownerLegalAge'];
@@ -118,7 +120,7 @@ readonly class OvhConnector implements ConnectorInterface
     /**
      * @throws \Exception
      */
-    public static function verifyAuthData(array $authData): array
+    public static function verifyAuthData(array $authData, HttpClientInterface $client): array
     {
         $appKey = $authData['appKey'];
         $appSecret = $authData['appSecret'];
@@ -137,12 +139,14 @@ readonly class OvhConnector implements ConnectorInterface
             || !is_string($apiEndpoint) || empty($apiEndpoint)
             || !is_string($ovhSubsidiary) || empty($ovhSubsidiary)
             || !is_string($pricingMode) || empty($pricingMode)
-
-            || true !== $acceptConditions
-            || true !== $ownerLegalAge
-            || true !== $waiveRetractationPeriod
         ) {
             throw new BadRequestHttpException('Bad authData schema');
+        }
+
+        if (true !== $acceptConditions
+            || true !== $ownerLegalAge
+            || true !== $waiveRetractationPeriod) {
+            throw new HttpException(451, 'The user has not given explicit consent');
         }
 
         $conn = new Api(
