@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2024-08-06 23:31+0000\n"
+"PO-Revision-Date: 2024-08-06 23:33+0000\n"
 "Last-Translator: Maël Gangloff <contact@maelgangloff.fr>\n"
 "Language-Team: French <https://weblate.vinceh121.me/projects/domain-watchdog/"
 "domain-watchdog-dashboard/fr/>\n"
@@ -225,7 +225,7 @@ msgstr "Mode de tarification OVH"
 
 #: assets/components/tracking/ConnectorForm.tsx:98
 msgid "Personal Access Token (PAT)"
-msgstr ""
+msgstr "Jeton d'accès personnel (PAT)"
 
 #: assets/components/tracking/ConnectorForm.tsx:104
 msgid "Organization sharing ID"
@@ -554,16 +554,12 @@ msgstr ""
 "web du Fournisseur"
 
 #: assets/utils/providers/index.tsx:16
-#, fuzzy
-#| msgid ""
-#| "Retrieve a set of tokens from your customer account on the Provider's "
-#| "website"
 msgid ""
 "Retrieve a Personal Access Token from your customer account on the "
 "Provider's website"
 msgstr ""
-"Récupérer un ensemble de jetons à partir de votre compte client sur le site "
-"web du Fournisseur"
+"Récupérer un jeton d'accès personnel (PAT) à partir de votre compte client "
+"sur le site web du Fournisseur"
 
 #: assets/utils/providers/ovh.tsx:5
 msgid "Application key"
