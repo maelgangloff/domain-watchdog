@@ -297,73 +297,65 @@ msgstr ""
 msgid "Are you sure to delete this Connector?"
 msgstr ""
 
-#: assets/components/Sider.tsx:29
+#: assets/components/Sider.tsx:30
 msgid "Home"
 msgstr ""
 
-#: assets/components/Sider.tsx:35
+#: assets/components/Sider.tsx:36
 msgid "Search"
 msgstr ""
 
-#: assets/components/Sider.tsx:41
+#: assets/components/Sider.tsx:42
 msgid "Domain"
 msgstr ""
 
-#: assets/components/Sider.tsx:42
+#: assets/components/Sider.tsx:43
 msgid "Domain Finder"
 msgstr ""
 
-#: assets/components/Sider.tsx:49
+#: assets/components/Sider.tsx:50
 #: assets/pages/info/TldPage.tsx:79
 msgid "TLD"
 msgstr ""
 
-#: assets/components/Sider.tsx:50
+#: assets/components/Sider.tsx:51
 msgid "TLD list"
 msgstr ""
 
-#: assets/components/Sider.tsx:57
-msgid "Entity"
-msgstr ""
-
 #: assets/components/Sider.tsx:58
-msgid "Entity Finder"
+msgid "LIPI IP Finder"
 msgstr ""
 
-#: assets/components/Sider.tsx:65
-msgid "Nameserver"
+#: assets/components/Sider.tsx:59
+msgid "IP Finder"
 msgstr ""
 
-#: assets/components/Sider.tsx:66
-msgid "Nameserver Finder"
-msgstr ""
-
-#: assets/components/Sider.tsx:74
+#: assets/components/Sider.tsx:67
 msgid "Tracking"
 msgstr ""
 
-#: assets/components/Sider.tsx:80
+#: assets/components/Sider.tsx:73
 msgid "My Watchlists"
 msgstr ""
 
-#: assets/components/Sider.tsx:87
+#: assets/components/Sider.tsx:80
 msgid "My Connectors"
 msgstr ""
 
-#: assets/components/Sider.tsx:96
+#: assets/components/Sider.tsx:89
 msgid "Statistics"
 msgstr ""
 
-#: assets/components/Sider.tsx:106
+#: assets/components/Sider.tsx:99
 #: assets/pages/watchdog/UserPage.tsx:16
 msgid "My Account"
 msgstr ""
 
-#: assets/components/Sider.tsx:112
+#: assets/components/Sider.tsx:105
 msgid "Log out"
 msgstr ""
 
-#: assets/components/Sider.tsx:120
+#: assets/components/Sider.tsx:113
 #: assets/pages/LoginPage.tsx:30
 #: assets/pages/LoginPage.tsx:38
 msgid "Log in"
