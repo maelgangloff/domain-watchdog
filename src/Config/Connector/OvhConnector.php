@@ -145,7 +145,7 @@ readonly class OvhConnector implements ConnectorInterface
         if (true !== $acceptConditions
             || true !== $ownerLegalAge
             || true !== $waiveRetractationPeriod) {
-            throw new HttpException(451, 'The user has not given explicit consent', null, ['Link' => '<https://www.ovhcloud.com/fr/terms-and-conditions/contracts/>; rel="blocked-by"']);
+            throw new HttpException(451, 'The user has not given explicit consent', null);
         }
 
         $conn = new Api(

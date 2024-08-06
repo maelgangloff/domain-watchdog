@@ -110,7 +110,7 @@ readonly class GandiConnector implements ConnectorInterface
         if (true !== $acceptConditions
             || true !== $ownerLegalAge
             || true !== $waiveRetractationPeriod) {
-            throw new HttpException(451, 'The user has not given explicit consent', null, ['Link' => '<https://www.gandi.net/en/contracts/terms-of-service>; rel="blocked-by"']);
+            throw new HttpException(451, 'The user has not given explicit consent', null);
         }
 
         $response = $client->request('GET', '/v5/organization/user-info', (new HttpOptions())
