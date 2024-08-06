@@ -619,10 +619,6 @@ msgstr ""
 "${ LicenseLink }."
 
 #, fuzzy
-#~| msgid "Domain Finder"
-#~ msgid "IP Finder"
-#~ msgstr "Rechercher un domaine"
-
 #~ msgid "Terms of service"
 #~ msgstr "Conditions d'utilisation"
 
