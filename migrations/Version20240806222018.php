@@ -35,7 +35,6 @@ final class Version20240806222018 extends AbstractMigration
     public function down(Schema $schema): void
     {
         // this down() migration is auto-generated, please modify it to your needs
-        $this->addSql('CREATE SCHEMA public');
         $this->addSql('ALTER TABLE watch_list_trigger DROP CONSTRAINT fk_cf857a4cc4508918');
         $this->addSql('ALTER TABLE watch_list_trigger ADD CONSTRAINT fk_cf857a4cc4508918 FOREIGN KEY (watch_list_id) REFERENCES watch_list (token) NOT DEFERRABLE INITIALLY IMMEDIATE');
         $this->addSql('ALTER TABLE watch_list DROP CONSTRAINT fk_152b584ba76ed395');
