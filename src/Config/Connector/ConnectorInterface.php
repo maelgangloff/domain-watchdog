@@ -11,5 +11,5 @@ interface ConnectorInterface
 
     public function orderDomain(Domain $domain, bool $dryRun): void;
 
-    public static function verifyAuthData(array $authData, HttpClientInterface $client);
+    public static function verifyAuthData(array $authData, HttpClientInterface $client): array;
 }
