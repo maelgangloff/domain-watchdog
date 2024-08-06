@@ -48,7 +48,8 @@ export default function App() {
             if (location.pathname === '/login') navigate('/home')
         }).catch(() => {
             setIsAuthenticated(false)
-            if (location.pathname !== '/login') navigate('/home')
+            const pathname = location.pathname
+            if (!['/login', '/tos', '/faq', '/privacy'].includes(pathname)) navigate('/home')
         })
     }, []);
 

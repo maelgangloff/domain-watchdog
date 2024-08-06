@@ -539,23 +539,23 @@ msgid ""
 "another"
 msgstr ""
 
-#: assets/App.tsx:100
+#: assets/App.tsx:101
 msgid "TOS"
 msgstr ""
 
-#: assets/App.tsx:101
+#: assets/App.tsx:102
 msgid "Privacy Policy"
 msgstr ""
 
-#: assets/App.tsx:102
+#: assets/App.tsx:103
 msgid "FAQ"
 msgstr ""
 
-#: assets/App.tsx:104
+#: assets/App.tsx:105
 msgid "Documentation"
 msgstr ""
 
-#: assets/App.tsx:107
+#: assets/App.tsx:108
 #, javascript-format
 msgid ""
 "${ ProjectLink } is an open source project distributed under the ${ "
