@@ -44,7 +44,7 @@ class Connector
     private ?string $id;
 
     #[ORM\ManyToOne(inversedBy: 'connectors')]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(nullable: false, onDelete: 'CASCADE')]
     public ?User $user = null;
 
     #[Groups(['connector:list', 'connector:create', 'watchlist:list'])]

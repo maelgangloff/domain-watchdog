@@ -17,7 +17,7 @@ class WatchListTrigger
 
     #[ORM\Id]
     #[ORM\ManyToOne(targetEntity: WatchList::class, inversedBy: 'watchListTriggers')]
-    #[ORM\JoinColumn(referencedColumnName: 'token', nullable: false)]
+    #[ORM\JoinColumn(referencedColumnName: 'token', nullable: false, onDelete: 'CASCADE')]
     private ?WatchList $watchList = null;
 
     #[ORM\Id]

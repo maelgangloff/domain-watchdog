@@ -73,7 +73,7 @@ class WatchList
     private string $token;
 
     #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'watchLists')]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(nullable: false, onDelete: 'CASCADE')]
     public ?User $user = null;
 
     /**
@@ -81,8 +81,8 @@ class WatchList
      */
     #[ORM\ManyToMany(targetEntity: Domain::class, inversedBy: 'watchLists')]
     #[ORM\JoinTable(name: 'watch_lists_domains',
-        joinColumns: [new ORM\JoinColumn(name: 'watch_list_token', referencedColumnName: 'token')],
-        inverseJoinColumns: [new ORM\JoinColumn(name: 'domain_ldh_name', referencedColumnName: 'ldh_name')])]
+        joinColumns: [new ORM\JoinColumn(name: 'watch_list_token', referencedColumnName: 'token', onDelete: 'CASCADE')],
+        inverseJoinColumns: [new ORM\JoinColumn(name: 'domain_ldh_name', referencedColumnName: 'ldh_name', onDelete: 'CASCADE')])]
     #[Groups(['watchlist:list', 'watchlist:item', 'watchlist:create', 'watchlist:update'])]
     private Collection $domains;
 
