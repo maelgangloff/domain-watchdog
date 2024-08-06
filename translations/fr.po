@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2024-08-05 01:44+0000\n"
+"PO-Revision-Date: 2024-08-06 15:36+0000\n"
 "Last-Translator: Maël Gangloff <contact@maelgangloff.fr>\n"
 "Language-Team: French <https://weblate.vinceh121.me/projects/domain-watchdog/"
 "domain-watchdog-dashboard/fr/>\n"
@@ -370,7 +370,7 @@ msgstr "Se connecter"
 #: assets/pages/search/DomainSearchPage.tsx:26
 #, javascript-format
 msgid "Please retry after ${ duration } seconds"
-msgstr ""
+msgstr "Merci de réessayer dans ${ durée } secondes"
 
 #: assets/components/RegisterForm.tsx:72 assets/pages/LoginPage.tsx:30
 msgid "Register"
