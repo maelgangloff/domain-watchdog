@@ -27,9 +27,10 @@ msgstr "Adresse e-mail"
 #: assets/components/tracking/ConnectorForm.tsx:74
 #: assets/components/tracking/ConnectorForm.tsx:81
 #: assets/components/tracking/ConnectorForm.tsx:89
-#: assets/components/tracking/ConnectorForm.tsx:97
-#: assets/components/tracking/ConnectorForm.tsx:110
-#: assets/components/tracking/ConnectorForm.tsx:119
+#: assets/components/tracking/ConnectorForm.tsx:100
+#: assets/components/tracking/ConnectorForm.tsx:120
+#: assets/components/tracking/ConnectorForm.tsx:134
+#: assets/components/tracking/ConnectorForm.tsx:143
 #: assets/components/tracking/WatchlistForm.tsx:103
 msgid "Required"
 msgstr "Requis"
@@ -192,12 +193,12 @@ msgstr ""
 "Merci de vous assurer que les informations du connecteur sont valides pour "
 "acheter un domaine qui pourrait être disponible prochainement."
 
-#: assets/components/tracking/ConnectorForm.tsx:131
+#: assets/components/tracking/ConnectorForm.tsx:154
 #: assets/components/tracking/WatchlistForm.tsx:186
 msgid "Create"
 msgstr "Créer"
 
-#: assets/components/tracking/ConnectorForm.tsx:134
+#: assets/components/tracking/ConnectorForm.tsx:157
 #: assets/components/tracking/WatchlistForm.tsx:189
 msgid "Reset"
 msgstr "Réinitialiser"
@@ -222,11 +223,23 @@ msgstr "Filiale OVH"
 msgid "OVH pricing mode"
 msgstr "Mode de tarification OVH"
 
-#: assets/components/tracking/ConnectorForm.tsx:95
+#: assets/components/tracking/ConnectorForm.tsx:98
+msgid "Personal Access Token (PAT)"
+msgstr ""
+
+#: assets/components/tracking/ConnectorForm.tsx:104
+msgid "Organization sharing ID"
+msgstr ""
+
+#: assets/components/tracking/ConnectorForm.tsx:107
+msgid "It indicates the organization that will pay for the ordered product"
+msgstr ""
+
+#: assets/components/tracking/ConnectorForm.tsx:118
 msgid "API Terms of Service"
 msgstr "Conditions d'utilisation de l'API"
 
-#: assets/components/tracking/ConnectorForm.tsx:102
+#: assets/components/tracking/ConnectorForm.tsx:126
 msgid ""
 "I certify that I have read and accepted the conditions of use of the "
 "Provider API, accessible from this hyperlink"
@@ -234,11 +247,11 @@ msgstr ""
 "Je certifie avoir lu et accepté les conditions d'utilisation de l'API du "
 "Fournisseur, accessibles à partir de ce lien hypertexte"
 
-#: assets/components/tracking/ConnectorForm.tsx:108
+#: assets/components/tracking/ConnectorForm.tsx:132
 msgid "Legal age"
 msgstr "Âge minimum légal"
 
-#: assets/components/tracking/ConnectorForm.tsx:113
+#: assets/components/tracking/ConnectorForm.tsx:137
 msgid ""
 "I certify on my honor that I am of the minimum age required to consent to "
 "these conditions"
@@ -246,11 +259,11 @@ msgstr ""
 "Je certifie sur l'honneur que j'ai l'âge minimum requis pour consentir à ces "
 "conditions"
 
-#: assets/components/tracking/ConnectorForm.tsx:117
+#: assets/components/tracking/ConnectorForm.tsx:141
 msgid "Withdrawal period"
 msgstr "Délai de rétractation"
 
-#: assets/components/tracking/ConnectorForm.tsx:122
+#: assets/components/tracking/ConnectorForm.tsx:146
 msgid ""
 "I expressly waive my right of withdrawal regarding the purchase of domain "
 "names via the Provider's API"
@@ -297,71 +310,65 @@ msgstr "Supprimer le Connecteur"
 msgid "Are you sure to delete this Connector?"
 msgstr "Êtes-vous sûr de vouloir supprimer ce Connecteur ?"
 
-#: assets/components/Sider.tsx:29
+#: assets/components/Sider.tsx:30
 msgid "Home"
 msgstr "Accueil"
 
-#: assets/components/Sider.tsx:35
+#: assets/components/Sider.tsx:36
 msgid "Search"
 msgstr "Rechercher"
 
-#: assets/components/Sider.tsx:41
+#: assets/components/Sider.tsx:42
 msgid "Domain"
 msgstr "Domaine"
 
-#: assets/components/Sider.tsx:42
+#: assets/components/Sider.tsx:43
 msgid "Domain Finder"
 msgstr "Rechercher un domaine"
 
-#: assets/components/Sider.tsx:49 assets/pages/info/TldPage.tsx:79
+#: assets/components/Sider.tsx:50 assets/pages/info/TldPage.tsx:79
 msgid "TLD"
 msgstr "TLD"
 
-#: assets/components/Sider.tsx:50
+#: assets/components/Sider.tsx:51
 msgid "TLD list"
 msgstr "Liste des TLD"
 
-#: assets/components/Sider.tsx:57
-msgid "Entity"
-msgstr "Entité"
-
 #: assets/components/Sider.tsx:58
-msgid "Entity Finder"
-msgstr "Rechercher une entité"
+msgid "LIPI IP Finder"
+msgstr ""
 
-#: assets/components/Sider.tsx:65
-msgid "Nameserver"
-msgstr "Serveur DNS"
+#: assets/components/Sider.tsx:59
+#, fuzzy
+#| msgid "Domain Finder"
+msgid "IP Finder"
+msgstr "Rechercher un domaine"
 
-#: assets/components/Sider.tsx:66
-msgid "Nameserver Finder"
-msgstr "Rechercher un serveur DNS"
-
-#: assets/components/Sider.tsx:74
+#: assets/components/Sider.tsx:67
 msgid "Tracking"
 msgstr "Suivi"
 
-#: assets/components/Sider.tsx:80
+#: assets/components/Sider.tsx:73
 msgid "My Watchlists"
 msgstr "Mes Watchlists"
 
-#: assets/components/Sider.tsx:87
+#: assets/components/Sider.tsx:80
 msgid "My Connectors"
 msgstr "Mes Connecteurs"
 
-#: assets/components/Sider.tsx:96
+#: assets/components/Sider.tsx:89
 msgid "Statistics"
 msgstr "Statistiques"
 
-#: assets/components/Sider.tsx:106 assets/pages/watchdog/UserPage.tsx:16
+#: assets/components/Sider.tsx:99 assets/pages/watchdog/UserPage.tsx:16
 msgid "My Account"
 msgstr "Mon compte"
 
-#: assets/components/Sider.tsx:112
+#: assets/components/Sider.tsx:105
 msgid "Log out"
 msgstr "Se déconnecter"
 
-#: assets/components/Sider.tsx:120 assets/pages/LoginPage.tsx:30
+#: assets/components/Sider.tsx:113 assets/pages/LoginPage.tsx:30
 #: assets/pages/LoginPage.tsx:38
 msgid "Log in"
 msgstr "Se connecter"
@@ -540,6 +547,18 @@ msgstr ""
 "Récupérer un ensemble de jetons à partir de votre compte client sur le site "
 "web du Fournisseur"
 
+#: assets/utils/providers/index.tsx:16
+#, fuzzy
+#| msgid ""
+#| "Retrieve a set of tokens from your customer account on the Provider's "
+#| "website"
+msgid ""
+"Retrieve a Personal Access Token from your customer account on the "
+"Provider's website"
+msgstr ""
+"Récupérer un ensemble de jetons à partir de votre compte client sur le site "
+"web du Fournisseur"
+
 #: assets/utils/providers/ovh.tsx:5
 msgid "Application key"
 msgstr "Clé d'application"
@@ -596,6 +615,18 @@ msgid ""
 msgstr ""
 "${ ProjectLink } est un projet open source distribué sous licence "
 "${ LicenseLink }."
+
+#~ msgid "Entity"
+#~ msgstr "Entité"
+
+#~ msgid "Entity Finder"
+#~ msgstr "Rechercher une entité"
+
+#~ msgid "Nameserver"
+#~ msgstr "Serveur DNS"
+
+#~ msgid "Nameserver Finder"
+#~ msgstr "Rechercher un serveur DNS"
 
 #~ msgid "Terms of service"
 #~ msgstr "Conditions d'utilisation"
