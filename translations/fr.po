@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2024-08-06 15:41+0000\n"
+"PO-Revision-Date: 2024-08-06 23:31+0000\n"
 "Last-Translator: Maël Gangloff <contact@maelgangloff.fr>\n"
 "Language-Team: French <https://weblate.vinceh121.me/projects/domain-watchdog/"
 "domain-watchdog-dashboard/fr/>\n"
@@ -229,11 +229,11 @@ msgstr ""
 
 #: assets/components/tracking/ConnectorForm.tsx:104
 msgid "Organization sharing ID"
-msgstr ""
+msgstr "ID de partage d'organisation"
 
 #: assets/components/tracking/ConnectorForm.tsx:107
 msgid "It indicates the organization that will pay for the ordered product"
-msgstr ""
+msgstr "Il indique l'organisation qui paiera le produit commandé"
 
 #: assets/components/tracking/ConnectorForm.tsx:118
 msgid "API Terms of Service"
