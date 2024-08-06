@@ -10,7 +10,6 @@ use App\Service\RDAPService;
 use Psr\Log\LoggerInterface;
 use Random\Randomizer;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpKernel\Exception\TooManyRequestsHttpException;
 use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Component\Messenger\Exception\ExceptionInterface;
@@ -35,6 +34,7 @@ class DomainRefreshController extends AbstractController
      * @throws DecodingExceptionInterface
      * @throws ExceptionInterface
      * @throws \Exception
+     * @throws HttpExceptionInterface
      */
     public function __invoke(string $ldhName, KernelInterface $kernel): ?Domain
     {
@@ -72,11 +72,7 @@ class DomainRefreshController extends AbstractController
         }
 
         $updatedAt = null === $domain ? new \DateTimeImmutable('now') : $domain->getUpdatedAt();
-        try {
-            $domain = $this->RDAPService->registerDomain($idnDomain);
-        } catch (HttpExceptionInterface) {
-            throw new NotFoundHttpException('This domain name cannot be found in the WHOIS database');
-        }
+        $domain = $this->RDAPService->registerDomain($idnDomain);
 
         $randomizer = new Randomizer();
         $watchLists = $randomizer->shuffleArray($domain->getWatchLists()->toArray());

@@ -11,6 +11,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Serializer\SerializerInterface;
 
@@ -74,7 +75,7 @@ class ConnectorController extends AbstractController
                 'username' => $user->getUserIdentifier(),
             ]);
         } else {
-            throw new \Exception('Unknown provider');
+            throw new BadRequestHttpException('Unknown provider');
         }
 
         $this->logger->info('The new API connector requested by {username} has been successfully registered.', [

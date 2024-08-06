@@ -4,6 +4,7 @@ namespace App\Config\Connector;
 
 use App\Entity\Domain;
 use Ovh\Api;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 readonly class OvhConnector implements ConnectorInterface
 {
@@ -141,7 +142,7 @@ readonly class OvhConnector implements ConnectorInterface
             || true !== $ownerLegalAge
             || true !== $waiveRetractationPeriod
         ) {
-            throw new \Exception('Bad authData schema');
+            throw new BadRequestHttpException('Bad authData schema');
         }
 
         $conn = new Api(
@@ -174,7 +175,7 @@ readonly class OvhConnector implements ConnectorInterface
             }
 
             if (!$ok) {
-                throw new \Exception('The credentials provided do not have enough permissions to purchase a domain name.');
+                throw new BadRequestHttpException('The credentials provided do not have enough permissions to purchase a domain name.');
             }
         }
 
