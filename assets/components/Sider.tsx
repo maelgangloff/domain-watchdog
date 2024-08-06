@@ -13,8 +13,7 @@ import {
     LogoutOutlined,
     SearchOutlined,
     TeamOutlined,
-    UserOutlined,
-    FieldBinaryOutlined
+    UserOutlined
 } from "@ant-design/icons";
 import {Badge, Menu} from "antd";
 import React from "react";
@@ -53,12 +52,19 @@ export function Sider({isAuthenticated}: { isAuthenticated: boolean }) {
                     onClick: () => navigate('/info/tld')
                 },
                 {
-                    key: 'ip-finder',
-                    icon: <FieldBinaryOutlined />,
-                    label: t`LIPI IP Finder`,
-                    title: t`IP Finder`,
-                    disabled: false,
-                    onClick: () => navigate('/search/nameserver')
+                    key: 'entity-finder',
+                    icon: <TeamOutlined/>,
+                    label: t`Entity`,
+                    title: t`Entity Finder`,
+                    disabled: true,
+                    onClick: () => navigate('/search/entity')
+                },
+                {
+                    key: 'ns-finder',
+                    icon: <CloudServerOutlined/>,
+                    label: t`Nameserver`,
+                    title: t`Nameserver Finder`,
+                    disabled: true
                 }
             ]
         },
