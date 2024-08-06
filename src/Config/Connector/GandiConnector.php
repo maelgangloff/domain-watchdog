@@ -43,8 +43,10 @@ readonly class GandiConnector implements ConnectorInterface
         $ownerLegalAge = $authData['ownerLegalAge'];
         $waiveRetractationPeriod = $authData['waiveRetractationPeriod'];
 
-        if (false === $acceptConditions || false === $ownerLegalAge || false === $waiveRetractationPeriod) {
-            throw new \Exception('It is not possible to order a domain name if the legal conditions are not met');
+        if (true !== $acceptConditions
+            || true !== $ownerLegalAge
+            || true !== $waiveRetractationPeriod) {
+            throw new HttpException(451, 'The user has not given explicit consent');
         }
 
         $user = $this->client->request('GET', '/v5/organization/user-info', (new HttpOptions())

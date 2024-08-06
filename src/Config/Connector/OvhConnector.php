@@ -57,6 +57,12 @@ readonly class OvhConnector implements ConnectorInterface
         $ownerLegalAge = $authData['ownerLegalAge'];
         $waiveRetractationPeriod = $authData['waiveRetractationPeriod'];
 
+        if (true !== $acceptConditions
+            || true !== $ownerLegalAge
+            || true !== $waiveRetractationPeriod) {
+            throw new HttpException(451, 'The user has not given explicit consent');
+        }
+
         $conn = new Api(
             $authData['appKey'],
             $authData['appSecret'],
