@@ -2,6 +2,7 @@
 
 namespace App\MessageHandler;
 
+use App\Config\Connector\GandiConnector;
 use App\Config\Connector\OvhConnector;
 use App\Config\ConnectorProvider;
 use App\Config\TriggerAction;
@@ -22,6 +23,7 @@ use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 use Symfony\Component\Mime\Address;
 use Symfony\Component\Mime\Email;
+use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 #[AsMessageHandler]
 final readonly class ProcessDomainTriggerHandler
@@ -33,7 +35,8 @@ final readonly class ProcessDomainTriggerHandler
         private WatchListRepository $watchListRepository,
         private DomainRepository $domainRepository,
         private KernelInterface $kernel,
-        private LoggerInterface $logger
+        private LoggerInterface $logger,
+        private HttpClientInterface $client
     ) {
     }
 
@@ -57,15 +60,19 @@ final readonly class ProcessDomainTriggerHandler
                 'provider' => $connector->getProvider()->value,
             ]);
             try {
+                $isDebug = $this->kernel->isDebug();
+
                 if (ConnectorProvider::OVH === $connector->getProvider()) {
                     $ovh = new OvhConnector($connector->getAuthData());
-                    $isDebug = $this->kernel->isDebug();
-
                     $ovh->orderDomain($domain, $isDebug);
-                    $this->sendEmailDomainOrdered($domain, $connector, $watchList->getUser());
+                } elseif (ConnectorProvider::GANDI === $connector->getProvider()) {
+                    $gandi = new GandiConnector($connector->getAuthData(), $this->client);
+                    $gandi->orderDomain($domain, $isDebug);
                 } else {
                     throw new \Exception('Unknown provider');
                 }
+
+                $this->sendEmailDomainOrdered($domain, $connector, $watchList->getUser());
             } catch (\Throwable) {
                 $this->logger->warning('Unable to complete purchase. An error message is sent to user {username}.', [
                     'username' => $watchList->getUser()->getUserIdentifier(),

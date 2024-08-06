@@ -1,7 +1,8 @@
 import {request} from "./index";
 
 export enum ConnectorProvider {
-    OVH = 'ovh'
+    OVH = 'ovh',
+    GANDI = 'gandi'
 }
 
 export type Connector = {

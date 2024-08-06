@@ -38,8 +38,8 @@ readonly class OvhConnector implements ConnectorInterface
      *
      * @throws \Exception
      */
-    public function orderDomain(Domain $domain, bool $dryRun = false
-    ): void {
+    public function orderDomain(Domain $domain, bool $dryRun = false): void
+    {
         if (!$domain->getDeleted()) {
             throw new \Exception('The domain name still appears in the WHOIS database');
         }

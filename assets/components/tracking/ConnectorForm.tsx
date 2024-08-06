@@ -90,6 +90,29 @@ export function ConnectorForm({form, onCreate}: { form: FormInstance, onCreate: 
                 >
                     <Select options={ovhPricingMode} optionFilterProp="label"/>
                 </Form.Item>
+            </>
+        }
+        {
+            provider === ConnectorProvider.GANDI && <>
+                <Form.Item
+                    label={t`Personal Access Token (PAT)`}
+                    name={['authData', 'token']}
+                    rules={[{required: true, message: t`Required`}]}>
+                    <Input autoComplete='off'/>
+                </Form.Item>
+                <Form.Item
+                    label={t`Organization sharing ID`}
+                    name={['authData', 'sharingId']}
+                    help={<Typography.Text
+                        type='secondary'>{t`It indicates the organization that will pay for the ordered product`}</Typography.Text>}
+                    required={false}>
+                    <Input autoComplete='off' placeholder='xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx'/>
+                </Form.Item>
+            </>
+        }
+
+        {
+            provider !== undefined && <>
                 <Form.Item
                     valuePropName="checked"
                     label={t`API Terms of Service`}
@@ -123,7 +146,6 @@ export function ConnectorForm({form, onCreate}: { form: FormInstance, onCreate: 
                 </Form.Item>
             </>
         }
-
 
         <Form.Item style={{marginTop: 10}}>
             <Space>
