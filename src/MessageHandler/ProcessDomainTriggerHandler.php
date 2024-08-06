@@ -63,14 +63,14 @@ final readonly class ProcessDomainTriggerHandler
                 $isDebug = $this->kernel->isDebug();
 
                 if (ConnectorProvider::OVH === $connector->getProvider()) {
-                    $ovh = new OvhConnector($connector->getAuthData());
-                    $ovh->orderDomain($domain, $isDebug);
+                    $provider = new OvhConnector($connector->getAuthData());
                 } elseif (ConnectorProvider::GANDI === $connector->getProvider()) {
-                    $gandi = new GandiConnector($connector->getAuthData(), $this->client);
-                    $gandi->orderDomain($domain, $isDebug);
+                    $provider = new GandiConnector($connector->getAuthData(), $this->client);
                 } else {
                     throw new \Exception('Unknown provider');
                 }
+
+                $provider->orderDomain($domain, $isDebug);
 
                 $this->sendEmailDomainOrdered($domain, $connector, $watchList->getUser());
             } catch (\Throwable) {

@@ -118,6 +118,7 @@ export function ConnectorForm({form, onCreate}: { form: FormInstance, onCreate: 
                     label={t`API Terms of Service`}
                     name={['authData', 'acceptConditions']}
                     rules={[{required: true, message: t`Required`}]}
+                    style={{marginTop: '3em'}}
                 >
                     <Checkbox
                         required={true}>

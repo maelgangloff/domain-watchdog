@@ -82,7 +82,8 @@ readonly class GandiConnector implements ConnectorInterface
 
         $res = $this->client->request('POST', '/domain/domains', $httpOptions->toArray());
 
-        if (Response::HTTP_ACCEPTED !== $res->getStatusCode()) {
+        if ((!$dryRun && Response::HTTP_ACCEPTED !== $res->getStatusCode())
+            || ($dryRun && Response::HTTP_OK !== $res->getStatusCode())) {
             throw new \Exception($res->toArray()['message']);
         }
     }

@@ -25,8 +25,8 @@ msgstr ""
 #: assets/components/tracking/ConnectorForm.tsx:89
 #: assets/components/tracking/ConnectorForm.tsx:100
 #: assets/components/tracking/ConnectorForm.tsx:120
-#: assets/components/tracking/ConnectorForm.tsx:133
-#: assets/components/tracking/ConnectorForm.tsx:142
+#: assets/components/tracking/ConnectorForm.tsx:134
+#: assets/components/tracking/ConnectorForm.tsx:143
 #: assets/components/tracking/WatchlistForm.tsx:103
 msgid "Required"
 msgstr ""
@@ -186,12 +186,12 @@ msgid ""
 "that may be available soon."
 msgstr ""
 
-#: assets/components/tracking/ConnectorForm.tsx:153
+#: assets/components/tracking/ConnectorForm.tsx:154
 #: assets/components/tracking/WatchlistForm.tsx:186
 msgid "Create"
 msgstr ""
 
-#: assets/components/tracking/ConnectorForm.tsx:156
+#: assets/components/tracking/ConnectorForm.tsx:157
 #: assets/components/tracking/WatchlistForm.tsx:189
 msgid "Reset"
 msgstr ""
@@ -232,27 +232,27 @@ msgstr ""
 msgid "API Terms of Service"
 msgstr ""
 
-#: assets/components/tracking/ConnectorForm.tsx:125
+#: assets/components/tracking/ConnectorForm.tsx:126
 msgid ""
 "I certify that I have read and accepted the conditions of use of the "
 "Provider API, accessible from this hyperlink"
 msgstr ""
 
-#: assets/components/tracking/ConnectorForm.tsx:131
+#: assets/components/tracking/ConnectorForm.tsx:132
 msgid "Legal age"
 msgstr ""
 
-#: assets/components/tracking/ConnectorForm.tsx:136
+#: assets/components/tracking/ConnectorForm.tsx:137
 msgid ""
 "I certify on my honor that I am of the minimum age required to consent to "
 "these conditions"
 msgstr ""
 
-#: assets/components/tracking/ConnectorForm.tsx:140
+#: assets/components/tracking/ConnectorForm.tsx:141
 msgid "Withdrawal period"
 msgstr ""
 
-#: assets/components/tracking/ConnectorForm.tsx:145
+#: assets/components/tracking/ConnectorForm.tsx:146
 msgid ""
 "I expressly waive my right of withdrawal regarding the purchase of domain "
 "names via the Provider's API"
