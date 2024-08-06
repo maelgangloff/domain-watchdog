@@ -12,6 +12,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
@@ -75,7 +76,7 @@ class ConnectorController extends AbstractController
         } elseif (ConnectorProvider::GANDI === $provider) {
             $authData = GandiConnector::verifyAuthData($connector->getAuthData(), $client);
         } else {
-            throw new \Exception('Unknown provider');
+            throw new BadRequestHttpException('Unknown provider');
         }
 
         $connector->setAuthData($authData);

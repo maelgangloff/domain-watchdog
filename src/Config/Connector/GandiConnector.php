@@ -5,6 +5,7 @@ namespace App\Config\Connector;
 use App\Entity\Domain;
 use Symfony\Component\HttpClient\HttpOptions;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Contracts\HttpClient\Exception\DecodingExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
@@ -89,7 +90,6 @@ readonly class GandiConnector implements ConnectorInterface
     }
 
     /**
-     * @throws \Exception
      * @throws TransportExceptionInterface
      */
     public static function verifyAuthData(array $authData, HttpClientInterface $client): array
@@ -106,7 +106,7 @@ readonly class GandiConnector implements ConnectorInterface
             || true !== $ownerLegalAge
             || true !== $waiveRetractationPeriod
         ) {
-            throw new \Exception('Bad authData schema');
+            throw new BadRequestHttpException('Bad authData schema');
         }
 
         $response = $client->request('GET', '/v5/organization/user-info', (new HttpOptions())
@@ -117,7 +117,7 @@ readonly class GandiConnector implements ConnectorInterface
         );
 
         if (Response::HTTP_OK !== $response->getStatusCode()) {
-            throw new \Exception('The status of these credentials is not valid');
+            throw new BadRequestHttpException('The status of these credentials is not valid');
         }
 
         $authDataReturned = [
