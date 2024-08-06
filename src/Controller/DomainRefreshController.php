@@ -32,7 +32,6 @@ class DomainRefreshController extends AbstractController
 
     /**
      * @throws TransportExceptionInterface
-     * @throws HttpExceptionInterface
      * @throws DecodingExceptionInterface
      * @throws ExceptionInterface
      * @throws \Exception

@@ -258,7 +258,8 @@ readonly class RDAPService
                 $domain->addDomainEntity($domainEntity
                     ->setDomain($domain)
                     ->setEntity($entity)
-                    ->setRoles($roles));
+                    ->setRoles($roles))
+                    ->updateTimestamps();
 
                 $this->em->persist($domainEntity);
                 $this->em->flush();
