@@ -69,8 +69,23 @@ class WatchListController extends AbstractController
          * This policy guarantees the equal probability of obtaining a domain name if it is requested by several users.
          */
         if ($this->getParameter('limited_features')) {
+            if ($watchList->getDomains()->count() >= (int) $this->getParameter('limit_max_watchlist_domains')) {
+                $this->logger->notice('User {username} tried to create a Watchlist. However, the maximum number of domains has been reached for this Watchlist', [
+                    'username' => $user->getUserIdentifier(),
+                ]);
+                throw new AccessDeniedHttpException('You have exceeded the maximum number of domain names allowed in this Watchlist');
+            }
+
+            $userWatchLists = $user->getWatchLists();
+            if ($userWatchLists->count() >= (int) $this->getParameter('limit_max_watchlist')) {
+                $this->logger->notice('User {username} tried to create a Watchlist. However, the maximum number of Watchlists has been reached.', [
+                    'username' => $user->getUserIdentifier(),
+                ]);
+                throw new AccessDeniedHttpException('You have exceeded the maximum number of Watchlists allowed');
+            }
+
             /** @var Domain[] $trackedDomains */
-            $trackedDomains = $user->getWatchLists()->reduce(fn (array $acc, WatchList $watchList) => [...$acc, ...$watchList->getDomains()->toArray()], []);
+            $trackedDomains = $userWatchLists->reduce(fn (array $acc, WatchList $watchList) => [...$acc, ...$watchList->getDomains()->toArray()], []);
 
             /** @var Domain $domain */
             foreach ($watchList->getDomains()->getIterator() as $domain) {

@@ -7,8 +7,11 @@ parameters:
     mailer_sender_email: '%env(string:MAILER_SENDER_EMAIL)%'
     mailer_sender_name: '%env(string:MAILER_SENDER_NAME)'
     oauth_enabled: '%env(OAUTH_CLIENT_ID)%'
-    limited_features: '%env(bool:LIMITED_FEATURES)%'
     registration_enabled: '%env(bool:REGISTRATION_ENABLED)%'
+
+    limited_features: '%env(bool:LIMITED_FEATURES)%'
+    limit_max_watchlist: '%env(int:LIMIT_MAX_WATCHLIST)%'
+    limit_max_watchlist_domains: '%env(int:LIMIT_MAX_WATCHLIST_DOMAINS)%'
 
 services:
     # default configuration for services in *this* file
