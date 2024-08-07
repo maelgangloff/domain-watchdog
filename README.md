@@ -47,6 +47,16 @@ possible to predict in advance which user will win the domain name. The choice i
 > - [RFC 7483 : JSON Responses for the Registration Data Access Protocol (RDAP)](https://datatracker.ietf.org/doc/html/rfc7483)
 > - [RFC 7484 : Finding the Authoritative Registration Data (RDAP) Service](https://datatracker.ietf.org/doc/html/rfc7484)
 
+## Disclaimer
+
+> [!WARNING]
+> * Domain Watchdog is an opensource project distributed under *GNU Affero General Public License v3.0 or later* license
+> * In the internal opration, everything is done to perform the least possible RDAP requests: rate limit, intelligent
+    caching system, etc.
+> * Please note that this project is NOT affiliated IN ANY WAY with the API Providers used to order domain names.
+> * The project installers are responsible for the use of their own instance.
+> * In no event the owner of this project will not be held responsible for other instances over which he has no control.
+
 ## Licensing
 
 This source code of this project is licensed under *GNU Affero General Public License v3.0 or later*.
