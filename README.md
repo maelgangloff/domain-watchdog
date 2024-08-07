@@ -40,9 +40,9 @@ connector provider's API.
 Note: If the same domain name is present on several Watchlists, on the same principle as the raise condition, it is not
 possible to predict in advance which user will win the domain name. The choice is left to chance.
 
+## Useful documentation
 
 > [!NOTE]
-> ## Useful documentation
 > - [RFC 7482 : Registration Data Access Protocol (RDAP) Query Format](https://datatracker.ietf.org/doc/html/rfc7482)
 > - [RFC 7483 : JSON Responses for the Registration Data Access Protocol (RDAP)](https://datatracker.ietf.org/doc/html/rfc7483)
 > - [RFC 7484 : Finding the Authoritative Registration Data (RDAP) Service](https://datatracker.ietf.org/doc/html/rfc7484)
