@@ -25,6 +25,7 @@ use App\Repository\TldRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Exception\ORMException;
 use Psr\Log\LoggerInterface;
+use Symfony\Component\HttpClient\Exception\ClientException;
 use Symfony\Component\HttpFoundation\Exception\BadRequestException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface;
@@ -125,9 +126,10 @@ readonly class RDAPService
 
     /**
      * @throws TransportExceptionInterface
+     * @throws ServerExceptionInterface
+     * @throws RedirectionExceptionInterface
      * @throws DecodingExceptionInterface
-     * @throws HttpExceptionInterface
-     * @throws \Exception
+     * @throws ClientExceptionInterface
      */
     public function registerDomain(string $fqdn): Domain
     {
@@ -160,7 +162,7 @@ readonly class RDAPService
             $res = $this->client->request(
                 'GET', $rdapServerUrl.'domain/'.$idnDomain
             )->toArray();
-        } catch (HttpExceptionInterface $e) {
+        } catch (ClientException $e) {
             if (null !== $domain) {
                 $this->logger->notice('The domain name {idnDomain} has been deleted from the WHOIS database.', [
                     'idnDomain' => $idnDomain,

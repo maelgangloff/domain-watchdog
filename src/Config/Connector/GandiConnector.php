@@ -79,7 +79,7 @@ readonly class GandiConnector implements ConnectorInterface
 
         if ((!$dryRun && Response::HTTP_ACCEPTED !== $res->getStatusCode())
             || ($dryRun && Response::HTTP_OK !== $res->getStatusCode())) {
-            throw new \Exception($res->toArray()['message']);
+            throw new \HttpException($res->toArray()['message']);
         }
     }
 
