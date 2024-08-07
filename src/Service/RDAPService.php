@@ -116,6 +116,7 @@ readonly class RDAPService
      * @throws HttpExceptionInterface
      * @throws TransportExceptionInterface
      * @throws DecodingExceptionInterface
+     * @throws \Throwable
      */
     public function registerDomains(array $domains): void
     {
@@ -130,6 +131,7 @@ readonly class RDAPService
      * @throws RedirectionExceptionInterface
      * @throws DecodingExceptionInterface
      * @throws ClientExceptionInterface
+     * @throws \Throwable
      */
     public function registerDomain(string $fqdn): Domain
     {
@@ -162,7 +164,7 @@ readonly class RDAPService
             $res = $this->client->request(
                 'GET', $rdapServerUrl.'domain/'.$idnDomain
             )->toArray();
-        } catch (ClientException $e) {
+        } catch (\Throwable $e) {
             if (null !== $domain) {
                 $this->logger->notice('The domain name {idnDomain} has been deleted from the WHOIS database.', [
                     'idnDomain' => $idnDomain,
@@ -173,6 +175,11 @@ readonly class RDAPService
                 $this->em->persist($domain);
                 $this->em->flush();
             }
+
+            if ($e instanceof ClientException && 404 === $e->getResponse()->getStatusCode()) {
+                throw new NotFoundHttpException('The domain name is not present in the WHOIS database.');
+            }
+
             throw $e;
         }
 
