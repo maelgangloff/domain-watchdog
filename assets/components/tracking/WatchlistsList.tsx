@@ -1,7 +1,7 @@
-import {Card, Divider, Popconfirm, Table, Tag, theme, Typography} from "antd";
+import {Card, Divider, Popconfirm, Space, Table, Tag, theme, Typography} from "antd";
 import {t} from "ttag";
 import {deleteWatchlist} from "../../utils/api";
-import {DeleteFilled, DisconnectOutlined, LinkOutlined} from "@ant-design/icons";
+import {CalendarFilled, DeleteFilled, DisconnectOutlined, LinkOutlined} from "@ant-design/icons";
 import React from "react";
 import useBreakpoint from "../../hooks/useBreakpoint";
 import {actionToColor, domainEvent} from "../search/EventTimeline";
@@ -45,15 +45,20 @@ export function WatchlistsList({watchlists, onDelete}: { watchlists: Watchlist[]
                     }
                     size='small'
                     style={{width: '100%'}}
-                    extra={<Popconfirm
-                        title={t`Delete the Watchlist`}
-                        description={t`Are you sure to delete this Watchlist?`}
-                        onConfirm={() => deleteWatchlist(watchlist.token).then(onDelete)}
-                        okText={t`Yes`}
-                        cancelText={t`No`}
-                        okButtonProps={{danger: true}}>
-                        <DeleteFilled style={{color: token.colorError}}/>
-                    </Popconfirm>}
+                    extra={<Space size='middle'>
+                        <Typography.Link href={`/api/watchlists/${watchlist.token}/calendar`}>
+                            <CalendarFilled title={t`Export events to iCalendar format`}/>
+                        </Typography.Link>
+                        <Popconfirm
+                            title={t`Delete the Watchlist`}
+                            description={t`Are you sure to delete this Watchlist?`}
+                            onConfirm={() => deleteWatchlist(watchlist.token).then(onDelete)}
+                            okText={t`Yes`}
+                            cancelText={t`No`}
+                            okButtonProps={{danger: true}}>
+                            <DeleteFilled style={{color: token.colorError}} title={t`Delete the Watchlist`}/>
+                        </Popconfirm>
+                    </Space>}
                 >
                     <Card.Meta description={watchlist.token} style={{marginBottom: '1em'}}/>
                     <Table

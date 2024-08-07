@@ -266,21 +266,26 @@ msgstr ""
 msgid "Watchlist"
 msgstr ""
 
-#: assets/components/tracking/WatchlistsList.tsx:49
+#: assets/components/tracking/WatchlistsList.tsx:50
+msgid "Export events to iCalendar format"
+msgstr ""
+
+#: assets/components/tracking/WatchlistsList.tsx:53
+#: assets/components/tracking/WatchlistsList.tsx:59
 msgid "Delete the Watchlist"
 msgstr ""
 
-#: assets/components/tracking/WatchlistsList.tsx:50
+#: assets/components/tracking/WatchlistsList.tsx:54
 msgid "Are you sure to delete this Watchlist?"
 msgstr ""
 
 #: assets/components/tracking/ConnectorsList.tsx:25
-#: assets/components/tracking/WatchlistsList.tsx:52
+#: assets/components/tracking/WatchlistsList.tsx:56
 msgid "Yes"
 msgstr ""
 
 #: assets/components/tracking/ConnectorsList.tsx:26
-#: assets/components/tracking/WatchlistsList.tsx:53
+#: assets/components/tracking/WatchlistsList.tsx:57
 msgid "No"
 msgstr ""
 
