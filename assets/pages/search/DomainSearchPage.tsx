@@ -6,6 +6,7 @@ import {t} from 'ttag'
 import {DomainSearchBar, FieldType} from "../../components/search/DomainSearchBar";
 import {EventTimeline} from "../../components/search/EventTimeline";
 import {EntitiesList} from "../../components/search/EntitiesList";
+import {showErrorAPI} from "../../utils";
 
 const {Text} = Typography;
 
@@ -20,14 +21,7 @@ export default function DomainSearchPage() {
             messageApi.success(t`Found !`)
         }).catch((e: AxiosError) => {
             setDomain(undefined)
-
-            if (e.response?.status === 429) {
-                const duration = e.response.headers['retry-after']
-                messageApi.error(t`Please retry after ${duration} seconds`)
-                return;
-            }
-            const data = e?.response?.data as { detail: string }
-            messageApi.error(data.detail !== '' ? data.detail : t`An error occurred`)
+            showErrorAPI(e, messageApi)
         })
     }
 

@@ -1,8 +1,9 @@
-import {Alert, Button, Form, Input} from "antd";
+import {Button, Form, Input, message} from "antd";
 import {t} from "ttag";
 import React, {useState} from "react";
 import {register} from "../utils/api";
 import {useNavigate} from "react-router-dom";
+import {showErrorAPI} from "../utils";
 
 
 type FieldType = {
@@ -14,35 +15,17 @@ export function RegisterForm() {
 
     const [error, setError] = useState<string>()
     const navigate = useNavigate()
+    const [messageApi, contextHolder] = message.useMessage()
 
     const onFinish = (data: FieldType) => {
         register(data.username, data.password).then(() => {
             navigate('/home')
         }).catch((e) => {
-
-            if (e.response?.status === 429) {
-                const duration = e.response.headers['retry-after']
-                setError(t`Please retry after ${duration} seconds`)
-                return;
-            }
-
-            if (e.response.data.message !== undefined) {
-                setError(e.response.data.message)
-            } else {
-                setError(e.response.data['hydra:description'])
-            }
+            showErrorAPI(e, messageApi)
         })
     }
     return <>
-        {error &&
-            <Alert
-                type='error'
-                message={t`Error`}
-                banner={true}
-                role='role'
-                description={error}
-                style={{marginBottom: '1em'}}
-            />}
+        {contextHolder}
         <Form
             name="basic"
             labelCol={{span: 8}}

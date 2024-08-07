@@ -1,9 +1,10 @@
-import {Alert, Button, Form, Input, Space} from "antd";
+import {Button, Form, Input, message, Space} from "antd";
 import {t} from "ttag";
-import React, {useContext, useEffect, useState} from "react";
+import React, {useContext, useEffect} from "react";
 import {getUser, login} from "../utils/api";
 import {AuthenticatedContext} from "../pages/LoginPage";
 import {useNavigate} from "react-router-dom";
+import {showErrorAPI} from "../utils";
 
 
 type FieldType = {
@@ -13,8 +14,8 @@ type FieldType = {
 
 export function LoginForm({ssoLogin}: { ssoLogin?: boolean }) {
 
-    const [error, setError] = useState<string>()
     const navigate = useNavigate()
+    const [messageApi, contextHolder] = message.useMessage()
     const {setIsAuthenticated} = useContext(AuthenticatedContext)
 
 
@@ -33,23 +34,11 @@ export function LoginForm({ssoLogin}: { ssoLogin?: boolean }) {
             navigate('/home')
         }).catch((e) => {
             setIsAuthenticated(false)
-            if (e.response.data.message !== undefined) {
-                setError(e.response.data.message)
-            } else {
-                setError(e.response.data['hydra:description'])
-            }
+            showErrorAPI(e, messageApi)
         })
     }
     return <>
-        {error &&
-            <Alert
-                type='error'
-                message={t`Error`}
-                banner={true}
-                role='role'
-                description={error}
-                style={{marginBottom: '1em'}}
-            />}
+        {contextHolder}
         <Form
             name="basic"
             labelCol={{span: 8}}

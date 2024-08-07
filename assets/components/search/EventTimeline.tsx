@@ -39,7 +39,6 @@ export function EventTimeline({domain}: { domain: Domain }) {
     const sm = useBreakpoint('sm')
 
 
-
     const locale = navigator.language.split('-')[0]
     const domainEventTranslated = domainEvent()
 

@@ -3,20 +3,15 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Plural-Forms: nplurals=2; plural=(n!=1);\n"
 
-#: assets/components/LoginForm.tsx:47
-#: assets/components/RegisterForm.tsx:40
-msgid "Error"
-msgstr ""
-
-#: assets/components/LoginForm.tsx:62
-#: assets/components/RegisterForm.tsx:55
+#: assets/components/LoginForm.tsx:51
+#: assets/components/RegisterForm.tsx:38
 msgid "Email address"
 msgstr ""
 
-#: assets/components/LoginForm.tsx:64
-#: assets/components/LoginForm.tsx:72
-#: assets/components/RegisterForm.tsx:57
-#: assets/components/RegisterForm.tsx:65
+#: assets/components/LoginForm.tsx:53
+#: assets/components/LoginForm.tsx:61
+#: assets/components/RegisterForm.tsx:40
+#: assets/components/RegisterForm.tsx:48
 #: assets/components/search/DomainSearchBar.tsx:23
 #: assets/components/tracking/ConnectorForm.tsx:40
 #: assets/components/tracking/ConnectorForm.tsx:66
@@ -31,16 +26,16 @@ msgstr ""
 msgid "Required"
 msgstr ""
 
-#: assets/components/LoginForm.tsx:70
-#: assets/components/RegisterForm.tsx:63
+#: assets/components/LoginForm.tsx:59
+#: assets/components/RegisterForm.tsx:46
 msgid "Password"
 msgstr ""
 
-#: assets/components/LoginForm.tsx:80
+#: assets/components/LoginForm.tsx:69
 msgid "Submit"
 msgstr ""
 
-#: assets/components/LoginForm.tsx:85
+#: assets/components/LoginForm.tsx:74
 msgid "Log in with SSO"
 msgstr ""
 
@@ -374,47 +369,32 @@ msgstr ""
 msgid "Log in"
 msgstr ""
 
-#: assets/components/RegisterForm.tsx:25
-#: assets/pages/search/DomainSearchPage.tsx:26
-#, javascript-format
-msgid "Please retry after ${ duration } seconds"
-msgstr ""
-
-#: assets/components/RegisterForm.tsx:72
+#: assets/components/RegisterForm.tsx:55
 #: assets/pages/LoginPage.tsx:30
 msgid "Register"
 msgstr ""
 
-#: assets/pages/search/DomainSearchPage.tsx:20
+#: assets/pages/search/DomainSearchPage.tsx:21
 msgid "Found !"
 msgstr ""
 
-#: assets/pages/search/DomainSearchPage.tsx:30
-#: assets/pages/tracking/ConnectorsPage.tsx:21
-#: assets/pages/tracking/ConnectorsPage.tsx:29
-#: assets/pages/tracking/WatchlistPage.tsx:49
-#: assets/pages/tracking/WatchlistPage.tsx:57
-#: assets/pages/tracking/WatchlistPage.tsx:67
-msgid "An error occurred"
-msgstr ""
-
-#: assets/pages/search/DomainSearchPage.tsx:35
+#: assets/pages/search/DomainSearchPage.tsx:29
 msgid "Domain finder"
 msgstr ""
 
-#: assets/pages/search/DomainSearchPage.tsx:56
+#: assets/pages/search/DomainSearchPage.tsx:50
 msgid "EPP Status Codes"
 msgstr ""
 
-#: assets/pages/search/DomainSearchPage.tsx:66
+#: assets/pages/search/DomainSearchPage.tsx:60
 msgid "Timeline"
 msgstr ""
 
-#: assets/pages/search/DomainSearchPage.tsx:71
+#: assets/pages/search/DomainSearchPage.tsx:65
 msgid "Entities"
 msgstr ""
 
-#: assets/pages/search/DomainSearchPage.tsx:79
+#: assets/pages/search/DomainSearchPage.tsx:73
 msgid ""
 "Although the domain exists in my database, it has been deleted from the "
 "WHOIS by its registrar."
@@ -497,19 +477,19 @@ msgstr ""
 msgid "Roles"
 msgstr ""
 
-#: assets/pages/tracking/ConnectorsPage.tsx:18
+#: assets/pages/tracking/ConnectorsPage.tsx:19
 msgid "Connector created !"
 msgstr ""
 
-#: assets/pages/tracking/ConnectorsPage.tsx:39
+#: assets/pages/tracking/ConnectorsPage.tsx:38
 msgid "Create a Connector"
 msgstr ""
 
-#: assets/pages/tracking/WatchlistPage.tsx:46
+#: assets/pages/tracking/WatchlistPage.tsx:47
 msgid "Watchlist created !"
 msgstr ""
 
-#: assets/pages/tracking/WatchlistPage.tsx:72
+#: assets/pages/tracking/WatchlistPage.tsx:70
 msgid "Create a Watchlist"
 msgstr ""
 
@@ -561,6 +541,16 @@ msgstr ""
 msgid ""
 "The domain is free but is a premium. Its price varies from one domain to "
 "another"
+msgstr ""
+
+#: assets/utils/index.ts:19
+#, javascript-format
+msgid "Please retry after ${ duration } seconds"
+msgstr ""
+
+#: assets/utils/index.ts:23
+#: assets/utils/index.ts:26
+msgid "An error occurred"
 msgstr ""
 
 #: assets/App.tsx:101

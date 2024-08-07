@@ -5,6 +5,7 @@ import {Connector, getConnectors, postConnector} from "../../utils/api/connector
 import {ConnectorForm} from "../../components/tracking/ConnectorForm";
 import {AxiosError} from "axios";
 import {ConnectorElement, ConnectorsList} from "../../components/tracking/ConnectorsList";
+import {showErrorAPI} from "../../utils";
 
 export default function ConnectorsPage() {
     const [form] = Form.useForm()
@@ -17,17 +18,15 @@ export default function ConnectorsPage() {
             refreshConnectors()
             messageApi.success(t`Connector created !`)
         }).catch((e: AxiosError) => {
-            const data = e?.response?.data as { detail: string }
-            messageApi.error(data.detail ?? t`An error occurred`)
+            showErrorAPI(e, messageApi)
         })
     }
 
     const refreshConnectors = () => getConnectors().then(c => {
         setConnectors(c['hydra:member'])
     }).catch((e: AxiosError) => {
-        const data = e?.response?.data as { detail: string }
-        messageApi.error(data.detail ?? t`An error occurred`)
         setConnectors(undefined)
+        showErrorAPI(e, messageApi)
     })
 
     useEffect(() => {

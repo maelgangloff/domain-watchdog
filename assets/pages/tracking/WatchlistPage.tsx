@@ -6,6 +6,7 @@ import {t} from 'ttag'
 import {WatchlistForm} from "../../components/tracking/WatchlistForm";
 import {WatchlistsList} from "../../components/tracking/WatchlistsList";
 import {Connector, getConnectors} from "../../utils/api/connectors";
+import {showErrorAPI} from "../../utils";
 
 
 export type Watchlist = {
@@ -45,17 +46,15 @@ export default function WatchlistPage() {
             refreshWatchlists()
             messageApi.success(t`Watchlist created !`)
         }).catch((e: AxiosError) => {
-            const data = e?.response?.data as { detail: string }
-            messageApi.error(data?.detail ?? t`An error occurred`)
+            showErrorAPI(e, messageApi)
         })
     }
 
     const refreshWatchlists = () => getWatchlists().then(w => {
         setWatchlists(w['hydra:member'])
     }).catch((e: AxiosError) => {
-        const data = e?.response?.data as { detail: string }
-        messageApi.error(data?.detail ?? t`An error occurred`)
         setWatchlists(undefined)
+        showErrorAPI(e, messageApi)
     })
 
     useEffect(() => {
@@ -63,8 +62,7 @@ export default function WatchlistPage() {
         getConnectors()
             .then(c => setConnectors(c['hydra:member']))
             .catch((e: AxiosError) => {
-                const data = e?.response?.data as { detail: string }
-                messageApi.error(data?.detail ?? t`An error occurred`)
+                showErrorAPI(e, messageApi)
             })
     }, [])
 
