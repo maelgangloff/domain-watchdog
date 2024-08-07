@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2024-08-06 23:33+0000\n"
+"PO-Revision-Date: 2024-08-07 13:58+0000\n"
 "Last-Translator: Maël Gangloff <contact@maelgangloff.fr>\n"
 "Language-Team: French <https://weblate.vinceh121.me/projects/domain-watchdog/"
 "domain-watchdog-dashboard/fr/>\n"
@@ -277,7 +277,7 @@ msgstr "Watchlist"
 
 #: assets/components/tracking/WatchlistsList.tsx:50
 msgid "Export events to iCalendar format"
-msgstr ""
+msgstr "Exporter les événements au format iCalendar"
 
 #: assets/components/tracking/WatchlistsList.tsx:53
 #: assets/components/tracking/WatchlistsList.tsx:59
