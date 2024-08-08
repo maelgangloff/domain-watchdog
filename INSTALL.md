@@ -45,6 +45,7 @@ git clone https://github.com/maelgangloff/domain-watchdog.git
     ```shell
     symfony server:start
     ```
+6. Don't forget to set up workers to process the [message queue](https://symfony.com/doc/current/messenger.html)
 
 #### Frontend
 
@@ -60,6 +61,15 @@ git clone https://github.com/maelgangloff/domain-watchdog.git
     ```shell
     yarn build
     ```
+4. Add and modify the following files as you wish:
+   ~~~
+   public/contents/home.md
+   public/contents/privacy.md
+   public/contents/tos.md
+   public/contents/faq.md
+   public/images/icons-512.png
+   public/favicon.ico
+   ~~~
 
 ## Update
 
