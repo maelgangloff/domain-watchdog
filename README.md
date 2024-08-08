@@ -40,7 +40,7 @@ The table below lists the supported API connector providers:
 |:---------:|---------------------------------------------------------------|:---------:|
 |    OVH    | https://api.ovh.com                                           |  **Yes**  |
 |   GANDI   | https://api.gandi.net/docs/domains/                           |  **Yes**  |
-| NAMECHEAP | https://www.namecheap.com/support/api/methods/domains/create/ |  **No**   |
+| NAMECHEAP | https://www.namecheap.com/support/api/methods/domains/create/ |           |
 
 ### Watchlist
 
