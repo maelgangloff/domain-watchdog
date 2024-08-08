@@ -123,7 +123,7 @@ export function ConnectorForm({form, onCreate}: { form: FormInstance, onCreate: 
                     <Checkbox
                         required={true}>
                         <Typography.Link target='_blank' href={tosHyperlink(provider)}>
-                            {t`I certify that I have read and accepted the conditions of use of the Provider API, accessible from this hyperlink`}
+                            {t`I have read and accepted the conditions of use of the Provider API, accessible from this hyperlink`}
                         </Typography.Link>
                     </Checkbox>
                 </Form.Item>
@@ -134,7 +134,7 @@ export function ConnectorForm({form, onCreate}: { form: FormInstance, onCreate: 
                     rules={[{required: true, message: t`Required`}]}
                 >
                     <Checkbox
-                        required={true}>{t`I certify on my honor that I am of the minimum age required to consent to these conditions`}</Checkbox>
+                        required={true}>{t`I am of the minimum age required to consent to these conditions`}</Checkbox>
                 </Form.Item>
                 <Form.Item
                     valuePropName="checked"
@@ -143,7 +143,7 @@ export function ConnectorForm({form, onCreate}: { form: FormInstance, onCreate: 
                     rules={[{required: true, message: t`Required`}]}
                 >
                     <Checkbox
-                        required={true}>{t`I expressly waive my right of withdrawal regarding the purchase of domain names via the Provider's API`}</Checkbox>
+                        required={true}>{t`I waive my right of withdrawal regarding the purchase of domain names via the Provider's API`}</Checkbox>
                 </Form.Item>
             </>
         }

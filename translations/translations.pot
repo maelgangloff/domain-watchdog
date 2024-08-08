@@ -229,8 +229,8 @@ msgstr ""
 
 #: assets/components/tracking/ConnectorForm.tsx:126
 msgid ""
-"I certify that I have read and accepted the conditions of use of the "
-"Provider API, accessible from this hyperlink"
+"I have read and accepted the conditions of use of the Provider API, "
+"accessible from this hyperlink"
 msgstr ""
 
 #: assets/components/tracking/ConnectorForm.tsx:132
@@ -238,9 +238,7 @@ msgid "Legal age"
 msgstr ""
 
 #: assets/components/tracking/ConnectorForm.tsx:137
-msgid ""
-"I certify on my honor that I am of the minimum age required to consent to "
-"these conditions"
+msgid "I am of the minimum age required to consent to these conditions"
 msgstr ""
 
 #: assets/components/tracking/ConnectorForm.tsx:141
@@ -249,8 +247,8 @@ msgstr ""
 
 #: assets/components/tracking/ConnectorForm.tsx:146
 msgid ""
-"I expressly waive my right of withdrawal regarding the purchase of domain "
-"names via the Provider's API"
+"I waive my right of withdrawal regarding the purchase of domain names via "
+"the Provider's API"
 msgstr ""
 
 #: assets/components/tracking/WatchlistsList.tsx:40
