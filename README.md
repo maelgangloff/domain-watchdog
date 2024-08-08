@@ -1,13 +1,11 @@
 # Domain Watchdog
 
-Domain Watchdog is a standalone web application that collects open access information about domain names, helping users
-track the history and changes associated with domain names.
+Domain Watchdog is a standalone application that collects RDAP open access information about domain names, to track their history and purchase them.
 
 ## Why use it?
 
 - **Historical Tracking**: Know the history of a domain name, from its inception to its release into the public domain.
 - **Detailed Monitoring**: Follow the evolution of a domain name and the entities that manage it in detail.
-- **Reverse Directory**: Discover domain names associated with an entity registered with a registrar.
 - **Auto-purchase Domain**: You want the domain name of your dreams, but it is already taken? Domain Watchdog detects
   the deletion of the domain name on WHOIS and can trigger the purchase of the domain name via a provider's API
 
@@ -28,13 +26,26 @@ registrars will no longer be required to support WHOIS from 2025 (*WHOIS Sunset 
 Domain Watchdog uses the RDAP protocol, which will soon be the new standard for retrieving information concerning domain
 names. The data is organized in a SQL database to minimize space by ensuring an entity is not repeated.
 
+### Connector Provider
+
+A connector is a way to order a domain name. It is important to mention that this project does not act as a payment intermediary.
+Indeed, the user's credentials are directly used to enable the purchase via the provider's API. To this end, the user gives his consent to define the legal framework in which the use of his account with the provider's API will be made.
+
+The table below lists the supported API connector providers:
+
+| Provider     | Documentation                                                                                        | Supported |
+|:------------:|------------------------------------------------------------------------------------------------------|:---------:|
+| OVH          | https://api.ovh.com                                                                                  | **Yes**   |
+| GANDI        | https://api.gandi.net/docs/domains/                                                                  | **Yes**   |
+| NAMECHEAP    | https://www.namecheap.com/support/api/methods/domains/create/                                        | **No**    |
+
 ### Watchlist
 
-A watchlist is a list of domain names, triggers and possibly an API connector from a provider.
+A watchlist is a list of domain names, triggers and possibly an API connector.
 They allow you to follow the life of the listed domain names and send you a notification when a change has been
 detected.
 
-If a domain has expired and a connector is listed on the Watchlist, then Domain Watchdog will try to order it via the
+If a domain has expired and a connector is linked to the Watchlist, then Domain Watchdog will try to order it via the
 connector provider's API.
 
 Note: If the same domain name is present on several Watchlists, on the same principle as the raise condition, it is not
