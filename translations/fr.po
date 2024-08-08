@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2024-08-07 13:58+0000\n"
+"PO-Revision-Date: 2024-08-08 17:57+0000\n"
 "Last-Translator: Maël Gangloff <contact@maelgangloff.fr>\n"
 "Language-Team: French <https://weblate.vinceh121.me/projects/domain-watchdog/"
 "domain-watchdog-dashboard/fr/>\n"
@@ -9,7 +9,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 5.6\n"
+"X-Generator: Weblate 5.6.2\n"
 
 #: assets/components/LoginForm.tsx:51 assets/components/RegisterForm.tsx:38
 msgid "Email address"
@@ -236,40 +236,27 @@ msgid "API Terms of Service"
 msgstr "Conditions d'utilisation de l'API"
 
 #: assets/components/tracking/ConnectorForm.tsx:126
-#, fuzzy
-#| msgid ""
-#| "I certify that I have read and accepted the conditions of use of the "
-#| "Provider API, accessible from this hyperlink"
 msgid ""
 "I have read and accepted the conditions of use of the Provider API, "
 "accessible from this hyperlink"
 msgstr ""
-"Je certifie avoir lu et accepté les conditions d'utilisation de l'API du "
-"Fournisseur, accessibles à partir de ce lien hypertexte"
+"J'ai lu et j'accepte les conditions d'utilisation de l'API du Fournisseur, "
+"accessibles à partir de ce lien hypertexte"
 
 #: assets/components/tracking/ConnectorForm.tsx:132
 msgid "Legal age"
 msgstr "Âge minimum légal"
 
 #: assets/components/tracking/ConnectorForm.tsx:137
-#, fuzzy
-#| msgid ""
-#| "I certify on my honor that I am of the minimum age required to consent to "
-#| "these conditions"
 msgid "I am of the minimum age required to consent to these conditions"
 msgstr ""
-"Je certifie sur l'honneur que j'ai l'âge minimum requis pour consentir à ces "
-"conditions"
+"Je certifie que j'ai l'âge minimum requis pour consentir à ces conditions"
 
 #: assets/components/tracking/ConnectorForm.tsx:141
 msgid "Withdrawal period"
 msgstr "Délai de rétractation"
 
 #: assets/components/tracking/ConnectorForm.tsx:146
-#, fuzzy
-#| msgid ""
-#| "I expressly waive my right of withdrawal regarding the purchase of domain "
-#| "names via the Provider's API"
 msgid ""
 "I waive my right of withdrawal regarding the purchase of domain names via "
 "the Provider's API"
