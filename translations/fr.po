@@ -236,9 +236,13 @@ msgid "API Terms of Service"
 msgstr "Conditions d'utilisation de l'API"
 
 #: assets/components/tracking/ConnectorForm.tsx:126
+#, fuzzy
+#| msgid ""
+#| "I certify that I have read and accepted the conditions of use of the "
+#| "Provider API, accessible from this hyperlink"
 msgid ""
-"I certify that I have read and accepted the conditions of use of the "
-"Provider API, accessible from this hyperlink"
+"I have read and accepted the conditions of use of the Provider API, "
+"accessible from this hyperlink"
 msgstr ""
 "Je certifie avoir lu et accepté les conditions d'utilisation de l'API du "
 "Fournisseur, accessibles à partir de ce lien hypertexte"
@@ -248,9 +252,11 @@ msgid "Legal age"
 msgstr "Âge minimum légal"
 
 #: assets/components/tracking/ConnectorForm.tsx:137
-msgid ""
-"I certify on my honor that I am of the minimum age required to consent to "
-"these conditions"
+#, fuzzy
+#| msgid ""
+#| "I certify on my honor that I am of the minimum age required to consent to "
+#| "these conditions"
+msgid "I am of the minimum age required to consent to these conditions"
 msgstr ""
 "Je certifie sur l'honneur que j'ai l'âge minimum requis pour consentir à ces "
 "conditions"
@@ -260,9 +266,13 @@ msgid "Withdrawal period"
 msgstr "Délai de rétractation"
 
 #: assets/components/tracking/ConnectorForm.tsx:146
+#, fuzzy
+#| msgid ""
+#| "I expressly waive my right of withdrawal regarding the purchase of domain "
+#| "names via the Provider's API"
 msgid ""
-"I expressly waive my right of withdrawal regarding the purchase of domain "
-"names via the Provider's API"
+"I waive my right of withdrawal regarding the purchase of domain names via "
+"the Provider's API"
 msgstr ""
 "Je renonce expressément à mon droit de rétractation concernant l'achat de "
 "noms de domaine via l'API du Fournisseur"
