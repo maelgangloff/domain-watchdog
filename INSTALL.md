@@ -68,6 +68,7 @@ git clone https://github.com/maelgangloff/domain-watchdog.git
    public/contents/tos.md
    public/contents/faq.md
    public/images/icons-512.png
+   public/images/banner.png
    public/favicon.ico
    ~~~
 
