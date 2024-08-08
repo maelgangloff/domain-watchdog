@@ -253,34 +253,34 @@ msgid ""
 "names via the Provider's API"
 msgstr ""
 
-#: assets/components/tracking/WatchlistsList.tsx:39
+#: assets/components/tracking/WatchlistsList.tsx:40
 msgid "This Watchlist is not linked to a Connector."
 msgstr ""
 
-#: assets/components/tracking/WatchlistsList.tsx:42
+#: assets/components/tracking/WatchlistsList.tsx:43
 msgid "Watchlist"
 msgstr ""
 
-#: assets/components/tracking/WatchlistsList.tsx:50
+#: assets/components/tracking/WatchlistsList.tsx:51
 msgid "Export events to iCalendar format"
 msgstr ""
 
-#: assets/components/tracking/WatchlistsList.tsx:53
-#: assets/components/tracking/WatchlistsList.tsx:59
+#: assets/components/tracking/WatchlistsList.tsx:54
+#: assets/components/tracking/WatchlistsList.tsx:60
 msgid "Delete the Watchlist"
 msgstr ""
 
-#: assets/components/tracking/WatchlistsList.tsx:54
+#: assets/components/tracking/WatchlistsList.tsx:55
 msgid "Are you sure to delete this Watchlist?"
 msgstr ""
 
 #: assets/components/tracking/ConnectorsList.tsx:25
-#: assets/components/tracking/WatchlistsList.tsx:56
+#: assets/components/tracking/WatchlistsList.tsx:57
 msgid "Yes"
 msgstr ""
 
 #: assets/components/tracking/ConnectorsList.tsx:26
-#: assets/components/tracking/WatchlistsList.tsx:57
+#: assets/components/tracking/WatchlistsList.tsx:58
 msgid "No"
 msgstr ""
 
