@@ -1,6 +1,7 @@
 # Domain Watchdog
 
-Domain Watchdog is a standalone application that collects RDAP open access information about domain names, to track their history and purchase them.
+Domain Watchdog is a standalone application that collects RDAP open access information about domain names, to track
+their history and purchase them.
 
 ## Why use it?
 
@@ -28,16 +29,18 @@ names. The data is organized in a SQL database to minimize space by ensuring an 
 
 ### Connector Provider
 
-A connector is a way to order a domain name. It is important to mention that this project does not act as a payment intermediary.
-Indeed, the user's credentials are directly used to enable the purchase via the provider's API. To this end, the user gives his consent to define the legal framework in which the use of his account with the provider's API will be made.
+A connector is a way to order a domain name. It is important to mention that this project does not act as a payment
+intermediary.
+Indeed, the user's credentials are directly used to enable the purchase via the provider's API. To this end, the user
+gives his consent to define the legal framework in which the use of his account with the provider's API will be made.
 
 The table below lists the supported API connector providers:
 
-| Provider     | Documentation                                                                                        | Supported |
-|:------------:|------------------------------------------------------------------------------------------------------|:---------:|
-| OVH          | https://api.ovh.com                                                                                  | **Yes**   |
-| GANDI        | https://api.gandi.net/docs/domains/                                                                  | **Yes**   |
-| NAMECHEAP    | https://www.namecheap.com/support/api/methods/domains/create/                                        | **No**    |
+| Provider  | Documentation                                                 | Supported |
+|:---------:|---------------------------------------------------------------|:---------:|
+|    OVH    | https://api.ovh.com                                           |  **Yes**  |
+|   GANDI   | https://api.gandi.net/docs/domains/                           |  **Yes**  |
+| NAMECHEAP | https://www.namecheap.com/support/api/methods/domains/create/ |  **No**   |
 
 ### Watchlist
 
