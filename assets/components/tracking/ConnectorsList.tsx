@@ -15,7 +15,7 @@ export function ConnectorsList({connectors, onDelete}: { connectors: ConnectorEl
     return <>
         {connectors.map(connector =>
             <>
-                <Card title={<Typography.Text
+                <Card hoverable title={<Typography.Text
                     title={new Date(connector.createdAt).toLocaleString()}>{t`Connector ${connector.provider}`}</Typography.Text>}
                       size='small'
                       style={{width: '100%'}}

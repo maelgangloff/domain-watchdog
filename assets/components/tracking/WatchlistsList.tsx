@@ -31,6 +31,7 @@ export function WatchlistsList({watchlists, onDelete}: { watchlists: Watchlist[]
         {watchlists.map(watchlist =>
             <>
                 <Card
+                    hoverable
                     title={<>
                         {
                             watchlist.connector ?
