@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2024-08-09 22:30+0000\n"
+"PO-Revision-Date: 2024-08-09 22:58+0000\n"
 "Last-Translator: Maël Gangloff <contact@maelgangloff.fr>\n"
 "Language-Team: French <https://weblate.vinceh121.me/projects/domain-watchdog/"
 "domain-watchdog-dashboard/fr/>\n"
@@ -220,16 +220,16 @@ msgid "OVH pricing mode"
 msgstr "Mode de tarification OVH"
 
 #: assets/components/tracking/ConnectorForm.tsx:95
-#, fuzzy
-#| msgid "OVH pricing mode"
 msgid "Confirm pricing mode"
-msgstr "Mode de tarification OVH"
+msgstr "Confirmer le mode de tarification"
 
 #: assets/components/tracking/ConnectorForm.tsx:96
 msgid ""
 "Are you sure about this setting? This may result in additional charges from "
 "the API Provider"
 msgstr ""
+"Êtes-vous sûr de ce paramètre ? Cela peut entraîner des frais "
+"supplémentaires de la part du fournisseur d'API"
 
 #: assets/components/tracking/ConnectorForm.tsx:118
 msgid "Personal Access Token (PAT)"
