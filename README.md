@@ -1,9 +1,7 @@
 # Domain Watchdog
 
 Domain Watchdog is a standalone application that utilizes RDAP to gather publicly accessible information about domain
-names, track their history, and automatically purchase them.
-
-## [Documentation](https://github.com/maelgangloff/domain-watchdog/wiki)
+names, track their history, and automatically purchase them. For more information please check [the wiki](https://github.com/maelgangloff/domain-watchdog/wiki) !
 
 ## Why use it?
 
