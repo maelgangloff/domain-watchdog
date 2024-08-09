@@ -1,25 +1,3 @@
-framework:
-    rate_limiter:
-        username_ip_login:
-            policy: token_bucket
-            limit: 5
-            rate: { interval: '5 minutes' }
-
-        ip_login:
-            policy: sliding_window
-            limit: 50
-            interval: '15 minutes'
-
-        user_register:
-            policy: token_bucket
-            limit: 1
-            rate: { interval: '5 minutes' }
-
-        rdap_requests:
-            policy: sliding_window
-            limit: 10
-            interval: '1 hour'
-
 services:
     app.login_rate_limiter:
         class: Symfony\Component\Security\Http\RateLimiter\DefaultLoginRateLimiter

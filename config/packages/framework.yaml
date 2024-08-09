@@ -8,11 +8,6 @@ framework:
 
     #esi: true
     #fragments: true
-    rate_limiter:
-        authenticated_api:
-            policy: 'sliding_window'
-            limit: 25
-            interval: '1 day'
     assets:
         base_path: '/'
         packages:
