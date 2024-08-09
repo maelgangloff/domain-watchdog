@@ -75,8 +75,8 @@ readonly class OvhConnector implements ConnectorInterface
             'domain' => $ldhName,
         ]);
 
-        $pricingModes = ['create-premium'];
-        if ('create-premium' !== $authData['pricingMode']) {
+        $pricingModes = ['create-default'];
+        if ('create-default' !== $authData['pricingMode']) {
             $pricingModes[] = $authData['pricingMode'];
         }
 

@@ -1,4 +1,4 @@
-import {Button, Checkbox, Form, FormInstance, Input, Select, Space, Typography} from "antd";
+import {Button, Checkbox, Form, FormInstance, Input, Popconfirm, Select, Space, Typography} from "antd";
 import React, {useState} from "react";
 import {Connector, ConnectorProvider} from "../../utils/api/connectors";
 import {t} from "ttag";
@@ -24,6 +24,9 @@ export function ConnectorForm({form, onCreate}: { form: FormInstance, onCreate: 
     const ovhEndpointList = ovhEndpointListFunction()
     const ovhSubsidiaryList = ovhSubsidiaryListFunction()
     const ovhPricingMode = ovhPricingModeFunction()
+    const [open, setOpen] = useState(false)
+    const [ovhPricingModeValue, setOvhPricingModeValue] = useState<string | undefined>()
+
 
     return <Form
         {...formItemLayoutWithOutLabel}
@@ -88,7 +91,24 @@ export function ConnectorForm({form, onCreate}: { form: FormInstance, onCreate: 
                     name={['authData', 'pricingMode']}
                     rules={[{required: true, message: t`Required`}]}
                 >
-                    <Select options={ovhPricingMode} optionFilterProp="label"/>
+                    <Popconfirm
+                        title={t`Confirm pricing mode`}
+                        description={t`Are you sure about this setting? This may result in additional charges from the API Provider`}
+                        onCancel={() => {
+                            setOvhPricingModeValue('create-default');
+                            setOpen(false)
+                        }}
+                        onConfirm={() => setOpen(false)}
+                        open={open}
+                    >
+                        <Select options={ovhPricingMode} optionFilterProp="label" value={ovhPricingModeValue}
+                                onChange={(value: string) => {
+                                    setOvhPricingModeValue(value)
+                                    if (value !== 'create-default') {
+                                        setOpen(true)
+                                    }
+                                }}/>
+                    </Popconfirm>
                 </Form.Item>
             </>
         }
