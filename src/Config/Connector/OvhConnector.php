@@ -74,9 +74,15 @@ readonly class OvhConnector implements ConnectorInterface
         $offers = $conn->get("/order/cart/{$cartId}/domain", [
             'domain' => $ldhName,
         ]);
+
+        $pricingModes = ['create-premium'];
+        if ('create-premium' !== $authData['pricingMode']) {
+            $pricingModes[] = $authData['pricingMode'];
+        }
+
         $offer = array_filter($offers, fn ($offer) => 'create' === $offer['action']
             && true === $offer['orderable']
-            && $offer['pricingMode'] === $authData['pricingMode']
+            && in_array($offer['pricingMode'], $pricingModes)
         );
         if (empty($offer)) {
             $conn->delete("/order/cart/{$cartId}");

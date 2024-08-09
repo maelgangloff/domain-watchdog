@@ -22,6 +22,6 @@ export const ovhPricingMode = () => [
     {value: 'create-default', label: t`The domain is free and at the standard price`},
     {
         value: 'create-premium',
-        label: t`The domain is free but is a premium. Its price varies from one domain to another`
+        label: t`The domain is free but can be premium. Its price varies from one domain to another`
     }
 ]
