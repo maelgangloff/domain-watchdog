@@ -569,8 +569,12 @@ msgid "The domain is free and at the standard price"
 msgstr "Le domaine est libre et au prix standard"
 
 #: assets/utils/providers/ovh.tsx:25
+#, fuzzy
+#| msgid ""
+#| "The domain is free but is a premium. Its price varies from one domain to "
+#| "another"
 msgid ""
-"The domain is free but is a premium. Its price varies from one domain to "
+"The domain is free but can be premium. Its price varies from one domain to "
 "another"
 msgstr ""
 "Le domaine est libre mais est un premium. Son prix est variable d'un domaine "
