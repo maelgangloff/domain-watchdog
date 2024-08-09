@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2024-08-08 17:57+0000\n"
+"PO-Revision-Date: 2024-08-09 22:30+0000\n"
 "Last-Translator: Maël Gangloff <contact@maelgangloff.fr>\n"
 "Language-Team: French <https://weblate.vinceh121.me/projects/domain-watchdog/"
 "domain-watchdog-dashboard/fr/>\n"
@@ -569,16 +569,12 @@ msgid "The domain is free and at the standard price"
 msgstr "Le domaine est libre et au prix standard"
 
 #: assets/utils/providers/ovh.tsx:25
-#, fuzzy
-#| msgid ""
-#| "The domain is free but is a premium. Its price varies from one domain to "
-#| "another"
 msgid ""
 "The domain is free but can be premium. Its price varies from one domain to "
 "another"
 msgstr ""
-"Le domaine est libre mais est un premium. Son prix est variable d'un domaine "
-"à l'autre"
+"Le domaine est libre mais il peut être premium. Son prix est variable d'un "
+"domaine à l'autre"
 
 #: assets/utils/index.ts:19
 #, javascript-format
