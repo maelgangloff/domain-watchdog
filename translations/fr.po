@@ -18,15 +18,15 @@ msgstr "Adresse e-mail"
 #: assets/components/LoginForm.tsx:53 assets/components/LoginForm.tsx:61
 #: assets/components/RegisterForm.tsx:40 assets/components/RegisterForm.tsx:48
 #: assets/components/search/DomainSearchBar.tsx:23
-#: assets/components/tracking/ConnectorForm.tsx:40
-#: assets/components/tracking/ConnectorForm.tsx:66
-#: assets/components/tracking/ConnectorForm.tsx:74
-#: assets/components/tracking/ConnectorForm.tsx:81
-#: assets/components/tracking/ConnectorForm.tsx:89
-#: assets/components/tracking/ConnectorForm.tsx:100
+#: assets/components/tracking/ConnectorForm.tsx:43
+#: assets/components/tracking/ConnectorForm.tsx:69
+#: assets/components/tracking/ConnectorForm.tsx:77
+#: assets/components/tracking/ConnectorForm.tsx:84
+#: assets/components/tracking/ConnectorForm.tsx:92
 #: assets/components/tracking/ConnectorForm.tsx:120
-#: assets/components/tracking/ConnectorForm.tsx:134
-#: assets/components/tracking/ConnectorForm.tsx:143
+#: assets/components/tracking/ConnectorForm.tsx:140
+#: assets/components/tracking/ConnectorForm.tsx:154
+#: assets/components/tracking/ConnectorForm.tsx:163
 #: assets/components/tracking/WatchlistForm.tsx:103
 msgid "Required"
 msgstr "Requis"
@@ -189,53 +189,65 @@ msgstr ""
 "Merci de vous assurer que les informations du connecteur sont valides pour "
 "acheter un domaine qui pourrait être disponible prochainement."
 
-#: assets/components/tracking/ConnectorForm.tsx:154
+#: assets/components/tracking/ConnectorForm.tsx:174
 #: assets/components/tracking/WatchlistForm.tsx:186
 msgid "Create"
 msgstr "Créer"
 
-#: assets/components/tracking/ConnectorForm.tsx:157
+#: assets/components/tracking/ConnectorForm.tsx:177
 #: assets/components/tracking/WatchlistForm.tsx:189
 msgid "Reset"
 msgstr "Réinitialiser"
 
-#: assets/components/tracking/ConnectorForm.tsx:37
+#: assets/components/tracking/ConnectorForm.tsx:40
 msgid "Provider"
 msgstr "Fournisseur"
 
-#: assets/components/tracking/ConnectorForm.tsx:44
+#: assets/components/tracking/ConnectorForm.tsx:47
 msgid "Please select a Provider"
 msgstr "Veuillez sélectionner un fournisseur"
 
-#: assets/components/tracking/ConnectorForm.tsx:72
+#: assets/components/tracking/ConnectorForm.tsx:75
 msgid "OVH Endpoint"
 msgstr "Endpoint OVH"
 
-#: assets/components/tracking/ConnectorForm.tsx:79
+#: assets/components/tracking/ConnectorForm.tsx:82
 msgid "OVH subsidiary"
 msgstr "Filiale OVH"
 
-#: assets/components/tracking/ConnectorForm.tsx:87
+#: assets/components/tracking/ConnectorForm.tsx:90
 msgid "OVH pricing mode"
 msgstr "Mode de tarification OVH"
 
-#: assets/components/tracking/ConnectorForm.tsx:98
+#: assets/components/tracking/ConnectorForm.tsx:95
+#, fuzzy
+#| msgid "OVH pricing mode"
+msgid "Confirm pricing mode"
+msgstr "Mode de tarification OVH"
+
+#: assets/components/tracking/ConnectorForm.tsx:96
+msgid ""
+"Are you sure about this setting? This may result in additional charges from "
+"the API Provider"
+msgstr ""
+
+#: assets/components/tracking/ConnectorForm.tsx:118
 msgid "Personal Access Token (PAT)"
 msgstr "Jeton d'accès personnel (PAT)"
 
-#: assets/components/tracking/ConnectorForm.tsx:104
+#: assets/components/tracking/ConnectorForm.tsx:124
 msgid "Organization sharing ID"
 msgstr "ID de partage d'organisation"
 
-#: assets/components/tracking/ConnectorForm.tsx:107
+#: assets/components/tracking/ConnectorForm.tsx:127
 msgid "It indicates the organization that will pay for the ordered product"
 msgstr "Il indique l'organisation qui paiera le produit commandé"
 
-#: assets/components/tracking/ConnectorForm.tsx:118
+#: assets/components/tracking/ConnectorForm.tsx:138
 msgid "API Terms of Service"
 msgstr "Conditions d'utilisation de l'API"
 
-#: assets/components/tracking/ConnectorForm.tsx:126
+#: assets/components/tracking/ConnectorForm.tsx:146
 msgid ""
 "I have read and accepted the conditions of use of the Provider API, "
 "accessible from this hyperlink"
@@ -243,20 +255,20 @@ msgstr ""
 "J'ai lu et j'accepte les conditions d'utilisation de l'API du Fournisseur, "
 "accessibles à partir de ce lien hypertexte"
 
-#: assets/components/tracking/ConnectorForm.tsx:132
+#: assets/components/tracking/ConnectorForm.tsx:152
 msgid "Legal age"
 msgstr "Âge minimum légal"
 
-#: assets/components/tracking/ConnectorForm.tsx:137
+#: assets/components/tracking/ConnectorForm.tsx:157
 msgid "I am of the minimum age required to consent to these conditions"
 msgstr ""
 "Je certifie que j'ai l'âge minimum requis pour consentir à ces conditions"
 
-#: assets/components/tracking/ConnectorForm.tsx:141
+#: assets/components/tracking/ConnectorForm.tsx:161
 msgid "Withdrawal period"
 msgstr "Délai de rétractation"
 
-#: assets/components/tracking/ConnectorForm.tsx:146
+#: assets/components/tracking/ConnectorForm.tsx:166
 msgid ""
 "I waive my right of withdrawal regarding the purchase of domain names via "
 "the Provider's API"
