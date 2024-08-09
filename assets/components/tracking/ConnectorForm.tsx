@@ -95,7 +95,8 @@ export function ConnectorForm({form, onCreate}: { form: FormInstance, onCreate: 
                         title={t`Confirm pricing mode`}
                         description={t`Are you sure about this setting? This may result in additional charges from the API Provider`}
                         onCancel={() => {
-                            setOvhPricingModeValue('create-default');
+                            form.resetFields(['authData'])
+                            setOvhPricingModeValue(undefined)
                             setOpen(false)
                         }}
                         onConfirm={() => setOpen(false)}
@@ -104,6 +105,7 @@ export function ConnectorForm({form, onCreate}: { form: FormInstance, onCreate: 
                         <Select options={ovhPricingMode} optionFilterProp="label" value={ovhPricingModeValue}
                                 onChange={(value: string) => {
                                     setOvhPricingModeValue(value)
+                                    form.setFieldValue(['authData', 'pricingMode'], value)
                                     if (value !== 'create-default') {
                                         setOpen(true)
                                     }

@@ -18,10 +18,10 @@ msgstr ""
 #: assets/components/tracking/ConnectorForm.tsx:77
 #: assets/components/tracking/ConnectorForm.tsx:84
 #: assets/components/tracking/ConnectorForm.tsx:92
-#: assets/components/tracking/ConnectorForm.tsx:120
-#: assets/components/tracking/ConnectorForm.tsx:140
-#: assets/components/tracking/ConnectorForm.tsx:154
-#: assets/components/tracking/ConnectorForm.tsx:163
+#: assets/components/tracking/ConnectorForm.tsx:122
+#: assets/components/tracking/ConnectorForm.tsx:142
+#: assets/components/tracking/ConnectorForm.tsx:156
+#: assets/components/tracking/ConnectorForm.tsx:165
 #: assets/components/tracking/WatchlistForm.tsx:103
 msgid "Required"
 msgstr ""
@@ -181,12 +181,12 @@ msgid ""
 "that may be available soon."
 msgstr ""
 
-#: assets/components/tracking/ConnectorForm.tsx:174
+#: assets/components/tracking/ConnectorForm.tsx:176
 #: assets/components/tracking/WatchlistForm.tsx:186
 msgid "Create"
 msgstr ""
 
-#: assets/components/tracking/ConnectorForm.tsx:177
+#: assets/components/tracking/ConnectorForm.tsx:179
 #: assets/components/tracking/WatchlistForm.tsx:189
 msgid "Reset"
 msgstr ""
@@ -221,41 +221,41 @@ msgid ""
 "the API Provider"
 msgstr ""
 
-#: assets/components/tracking/ConnectorForm.tsx:118
+#: assets/components/tracking/ConnectorForm.tsx:120
 msgid "Personal Access Token (PAT)"
 msgstr ""
 
-#: assets/components/tracking/ConnectorForm.tsx:124
+#: assets/components/tracking/ConnectorForm.tsx:126
 msgid "Organization sharing ID"
 msgstr ""
 
-#: assets/components/tracking/ConnectorForm.tsx:127
+#: assets/components/tracking/ConnectorForm.tsx:129
 msgid "It indicates the organization that will pay for the ordered product"
 msgstr ""
 
-#: assets/components/tracking/ConnectorForm.tsx:138
+#: assets/components/tracking/ConnectorForm.tsx:140
 msgid "API Terms of Service"
 msgstr ""
 
-#: assets/components/tracking/ConnectorForm.tsx:146
+#: assets/components/tracking/ConnectorForm.tsx:148
 msgid ""
 "I have read and accepted the conditions of use of the Provider API, "
 "accessible from this hyperlink"
 msgstr ""
 
-#: assets/components/tracking/ConnectorForm.tsx:152
+#: assets/components/tracking/ConnectorForm.tsx:154
 msgid "Legal age"
 msgstr ""
 
-#: assets/components/tracking/ConnectorForm.tsx:157
+#: assets/components/tracking/ConnectorForm.tsx:159
 msgid "I am of the minimum age required to consent to these conditions"
 msgstr ""
 
-#: assets/components/tracking/ConnectorForm.tsx:161
+#: assets/components/tracking/ConnectorForm.tsx:163
 msgid "Withdrawal period"
 msgstr ""
 
-#: assets/components/tracking/ConnectorForm.tsx:166
+#: assets/components/tracking/ConnectorForm.tsx:168
 msgid ""
 "I waive my right of withdrawal regarding the purchase of domain names via "
 "the Provider's API"
