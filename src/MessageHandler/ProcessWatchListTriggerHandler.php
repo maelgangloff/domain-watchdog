@@ -9,7 +9,6 @@ use App\Message\ProcessDomainTrigger;
 use App\Message\ProcessWatchListTrigger;
 use App\Repository\WatchListRepository;
 use App\Service\RDAPService;
-use GuzzleHttp\Exception\ClientException;
 use Psr\Log\LoggerInterface;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
@@ -59,18 +58,14 @@ final readonly class ProcessWatchListTriggerHandler
 
             try {
                 $domain = $this->RDAPService->registerDomain($domain->getLdhName());
+                $this->bus->dispatch(new ProcessDomainTrigger($watchList->getToken(), $domain->getLdhName(), $updatedAt));
             } catch (\Throwable $e) {
-                $this->logger->notice('An update error email is sent to user {username}.', [
+                $this->logger->error('An update error email is sent to user {username}.', [
                     'username' => $watchList->getUser()->getUserIdentifier(),
+                    'error' => $e,
                 ]);
                 $this->sendEmailDomainUpdateError($domain, $watchList->getUser());
-
-                if (!($e instanceof ClientException)) {
-                    continue;
-                }
             }
-
-            $this->bus->dispatch(new ProcessDomainTrigger($watchList->getToken(), $domain->getLdhName(), $updatedAt));
         }
     }
 
