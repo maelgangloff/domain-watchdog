@@ -165,18 +165,18 @@ readonly class RDAPService
                 'GET', $rdapServerUrl.'domain/'.$idnDomain
             )->toArray();
         } catch (\Throwable $e) {
-            if (null !== $domain) {
-                $this->logger->notice('The domain name {idnDomain} has been deleted from the WHOIS database.', [
-                    'idnDomain' => $idnDomain,
-                ]);
-
-                $domain->setDeleted(true)
-                    ->updateTimestamps();
-                $this->em->persist($domain);
-                $this->em->flush();
-            }
-
             if ($e instanceof ClientException && 404 === $e->getResponse()->getStatusCode()) {
+                if (null !== $domain) {
+                    $this->logger->notice('The domain name {idnDomain} has been deleted from the WHOIS database.', [
+                        'idnDomain' => $idnDomain,
+                    ]);
+
+                    $domain->setDeleted(true)
+                        ->updateTimestamps();
+                    $this->em->persist($domain);
+                    $this->em->flush();
+                }
+
                 throw new NotFoundHttpException('The domain name is not present in the WHOIS database.');
             }
 

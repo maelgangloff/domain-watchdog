@@ -9,6 +9,7 @@ use App\Message\ProcessDomainTrigger;
 use App\Message\ProcessWatchListTrigger;
 use App\Repository\WatchListRepository;
 use App\Service\RDAPService;
+use GuzzleHttp\Exception\ClientException;
 use Psr\Log\LoggerInterface;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
@@ -17,7 +18,6 @@ use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 use Symfony\Component\Messenger\Exception\ExceptionInterface;
 use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Mime\Address;
-use Symfony\Contracts\HttpClient\Exception\HttpExceptionInterface;
 
 #[AsMessageHandler]
 final readonly class ProcessWatchListTriggerHandler
@@ -60,27 +60,15 @@ final readonly class ProcessWatchListTriggerHandler
             try {
                 $domain = $this->RDAPService->registerDomain($domain->getLdhName());
             } catch (\Throwable $e) {
-                if (!($e instanceof HttpExceptionInterface)) {
-                    continue;
-                }
                 $this->logger->notice('An update error email is sent to user {username}.', [
                     'username' => $watchList->getUser()->getUserIdentifier(),
                 ]);
                 $this->sendEmailDomainUpdateError($domain, $watchList->getUser());
-            }
 
-            /*
-             * This code is deliberately commented to avoid unwanted side effects.
-             * Indeed, although it is useful and relevant to schedule a new update every day,
-             * there is a risk that the messages will get carried away by chain reaction.
-             * In theory, a new message chain would be generated every week.
-             *
-             * if ($this->RDAPService::isToBeWatchClosely($domain, $updatedAt)) {
-             *     $this->bus->dispatch(new ProcessWatchListTrigger($message->watchListToken), [
-             *         new DelayStamp(24 * 60 * 60 * 1e3)
-             *     ]);
-             * }
-            */
+                if (!($e instanceof ClientException)) {
+                    continue;
+                }
+            }
 
             $this->bus->dispatch(new ProcessDomainTrigger($watchList->getToken(), $domain->getLdhName(), $updatedAt));
         }
