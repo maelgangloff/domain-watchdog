@@ -58,7 +58,6 @@ final readonly class ProcessWatchListTriggerHandler
 
             try {
                 $domain = $this->RDAPService->registerDomain($domain->getLdhName());
-                $this->bus->dispatch(new ProcessDomainTrigger($watchList->getToken(), $domain->getLdhName(), $updatedAt));
             } catch (\Throwable $e) {
                 $this->logger->error('An update error email is sent to user {username}.', [
                     'username' => $watchList->getUser()->getUserIdentifier(),
@@ -66,6 +65,8 @@ final readonly class ProcessWatchListTriggerHandler
                 ]);
                 $this->sendEmailDomainUpdateError($domain, $watchList->getUser());
             }
+
+            $this->bus->dispatch(new ProcessDomainTrigger($watchList->getToken(), $domain->getLdhName(), $updatedAt));
         }
     }
 
