@@ -55,7 +55,6 @@ final readonly class ProcessWatchListTriggerHandler
                      ) as $domain
         ) {
             $updatedAt = $domain->getUpdatedAt();
-            $this->bus->dispatch(new ProcessDomainTrigger($watchList->getToken(), $domain->getLdhName(), $updatedAt));
 
             try {
                 $this->RDAPService->registerDomain($domain->getLdhName());
@@ -66,6 +65,8 @@ final readonly class ProcessWatchListTriggerHandler
                 ]);
                 $this->sendEmailDomainUpdateError($domain, $watchList->getUser());
             }
+
+            $this->bus->dispatch(new ProcessDomainTrigger($watchList->getToken(), $domain->getLdhName(), $updatedAt));
         }
     }
 
