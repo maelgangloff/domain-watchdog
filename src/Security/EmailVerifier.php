@@ -22,7 +22,7 @@ readonly class EmailVerifier
     /**
      * @throws TransportExceptionInterface
      */
-    public function sendEmailConfirmation(string $verifyEmailRouteName, User $user, TemplatedEmail $email): void
+    public function sendEmailConfirmation(string $verifyEmailRouteName, User $user, TemplatedEmail $email): TemplatedEmail
     {
         $signatureComponents = $this->verifyEmailHelper->generateSignature(
             $verifyEmailRouteName,
@@ -39,6 +39,8 @@ readonly class EmailVerifier
         $email->context($context);
 
         $this->mailer->send($email);
+
+        return $email;
     }
 
     public function handleEmailConfirmation(Request $request, User $user): void

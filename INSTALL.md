@@ -45,7 +45,11 @@ git clone https://github.com/maelgangloff/domain-watchdog.git
     ```shell
     symfony server:start
     ```
-6. Don't forget to set up workers to process the [message queue](https://symfony.com/doc/current/messenger.html)
+6. Build assets:
+   ```shell
+   php bin/console assets:install
+   ```
+7. Don't forget to set up workers to process the [message queue](https://symfony.com/doc/current/messenger.html)
 
 #### Frontend
 
@@ -96,6 +100,10 @@ git pull origin master
    ```shell
    php bin/console cache:clear
     ```
+4. Build assets:
+   ```shell
+   php bin/console assets:install
+   ```
 
 ### Frontend
 

@@ -82,7 +82,7 @@ class RegistrationController extends AbstractController
             'username' => $user->getUserIdentifier(),
         ]);
 
-        $this->emailVerifier->sendEmailConfirmation('app_verify_email', $user,
+        $email = $this->emailVerifier->sendEmailConfirmation('app_verify_email', $user,
             (new TemplatedEmail())
                 ->from(new Address($this->mailerSenderEmail, $this->mailerSenderName))
                 ->to($user->getEmail())
@@ -90,6 +90,12 @@ class RegistrationController extends AbstractController
                 ->subject('Please Confirm your Email')
                 ->htmlTemplate('emails/success/confirmation_email.html.twig')
         );
+
+        $signedUrl = (string) $email->getContext()['signedUrl'];
+        $this->logger->notice('The validation link for user {username} is {signedUrl}', [
+            'username' => $user->getUserIdentifier(),
+            'signedUrl' => $signedUrl,
+        ]);
 
         return new Response(null, 201);
     }
