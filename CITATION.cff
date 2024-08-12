@@ -13,9 +13,9 @@ identifiers:
   - type: url
     value: >-
       https://github.com/maelgangloff/domain-watcher/releases
-    description: Release of scolengo-api
+    description: Release of domain watchdog
 repository-code: 'https://github.com/maelgangloff/domain-watchdog'
-abstract: Unofficial Node.js API client of Skolengo EMS.
+abstract: An app that utilizes RDAP to gather publicly accessible information about domain names, track their history, and automatically purchase them.
 keywords:
   - DOMAIN
   - RDAP
