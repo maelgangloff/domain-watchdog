@@ -15,8 +15,13 @@ perform a reverse search to discover a list of domain names associated with an e
 detailed history of events (ownership changes, renewals, etc.) is not feasible with these protocols.
 
 ## Install
-For more details on the installation procedure, please refer to [INSTALL.md](/INSTALL.md). This project is compatible with Docker.
-1. Clone the GitHub repository
+
+> [!TIP]
+> For more details on the installation procedure, please refer to [INSTALL.md](/INSTALL.md).
+
+### Docker Deployment
+
+1. Clone the repository
 2. Build the Docker image locally
   ```shell
   docker compose -f compose.yaml -f compose.prod.yaml build --pull --no-cache
