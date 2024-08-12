@@ -14,6 +14,19 @@ Although the RDAP and WHOIS protocols allow you to obtain precise information ab
 perform a reverse search to discover a list of domain names associated with an entity. Additionally, accessing a
 detailed history of events (ownership changes, renewals, etc.) is not feasible with these protocols.
 
+## Install
+For more details on the installation procedure, please refer to [INSTALL.md](/INSTALL.md). This project is compatible with Docker.
+1. Clone the GitHub repository
+2. Build the Docker image locally
+  ```shell
+  docker compose -f compose.yaml -f compose.prod.yaml build --pull --no-cache
+  ```
+3. Modify environment variables and add static files to customize your instance
+4. Start the project in production environment
+  ```shell
+  docker compose -f compose.yaml -f compose.prod.yaml up
+  ```
+
 ## How it works?
 
 ### RDAP search
