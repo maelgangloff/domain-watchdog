@@ -13,14 +13,14 @@ identifiers:
   - type: url
     value: >-
       https://github.com/maelgangloff/domain-watcher/releases
-    description: Release of domain watchdog
+    description: Release of domain-watchdog
 repository-code: 'https://github.com/maelgangloff/domain-watchdog'
-abstract: An app that utilizes RDAP to gather publicly accessible information about domain names, track their history, and automatically purchase them.
+abstract: An app that utilizes RDAP to gather publicly accessible information about domain names, track their history, and automatically purchase them
 keywords:
   - DOMAIN
   - RDAP
   - WHOIS
 license: AGPL-3.0-or-later
-version: 0.0.1
-date-released: '2024-07-11'
+version: 0.1.0
+date-released: '2024-08-08'
 license-url: 'https://github.com/maelgangloff/domain-watchdog/blob/master/LICENSE'
