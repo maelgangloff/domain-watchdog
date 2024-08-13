@@ -1,0 +1,587 @@
+msgid ""
+msgstr ""
+"Language: de\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+
+#: assets/components/LoginForm.tsx:51
+#: assets/components/RegisterForm.tsx:38
+msgid "Email address"
+msgstr ""
+
+#: assets/components/LoginForm.tsx:53
+#: assets/components/LoginForm.tsx:61
+#: assets/components/RegisterForm.tsx:40
+#: assets/components/RegisterForm.tsx:48
+#: assets/components/search/DomainSearchBar.tsx:23
+#: assets/components/tracking/ConnectorForm.tsx:43
+#: assets/components/tracking/ConnectorForm.tsx:69
+#: assets/components/tracking/ConnectorForm.tsx:77
+#: assets/components/tracking/ConnectorForm.tsx:84
+#: assets/components/tracking/ConnectorForm.tsx:92
+#: assets/components/tracking/ConnectorForm.tsx:122
+#: assets/components/tracking/ConnectorForm.tsx:142
+#: assets/components/tracking/ConnectorForm.tsx:156
+#: assets/components/tracking/ConnectorForm.tsx:165
+#: assets/components/tracking/WatchlistForm.tsx:103
+msgid "Required"
+msgstr ""
+
+#: assets/components/LoginForm.tsx:59
+#: assets/components/RegisterForm.tsx:46
+msgid "Password"
+msgstr ""
+
+#: assets/components/LoginForm.tsx:69
+msgid "Submit"
+msgstr ""
+
+#: assets/components/LoginForm.tsx:74
+msgid "Log in with SSO"
+msgstr ""
+
+#: assets/components/search/EventTimeline.tsx:25
+msgid "Registration"
+msgstr ""
+
+#: assets/components/search/EventTimeline.tsx:26
+msgid "Reregistration"
+msgstr ""
+
+#: assets/components/search/EventTimeline.tsx:27
+msgid "Last changed"
+msgstr ""
+
+#: assets/components/search/EventTimeline.tsx:28
+msgid "Expiration"
+msgstr ""
+
+#: assets/components/search/EventTimeline.tsx:29
+msgid "Deletion"
+msgstr ""
+
+#: assets/components/search/EventTimeline.tsx:30
+msgid "Reinstantiation"
+msgstr ""
+
+#: assets/components/search/EventTimeline.tsx:31
+msgid "Transfer"
+msgstr ""
+
+#: assets/components/search/EventTimeline.tsx:32
+msgid "Locked"
+msgstr ""
+
+#: assets/components/search/EventTimeline.tsx:33
+msgid "Unlocked"
+msgstr ""
+
+#: assets/components/search/EventTimeline.tsx:34
+msgid "Registrar expiration"
+msgstr ""
+
+#: assets/components/search/EventTimeline.tsx:35
+msgid "ENUM validation expiration"
+msgstr ""
+
+#: assets/components/search/DomainSearchBar.tsx:26
+#: assets/components/tracking/WatchlistForm.tsx:106
+msgid "This domain name does not appear to be valid"
+msgstr ""
+
+#: assets/components/search/EntitiesList.tsx:10
+msgid "Registrant"
+msgstr ""
+
+#: assets/components/search/EntitiesList.tsx:11
+msgid "Technical"
+msgstr ""
+
+#: assets/components/search/EntitiesList.tsx:12
+msgid "Administrative"
+msgstr ""
+
+#: assets/components/search/EntitiesList.tsx:13
+msgid "Abuse"
+msgstr ""
+
+#: assets/components/search/EntitiesList.tsx:14
+msgid "Billing"
+msgstr ""
+
+#: assets/components/search/EntitiesList.tsx:15
+msgid "Registrar"
+msgstr ""
+
+#: assets/components/search/EntitiesList.tsx:16
+msgid "Reseller"
+msgstr ""
+
+#: assets/components/search/EntitiesList.tsx:17
+msgid "Sponsor"
+msgstr ""
+
+#: assets/components/search/EntitiesList.tsx:18
+msgid "Proxy"
+msgstr ""
+
+#: assets/components/search/EntitiesList.tsx:19
+msgid "Notifications"
+msgstr ""
+
+#: assets/components/search/EntitiesList.tsx:20
+msgid "Noc"
+msgstr ""
+
+#: assets/components/tracking/WatchlistForm.tsx:60
+msgid "Name"
+msgstr ""
+
+#: assets/components/tracking/WatchlistForm.tsx:71
+msgid "Watchlist Name"
+msgstr ""
+
+#: assets/components/tracking/WatchlistForm.tsx:72
+msgid "Naming the Watchlist makes it easier to find in the list below."
+msgstr ""
+
+#: assets/components/tracking/WatchlistForm.tsx:83
+msgid "At least one domain name"
+msgstr ""
+
+#: assets/components/tracking/WatchlistForm.tsx:94
+#: assets/components/tracking/WatchlistsList.tsx:21
+msgid "Domain names"
+msgstr ""
+
+#: assets/components/tracking/WatchlistForm.tsx:112
+msgid "Domain name"
+msgstr ""
+
+#: assets/components/tracking/WatchlistForm.tsx:129
+msgid "Add a Domain name"
+msgstr ""
+
+#: assets/components/tracking/WatchlistForm.tsx:136
+#: assets/components/tracking/WatchlistsList.tsx:25
+msgid "Tracked events"
+msgstr ""
+
+#: assets/components/tracking/WatchlistForm.tsx:138
+msgid "At least one trigger"
+msgstr ""
+
+#: assets/components/tracking/WatchlistForm.tsx:160
+#: assets/components/tracking/WatchlistForm.tsx:174
+msgid "Connector"
+msgstr ""
+
+#: assets/components/tracking/WatchlistForm.tsx:170
+msgid ""
+"Please make sure the connector information is valid to purchase a domain "
+"that may be available soon."
+msgstr ""
+
+#: assets/components/tracking/ConnectorForm.tsx:176
+#: assets/components/tracking/WatchlistForm.tsx:186
+msgid "Create"
+msgstr ""
+
+#: assets/components/tracking/ConnectorForm.tsx:179
+#: assets/components/tracking/WatchlistForm.tsx:189
+msgid "Reset"
+msgstr ""
+
+#: assets/components/tracking/ConnectorForm.tsx:40
+msgid "Provider"
+msgstr ""
+
+#: assets/components/tracking/ConnectorForm.tsx:47
+msgid "Please select a Provider"
+msgstr ""
+
+#: assets/components/tracking/ConnectorForm.tsx:75
+msgid "OVH Endpoint"
+msgstr ""
+
+#: assets/components/tracking/ConnectorForm.tsx:82
+msgid "OVH subsidiary"
+msgstr ""
+
+#: assets/components/tracking/ConnectorForm.tsx:90
+msgid "OVH pricing mode"
+msgstr ""
+
+#: assets/components/tracking/ConnectorForm.tsx:95
+msgid "Confirm pricing mode"
+msgstr ""
+
+#: assets/components/tracking/ConnectorForm.tsx:96
+msgid ""
+"Are you sure about this setting? This may result in additional charges from "
+"the API Provider"
+msgstr ""
+
+#: assets/components/tracking/ConnectorForm.tsx:120
+msgid "Personal Access Token (PAT)"
+msgstr ""
+
+#: assets/components/tracking/ConnectorForm.tsx:126
+msgid "Organization sharing ID"
+msgstr ""
+
+#: assets/components/tracking/ConnectorForm.tsx:129
+msgid "It indicates the organization that will pay for the ordered product"
+msgstr ""
+
+#: assets/components/tracking/ConnectorForm.tsx:140
+msgid "API Terms of Service"
+msgstr ""
+
+#: assets/components/tracking/ConnectorForm.tsx:148
+msgid ""
+"I have read and accepted the conditions of use of the Provider API, "
+"accessible from this hyperlink"
+msgstr ""
+
+#: assets/components/tracking/ConnectorForm.tsx:154
+msgid "Legal age"
+msgstr ""
+
+#: assets/components/tracking/ConnectorForm.tsx:159
+msgid "I am of the minimum age required to consent to these conditions"
+msgstr ""
+
+#: assets/components/tracking/ConnectorForm.tsx:163
+msgid "Withdrawal period"
+msgstr ""
+
+#: assets/components/tracking/ConnectorForm.tsx:168
+msgid ""
+"I waive my right of withdrawal regarding the purchase of domain names via "
+"the Provider's API"
+msgstr ""
+
+#: assets/components/tracking/WatchlistsList.tsx:40
+msgid "This Watchlist is not linked to a Connector."
+msgstr ""
+
+#: assets/components/tracking/WatchlistsList.tsx:43
+msgid "Watchlist"
+msgstr ""
+
+#: assets/components/tracking/WatchlistsList.tsx:51
+msgid "Export events to iCalendar format"
+msgstr ""
+
+#: assets/components/tracking/WatchlistsList.tsx:54
+#: assets/components/tracking/WatchlistsList.tsx:60
+msgid "Delete the Watchlist"
+msgstr ""
+
+#: assets/components/tracking/WatchlistsList.tsx:55
+msgid "Are you sure to delete this Watchlist?"
+msgstr ""
+
+#: assets/components/tracking/ConnectorsList.tsx:25
+#: assets/components/tracking/WatchlistsList.tsx:57
+msgid "Yes"
+msgstr ""
+
+#: assets/components/tracking/ConnectorsList.tsx:26
+#: assets/components/tracking/WatchlistsList.tsx:58
+msgid "No"
+msgstr ""
+
+#: assets/components/tracking/ConnectorsList.tsx:19
+#, javascript-format
+msgid "Connector ${ connector.provider }"
+msgstr ""
+
+#: assets/components/tracking/ConnectorsList.tsx:22
+msgid "Delete the Connector"
+msgstr ""
+
+#: assets/components/tracking/ConnectorsList.tsx:23
+msgid "Are you sure to delete this Connector?"
+msgstr ""
+
+#: assets/components/Sider.tsx:29
+msgid "Home"
+msgstr ""
+
+#: assets/components/Sider.tsx:35
+msgid "Search"
+msgstr ""
+
+#: assets/components/Sider.tsx:41
+msgid "Domain"
+msgstr ""
+
+#: assets/components/Sider.tsx:42
+msgid "Domain Finder"
+msgstr ""
+
+#: assets/components/Sider.tsx:49
+#: assets/pages/info/TldPage.tsx:79
+msgid "TLD"
+msgstr ""
+
+#: assets/components/Sider.tsx:50
+msgid "TLD list"
+msgstr ""
+
+#: assets/components/Sider.tsx:57
+msgid "Entity"
+msgstr ""
+
+#: assets/components/Sider.tsx:58
+msgid "Entity Finder"
+msgstr ""
+
+#: assets/components/Sider.tsx:65
+msgid "Nameserver"
+msgstr ""
+
+#: assets/components/Sider.tsx:66
+msgid "Nameserver Finder"
+msgstr ""
+
+#: assets/components/Sider.tsx:73
+msgid "Tracking"
+msgstr ""
+
+#: assets/components/Sider.tsx:79
+msgid "My Watchlists"
+msgstr ""
+
+#: assets/components/Sider.tsx:86
+msgid "My Connectors"
+msgstr ""
+
+#: assets/components/Sider.tsx:95
+msgid "Statistics"
+msgstr ""
+
+#: assets/components/Sider.tsx:105
+#: assets/pages/watchdog/UserPage.tsx:16
+msgid "My Account"
+msgstr ""
+
+#: assets/components/Sider.tsx:111
+msgid "Log out"
+msgstr ""
+
+#: assets/components/Sider.tsx:119
+#: assets/pages/LoginPage.tsx:30
+#: assets/pages/LoginPage.tsx:38
+msgid "Log in"
+msgstr ""
+
+#: assets/components/RegisterForm.tsx:55
+#: assets/pages/LoginPage.tsx:30
+msgid "Register"
+msgstr ""
+
+#: assets/pages/search/DomainSearchPage.tsx:21
+msgid "Found !"
+msgstr ""
+
+#: assets/pages/search/DomainSearchPage.tsx:29
+msgid "Domain finder"
+msgstr ""
+
+#: assets/pages/search/DomainSearchPage.tsx:50
+msgid "EPP Status Codes"
+msgstr ""
+
+#: assets/pages/search/DomainSearchPage.tsx:60
+msgid "Timeline"
+msgstr ""
+
+#: assets/pages/search/DomainSearchPage.tsx:65
+msgid "Entities"
+msgstr ""
+
+#: assets/pages/search/DomainSearchPage.tsx:73
+msgid ""
+"Although the domain exists in my database, it has been deleted from the "
+"WHOIS by its registrar."
+msgstr ""
+
+#: assets/pages/info/TldPage.tsx:85
+msgid "Flag"
+msgstr ""
+
+#: assets/pages/info/TldPage.tsx:88
+msgid "Country"
+msgstr ""
+
+#: assets/pages/info/TldPage.tsx:93
+msgid "Registry Operator"
+msgstr ""
+
+#: assets/pages/info/TldPage.tsx:120
+msgid "This page presents all active TLDs in the root zone database."
+msgstr ""
+
+#: assets/pages/info/TldPage.tsx:123
+msgid ""
+"IANA provides the list of currently active TLDs, regardless of their type, "
+"and ICANN provides the list of gTLDs.\n"
+"In most cases, the two-letter ccTLD assigned to a country is made in "
+"accordance with the ISO 3166-1 standard.\n"
+"This data is updated every month. Three HTTP requests are needed for the "
+"complete update of TLDs in Domain Watchdog (two requests to IANA and one to "
+"ICANN).\n"
+"At the same time, the list of root RDAP servers is updated."
+msgstr ""
+
+#: assets/pages/info/TldPage.tsx:134
+msgid "Sponsored Top-Level-Domains"
+msgstr ""
+
+#: assets/pages/info/TldPage.tsx:136
+msgid ""
+"Top-level domains sponsored by specific organizations that set rules for "
+"registration and use, often related to particular interest groups or "
+"industries."
+msgstr ""
+
+#: assets/pages/info/TldPage.tsx:143
+msgid "Generic Top-Level-Domains"
+msgstr ""
+
+#: assets/pages/info/TldPage.tsx:145
+msgid ""
+"Generic top-level domains open to everyone, not restricted by specific "
+"criteria, representing various themes or industries."
+msgstr ""
+
+#: assets/pages/info/TldPage.tsx:152
+msgid "Brand Generic Top-Level-Domains"
+msgstr ""
+
+#: assets/pages/info/TldPage.tsx:154
+msgid ""
+"Generic top-level domains associated with specific brands, allowing "
+"companies to use their own brand names as domains."
+msgstr ""
+
+#: assets/pages/info/TldPage.tsx:161
+msgid "Country-Code Top-Level-Domains"
+msgstr ""
+
+#: assets/pages/info/TldPage.tsx:163
+msgid ""
+"Top-level domains based on country codes, identifying websites according to "
+"their country of origin."
+msgstr ""
+
+#: assets/pages/watchdog/UserPage.tsx:18
+msgid "Username"
+msgstr ""
+
+#: assets/pages/watchdog/UserPage.tsx:21
+msgid "Roles"
+msgstr ""
+
+#: assets/pages/tracking/ConnectorsPage.tsx:19
+msgid "Connector created !"
+msgstr ""
+
+#: assets/pages/tracking/ConnectorsPage.tsx:38
+msgid "Create a Connector"
+msgstr ""
+
+#: assets/pages/tracking/WatchlistPage.tsx:47
+msgid "Watchlist created !"
+msgstr ""
+
+#: assets/pages/tracking/WatchlistPage.tsx:70
+msgid "Create a Watchlist"
+msgstr ""
+
+#: assets/pages/NotFoundPage.tsx:10
+msgid "Sorry, the page you visited does not exist."
+msgstr ""
+
+#: assets/pages/LoginPage.tsx:38
+msgid "Create an account"
+msgstr ""
+
+#: assets/utils/providers/index.tsx:11
+msgid ""
+"Retrieve a set of tokens from your customer account on the Provider's "
+"website"
+msgstr ""
+
+#: assets/utils/providers/index.tsx:16
+msgid ""
+"Retrieve a Personal Access Token from your customer account on the "
+"Provider's website"
+msgstr ""
+
+#: assets/utils/providers/ovh.tsx:5
+msgid "Application key"
+msgstr ""
+
+#: assets/utils/providers/ovh.tsx:6
+msgid "Application secret"
+msgstr ""
+
+#: assets/utils/providers/ovh.tsx:7
+msgid "Consumer key"
+msgstr ""
+
+#: assets/utils/providers/ovh.tsx:12
+msgid "European Region"
+msgstr ""
+
+#: assets/utils/providers/ovh.tsx:19
+msgid "Europe"
+msgstr ""
+
+#: assets/utils/providers/ovh.tsx:22
+msgid "The domain is free and at the standard price"
+msgstr ""
+
+#: assets/utils/providers/ovh.tsx:25
+msgid ""
+"The domain is free but can be premium. Its price varies from one domain to "
+"another"
+msgstr ""
+
+#: assets/utils/index.ts:19
+#, javascript-format
+msgid "Please retry after ${ duration } seconds"
+msgstr ""
+
+#: assets/utils/index.ts:23
+#: assets/utils/index.ts:26
+msgid "An error occurred"
+msgstr ""
+
+#: assets/App.tsx:101
+msgid "TOS"
+msgstr ""
+
+#: assets/App.tsx:102
+msgid "Privacy Policy"
+msgstr ""
+
+#: assets/App.tsx:103
+msgid "FAQ"
+msgstr ""
+
+#: assets/App.tsx:105
+msgid "Documentation"
+msgstr ""
+
+#: assets/App.tsx:108
+#, javascript-format
+msgid ""
+"${ ProjectLink } is an open source project distributed under the ${ "
+"LicenseLink } license."
+msgstr ""
