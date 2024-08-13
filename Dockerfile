@@ -103,4 +103,5 @@ RUN set -eux; \
     yarn install; \
     yarn run build; \
     yarn run ttag:po2json; \
+    rm -rf node_modules; \
     sync
