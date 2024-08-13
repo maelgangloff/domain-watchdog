@@ -97,7 +97,10 @@ RUN set -eux; \
     chmod +x bin/console; \
     sync
 
-RUN php bin/console assets:install
-RUN yarn install
-RUN yarn run build
-RUN yarn run ttag:po2json
+
+RUN set -eux; \
+    php bin/console assets:install; \
+    yarn install; \
+    yarn run build; \
+    yarn run ttag:po2json; \
+    sync
