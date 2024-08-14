@@ -23,14 +23,14 @@ detailed history of events (ownership changes, renewals, etc.) is not feasible w
 
 1. Clone the repository
 2. Build the Docker image locally
-  ```shell
-  docker compose -f compose.yaml -f compose.prod.yaml build --pull --no-cache
-  ```
+    ```shell
+    docker compose -f compose.yaml -f compose.prod.yaml build --pull --no-cache
+    ```
 3. Modify environment variables and add static files to customize your instance
 4. Start the project in production environment
-  ```shell
-  docker compose -f compose.yaml -f compose.prod.yaml up
-  ```
+    ```shell
+    docker compose -f compose.yaml -f compose.prod.yaml up
+    ```
 
 ## How it works?
 
@@ -81,7 +81,7 @@ possible to predict in advance which user will win the domain name. The choice i
 
 ## Disclaimer
 
-> [!WARNING]
+> [!IMPORTANT]
 > * Domain Watchdog is an opensource project distributed under *GNU Affero General Public License v3.0 or later* license
 > * In the internal opration, everything is done to perform the least possible RDAP requests: rate limit, intelligent
     caching system, etc.

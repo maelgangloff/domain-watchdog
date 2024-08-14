@@ -58,10 +58,12 @@ use Symfony\Component\Uid\Uuid;
             denormalizationContext: ['groups' => 'watchlist:create'],
             name: 'create'
         ),
+        /*
         new Patch(
             normalizationContext: ['groups' => 'watchlist:item'],
             denormalizationContext: ['groups' => 'watchlist:update']
         ),
+        */
         new Delete(),
     ],
 )]

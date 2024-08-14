@@ -32,18 +32,3 @@ export async function deleteWatchlist(token: string): Promise<void> {
         url: 'watchlists/' + token
     })
 }
-
-export async function patchWatchlist(domains: string[], triggers: Event[]) {
-    const response = await request<Watchlist>({
-        method: 'PATCH',
-        url: 'watchlists',
-        data: {
-            domains,
-            triggers
-        },
-        headers: {
-            "Content-Type": 'application/merge-patch+json'
-        }
-    })
-    return response.data
-}
