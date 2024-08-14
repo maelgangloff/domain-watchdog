@@ -27,7 +27,16 @@ use Symfony\Component\Uid\Uuid;
             name: 'get_all_mine',
         ),
         new Get(
-            normalizationContext: ['groups' => 'watchlist:item'],
+            normalizationContext: ['groups' => [
+                'watchlist:item',
+                'domain:item',
+                'event:list',
+                'domain-entity:entity',
+                'nameserver-entity:nameserver',
+                'nameserver-entity:entity',
+                'tld:item',
+            ],
+            ],
             security: 'object.user == user'
         ),
         new Get(
@@ -58,26 +67,24 @@ use Symfony\Component\Uid\Uuid;
             denormalizationContext: ['groups' => 'watchlist:create'],
             name: 'create'
         ),
-        /*
         new Patch(
+            routeName: 'watchlist_update',
             normalizationContext: ['groups' => 'watchlist:item'],
-            denormalizationContext: ['groups' => 'watchlist:update']
+            denormalizationContext: ['groups' => 'watchlist:create'],
+            name: 'update'
         ),
-        */
         new Delete(),
     ],
 )]
 class WatchList
 {
+    #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'watchLists')]
+    #[ORM\JoinColumn(nullable: false, onDelete: 'CASCADE')]
+    public ?User $user = null;
     #[ORM\Id]
     #[ORM\Column(type: 'uuid')]
     #[Groups(['watchlist:item', 'watchlist:list'])]
     private string $token;
-
-    #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'watchLists')]
-    #[ORM\JoinColumn(nullable: false, onDelete: 'CASCADE')]
-    public ?User $user = null;
-
     /**
      * @var Collection<int, Domain>
      */
@@ -85,23 +92,23 @@ class WatchList
     #[ORM\JoinTable(name: 'watch_lists_domains',
         joinColumns: [new ORM\JoinColumn(name: 'watch_list_token', referencedColumnName: 'token', onDelete: 'CASCADE')],
         inverseJoinColumns: [new ORM\JoinColumn(name: 'domain_ldh_name', referencedColumnName: 'ldh_name', onDelete: 'CASCADE')])]
-    #[Groups(['watchlist:list', 'watchlist:item', 'watchlist:create', 'watchlist:update'])]
+    #[Groups(['watchlist:list', 'watchlist:item', 'watchlist:create'])]
     private Collection $domains;
 
     /**
      * @var Collection<int, WatchListTrigger>
      */
     #[ORM\OneToMany(targetEntity: WatchListTrigger::class, mappedBy: 'watchList', cascade: ['persist'], orphanRemoval: true)]
-    #[Groups(['watchlist:list', 'watchlist:item', 'watchlist:create', 'watchlist:update'])]
+    #[Groups(['watchlist:list', 'watchlist:item', 'watchlist:create'])]
     #[SerializedName('triggers')]
     private Collection $watchListTriggers;
 
     #[ORM\ManyToOne(inversedBy: 'watchLists')]
-    #[Groups(['watchlist:list', 'watchlist:item', 'watchlist:create', 'watchlist:update'])]
+    #[Groups(['watchlist:list', 'watchlist:item', 'watchlist:create'])]
     private ?Connector $connector = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    #[Groups(['watchlist:list', 'watchlist:item', 'watchlist:create', 'watchlist:update'])]
+    #[Groups(['watchlist:list', 'watchlist:item', 'watchlist:create'])]
     private ?string $name = null;
 
     #[ORM\Column]

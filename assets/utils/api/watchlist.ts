@@ -1,4 +1,4 @@
-import {Event, request, Watchlist} from "./index";
+import {request, Watchlist} from "./index";
 
 export async function getWatchlists() {
     const response = await request({
@@ -31,4 +31,16 @@ export async function deleteWatchlist(token: string): Promise<void> {
         method: 'DELETE',
         url: 'watchlists/' + token
     })
+}
+
+export async function patchWatchlist(watchlist: Partial<Watchlist> & { token: string }) {
+    const response = await request<Watchlist>({
+        method: 'PATCH',
+        url: 'watchlists/' + watchlist.token,
+        data: watchlist,
+        headers: {
+            "Content-Type": 'application/merge-patch+json'
+        }
+    })
+    return response.data
 }

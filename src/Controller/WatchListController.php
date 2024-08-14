@@ -44,22 +44,8 @@ class WatchListController extends AbstractController
     ) {
     }
 
-    /**
-     * @throws \Exception
-     */
-    #[Route(
-        path: '/api/watchlists',
-        name: 'watchlist_create',
-        defaults: [
-            '_api_resource_class' => WatchList::class,
-            '_api_operation_name' => 'create',
-        ],
-        methods: ['POST']
-    )]
-    public function createWatchList(Request $request): WatchList
+    public function verifyLimitations(WatchList $watchList)
     {
-        $watchList = $this->serializer->deserialize($request->getContent(), WatchList::class, 'json', ['groups' => 'watchlist:create']);
-
         /** @var User $user */
         $user = $this->getUser();
         $watchList->setUser($user);
@@ -99,8 +85,53 @@ class WatchListController extends AbstractController
                 }
             }
         }
+    }
 
-        $this->logger->info('User {username} register a Watchlist ({token}).', [
+    /**
+     * @throws \Exception
+     */
+    #[Route(
+        path: '/api/watchlists',
+        name: 'watchlist_create',
+        defaults: [
+            '_api_resource_class' => WatchList::class,
+            '_api_operation_name' => 'create',
+        ],
+        methods: ['POST']
+    )]
+    public function createWatchList(Request $request): WatchList
+    {
+        $watchList = $this->serializer->deserialize($request->getContent(), WatchList::class, 'json', ['groups' => 'watchlist:create']);
+        $this->verifyLimitations($watchList);
+
+        $user = $this->getUser();
+        $this->logger->info('User {username} registers a Watchlist ({token}).', [
+            'username' => $user->getUserIdentifier(),
+            'token' => $watchList->getToken(),
+        ]);
+
+        $this->em->persist($watchList);
+        $this->em->flush();
+
+        return $watchList;
+    }
+
+    #[Route(
+        path: '/api/watchlists/{token}',
+        name: 'watchlist_update',
+        defaults: [
+            '_api_resource_class' => WatchList::class,
+            '_api_operation_name' => 'update',
+        ],
+        methods: ['PATCH']
+    )]
+    public function patchWatchList(Request $request): WatchList
+    {
+        $watchList = $this->serializer->deserialize($request->getContent(), WatchList::class, 'json', ['groups' => 'watchlist:create']);
+        $this->verifyLimitations($watchList);
+
+        $user = $this->getUser();
+        $this->logger->info('User {username} updates a Watchlist ({token}).', [
             'username' => $user->getUserIdentifier(),
             'token' => $watchList->getToken(),
         ]);
