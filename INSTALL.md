@@ -67,10 +67,10 @@ git clone https://github.com/maelgangloff/domain-watchdog.git
     ```
 4. Add and modify the following files as you wish:
    ~~~
-   public/contents/home.md
-   public/contents/privacy.md
-   public/contents/tos.md
-   public/contents/faq.md
+   public/content/home.md
+   public/content/privacy.md
+   public/content/tos.md
+   public/content/faq.md
    public/images/icons-512.png
    public/images/banner.png
    public/favicon.ico
