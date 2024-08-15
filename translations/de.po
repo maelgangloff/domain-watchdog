@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2024-08-13 10:20+0000\n"
+"PO-Revision-Date: 2024-08-15 01:17+0000\n"
 "Last-Translator: Maël Gangloff <contact@maelgangloff.fr>\n"
 "Language-Team: German <https://weblate.vinceh121.me/projects/domain-watchdog/"
 "domain-watchdog-dashboard/de/>\n"
@@ -195,7 +195,7 @@ msgstr "Erstellen"
 
 #: assets/components/tracking/WatchlistForm.tsx:192
 msgid "Update"
-msgstr ""
+msgstr "Aktualisieren"
 
 #: assets/components/tracking/ConnectorForm.tsx:179
 #: assets/components/tracking/WatchlistForm.tsx:195
@@ -293,16 +293,12 @@ msgid "Export events to iCalendar format"
 msgstr "Ereignisse in das iCalendar-Format exportieren"
 
 #: assets/components/tracking/WatchlistsList.tsx:71
-#, fuzzy
-#| msgid "Delete the Watchlist"
 msgid "Edit the Watchlist"
-msgstr "Löschen der Watchlist"
+msgstr "Bearbeiten der Watchlist"
 
 #: assets/components/tracking/WatchlistsList.tsx:84
-#, fuzzy
-#| msgid "Create a Watchlist"
 msgid "Update a Watchlist"
-msgstr "Erstellen Sie eine Watchlist"
+msgstr "Aktualisieren einer Watchlist"
 
 #: assets/components/tracking/WatchlistsList.tsx:107
 #: assets/components/tracking/WatchlistsList.tsx:114
@@ -547,10 +543,8 @@ msgid "Watchlist created !"
 msgstr "Watchlist erstellt !"
 
 #: assets/pages/tracking/WatchlistPage.tsx:72
-#, fuzzy
-#| msgid "Watchlist created !"
 msgid "Watchlist updated !"
-msgstr "Watchlist erstellt !"
+msgstr "Watchlist aktualisiert !"
 
 #: assets/pages/tracking/WatchlistPage.tsx:98
 msgid "Create a Watchlist"
