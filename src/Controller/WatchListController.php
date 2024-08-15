@@ -78,7 +78,7 @@ class WatchListController extends AbstractController
             }
 
             $userWatchLists = $user->getWatchLists();
-            if ($userWatchLists->count() > (int) $this->getParameter('limit_max_watchlist')) {
+            if ($userWatchLists->count() >= (int) $this->getParameter('limit_max_watchlist')) {
                 $this->logger->notice('User {username} tried to create a Watchlist. However, the maximum number of Watchlists has been reached.', [
                     'username' => $user->getUserIdentifier(),
                 ]);
