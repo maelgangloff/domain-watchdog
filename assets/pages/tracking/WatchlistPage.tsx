@@ -50,7 +50,7 @@ export default function WatchlistPage() {
         })
     }
 
-    const onUpdateWatchlist = (values: {
+    const onUpdateWatchlist = async (values: {
         token: string
         name?: string
         domains: string[],
@@ -59,9 +59,7 @@ export default function WatchlistPage() {
     }) => {
         const domainsURI = values.domains.map(d => '/api/domains/' + d)
 
-        console.log(values)
-
-        putWatchlist({
+        return putWatchlist({
             token: values.token,
             name: values.name,
             domains: domainsURI,
@@ -71,7 +69,7 @@ export default function WatchlistPage() {
             refreshWatchlists()
             messageApi.success(t`Watchlist updated !`)
         }).catch((e: AxiosError) => {
-            showErrorAPI(e, messageApi)
+            throw showErrorAPI(e, messageApi)
         })
     }
 

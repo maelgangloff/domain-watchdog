@@ -15,7 +15,7 @@ const {useToken} = theme;
 export function WatchlistsList({watchlists, onDelete, onUpdateWatchlist, connectors}: {
     watchlists: Watchlist[],
     onDelete: () => void,
-    onUpdateWatchlist: (values: { domains: string[], emailTriggers: string[], token: string }) => void,
+    onUpdateWatchlist: (values: { domains: string[], emailTriggers: string[], token: string }) => Promise<void>,
     connectors: (Connector & { id: string })[]
 }) {
     const {token} = useToken()
@@ -34,7 +34,8 @@ export function WatchlistsList({watchlists, onDelete, onUpdateWatchlist, connect
         }
     ]
 
-    const [open, setOpen] = useState(false);
+    const [open, setOpen] = useState(false)
+    const [loading, setLoading] = useState(false)
 
     const showDrawer = () => {
         setOpen(true)
@@ -42,6 +43,7 @@ export function WatchlistsList({watchlists, onDelete, onUpdateWatchlist, connect
 
     const onClose = () => {
         setOpen(false)
+        setLoading(false)
     };
 
     return <>
@@ -85,6 +87,7 @@ export function WatchlistsList({watchlists, onDelete, onUpdateWatchlist, connect
                             width='80%'
                             onClose={onClose}
                             open={open}
+                            loading={loading}
                             styles={{
                                 body: {
                                     paddingBottom: 80,
@@ -95,8 +98,8 @@ export function WatchlistsList({watchlists, onDelete, onUpdateWatchlist, connect
                             <WatchlistForm
                                 form={form}
                                 onFinish={values => {
-                                    onUpdateWatchlist(values);
-                                    onClose()
+                                    setLoading(true)
+                                    onUpdateWatchlist(values).then(onClose).catch(() => setLoading(false))
                                 }}
                                 connectors={connectors}
                                 isCreation={false}

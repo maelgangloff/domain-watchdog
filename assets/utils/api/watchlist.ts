@@ -1,4 +1,4 @@
-import {Event, request, Watchlist} from "./index";
+import {request, Watchlist} from "./index";
 
 export async function getWatchlists() {
     const response = await request({

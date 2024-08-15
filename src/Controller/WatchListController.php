@@ -70,7 +70,7 @@ class WatchListController extends AbstractController
          * This policy guarantees the equal probability of obtaining a domain name if it is requested by several users.
          */
         if ($this->getParameter('limited_features')) {
-            if ($watchList->getDomains()->count() >= (int) $this->getParameter('limit_max_watchlist_domains')) {
+            if ($watchList->getDomains()->count() > (int) $this->getParameter('limit_max_watchlist_domains')) {
                 $this->logger->notice('User {username} tried to create a Watchlist. However, the maximum number of domains has been reached for this Watchlist', [
                     'username' => $user->getUserIdentifier(),
                 ]);
@@ -78,7 +78,7 @@ class WatchListController extends AbstractController
             }
 
             $userWatchLists = $user->getWatchLists();
-            if ($userWatchLists->count() >= (int) $this->getParameter('limit_max_watchlist')) {
+            if ($userWatchLists->count() > (int) $this->getParameter('limit_max_watchlist')) {
                 $this->logger->notice('User {username} tried to create a Watchlist. However, the maximum number of Watchlists has been reached.', [
                     'username' => $user->getUserIdentifier(),
                 ]);
@@ -150,7 +150,7 @@ class WatchListController extends AbstractController
         $watchList->setUser($user);
 
         if ($this->getParameter('limited_features')) {
-            if ($watchList->getDomains()->count() >= (int) $this->getParameter('limit_max_watchlist_domains')) {
+            if ($watchList->getDomains()->count() > (int) $this->getParameter('limit_max_watchlist_domains')) {
                 $this->logger->notice('User {username} tried to update a Watchlist. However, the maximum number of domains has been reached for this Watchlist', [
                     'username' => $user->getUserIdentifier(),
                 ]);
@@ -161,7 +161,7 @@ class WatchListController extends AbstractController
 
             /** @var Domain[] $trackedDomains */
             $trackedDomains = $userWatchLists
-                ->filter(fn (WatchList $wl) => $wl !== $watchList)
+                ->filter(fn (WatchList $wl) => $wl->getToken() !== $watchList->getToken())
                 ->reduce(fn (array $acc, WatchList $wl) => [...$acc, ...$wl->getDomains()->toArray()], []);
 
             /** @var Domain $domain */
