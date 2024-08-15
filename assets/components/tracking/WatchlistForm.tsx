@@ -25,19 +25,20 @@ const formItemLayoutWithOutLabel = {
     },
 };
 
-export function WatchlistForm({form, connectors, onCreateWatchlist}: {
+export function WatchlistForm({form, connectors, onFinish, isCreation}: {
     form: FormInstance,
     connectors: (Connector & { id: string })[]
-    onCreateWatchlist: (values: { domains: string[], emailTriggers: string[] }) => void
+    onFinish: (values: { domains: string[], emailTriggers: string[], token: string }) => void
+    isCreation: boolean
 }) {
     const domainEventTranslated = domainEvent()
 
     const triggerTagRenderer: TagRender = (props) => {
         const {value, closable, onClose} = props;
         const onPreventMouseDown = (event: React.MouseEvent<HTMLSpanElement>) => {
-            event.preventDefault();
-            event.stopPropagation();
-        };
+            event.preventDefault()
+            event.stopPropagation()
+        }
         return (
             <Tag
                 color={actionToColor(value)}
@@ -54,9 +55,14 @@ export function WatchlistForm({form, connectors, onCreateWatchlist}: {
     return <Form
         {...formItemLayoutWithOutLabel}
         form={form}
-        onFinish={onCreateWatchlist}
+        onFinish={onFinish}
         initialValues={{emailTriggers: ['last changed', 'transfer', 'expiration', 'deletion']}}
     >
+
+        <Form.Item name='token' hidden>
+            <Input hidden/>
+        </Form.Item>
+
         <Form.Item label={t`Name`}
                    name='name'
                    labelCol={{
@@ -183,7 +189,7 @@ export function WatchlistForm({form, connectors, onCreateWatchlist}: {
         <Form.Item>
             <Space>
                 <Button type="primary" htmlType="submit">
-                    {t`Create`}
+                    {isCreation ? t`Create` : t`Update`}
                 </Button>
                 <Button type="default" htmlType="reset">
                     {t`Reset`}

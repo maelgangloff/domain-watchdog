@@ -1,20 +1,27 @@
-import {Card, Divider, Popconfirm, Space, Table, Tag, theme, Typography} from "antd";
+import {Button, Card, Divider, Drawer, Form, Popconfirm, Space, Table, Tag, theme, Typography} from "antd";
 import {t} from "ttag";
 import {deleteWatchlist} from "../../utils/api";
-import {CalendarFilled, DeleteFilled, DisconnectOutlined, LinkOutlined} from "@ant-design/icons";
-import React from "react";
+import {CalendarFilled, DeleteFilled, DisconnectOutlined, EditOutlined, LinkOutlined} from "@ant-design/icons";
+import React, {useState} from "react";
 import useBreakpoint from "../../hooks/useBreakpoint";
 import {actionToColor, domainEvent} from "../search/EventTimeline";
 import {Watchlist} from "../../pages/tracking/WatchlistPage";
 import punycode from "punycode/punycode";
+import {WatchlistForm} from "./WatchlistForm";
+import {Connector} from "../../utils/api/connectors";
 
 const {useToken} = theme;
 
-export function WatchlistsList({watchlists, onDelete}: { watchlists: Watchlist[], onDelete: () => void }) {
+export function WatchlistsList({watchlists, onDelete, onUpdateWatchlist, connectors}: {
+    watchlists: Watchlist[],
+    onDelete: () => void,
+    onUpdateWatchlist: (values: { domains: string[], emailTriggers: string[], token: string }) => void,
+    connectors: (Connector & { id: string })[]
+}) {
     const {token} = useToken()
     const sm = useBreakpoint('sm')
-
     const domainEventTranslated = domainEvent()
+    const [form] = Form.useForm()
 
     const columns = [
         {
@@ -26,6 +33,16 @@ export function WatchlistsList({watchlists, onDelete}: { watchlists: Watchlist[]
             dataIndex: 'events'
         }
     ]
+
+    const [open, setOpen] = useState(false);
+
+    const showDrawer = () => {
+        setOpen(true)
+    };
+
+    const onClose = () => {
+        setOpen(false)
+    };
 
     return <>
         {watchlists.map(watchlist =>
@@ -47,9 +64,45 @@ export function WatchlistsList({watchlists, onDelete}: { watchlists: Watchlist[]
                     size='small'
                     style={{width: '100%'}}
                     extra={<Space size='middle'>
-                        <Typography.Link href={`/api/watchlists/${watchlist.token}/calendar`}>
+                        <Typography.Link>
                             <CalendarFilled title={t`Export events to iCalendar format`}/>
                         </Typography.Link>
+                        <Typography.Link>
+                            <EditOutlined title={t`Edit the Watchlist`} onClick={() => {
+                                showDrawer()
+                                form.setFields([
+                                    {name: 'token', value: watchlist.token},
+                                    {name: 'name', value: watchlist.name},
+                                    {name: 'connector', value: watchlist.connector?.id},
+                                    {name: 'domains', value: watchlist.domains.map(d => d.ldhName)},
+                                    {name: 'emailTriggers', value: watchlist.triggers?.map(t => t.event)},
+                                ])
+                            }}/>
+                        </Typography.Link>
+
+                        <Drawer
+                            title={t`Update a Watchlist`}
+                            width={800}
+                            onClose={onClose}
+                            open={open}
+                            styles={{
+                                body: {
+                                    paddingBottom: 80,
+                                }
+                            }}
+                            extra={<Button onClick={onClose}>Cancel</Button>}
+                        >
+                            <WatchlistForm
+                                form={form}
+                                onFinish={values => {
+                                    onUpdateWatchlist(values);
+                                    onClose()
+                                }}
+                                connectors={connectors}
+                                isCreation={false}
+                            />
+                        </Drawer>
+
                         <Popconfirm
                             title={t`Delete the Watchlist`}
                             description={t`Are you sure to delete this Watchlist?`}
@@ -57,7 +110,9 @@ export function WatchlistsList({watchlists, onDelete}: { watchlists: Watchlist[]
                             okText={t`Yes`}
                             cancelText={t`No`}
                             okButtonProps={{danger: true}}>
-                            <DeleteFilled style={{color: token.colorError}} title={t`Delete the Watchlist`}/>
+                            <Typography.Link>
+                                <DeleteFilled style={{color: token.colorError}} title={t`Delete the Watchlist`}/>
+                            </Typography.Link>
                         </Popconfirm>
                     </Space>}
                 >

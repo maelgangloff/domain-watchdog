@@ -10,6 +10,7 @@ use App\Entity\WatchList;
 use App\Repository\WatchListRepository;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\Exception\ORMException;
 use Eluceo\iCal\Domain\Entity\Attendee;
 use Eluceo\iCal\Domain\Entity\Calendar;
 use Eluceo\iCal\Domain\Entity\Event;
@@ -44,7 +45,36 @@ class WatchListController extends AbstractController
     ) {
     }
 
-    public function verifyLimitations(WatchList $watchList)
+    /**
+     * @throws \Exception
+     */
+    #[Route(
+        path: '/api/watchlists',
+        name: 'watchlist_create',
+        defaults: [
+            '_api_resource_class' => WatchList::class,
+            '_api_operation_name' => 'create',
+        ],
+        methods: ['POST']
+    )]
+    public function createWatchList(Request $request): WatchList
+    {
+        $watchList = $this->serializer->deserialize($request->getContent(), WatchList::class, 'json', ['groups' => 'watchlist:create']);
+        $this->verifyLimitations($watchList);
+
+        $user = $this->getUser();
+        $this->logger->info('User {username} registers a Watchlist ({token}).', [
+            'username' => $user->getUserIdentifier(),
+            'token' => $watchList->getToken(),
+        ]);
+
+        $this->em->persist($watchList);
+        $this->em->flush();
+
+        return $watchList;
+    }
+
+    public function verifyLimitations(WatchList $watchList): void
     {
         /** @var User $user */
         $user = $this->getUser();
@@ -87,35 +117,26 @@ class WatchListController extends AbstractController
         }
     }
 
-    /**
-     * @throws \Exception
-     */
     #[Route(
         path: '/api/watchlists',
-        name: 'watchlist_create',
+        name: 'watchlist_get_all_mine',
         defaults: [
             '_api_resource_class' => WatchList::class,
-            '_api_operation_name' => 'create',
+            '_api_operation_name' => 'get_all_mine',
         ],
-        methods: ['POST']
+        methods: ['GET']
     )]
-    public function createWatchList(Request $request): WatchList
+    public function getWatchLists(): Collection
     {
-        $watchList = $this->serializer->deserialize($request->getContent(), WatchList::class, 'json', ['groups' => 'watchlist:create']);
-        $this->verifyLimitations($watchList);
-
+        /** @var User $user */
         $user = $this->getUser();
-        $this->logger->info('User {username} registers a Watchlist ({token}).', [
-            'username' => $user->getUserIdentifier(),
-            'token' => $watchList->getToken(),
-        ]);
 
-        $this->em->persist($watchList);
-        $this->em->flush();
-
-        return $watchList;
+        return $user->getWatchLists();
     }
 
+    /**
+     * @throws ORMException
+     */
     #[Route(
         path: '/api/watchlists/{token}',
         name: 'watchlist_update',
@@ -123,18 +144,22 @@ class WatchListController extends AbstractController
             '_api_resource_class' => WatchList::class,
             '_api_operation_name' => 'update',
         ],
-        methods: ['PATCH']
+        methods: ['PUT']
     )]
-    public function patchWatchList(Request $request): WatchList
+    public function putWatchList(WatchList $watchList): WatchList
     {
-        $watchList = $this->serializer->deserialize($request->getContent(), WatchList::class, 'json', ['groups' => 'watchlist:create']);
+        /** @var User $user */
+        $user = $this->getUser();
+
         $this->verifyLimitations($watchList);
 
-        $user = $this->getUser();
         $this->logger->info('User {username} updates a Watchlist ({token}).', [
             'username' => $user->getUserIdentifier(),
             'token' => $watchList->getToken(),
         ]);
+
+        $this->em->remove($this->em->getReference(WatchList::class, $watchList->getToken()));
+        $this->em->flush();
 
         $this->em->persist($watchList);
         $this->em->flush();
@@ -201,22 +226,5 @@ class WatchListController extends AbstractController
         return new Response($calendarResponse, Response::HTTP_OK, [
             'Content-Type' => 'text/calendar; charset=utf-8',
         ]);
-    }
-
-    #[Route(
-        path: '/api/watchlists',
-        name: 'watchlist_get_all_mine',
-        defaults: [
-            '_api_resource_class' => WatchList::class,
-            '_api_operation_name' => 'get_all_mine',
-        ],
-        methods: ['GET']
-    )]
-    public function getWatchLists(): Collection
-    {
-        /** @var User $user */
-        $user = $this->getUser();
-
-        return $user->getWatchLists();
     }
 }

@@ -6,8 +6,8 @@ use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\Delete;
 use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\GetCollection;
-use ApiPlatform\Metadata\Patch;
 use ApiPlatform\Metadata\Post;
+use ApiPlatform\Metadata\Put;
 use App\Controller\WatchListController;
 use App\Repository\WatchListRepository;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -67,10 +67,11 @@ use Symfony\Component\Uid\Uuid;
             denormalizationContext: ['groups' => 'watchlist:create'],
             name: 'create'
         ),
-        new Patch(
+        new Put(
             routeName: 'watchlist_update',
             normalizationContext: ['groups' => 'watchlist:item'],
-            denormalizationContext: ['groups' => 'watchlist:create'],
+            denormalizationContext: ['groups' => ['watchlist:create', 'watchlist:token']],
+            security: 'object.user == user',
             name: 'update'
         ),
         new Delete(),
@@ -83,7 +84,7 @@ class WatchList
     public ?User $user = null;
     #[ORM\Id]
     #[ORM\Column(type: 'uuid')]
-    #[Groups(['watchlist:item', 'watchlist:list'])]
+    #[Groups(['watchlist:item', 'watchlist:list', 'watchlist:token'])]
     private string $token;
     /**
      * @var Collection<int, Domain>
@@ -126,6 +127,11 @@ class WatchList
     public function getToken(): ?string
     {
         return $this->token;
+    }
+
+    public function setToken(string $token): void
+    {
+        $this->token = $token;
     }
 
     public function getUser(): ?User
