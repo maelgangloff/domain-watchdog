@@ -6,3 +6,10 @@ services:
       target: frankenphp_prod
     environment:
       APP_SECRET: ${APP_SECRET}
+
+  php-worker:
+    build:
+      context: .
+      target: frankenphp_prod
+    restart: always
+    command: php /app/bin/console messenger:consume --all --time-limit=3600 -vvv
