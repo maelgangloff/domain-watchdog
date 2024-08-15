@@ -280,42 +280,42 @@ msgstr ""
 "Ich verzichte auf mein Widerrufsrecht beim Kauf von Domainnamen über die API "
 "des Anbieters"
 
-#: assets/components/tracking/WatchlistsList.tsx:57
+#: assets/components/tracking/WatchlistsList.tsx:59
 msgid "This Watchlist is not linked to a Connector."
 msgstr "Diese Beobachtungsliste ist nicht mit einem Connector verknüpft."
 
-#: assets/components/tracking/WatchlistsList.tsx:60
+#: assets/components/tracking/WatchlistsList.tsx:62
 msgid "Watchlist"
 msgstr "Watchlist"
 
-#: assets/components/tracking/WatchlistsList.tsx:68
+#: assets/components/tracking/WatchlistsList.tsx:70
 msgid "Export events to iCalendar format"
 msgstr "Ereignisse in das iCalendar-Format exportieren"
 
-#: assets/components/tracking/WatchlistsList.tsx:71
+#: assets/components/tracking/WatchlistsList.tsx:73
 msgid "Edit the Watchlist"
 msgstr "Bearbeiten der Watchlist"
 
-#: assets/components/tracking/WatchlistsList.tsx:84
+#: assets/components/tracking/WatchlistsList.tsx:86
 msgid "Update a Watchlist"
 msgstr "Aktualisieren einer Watchlist"
 
-#: assets/components/tracking/WatchlistsList.tsx:107
-#: assets/components/tracking/WatchlistsList.tsx:114
+#: assets/components/tracking/WatchlistsList.tsx:110
+#: assets/components/tracking/WatchlistsList.tsx:117
 msgid "Delete the Watchlist"
 msgstr "Löschen der Watchlist"
 
-#: assets/components/tracking/WatchlistsList.tsx:108
+#: assets/components/tracking/WatchlistsList.tsx:111
 msgid "Are you sure to delete this Watchlist?"
 msgstr "Möchten Sie diese Watchlist wirklich löschen?"
 
 #: assets/components/tracking/ConnectorsList.tsx:25
-#: assets/components/tracking/WatchlistsList.tsx:110
+#: assets/components/tracking/WatchlistsList.tsx:113
 msgid "Yes"
 msgstr "Ja"
 
 #: assets/components/tracking/ConnectorsList.tsx:26
-#: assets/components/tracking/WatchlistsList.tsx:111
+#: assets/components/tracking/WatchlistsList.tsx:114
 msgid "No"
 msgstr "Nein"
 
@@ -542,11 +542,11 @@ msgstr "Erstellen eines Connectors"
 msgid "Watchlist created !"
 msgstr "Watchlist erstellt !"
 
-#: assets/pages/tracking/WatchlistPage.tsx:72
+#: assets/pages/tracking/WatchlistPage.tsx:70
 msgid "Watchlist updated !"
 msgstr "Watchlist aktualisiert !"
 
-#: assets/pages/tracking/WatchlistPage.tsx:98
+#: assets/pages/tracking/WatchlistPage.tsx:96
 msgid "Create a Watchlist"
 msgstr "Erstellen Sie eine Watchlist"
 
