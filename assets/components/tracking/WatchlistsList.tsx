@@ -82,7 +82,7 @@ export function WatchlistsList({watchlists, onDelete, onUpdateWatchlist, connect
 
                         <Drawer
                             title={t`Update a Watchlist`}
-                            width={800}
+                            width='80%'
                             onClose={onClose}
                             open={open}
                             styles={{
