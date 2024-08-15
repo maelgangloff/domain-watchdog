@@ -364,7 +364,7 @@ readonly class RDAPService
 
         if (null === $entity) {
             $entity = new Entity();
-        } else {
+
             $this->logger->info('The entity {handle} was not known to this Domain Watchdog instance.', [
                 'handle' => $rdapEntity['handle'],
             ]);
