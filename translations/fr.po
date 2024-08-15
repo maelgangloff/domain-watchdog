@@ -300,6 +300,10 @@ msgstr "Modifier la Watchlist"
 msgid "Update a Watchlist"
 msgstr "Mise à jour d'une Watchlist"
 
+#: assets/components/tracking/WatchlistsList.tsx:96
+msgid "Cancel"
+msgstr ""
+
 #: assets/components/tracking/WatchlistsList.tsx:110
 #: assets/components/tracking/WatchlistsList.tsx:117
 msgid "Delete the Watchlist"
