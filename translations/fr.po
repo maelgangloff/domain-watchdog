@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2024-08-15 01:17+0000\n"
+"PO-Revision-Date: 2024-08-15 02:07+0000\n"
 "Last-Translator: Maël Gangloff <contact@maelgangloff.fr>\n"
 "Language-Team: French <https://weblate.vinceh121.me/projects/domain-watchdog/"
 "domain-watchdog-dashboard/fr/>\n"
@@ -196,7 +196,7 @@ msgstr "Créer"
 
 #: assets/components/tracking/WatchlistForm.tsx:192
 msgid "Update"
-msgstr "Mise à jour"
+msgstr "Mettre à jour"
 
 #: assets/components/tracking/ConnectorForm.tsx:179
 #: assets/components/tracking/WatchlistForm.tsx:195
