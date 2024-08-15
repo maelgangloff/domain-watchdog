@@ -60,22 +60,7 @@ class WatchListController extends AbstractController
     public function createWatchList(Request $request): WatchList
     {
         $watchList = $this->serializer->deserialize($request->getContent(), WatchList::class, 'json', ['groups' => 'watchlist:create']);
-        $this->verifyLimitations($watchList);
 
-        $user = $this->getUser();
-        $this->logger->info('User {username} registers a Watchlist ({token}).', [
-            'username' => $user->getUserIdentifier(),
-            'token' => $watchList->getToken(),
-        ]);
-
-        $this->em->persist($watchList);
-        $this->em->flush();
-
-        return $watchList;
-    }
-
-    public function verifyLimitations(WatchList $watchList): void
-    {
         /** @var User $user */
         $user = $this->getUser();
         $watchList->setUser($user);
@@ -115,6 +100,17 @@ class WatchListController extends AbstractController
                 }
             }
         }
+
+        $user = $this->getUser();
+        $this->logger->info('User {username} registers a Watchlist ({token}).', [
+            'username' => $user->getUserIdentifier(),
+            'token' => $watchList->getToken(),
+        ]);
+
+        $this->em->persist($watchList);
+        $this->em->flush();
+
+        return $watchList;
     }
 
     #[Route(
@@ -136,6 +132,7 @@ class WatchListController extends AbstractController
 
     /**
      * @throws ORMException
+     * @throws \Exception
      */
     #[Route(
         path: '/api/watchlists/{token}',
@@ -150,8 +147,33 @@ class WatchListController extends AbstractController
     {
         /** @var User $user */
         $user = $this->getUser();
+        $watchList->setUser($user);
 
-        $this->verifyLimitations($watchList);
+        if ($this->getParameter('limited_features')) {
+            if ($watchList->getDomains()->count() >= (int) $this->getParameter('limit_max_watchlist_domains')) {
+                $this->logger->notice('User {username} tried to update a Watchlist. However, the maximum number of domains has been reached for this Watchlist', [
+                    'username' => $user->getUserIdentifier(),
+                ]);
+                throw new AccessDeniedHttpException('You have exceeded the maximum number of domain names allowed in this Watchlist');
+            }
+
+            $userWatchLists = $user->getWatchLists();
+
+            /** @var Domain[] $trackedDomains */
+            $trackedDomains = $userWatchLists->reduce(fn (array $acc, WatchList $watchList) => [...$acc, ...$watchList->getDomains()->toArray()], []);
+
+            /** @var Domain $domain */
+            foreach ($watchList->getDomains()->getIterator() as $domain) {
+                if (in_array($domain, $trackedDomains)) {
+                    $this->logger->notice('User {username} tried to update a watchlist with domain name {ldhName}. However, it is forbidden to register the same domain name twice with limited mode.', [
+                        'username' => $user->getUserIdentifier(),
+                        'ldhName' => $domain->getLdhName(),
+                    ]);
+
+                    throw new AccessDeniedHttpException('It is forbidden to register the same domain name twice in your watchlists with limited mode.');
+                }
+            }
+        }
 
         $this->logger->info('User {username} updates a Watchlist ({token}).', [
             'username' => $user->getUserIdentifier(),
