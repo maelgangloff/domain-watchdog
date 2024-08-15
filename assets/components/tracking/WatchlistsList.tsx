@@ -39,12 +39,12 @@ export function WatchlistsList({watchlists, onDelete, onUpdateWatchlist, connect
 
     const showDrawer = () => {
         setOpen(true)
-    };
+    }
 
     const onClose = () => {
         setOpen(false)
         setLoading(false)
-    };
+    }
 
     return <>
         {watchlists.map(watchlist =>
@@ -93,7 +93,7 @@ export function WatchlistsList({watchlists, onDelete, onUpdateWatchlist, connect
                                     paddingBottom: 80,
                                 }
                             }}
-                            extra={<Button onClick={onClose}>Cancel</Button>}
+                            extra={<Button onClick={onClose}>{t`Cancel`}</Button>}
                         >
                             <WatchlistForm
                                 form={form}
