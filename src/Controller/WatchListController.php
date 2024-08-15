@@ -160,7 +160,9 @@ class WatchListController extends AbstractController
             $userWatchLists = $user->getWatchLists();
 
             /** @var Domain[] $trackedDomains */
-            $trackedDomains = $userWatchLists->reduce(fn (array $acc, WatchList $watchList) => [...$acc, ...$watchList->getDomains()->toArray()], []);
+            $trackedDomains = $userWatchLists
+                ->filter(fn (WatchList $wl) => $wl !== $watchList)
+                ->reduce(fn (array $acc, WatchList $wl) => [...$acc, ...$wl->getDomains()->toArray()], []);
 
             /** @var Domain $domain */
             foreach ($watchList->getDomains()->getIterator() as $domain) {
