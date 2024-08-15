@@ -27,7 +27,7 @@ msgstr "Adresse e-mail"
 #: assets/components/tracking/ConnectorForm.tsx:142
 #: assets/components/tracking/ConnectorForm.tsx:156
 #: assets/components/tracking/ConnectorForm.tsx:165
-#: assets/components/tracking/WatchlistForm.tsx:103
+#: assets/components/tracking/WatchlistForm.tsx:109
 msgid "Required"
 msgstr "Requis"
 
@@ -88,7 +88,7 @@ msgid "ENUM validation expiration"
 msgstr "Expiration de la validation ENUM"
 
 #: assets/components/search/DomainSearchBar.tsx:26
-#: assets/components/tracking/WatchlistForm.tsx:106
+#: assets/components/tracking/WatchlistForm.tsx:112
 msgid "This domain name does not appear to be valid"
 msgstr "Ce nom de domaine ne semble pas être valide"
 
@@ -136,52 +136,52 @@ msgstr "Notifications"
 msgid "Noc"
 msgstr "NOC"
 
-#: assets/components/tracking/WatchlistForm.tsx:60
+#: assets/components/tracking/WatchlistForm.tsx:66
 msgid "Name"
 msgstr "Nom"
 
-#: assets/components/tracking/WatchlistForm.tsx:71
+#: assets/components/tracking/WatchlistForm.tsx:77
 msgid "Watchlist Name"
 msgstr "Nom de la Watchlist"
 
-#: assets/components/tracking/WatchlistForm.tsx:72
+#: assets/components/tracking/WatchlistForm.tsx:78
 msgid "Naming the Watchlist makes it easier to find in the list below."
 msgstr ""
 "Nommer la Watchlist permet de la retrouver plus facilement dans la liste ci-"
 "dessous."
 
-#: assets/components/tracking/WatchlistForm.tsx:83
+#: assets/components/tracking/WatchlistForm.tsx:89
 msgid "At least one domain name"
 msgstr "Au moins un nom de domaine"
 
-#: assets/components/tracking/WatchlistForm.tsx:94
-#: assets/components/tracking/WatchlistsList.tsx:21
+#: assets/components/tracking/WatchlistForm.tsx:100
+#: assets/components/tracking/WatchlistsList.tsx:28
 msgid "Domain names"
 msgstr "Noms de domaines"
 
-#: assets/components/tracking/WatchlistForm.tsx:112
+#: assets/components/tracking/WatchlistForm.tsx:118
 msgid "Domain name"
 msgstr "Nom de domaine"
 
-#: assets/components/tracking/WatchlistForm.tsx:129
+#: assets/components/tracking/WatchlistForm.tsx:135
 msgid "Add a Domain name"
 msgstr "Ajouter un nom de domaine"
 
-#: assets/components/tracking/WatchlistForm.tsx:136
-#: assets/components/tracking/WatchlistsList.tsx:25
+#: assets/components/tracking/WatchlistForm.tsx:142
+#: assets/components/tracking/WatchlistsList.tsx:32
 msgid "Tracked events"
 msgstr "Événements suivis"
 
-#: assets/components/tracking/WatchlistForm.tsx:138
+#: assets/components/tracking/WatchlistForm.tsx:144
 msgid "At least one trigger"
 msgstr "Au moins un déclencheur"
 
-#: assets/components/tracking/WatchlistForm.tsx:160
-#: assets/components/tracking/WatchlistForm.tsx:174
+#: assets/components/tracking/WatchlistForm.tsx:166
+#: assets/components/tracking/WatchlistForm.tsx:180
 msgid "Connector"
 msgstr "Connecteur"
 
-#: assets/components/tracking/WatchlistForm.tsx:170
+#: assets/components/tracking/WatchlistForm.tsx:176
 msgid ""
 "Please make sure the connector information is valid to purchase a domain "
 "that may be available soon."
@@ -190,12 +190,16 @@ msgstr ""
 "acheter un domaine qui pourrait être disponible prochainement."
 
 #: assets/components/tracking/ConnectorForm.tsx:176
-#: assets/components/tracking/WatchlistForm.tsx:186
+#: assets/components/tracking/WatchlistForm.tsx:192
 msgid "Create"
 msgstr "Créer"
 
+#: assets/components/tracking/WatchlistForm.tsx:192
+msgid "Update"
+msgstr ""
+
 #: assets/components/tracking/ConnectorForm.tsx:179
-#: assets/components/tracking/WatchlistForm.tsx:189
+#: assets/components/tracking/WatchlistForm.tsx:195
 msgid "Reset"
 msgstr "Réinitialiser"
 
@@ -276,34 +280,46 @@ msgstr ""
 "Je renonce expressément à mon droit de rétractation concernant l'achat de "
 "noms de domaine via l'API du Fournisseur"
 
-#: assets/components/tracking/WatchlistsList.tsx:40
+#: assets/components/tracking/WatchlistsList.tsx:57
 msgid "This Watchlist is not linked to a Connector."
 msgstr "Cette Watchlist n'est pas liée à un connecteur."
 
-#: assets/components/tracking/WatchlistsList.tsx:43
+#: assets/components/tracking/WatchlistsList.tsx:60
 msgid "Watchlist"
 msgstr "Watchlist"
 
-#: assets/components/tracking/WatchlistsList.tsx:51
+#: assets/components/tracking/WatchlistsList.tsx:68
 msgid "Export events to iCalendar format"
 msgstr "Exporter les événements au format iCalendar"
 
-#: assets/components/tracking/WatchlistsList.tsx:54
-#: assets/components/tracking/WatchlistsList.tsx:60
+#: assets/components/tracking/WatchlistsList.tsx:71
+#, fuzzy
+#| msgid "Delete the Watchlist"
+msgid "Edit the Watchlist"
+msgstr "Supprimer la Watchlist"
+
+#: assets/components/tracking/WatchlistsList.tsx:84
+#, fuzzy
+#| msgid "Create a Watchlist"
+msgid "Update a Watchlist"
+msgstr "Créer une Watchlist"
+
+#: assets/components/tracking/WatchlistsList.tsx:107
+#: assets/components/tracking/WatchlistsList.tsx:114
 msgid "Delete the Watchlist"
 msgstr "Supprimer la Watchlist"
 
-#: assets/components/tracking/WatchlistsList.tsx:55
+#: assets/components/tracking/WatchlistsList.tsx:108
 msgid "Are you sure to delete this Watchlist?"
 msgstr "Êtes-vous sûr de vouloir supprimer cette Watchlist ?"
 
 #: assets/components/tracking/ConnectorsList.tsx:25
-#: assets/components/tracking/WatchlistsList.tsx:57
+#: assets/components/tracking/WatchlistsList.tsx:110
 msgid "Yes"
 msgstr "Oui"
 
 #: assets/components/tracking/ConnectorsList.tsx:26
-#: assets/components/tracking/WatchlistsList.tsx:58
+#: assets/components/tracking/WatchlistsList.tsx:111
 msgid "No"
 msgstr "Non"
 
@@ -529,7 +545,13 @@ msgstr "Créer un Connecteur"
 msgid "Watchlist created !"
 msgstr "Watchlist créée !"
 
-#: assets/pages/tracking/WatchlistPage.tsx:70
+#: assets/pages/tracking/WatchlistPage.tsx:72
+#, fuzzy
+#| msgid "Watchlist created !"
+msgid "Watchlist updated !"
+msgstr "Watchlist créée !"
+
+#: assets/pages/tracking/WatchlistPage.tsx:98
 msgid "Create a Watchlist"
 msgstr "Créer une Watchlist"
 
