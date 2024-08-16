@@ -1,6 +1,6 @@
 import {Button, Checkbox, Form, FormInstance, Input, Popconfirm, Select, Space, Typography} from "antd";
 import React, {useState} from "react";
-import {Connector, ConnectorProvider} from "../../utils/api/connectors";
+import {Connector, ConnectorProvider} from "../../../utils/api/connectors";
 import {t} from "ttag";
 import {BankOutlined} from "@ant-design/icons";
 import {
@@ -8,8 +8,8 @@ import {
     ovhFields as ovhFieldsFunction,
     ovhPricingMode as ovhPricingModeFunction,
     ovhSubsidiaryList as ovhSubsidiaryListFunction
-} from "../../utils/providers/ovh";
-import {helpGetTokenLink, tosHyperlink} from "../../utils/providers";
+} from "../../../utils/providers/ovh";
+import {helpGetTokenLink, tosHyperlink} from "../../../utils/providers";
 
 const formItemLayoutWithOutLabel = {
     wrapperCol: {

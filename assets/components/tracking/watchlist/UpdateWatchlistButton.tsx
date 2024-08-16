@@ -2,9 +2,9 @@ import {Button, Drawer, Form, Typography} from "antd";
 import {t} from "ttag";
 import {WatchlistForm} from "./WatchlistForm";
 import React, {useState} from "react";
-import {Watchlist} from "../../pages/tracking/WatchlistPage";
+import {Watchlist} from "../../../pages/tracking/WatchlistPage";
 import {EditOutlined} from "@ant-design/icons";
-import {Connector} from "../../utils/api/connectors";
+import {Connector} from "../../../utils/api/connectors";
 
 export function UpdateWatchlistButton({watchlist, onUpdateWatchlist, connectors}: {
     watchlist: Watchlist,

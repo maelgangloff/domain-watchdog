@@ -5,8 +5,8 @@ import React from "react";
 import {Domain} from "../../utils/api";
 import {t} from "ttag";
 
-export function EntitiesList({domain}: { domain: Domain }) {
-    const domainRole = {
+export function translateRoles() {
+    return {
         registrant: t`Registrant`,
         technical: t`Technical`,
         administrative: t`Administrative`,
@@ -19,6 +19,10 @@ export function EntitiesList({domain}: { domain: Domain }) {
         notifications: t`Notifications`,
         noc: t`Noc`
     }
+}
+
+export function EntitiesList({domain}: { domain: Domain }) {
+    const domainRole = translateRoles()
 
     return <List
         className="demo-loadmore-list"

@@ -34,6 +34,7 @@
     "core-js": "^3.23.0",
     "dagre": "^0.8.5",
     "html-loader": "^5.1.0",
+    "html-to-image": "^1.11.11",
     "jsonld": "^8.3.2",
     "punycode": "^2.3.1",
     "react": "^18.3.1",

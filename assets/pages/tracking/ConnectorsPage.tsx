@@ -2,9 +2,9 @@ import React, {useEffect, useState} from "react";
 import {Card, Flex, Form, message, Skeleton} from "antd";
 import {t} from "ttag";
 import {Connector, getConnectors, postConnector} from "../../utils/api/connectors";
-import {ConnectorForm} from "../../components/tracking/ConnectorForm";
+import {ConnectorForm} from "../../components/tracking/connector/ConnectorForm";
 import {AxiosError} from "axios";
-import {ConnectorElement, ConnectorsList} from "../../components/tracking/ConnectorsList";
+import {ConnectorElement, ConnectorsList} from "../../components/tracking/connector/ConnectorsList";
 import {showErrorAPI} from "../../utils";
 
 export default function ConnectorsPage() {

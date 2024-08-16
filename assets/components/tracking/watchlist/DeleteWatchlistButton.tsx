@@ -1,9 +1,9 @@
 import {Popconfirm, theme, Typography} from "antd";
 import {t} from "ttag";
-import {deleteWatchlist} from "../../utils/api";
+import {deleteWatchlist} from "../../../utils/api";
 import {DeleteFilled} from "@ant-design/icons";
 import React from "react";
-import {Watchlist} from "../../pages/tracking/WatchlistPage";
+import {Watchlist} from "../../../pages/tracking/WatchlistPage";
 
 export function DeleteWatchlistButton({watchlist, onDelete}: { watchlist: Watchlist, onDelete: () => void }) {
     const {token} = theme.useToken()

@@ -2,50 +2,13 @@ import {Button, Flex, Modal, Space, Typography} from "antd"
 import {t} from "ttag"
 import React, {useEffect, useState} from "react"
 import {ApartmentOutlined} from "@ant-design/icons"
+import vCard from "vcf";
 
 import '@xyflow/react/dist/style.css'
 import {Background, Controls, MiniMap, ReactFlow, useEdgesState, useNodesState} from "@xyflow/react";
-import {getWatchlist, Watchlist} from "../../utils/api";
-
-import dagre from 'dagre'
-import vCard from "vcf";
-
-const dagreGraph = new dagre.graphlib.Graph();
-dagreGraph.setDefaultEdgeLabel(() => ({}));
-
-const nodeWidth = 172;
-const nodeHeight = 200;
-
-const getLayoutedElements = (nodes: any, edges: any, direction = 'TB') => {
-    const isHorizontal = direction === 'LR';
-    dagreGraph.setGraph({rankdir: direction});
-
-    nodes.forEach((node: any) => {
-        dagreGraph.setNode(node.id, {width: nodeWidth, height: nodeHeight});
-    });
-
-    edges.forEach((edge: any) => {
-        dagreGraph.setEdge(edge.source, edge.target);
-    });
-
-    dagre.layout(dagreGraph);
-
-    const newNodes = nodes.map((node: any) => {
-        const nodeWithPosition = dagreGraph.node(node.id)
-
-        return {
-            ...node,
-            targetPosition: isHorizontal ? 'left' : 'top',
-            sourcePosition: isHorizontal ? 'right' : 'bottom',
-            position: {
-                x: nodeWithPosition.x - nodeWidth / 2,
-                y: nodeWithPosition.y - nodeHeight / 2
-            },
-        };
-    });
-
-    return {nodes: newNodes, edges};
-}
+import {getWatchlist, Watchlist} from "../../../utils/api";
+import {translateRoles} from "../../search/EntitiesList";
+import {getLayoutedElements} from "./getLayoutedElements";
 
 
 function watchlistToNodes(watchlist: Watchlist) {
@@ -79,9 +42,12 @@ function watchlistToNodes(watchlist: Watchlist) {
 }
 
 const rolesToColor = (roles: string[]) => roles.includes('registrant') ? 'green' :
-    roles.includes('technical') ? 'orange' : 'black'
+    roles.includes('administrative') ? 'blue' :
+        roles.includes('technical') ? 'orange' : 'violet'
 
 function watchlistToEdges(watchlist: Watchlist) {
+    const domainRole = translateRoles()
+
     return watchlist.domains
         .map(d => d.entities
             .filter(e => !e.roles.includes('registrar'))
@@ -90,6 +56,7 @@ function watchlistToEdges(watchlist: Watchlist) {
                 source: e.roles.includes('technical') ? d.ldhName : e.entity.handle,
                 target: e.roles.includes('technical') ? e.entity.handle : d.ldhName,
                 style: {stroke: rolesToColor(e.roles), strokeWidth: 3},
+                label: e.roles.map(r => Object.keys(domainRole).includes(r) ? domainRole[r as keyof typeof domainRole] : r).join(', '),
                 animated: e.roles.includes('registrant'),
             }))
         ).flat(2)
@@ -138,6 +105,10 @@ export function ViewDiagramWatchlistButton({token}: { token: string }) {
         >
             {nodes && edges && <Flex style={{width: '75vw', height: '80vh'}}>
                 <ReactFlow
+                    fitView
+                    colorMode='system'
+                    nodesConnectable={false}
+                    edgesReconnectable={false}
                     nodes={nodes}
                     edges={edges}
                     onNodesChange={onNodesChange}

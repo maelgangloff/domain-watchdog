@@ -2,8 +2,8 @@ import {Button, Form, FormInstance, Input, Select, SelectProps, Space, Tag} from
 import {t} from "ttag";
 import {ApiOutlined, MinusCircleOutlined, PlusOutlined} from "@ant-design/icons";
 import React from "react";
-import {Connector} from "../../utils/api/connectors";
-import {actionToColor, domainEvent} from "../search/EventTimeline";
+import {Connector} from "../../../utils/api/connectors";
+import {actionToColor, domainEvent} from "../../search/EventTimeline";
 
 type TagRender = SelectProps['tagRender'];
 

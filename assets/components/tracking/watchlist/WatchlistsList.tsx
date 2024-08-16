@@ -2,14 +2,14 @@ import {Card, Divider, Space, Table, Tag, Typography} from "antd";
 import {t} from "ttag";
 import {CalendarFilled, DisconnectOutlined, LinkOutlined} from "@ant-design/icons";
 import React from "react";
-import useBreakpoint from "../../hooks/useBreakpoint";
-import {actionToColor, domainEvent} from "../search/EventTimeline";
-import {Watchlist} from "../../pages/tracking/WatchlistPage";
+import useBreakpoint from "../../../hooks/useBreakpoint";
+import {actionToColor, domainEvent} from "../../search/EventTimeline";
+import {Watchlist} from "../../../pages/tracking/WatchlistPage";
 import punycode from "punycode/punycode";
-import {Connector} from "../../utils/api/connectors";
+import {Connector} from "../../../utils/api/connectors";
 import {UpdateWatchlistButton} from "./UpdateWatchlistButton";
 import {DeleteWatchlistButton} from "./DeleteWatchlistButton";
-import {ViewDiagramWatchlistButton} from "./ViewDiagramWatchlistButton";
+import {ViewDiagramWatchlistButton} from "../diagram/ViewDiagramWatchlistButton";
 
 export function WatchlistsList({watchlists, onDelete, onUpdateWatchlist, connectors}: {
     watchlists: Watchlist[],
