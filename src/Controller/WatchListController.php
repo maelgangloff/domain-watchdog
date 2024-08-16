@@ -35,6 +35,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
+use Symfony\Component\Notifier\Exception\TransportExceptionInterface;
 use Symfony\Component\Notifier\Transport\AbstractTransportFactory;
 use Symfony\Component\Notifier\Transport\Dsn;
 use Symfony\Component\Routing\Attribute\Route;
@@ -48,6 +49,29 @@ class WatchListController extends AbstractController
         private readonly WatchListRepository $watchListRepository,
         private readonly LoggerInterface $logger
     ) {
+    }
+
+    /**
+     * @throws TransportExceptionInterface
+     */
+    private function verifyWebhookDSN(WatchList $watchList): void
+    {
+        if (null !== $watchList->getWebhookDsn()) {
+            foreach ($watchList->getWebhookDsn() as $dsnString) {
+                $dsn = new Dsn($dsnString);
+
+                $scheme = $dsn->getScheme();
+                $webhookScheme = WebhookScheme::tryFrom($scheme);
+
+                if (null === $webhookScheme) {
+                    throw new BadRequestHttpException("The DSN scheme ($scheme) is not supported");
+                }
+                $transportFactoryClass = $webhookScheme->getChatTransportFactory();
+                /** @var AbstractTransportFactory $transportFactory */
+                $transportFactory = new $transportFactoryClass();
+                $transportFactory->create($dsn)->send((new TestChatNotification())->asChatMessage());
+            }
+        }
     }
 
     /**
@@ -70,22 +94,7 @@ class WatchListController extends AbstractController
         $user = $this->getUser();
         $watchList->setUser($user);
 
-        if (null !== $watchList->getWebhookDsn()) {
-            foreach ($watchList->getWebhookDsn() as $dsnString) {
-                $dsn = new Dsn($dsnString);
-
-                $scheme = $dsn->getScheme();
-                $webhookScheme = WebhookScheme::tryFrom($scheme);
-
-                if (null === $webhookScheme) {
-                    throw new BadRequestHttpException("The DSN scheme ($scheme) is not supported");
-                }
-                $transportFactoryClass = $webhookScheme->getChatTransportFactory();
-                /** @var AbstractTransportFactory $transportFactory */
-                $transportFactory = new $transportFactoryClass();
-                $transportFactory->create($dsn)->send((new TestChatNotification())->asChatMessage());
-            }
-        }
+        $this->verifyWebhookDSN($watchList);
 
         /*
          * In the limited version, we do not want a user to be able to register the same domain more than once in their watchlists.
@@ -173,15 +182,7 @@ class WatchListController extends AbstractController
         $user = $this->getUser();
         $watchList->setUser($user);
 
-        if (null !== $watchList->getWebhookDsn()) {
-            foreach ($watchList->getWebhookDsn() as $dsnString) {
-                $scheme = (new Dsn($dsnString))->getScheme();
-
-                if (null === WebhookScheme::tryFrom($scheme)) {
-                    throw new BadRequestHttpException("The DSN scheme ($scheme) is not supported");
-                }
-            }
-        }
+        $this->verifyWebhookDSN($watchList);
 
         if ($this->getParameter('limited_features')) {
             if ($watchList->getDomains()->count() > (int) $this->getParameter('limit_max_watchlist_domains')) {

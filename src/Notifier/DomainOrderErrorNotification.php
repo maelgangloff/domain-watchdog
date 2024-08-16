@@ -24,7 +24,10 @@ class DomainOrderErrorNotification extends Notification implements ChatNotificat
 
     public function asChatMessage(?RecipientInterface $recipient = null, ?string $transport = null): ?ChatMessage
     {
-        $this->subject('Error: Domain Order');
+        $ldhName = $this->domain->getLdhName();
+        $this->subject("Error: Domain Order $ldhName")
+            ->content("Domain name $ldhName tried to be purchased. The attempt failed.")
+            ->importance(Notification::IMPORTANCE_HIGH);
 
         return ChatMessage::fromNotification($this);
     }

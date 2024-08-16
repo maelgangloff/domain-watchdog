@@ -25,7 +25,11 @@ class DomainUpdateNotification extends Notification implements ChatNotificationI
 
     public function asChatMessage(?RecipientInterface $recipient = null, ?string $transport = null): ?ChatMessage
     {
-        $this->subject('Domain Updated');
+        $ldhName = $this->domainEvent->getDomain()->getLdhName();
+        $action = $this->domainEvent->getAction();
+        $this->subject("Success: Domain Updated $ldhName")
+            ->content("Domain name $ldhName information has been updated ($action).")
+            ->importance(Notification::IMPORTANCE_HIGH);
 
         return ChatMessage::fromNotification($this);
     }

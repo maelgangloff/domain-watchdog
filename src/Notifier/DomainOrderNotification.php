@@ -27,7 +27,11 @@ class DomainOrderNotification extends Notification implements ChatNotificationIn
 
     public function asChatMessage(?RecipientInterface $recipient = null, ?string $transport = null): ?ChatMessage
     {
-        $this->subject('Domain Ordered');
+        $ldhName = $this->domain->getLdhName();
+        $this
+            ->subject("Success: Domain Ordered $ldhName!")
+            ->content("Domain name $ldhName has just been purchased. The API provider did not return an error.")
+            ->importance(Notification::IMPORTANCE_HIGH);
 
         return ChatMessage::fromNotification($this);
     }

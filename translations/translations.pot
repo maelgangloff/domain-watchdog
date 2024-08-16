@@ -23,6 +23,7 @@ msgstr ""
 #: assets/components/tracking/connector/ConnectorForm.tsx:156
 #: assets/components/tracking/connector/ConnectorForm.tsx:165
 #: assets/components/tracking/watchlist/WatchlistForm.tsx:109
+#: assets/components/tracking/watchlist/WatchlistForm.tsx:205
 msgid "Required"
 msgstr ""
 
@@ -203,12 +204,12 @@ msgid ""
 msgstr ""
 
 #: assets/components/tracking/connector/ConnectorForm.tsx:176
-#: assets/components/tracking/watchlist/WatchlistForm.tsx:192
+#: assets/components/tracking/watchlist/WatchlistForm.tsx:243
 msgid "Create"
 msgstr ""
 
 #: assets/components/tracking/connector/ConnectorForm.tsx:179
-#: assets/components/tracking/watchlist/WatchlistForm.tsx:195
+#: assets/components/tracking/watchlist/WatchlistForm.tsx:246
 msgid "Reset"
 msgstr ""
 
@@ -292,7 +293,27 @@ msgid ""
 "that may be available soon."
 msgstr ""
 
-#: assets/components/tracking/watchlist/WatchlistForm.tsx:192
+#: assets/components/tracking/watchlist/WatchlistForm.tsx:196
+msgid "DSN"
+msgstr ""
+
+#: assets/components/tracking/watchlist/WatchlistForm.tsx:208
+msgid "This DSN does not appear to be valid"
+msgstr ""
+
+#: assets/components/tracking/watchlist/WatchlistForm.tsx:212
+msgid "slack://TOKEN@default?channel=CHANNEL"
+msgstr ""
+
+#: assets/components/tracking/watchlist/WatchlistForm.tsx:224
+msgid "Check out this link to the Symfony documentation to help you build the DSN"
+msgstr ""
+
+#: assets/components/tracking/watchlist/WatchlistForm.tsx:233
+msgid "Add a Webhook"
+msgstr ""
+
+#: assets/components/tracking/watchlist/WatchlistForm.tsx:243
 msgid "Update"
 msgstr ""
 
@@ -300,11 +321,11 @@ msgstr ""
 msgid "Edit the Watchlist"
 msgstr ""
 
-#: assets/components/tracking/watchlist/UpdateWatchlistButton.tsx:43
+#: assets/components/tracking/watchlist/UpdateWatchlistButton.tsx:44
 msgid "Update a Watchlist"
 msgstr ""
 
-#: assets/components/tracking/watchlist/UpdateWatchlistButton.tsx:53
+#: assets/components/tracking/watchlist/UpdateWatchlistButton.tsx:54
 msgid "Cancel"
 msgstr ""
 
@@ -517,15 +538,15 @@ msgstr ""
 msgid "Create a Connector"
 msgstr ""
 
-#: assets/pages/tracking/WatchlistPage.tsx:47
+#: assets/pages/tracking/WatchlistPage.tsx:53
 msgid "Watchlist created !"
 msgstr ""
 
-#: assets/pages/tracking/WatchlistPage.tsx:70
+#: assets/pages/tracking/WatchlistPage.tsx:78
 msgid "Watchlist updated !"
 msgstr ""
 
-#: assets/pages/tracking/WatchlistPage.tsx:96
+#: assets/pages/tracking/WatchlistPage.tsx:104
 msgid "Create a Watchlist"
 msgstr ""
 

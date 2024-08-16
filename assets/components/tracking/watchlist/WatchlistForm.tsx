@@ -1,4 +1,4 @@
-import {Button, Form, FormInstance, Input, Select, SelectProps, Space, Tag} from "antd";
+import {Button, Form, FormInstance, Input, Select, SelectProps, Space, Tag, Typography} from "antd";
 import {t} from "ttag";
 import {ApiOutlined, MinusCircleOutlined, PlusOutlined} from "@ant-design/icons";
 import React from "react";
@@ -209,7 +209,7 @@ export function WatchlistForm({form, connectors, onFinish, isCreation}: {
                                 }]}
                                 noStyle
                             >
-                                <Input placeholder={t`Data Source Name`} style={{width: '60%'}} autoComplete='off'/>
+                                <Input placeholder={t`slack://TOKEN@default?channel=CHANNEL`} style={{width: '60%'}} autoComplete='off'/>
                             </Form.Item>
                             {fields.length > 1 ? (
                                 <MinusCircleOutlined
@@ -219,7 +219,11 @@ export function WatchlistForm({form, connectors, onFinish, isCreation}: {
                             ) : null}
                         </Form.Item>
                     ))}
-                    <Form.Item>
+                    <Form.Item help={
+                        <Typography.Link href='https://symfony.com/doc/current/notifier.html#chat-channel'>
+                            {t`Check out this link to the Symfony documentation to help you build the DSN`}
+                        </Typography.Link>}
+                    >
                         <Button
                             type="dashed"
                             onClick={() => add()}
@@ -233,7 +237,7 @@ export function WatchlistForm({form, connectors, onFinish, isCreation}: {
                 </>
             )}
         </Form.List>
-        <Form.Item>
+        <Form.Item style={{marginTop: '10px'}}>
             <Space>
                 <Button type="primary" htmlType="submit">
                     {isCreation ? t`Create` : t`Update`}

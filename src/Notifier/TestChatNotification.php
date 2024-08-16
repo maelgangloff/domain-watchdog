@@ -11,8 +11,10 @@ class TestChatNotification extends Notification implements ChatNotificationInter
 {
     public function asChatMessage(?RecipientInterface $recipient = null, ?string $transport = null): ?ChatMessage
     {
-        $this->subject('Test notification');
-        $this->content('This is a test message. If you can read me, this Webhook is configured correctly');
+        $this
+            ->subject('Test notification')
+            ->content('This is a test message. If you can read me, this Webhook is configured correctly')
+            ->importance(Notification::IMPORTANCE_LOW);
 
         return ChatMessage::fromNotification($this);
     }

@@ -24,7 +24,10 @@ class DomainUpdateErrorNotification extends Notification implements ChatNotifica
 
     public function asChatMessage(?RecipientInterface $recipient = null, ?string $transport = null): ?ChatMessage
     {
-        $this->subject('Error: Domain Update');
+        $ldhName = $this->domain->getLdhName();
+        $this->subject("Error: Domain Update $ldhName")
+            ->content("Domain name $ldhName tried to be updated. The attempt failed.")
+            ->importance(Notification::IMPORTANCE_MEDIUM);
 
         return ChatMessage::fromNotification($this);
     }
