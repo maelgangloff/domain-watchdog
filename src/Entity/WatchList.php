@@ -74,7 +74,9 @@ use Symfony\Component\Uid\Uuid;
             security: 'object.user == user',
             name: 'update'
         ),
-        new Delete(),
+        new Delete(
+            security: 'object.user == user'
+        ),
     ],
 )]
 class WatchList
