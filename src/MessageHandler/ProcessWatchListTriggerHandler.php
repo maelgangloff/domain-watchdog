@@ -3,33 +3,36 @@
 namespace App\MessageHandler;
 
 use App\Entity\Domain;
-use App\Entity\User;
 use App\Entity\WatchList;
 use App\Message\ProcessDomainTrigger;
 use App\Message\ProcessWatchListTrigger;
+use App\Notifier\DomainUpdateErrorNotification;
 use App\Repository\WatchListRepository;
 use App\Service\RDAPService;
 use Psr\Log\LoggerInterface;
-use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 use Symfony\Component\Messenger\Exception\ExceptionInterface;
 use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Mime\Address;
+use Symfony\Component\Notifier\Recipient\Recipient;
 
 #[AsMessageHandler]
 final readonly class ProcessWatchListTriggerHandler
 {
+    private Address $sender;
+
     public function __construct(
         private RDAPService $RDAPService,
         private MailerInterface $mailer,
-        private string $mailerSenderEmail,
-        private string $mailerSenderName,
+        string $mailerSenderEmail,
+        string $mailerSenderName,
         private MessageBusInterface $bus,
         private WatchListRepository $watchListRepository,
         private LoggerInterface $logger
     ) {
+        $this->sender = new Address($mailerSenderEmail, $mailerSenderName);
     }
 
     /**
@@ -63,28 +66,12 @@ final readonly class ProcessWatchListTriggerHandler
                     'username' => $watchList->getUser()->getUserIdentifier(),
                     'error' => $e,
                 ]);
-                $this->sendEmailDomainUpdateError($domain, $watchList->getUser());
+                $email = (new DomainUpdateErrorNotification($this->sender, $domain))
+                    ->asEmailMessage(new Recipient($watchList->getUser()->getEmail()));
+                $this->mailer->send($email->getMessage());
             }
 
             $this->bus->dispatch(new ProcessDomainTrigger($watchList->getToken(), $domain->getLdhName(), $updatedAt));
         }
-    }
-
-    /**
-     * @throws TransportExceptionInterface
-     */
-    private function sendEmailDomainUpdateError(Domain $domain, User $user): void
-    {
-        $email = (new TemplatedEmail())
-            ->from(new Address($this->mailerSenderEmail, $this->mailerSenderName))
-            ->to($user->getEmail())
-            ->subject('An error occurred while updating a domain name')
-            ->htmlTemplate('emails/errors/domain_update.html.twig')
-            ->locale('en')
-            ->context([
-                'domain' => $domain,
-            ]);
-
-        $this->mailer->send($email);
     }
 }

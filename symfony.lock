@@ -153,6 +153,15 @@
             "config/packages/debug.yaml"
         ]
     },
+    "symfony/discord-notifier": {
+        "version": "7.1",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "main",
+            "version": "5.2",
+            "ref": "b97655f9a2fb8fc04d9f4081e0b5599d897b7f6e"
+        }
+    },
     "symfony/flex": {
         "version": "2.4",
         "recipe": {
@@ -183,6 +192,15 @@
             "src/Controller/.gitignore",
             "src/Kernel.php"
         ]
+    },
+    "symfony/google-chat-notifier": {
+        "version": "7.1",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "main",
+            "version": "5.3",
+            "ref": "5954a3403bf1cdc557e2b71d3854cc81ba7d37cb"
+        }
     },
     "symfony/lock": {
         "version": "7.1",
@@ -217,6 +235,15 @@
             "ref": "fadbfe33303a76e25cb63401050439aa9b1a9c7f"
         }
     },
+    "symfony/mattermost-notifier": {
+        "version": "7.1",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "main",
+            "version": "5.1",
+            "ref": "60df16a0ff39e942f6579e624d5630fc6b4e0cc1"
+        }
+    },
     "symfony/messenger": {
         "version": "7.1",
         "recipe": {
@@ -228,6 +255,15 @@
         "files": [
             "config/packages/messenger.yaml"
         ]
+    },
+    "symfony/microsoft-teams-notifier": {
+        "version": "7.1",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "main",
+            "version": "5.3",
+            "ref": "e4e1704f0b11573aaededc00640492c915de0bbe"
+        }
     },
     "symfony/monolog-bundle": {
         "version": "3.10",
@@ -268,6 +304,15 @@
             "tests/bootstrap.php"
         ]
     },
+    "symfony/rocket-chat-notifier": {
+        "version": "7.1",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "main",
+            "version": "5.1",
+            "ref": "5c91d24b503de5cc0d0eb880fc95afa1bef8b6f4"
+        }
+    },
     "symfony/routing": {
         "version": "7.1",
         "recipe": {
@@ -294,6 +339,15 @@
             "config/routes/security.yaml"
         ]
     },
+    "symfony/slack-notifier": {
+        "version": "7.1",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "main",
+            "version": "5.2",
+            "ref": "8fb9603326990013efbe6d71c2dd78ada316808a"
+        }
+    },
     "symfony/stimulus-bundle": {
         "version": "2.18",
         "recipe": {
@@ -307,6 +361,15 @@
             "assets/controllers.json",
             "assets/controllers/hello_controller.js"
         ]
+    },
+    "symfony/telegram-notifier": {
+        "version": "7.1",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "main",
+            "version": "5.0",
+            "ref": "6cecb59a0e96c9e1cee469f2b82fa920101a68e8"
+        }
     },
     "symfony/translation": {
         "version": "7.1",
@@ -386,6 +449,15 @@
             "package.json",
             "webpack.config.js"
         ]
+    },
+    "symfony/zulip-notifier": {
+        "version": "7.1",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "main",
+            "version": "5.2",
+            "ref": "f420901c554baf7cde79a2a0bbf9b37ab1a650aa"
+        }
     },
     "symfonycasts/verify-email-bundle": {
         "version": "v1.17.0"
