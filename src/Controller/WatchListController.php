@@ -71,7 +71,7 @@ class WatchListController extends AbstractController
          */
         if ($this->getParameter('limited_features')) {
             if ($watchList->getDomains()->count() > (int) $this->getParameter('limit_max_watchlist_domains')) {
-                $this->logger->notice('User {username} tried to create a Watchlist. However, the maximum number of domains has been reached for this Watchlist', [
+                $this->logger->notice('User {username} tried to create a Watchlist. The maximum number of domains has been reached for this Watchlist', [
                     'username' => $user->getUserIdentifier(),
                 ]);
                 throw new AccessDeniedHttpException('You have exceeded the maximum number of domain names allowed in this Watchlist');
@@ -79,7 +79,7 @@ class WatchListController extends AbstractController
 
             $userWatchLists = $user->getWatchLists();
             if ($userWatchLists->count() >= (int) $this->getParameter('limit_max_watchlist')) {
-                $this->logger->notice('User {username} tried to create a Watchlist. However, the maximum number of Watchlists has been reached.', [
+                $this->logger->notice('User {username} tried to create a Watchlist. The maximum number of Watchlists has been reached', [
                     'username' => $user->getUserIdentifier(),
                 ]);
                 throw new AccessDeniedHttpException('You have exceeded the maximum number of Watchlists allowed');
@@ -91,12 +91,14 @@ class WatchListController extends AbstractController
             /** @var Domain $domain */
             foreach ($watchList->getDomains()->getIterator() as $domain) {
                 if (in_array($domain, $trackedDomains)) {
-                    $this->logger->notice('User {username} tried to create a watchlist with domain name {ldhName}. However, it is forbidden to register the same domain name twice with limited mode.', [
+                    $ldhName = $domain->getLdhName();
+
+                    $this->logger->notice('User {username} tried to create a watchlist with domain name {ldhName}. It is forbidden to register the same domain name twice with limited mode', [
                         'username' => $user->getUserIdentifier(),
-                        'ldhName' => $domain->getLdhName(),
+                        'ldhName' => $ldhName,
                     ]);
 
-                    throw new AccessDeniedHttpException('It is forbidden to register the same domain name twice in your watchlists with limited mode.');
+                    throw new AccessDeniedHttpException("It is forbidden to register the same domain name twice in your watchlists with limited mode ($ldhName)");
                 }
             }
         }
@@ -151,7 +153,7 @@ class WatchListController extends AbstractController
 
         if ($this->getParameter('limited_features')) {
             if ($watchList->getDomains()->count() > (int) $this->getParameter('limit_max_watchlist_domains')) {
-                $this->logger->notice('User {username} tried to update a Watchlist. However, the maximum number of domains has been reached for this Watchlist', [
+                $this->logger->notice('User {username} tried to update a Watchlist. The maximum number of domains has been reached for this Watchlist', [
                     'username' => $user->getUserIdentifier(),
                 ]);
                 throw new AccessDeniedHttpException('You have exceeded the maximum number of domain names allowed in this Watchlist');
@@ -167,12 +169,13 @@ class WatchListController extends AbstractController
             /** @var Domain $domain */
             foreach ($watchList->getDomains()->getIterator() as $domain) {
                 if (in_array($domain, $trackedDomains)) {
-                    $this->logger->notice('User {username} tried to update a watchlist with domain name {ldhName}. However, it is forbidden to register the same domain name twice with limited mode.', [
+                    $ldhName = $domain->getLdhName();
+                    $this->logger->notice('User {username} tried to update a watchlist with domain name {ldhName}. It is forbidden to register the same domain name twice with limited mode', [
                         'username' => $user->getUserIdentifier(),
-                        'ldhName' => $domain->getLdhName(),
+                        'ldhName' => $ldhName,
                     ]);
 
-                    throw new AccessDeniedHttpException('It is forbidden to register the same domain name twice in your watchlists with limited mode.');
+                    throw new AccessDeniedHttpException("It is forbidden to register the same domain name twice in your watchlists with limited mode ($ldhName)");
                 }
             }
         }
