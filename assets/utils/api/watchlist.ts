@@ -1,4 +1,4 @@
-import {request, Watchlist} from "./index";
+import {request, Watchlist, WatchlistRequest} from "./index";
 
 export async function getWatchlists() {
     const response = await request({
@@ -8,13 +8,13 @@ export async function getWatchlists() {
 }
 
 export async function getWatchlist(token: string) {
-    const response = await request<Watchlist & { token: string }>({
+    const response = await request<Watchlist>({
         url: 'watchlists/' + token
     })
     return response.data
 }
 
-export async function postWatchlist(watchlist: Watchlist) {
+export async function postWatchlist(watchlist: WatchlistRequest) {
     const response = await request<{ token: string }>({
         method: 'POST',
         url: 'watchlists',
@@ -33,8 +33,8 @@ export async function deleteWatchlist(token: string): Promise<void> {
     })
 }
 
-export async function putWatchlist(watchlist: Partial<Watchlist> & { token: string }) {
-    const response = await request<Watchlist>({
+export async function putWatchlist(watchlist: Partial<WatchlistRequest> & { token: string }) {
+    const response = await request<WatchlistRequest>({
         method: 'PUT',
         url: 'watchlists/' + watchlist.token,
         data: watchlist,

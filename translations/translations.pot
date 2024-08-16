@@ -149,7 +149,7 @@ msgid "At least one domain name"
 msgstr ""
 
 #: assets/components/tracking/WatchlistForm.tsx:100
-#: assets/components/tracking/WatchlistsList.tsx:28
+#: assets/components/tracking/WatchlistsList.tsx:26
 msgid "Domain names"
 msgstr ""
 
@@ -162,7 +162,7 @@ msgid "Add a Domain name"
 msgstr ""
 
 #: assets/components/tracking/WatchlistForm.tsx:142
-#: assets/components/tracking/WatchlistsList.tsx:32
+#: assets/components/tracking/WatchlistsList.tsx:30
 msgid "Tracked events"
 msgstr ""
 
@@ -193,6 +193,14 @@ msgstr ""
 #: assets/components/tracking/ConnectorForm.tsx:179
 #: assets/components/tracking/WatchlistForm.tsx:195
 msgid "Reset"
+msgstr ""
+
+#: assets/components/tracking/ViewDiagramWatchlistButton.tsx:119
+msgid "View the Watchlist Entity Diagram"
+msgstr ""
+
+#: assets/components/tracking/ViewDiagramWatchlistButton.tsx:124
+msgid "Watchlist Entity Diagram"
 msgstr ""
 
 #: assets/components/tracking/ConnectorForm.tsx:40
@@ -265,47 +273,47 @@ msgid ""
 "the Provider's API"
 msgstr ""
 
-#: assets/components/tracking/WatchlistsList.tsx:59
-msgid "This Watchlist is not linked to a Connector."
-msgstr ""
-
-#: assets/components/tracking/WatchlistsList.tsx:62
-msgid "Watchlist"
-msgstr ""
-
-#: assets/components/tracking/WatchlistsList.tsx:70
-msgid "Export events to iCalendar format"
-msgstr ""
-
-#: assets/components/tracking/WatchlistsList.tsx:73
+#: assets/components/tracking/UpdateWatchlistButton.tsx:31
 msgid "Edit the Watchlist"
 msgstr ""
 
-#: assets/components/tracking/WatchlistsList.tsx:86
+#: assets/components/tracking/UpdateWatchlistButton.tsx:43
 msgid "Update a Watchlist"
 msgstr ""
 
-#: assets/components/tracking/WatchlistsList.tsx:96
+#: assets/components/tracking/UpdateWatchlistButton.tsx:53
 msgid "Cancel"
 msgstr ""
 
-#: assets/components/tracking/WatchlistsList.tsx:110
-#: assets/components/tracking/WatchlistsList.tsx:117
+#: assets/components/tracking/DeleteWatchlistButton.tsx:12
+#: assets/components/tracking/DeleteWatchlistButton.tsx:19
 msgid "Delete the Watchlist"
 msgstr ""
 
-#: assets/components/tracking/WatchlistsList.tsx:111
+#: assets/components/tracking/DeleteWatchlistButton.tsx:13
 msgid "Are you sure to delete this Watchlist?"
 msgstr ""
 
 #: assets/components/tracking/ConnectorsList.tsx:25
-#: assets/components/tracking/WatchlistsList.tsx:113
+#: assets/components/tracking/DeleteWatchlistButton.tsx:15
 msgid "Yes"
 msgstr ""
 
 #: assets/components/tracking/ConnectorsList.tsx:26
-#: assets/components/tracking/WatchlistsList.tsx:114
+#: assets/components/tracking/DeleteWatchlistButton.tsx:16
 msgid "No"
+msgstr ""
+
+#: assets/components/tracking/WatchlistsList.tsx:46
+msgid "This Watchlist is not linked to a Connector."
+msgstr ""
+
+#: assets/components/tracking/WatchlistsList.tsx:49
+msgid "Watchlist"
+msgstr ""
+
+#: assets/components/tracking/WatchlistsList.tsx:60
+msgid "Export events to iCalendar format"
 msgstr ""
 
 #: assets/components/tracking/ConnectorsList.tsx:19

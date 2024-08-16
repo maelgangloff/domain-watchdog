@@ -54,7 +54,7 @@ export function WatchlistsList({watchlists, onDelete, onUpdateWatchlist, connect
                     style={{width: '100%'}}
                     extra={<Space size='middle'>
 
-                        <ViewDiagramWatchlistButton watchlist={watchlist}/>
+                        <ViewDiagramWatchlistButton token={watchlist.token}/>
 
                         <Typography.Link href={`/api/watchlists/${watchlist.token}/calendar`}>
                             <CalendarFilled title={t`Export events to iCalendar format`}

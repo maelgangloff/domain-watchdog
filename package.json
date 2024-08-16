@@ -21,15 +21,18 @@
     "@fontsource/noto-color-emoji": "^5.0.27",
     "@symfony/webpack-encore": "^4.0.0",
     "@types/axios": "^0.14.0",
+    "@types/dagre": "^0.7.52",
     "@types/jsonld": "^1.5.15",
     "@types/punycode": "^2.1.4",
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
     "@types/react-responsive": "^8.0.8",
     "@types/vcf": "^2.0.7",
+    "@xyflow/react": "^12.1.0",
     "antd": "^5.19.3",
     "axios": "^1.7.2",
     "core-js": "^3.23.0",
+    "dagre": "^0.8.5",
     "html-loader": "^5.1.0",
     "jsonld": "^8.3.2",
     "punycode": "^2.3.1",
@@ -57,8 +60,5 @@
     "build": "encore production --progress",
     "ttag:po2json": "cd translations; for i in $(find . -name \"*.po\"); do ttag po2json $i > ../public/locales/$i.json; done; cd ..",
     "ttag:extract": "ttag extract $(find assets -name '*.ts' -or -name '*.tsx') -o translations/translations.pot"
-  },
-  "dependencies": {
-    "remove": "^0.1.5"
   }
 }

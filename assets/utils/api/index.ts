@@ -64,11 +64,20 @@ export interface User {
     roles: string[]
 }
 
-export interface Watchlist {
+export interface WatchlistRequest {
     name?: string
     domains: string[],
     triggers: { event: EventAction, action: TriggerAction }[],
     connector?: string
+}
+
+export interface Watchlist {
+    token: string
+    name?: string
+    domains: Domain[],
+    triggers: { event: EventAction, action: TriggerAction }[],
+    connector?: string
+    createdAt: string
 }
 
 export interface InstanceConfig {
