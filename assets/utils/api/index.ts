@@ -69,6 +69,7 @@ export interface WatchlistRequest {
     domains: string[],
     triggers: { event: EventAction, action: TriggerAction }[],
     connector?: string
+    dsn?: string[]
 }
 
 export interface Watchlist {
@@ -78,6 +79,7 @@ export interface Watchlist {
     triggers: { event: EventAction, action: TriggerAction }[],
     connector?: string
     createdAt: string
+    dsn?: string[]
 }
 
 export interface InstanceConfig {

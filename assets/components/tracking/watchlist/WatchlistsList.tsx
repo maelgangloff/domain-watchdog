@@ -14,7 +14,7 @@ import {ViewDiagramWatchlistButton} from "../diagram/ViewDiagramWatchlistButton"
 export function WatchlistsList({watchlists, onDelete, onUpdateWatchlist, connectors}: {
     watchlists: Watchlist[],
     onDelete: () => void,
-    onUpdateWatchlist: (values: { domains: string[], emailTriggers: string[], token: string }) => Promise<void>,
+    onUpdateWatchlist: (values: { domains: string[], triggers: string[], token: string }) => Promise<void>,
     connectors: (Connector & { id: string })[]
 }) {
     const sm = useBreakpoint('sm')

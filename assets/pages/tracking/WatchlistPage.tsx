@@ -14,6 +14,7 @@ export type Watchlist = {
     token: string,
     domains: { ldhName: string }[],
     triggers?: { event: EventAction, action: string }[],
+    dsn?: string[]
     connector?: {
         id: string
         provider: string
@@ -32,15 +33,20 @@ export default function WatchlistPage() {
     const onCreateWatchlist = (values: {
         name?: string
         domains: string[],
-        emailTriggers: string[]
-        connector?: string
+        triggers: string[]
+        connector?: string,
+        dsn?: string[]
     }) => {
         const domainsURI = values.domains.map(d => '/api/domains/' + d)
+        let triggers =  values.triggers.map(t => ({event: t, action: 'email'}))
+        if(values.dsn !== undefined) triggers = [...triggers, ...values.triggers.map(t => ({event: t, action: 'chat'}))]
+
         postWatchlist({
             name: values.name,
             domains: domainsURI,
-            triggers: values.emailTriggers.map(t => ({event: t, action: 'email'})),
-            connector: values.connector !== undefined ? ('/api/connectors/' + values.connector) : undefined
+            triggers,
+            connector: values.connector !== undefined ? ('/api/connectors/' + values.connector) : undefined,
+            dsn: values.dsn
         }).then((w) => {
             form.resetFields()
             refreshWatchlists()
@@ -54,8 +60,9 @@ export default function WatchlistPage() {
         token: string
         name?: string
         domains: string[],
-        emailTriggers: string[]
-        connector?: string
+        triggers: string[]
+        connector?: string,
+        dsn?: string[]
     }) => {
         const domainsURI = values.domains.map(d => '/api/domains/' + d)
 
@@ -63,8 +70,9 @@ export default function WatchlistPage() {
             token: values.token,
             name: values.name,
             domains: domainsURI,
-            triggers: values.emailTriggers.map(t => ({event: t, action: 'email'})),
-            connector: values.connector !== undefined ? ('/api/connectors/' + values.connector) : undefined
+            triggers: values.triggers.map(t => ({event: t, action: 'email'})),
+            connector: values.connector !== undefined ? ('/api/connectors/' + values.connector) : undefined,
+            dsn: values.dsn
         }).then((w) => {
             refreshWatchlists()
             messageApi.success(t`Watchlist updated !`)
