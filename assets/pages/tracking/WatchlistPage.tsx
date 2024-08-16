@@ -65,12 +65,15 @@ export default function WatchlistPage() {
         dsn?: string[]
     }) => {
         const domainsURI = values.domains.map(d => '/api/domains/' + d)
+        let triggers =  values.triggers.map(t => ({event: t, action: 'email'}))
+        if(values.dsn !== undefined) triggers = [...triggers, ...values.triggers.map(t => ({event: t, action: 'chat'}))]
+
 
         return putWatchlist({
             token: values.token,
             name: values.name,
             domains: domainsURI,
-            triggers: values.triggers.map(t => ({event: t, action: 'email'})),
+            triggers,
             connector: values.connector !== undefined ? ('/api/connectors/' + values.connector) : undefined,
             dsn: values.dsn
         }).then((w) => {

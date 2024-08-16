@@ -35,7 +35,7 @@ export function UpdateWatchlistButton({watchlist, onUpdateWatchlist, connectors}
                     {name: 'name', value: watchlist.name},
                     {name: 'connector', value: watchlist.connector?.id},
                     {name: 'domains', value: watchlist.domains.map(d => d.ldhName)},
-                    {name: 'triggers', value: watchlist.triggers?.map(t => t.event)},
+                    {name: 'triggers', value: [...new Set(watchlist.triggers?.map(t => t.event))]},
                     {name: 'dsn', value: watchlist.dsn}
                 ])
             }}/>
