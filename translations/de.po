@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2024-08-15 16:16+0000\n"
+"PO-Revision-Date: 2024-08-16 01:59+0000\n"
 "Last-Translator: Maël Gangloff <contact@maelgangloff.fr>\n"
 "Language-Team: German <https://weblate.vinceh121.me/projects/domain-watchdog/"
 "domain-watchdog-dashboard/de/>\n"
@@ -204,13 +204,11 @@ msgstr "Zurücksetzen"
 
 #: assets/components/tracking/ViewDiagramWatchlistButton.tsx:119
 msgid "View the Watchlist Entity Diagram"
-msgstr ""
+msgstr "Sehen Sie sich das Watchlist-Entitätsdiagramm an"
 
 #: assets/components/tracking/ViewDiagramWatchlistButton.tsx:124
-#, fuzzy
-#| msgid "Watchlist Name"
 msgid "Watchlist Entity Diagram"
-msgstr "Name der Watchlist"
+msgstr "Watchlist-Entitäten Diagramm"
 
 #: assets/components/tracking/ConnectorForm.tsx:40
 msgid "Provider"
