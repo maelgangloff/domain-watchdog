@@ -154,7 +154,7 @@ msgid "At least one domain name"
 msgstr "Mindestens ein Domänenname"
 
 #: assets/components/tracking/WatchlistForm.tsx:100
-#: assets/components/tracking/WatchlistsList.tsx:28
+#: assets/components/tracking/WatchlistsList.tsx:26
 msgid "Domain names"
 msgstr "Domänennamen"
 
@@ -167,7 +167,7 @@ msgid "Add a Domain name"
 msgstr "Einen Domänennamen hinzufügen"
 
 #: assets/components/tracking/WatchlistForm.tsx:142
-#: assets/components/tracking/WatchlistsList.tsx:32
+#: assets/components/tracking/WatchlistsList.tsx:30
 msgid "Tracked events"
 msgstr "Verfolgte Ereignisse"
 
@@ -201,6 +201,16 @@ msgstr "Aktualisieren"
 #: assets/components/tracking/WatchlistForm.tsx:195
 msgid "Reset"
 msgstr "Zurücksetzen"
+
+#: assets/components/tracking/ViewDiagramWatchlistButton.tsx:119
+msgid "View the Watchlist Entity Diagram"
+msgstr ""
+
+#: assets/components/tracking/ViewDiagramWatchlistButton.tsx:124
+#, fuzzy
+#| msgid "Watchlist Name"
+msgid "Watchlist Entity Diagram"
+msgstr "Name der Watchlist"
 
 #: assets/components/tracking/ConnectorForm.tsx:40
 msgid "Provider"
@@ -280,48 +290,48 @@ msgstr ""
 "Ich verzichte auf mein Widerrufsrecht beim Kauf von Domainnamen über die API "
 "des Anbieters"
 
-#: assets/components/tracking/WatchlistsList.tsx:59
-msgid "This Watchlist is not linked to a Connector."
-msgstr "Diese Beobachtungsliste ist nicht mit einem Connector verknüpft."
-
-#: assets/components/tracking/WatchlistsList.tsx:62
-msgid "Watchlist"
-msgstr "Watchlist"
-
-#: assets/components/tracking/WatchlistsList.tsx:70
-msgid "Export events to iCalendar format"
-msgstr "Ereignisse in das iCalendar-Format exportieren"
-
-#: assets/components/tracking/WatchlistsList.tsx:73
+#: assets/components/tracking/UpdateWatchlistButton.tsx:31
 msgid "Edit the Watchlist"
 msgstr "Bearbeiten der Watchlist"
 
-#: assets/components/tracking/WatchlistsList.tsx:86
+#: assets/components/tracking/UpdateWatchlistButton.tsx:43
 msgid "Update a Watchlist"
 msgstr "Aktualisieren einer Watchlist"
 
-#: assets/components/tracking/WatchlistsList.tsx:96
+#: assets/components/tracking/UpdateWatchlistButton.tsx:53
 msgid "Cancel"
 msgstr "Abbrechen"
 
-#: assets/components/tracking/WatchlistsList.tsx:110
-#: assets/components/tracking/WatchlistsList.tsx:117
+#: assets/components/tracking/DeleteWatchlistButton.tsx:12
+#: assets/components/tracking/DeleteWatchlistButton.tsx:19
 msgid "Delete the Watchlist"
 msgstr "Löschen der Watchlist"
 
-#: assets/components/tracking/WatchlistsList.tsx:111
+#: assets/components/tracking/DeleteWatchlistButton.tsx:13
 msgid "Are you sure to delete this Watchlist?"
 msgstr "Möchten Sie diese Watchlist wirklich löschen?"
 
 #: assets/components/tracking/ConnectorsList.tsx:25
-#: assets/components/tracking/WatchlistsList.tsx:113
+#: assets/components/tracking/DeleteWatchlistButton.tsx:15
 msgid "Yes"
 msgstr "Ja"
 
 #: assets/components/tracking/ConnectorsList.tsx:26
-#: assets/components/tracking/WatchlistsList.tsx:114
+#: assets/components/tracking/DeleteWatchlistButton.tsx:16
 msgid "No"
 msgstr "Nein"
+
+#: assets/components/tracking/WatchlistsList.tsx:46
+msgid "This Watchlist is not linked to a Connector."
+msgstr "Diese Beobachtungsliste ist nicht mit einem Connector verknüpft."
+
+#: assets/components/tracking/WatchlistsList.tsx:49
+msgid "Watchlist"
+msgstr "Watchlist"
+
+#: assets/components/tracking/WatchlistsList.tsx:60
+msgid "Export events to iCalendar format"
+msgstr "Ereignisse in das iCalendar-Format exportieren"
 
 #: assets/components/tracking/ConnectorsList.tsx:19
 #, javascript-format
