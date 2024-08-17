@@ -209,7 +209,7 @@ export function WatchlistForm({form, connectors, onFinish, isCreation}: {
                                 }]}
                                 noStyle
                             >
-                                <Input placeholder={t`slack://TOKEN@default?channel=CHANNEL`} style={{width: '60%'}} autoComplete='off'/>
+                                <Input placeholder={'slack://TOKEN@default?channel=CHANNEL'} style={{width: '60%'}} autoComplete='off'/>
                             </Form.Item>
                             {fields.length > 1 ? (
                                 <MinusCircleOutlined
