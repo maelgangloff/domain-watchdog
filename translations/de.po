@@ -310,10 +310,6 @@ msgstr ""
 msgid "This DSN does not appear to be valid"
 msgstr "Dieser Domainname scheint nicht gültig zu sein"
 
-#: assets/components/tracking/watchlist/WatchlistForm.tsx:212
-msgid "slack://TOKEN@default?channel=CHANNEL"
-msgstr ""
-
 #: assets/components/tracking/watchlist/WatchlistForm.tsx:224
 msgid ""
 "Check out this link to the Symfony documentation to help you build the DSN"
