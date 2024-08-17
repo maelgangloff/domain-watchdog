@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2024-08-16 01:59+0000\n"
+"PO-Revision-Date: 2024-08-17 21:03+0000\n"
 "Last-Translator: Maël Gangloff <contact@maelgangloff.fr>\n"
 "Language-Team: French <https://weblate.vinceh121.me/projects/domain-watchdog/"
 "domain-watchdog-dashboard/fr/>\n"
@@ -249,7 +249,7 @@ msgstr "Non"
 #: assets/components/tracking/diagram/WatchlistToNodes.tsx:37
 #, javascript-format
 msgid ".${ tld.tld } Registry"
-msgstr ""
+msgstr "Registre .${ tld.tld }"
 
 #: assets/components/tracking/diagram/ViewDiagramWatchlistButton.tsx:40
 msgid "View the Watchlist Entity Diagram"
