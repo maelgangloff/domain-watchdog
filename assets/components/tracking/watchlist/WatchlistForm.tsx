@@ -209,9 +209,10 @@ export function WatchlistForm({form, connectors, onFinish, isCreation}: {
                                 }]}
                                 noStyle
                             >
-                                <Input placeholder={'slack://TOKEN@default?channel=CHANNEL'} style={{width: '60%'}} autoComplete='off'/>
+                                <Input placeholder={'slack://TOKEN@default?channel=CHANNEL'} style={{width: '60%'}}
+                                       autoComplete='off'/>
                             </Form.Item>
-                            {fields.length > 1 ? (
+                            {fields.length > 0 ? (
                                 <MinusCircleOutlined
                                     className="dynamic-delete-button"
                                     onClick={() => remove(field.name)}
