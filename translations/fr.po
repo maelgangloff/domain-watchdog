@@ -28,6 +28,7 @@ msgstr "Adresse e-mail"
 #: assets/components/tracking/connector/ConnectorForm.tsx:156
 #: assets/components/tracking/connector/ConnectorForm.tsx:165
 #: assets/components/tracking/watchlist/WatchlistForm.tsx:109
+#: assets/components/tracking/watchlist/WatchlistForm.tsx:205
 msgid "Required"
 msgstr "Requis"
 
@@ -214,12 +215,12 @@ msgstr ""
 "noms de domaine via l'API du Fournisseur"
 
 #: assets/components/tracking/connector/ConnectorForm.tsx:176
-#: assets/components/tracking/watchlist/WatchlistForm.tsx:192
+#: assets/components/tracking/watchlist/WatchlistForm.tsx:243
 msgid "Create"
 msgstr "Créer"
 
 #: assets/components/tracking/connector/ConnectorForm.tsx:179
-#: assets/components/tracking/watchlist/WatchlistForm.tsx:195
+#: assets/components/tracking/watchlist/WatchlistForm.tsx:246
 msgid "Reset"
 msgstr "Réinitialiser"
 
@@ -245,19 +246,6 @@ msgstr "Oui"
 #: assets/components/tracking/watchlist/DeleteWatchlistButton.tsx:16
 msgid "No"
 msgstr "Non"
-
-#: assets/components/tracking/diagram/WatchlistToNodes.tsx:37
-#, javascript-format
-msgid ".${ tld.tld } Registry"
-msgstr "Registre .${ tld.tld }"
-
-#: assets/components/tracking/diagram/ViewDiagramWatchlistButton.tsx:40
-msgid "View the Watchlist Entity Diagram"
-msgstr "Afficher le diagramme d'entités de la Watchlist"
-
-#: assets/components/tracking/diagram/ViewDiagramWatchlistButton.tsx:45
-msgid "Watchlist Entity Diagram"
-msgstr "Diagramme d'entités de la Watchlist"
 
 #: assets/components/tracking/watchlist/WatchlistForm.tsx:66
 msgid "Name"
@@ -312,7 +300,30 @@ msgstr ""
 "Merci de vous assurer que les informations du connecteur sont valides pour "
 "acheter un domaine qui pourrait être disponible prochainement."
 
-#: assets/components/tracking/watchlist/WatchlistForm.tsx:192
+#: assets/components/tracking/watchlist/WatchlistForm.tsx:196
+msgid "DSN"
+msgstr ""
+
+#: assets/components/tracking/watchlist/WatchlistForm.tsx:208
+#, fuzzy
+#| msgid "This domain name does not appear to be valid"
+msgid "This DSN does not appear to be valid"
+msgstr "Ce nom de domaine ne semble pas être valide"
+
+#: assets/components/tracking/watchlist/WatchlistForm.tsx:212
+msgid "slack://TOKEN@default?channel=CHANNEL"
+msgstr ""
+
+#: assets/components/tracking/watchlist/WatchlistForm.tsx:224
+msgid ""
+"Check out this link to the Symfony documentation to help you build the DSN"
+msgstr ""
+
+#: assets/components/tracking/watchlist/WatchlistForm.tsx:233
+msgid "Add a Webhook"
+msgstr ""
+
+#: assets/components/tracking/watchlist/WatchlistForm.tsx:243
 msgid "Update"
 msgstr "Mettre à jour"
 
@@ -320,13 +331,32 @@ msgstr "Mettre à jour"
 msgid "Edit the Watchlist"
 msgstr "Modifier la Watchlist"
 
-#: assets/components/tracking/watchlist/UpdateWatchlistButton.tsx:43
+#: assets/components/tracking/watchlist/UpdateWatchlistButton.tsx:44
 msgid "Update a Watchlist"
 msgstr "Mise à jour d'une Watchlist"
 
-#: assets/components/tracking/watchlist/UpdateWatchlistButton.tsx:53
+#: assets/components/tracking/watchlist/UpdateWatchlistButton.tsx:54
 msgid "Cancel"
 msgstr "Annuler"
+
+#: assets/components/tracking/watchlist/diagram/ViewDiagramWatchlistButton.tsx:40
+msgid "View the Watchlist Entity Diagram"
+msgstr "Afficher le diagramme d'entités de la Watchlist"
+
+#: assets/components/tracking/watchlist/diagram/ViewDiagramWatchlistButton.tsx:45
+msgid "Watchlist Entity Diagram"
+msgstr "Diagramme d'entités de la Watchlist"
+
+#: assets/components/tracking/watchlist/diagram/watchlistToEdges.tsx:39
+#, fuzzy
+#| msgid "Register"
+msgid "Registry"
+msgstr "S'enregistrer"
+
+#: assets/components/tracking/watchlist/diagram/watchlistToNodes.tsx:32
+#, javascript-format
+msgid ".${ tld.tld } Registry"
+msgstr "Registre .${ tld.tld }"
 
 #: assets/components/tracking/watchlist/DeleteWatchlistButton.tsx:12
 #: assets/components/tracking/watchlist/DeleteWatchlistButton.tsx:19
@@ -422,27 +452,27 @@ msgstr "Se connecter"
 msgid "Register"
 msgstr "S'enregistrer"
 
-#: assets/pages/search/DomainSearchPage.tsx:21
+#: assets/pages/search/DomainSearchPage.tsx:22
 msgid "Found !"
 msgstr "Trouvé !"
 
-#: assets/pages/search/DomainSearchPage.tsx:29
+#: assets/pages/search/DomainSearchPage.tsx:30
 msgid "Domain finder"
 msgstr "Rechercher un domaine"
 
-#: assets/pages/search/DomainSearchPage.tsx:50
+#: assets/pages/search/DomainSearchPage.tsx:51
 msgid "EPP Status Codes"
 msgstr "Codes de statut EPP"
 
-#: assets/pages/search/DomainSearchPage.tsx:60
+#: assets/pages/search/DomainSearchPage.tsx:61
 msgid "Timeline"
 msgstr "Chronologie"
 
-#: assets/pages/search/DomainSearchPage.tsx:65
+#: assets/pages/search/DomainSearchPage.tsx:66
 msgid "Entities"
 msgstr "Entités"
 
-#: assets/pages/search/DomainSearchPage.tsx:73
+#: assets/pages/search/DomainSearchPage.tsx:75
 msgid ""
 "Although the domain exists in my database, it has been deleted from the "
 "WHOIS by its registrar."
@@ -554,15 +584,15 @@ msgstr "Connecteur créé !"
 msgid "Create a Connector"
 msgstr "Créer un Connecteur"
 
-#: assets/pages/tracking/WatchlistPage.tsx:47
+#: assets/pages/tracking/WatchlistPage.tsx:65
 msgid "Watchlist created !"
 msgstr "Watchlist créée !"
 
-#: assets/pages/tracking/WatchlistPage.tsx:70
+#: assets/pages/tracking/WatchlistPage.tsx:77
 msgid "Watchlist updated !"
 msgstr "Watchlist mise à jour !"
 
-#: assets/pages/tracking/WatchlistPage.tsx:96
+#: assets/pages/tracking/WatchlistPage.tsx:102
 msgid "Create a Watchlist"
 msgstr "Créer une Watchlist"
 
