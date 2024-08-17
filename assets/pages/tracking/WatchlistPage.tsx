@@ -23,6 +23,33 @@ export type Watchlist = {
     createdAt: string
 }
 
+type FormValuesType = {
+    name?: string
+    domains: string[],
+    triggers: string[]
+    connector?: string,
+    dsn?: string[]
+}
+
+const getRequestDataFromForm = (values: FormValuesType) => {
+    const domainsURI = values.domains.map(d => '/api/domains/' + d.toLowerCase())
+    let triggers = values.triggers.map(t => ({event: t, action: 'email'}))
+
+    if (values.dsn !== undefined) {
+        triggers = [...triggers, ...values.triggers.map(t => ({
+            event: t,
+            action: 'chat'
+        }))]
+    }
+    return {
+        name: values.name,
+        domains: domainsURI,
+        triggers,
+        connector: values.connector !== undefined ? ('/api/connectors/' + values.connector) : undefined,
+        dsn: values.dsn
+    }
+}
+
 export default function WatchlistPage() {
 
     const [form] = Form.useForm()
@@ -30,27 +57,9 @@ export default function WatchlistPage() {
     const [watchlists, setWatchlists] = useState<Watchlist[] | null>()
     const [connectors, setConnectors] = useState<(Connector & { id: string })[] | null>()
 
-    const onCreateWatchlist = (values: {
-        name?: string
-        domains: string[],
-        triggers: string[]
-        connector?: string,
-        dsn?: string[]
-    }) => {
-        const domainsURI = values.domains.map(d => '/api/domains/' + d.toLowerCase())
-        let triggers = values.triggers.map(t => ({event: t, action: 'email'}))
-        if (values.dsn !== undefined) triggers = [...triggers, ...values.triggers.map(t => ({
-            event: t,
-            action: 'chat'
-        }))]
+    const onCreateWatchlist = (values: FormValuesType) => {
 
-        postWatchlist({
-            name: values.name,
-            domains: domainsURI,
-            triggers,
-            connector: values.connector !== undefined ? ('/api/connectors/' + values.connector) : undefined,
-            dsn: values.dsn
-        }).then((w) => {
+        postWatchlist(getRequestDataFromForm(values)).then((w) => {
             form.resetFields()
             refreshWatchlists()
             messageApi.success(t`Watchlist created !`)
@@ -59,35 +68,16 @@ export default function WatchlistPage() {
         })
     }
 
-    const onUpdateWatchlist = async (values: {
-        token: string
-        name?: string
-        domains: string[],
-        triggers: string[]
-        connector?: string,
-        dsn?: string[]
-    }) => {
-        const domainsURI = values.domains.map(d => '/api/domains/' + d.toLowerCase())
-        let triggers = values.triggers.map(t => ({event: t, action: 'email'}))
-        if (values.dsn !== undefined) triggers = [...triggers, ...values.triggers.map(t => ({
-            event: t,
-            action: 'chat'
-        }))]
-
-        return putWatchlist({
+    const onUpdateWatchlist = async (values: FormValuesType & { token: string }) => putWatchlist({
             token: values.token,
-            name: values.name,
-            domains: domainsURI,
-            triggers,
-            connector: values.connector !== undefined ? ('/api/connectors/' + values.connector) : undefined,
-            dsn: values.dsn
-        }).then((w) => {
-            refreshWatchlists()
-            messageApi.success(t`Watchlist updated !`)
-        }).catch((e: AxiosError) => {
-            throw showErrorAPI(e, messageApi)
-        })
-    }
+            ...getRequestDataFromForm(values)
+        }
+    ).then((w) => {
+        refreshWatchlists()
+        messageApi.success(t`Watchlist updated !`)
+    }).catch((e: AxiosError) => {
+        throw showErrorAPI(e, messageApi)
+    })
 
     const refreshWatchlists = () => getWatchlists().then(w => {
         setWatchlists(w['hydra:member'])
