@@ -215,12 +215,12 @@ msgstr ""
 "noms de domaine via l'API du Fournisseur"
 
 #: assets/components/tracking/connector/ConnectorForm.tsx:176
-#: assets/components/tracking/watchlist/WatchlistForm.tsx:243
+#: assets/components/tracking/watchlist/WatchlistForm.tsx:244
 msgid "Create"
 msgstr "Créer"
 
 #: assets/components/tracking/connector/ConnectorForm.tsx:179
-#: assets/components/tracking/watchlist/WatchlistForm.tsx:246
+#: assets/components/tracking/watchlist/WatchlistForm.tsx:247
 msgid "Reset"
 msgstr "Réinitialiser"
 
@@ -308,18 +308,18 @@ msgstr "DSN"
 msgid "This DSN does not appear to be valid"
 msgstr "Ce DSN ne semble pas être valide"
 
-#: assets/components/tracking/watchlist/WatchlistForm.tsx:224
+#: assets/components/tracking/watchlist/WatchlistForm.tsx:225
 msgid ""
 "Check out this link to the Symfony documentation to help you build the DSN"
 msgstr ""
 "Consultez ce lien vers la documentation Symfony pour vous aider à construire "
 "le DSN"
 
-#: assets/components/tracking/watchlist/WatchlistForm.tsx:233
+#: assets/components/tracking/watchlist/WatchlistForm.tsx:234
 msgid "Add a Webhook"
 msgstr "Ajouter un Webhook"
 
-#: assets/components/tracking/watchlist/WatchlistForm.tsx:243
+#: assets/components/tracking/watchlist/WatchlistForm.tsx:244
 msgid "Update"
 msgstr "Mettre à jour"
 
