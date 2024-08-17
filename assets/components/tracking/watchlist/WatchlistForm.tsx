@@ -1,4 +1,4 @@
-import {Button, Form, FormInstance, Input, Select, SelectProps, Space, Tag} from "antd";
+import {Button, Form, FormInstance, Input, Select, SelectProps, Space, Tag, Typography} from "antd";
 import {t} from "ttag";
 import {ApiOutlined, MinusCircleOutlined, PlusOutlined} from "@ant-design/icons";
 import React from "react";
@@ -28,7 +28,7 @@ const formItemLayoutWithOutLabel = {
 export function WatchlistForm({form, connectors, onFinish, isCreation}: {
     form: FormInstance,
     connectors: (Connector & { id: string })[]
-    onFinish: (values: { domains: string[], emailTriggers: string[], token: string }) => void
+    onFinish: (values: { domains: string[], triggers: string[], token: string }) => void
     isCreation: boolean
 }) {
     const domainEventTranslated = domainEvent()
@@ -56,7 +56,7 @@ export function WatchlistForm({form, connectors, onFinish, isCreation}: {
         {...formItemLayoutWithOutLabel}
         form={form}
         onFinish={onFinish}
-        initialValues={{emailTriggers: ['last changed', 'transfer', 'expiration', 'deletion']}}
+        initialValues={{triggers: ['last changed', 'transfer', 'expiration', 'deletion']}}
     >
 
         <Form.Item name='token' hidden>
@@ -140,7 +140,7 @@ export function WatchlistForm({form, connectors, onFinish, isCreation}: {
             )}
         </Form.List>
         <Form.Item label={t`Tracked events`}
-                   name='emailTriggers'
+                   name='triggers'
                    rules={[{required: true, message: t`At least one trigger`, type: 'array'}]}
                    labelCol={{
                        xs: {span: 24},
@@ -186,7 +186,58 @@ export function WatchlistForm({form, connectors, onFinish, isCreation}: {
                     }))}
             />
         </Form.Item>
-        <Form.Item>
+        <Form.List
+            name="dsn">
+            {(fields, {add, remove}, {errors}) => (
+                <>
+                    {fields.map((field, index) => (
+                        <Form.Item
+                            {...(index === 0 ? formItemLayout : formItemLayoutWithOutLabel)}
+                            label={index === 0 ? t`DSN` : ''}
+                            required={true}
+                            key={field.key}
+                        >
+                            <Form.Item
+                                {...field}
+                                validateTrigger={['onChange', 'onBlur']}
+                                rules={[{
+                                    required: true,
+                                    message: t`Required`
+                                }, {
+                                    pattern: /:\/\//,
+                                    message: t`This DSN does not appear to be valid`
+                                }]}
+                                noStyle
+                            >
+                                <Input placeholder={t`slack://TOKEN@default?channel=CHANNEL`} style={{width: '60%'}} autoComplete='off'/>
+                            </Form.Item>
+                            {fields.length > 1 ? (
+                                <MinusCircleOutlined
+                                    className="dynamic-delete-button"
+                                    onClick={() => remove(field.name)}
+                                />
+                            ) : null}
+                        </Form.Item>
+                    ))}
+                    <Form.Item help={
+                        <Typography.Link href='https://symfony.com/doc/current/notifier.html#chat-channel'>
+                            {t`Check out this link to the Symfony documentation to help you build the DSN`}
+                        </Typography.Link>}
+                    >
+                        <Button
+                            type="dashed"
+                            onClick={() => add()}
+                            style={{width: '60%'}}
+                            icon={<PlusOutlined/>}
+                        >
+                            {t`Add a Webhook`}
+                        </Button>
+                        <Form.ErrorList errors={errors}/>
+                    </Form.Item>
+                </>
+            )}
+        </Form.List>
+        <Form.Item style={{marginTop: '10px'}}>
             <Space>
                 <Button type="primary" htmlType="submit">
                     {isCreation ? t`Create` : t`Update`}

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "bab584811b8175e404608e6738549f52",
+    "content-hash": "f64fa606b60efd34dccdee3abcdad8b2",
     "packages": [
         {
             "name": "api-platform/core",
@@ -4326,6 +4326,74 @@
             "time": "2024-04-18T09:32:20+00:00"
         },
         {
+            "name": "symfony/discord-notifier",
+            "version": "v7.1.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/discord-notifier.git",
+                "reference": "f3d8368ca5ff80c1268a851f925e1f0c07997a8e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/discord-notifier/zipball/f3d8368ca5ff80c1268a851f925e1f0c07997a8e",
+                "reference": "f3d8368ca5ff80c1268a851f925e1f0c07997a8e",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.2",
+                "symfony/http-client": "^6.4|^7.0",
+                "symfony/notifier": "^6.4|^7.0",
+                "symfony/polyfill-mbstring": "^1.0"
+            },
+            "type": "symfony-notifier-bridge",
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\Component\\Notifier\\Bridge\\Discord\\": ""
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Symfony Discord Notifier Bridge",
+            "homepage": "https://symfony.com",
+            "keywords": [
+                "discord",
+                "notifier"
+            ],
+            "support": {
+                "source": "https://github.com/symfony/discord-notifier/tree/v7.1.1"
+            },
+            "funding": [
+                {
+                    "url": "https://symfony.com/sponsor",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2024-05-31T14:57:53+00:00"
+        },
+        {
             "name": "symfony/doctrine-bridge",
             "version": "v7.1.2",
             "source": {
@@ -5314,6 +5382,75 @@
             "time": "2024-06-28T08:00:31+00:00"
         },
         {
+            "name": "symfony/google-chat-notifier",
+            "version": "v7.1.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/google-chat-notifier.git",
+                "reference": "1e92b6c89b2182ba26554861dc261c530c98000f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/google-chat-notifier/zipball/1e92b6c89b2182ba26554861dc261c530c98000f",
+                "reference": "1e92b6c89b2182ba26554861dc261c530c98000f",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.2",
+                "symfony/http-client": "^6.4|^7.0",
+                "symfony/notifier": "^6.4|^7.0"
+            },
+            "type": "symfony-notifier-bridge",
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\Component\\Notifier\\Bridge\\GoogleChat\\": ""
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Symfony Google Chat Notifier Bridge",
+            "homepage": "https://symfony.com",
+            "keywords": [
+                "Google-Chat",
+                "chat",
+                "google",
+                "notifier"
+            ],
+            "support": {
+                "source": "https://github.com/symfony/google-chat-notifier/tree/v7.1.2"
+            },
+            "funding": [
+                {
+                    "url": "https://symfony.com/sponsor",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2024-06-25T19:55:06+00:00"
+        },
+        {
             "name": "symfony/http-client",
             "version": "v7.1.2",
             "source": {
@@ -5921,6 +6058,73 @@
             "time": "2024-06-28T08:00:31+00:00"
         },
         {
+            "name": "symfony/mattermost-notifier",
+            "version": "v7.1.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/mattermost-notifier.git",
+                "reference": "c5ff6774682ab3504a77bbe01f8c1275b4bf48e9"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/mattermost-notifier/zipball/c5ff6774682ab3504a77bbe01f8c1275b4bf48e9",
+                "reference": "c5ff6774682ab3504a77bbe01f8c1275b4bf48e9",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.2",
+                "symfony/http-client": "^6.4|^7.0",
+                "symfony/notifier": "^6.4|^7.0"
+            },
+            "type": "symfony-notifier-bridge",
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\Component\\Notifier\\Bridge\\Mattermost\\": ""
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Emanuele Panzeri",
+                    "email": "thepanz@gmail.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Symfony Mattermost Notifier Bridge",
+            "homepage": "https://symfony.com",
+            "keywords": [
+                "Mattermost",
+                "notifier"
+            ],
+            "support": {
+                "source": "https://github.com/symfony/mattermost-notifier/tree/v7.1.1"
+            },
+            "funding": [
+                {
+                    "url": "https://symfony.com/sponsor",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2024-05-31T14:57:53+00:00"
+        },
+        {
             "name": "symfony/messenger",
             "version": "v7.1.2",
             "source": {
@@ -6005,6 +6209,78 @@
                 }
             ],
             "time": "2024-06-28T08:00:31+00:00"
+        },
+        {
+            "name": "symfony/microsoft-teams-notifier",
+            "version": "v7.1.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/microsoft-teams-notifier.git",
+                "reference": "546b0368928b5849d08728b7daf5d22a07a052b3"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/microsoft-teams-notifier/zipball/546b0368928b5849d08728b7daf5d22a07a052b3",
+                "reference": "546b0368928b5849d08728b7daf5d22a07a052b3",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.2",
+                "symfony/http-client": "^6.4|^7.0",
+                "symfony/notifier": "^6.4|^7.0"
+            },
+            "type": "symfony-notifier-bridge",
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\Component\\Notifier\\Bridge\\MicrosoftTeams\\": ""
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Edouard Lescot",
+                    "email": "edouard.lescot@gmail.com"
+                },
+                {
+                    "name": "Oskar Stark",
+                    "email": "oskarstark@googlemail.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Symfony Microsoft Teams Notifier Bridge",
+            "homepage": "https://symfony.com",
+            "keywords": [
+                "chat",
+                "microsoft-teams",
+                "notifier"
+            ],
+            "support": {
+                "source": "https://github.com/symfony/microsoft-teams-notifier/tree/v7.1.1"
+            },
+            "funding": [
+                {
+                    "url": "https://symfony.com/sponsor",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2024-05-31T14:57:53+00:00"
         },
         {
             "name": "symfony/mime",
@@ -7320,6 +7596,73 @@
             "time": "2024-05-31T14:57:53+00:00"
         },
         {
+            "name": "symfony/rocket-chat-notifier",
+            "version": "v7.1.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/rocket-chat-notifier.git",
+                "reference": "b17bff59107b51753e3e347c5194dc304019daf7"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/rocket-chat-notifier/zipball/b17bff59107b51753e3e347c5194dc304019daf7",
+                "reference": "b17bff59107b51753e3e347c5194dc304019daf7",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.2",
+                "symfony/http-client": "^6.4|^7.0",
+                "symfony/notifier": "^6.4|^7.0"
+            },
+            "type": "symfony-notifier-bridge",
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\Component\\Notifier\\Bridge\\RocketChat\\": ""
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jeroen Spee",
+                    "homepage": "https://github.com/Jeroeny"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Symfony RocketChat Notifier Bridge",
+            "homepage": "https://symfony.com",
+            "keywords": [
+                "notifier",
+                "rocketchat"
+            ],
+            "support": {
+                "source": "https://github.com/symfony/rocket-chat-notifier/tree/v7.1.1"
+            },
+            "funding": [
+                {
+                    "url": "https://symfony.com/sponsor",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2024-05-31T14:57:53+00:00"
+        },
+        {
             "name": "symfony/routing",
             "version": "v7.1.1",
             "source": {
@@ -8088,6 +8431,73 @@
             "time": "2024-04-18T09:32:20+00:00"
         },
         {
+            "name": "symfony/slack-notifier",
+            "version": "v7.1.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/slack-notifier.git",
+                "reference": "452a17e3935192e6a9a5b16f0443911d67e456af"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/slack-notifier/zipball/452a17e3935192e6a9a5b16f0443911d67e456af",
+                "reference": "452a17e3935192e6a9a5b16f0443911d67e456af",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.2",
+                "symfony/http-client": "^6.4|^7.0",
+                "symfony/notifier": "^6.4|^7.0"
+            },
+            "type": "symfony-notifier-bridge",
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\Component\\Notifier\\Bridge\\Slack\\": ""
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Symfony Slack Notifier Bridge",
+            "homepage": "https://symfony.com",
+            "keywords": [
+                "notifier",
+                "slack"
+            ],
+            "support": {
+                "source": "https://github.com/symfony/slack-notifier/tree/v7.1.1"
+            },
+            "funding": [
+                {
+                    "url": "https://symfony.com/sponsor",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2024-05-31T14:57:53+00:00"
+        },
+        {
             "name": "symfony/stimulus-bundle",
             "version": "v2.18.1",
             "source": {
@@ -8304,6 +8714,74 @@
                 }
             ],
             "time": "2024-06-28T09:27:18+00:00"
+        },
+        {
+            "name": "symfony/telegram-notifier",
+            "version": "v7.1.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/telegram-notifier.git",
+                "reference": "521e77470d5b07306c1001c2d1d1bc88474a8035"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/telegram-notifier/zipball/521e77470d5b07306c1001c2d1d1bc88474a8035",
+                "reference": "521e77470d5b07306c1001c2d1d1bc88474a8035",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.2",
+                "symfony/http-client": "^6.4|^7.0",
+                "symfony/mime": "^6.4|^7.0",
+                "symfony/notifier": "^6.4|^7.0"
+            },
+            "type": "symfony-notifier-bridge",
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\Component\\Notifier\\Bridge\\Telegram\\": ""
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Symfony Telegram Notifier Bridge",
+            "homepage": "https://symfony.com",
+            "keywords": [
+                "notifier",
+                "telegram"
+            ],
+            "support": {
+                "source": "https://github.com/symfony/telegram-notifier/tree/v7.1.1"
+            },
+            "funding": [
+                {
+                    "url": "https://symfony.com/sponsor",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2024-05-31T14:57:53+00:00"
         },
         {
             "name": "symfony/translation",
@@ -9387,6 +9865,73 @@
             "homepage": "https://symfony.com",
             "support": {
                 "source": "https://github.com/symfony/yaml/tree/v7.1.1"
+            },
+            "funding": [
+                {
+                    "url": "https://symfony.com/sponsor",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2024-05-31T14:57:53+00:00"
+        },
+        {
+            "name": "symfony/zulip-notifier",
+            "version": "v7.1.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/zulip-notifier.git",
+                "reference": "48b3e1ac791d8eac7ee268108865b36de3be5ed2"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/zulip-notifier/zipball/48b3e1ac791d8eac7ee268108865b36de3be5ed2",
+                "reference": "48b3e1ac791d8eac7ee268108865b36de3be5ed2",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.2",
+                "symfony/http-client": "^6.4|^7.0",
+                "symfony/notifier": "^6.4|^7.0"
+            },
+            "type": "symfony-notifier-bridge",
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\Component\\Notifier\\Bridge\\Zulip\\": ""
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Mohammad Emran Hasan",
+                    "email": "phpfour@gmail.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Symfony Zulip Notifier Bridge",
+            "homepage": "https://symfony.com",
+            "keywords": [
+                "notifier",
+                "zulip"
+            ],
+            "support": {
+                "source": "https://github.com/symfony/zulip-notifier/tree/v7.1.1"
             },
             "funding": [
                 {

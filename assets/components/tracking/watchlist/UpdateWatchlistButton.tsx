@@ -8,7 +8,7 @@ import {Connector} from "../../../utils/api/connectors";
 
 export function UpdateWatchlistButton({watchlist, onUpdateWatchlist, connectors}: {
     watchlist: Watchlist,
-    onUpdateWatchlist: (values: { domains: string[], emailTriggers: string[], token: string }) => Promise<void>,
+    onUpdateWatchlist: (values: { domains: string[], triggers: string[], token: string }) => Promise<void>,
     connectors: (Connector & { id: string })[]
 }) {
 
@@ -35,7 +35,8 @@ export function UpdateWatchlistButton({watchlist, onUpdateWatchlist, connectors}
                     {name: 'name', value: watchlist.name},
                     {name: 'connector', value: watchlist.connector?.id},
                     {name: 'domains', value: watchlist.domains.map(d => d.ldhName)},
-                    {name: 'emailTriggers', value: watchlist.triggers?.map(t => t.event)},
+                    {name: 'triggers', value: [...new Set(watchlist.triggers?.map(t => t.event))]},
+                    {name: 'dsn', value: watchlist.dsn}
                 ])
             }}/>
         </Typography.Link>

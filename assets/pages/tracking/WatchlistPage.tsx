@@ -14,12 +14,40 @@ export type Watchlist = {
     token: string,
     domains: { ldhName: string }[],
     triggers?: { event: EventAction, action: string }[],
+    dsn?: string[]
     connector?: {
         id: string
         provider: string
         createdAt: string
     }
     createdAt: string
+}
+
+type FormValuesType = {
+    name?: string
+    domains: string[],
+    triggers: string[]
+    connector?: string,
+    dsn?: string[]
+}
+
+const getRequestDataFromForm = (values: FormValuesType) => {
+    const domainsURI = values.domains.map(d => '/api/domains/' + d.toLowerCase())
+    let triggers = values.triggers.map(t => ({event: t, action: 'email'}))
+
+    if (values.dsn !== undefined) {
+        triggers = [...triggers, ...values.triggers.map(t => ({
+            event: t,
+            action: 'chat'
+        }))]
+    }
+    return {
+        name: values.name,
+        domains: domainsURI,
+        triggers,
+        connector: values.connector !== undefined ? ('/api/connectors/' + values.connector) : undefined,
+        dsn: values.dsn
+    }
 }
 
 export default function WatchlistPage() {
@@ -29,19 +57,9 @@ export default function WatchlistPage() {
     const [watchlists, setWatchlists] = useState<Watchlist[] | null>()
     const [connectors, setConnectors] = useState<(Connector & { id: string })[] | null>()
 
-    const onCreateWatchlist = (values: {
-        name?: string
-        domains: string[],
-        emailTriggers: string[]
-        connector?: string
-    }) => {
-        const domainsURI = values.domains.map(d => '/api/domains/' + d.toLowerCase())
-        postWatchlist({
-            name: values.name,
-            domains: domainsURI,
-            triggers: values.emailTriggers.map(t => ({event: t, action: 'email'})),
-            connector: values.connector !== undefined ? ('/api/connectors/' + values.connector) : undefined
-        }).then((w) => {
+    const onCreateWatchlist = (values: FormValuesType) => {
+
+        postWatchlist(getRequestDataFromForm(values)).then((w) => {
             form.resetFields()
             refreshWatchlists()
             messageApi.success(t`Watchlist created !`)
@@ -50,28 +68,16 @@ export default function WatchlistPage() {
         })
     }
 
-    const onUpdateWatchlist = async (values: {
-        token: string
-        name?: string
-        domains: string[],
-        emailTriggers: string[]
-        connector?: string
-    }) => {
-        const domainsURI = values.domains.map(d => '/api/domains/' + d.toLowerCase())
-
-        return putWatchlist({
+    const onUpdateWatchlist = async (values: FormValuesType & { token: string }) => putWatchlist({
             token: values.token,
-            name: values.name,
-            domains: domainsURI,
-            triggers: values.emailTriggers.map(t => ({event: t, action: 'email'})),
-            connector: values.connector !== undefined ? ('/api/connectors/' + values.connector) : undefined
-        }).then((w) => {
-            refreshWatchlists()
-            messageApi.success(t`Watchlist updated !`)
-        }).catch((e: AxiosError) => {
-            throw showErrorAPI(e, messageApi)
-        })
-    }
+            ...getRequestDataFromForm(values)
+        }
+    ).then((w) => {
+        refreshWatchlists()
+        messageApi.success(t`Watchlist updated !`)
+    }).catch((e: AxiosError) => {
+        throw showErrorAPI(e, messageApi)
+    })
 
     const refreshWatchlists = () => getWatchlists().then(w => {
         setWatchlists(w['hydra:member'])

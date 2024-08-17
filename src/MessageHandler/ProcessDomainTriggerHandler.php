@@ -4,43 +4,51 @@ namespace App\MessageHandler;
 
 use App\Config\Connector\ConnectorInterface;
 use App\Config\TriggerAction;
-use App\Entity\Connector;
+use App\Config\WebhookScheme;
 use App\Entity\Domain;
 use App\Entity\DomainEvent;
-use App\Entity\User;
 use App\Entity\WatchList;
 use App\Entity\WatchListTrigger;
 use App\Message\ProcessDomainTrigger;
+use App\Notifier\DomainOrderErrorNotification;
+use App\Notifier\DomainOrderNotification;
+use App\Notifier\DomainUpdateNotification;
 use App\Repository\DomainRepository;
 use App\Repository\WatchListRepository;
 use Psr\Log\LoggerInterface;
-use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
+use Symfony\Component\Messenger\Exception\ExceptionInterface;
 use Symfony\Component\Mime\Address;
-use Symfony\Component\Mime\Email;
+use Symfony\Component\Notifier\Recipient\Recipient;
+use Symfony\Component\Notifier\Transport\AbstractTransportFactory;
+use Symfony\Component\Notifier\Transport\Dsn;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 #[AsMessageHandler]
 final readonly class ProcessDomainTriggerHandler
 {
+    private Address $sender;
+
     public function __construct(
-        private string $mailerSenderEmail,
-        private string $mailerSenderName,
-        private MailerInterface $mailer,
+        string $mailerSenderEmail,
+        string $mailerSenderName,
         private WatchListRepository $watchListRepository,
         private DomainRepository $domainRepository,
         private KernelInterface $kernel,
         private LoggerInterface $logger,
-        private HttpClientInterface $client
+        private HttpClientInterface $client,
+        private MailerInterface $mailer
     ) {
+        $this->sender = new Address($mailerSenderEmail, $mailerSenderName);
     }
 
     /**
      * @throws TransportExceptionInterface
      * @throws \Exception
+     * @throws ExceptionInterface
      */
     public function __invoke(ProcessDomainTrigger $message): void
     {
@@ -70,12 +78,16 @@ final readonly class ProcessDomainTriggerHandler
 
                 $connectorProvider->orderDomain($domain, $this->kernel->isDebug());
 
-                $this->sendEmailDomainOrdered($domain, $connector, $watchList->getUser());
+                $email = (new DomainOrderNotification($this->sender, $domain, $connector))
+                    ->asEmailMessage(new Recipient($watchList->getUser()->getEmail()));
+                $this->mailer->send($email->getMessage());
             } catch (\Throwable) {
                 $this->logger->warning('Unable to complete purchase. An error message is sent to user {username}.', [
                     'username' => $watchList->getUser()->getUserIdentifier(),
                 ]);
-                $this->sendEmailDomainOrderError($domain, $watchList->getUser());
+                $email = (new DomainOrderErrorNotification($this->sender, $domain))
+                    ->asEmailMessage(new Recipient($watchList->getUser()->getEmail()));
+                $this->mailer->send($email->getMessage());
             }
         }
 
@@ -91,67 +103,29 @@ final readonly class ProcessDomainTriggerHandler
                     'ldhName' => $message->ldhName,
                     'username' => $watchList->getUser()->getUserIdentifier(),
                 ]);
+
+                $recipient = new Recipient($watchList->getUser()->getEmail());
+                $notification = new DomainUpdateNotification($this->sender, $event);
+
                 if (TriggerAction::SendEmail == $watchListTrigger->getAction()) {
-                    $this->sendEmailDomainUpdated($event, $watchList->getUser());
+                    $this->mailer->send($notification->asEmailMessage($recipient)->getMessage());
+                } elseif (TriggerAction::SendChat == $watchListTrigger->getAction()) {
+                    if (null !== $watchList->getWebhookDsn()) {
+                        foreach ($watchList->getWebhookDsn() as $dsnString) {
+                            $dsn = new Dsn($dsnString);
+
+                            $scheme = $dsn->getScheme();
+                            $webhookScheme = WebhookScheme::tryFrom($scheme);
+                            if (null !== $webhookScheme) {
+                                $transportFactoryClass = $webhookScheme->getChatTransportFactory();
+                                /** @var AbstractTransportFactory $transportFactory */
+                                $transportFactory = new $transportFactoryClass();
+                                $transportFactory->create($dsn)->send($notification->asChatMessage());
+                            }
+                        }
+                    }
                 }
             }
         }
-    }
-
-    /**
-     * @throws TransportExceptionInterface
-     */
-    private function sendEmailDomainOrdered(Domain $domain, Connector $connector, User $user): void
-    {
-        $email = (new TemplatedEmail())
-            ->from(new Address($this->mailerSenderEmail, $this->mailerSenderName))
-            ->to($user->getEmail())
-            ->priority(Email::PRIORITY_HIGHEST)
-            ->subject('A domain name has been ordered')
-            ->htmlTemplate('emails/success/domain_ordered.html.twig')
-            ->locale('en')
-            ->context([
-                'domain' => $domain,
-                'provider' => $connector->getProvider()->value,
-            ]);
-
-        $this->mailer->send($email);
-    }
-
-    /**
-     * @throws TransportExceptionInterface
-     */
-    private function sendEmailDomainOrderError(Domain $domain, User $user): void
-    {
-        $email = (new TemplatedEmail())
-            ->from(new Address($this->mailerSenderEmail, $this->mailerSenderName))
-            ->to($user->getEmail())
-            ->subject('An error occurred while ordering a domain name')
-            ->htmlTemplate('emails/errors/domain_order.html.twig')
-            ->locale('en')
-            ->context([
-                'domain' => $domain,
-            ]);
-
-        $this->mailer->send($email);
-    }
-
-    /**
-     * @throws TransportExceptionInterface
-     */
-    private function sendEmailDomainUpdated(DomainEvent $domainEvent, User $user): void
-    {
-        $email = (new TemplatedEmail())
-            ->from(new Address($this->mailerSenderEmail, $this->mailerSenderName))
-            ->to($user->getEmail())
-            ->priority(Email::PRIORITY_HIGHEST)
-            ->subject('A domain name has been changed')
-            ->htmlTemplate('emails/success/domain_updated.html.twig')
-            ->locale('en')
-            ->context([
-                'event' => $domainEvent,
-            ]);
-
-        $this->mailer->send($email);
     }
 }

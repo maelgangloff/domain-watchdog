@@ -1504,6 +1504,21 @@
   resolved "https://registry.yarnpkg.com/@fontsource/noto-color-emoji/-/noto-color-emoji-5.0.27.tgz#61e40657bea980553bde8fd2d566104bd2859ad6"
   integrity sha512-gsIMN5o8qoRLrA+XyDNKKnMNpTbwpNbINisJqirLOLXl83arOV2sHRnNOkVht2gzUcImUxEUBGektp56G3Vj9w==
 
+"@hotwired/stimulus-webpack-helpers@^1.0.1":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@hotwired/stimulus-webpack-helpers/-/stimulus-webpack-helpers-1.0.1.tgz#4cd74487adeca576c9865ac2b9fe5cb20cef16dd"
+  integrity sha512-wa/zupVG0eWxRYJjC1IiPBdt3Lruv0RqGN+/DTMmUWUyMAEB27KXmVY6a8YpUVTM7QwVuaLNGW4EqDgrS2upXQ==
+
+"@hotwired/stimulus@^3.0.0":
+  version "3.2.2"
+  resolved "https://registry.yarnpkg.com/@hotwired/stimulus/-/stimulus-3.2.2.tgz#071aab59c600fed95b97939e605ff261a4251608"
+  integrity sha512-eGeIqNOQpXoPAIP7tC1+1Yc1yl1xnwYqg+3mzqxyrbE5pg5YFBZcA6YoTiByJB6DKAEsiWtl6tjTJS4IYtbB7A==
+
+"@hotwired/turbo@^7.1.1 || ^8.0":
+  version "8.0.5"
+  resolved "https://registry.yarnpkg.com/@hotwired/turbo/-/turbo-8.0.5.tgz#abae6dad018a891e4286e87fa0959217e3866d5a"
+  integrity sha512-TdZDA7fxVQ2ZycygvpnzjGPmFq4sO/E2QVg+2em/sJ3YTSsIWVEis8HmWlumz+c9DjWcUkcCuB+muF08TInpAQ==
+
 "@jest/schemas@^29.6.3":
   version "29.6.3"
   resolved "https://registry.yarnpkg.com/@jest/schemas/-/schemas-29.6.3.tgz#430b5ce8a4e0044a7e3819663305a7b3091c8e03"
@@ -1669,6 +1684,20 @@
   version "0.27.8"
   resolved "https://registry.yarnpkg.com/@sinclair/typebox/-/typebox-0.27.8.tgz#6667fac16c436b5434a387a34dedb013198f6e6e"
   integrity sha512-+Fj43pSMwJs4KRrH/938Uf+uAELIgVBmQzg/q1YG10djyfA3TnrU8N8XzqCh/okZdszqBQTZf96idMfE5lnwTA==
+
+"@symfony/stimulus-bridge@^3.2.0":
+  version "3.2.2"
+  resolved "https://registry.yarnpkg.com/@symfony/stimulus-bridge/-/stimulus-bridge-3.2.2.tgz#afc1918f82d78cb2b6e299285c54094aa7f53696"
+  integrity sha512-kIaUEGPXW7g14zsHkIvQWw8cmfCdXSqsEQx18fuHPBb+R0h8nYPyY+e9uVtTuHlE2wHwAjrJoc6YBBK4a7CpKA==
+  dependencies:
+    "@hotwired/stimulus-webpack-helpers" "^1.0.1"
+    "@types/webpack-env" "^1.16.4"
+    acorn "^8.0.5"
+    loader-utils "^2.0.0"
+    schema-utils "^3.0.0"
+
+"@symfony/ux-turbo@file:vendor/symfony/ux-turbo/assets":
+  version "0.1.0"
 
 "@symfony/webpack-encore@^4.0.0":
   version "4.6.1"
@@ -1993,6 +2022,11 @@
   dependencies:
     "@types/node" "*"
 
+"@types/webpack-env@^1.16.4":
+  version "1.18.5"
+  resolved "https://registry.yarnpkg.com/@types/webpack-env/-/webpack-env-1.18.5.tgz#eccda0b04fe024bed505881e2e532f9c119169bf"
+  integrity sha512-wz7kjjRRj8/Lty4B+Kr0LN6Ypc/3SymeCCGSbaXp2leH0ZVg/PriNiOwNj4bD4uphI7A8NXS4b6Gl373sfO5mA==
+
 "@types/ws@^8.5.5":
   version "8.5.11"
   resolved "https://registry.yarnpkg.com/@types/ws/-/ws-8.5.11.tgz#90ad17b3df7719ce3e6bc32f83ff954d38656508"
@@ -2202,7 +2236,7 @@ acorn-import-attributes@^1.9.5:
   resolved "https://registry.yarnpkg.com/acorn-import-attributes/-/acorn-import-attributes-1.9.5.tgz#7eb1557b1ba05ef18b5ed0ec67591bfab04688ef"
   integrity sha512-n02Vykv5uA3eHGM/Z2dQrcD56kL8TyDb2p1+0P83PClMnC/nc+anbQRhIOWnSq4Ke/KvDPrY3C9hDtC/A3eHnQ==
 
-acorn@^8.7.1, acorn@^8.8.2:
+acorn@^8.0.5, acorn@^8.7.1, acorn@^8.8.2:
   version "8.12.1"
   resolved "https://registry.yarnpkg.com/acorn/-/acorn-8.12.1.tgz#71616bdccbe25e27a54439e0046e89ca76df2248"
   integrity sha512-tcpGyI9zbizT9JbV6oYE477V6mTlXvvi0T0G3SNIYE2apm/G5huBa1+K89VGeovbg+jycCrfhl3ADxErOuO6Jg==
@@ -6020,7 +6054,7 @@ scheduler@^0.23.2:
   dependencies:
     loose-envify "^1.1.0"
 
-schema-utils@^3.1.1, schema-utils@^3.2.0:
+schema-utils@^3.0.0, schema-utils@^3.1.1, schema-utils@^3.2.0:
   version "3.3.0"
   resolved "https://registry.yarnpkg.com/schema-utils/-/schema-utils-3.3.0.tgz#f50a88877c3c01652a15b622ae9e9795df7a60fe"
   integrity sha512-pN/yOAvcC+5rQ5nERGuwrjLlYvLTbCibnZ1I7B1LaiAz9BRBlE9GMgE/eqV30P7aJQUf7Ddimy/RsbYO/GrVGg==

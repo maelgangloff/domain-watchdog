@@ -12,6 +12,7 @@ use App\Controller\WatchListController;
 use App\Repository\WatchListRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Attribute\Groups;
 use Symfony\Component\Serializer\Attribute\SerializedName;
@@ -117,6 +118,11 @@ class WatchList
     #[ORM\Column]
     #[Groups(['watchlist:list', 'watchlist:item'])]
     private ?\DateTimeImmutable $createdAt = null;
+
+    #[SerializedName('dsn')]
+    #[ORM\Column(type: Types::SIMPLE_ARRAY, nullable: true)]
+    #[Groups(['watchlist:list', 'watchlist:item', 'watchlist:create'])]
+    private ?array $webhookDsn = null;
 
     public function __construct()
     {
@@ -234,6 +240,18 @@ class WatchList
     public function setCreatedAt(\DateTimeImmutable $createdAt): static
     {
         $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    public function getWebhookDsn(): ?array
+    {
+        return $this->webhookDsn;
+    }
+
+    public function setWebhookDsn(?array $webhookDsn): static
+    {
+        $this->webhookDsn = $webhookDsn;
 
         return $this;
     }
