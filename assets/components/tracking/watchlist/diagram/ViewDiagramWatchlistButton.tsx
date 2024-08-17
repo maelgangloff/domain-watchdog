@@ -5,10 +5,10 @@ import {ApartmentOutlined} from "@ant-design/icons"
 
 import '@xyflow/react/dist/style.css'
 import {Background, Controls, MiniMap, ReactFlow, useEdgesState, useNodesState} from "@xyflow/react";
-import {getWatchlist} from "../../../utils/api";
+import {getWatchlist} from "../../../../utils/api";
 import {getLayoutedElements} from "./getLayoutedElements";
-import {watchlistToNodes} from "./WatchlistToNodes";
-import {watchlistToEdges} from "./WatchlistToEdges";
+import {watchlistToNodes} from "./watchlistToNodes";
+import {watchlistToEdges} from "./watchlistToEdges";
 
 export type DiagramConfig = {
     tld?: boolean
@@ -17,8 +17,8 @@ export type DiagramConfig = {
 }
 
 export function ViewDiagramWatchlistButton({token}: { token: string }) {
-    const [open, setOpen] = useState(false)
 
+    const [open, setOpen] = useState(false)
     const [loading, setLoading] = useState(false)
     const [nodes, setNodes, onNodesChange] = useNodesState([])
     const [edges, setEdges, onEdgesChange] = useEdgesState([])

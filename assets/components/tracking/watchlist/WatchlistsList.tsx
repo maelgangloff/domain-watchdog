@@ -9,7 +9,7 @@ import punycode from "punycode/punycode";
 import {Connector} from "../../../utils/api/connectors";
 import {UpdateWatchlistButton} from "./UpdateWatchlistButton";
 import {DeleteWatchlistButton} from "./DeleteWatchlistButton";
-import {ViewDiagramWatchlistButton} from "../diagram/ViewDiagramWatchlistButton";
+import {ViewDiagramWatchlistButton} from "./diagram/ViewDiagramWatchlistButton";
 
 export function WatchlistsList({watchlists, onDelete, onUpdateWatchlist, connectors}: {
     watchlists: Watchlist[],
