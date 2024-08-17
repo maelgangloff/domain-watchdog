@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2024-08-17 21:03+0000\n"
+"PO-Revision-Date: 2024-08-17 21:11+0000\n"
 "Last-Translator: Maël Gangloff <contact@maelgangloff.fr>\n"
 "Language-Team: German <https://weblate.vinceh121.me/projects/domain-watchdog/"
 "domain-watchdog-dashboard/de/>\n"
@@ -302,22 +302,22 @@ msgstr ""
 
 #: assets/components/tracking/watchlist/WatchlistForm.tsx:196
 msgid "DSN"
-msgstr ""
+msgstr "DSN"
 
 #: assets/components/tracking/watchlist/WatchlistForm.tsx:208
-#, fuzzy
-#| msgid "This domain name does not appear to be valid"
 msgid "This DSN does not appear to be valid"
-msgstr "Dieser Domainname scheint nicht gültig zu sein"
+msgstr "Dieser DSN scheint nicht gültig zu sein"
 
 #: assets/components/tracking/watchlist/WatchlistForm.tsx:224
 msgid ""
 "Check out this link to the Symfony documentation to help you build the DSN"
 msgstr ""
+"Sehen Sie sich diesen Link zur Symfony-Dokumentation an, der Ihnen beim "
+"Erstellen des DSN hilft"
 
 #: assets/components/tracking/watchlist/WatchlistForm.tsx:233
 msgid "Add a Webhook"
-msgstr ""
+msgstr "Einen Webhook hinzufügen"
 
 #: assets/components/tracking/watchlist/WatchlistForm.tsx:243
 msgid "Update"
@@ -344,10 +344,8 @@ msgid "Watchlist Entity Diagram"
 msgstr "Watchlist-Entitäten Diagramm"
 
 #: assets/components/tracking/watchlist/diagram/watchlistToEdges.tsx:39
-#, fuzzy
-#| msgid "Register"
 msgid "Registry"
-msgstr "Registrieren"
+msgstr "Registrierung"
 
 #: assets/components/tracking/watchlist/diagram/watchlistToNodes.tsx:32
 #, javascript-format
