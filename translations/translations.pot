@@ -236,14 +236,6 @@ msgstr ""
 msgid "No"
 msgstr ""
 
-#: assets/components/tracking/diagram/ViewDiagramWatchlistButton.tsx:86
-msgid "View the Watchlist Entity Diagram"
-msgstr ""
-
-#: assets/components/tracking/diagram/ViewDiagramWatchlistButton.tsx:91
-msgid "Watchlist Entity Diagram"
-msgstr ""
-
 #: assets/components/tracking/watchlist/WatchlistForm.tsx:66
 msgid "Name"
 msgstr ""
@@ -327,6 +319,23 @@ msgstr ""
 
 #: assets/components/tracking/watchlist/UpdateWatchlistButton.tsx:54
 msgid "Cancel"
+msgstr ""
+
+#: assets/components/tracking/watchlist/diagram/ViewDiagramWatchlistButton.tsx:40
+msgid "View the Watchlist Entity Diagram"
+msgstr ""
+
+#: assets/components/tracking/watchlist/diagram/ViewDiagramWatchlistButton.tsx:45
+msgid "Watchlist Entity Diagram"
+msgstr ""
+
+#: assets/components/tracking/watchlist/diagram/watchlistToEdges.tsx:39
+msgid "Registry"
+msgstr ""
+
+#: assets/components/tracking/watchlist/diagram/watchlistToNodes.tsx:32
+#, javascript-format
+msgid ".${ tld.tld } Registry"
 msgstr ""
 
 #: assets/components/tracking/watchlist/DeleteWatchlistButton.tsx:12
@@ -427,27 +436,27 @@ msgstr ""
 msgid "Register"
 msgstr ""
 
-#: assets/pages/search/DomainSearchPage.tsx:21
+#: assets/pages/search/DomainSearchPage.tsx:22
 msgid "Found !"
 msgstr ""
 
-#: assets/pages/search/DomainSearchPage.tsx:29
+#: assets/pages/search/DomainSearchPage.tsx:30
 msgid "Domain finder"
 msgstr ""
 
-#: assets/pages/search/DomainSearchPage.tsx:50
+#: assets/pages/search/DomainSearchPage.tsx:51
 msgid "EPP Status Codes"
 msgstr ""
 
-#: assets/pages/search/DomainSearchPage.tsx:60
+#: assets/pages/search/DomainSearchPage.tsx:61
 msgid "Timeline"
 msgstr ""
 
-#: assets/pages/search/DomainSearchPage.tsx:65
+#: assets/pages/search/DomainSearchPage.tsx:66
 msgid "Entities"
 msgstr ""
 
-#: assets/pages/search/DomainSearchPage.tsx:73
+#: assets/pages/search/DomainSearchPage.tsx:75
 msgid ""
 "Although the domain exists in my database, it has been deleted from the "
 "WHOIS by its registrar."

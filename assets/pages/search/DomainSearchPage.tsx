@@ -7,6 +7,7 @@ import {DomainSearchBar, FieldType} from "../../components/search/DomainSearchBa
 import {EventTimeline} from "../../components/search/EventTimeline";
 import {EntitiesList} from "../../components/search/EntitiesList";
 import {showErrorAPI} from "../../utils";
+import {DomainDiagram} from "../../components/search/DomainDiagram";
 
 const {Text} = Typography;
 
@@ -68,6 +69,7 @@ export default function DomainSearchPage() {
                                     }
                                 </Card>
                             </Badge.Ribbon>
+                            <DomainDiagram domain={domain}/>
                         </Space>
                         : <Empty
                             description={t`Although the domain exists in my database, it has been deleted from the WHOIS by its registrar.`}/>)

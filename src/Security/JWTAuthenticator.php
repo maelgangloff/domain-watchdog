@@ -43,7 +43,7 @@ class JWTAuthenticator implements AuthenticationSuccessHandlerInterface
             new Cookie(
                 'BEARER',
                 $jwt,
-                time() + 7200, // expiration
+                time() + 604800, // expiration
                 '/',
                 null,
                 true,
