@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import {Card, Divider, Flex, Form, message} from "antd";
-import {EventAction, getWatchlists, putWatchlist, postWatchlist} from "../../utils/api";
+import {EventAction, getWatchlists, postWatchlist, putWatchlist} from "../../utils/api";
 import {AxiosError} from "axios";
 import {t} from 'ttag'
 import {WatchlistForm} from "../../components/tracking/watchlist/WatchlistForm";
@@ -35,7 +35,7 @@ export default function WatchlistPage() {
         emailTriggers: string[]
         connector?: string
     }) => {
-        const domainsURI = values.domains.map(d => '/api/domains/' + d)
+        const domainsURI = values.domains.map(d => '/api/domains/' + d.toLowerCase())
         postWatchlist({
             name: values.name,
             domains: domainsURI,
@@ -57,7 +57,7 @@ export default function WatchlistPage() {
         emailTriggers: string[]
         connector?: string
     }) => {
-        const domainsURI = values.domains.map(d => '/api/domains/' + d)
+        const domainsURI = values.domains.map(d => '/api/domains/' + d.toLowerCase())
 
         return putWatchlist({
             token: values.token,
