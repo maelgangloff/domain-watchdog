@@ -235,11 +235,16 @@ msgstr ""
 msgid "No"
 msgstr ""
 
-#: assets/components/tracking/diagram/ViewDiagramWatchlistButton.tsx:86
+#: assets/components/tracking/diagram/WatchlistToNodes.tsx:37
+#, javascript-format
+msgid ".${ tld.tld } Registry"
+msgstr ""
+
+#: assets/components/tracking/diagram/ViewDiagramWatchlistButton.tsx:40
 msgid "View the Watchlist Entity Diagram"
 msgstr ""
 
-#: assets/components/tracking/diagram/ViewDiagramWatchlistButton.tsx:91
+#: assets/components/tracking/diagram/ViewDiagramWatchlistButton.tsx:45
 msgid "Watchlist Entity Diagram"
 msgstr ""
 
