@@ -547,15 +547,15 @@ msgstr ""
 msgid "Create a Connector"
 msgstr ""
 
-#: assets/pages/tracking/WatchlistPage.tsx:53
+#: assets/pages/tracking/WatchlistPage.tsx:56
 msgid "Watchlist created !"
 msgstr ""
 
-#: assets/pages/tracking/WatchlistPage.tsx:78
+#: assets/pages/tracking/WatchlistPage.tsx:86
 msgid "Watchlist updated !"
 msgstr ""
 
-#: assets/pages/tracking/WatchlistPage.tsx:104
+#: assets/pages/tracking/WatchlistPage.tsx:112
 msgid "Create a Watchlist"
 msgstr ""
 
