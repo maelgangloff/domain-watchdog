@@ -24,6 +24,7 @@ use Symfony\Component\Messenger\Exception\ExceptionInterface;
 use Symfony\Component\Mime\Address;
 use Symfony\Component\Notifier\Recipient\Recipient;
 use Symfony\Component\Notifier\Transport\AbstractTransportFactory;
+use Symfony\Component\Notifier\Transport\Dsn;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 #[AsMessageHandler]
@@ -111,7 +112,7 @@ final readonly class ProcessDomainTriggerHandler
                 } elseif (TriggerAction::SendChat == $watchListTrigger->getAction()) {
                     if (null !== $watchList->getWebhookDsn()) {
                         foreach ($watchList->getWebhookDsn() as $dsnString) {
-                            $dsn = new \Symfony\Component\Notifier\Transport\Dsn($dsnString);
+                            $dsn = new Dsn($dsnString);
 
                             $scheme = $dsn->getScheme();
                             $webhookScheme = WebhookScheme::tryFrom($scheme);
