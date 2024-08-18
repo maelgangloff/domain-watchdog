@@ -52,7 +52,9 @@ msgid "Reregistration"
 msgstr "Neuregistrierung"
 
 #: assets/components/search/EventTimeline.tsx:27
-msgid "Last changed"
+#, fuzzy
+#| msgid "Last changed"
+msgid "Changed"
 msgstr "Letzte Änderung"
 
 #: assets/components/search/EventTimeline.tsx:28
