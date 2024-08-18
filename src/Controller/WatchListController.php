@@ -94,8 +94,6 @@ class WatchListController extends AbstractController
         $user = $this->getUser();
         $watchList->setUser($user);
 
-        $this->verifyWebhookDSN($watchList);
-
         /*
          * In the limited version, we do not want a user to be able to register the same domain more than once in their watchlists.
          * This policy guarantees the equal probability of obtaining a domain name if it is requested by several users.
@@ -140,6 +138,8 @@ class WatchListController extends AbstractController
                 throw new AccessDeniedHttpException('You have exceeded the maximum number of webhooks allowed in this Watchlist');
             }
         }
+
+        $this->verifyWebhookDSN($watchList);
 
         $user = $this->getUser();
         $this->logger->info('User {username} registers a Watchlist ({token}).', [
@@ -189,8 +189,6 @@ class WatchListController extends AbstractController
         $user = $this->getUser();
         $watchList->setUser($user);
 
-        $this->verifyWebhookDSN($watchList);
-
         if ($this->getParameter('limited_features')) {
             if ($watchList->getDomains()->count() > (int) $this->getParameter('limit_max_watchlist_domains')) {
                 $this->logger->notice('User {username} tried to update a Watchlist. The maximum number of domains has been reached for this Watchlist', [
@@ -226,6 +224,8 @@ class WatchListController extends AbstractController
                 throw new AccessDeniedHttpException('You have exceeded the maximum number of webhooks allowed in this Watchlist');
             }
         }
+
+        $this->verifyWebhookDSN($watchList);
 
         $this->logger->info('User {username} updates a Watchlist ({token}).', [
             'username' => $user->getUserIdentifier(),
