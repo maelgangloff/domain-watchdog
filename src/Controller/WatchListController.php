@@ -69,7 +69,12 @@ class WatchListController extends AbstractController
                 $transportFactoryClass = $webhookScheme->getChatTransportFactory();
                 /** @var AbstractTransportFactory $transportFactory */
                 $transportFactory = new $transportFactoryClass();
-                $transportFactory->create($dsn)->send((new TestChatNotification())->asChatMessage());
+
+                try {
+                    $transportFactory->create($dsn)->send((new TestChatNotification())->asChatMessage());
+                } catch (\Throwable $exception) {
+                    throw new BadRequestHttpException($exception->getMessage());
+                }
             }
         }
     }
