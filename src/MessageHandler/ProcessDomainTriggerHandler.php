@@ -22,6 +22,7 @@ use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 use Symfony\Component\Messenger\Exception\ExceptionInterface;
 use Symfony\Component\Mime\Address;
+use Symfony\Component\Notifier\Notification\ChatNotificationInterface;
 use Symfony\Component\Notifier\Recipient\Recipient;
 use Symfony\Component\Notifier\Transport\AbstractTransportFactory;
 use Symfony\Component\Notifier\Transport\Dsn;
@@ -78,16 +79,17 @@ final readonly class ProcessDomainTriggerHandler
 
                 $connectorProvider->orderDomain($domain, $this->kernel->isDebug());
 
-                $email = (new DomainOrderNotification($this->sender, $domain, $connector))
-                    ->asEmailMessage(new Recipient($watchList->getUser()->getEmail()));
-                $this->mailer->send($email->getMessage());
+                $notification = (new DomainOrderNotification($this->sender, $domain, $connector));
+                $this->mailer->send($notification->asEmailMessage(new Recipient($watchList->getUser()->getEmail()))->getMessage());
+                $this->sendChatNotification($watchList, $notification);
             } catch (\Throwable) {
                 $this->logger->warning('Unable to complete purchase. An error message is sent to user {username}.', [
                     'username' => $watchList->getUser()->getUserIdentifier(),
                 ]);
-                $email = (new DomainOrderErrorNotification($this->sender, $domain))
-                    ->asEmailMessage(new Recipient($watchList->getUser()->getEmail()));
-                $this->mailer->send($email->getMessage());
+
+                $notification = (new DomainOrderErrorNotification($this->sender, $domain));
+                $this->mailer->send($notification->asEmailMessage(new Recipient($watchList->getUser()->getEmail()))->getMessage());
+                $this->sendChatNotification($watchList, $notification);
             }
         }
 
@@ -110,19 +112,41 @@ final readonly class ProcessDomainTriggerHandler
                 if (TriggerAction::SendEmail == $watchListTrigger->getAction()) {
                     $this->mailer->send($notification->asEmailMessage($recipient)->getMessage());
                 } elseif (TriggerAction::SendChat == $watchListTrigger->getAction()) {
-                    if (null !== $watchList->getWebhookDsn()) {
-                        foreach ($watchList->getWebhookDsn() as $dsnString) {
-                            $dsn = new Dsn($dsnString);
+                    $this->sendChatNotification($watchList, $notification);
+                }
+            }
+        }
+    }
 
-                            $scheme = $dsn->getScheme();
-                            $webhookScheme = WebhookScheme::tryFrom($scheme);
-                            if (null !== $webhookScheme) {
-                                $transportFactoryClass = $webhookScheme->getChatTransportFactory();
-                                /** @var AbstractTransportFactory $transportFactory */
-                                $transportFactory = new $transportFactoryClass();
-                                $transportFactory->create($dsn)->send($notification->asChatMessage());
-                            }
-                        }
+    /**
+     * @throws \Symfony\Component\Notifier\Exception\TransportExceptionInterface
+     */
+    private function sendChatNotification(WatchList $watchList, ChatNotificationInterface $notification): void
+    {
+        if (null !== $watchList->getWebhookDsn()) {
+            foreach ($watchList->getWebhookDsn() as $dsnString) {
+                $dsn = new Dsn($dsnString);
+
+                $scheme = $dsn->getScheme();
+                $webhookScheme = WebhookScheme::tryFrom($scheme);
+
+                if (null !== $webhookScheme) {
+                    $transportFactoryClass = $webhookScheme->getChatTransportFactory();
+                    /** @var AbstractTransportFactory $transportFactory */
+                    $transportFactory = new $transportFactoryClass();
+                    try {
+                        $transportFactory->create($dsn)->send($notification->asChatMessage(new Recipient()));
+                        $this->logger->info('Chat message sent with {schema} for Watchlist {token}',
+                            [
+                                'scheme' => $webhookScheme->name,
+                                'token' => $watchList->getToken(),
+                            ]);
+                    } catch (\Throwable) {
+                        $this->logger->error('Unable to send a chat message to {scheme} for Watchlist {token}',
+                            [
+                                'scheme' => $webhookScheme->name,
+                                'token' => $watchList->getToken(),
+                            ]);
                     }
                 }
             }
