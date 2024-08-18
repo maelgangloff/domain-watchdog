@@ -325,7 +325,7 @@ msgstr ""
 msgid "Watchlist Entity Diagram"
 msgstr ""
 
-#: assets/components/tracking/watchlist/diagram/watchlistToEdges.tsx:39
+#: assets/components/tracking/watchlist/diagram/watchlistToEdges.tsx:40
 msgid "Registry"
 msgstr ""
 
@@ -607,7 +607,7 @@ msgstr ""
 
 #: assets/utils/index.ts:19
 #, javascript-format
-msgid "Please retry after ${ duration } seconds"
+msgid "Please retry after ${ duration } minutes"
 msgstr ""
 
 #: assets/utils/index.ts:23

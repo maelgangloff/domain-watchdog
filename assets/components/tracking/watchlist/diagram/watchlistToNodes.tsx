@@ -11,8 +11,8 @@ export const domainToNode = (d: Domain) => ({
     }
 })
 
-export const domainEntitiesToNode = (d: Domain) => d.entities
-    .filter(e => !e.roles.includes('registrar')) //
+export const domainEntitiesToNode = (d: Domain, withRegistrar = false) => d.entities
+    .filter(e => !withRegistrar ? !e.roles.includes('registrar') : true)
     .map(e => {
         const jCard = vCard.fromJSON(e.entity.jCard)
         let label = e.entity.handle
@@ -46,7 +46,7 @@ export const nsToNode = (ns: Nameserver) => ({
 export function watchlistToNodes(watchlist: Watchlist) {
 
     const domains = watchlist.domains.map(domainToNode)
-    const entities = [...new Set(watchlist.domains.map(domainEntitiesToNode).flat())]
+    const entities = [...new Set(watchlist.domains.map(d => domainEntitiesToNode(d)).flat())]
     const tlds = [...new Set(watchlist.domains.map(d => d.tld))].map(tldToNode)
     const nameservers = [...new Set(watchlist.domains.map(d => d.nameservers))].flat().map(nsToNode)
 

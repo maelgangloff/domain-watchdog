@@ -14,11 +14,11 @@ export function DomainDiagram({domain}: { domain: Domain }) {
     useEffect(() => {
         const e = getLayoutedElements([
             domainToNode(domain),
-            ...domainEntitiesToNode(domain),
+            ...domainEntitiesToNode(domain, true),
             tldToNode(domain.tld),
             ...domain.nameservers.map(nsToNode)
         ].flat(), [
-            domainEntitiesToEdges(domain),
+            domainEntitiesToEdges(domain, true),
             tldToEdge(domain),
             ...domainNSToEdges(domain)
         ].flat())
@@ -30,7 +30,7 @@ export function DomainDiagram({domain}: { domain: Domain }) {
     return <Flex style={{width: '80vw', height: '80vh'}}>
         <ReactFlow
             fitView
-            colorMode='system'
+            colorMode='dark'
             nodesConnectable={false}
             edgesReconnectable={false}
             nodes={nodes}

@@ -16,7 +16,7 @@ export function showErrorAPI(e: AxiosError, messageApi: MessageInstance): Messag
 
     if (response.status === 429) {
         const duration = response.headers['retry-after']
-        return messageApi.error(t`Please retry after ${duration} seconds`)
+        return messageApi.error(t`Please retry after ${duration} minutes`)
     }
 
     if (response.status.toString()[0] === '4') {
