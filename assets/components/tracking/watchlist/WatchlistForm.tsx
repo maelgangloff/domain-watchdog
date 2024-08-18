@@ -221,7 +221,8 @@ export function WatchlistForm({form, connectors, onFinish, isCreation}: {
                         </Form.Item>
                     ))}
                     <Form.Item help={
-                        <Typography.Link href='https://symfony.com/doc/current/notifier.html#chat-channel'>
+                        <Typography.Link href='https://symfony.com/doc/current/notifier.html#chat-channel'
+                                         target='_blank'>
                             {t`Check out this link to the Symfony documentation to help you build the DSN`}
                         </Typography.Link>}
                     >

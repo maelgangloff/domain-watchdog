@@ -55,9 +55,9 @@ export function ViewDiagramWatchlistButton({token}: { token: string }) {
             }
             onOk={() => setOpen(false)}
             onCancel={() => setOpen(false)}
-            width='80vw'
+            width='85vw'
         >
-            {nodes && edges && <Flex style={{width: '75vw', height: '80vh'}}>
+            <Flex style={{width: '80vw', height: '80vh'}}>
                 <ReactFlow
                     fitView
                     colorMode='system'
@@ -73,7 +73,7 @@ export function ViewDiagramWatchlistButton({token}: { token: string }) {
                     <Controls/>
                     <Background/>
                 </ReactFlow>
-            </Flex>}
+            </Flex>
         </Modal>
     </>
 }
