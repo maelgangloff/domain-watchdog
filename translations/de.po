@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2024-08-18 15:39+0000\n"
+"PO-Revision-Date: 2024-08-18 16:52+0000\n"
 "Last-Translator: Maël Gangloff <contact@maelgangloff.fr>\n"
 "Language-Team: German <https://weblate.vinceh121.me/projects/domain-watchdog/"
 "domain-watchdog-dashboard/de/>\n"
@@ -52,10 +52,8 @@ msgid "Reregistration"
 msgstr "Neuregistrierung"
 
 #: assets/components/search/EventTimeline.tsx:27
-#, fuzzy
-#| msgid "Last changed"
 msgid "Changed"
-msgstr "Letzte Änderung"
+msgstr "Geändert"
 
 #: assets/components/search/EventTimeline.tsx:28
 msgid "Expiration"
