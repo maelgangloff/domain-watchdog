@@ -75,26 +75,30 @@ class RegistrationController extends AbstractController
             )
         );
 
+        if (false === (bool) $this->getParameter('registration_verify_email')) {
+            $user->setVerified(true);
+        } else {
+            $email = $this->emailVerifier->sendEmailConfirmation('app_verify_email', $user,
+                (new TemplatedEmail())
+                    ->from(new Address($this->mailerSenderEmail, $this->mailerSenderName))
+                    ->to($user->getEmail())
+                    ->locale('en')
+                    ->subject('Please Confirm your Email')
+                    ->htmlTemplate('emails/success/confirmation_email.html.twig')
+            );
+
+            $signedUrl = (string) $email->getContext()['signedUrl'];
+            $this->logger->notice('The validation link for user {username} is {signedUrl}', [
+                'username' => $user->getUserIdentifier(),
+                'signedUrl' => $signedUrl,
+            ]);
+        }
+
         $this->em->persist($user);
         $this->em->flush();
 
         $this->logger->info('A new user has registered ({username}).', [
             'username' => $user->getUserIdentifier(),
-        ]);
-
-        $email = $this->emailVerifier->sendEmailConfirmation('app_verify_email', $user,
-            (new TemplatedEmail())
-                ->from(new Address($this->mailerSenderEmail, $this->mailerSenderName))
-                ->to($user->getEmail())
-                ->locale('en')
-                ->subject('Please Confirm your Email')
-                ->htmlTemplate('emails/success/confirmation_email.html.twig')
-        );
-
-        $signedUrl = (string) $email->getContext()['signedUrl'];
-        $this->logger->notice('The validation link for user {username} is {signedUrl}', [
-            'username' => $user->getUserIdentifier(),
-            'signedUrl' => $signedUrl,
         ]);
 
         return new Response(null, 201);

@@ -8,6 +8,7 @@ parameters:
     mailer_sender_name: '%env(string:MAILER_SENDER_NAME)%'
     oauth_enabled: '%env(OAUTH_CLIENT_ID)%'
     registration_enabled: '%env(bool:REGISTRATION_ENABLED)%'
+    registration_verify_email: '%env(bool:REGISTRATION_VERIFY_EMAIL)%'
 
     limited_features: '%env(bool:LIMITED_FEATURES)%'
     limit_max_watchlist: '%env(int:LIMIT_MAX_WATCHLIST)%'

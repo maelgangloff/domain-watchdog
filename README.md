@@ -1,10 +1,11 @@
 <p align="center"><img src="https://github.com/user-attachments/assets/942ddfd0-2c76-4b00-bd9f-727cfddc0103" alt="Domain Watchdog" width="150" height="150" /></p>
 <h1 align="center"><b>Domain Watchdog</b></h1>
-<p align="center">Your companion in the quest for domain names</br><a href="https://domainwatchdog.eu">domainwatchdog.eu »</a></p>
+<p align="center">Your companion in the quest for domain names<br/><a href="https://domainwatchdog.eu">domainwatchdog.eu »</a></p>
 <br/>
 
 Domain Watchdog is a standalone application that utilizes RDAP to gather publicly accessible information about domain
-names, track their history, and automatically purchase them. For more information please check [the wiki](https://github.com/maelgangloff/domain-watchdog/wiki) !
+names, track their history, and automatically purchase them. For more information please
+check [the wiki](https://github.com/maelgangloff/domain-watchdog/wiki) !
 
 ## Why use it?
 
@@ -25,17 +26,20 @@ detailed history of events (ownership changes, renewals, etc.) is not feasible w
 ### Docker Deployment
 
 1. Clone the repository
-2. Build the Docker image locally
+2. Modify environment variables (.env) and add static files to customize your instance (see [INSTALL.md](/INSTALL.md))
+3. Pull the latest version of the Domain Watchdog image from Docker Hub.
     ```shell
-    docker compose -f compose.yaml -f compose.prod.yaml build --pull --no-cache
+    docker compose pull
     ```
-3. Modify environment variables and add static files to customize your instance
-4. Start the project in production environment
+4. Start the project in production environment. If you want, you can also build the Docker image to use yourself.
     ```shell
-    docker compose -f compose.yaml -f compose.prod.yaml up
+    docker compose up
     ```
 
-## How it works?
+By default, the container listens on http://localhost:8080, but you can configure this in environment variables.
+See the [Docker Compose file](./docker-compose.yml).
+
+## Features
 
 ### RDAP search
 
@@ -46,9 +50,9 @@ ICANN launched a global vote in 2023 to propose replacing the WHOIS protocol wit
 registrars will no longer be required to support WHOIS from 2025 (*WHOIS Sunset Date*).[^2]
 
 Domain Watchdog uses the RDAP protocol, which will soon be the new standard for retrieving information concerning domain
-names. The data is organized in a SQL database to minimize space by ensuring an entity is not repeated.
+names.
 
-### Connector Provider
+### Auto-purchase domain
 
 A connector is a way to order a domain name. It is important to mention that this project does not act as a payment
 intermediary.
@@ -63,24 +67,19 @@ The table below lists the supported API connector providers:
 |   GANDI   | https://api.gandi.net/docs/domains/                           |  **Yes**  |
 | NAMECHEAP | https://www.namecheap.com/support/api/methods/domains/create/ |           |
 
-### Watchlist
+If a domain has expired and a connector is linked to the Watchlist, then Domain Watchdog will try to order it via the
+connector provider's API.
+
+Note: If the same domain name is present on several Watchlists, it is not possible to predict in advance which user will
+win the domain name. The choice is left to chance.
+
+### Monitoring
 
 A watchlist is a list of domain names, triggers and possibly an API connector.
 They allow you to follow the life of the listed domain names and send you a notification when a change has been
 detected.
-
-If a domain has expired and a connector is linked to the Watchlist, then Domain Watchdog will try to order it via the
-connector provider's API.
-
-Note: If the same domain name is present on several Watchlists, on the same principle as the raise condition, it is not
-possible to predict in advance which user will win the domain name. The choice is left to chance.
-
-## Useful documentation
-
-> [!NOTE]
-> - [RFC 7482 : Registration Data Access Protocol (RDAP) Query Format](https://datatracker.ietf.org/doc/html/rfc7482)
-> - [RFC 7483 : JSON Responses for the Registration Data Access Protocol (RDAP)](https://datatracker.ietf.org/doc/html/rfc7483)
-> - [RFC 7484 : Finding the Authoritative Registration Data (RDAP) Service](https://datatracker.ietf.org/doc/html/rfc7484)
+A notification to the user is sent when a new event occurs on one of the domain names in the Watchlist. This can be an
+email or a chat via Webhook. An iCalendar export of events is possible.
 
 ## Disclaimer
 
@@ -91,6 +90,13 @@ possible to predict in advance which user will win the domain name. The choice i
 > * Please note that this project is NOT affiliated IN ANY WAY with the API Providers used to order domain names.
 > * The project installers are responsible for the use of their own instance.
 > * In no event the owner of this project will not be held responsible for other instances over which he has no control.
+
+## Useful documentation
+
+> [!NOTE]
+> - [RFC 7482 : Registration Data Access Protocol (RDAP) Query Format](https://datatracker.ietf.org/doc/html/rfc7482)
+> - [RFC 7483 : JSON Responses for the Registration Data Access Protocol (RDAP)](https://datatracker.ietf.org/doc/html/rfc7483)
+> - [RFC 7484 : Finding the Authoritative Registration Data (RDAP) Service](https://datatracker.ietf.org/doc/html/rfc7484)
 
 ## Licensing
 
