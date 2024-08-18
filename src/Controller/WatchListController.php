@@ -35,7 +35,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
-use Symfony\Component\Notifier\Exception\TransportExceptionInterface;
+use Symfony\Component\Notifier\Exception\InvalidArgumentException;
 use Symfony\Component\Notifier\Transport\AbstractTransportFactory;
 use Symfony\Component\Notifier\Transport\Dsn;
 use Symfony\Component\Routing\Attribute\Route;
@@ -51,14 +51,15 @@ class WatchListController extends AbstractController
     ) {
     }
 
-    /**
-     * @throws TransportExceptionInterface
-     */
     private function verifyWebhookDSN(WatchList $watchList): void
     {
         if (null !== $watchList->getWebhookDsn()) {
             foreach ($watchList->getWebhookDsn() as $dsnString) {
-                $dsn = new Dsn($dsnString);
+                try {
+                    $dsn = new Dsn($dsnString);
+                } catch (InvalidArgumentException $exception) {
+                    throw new BadRequestHttpException($exception->getMessage());
+                }
 
                 $scheme = $dsn->getScheme();
                 $webhookScheme = WebhookScheme::tryFrom($scheme);
@@ -66,6 +67,7 @@ class WatchListController extends AbstractController
                 if (null === $webhookScheme) {
                     throw new BadRequestHttpException("The DSN scheme ($scheme) is not supported");
                 }
+
                 $transportFactoryClass = $webhookScheme->getChatTransportFactory();
                 /** @var AbstractTransportFactory $transportFactory */
                 $transportFactory = new $transportFactoryClass();
