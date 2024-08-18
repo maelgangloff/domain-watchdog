@@ -10,12 +10,6 @@ import {getLayoutedElements} from "./getLayoutedElements";
 import {watchlistToNodes} from "./watchlistToNodes";
 import {watchlistToEdges} from "./watchlistToEdges";
 
-export type DiagramConfig = {
-    tld?: boolean
-    nameserver?: boolean
-    entities?: boolean
-}
-
 export function ViewDiagramWatchlistButton({token}: { token: string }) {
 
     const [open, setOpen] = useState(false)
@@ -24,9 +18,11 @@ export function ViewDiagramWatchlistButton({token}: { token: string }) {
     const [edges, setEdges, onEdgesChange] = useEdgesState([])
 
     useEffect(() => {
-        setNodes([])
         setEdges([])
+        setNodes([])
+    }, [])
 
+    useEffect(() => {
         if (!open) return
         setLoading(true)
         getWatchlist(token).then(w => {
@@ -58,19 +54,22 @@ export function ViewDiagramWatchlistButton({token}: { token: string }) {
             }
             onOk={() => setOpen(false)}
             onCancel={() => setOpen(false)}
-            width='85vw'
+            width='90vw'
+            height='100%'
         >
-            <Flex style={{width: '80vw', height: '80vh'}}>
+            <Flex style={{width: '85vw', height: '85vh'}}>
                 <ReactFlow
                     fitView
                     colorMode='system'
+                    defaultEdges={[]}
+                    defaultNodes={[]}
                     nodesConnectable={false}
                     edgesReconnectable={false}
                     nodes={nodes}
                     edges={edges}
                     onNodesChange={onNodesChange}
                     onEdgesChange={onEdgesChange}
-                    style={{width: '100%', height: '100vh'}}
+                    style={{width: '100%', height: '100%'}}
                 >
                     <MiniMap/>
                     <Controls/>

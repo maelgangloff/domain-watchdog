@@ -20,6 +20,7 @@ export const domainEntitiesToNode = (d: Domain, withRegistrar = false) => d.enti
 
         return {
             id: e.entity.handle,
+            type: e.roles.includes('registrant') || e.roles.includes('registrar') ? 'input' : 'output',
             data: {label},
             style: {
                 width: 200
@@ -30,6 +31,7 @@ export const domainEntitiesToNode = (d: Domain, withRegistrar = false) => d.enti
 export const tldToNode = (tld: Tld) => ({
     id: tld.tld,
     data: {label: t`.${tld.tld} Registry`},
+    type: 'input',
     style: {
         width: 200
     }
@@ -38,17 +40,18 @@ export const tldToNode = (tld: Tld) => ({
 export const nsToNode = (ns: Nameserver) => ({
     id: ns.ldhName,
     data: {label: ns.ldhName},
+    type: 'output',
     style: {
         width: 200
     }
 })
 
-export function watchlistToNodes(watchlist: Watchlist) {
+export function watchlistToNodes(watchlist: Watchlist, withRegistrar = false, withTld = false) {
 
     const domains = watchlist.domains.map(domainToNode)
-    const entities = [...new Set(watchlist.domains.map(d => domainEntitiesToNode(d)).flat())]
+    const entities = [...new Set(watchlist.domains.map(d => domainEntitiesToNode(d, withRegistrar)).flat())]
     const tlds = [...new Set(watchlist.domains.map(d => d.tld))].map(tldToNode)
-    const nameservers = [...new Set(watchlist.domains.map(d => d.nameservers))].flat().map(nsToNode)
+    const nameservers = [...new Set(watchlist.domains.map(d => d.nameservers))].flat().map(nsToNode, withRegistrar)
 
-    return [...domains, ...entities, ...nameservers]
+    return [...domains, ...entities, ...nameservers, ...(withTld ? tlds : [])]
 }

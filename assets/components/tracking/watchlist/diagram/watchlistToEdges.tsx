@@ -40,9 +40,10 @@ export const tldToEdge = (d: Domain) => ({
     label: t`Registry`
 })
 
-export function watchlistToEdges(watchlist: Watchlist) {
-    const entitiesEdges = watchlist.domains.map(d => domainEntitiesToEdges(d)).flat()
+export function watchlistToEdges(watchlist: Watchlist, withRegistrar = false, withTld = false) {
+    const entitiesEdges = watchlist.domains.map(d => domainEntitiesToEdges(d, withRegistrar)).flat()
     const nameserversEdges = watchlist.domains.map(domainNSToEdges).flat()
+    const tldEdge = watchlist.domains.map(tldToEdge)
 
-    return [...entitiesEdges, ...nameserversEdges]
+    return [...entitiesEdges, ...nameserversEdges, ...(withTld ? tldEdge : [])]
 }
