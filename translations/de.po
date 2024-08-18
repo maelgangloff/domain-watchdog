@@ -343,7 +343,7 @@ msgstr "Sehen Sie sich das Watchlist-Entitätsdiagramm an"
 msgid "Watchlist Entity Diagram"
 msgstr "Watchlist-Entitäten Diagramm"
 
-#: assets/components/tracking/watchlist/diagram/watchlistToEdges.tsx:39
+#: assets/components/tracking/watchlist/diagram/watchlistToEdges.tsx:40
 msgid "Registry"
 msgstr "Registrierung"
 
@@ -647,8 +647,9 @@ msgstr ""
 "einer Domain zur anderen"
 
 #: assets/utils/index.ts:19
-#, javascript-format
-msgid "Please retry after ${ duration } seconds"
+#, fuzzy, javascript-format
+#| msgid "Please retry after ${ duration } seconds"
+msgid "Please retry after ${ duration } minutes"
 msgstr "Bitte versuchen Sie es nach ${ duration } Sekunden erneut"
 
 #: assets/utils/index.ts:23 assets/utils/index.ts:26
