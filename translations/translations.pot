@@ -317,11 +317,11 @@ msgstr ""
 msgid "Cancel"
 msgstr ""
 
-#: assets/components/tracking/watchlist/diagram/ViewDiagramWatchlistButton.tsx:40
+#: assets/components/tracking/watchlist/diagram/ViewDiagramWatchlistButton.tsx:43
 msgid "View the Watchlist Entity Diagram"
 msgstr ""
 
-#: assets/components/tracking/watchlist/diagram/ViewDiagramWatchlistButton.tsx:45
+#: assets/components/tracking/watchlist/diagram/ViewDiagramWatchlistButton.tsx:48
 msgid "Watchlist Entity Diagram"
 msgstr ""
 

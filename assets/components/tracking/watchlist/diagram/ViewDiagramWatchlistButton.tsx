@@ -24,6 +24,9 @@ export function ViewDiagramWatchlistButton({token}: { token: string }) {
     const [edges, setEdges, onEdgesChange] = useEdgesState([])
 
     useEffect(() => {
+        setNodes([])
+        setEdges([])
+
         if (!open) return
         setLoading(true)
         getWatchlist(token).then(w => {
