@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2024-08-18 01:30+0000\n"
+"PO-Revision-Date: 2024-08-18 15:39+0000\n"
 "Last-Translator: Maël Gangloff <contact@maelgangloff.fr>\n"
 "Language-Team: French <https://weblate.vinceh121.me/projects/domain-watchdog/"
 "domain-watchdog-dashboard/fr/>\n"
@@ -354,7 +354,7 @@ msgstr "Registre .${ tld.tld }"
 
 #: assets/components/tracking/watchlist/CalendarWatchlistButton.tsx:14
 msgid "QR Code for iCalendar export"
-msgstr ""
+msgstr "QR Code pour l'exportation iCalendar"
 
 #: assets/components/tracking/watchlist/CalendarWatchlistButton.tsx:17
 msgid "Export events to iCalendar format"
