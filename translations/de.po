@@ -215,12 +215,12 @@ msgstr ""
 "des Anbieters"
 
 #: assets/components/tracking/connector/ConnectorForm.tsx:176
-#: assets/components/tracking/watchlist/WatchlistForm.tsx:244
+#: assets/components/tracking/watchlist/WatchlistForm.tsx:245
 msgid "Create"
 msgstr "Erstellen"
 
 #: assets/components/tracking/connector/ConnectorForm.tsx:179
-#: assets/components/tracking/watchlist/WatchlistForm.tsx:247
+#: assets/components/tracking/watchlist/WatchlistForm.tsx:248
 msgid "Reset"
 msgstr "Zurücksetzen"
 
@@ -308,18 +308,18 @@ msgstr "DSN"
 msgid "This DSN does not appear to be valid"
 msgstr "Dieser DSN scheint nicht gültig zu sein"
 
-#: assets/components/tracking/watchlist/WatchlistForm.tsx:225
+#: assets/components/tracking/watchlist/WatchlistForm.tsx:226
 msgid ""
 "Check out this link to the Symfony documentation to help you build the DSN"
 msgstr ""
 "Sehen Sie sich diesen Link zur Symfony-Dokumentation an, der Ihnen beim "
 "Erstellen des DSN hilft"
 
-#: assets/components/tracking/watchlist/WatchlistForm.tsx:234
+#: assets/components/tracking/watchlist/WatchlistForm.tsx:235
 msgid "Add a Webhook"
 msgstr "Einen Webhook hinzufügen"
 
-#: assets/components/tracking/watchlist/WatchlistForm.tsx:244
+#: assets/components/tracking/watchlist/WatchlistForm.tsx:245
 msgid "Update"
 msgstr "Aktualisieren"
 
