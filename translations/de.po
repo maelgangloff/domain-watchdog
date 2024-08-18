@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2024-08-17 21:11+0000\n"
+"PO-Revision-Date: 2024-08-18 01:30+0000\n"
 "Last-Translator: Maël Gangloff <contact@maelgangloff.fr>\n"
 "Language-Team: German <https://weblate.vinceh121.me/projects/domain-watchdog/"
 "domain-watchdog-dashboard/de/>\n"
@@ -647,10 +647,9 @@ msgstr ""
 "einer Domain zur anderen"
 
 #: assets/utils/index.ts:19
-#, fuzzy, javascript-format
-#| msgid "Please retry after ${ duration } seconds"
+#, javascript-format
 msgid "Please retry after ${ duration } minutes"
-msgstr "Bitte versuchen Sie es nach ${ duration } Sekunden erneut"
+msgstr "Bitte versuchen Sie es nach ${ duration } Minuten erneut"
 
 #: assets/utils/index.ts:23 assets/utils/index.ts:26
 msgid "An error occurred"
