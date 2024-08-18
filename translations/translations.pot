@@ -49,7 +49,7 @@ msgid "Reregistration"
 msgstr ""
 
 #: assets/components/search/EventTimeline.tsx:27
-msgid "Last changed"
+msgid "Changed"
 msgstr ""
 
 #: assets/components/search/EventTimeline.tsx:28
