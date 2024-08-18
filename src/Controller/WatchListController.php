@@ -102,7 +102,7 @@ class WatchListController extends AbstractController
          */
         if ($this->getParameter('limited_features')) {
             if ($watchList->getDomains()->count() > (int) $this->getParameter('limit_max_watchlist_domains')) {
-                $this->logger->notice('User {username} tried to create a Watchlist. The maximum number of domains has been reached for this Watchlist', [
+                $this->logger->notice('User {username} tried to create a Watchlist. The maximum number of domains has been reached.', [
                     'username' => $user->getUserIdentifier(),
                 ]);
                 throw new AccessDeniedHttpException('You have exceeded the maximum number of domain names allowed in this Watchlist');
@@ -131,6 +131,13 @@ class WatchListController extends AbstractController
 
                     throw new AccessDeniedHttpException("It is forbidden to register the same domain name twice in your watchlists with limited mode ($ldhName)");
                 }
+            }
+
+            if (null !== $watchList->getWebhookDsn() && count($watchList->getWebhookDsn()) > (int) $this->getParameter('limit_max_watchlist_webhooks')) {
+                $this->logger->notice('User {username} tried to create a Watchlist. The maximum number of webhooks has been reached.', [
+                    'username' => $user->getUserIdentifier(),
+                ]);
+                throw new AccessDeniedHttpException('You have exceeded the maximum number of webhooks allowed in this Watchlist');
             }
         }
 
@@ -210,6 +217,13 @@ class WatchListController extends AbstractController
 
                     throw new AccessDeniedHttpException("It is forbidden to register the same domain name twice in your watchlists with limited mode ($ldhName)");
                 }
+            }
+
+            if (null !== $watchList->getWebhookDsn() && count($watchList->getWebhookDsn()) > (int) $this->getParameter('limit_max_watchlist_webhooks')) {
+                $this->logger->notice('User {username} tried to update a Watchlist. The maximum number of webhooks has been reached.', [
+                    'username' => $user->getUserIdentifier(),
+                ]);
+                throw new AccessDeniedHttpException('You have exceeded the maximum number of webhooks allowed in this Watchlist');
             }
         }
 

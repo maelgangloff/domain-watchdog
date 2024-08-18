@@ -12,6 +12,7 @@ parameters:
     limited_features: '%env(bool:LIMITED_FEATURES)%'
     limit_max_watchlist: '%env(int:LIMIT_MAX_WATCHLIST)%'
     limit_max_watchlist_domains: '%env(int:LIMIT_MAX_WATCHLIST_DOMAINS)%'
+    limit_max_watchlist_webhooks: '%env(int:LIMIT_MAX_WATCHLIST_DOMAINS)%'
 
 services:
     # default configuration for services in *this* file
