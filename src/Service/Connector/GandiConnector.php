@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Config\Connector;
+namespace App\Service\Connector;
 
 use App\Entity\Domain;
 use http\Exception\InvalidArgumentException;

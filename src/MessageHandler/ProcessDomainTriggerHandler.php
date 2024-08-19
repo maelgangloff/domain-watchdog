@@ -2,7 +2,6 @@
 
 namespace App\MessageHandler;
 
-use App\Config\Connector\ConnectorInterface;
 use App\Config\TriggerAction;
 use App\Entity\Connector;
 use App\Entity\Domain;
@@ -22,6 +21,8 @@ use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 use Symfony\Component\Mime\Address;
 use Symfony\Component\Mime\Email;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
+use App\Service\Connector\ConnectorInterface;
+use Symfony\Component\DependencyInjection\ParameterBag\ContainerBagInterface;
 
 #[AsMessageHandler]
 final readonly class ProcessDomainTriggerHandler
@@ -34,7 +35,8 @@ final readonly class ProcessDomainTriggerHandler
         private DomainRepository $domainRepository,
         private KernelInterface $kernel,
         private LoggerInterface $logger,
-        private HttpClientInterface $client
+        private HttpClientInterface $client,
+        private ContainerBagInterface $container
     ) {
     }
 
@@ -66,7 +68,7 @@ final readonly class ProcessDomainTriggerHandler
                 $connectorProviderClass = $provider->getConnectorProvider();
 
                 /** @var ConnectorInterface $connectorProvider */
-                $connectorProvider = new $connectorProviderClass($connector->getAuthData(), $this->client);
+                $connectorProvider = $this->container->get($connectorProviderClass);
 
                 $connectorProvider->orderDomain($domain, $this->kernel->isDebug());
 

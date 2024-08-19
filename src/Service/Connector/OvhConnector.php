@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Config\Connector;
+namespace App\Service\Connector;
 
 use App\Entity\Domain;
 use Ovh\Api;
@@ -14,7 +14,8 @@ readonly class OvhConnector implements ConnectorInterface
         [
             'method' => 'GET',
             'path' => '/order/cart',
-        ], [
+        ],
+        [
             'method' => 'GET',
             'path' => '/order/cart/*',
         ],
