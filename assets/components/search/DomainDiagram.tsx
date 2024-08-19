@@ -27,7 +27,7 @@ export function DomainDiagram({domain}: { domain: Domain }) {
         setEdges(e.edges)
     }, [])
 
-    return <Flex style={{width: '80vw', height: '80vh'}}>
+    return <Flex style={{width: '100%', height: '100vh'}}>
         <ReactFlow
             fitView
             colorMode='dark'
