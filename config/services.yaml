@@ -4,6 +4,8 @@
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices.html#use-parameters-for-application-configuration
 parameters:
+    custom_rdap_servers_file: '%kernel.project_dir%/config/app/custom_rdap_servers.yaml'
+
     mailer_sender_email: '%env(string:MAILER_SENDER_EMAIL)%'
     mailer_sender_name: '%env(string:MAILER_SENDER_NAME)%'
     oauth_enabled: '%env(OAUTH_CLIENT_ID)%'

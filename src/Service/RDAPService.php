@@ -28,6 +28,7 @@ use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpClient\Exception\ClientException;
 use Symfony\Component\HttpFoundation\Exception\BadRequestException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\Yaml\Yaml;
 use Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\DecodingExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\HttpExceptionInterface;
@@ -424,14 +425,35 @@ readonly class RDAPService
      * @throws ClientExceptionInterface
      * @throws ORMException
      */
-    public function updateRDAPServers(): void
+    public function updateRDAPServersFromIANA(): void
     {
-        $this->logger->info('Started updating the RDAP server list.');
+        $this->logger->info('Start of update the RDAP server list from IANA.');
 
         $dnsRoot = $this->client->request(
             'GET', 'https://data.iana.org/rdap/dns.json'
         )->toArray();
 
+        $this->updateRDAPServers($dnsRoot);
+    }
+
+    /**
+     * @throws ORMException
+     */
+    public function updateRDAPServersFromFile(string $fileName): void
+    {
+        if (!file_exists($fileName)) {
+            return;
+        }
+
+        $this->logger->info('Start of update the RDAP server list from custom config file.');
+        $this->updateRDAPServers(Yaml::parseFile($fileName));
+    }
+
+    /**
+     * @throws ORMException
+     */
+    private function updateRDAPServers(array $dnsRoot): void
+    {
         foreach ($dnsRoot['services'] as $service) {
             foreach ($service[0] as $tld) {
                 if ('' === $tld) {
