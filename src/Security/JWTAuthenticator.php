@@ -11,6 +11,7 @@ use Symfony\Component\HttpFoundation\Cookie;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
+use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationSuccessHandlerInterface;
@@ -47,7 +48,7 @@ class JWTAuthenticator implements AuthenticationSuccessHandlerInterface
                 time() + 604800, // expiration
                 '/',
                 null,
-                !$this->kernel->isDebug()
+                !$this->kernel->isDebug(),
                 true,
                 false,
                 'strict'
