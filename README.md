@@ -41,17 +41,6 @@ See the [Docker Compose file](./docker-compose.yml).
 
 ## Features
 
-### RDAP search
-
-The latest version of the WHOIS protocol was standardized in 2004 by RFC 3912.[^1] This protocol allows anyone to
-retrieve key information concerning a domain name, an IP address, or an entity registered with a registry.
-
-ICANN launched a global vote in 2023 to propose replacing the WHOIS protocol with RDAP. As a result, registries and
-registrars will no longer be required to support WHOIS from 2025 (*WHOIS Sunset Date*).[^2]
-
-Domain Watchdog uses the RDAP protocol, which will soon be the new standard for retrieving information concerning domain
-names.
-
 ### Auto-purchase domain
 
 A connector is a way to order a domain name. It is important to mention that this project does not act as a payment
@@ -75,11 +64,26 @@ win the domain name. The choice is left to chance.
 
 ### Monitoring
 
+![Watchlist Diagram](https://github.com/user-attachments/assets/3979cd20-edca-4986-9dc6-7ff30ac5500a)
+
 A watchlist is a list of domain names, triggers and possibly an API connector.
+
 They allow you to follow the life of the listed domain names and send you a notification when a change has been
 detected.
+
 A notification to the user is sent when a new event occurs on one of the domain names in the Watchlist. This can be an
-email or a chat via Webhook. An iCalendar export of events is possible.
+email or a chat via Webhook (Slack, Mattermost, Discord, ...). An iCalendar export of domain events is possible.
+
+### RDAP search
+
+The latest version of the WHOIS protocol was standardized in 2004 by RFC 3912.[^1] This protocol allows anyone to
+retrieve key information concerning a domain name, an IP address, or an entity registered with a registry.
+
+ICANN launched a global vote in 2023 to propose replacing the WHOIS protocol with RDAP. As a result, registries and
+registrars will no longer be required to support WHOIS from 2025 (*WHOIS Sunset Date*).[^2]
+
+Domain Watchdog uses the RDAP protocol, which will soon be the new standard for retrieving information concerning domain
+names.
 
 ## Disclaimer
 
