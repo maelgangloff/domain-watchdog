@@ -438,19 +438,7 @@ readonly class RDAPService
 
     /**
      * @throws ORMException
-     */
-    public function updateRDAPServersFromFile(string $fileName): void
-    {
-        if (!file_exists($fileName)) {
-            return;
-        }
-
-        $this->logger->info('Start of update the RDAP server list from custom config file.');
-        $this->updateRDAPServers(Yaml::parseFile($fileName));
-    }
-
-    /**
-     * @throws ORMException
+     * @throws \Exception
      */
     private function updateRDAPServers(array $dnsRoot): void
     {
@@ -465,13 +453,29 @@ readonly class RDAPService
                     if (null === $server) {
                         $server = new RdapServer();
                     }
-                    $server->setTld($tldReference)->setUrl($rdapServerUrl)->updateTimestamps();
+                    $server
+                        ->setTld($tldReference)
+                        ->setUrl($rdapServerUrl)
+                        ->setUpdatedAt(new \DateTimeImmutable(array_key_exists('publication', $dnsRoot) ? $dnsRoot['publication'] : 'now'));
 
                     $this->em->persist($server);
                 }
             }
         }
         $this->em->flush();
+    }
+
+    /**
+     * @throws ORMException
+     */
+    public function updateRDAPServersFromFile(string $fileName): void
+    {
+        if (!file_exists($fileName)) {
+            return;
+        }
+
+        $this->logger->info('Start of update the RDAP server list from custom config file.');
+        $this->updateRDAPServers(Yaml::parseFile($fileName));
     }
 
     /**
