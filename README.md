@@ -89,11 +89,11 @@ names.
 
 > [!IMPORTANT]
 > * Domain Watchdog is an opensource project distributed under *GNU Affero General Public License v3.0 or later* license
-> * In the internal opration, everything is done to perform the least possible RDAP requests: rate limit, intelligent
+> * In the internal operation, everything is done to perform the least possible RDAP requests: rate limit, intelligent
     caching system, etc.
 > * Please note that this project is NOT affiliated IN ANY WAY with the API Providers used to order domain names.
 > * The project installers are responsible for the use of their own instance.
-> * In no event the owner of this project will not be held responsible for other instances over which he has no control.
+> * Under no circumstances will the owner of this project be held responsible for other cases over which he has no control.
 
 ## Useful documentation
 
