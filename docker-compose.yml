@@ -8,10 +8,11 @@ services:
             DATABASE_URL: postgresql://${POSTGRES_USER:-app}:${POSTGRES_PASSWORD:-!ChangeMe!}@${POSTGRES_HOST:-database}:${POSTGRES_PORT:-5432}/${POSTGRES_DB:-app}?serverVersion=${POSTGRES_VERSION:-15}&charset=${POSTGRES_CHARSET:-utf8}
             APP_SECRET: ${APP_SECRET:-ChangeMe}
             REGISTRATION_ENABLED: ${REGISTRATION_ENABLED:-true}
-            REGISTRATION_VERIFY_EMAIL: ${REGISTRATION_ENABLED:-false}
+            REGISTRATION_VERIFY_EMAIL: ${REGISTRATION_VERIFY_EMAIL:-false}
             LIMITED_FEATURES: ${LIMITED_FEATURES:-false}
             LIMIT_MAX_WATCHLIST: ${LIMIT_MAX_WATCHLIST:-0}
             LIMIT_MAX_WATCHLIST_DOMAINS: ${LIMIT_MAX_WATCHLIST_DOMAINS:-0}
+            LIMIT_MAX_WATCHLIST_WEBHOOKS: ${LIMIT_MAX_WATCHLIST_WEBHOOKS:-0}
             MAILER_DSN: ${MAILER_DSN:-null://null}
         volumes:
             - caddy_data:/data
