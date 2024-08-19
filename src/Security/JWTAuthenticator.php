@@ -21,7 +21,7 @@ class JWTAuthenticator implements AuthenticationSuccessHandlerInterface
     public function __construct(
         protected JWTTokenManagerInterface $jwtManager,
         protected EventDispatcherInterface $dispatcher,
-        private string $appEnv,
+        protected KernelInterface $kernel
     ) {
     }
 
