@@ -2,7 +2,9 @@
 
 namespace App\Controller;
 
+use App\Config\Connector\ConnectorInterface;
 use App\Config\WebhookScheme;
+use App\Entity\Connector;
 use App\Entity\Domain;
 use App\Entity\DomainEntity;
 use App\Entity\DomainEvent;
@@ -40,6 +42,7 @@ use Symfony\Component\Notifier\Transport\AbstractTransportFactory;
 use Symfony\Component\Notifier\Transport\Dsn;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Serializer\SerializerInterface;
+use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 class WatchListController extends AbstractController
 {
@@ -47,38 +50,8 @@ class WatchListController extends AbstractController
         private readonly SerializerInterface $serializer,
         private readonly EntityManagerInterface $em,
         private readonly WatchListRepository $watchListRepository,
-        private readonly LoggerInterface $logger
+        private readonly LoggerInterface $logger, private readonly HttpClientInterface $httpClient
     ) {
-    }
-
-    private function verifyWebhookDSN(WatchList $watchList): void
-    {
-        if (null !== $watchList->getWebhookDsn()) {
-            foreach ($watchList->getWebhookDsn() as $dsnString) {
-                try {
-                    $dsn = new Dsn($dsnString);
-                } catch (InvalidArgumentException $exception) {
-                    throw new BadRequestHttpException($exception->getMessage());
-                }
-
-                $scheme = $dsn->getScheme();
-                $webhookScheme = WebhookScheme::tryFrom($scheme);
-
-                if (null === $webhookScheme) {
-                    throw new BadRequestHttpException("The DSN scheme ($scheme) is not supported");
-                }
-
-                $transportFactoryClass = $webhookScheme->getChatTransportFactory();
-                /** @var AbstractTransportFactory $transportFactory */
-                $transportFactory = new $transportFactoryClass();
-
-                try {
-                    $transportFactory->create($dsn)->send((new TestChatNotification())->asChatMessage());
-                } catch (\Throwable $exception) {
-                    throw new BadRequestHttpException($exception->getMessage());
-                }
-            }
-        }
     }
 
     /**
@@ -147,8 +120,8 @@ class WatchListController extends AbstractController
         }
 
         $this->verifyWebhookDSN($watchList);
+        $this->verifyConnector($watchList, $watchList->getConnector());
 
-        $user = $this->getUser();
         $this->logger->info('User {username} registers a Watchlist ({token}).', [
             'username' => $user->getUserIdentifier(),
             'token' => $watchList->getToken(),
@@ -175,6 +148,78 @@ class WatchListController extends AbstractController
         $user = $this->getUser();
 
         return $user->getWatchLists();
+    }
+
+    private function verifyWebhookDSN(WatchList $watchList): void
+    {
+        if (null !== $watchList->getWebhookDsn()) {
+            foreach ($watchList->getWebhookDsn() as $dsnString) {
+                try {
+                    $dsn = new Dsn($dsnString);
+                } catch (InvalidArgumentException $exception) {
+                    throw new BadRequestHttpException($exception->getMessage());
+                }
+
+                $scheme = $dsn->getScheme();
+                $webhookScheme = WebhookScheme::tryFrom($scheme);
+
+                if (null === $webhookScheme) {
+                    throw new BadRequestHttpException("The DSN scheme ($scheme) is not supported");
+                }
+
+                $transportFactoryClass = $webhookScheme->getChatTransportFactory();
+                /** @var AbstractTransportFactory $transportFactory */
+                $transportFactory = new $transportFactoryClass();
+
+                try {
+                    $transportFactory->create($dsn)->send((new TestChatNotification())->asChatMessage());
+                } catch (\Throwable $exception) {
+                    throw new BadRequestHttpException($exception->getMessage());
+                }
+            }
+        }
+    }
+
+    /**
+     * @throws \Exception
+     */
+    private function verifyConnector(WatchList $watchList, ?Connector $connector): void
+    {
+        /** @var User $user */
+        $user = $this->getUser();
+
+        if (null !== $connector) {
+            if (!$user->getConnectors()->contains($connector)) {
+                $this->logger->notice('The Connector ({connector}) does not belong to the user.', [
+                    'username' => $user->getUserIdentifier(),
+                    'connector' => $connector->getId(),
+                ]);
+                throw new AccessDeniedHttpException('You cannot create a Watchlist with a connector that does not belong to you');
+            }
+
+            $connectorProviderClass = $connector->getProvider()->getConnectorProvider();
+            /** @var ConnectorInterface $connectorProvider */
+            $connectorProvider = new $connectorProviderClass($connector->getAuthData(), $this->httpClient);
+
+            $tldList = [];
+            /** @var Domain $domain */
+            foreach ($watchList->getDomains()->getIterator() as $domain) {
+                $tld = $domain->getTld();
+                if (!in_array($tld, $tldList)) {
+                    $tldList[] = $tld;
+                }
+            }
+
+            $supported = $connectorProvider->isSupported(...$tldList);
+
+            if (!$supported) {
+                $this->logger->notice('The Connector ({connector}) does not support all TLDs in this Watchlist', [
+                    'username' => $user->getUserIdentifier(),
+                    'connector' => $connector->getId(),
+                ]);
+                throw new BadRequestHttpException('This connector does not support all TLDs in this Watchlist');
+            }
+        }
     }
 
     /**
@@ -233,6 +278,7 @@ class WatchListController extends AbstractController
         }
 
         $this->verifyWebhookDSN($watchList);
+        $this->verifyConnector($watchList, $watchList->getConnector());
 
         $this->logger->info('User {username} updates a Watchlist ({token}).', [
             'username' => $user->getUserIdentifier(),

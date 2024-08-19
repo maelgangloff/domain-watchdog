@@ -3,7 +3,10 @@
 namespace App\Config\Connector;
 
 use App\Entity\Domain;
+use App\Entity\Tld;
+use GuzzleHttp\Exception\ClientException;
 use Ovh\Api;
+use Ovh\Exceptions\InvalidParameterException;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
@@ -13,8 +16,13 @@ readonly class OvhConnector implements ConnectorInterface
     public const REQUIRED_ROUTES = [
         [
             'method' => 'GET',
+            'path' => '/domain/extensions',
+        ],
+        [
+            'method' => 'GET',
             'path' => '/order/cart',
-        ], [
+        ],
+        [
             'method' => 'GET',
             'path' => '/order/cart/*',
         ],
@@ -162,14 +170,18 @@ readonly class OvhConnector implements ConnectorInterface
             $consumerKey
         );
 
-        $res = $conn->get('/auth/currentCredential');
-        if (null !== $res['expiration'] && new \DateTime($res['expiration']) < new \DateTime()) {
-            throw new \Exception('These credentials have expired');
-        }
+        try {
+            $res = $conn->get('/auth/currentCredential');
+            if (null !== $res['expiration'] && new \DateTime($res['expiration']) < new \DateTime()) {
+                throw new BadRequestHttpException('These credentials have expired');
+            }
 
-        $status = $res['status'];
-        if ('validated' !== $status) {
-            throw new \Exception("The status of these credentials is not valid ($status)");
+            $status = $res['status'];
+            if ('validated' !== $status) {
+                throw new BadRequestHttpException("The status of these credentials is not valid ($status)");
+            }
+        } catch (ClientException $exception) {
+            throw new BadRequestHttpException($exception->getMessage());
         }
 
         foreach (self::REQUIRED_ROUTES as $requiredRoute) {
@@ -200,5 +212,35 @@ readonly class OvhConnector implements ConnectorInterface
             'ownerLegalAge' => $ownerLegalAge,
             'waiveRetractationPeriod' => $waiveRetractationPeriod,
         ];
+    }
+
+    /**
+     * @throws InvalidParameterException
+     * @throws \JsonException
+     * @throws \Exception
+     */
+    public function isSupported(Tld ...$tldList): bool
+    {
+        $authData = self::verifyAuthData($this->authData, $this->client);
+
+        $conn = new Api(
+            $authData['appKey'],
+            $authData['appSecret'],
+            $authData['apiEndpoint'],
+            $authData['consumerKey']
+        );
+
+        $supportedTldList = $conn->get('/domain/extensions', [
+            'ovhSubsidiary' => $authData['ovhSubsidiary'],
+        ]);
+
+        /** @var string $tldString */
+        foreach (array_unique(array_map(fn (Tld $tld) => $tld->getTld(), $tldList)) as $tldString) {
+            if (!in_array($tldString, $supportedTldList)) {
+                return false;
+            }
+        }
+
+        return true;
     }
 }

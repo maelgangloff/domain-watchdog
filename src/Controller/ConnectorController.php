@@ -12,7 +12,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Serializer\SerializerInterface;
-use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 class ConnectorController extends AbstractController
@@ -43,7 +42,6 @@ class ConnectorController extends AbstractController
 
     /**
      * @throws \Exception
-     * @throws TransportExceptionInterface
      */
     #[Route(
         path: '/api/connectors',

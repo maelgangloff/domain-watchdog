@@ -3,18 +3,22 @@
 namespace App\Config\Connector;
 
 use App\Entity\Domain;
+use App\Entity\Tld;
 use http\Exception\InvalidArgumentException;
 use Symfony\Component\HttpClient\HttpOptions;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\HttpKernel\Exception\HttpException;
+use Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\DecodingExceptionInterface;
+use Symfony\Contracts\HttpClient\Exception\RedirectionExceptionInterface;
+use Symfony\Contracts\HttpClient\Exception\ServerExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 readonly class GandiConnector implements ConnectorInterface
 {
-    private const BASE_URL = 'https://api.gandi.net/v5';
+    private const BASE_URL = 'https://api.gandi.net';
 
     public function __construct(private array $authData, private HttpClientInterface $client)
     {
@@ -129,5 +133,34 @@ readonly class GandiConnector implements ConnectorInterface
         }
 
         return $authDataReturned;
+    }
+
+    /**
+     * @throws TransportExceptionInterface
+     * @throws ServerExceptionInterface
+     * @throws RedirectionExceptionInterface
+     * @throws DecodingExceptionInterface
+     * @throws ClientExceptionInterface
+     */
+    public function isSupported(Tld ...$tldList): bool
+    {
+        $authData = self::verifyAuthData($this->authData, $this->client);
+
+        $response = $this->client->request('GET', '/v5/domain/tlds', (new HttpOptions())
+            ->setAuthBearer($authData['token'])
+            ->setHeader('Accept', 'application/json')
+            ->setBaseUri(self::BASE_URL)
+            ->toArray())->toArray();
+
+        $supportedTldList = array_map(fn ($tld) => $tld['name'], $response);
+
+        /** @var string $tldString */
+        foreach (array_unique(array_map(fn (Tld $tld) => $tld->getTld(), $tldList)) as $tldString) {
+            if (!in_array($tldString, $supportedTldList)) {
+                return false;
+            }
+        }
+
+        return true;
     }
 }
