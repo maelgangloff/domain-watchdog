@@ -47,7 +47,7 @@ class JWTAuthenticator implements AuthenticationSuccessHandlerInterface
                 time() + 604800, // expiration
                 '/',
                 null,
-                'prod' === $this->appEnv,
+                !$this->kernel->isDebug()
                 true,
                 false,
                 'strict'
