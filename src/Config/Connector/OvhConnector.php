@@ -197,7 +197,7 @@ readonly class OvhConnector implements ConnectorInterface
             }
 
             if (!$ok) {
-                throw new BadRequestHttpException('The credentials provided do not have enough permissions to purchase a domain name.');
+                throw new BadRequestHttpException('This Connector does not have enough permissions on the Provider API. Please recreate this Connector.');
             }
         }
 
