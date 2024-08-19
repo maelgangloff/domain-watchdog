@@ -21,6 +21,7 @@ class JWTAuthenticator implements AuthenticationSuccessHandlerInterface
     public function __construct(
         protected JWTTokenManagerInterface $jwtManager,
         protected EventDispatcherInterface $dispatcher,
+        private string $appEnv,
     ) {
     }
 
@@ -46,7 +47,7 @@ class JWTAuthenticator implements AuthenticationSuccessHandlerInterface
                 time() + 604800, // expiration
                 '/',
                 null,
-                true,
+                'prod' === $this->appEnv,
                 true,
                 false,
                 'strict'
