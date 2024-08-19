@@ -64,7 +64,8 @@ win the domain name. The choice is left to chance.
 
 ### Monitoring
 
-![Watchlist Diagram](https://github.com/user-attachments/assets/3979cd20-edca-4986-9dc6-7ff30ac5500a)
+![Watchlist Diagram](https://github.com/user-attachments/assets/c3454572-3ac5-4b39-bc5e-6b7cf72fab92)
+
 
 A watchlist is a list of domain names, triggers and possibly an API connector.
 
