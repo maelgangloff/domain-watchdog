@@ -658,8 +658,9 @@ msgstr ""
 "domaine à l'autre"
 
 #: assets/utils/index.ts:19
-#, javascript-format
-msgid "Please retry after ${ duration } minutes"
+#, fuzzy, javascript-format
+#| msgid "Please retry after ${ duration } minutes"
+msgid "Please retry after ${ duration } seconds"
 msgstr "Merci de réessayer dans ${ duration } minutes"
 
 #: assets/utils/index.ts:23 assets/utils/index.ts:26
