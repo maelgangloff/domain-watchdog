@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2024-08-20 16:07+0000\n"
+"PO-Revision-Date: 2024-08-20 16:30+0000\n"
 "Last-Translator: Maël Gangloff <contact@maelgangloff.fr>\n"
 "Language-Team: French <https://weblate.vinceh121.me/projects/domain-watchdog/"
 "domain-watchdog-dashboard/fr/>\n"
@@ -314,67 +314,40 @@ msgstr ""
 "La suppression de l'enregistrement de l'instance de l'objet est interdite."
 
 #: assets/components/search/rdapTranslation.ts:82
-#, fuzzy
-#| msgid ""
-#| "The registration of the object instance has been performed by a third "
-#| "party. This is most commonly applied to entities."
 msgid ""
 "The registration of the object instance has been performed by a third party."
-msgstr ""
-"L'enregistrement de l'instance d'objet a été effectué par un tiers. Ceci "
-"s'applique le plus souvent aux entités."
+msgstr "L'enregistrement de l'instance d'objet a été effectué par un tiers."
 
 #: assets/components/search/rdapTranslation.ts:83
-#, fuzzy
-#| msgid ""
-#| "The information of the object instance is not designated for public "
-#| "consumption. This is most commonly applied to entities."
 msgid ""
 "The information of the object instance is not designated for public "
 "consumption."
 msgstr ""
-"Les informations de l'instance d'objet ne sont pas destinées au publique. "
-"Cela s'applique le plus souvent aux entités."
+"Les informations de l'instance d'objet ne sont pas destinées au publique."
 
 #: assets/components/search/rdapTranslation.ts:84
-#, fuzzy
-#| msgid ""
-#| "Some of the information of the object instance has not been made "
-#| "available and has been removed. This is most commonly applied to entities."
 msgid ""
 "Some of the information of the object instance has not been made available "
 "and has been removed."
 msgstr ""
 "Certaines informations de l'instance d'objet n'ont pas été rendues "
-"disponibles et ont été supprimées. Cela s'applique le plus souvent aux "
-"entités."
+"disponibles et ont été supprimées."
 
 #: assets/components/search/rdapTranslation.ts:85
-#, fuzzy
-#| msgid ""
-#| "Some of the information of the object instance has been altered for the "
-#| "purposes of not readily revealing the actual information of the object "
-#| "instance. This is most commonly applied to entities."
 msgid ""
 "Some of the information of the object instance has been altered for the "
 "purposes of not readily revealing the actual information of the object "
 "instance."
 msgstr ""
 "Certaines informations de l'instance d'objet ont été modifiées afin de ne "
-"pas révéler facilement les informations réelles de l'instance d'objet. Cela "
-"s'applique le plus souvent aux entités."
+"pas révéler facilement les informations réelles de l'instance d'objet."
 
 #: assets/components/search/rdapTranslation.ts:86
-#, fuzzy
-#| msgid ""
-#| "The entity object instance is an administrative contact for the "
-#| "registration."
 msgid ""
 "The object instance is associated with other object instances in the "
 "registry."
 msgstr ""
-"L'instance de l'objet entité est un contact administratif pour "
-"l'enregistrement."
+"L'instance d'objet est associée à d'autres instances objet dans le registre."
 
 #: assets/components/search/rdapTranslation.ts:87
 msgid ""
