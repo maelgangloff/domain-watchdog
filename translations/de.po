@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2024-08-20 11:45+0000\n"
+"PO-Revision-Date: 2024-08-20 16:07+0000\n"
 "Last-Translator: Maël Gangloff <contact@maelgangloff.fr>\n"
 "Language-Team: German <https://weblate.vinceh121.me/projects/domain-watchdog/"
 "domain-watchdog-dashboard/de/>\n"
@@ -92,63 +92,85 @@ msgid ""
 "The entity object instance is the registrant of the registration. In some "
 "registries, this is known as a maintainer."
 msgstr ""
+"Die Entitätsobjektinstanz ist der Registrant der Registrierung. In einigen "
+"Registern wird dies als Maintainer bezeichnet."
 
 #: assets/components/search/rdapTranslation.ts:26
 msgid "The entity object instance is a technical contact for the registration."
 msgstr ""
+"Die Entitätsobjektinstanz ist ein technischer Kontakt für die Registrierung."
 
 #: assets/components/search/rdapTranslation.ts:27
 msgid ""
 "The entity object instance is an administrative contact for the registration."
 msgstr ""
+"Die Entitätsobjektinstanz ist ein administrativer Kontakt für die "
+"Registrierung."
 
 #: assets/components/search/rdapTranslation.ts:28
 msgid ""
 "The entity object instance handles network abuse issues on behalf of the "
 "registrant of the registration."
 msgstr ""
+"Die Instanz des Entity-Objekts behandelt Fragen des Netzmissbrauchs im Namen "
+"des Registranten der Registrierung."
 
 #: assets/components/search/rdapTranslation.ts:29
 msgid ""
 "The entity object instance handles payment and billing issues on behalf of "
 "the registrant of the registration."
 msgstr ""
+"Die Instanz des Entitätsobjekts wickelt die Zahlungs- und "
+"Abrechnungsangelegenheiten im Namen des Registranten der Registrierung ab."
 
 #: assets/components/search/rdapTranslation.ts:30
 msgid ""
 "The entity object instance represents the authority responsible for the "
 "registration in the registry."
 msgstr ""
+"Die Instanz des Entitätsobjekts repräsentiert die für die Registrierung im "
+"Register zuständige Behörde."
 
 #: assets/components/search/rdapTranslation.ts:31
 msgid ""
 "The entity object instance represents a third party through which the "
 "registration was conducted (i.e., not the registry or registrar)."
 msgstr ""
+"Die Instanz des Entity-Objekts repräsentiert eine dritte Partei, über die "
+"die Registrierung durchgeführt wurde (d. h. nicht das Register oder die "
+"Registrierstelle)."
 
 #: assets/components/search/rdapTranslation.ts:32
 msgid ""
 "The entity object instance represents a domain policy sponsor, such as an "
 "ICANN-approved sponsor."
 msgstr ""
+"Die Instanz des Entity-Objekts repräsentiert einen Sponsor der "
+"Domänenpolitik, z. B. einen von der ICANN zugelassenen Sponsor."
 
 #: assets/components/search/rdapTranslation.ts:33
 msgid ""
 "The entity object instance represents a proxy for another entity object, "
 "such as a registrant."
 msgstr ""
+"Die Entitätsobjektinstanz stellt einen Stellvertreter für ein anderes "
+"Entitätsobjekt dar, z. B. einen Registranten."
 
 #: assets/components/search/rdapTranslation.ts:34
 msgid ""
 "An entity object instance designated to receive notifications about "
 "association object instances."
 msgstr ""
+"Eine Entitätsobjektinstanz, die für den Empfang von Benachrichtigungen über "
+"Assoziationsobjektinstanzen bestimmt ist."
 
 #: assets/components/search/rdapTranslation.ts:35
 msgid ""
 "The entity object instance handles communications related to a network "
 "operations center (NOC)."
 msgstr ""
+"Die Entity-Objektinstanz verarbeitet die Kommunikation im Zusammenhang mit "
+"einem Network Operations Center (NOC)."
 
 #: assets/components/search/rdapTranslation.ts:43
 msgid "Registration"
@@ -184,7 +206,7 @@ msgstr "Gesperrt"
 
 #: assets/components/search/rdapTranslation.ts:51
 msgid "Unlocked"
-msgstr "Ungesperrt"
+msgstr "Entsperrt"
 
 #: assets/components/search/rdapTranslation.ts:52
 msgid "Registrar expiration"
@@ -196,81 +218,97 @@ msgstr "Ablauf der ENUM-Validierung"
 
 #: assets/components/search/rdapTranslation.ts:60
 msgid "The object instance was initially registered."
-msgstr ""
+msgstr "Die Objektinstanz wurde zunächst registriert."
 
 #: assets/components/search/rdapTranslation.ts:61
 msgid ""
 "The object instance was registered subsequently to initial registration."
 msgstr ""
+"Die Objektinstanz wurde im Anschluss an die Erstregistrierung registriert."
 
 #: assets/components/search/rdapTranslation.ts:62
 msgid ""
 "An action noting when the information in the object instance was last "
 "changed."
 msgstr ""
+"Eine Aktion, die festhält, wann die Informationen in der Objektinstanz "
+"zuletzt geändert wurden."
 
 #: assets/components/search/rdapTranslation.ts:63
 msgid ""
 "The object instance has been removed or will be removed at a predetermined "
 "date and time from the registry."
 msgstr ""
+"Die Objektinstanz wurde entfernt oder wird zu einem festgelegten Datum und "
+"Zeitpunkt aus der Registrierung entfernt."
 
 #: assets/components/search/rdapTranslation.ts:64
 msgid ""
 "The object instance was removed from the registry at a point in time that "
 "was not predetermined."
 msgstr ""
+"Die Objektinstanz wurde zu einem nicht vorherbestimmten Zeitpunkt aus der "
+"Registry entfernt."
 
 #: assets/components/search/rdapTranslation.ts:65
 msgid ""
 "The object instance was reregistered after having been removed from the "
 "registry."
 msgstr ""
+"Die Objektinstanz wurde nach der Entfernung aus der Registry erneut "
+"registriert."
 
 #: assets/components/search/rdapTranslation.ts:66
 msgid "The object instance was transferred from one registrar to another."
 msgstr ""
+"Die Objektinstanz wurde von einem Registrar zu einem anderen übertragen."
 
 #: assets/components/search/rdapTranslation.ts:67
 msgid "The object instance was locked."
-msgstr ""
+msgstr "Die Objektinstanz wurde gesperrt."
 
 #: assets/components/search/rdapTranslation.ts:68
 msgid "The object instance was unlocked."
-msgstr ""
+msgstr "Die Objektinstanz wurde entsperrt."
 
 #: assets/components/search/rdapTranslation.ts:69
 msgid ""
 "An action noting the expiration date of the object in the registrar system."
 msgstr ""
+"Eine Aktion, die das Ablaufdatum des Objekts im Registrarsystem notiert."
 
 #: assets/components/search/rdapTranslation.ts:70
 msgid ""
 "Association of phone number represented by this ENUM domain to registrant "
 "has expired or will expire at a predetermined date and time."
 msgstr ""
+"Die Zuordnung der durch diese ENUM-Domäne repräsentierten Telefonnummer zum "
+"Registranten ist abgelaufen oder läuft zu einem festgelegten Datum und "
+"Zeitpunkt ab."
 
 #: assets/components/search/rdapTranslation.ts:77
 msgid ""
 "Signifies that the data of the object instance has been found to be accurate."
-msgstr ""
+msgstr "Bedeutet, dass die Daten der Objektinstanz als korrekt befunden wurden."
 
 #: assets/components/search/rdapTranslation.ts:78
 msgid "Renewal or reregistration of the object instance is forbidden."
-msgstr ""
+msgstr "Eine Erneuerung oder Neuregistrierung der Objektinstanz ist untersagt."
 
 #: assets/components/search/rdapTranslation.ts:79
 msgid "Updates to the object instance are forbidden."
-msgstr ""
+msgstr "Aktualisierungen der Objektinstanz sind verboten."
 
 #: assets/components/search/rdapTranslation.ts:80
 msgid ""
 "Transfers of the registration from one registrar to another are forbidden."
 msgstr ""
+"Eine Übertragung der Registrierung von einem Registrar auf einen anderen ist "
+"nicht zulässig."
 
 #: assets/components/search/rdapTranslation.ts:81
 msgid "Deletion of the registration of the object instance is forbidden."
-msgstr ""
+msgstr "Das Löschen der Registrierung der Objektinstanz ist verboten."
 
 #: assets/components/search/rdapTranslation.ts:82
 msgid ""
