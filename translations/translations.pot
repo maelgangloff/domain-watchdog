@@ -213,25 +213,31 @@ msgstr ""
 msgid "Reset"
 msgstr ""
 
-#: assets/components/tracking/connector/ConnectorsList.tsx:19
+#: assets/components/tracking/connector/ConnectorsList.tsx:18
+msgid ""
+"An error occurred while deleting the Connector. Make sure it is not used in "
+"any Watchlist"
+msgstr ""
+
+#: assets/components/tracking/connector/ConnectorsList.tsx:25
 #, javascript-format
 msgid "Connector ${ connector.provider }"
 msgstr ""
 
-#: assets/components/tracking/connector/ConnectorsList.tsx:22
+#: assets/components/tracking/connector/ConnectorsList.tsx:28
 msgid "Delete the Connector"
 msgstr ""
 
-#: assets/components/tracking/connector/ConnectorsList.tsx:23
+#: assets/components/tracking/connector/ConnectorsList.tsx:29
 msgid "Are you sure to delete this Connector?"
 msgstr ""
 
-#: assets/components/tracking/connector/ConnectorsList.tsx:25
+#: assets/components/tracking/connector/ConnectorsList.tsx:31
 #: assets/components/tracking/watchlist/DeleteWatchlistButton.tsx:15
 msgid "Yes"
 msgstr ""
 
-#: assets/components/tracking/connector/ConnectorsList.tsx:26
+#: assets/components/tracking/connector/ConnectorsList.tsx:32
 #: assets/components/tracking/watchlist/DeleteWatchlistButton.tsx:16
 msgid "No"
 msgstr ""
