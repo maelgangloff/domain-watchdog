@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2024-08-18 16:52+0000\n"
+"PO-Revision-Date: 2024-08-20 11:26+0000\n"
 "Last-Translator: Maël Gangloff <contact@maelgangloff.fr>\n"
 "Language-Team: French <https://weblate.vinceh121.me/projects/domain-watchdog/"
 "domain-watchdog-dashboard/fr/>\n"
@@ -229,6 +229,8 @@ msgid ""
 "An error occurred while deleting the Connector. Make sure it is not used in "
 "any Watchlist"
 msgstr ""
+"Une erreur est survenue lors de la suppression du Connecteur. Assurez-vous "
+"qu'il n'est utilisé dans aucune une Watchlist"
 
 #: assets/components/tracking/connector/ConnectorsList.tsx:25
 #, javascript-format
