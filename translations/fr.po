@@ -185,8 +185,12 @@ msgid "Updates to the object instance are forbidden."
 msgstr "Les mises à jour de l'instance de l'objet sont interdites."
 
 #: assets/components/search/rdapStatusCodeDetailTranslation.ts:10
+#, fuzzy
+#| msgid ""
+#| "Transfers of the registration from one registrar to another are "
+#| "forbidden. "
 msgid ""
-"Transfers of the registration from one registrar to another are forbidden. "
+"Transfers of the registration from one registrar to another are forbidden."
 msgstr ""
 "Les transferts de l'enregistrement d'un bureau d'enregistrement à un autre "
 "sont interdits. "
@@ -194,7 +198,7 @@ msgstr ""
 #: assets/components/search/rdapStatusCodeDetailTranslation.ts:11
 #, fuzzy
 #| msgid "Renewal or reregistration of the object instance is forbidden."
-msgid "Deletion of the registration of the object instance is forbidden. "
+msgid "Deletion of the registration of the object instance is forbidden."
 msgstr ""
 "Le renouvellement ou le réenregistrement de l'instance d'objet est interdit."
 

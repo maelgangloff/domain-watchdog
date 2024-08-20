@@ -170,11 +170,11 @@ msgstr ""
 
 #: assets/components/search/rdapStatusCodeDetailTranslation.ts:10
 msgid ""
-"Transfers of the registration from one registrar to another are forbidden. "
+"Transfers of the registration from one registrar to another are forbidden."
 msgstr ""
 
 #: assets/components/search/rdapStatusCodeDetailTranslation.ts:11
-msgid "Deletion of the registration of the object instance is forbidden. "
+msgid "Deletion of the registration of the object instance is forbidden."
 msgstr ""
 
 #: assets/components/search/rdapStatusCodeDetailTranslation.ts:12
