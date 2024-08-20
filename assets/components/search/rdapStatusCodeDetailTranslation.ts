@@ -4,7 +4,7 @@ import {t} from "ttag";
  * @see https://www.iana.org/assignments/rdap-json-values/rdap-json-values.xhtml
  */
 export const rdapStatusCodeDetailTranslation = () => ({
-    validated: t`Signifies that the data of the object instance has been found to be accurate. `,
+    validated: t`Signifies that the data of the object instance has been found to be accurate.`,
     'renew prohibited': t`Renewal or reregistration of the object instance is forbidden.`,
     'update prohibited': t`Updates to the object instance are forbidden.`,
     'transfer prohibited': t`Transfers of the registration from one registrar to another are forbidden. `,

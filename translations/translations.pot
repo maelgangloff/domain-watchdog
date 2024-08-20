@@ -153,7 +153,7 @@ msgstr ""
 #: assets/components/search/rdapStatusCodeDetailTranslation.ts:7
 msgid ""
 "Signifies that the data of the object instance has been found to be "
-"accurate. "
+"accurate."
 msgstr ""
 
 #: assets/components/search/rdapStatusCodeDetailTranslation.ts:8
