@@ -617,7 +617,7 @@ msgstr ""
 
 #: assets/utils/index.ts:19
 #, javascript-format
-msgid "Please retry after ${ duration } minutes"
+msgid "Please retry after ${ duration } seconds"
 msgstr ""
 
 #: assets/utils/index.ts:23
