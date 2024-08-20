@@ -671,7 +671,7 @@ msgstr ""
 msgid "Watchlist Entity Diagram"
 msgstr ""
 
-#: assets/components/tracking/watchlist/diagram/watchlistToEdges.tsx:40
+#: assets/components/tracking/watchlist/diagram/watchlistToEdges.tsx:42
 msgid "Registry"
 msgstr ""
 

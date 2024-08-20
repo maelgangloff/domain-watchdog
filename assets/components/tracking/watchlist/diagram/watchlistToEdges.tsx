@@ -5,7 +5,9 @@ import {t} from "ttag";
 export const rolesToColor = (roles: string[]) => roles.includes('registrant') ? 'green' :
     roles.includes('administrative') ? 'blue' :
         roles.includes('technical') ? 'orange' :
-            roles.includes('registrar') ? 'violet' : 'white'
+            roles.includes('registrar') ? 'magenta' :
+                roles.includes('sponsor') ? 'purple' :
+                    roles.includes('billing') ? 'cyan' : 'default'
 
 export function domainEntitiesToEdges(d: Domain, withRegistrar = false) {
     const rdapRoleTranslated = rdapRoleTranslation()
