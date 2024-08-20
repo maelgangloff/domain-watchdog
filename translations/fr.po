@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2024-08-20 13:38+0000\n"
+"PO-Revision-Date: 2024-08-20 13:45+0000\n"
 "Last-Translator: Maël Gangloff <contact@maelgangloff.fr>\n"
 "Language-Team: French <https://weblate.vinceh121.me/projects/domain-watchdog/"
 "domain-watchdog-dashboard/fr/>\n"
@@ -173,7 +173,7 @@ msgstr "Entités"
 #: assets/components/search/rdapStatusCodeDetailTranslation.ts:7
 msgid ""
 "Signifies that the data of the object instance has been found to be accurate."
-msgstr ""
+msgstr "Signifie que les données de l'instance d'objet ont été jugées exactes."
 
 #: assets/components/search/rdapStatusCodeDetailTranslation.ts:8
 msgid "Renewal or reregistration of the object instance is forbidden."
@@ -185,16 +185,11 @@ msgid "Updates to the object instance are forbidden."
 msgstr "Les mises à jour de l'instance de l'objet sont interdites."
 
 #: assets/components/search/rdapStatusCodeDetailTranslation.ts:10
-#, fuzzy
-#| msgid ""
-#| "Transfers of the registration from one registrar to another are "
-#| "forbidden. This type of status normally applies to DNR domain names."
 msgid ""
 "Transfers of the registration from one registrar to another are forbidden. "
 msgstr ""
 "Les transferts de l'enregistrement d'un bureau d'enregistrement à un autre "
-"sont interdits. Ce type de statut s'applique normalement aux noms de domaine "
-"DNR."
+"sont interdits. "
 
 #: assets/components/search/rdapStatusCodeDetailTranslation.ts:11
 #, fuzzy
