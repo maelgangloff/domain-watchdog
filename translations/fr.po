@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2024-08-20 11:45+0000\n"
+"PO-Revision-Date: 2024-08-20 13:38+0000\n"
 "Last-Translator: Maël Gangloff <contact@maelgangloff.fr>\n"
 "Language-Team: French <https://weblate.vinceh121.me/projects/domain-watchdog/"
 "domain-watchdog-dashboard/fr/>\n"
@@ -90,59 +90,73 @@ msgstr "Expiration de la validation ENUM"
 
 #: assets/components/search/rdapEventActionDetailTranslation.ts:24
 msgid "The object instance was initially registered."
-msgstr ""
+msgstr "L'instance d'objet a été initialement enregistrée."
 
 #: assets/components/search/rdapEventActionDetailTranslation.ts:25
 msgid ""
 "The object instance was registered subsequently to initial registration."
 msgstr ""
+"L'instance d'objet a été enregistrée postérieurement à l'enregistrement "
+"initial."
 
 #: assets/components/search/rdapEventActionDetailTranslation.ts:26
 msgid ""
 "An action noting when the information in the object instance was last "
 "changed."
 msgstr ""
+"Action indiquant la date de la dernière modification des informations "
+"contenues dans l'instance d'objet."
 
 #: assets/components/search/rdapEventActionDetailTranslation.ts:27
 msgid ""
 "The object instance has been removed or will be removed at a predetermined "
 "date and time from the registry."
 msgstr ""
+"L'instance d'objet a été supprimée ou sera supprimée du registre à une date "
+"et une heure prédéterminées."
 
 #: assets/components/search/rdapEventActionDetailTranslation.ts:28
 msgid ""
 "The object instance was removed from the registry at a point in time that "
 "was not predetermined."
 msgstr ""
+"L’instance d’objet a été supprimée du registre à un moment qui n’était pas "
+"prédéterminé."
 
 #: assets/components/search/rdapEventActionDetailTranslation.ts:29
 msgid ""
 "The object instance was reregistered after having been removed from the "
 "registry."
 msgstr ""
+"L'instance d'objet a été réenregistrée après avoir été supprimée du registre."
 
 #: assets/components/search/rdapEventActionDetailTranslation.ts:30
 msgid "The object instance was transferred from one registrar to another."
 msgstr ""
+"L'instance d'objet a été transférée d'un bureau d'enregistrement à un autre."
 
 #: assets/components/search/rdapEventActionDetailTranslation.ts:31
 msgid "The object instance was locked."
-msgstr ""
+msgstr "L'instance de l'objet a été verrouillée."
 
 #: assets/components/search/rdapEventActionDetailTranslation.ts:32
 msgid "The object instance was unlocked."
-msgstr ""
+msgstr "L'instance de l'objet a été déverrouillée."
 
 #: assets/components/search/rdapEventActionDetailTranslation.ts:33
 msgid ""
 "An action noting the expiration date of the object in the registrar system."
 msgstr ""
+"Une action notant la date d'expiration de l'objet dans le système "
+"d'enregistrement."
 
 #: assets/components/search/rdapEventActionDetailTranslation.ts:34
 msgid ""
 "Association of phone number represented by this ENUM domain to registrant "
 "has expired or will expire at a predetermined date and time."
 msgstr ""
+"L'association du numéro de téléphone représenté par ce domaine ENUM au "
+"titulaire a expiré ou expirera à une date et une heure prédéterminées."
 
 #: assets/components/search/DomainResult.tsx:28
 msgid "EPP Status Codes"
@@ -162,44 +176,60 @@ msgid ""
 "accurate. This type of status is usually found on entity object instances to "
 "note the validity of identifying contact information."
 msgstr ""
+"Signifie que les données de l'instance d'objet ont été jugées exactes. Ce "
+"type de statut se trouve généralement sur les instances d'objets d'entités "
+"pour indiquer la validité des informations de contact d'identification."
 
 #: assets/components/search/rdapStatusCodeDetailTranslation.ts:8
 msgid "Renewal or reregistration of the object instance is forbidden."
 msgstr ""
+"Le renouvellement ou le réenregistrement de l'instance d'objet est interdit."
 
 #: assets/components/search/rdapStatusCodeDetailTranslation.ts:9
 msgid "Updates to the object instance are forbidden."
-msgstr ""
+msgstr "Les mises à jour de l'instance de l'objet sont interdites."
 
 #: assets/components/search/rdapStatusCodeDetailTranslation.ts:10
 msgid ""
 "Transfers of the registration from one registrar to another are forbidden. "
 "This type of status normally applies to DNR domain names."
 msgstr ""
+"Les transferts de l'enregistrement d'un bureau d'enregistrement à un autre "
+"sont interdits. Ce type de statut s'applique normalement aux noms de domaine "
+"DNR."
 
 #: assets/components/search/rdapStatusCodeDetailTranslation.ts:11
 msgid ""
 "Deletion of the registration of the object instance is forbidden. This type "
 "of status normally applies to DNR domain names."
 msgstr ""
+"La suppression de l'enregistrement de l'instance d'objet est interdite. Ce "
+"type de statut s'applique normalement aux noms de domaine DNR."
 
 #: assets/components/search/rdapStatusCodeDetailTranslation.ts:12
 msgid ""
 "The registration of the object instance has been performed by a third party. "
 "This is most commonly applied to entities."
 msgstr ""
+"L'enregistrement de l'instance d'objet a été effectué par un tiers. Ceci "
+"s'applique le plus souvent aux entités."
 
 #: assets/components/search/rdapStatusCodeDetailTranslation.ts:13
 msgid ""
 "The information of the object instance is not designated for public "
 "consumption. This is most commonly applied to entities."
 msgstr ""
+"Les informations de l'instance d'objet ne sont pas destinées au publique. "
+"Cela s'applique le plus souvent aux entités."
 
 #: assets/components/search/rdapStatusCodeDetailTranslation.ts:14
 msgid ""
 "Some of the information of the object instance has not been made available "
 "and has been removed. This is most commonly applied to entities."
 msgstr ""
+"Certaines informations de l'instance d'objet n'ont pas été rendues "
+"disponibles et ont été supprimées. Cela s'applique le plus souvent aux "
+"entités."
 
 #: assets/components/search/rdapStatusCodeDetailTranslation.ts:15
 msgid ""
@@ -207,6 +237,9 @@ msgid ""
 "purposes of not readily revealing the actual information of the object "
 "instance. This is most commonly applied to entities."
 msgstr ""
+"Certaines informations de l'instance d'objet ont été modifiées afin de ne "
+"pas révéler facilement les informations réelles de l'instance d'objet. Cela "
+"s'applique le plus souvent aux entités."
 
 #: assets/components/search/rdapStatusCodeDetailTranslation.ts:16
 msgid ""
@@ -215,6 +248,10 @@ msgid ""
 "associated with a domain or that an entity is associated with a network "
 "resource or domain."
 msgstr ""
+"L'instance d'objet est associée à d'autres instances d'objet dans le "
+"registre. Cela est généralement utilisé pour signifier qu'un serveur de noms "
+"est associé à un domaine ou qu'une entité est associée à une ressource "
+"réseau ou à un domaine."
 
 #: assets/components/search/rdapStatusCodeDetailTranslation.ts:17
 msgid ""
@@ -224,40 +261,56 @@ msgid ""
 "networks. This maps to the \"OK\" status of the Extensible Provisioning "
 "Protocol (EPP) [RFC5730]."
 msgstr ""
+"L'instance d'objet est en cours d'utilisation. Pour les noms de domaine, "
+"cela signifie que le nom de domaine est publié dans le DNS. Pour les "
+"enregistrements réseau et autnum, cela signifie qu'ils sont alloués ou "
+"assignés pour être utilisés dans des réseaux opérationnels. Cela correspond "
+"au statut « OK » du protocole EPP (Extensible Provisioning Protocol) "
+"[RFC5730]."
 
 #: assets/components/search/rdapStatusCodeDetailTranslation.ts:18
 msgid "The object instance is not in use."
-msgstr ""
+msgstr "L'instance d'objet n'est pas utilisée."
 
 #: assets/components/search/rdapStatusCodeDetailTranslation.ts:19
 msgid ""
 "Changes to the object instance cannot be made, including the association of "
 "other object instances."
 msgstr ""
+"Aucune modification ne peut être apportée à l'instance d'objet, y compris "
+"l'association d'autres instances d'objet."
 
 #: assets/components/search/rdapStatusCodeDetailTranslation.ts:20
 msgid ""
 "A request has been received for the creation of the object instance, but "
 "this action is not yet complete."
 msgstr ""
+"Une demande a été reçue pour la création de l'instance d'objet, mais cette "
+"action n'est pas encore terminée."
 
 #: assets/components/search/rdapStatusCodeDetailTranslation.ts:21
 msgid ""
 "A request has been received for the renewal of the object instance, but this "
 "action is not yet complete."
 msgstr ""
+"Une demande a été reçue pour le renouvellement de l'instance d'objet, mais "
+"cette action n'est pas encore terminée."
 
 #: assets/components/search/rdapStatusCodeDetailTranslation.ts:22
 msgid ""
 "A request has been received for the transfer of the object instance, but "
 "this action is not yet complete."
 msgstr ""
+"Une demande a été reçue pour le transfert de l'instance d'objet, mais cette "
+"action n'est pas encore terminée."
 
 #: assets/components/search/rdapStatusCodeDetailTranslation.ts:23
 msgid ""
 "A request has been received for the update or modification of the object "
 "instance, but this action is not yet complete."
 msgstr ""
+"Une demande de mise à jour ou de modification de l'instance d'objet a été "
+"reçue, mais cette action n'est pas encore terminée."
 
 #: assets/components/search/rdapStatusCodeDetailTranslation.ts:24
 msgid ""
@@ -266,6 +319,10 @@ msgid ""
 "that the name is no longer published in DNS but has not yet been purged from "
 "the registry database."
 msgstr ""
+"Une demande de suppression ou de retrait de l'instance d'objet a été reçue, "
+"mais cette action n'est pas encore terminée. Pour les domaines, cela peut "
+"signifier que le nom n'est plus publié dans le DNS mais qu'il n'a pas encore "
+"été supprimé de la base de données du registre."
 
 #: assets/components/search/rdapStatusCodeDetailTranslation.ts:25
 msgid ""
@@ -275,6 +332,12 @@ msgid ""
 "to the Domain Registry Grace Period Mapping for the Extensible Provisioning "
 "Protocol (EPP) [RFC3915] 'addPeriod' status."
 msgstr ""
+"Cette période de grâce est accordée après l'enregistrement initial de "
+"l'objet. Si l'objet est supprimé par le client pendant cette période, le "
+"serveur fournit un crédit au client pour le coût de l'enregistrement. Cela "
+"correspond au mappage de la période de grâce du registre de domaine pour le "
+"statut 'addPeriod' du protocole EPP (Extensible Provisioning Protocol) "
+"[RFC3915]."
 
 #: assets/components/search/rdapStatusCodeDetailTranslation.ts:26
 msgid ""
@@ -285,6 +348,13 @@ msgid ""
 "Registry Grace Period Mapping for the Extensible Provisioning Protocol (EPP) "
 "[RFC3915] 'autoRenewPeriod' status."
 msgstr ""
+"Cette période de grâce est accordée après l'expiration d'une période "
+"d'enregistrement d'objet et est prolongée (renouvelée) automatiquement par "
+"le serveur. Si l'objet est supprimé par le client pendant cette période, le "
+"serveur fournit un crédit au client pour le coût du renouvellement "
+"automatique. Cela correspond au mappage de la période de grâce du registre "
+"de domaine pour le statut « autoRenewPeriod » du protocole EPP (Extensible "
+"Provisioning Protocol) [RFC3915]."
 
 #: assets/components/search/rdapStatusCodeDetailTranslation.ts:27
 msgid ""
@@ -294,6 +364,12 @@ msgid ""
 "and Extensible Provisioning Protocol (EPP) Contact Mapping [RFC5733] "
 "'clientDeleteProhibited' status."
 msgstr ""
+"Le client a demandé que les demandes de suppression de l'objet DOIVENT être "
+"rejetées. Cela correspond au statut « clientDeleteProhibited » du mappage de "
+"noms de domaine du protocole EPP (Extensible Provisioning Protocol) [RFC5731]"
+", du mappage d'hôtes du protocole EPP (Extensible Provisioning Protocol) "
+"[RFC5732] et du mappage de contacts du protocole EPP (Extensible "
+"Provisioning Protocol) [RFC5733]."
 
 #: assets/components/search/rdapStatusCodeDetailTranslation.ts:28
 msgid ""
@@ -301,6 +377,9 @@ msgid ""
 "published for the object. This maps to the Extensible Provisioning Protocol "
 "(EPP) Domain Name Mapping [RFC5731] 'clientHold' status."
 msgstr ""
+"Le client a demandé que les informations de délégation DNS NE DOIVENT PAS "
+"être publiées pour l'objet. Cela correspond au statut « clientHold » du "
+"mappage de noms de domaine EPP (Extensible Provisioning Protocol) [RFC5731]."
 
 #: assets/components/search/rdapStatusCodeDetailTranslation.ts:29
 msgid ""
@@ -308,6 +387,9 @@ msgid ""
 "This maps to the Extensible Provisioning Protocol (EPP) Domain Name Mapping "
 "[RFC5731] 'clientRenewProhibited' status."
 msgstr ""
+"Le client a demandé que les demandes de renouvellement de l'objet DOIVENT "
+"être rejetées. Cela correspond au statut « clientRenewProhibited » du "
+"mappage de noms de domaine EPP (Extensible Provisioning Protocol) [RFC5731]."
 
 #: assets/components/search/rdapStatusCodeDetailTranslation.ts:30
 msgid ""
@@ -316,6 +398,11 @@ msgid ""
 "[RFC5731] and Extensible Provisioning Protocol (EPP) Contact Mapping "
 "[RFC5733] 'clientTransferProhibited' status."
 msgstr ""
+"Le client a demandé que les demandes de transfert de l'objet DOIVENT être "
+"rejetées. Cela correspond au statut « clientTransferProhibited » du mappage "
+"de noms de domaine du protocole EPP (Extensible Provisioning Protocol) "
+"[RFC5731] et du mappage de contacts du protocole EPP (Extensible "
+"Provisioning Protocol) [RFC5733]."
 
 #: assets/components/search/rdapStatusCodeDetailTranslation.ts:31
 msgid ""
@@ -326,6 +413,12 @@ msgid ""
 "Provisioning Protocol (EPP) Contact Mapping [RFC5733] "
 "'clientUpdateProhibited' status."
 msgstr ""
+"Le client a demandé que les demandes de mise à jour de l'objet (autres que "
+"la suppression de ce statut) DOIVENT être rejetées. Cela correspond au "
+"statut « clientUpdateProhibited » du mappage de noms de domaine du protocole "
+"EPP (Extensible Provisioning Protocol) [RFC5731], du mappage d'hôtes du "
+"protocole EPP (Extensible Provisioning Protocol) [RFC5732] et du mappage de "
+"contacts du protocole EPP (Extensible Provisioning Protocol) [RFC5733]."
 
 #: assets/components/search/rdapStatusCodeDetailTranslation.ts:32
 msgid ""
@@ -333,6 +426,10 @@ msgid ""
 "period state. This maps to the Domain Registry Grace Period Mapping for the "
 "Extensible Provisioning Protocol (EPP) [RFC3915] 'pendingRestore' status."
 msgstr ""
+"Un objet est en cours de restauration après avoir été dans l'état de la "
+"période de rédemption. Cela correspond à la correspondance entre le délai de "
+"grâce du registre de domaine et l'état \"pendingRestore\" du protocole EPP ("
+"Extensible Provisioning Protocol) [RFC3915]."
 
 #: assets/components/search/rdapStatusCodeDetailTranslation.ts:33
 msgid ""
@@ -341,6 +438,11 @@ msgid ""
 "This maps to the Domain Registry Grace Period Mapping for the Extensible "
 "Provisioning Protocol (EPP) [RFC3915] 'redemptionPeriod' status."
 msgstr ""
+"Une suppression a été reçue, mais l'objet n'a pas encore été purgé car il "
+"existe une possibilité de restaurer l'objet et d'abandonner le processus de "
+"suppression. Cela correspond au mappage de la période de grâce du registre "
+"de domaine pour le statut « redemptionPeriod » du protocole EPP (Extensible "
+"Provisioning Protocol) [RFC3915]."
 
 #: assets/components/search/rdapStatusCodeDetailTranslation.ts:34
 msgid ""
@@ -351,6 +453,13 @@ msgid ""
 "Mapping for the Extensible Provisioning Protocol (EPP) [RFC3915] "
 "'renewPeriod' status."
 msgstr ""
+"Ce délai de grâce est accordé après que la période d'enregistrement d'un "
+"objet a été explicitement prolongée (renouvelée) par le client. Si l'objet "
+"est supprimé par le client pendant cette période, le serveur fournit un "
+"crédit au client pour le coût du renouvellement. Cela correspond à la "
+"correspondance du délai de grâce du registre de domaine pour le statut "
+"\"renewPeriod\" du protocole EPP (Extensible Provisioning Protocol) "
+"[RFC3915]."
 
 #: assets/components/search/rdapStatusCodeDetailTranslation.ts:35
 msgid ""
@@ -360,6 +469,12 @@ msgid ""
 "[RFC5732], and Extensible Provisioning Protocol (EPP) Contact Mapping "
 "[RFC5733] 'serverDeleteProhibited' status."
 msgstr ""
+"Le serveur a défini le statut de sorte que les demandes de suppression de "
+"l'objet DOIVENT être rejetées. Cela correspond au statut « "
+"serverDeleteProhibited » du mappage de noms de domaine du protocole EPP ("
+"Extensible Provisioning Protocol) [RFC5731], du mappage d'hôtes du protocole "
+"EPP (Extensible Provisioning Protocol) [RFC5732] et du mappage de contacts "
+"du protocole EPP (Extensible Provisioning Protocol) [RFC5733]."
 
 #: assets/components/search/rdapStatusCodeDetailTranslation.ts:36
 msgid ""
@@ -367,6 +482,10 @@ msgid ""
 "rejected. This maps to the Extensible Provisioning Protocol (EPP) Domain "
 "Name Mapping [RFC5731] 'serverRenewProhibited' status."
 msgstr ""
+"Le serveur a défini le statut de telle sorte que les demandes de "
+"renouvellement de l'objet DOIVENT être rejetées. Cela correspond au statut « "
+"serverRenewProhibited » du mappage de noms de domaine EPP (Extensible "
+"Provisioning Protocol) [RFC5731]."
 
 #: assets/components/search/rdapStatusCodeDetailTranslation.ts:37
 msgid ""
@@ -375,6 +494,11 @@ msgid ""
 "Name Mapping [RFC5731] and Extensible Provisioning Protocol (EPP) Contact "
 "Mapping [RFC5733] 'serverTransferProhibited' status."
 msgstr ""
+"Le serveur a défini le statut de telle sorte que les demandes de transfert "
+"de l'objet DOIVENT être rejetées. Cela correspond au statut « "
+"serverTransferProhibited » du mappage de noms de domaine du protocole EPP ("
+"Extensible Provisioning Protocol) [RFC5731] et du mappage de contacts du "
+"protocole EPP (Extensible Provisioning Protocol) [RFC5733]."
 
 #: assets/components/search/rdapStatusCodeDetailTranslation.ts:38
 msgid ""
@@ -385,6 +509,13 @@ msgid ""
 "Provisioning Protocol (EPP) Contact Mapping [RFC5733] "
 "'serverUpdateProhibited' status."
 msgstr ""
+"Le serveur a défini le statut de sorte que les demandes de mise à jour de "
+"l'objet (autres que la suppression de ce statut) DOIVENT être rejetées. Cela "
+"correspond au statut « serverUpdateProhibited » du mappage de noms de "
+"domaine du protocole EPP (Extensible Provisioning Protocol) [RFC5731], du "
+"mappage d'hôtes du protocole EPP (Extensible Provisioning Protocol) [RFC5732]"
+" et du mappage de contacts du protocole EPP (Extensible Provisioning "
+"Protocol) [RFC5733]."
 
 #: assets/components/search/rdapStatusCodeDetailTranslation.ts:39
 msgid ""
@@ -392,6 +523,10 @@ msgid ""
 "published for the object. This maps to the Extensible Provisioning Protocol "
 "(EPP) Domain Name Mapping [RFC5731] 'serverHold' status."
 msgstr ""
+"Le serveur a défini le statut de sorte que les informations de délégation "
+"DNS NE DOIVENT PAS être publiées pour l'objet. Cela correspond au statut « "
+"serverHold » du mappage de noms de domaine EPP (Extensible Provisioning "
+"Protocol) [RFC5731]."
 
 #: assets/components/search/rdapStatusCodeDetailTranslation.ts:40
 msgid ""
@@ -402,18 +537,29 @@ msgid ""
 "Grace Period Mapping for the Extensible Provisioning Protocol (EPP) "
 "[RFC3915] 'transferPeriod' status."
 msgstr ""
+"Cette période de grâce est accordée après le transfert réussi du parrainage "
+"de l'enregistrement d'un objet d'un client à un autre. Si l'objet est "
+"supprimé par le client pendant cette période, le serveur fournit un crédit "
+"au client pour le coût du transfert. Cela correspond au mappage de la "
+"période de grâce du registre de domaine pour le statut « transferPeriod » du "
+"protocole EPP (Extensible Provisioning Protocol) [RFC3915]."
 
 #: assets/components/search/rdapStatusCodeDetailTranslation.ts:41
 msgid ""
 "The object instance has been allocated administratively (i.e., not for use "
 "by the recipient in their own right in operational networks)."
 msgstr ""
+"L'instance d'objet a été attribuée à des fins administratives (c'est-à-dire "
+"qu'elle n'est pas destinée à être utilisée par le destinataire en tant que "
+"telle dans les réseaux opérationnels)."
 
 #: assets/components/search/rdapStatusCodeDetailTranslation.ts:42
 msgid ""
 "The object instance has been allocated to an IANA special-purpose address "
 "registry."
 msgstr ""
+"L'instance d'objet a été attribuée à un registre d'adresses à usage spécial "
+"de l'IANA."
 
 #: assets/components/search/DomainSearchBar.tsx:26
 #: assets/components/tracking/watchlist/WatchlistForm.tsx:113
