@@ -170,7 +170,7 @@ export function ConnectorForm({form, onCreate}: { form: FormInstance, onCreate: 
             </>
         }
 
-        <Form.Item style={{marginTop: 10}}>
+        <Form.Item style={{marginTop: '5vh'}}>
             <Space>
                 <Button type="primary" htmlType="submit">
                     {t`Create`}

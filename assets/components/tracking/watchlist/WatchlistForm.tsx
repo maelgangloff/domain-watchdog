@@ -1,10 +1,10 @@
-import {Button, Form, FormInstance, Input, Select, SelectProps, Space, Tag, Typography} from "antd";
+import {Button, Form, FormInstance, Input, Select, SelectProps, Space, Tag, Tooltip, Typography} from "antd";
 import {t} from "ttag";
 import {ApiOutlined, MinusCircleOutlined, PlusOutlined} from "@ant-design/icons";
 import React from "react";
 import {Connector} from "../../../utils/api/connectors";
 import {actionToColor} from "../../search/EventTimeline";
-import {rdapEventNameTranslation} from "../../search/rdapTranslation";
+import {rdapEventDetailTranslation, rdapEventNameTranslation} from "../../search/rdapTranslation";
 
 type TagRender = SelectProps['tagRender'];
 
@@ -33,6 +33,7 @@ export function WatchlistForm({form, connectors, onFinish, isCreation}: {
     isCreation: boolean
 }) {
     const rdapEventNameTranslated = rdapEventNameTranslation()
+    const rdapEventDetailTranslated = rdapEventDetailTranslation()
 
     const triggerTagRenderer: TagRender = (props) => {
         const {value, closable, onClose} = props;
@@ -40,16 +41,18 @@ export function WatchlistForm({form, connectors, onFinish, isCreation}: {
             event.preventDefault()
             event.stopPropagation()
         }
-        return (
-            <Tag
-                color={actionToColor(value)}
-                onMouseDown={onPreventMouseDown}
-                closable={closable}
-                onClose={onClose}
-                style={{marginInlineEnd: 4}}
-            >
-                {rdapEventNameTranslated[value as keyof typeof rdapEventNameTranslated]}
-            </Tag>
+        return (<Tooltip
+                title={value in rdapEventDetailTranslated ? rdapEventDetailTranslated[value as keyof typeof rdapEventDetailTranslated] : undefined}>
+                <Tag
+                    color={actionToColor(value)}
+                    onMouseDown={onPreventMouseDown}
+                    closable={closable}
+                    onClose={onClose}
+                    style={{marginInlineEnd: 4}}
+                >
+                    {rdapEventNameTranslated[value as keyof typeof rdapEventNameTranslated]}
+                </Tag>
+            </Tooltip>
         )
     }
 
@@ -159,6 +162,7 @@ export function WatchlistForm({form, connectors, onFinish, isCreation}: {
                 style={{width: '100%'}}
                 options={Object.keys(rdapEventNameTranslated).map(e => ({
                     value: e,
+                    title: e in rdapEventDetailTranslated ? rdapEventDetailTranslated[e as keyof typeof rdapEventDetailTranslated] : undefined,
                     label: rdapEventNameTranslated[e as keyof typeof rdapEventNameTranslated]
                 }))}
             />
@@ -240,7 +244,7 @@ export function WatchlistForm({form, connectors, onFinish, isCreation}: {
                 </>
             )}
         </Form.List>
-        <Form.Item style={{marginTop: '10px'}}>
+        <Form.Item style={{marginTop: '5vh'}}>
             <Space>
                 <Button type="primary" htmlType="submit">
                     {isCreation ? t`Create` : t`Update`}

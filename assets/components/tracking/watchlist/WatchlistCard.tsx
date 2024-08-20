@@ -1,4 +1,4 @@
-import {Card, Divider, Space, Table, Tag, Typography} from "antd";
+import {Card, Divider, Space, Table, Tag, Tooltip, Typography} from "antd";
 import {DisconnectOutlined, LinkOutlined} from "@ant-design/icons";
 import {t} from "ttag";
 import {ViewDiagramWatchlistButton} from "./diagram/ViewDiagramWatchlistButton";
@@ -11,7 +11,7 @@ import {Watchlist} from "../../../pages/tracking/WatchlistPage";
 import {Connector} from "../../../utils/api/connectors";
 import useBreakpoint from "../../../hooks/useBreakpoint";
 import {CalendarWatchlistButton} from "./CalendarWatchlistButton";
-import {rdapEventNameTranslation} from "../../search/rdapTranslation";
+import {rdapEventDetailTranslation, rdapEventNameTranslation} from "../../search/rdapTranslation";
 
 export function WatchlistCard({watchlist, onUpdateWatchlist, connectors, onDelete}: {
     watchlist: Watchlist,
@@ -21,6 +21,7 @@ export function WatchlistCard({watchlist, onUpdateWatchlist, connectors, onDelet
 }) {
     const sm = useBreakpoint('sm')
     const rdapEventNameTranslated = rdapEventNameTranslation()
+    const rdapEventDetailTranslated = rdapEventDetailTranslation()
 
     const columns = [
         {
@@ -75,9 +76,12 @@ export function WatchlistCard({watchlist, onUpdateWatchlist, connectors, onDelet
                 dataSource={[{
                     domains: watchlist.domains.map(d => <Tag>{punycode.toUnicode(d.ldhName)}</Tag>),
                     events: watchlist.triggers?.filter(t => t.action === 'email')
-                        .map(t => <Tag color={actionToColor(t.event)}>
-                                {rdapEventNameTranslated[t.event as keyof typeof rdapEventNameTranslated]}
-                            </Tag>
+                        .map(t => <Tooltip
+                                title={t.event in rdapEventDetailTranslated ? rdapEventDetailTranslated[t.event as keyof typeof rdapEventDetailTranslated] : undefined}>
+                                <Tag color={actionToColor(t.event)}>
+                                    {rdapEventNameTranslated[t.event as keyof typeof rdapEventNameTranslated]}
+                                </Tag>
+                            </Tooltip>
                         )
                 }]}
                 {...(sm ? {scroll: {y: 'max-content'}} : {scroll: {y: 240}})}
