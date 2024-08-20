@@ -289,7 +289,8 @@ msgstr ""
 #: assets/components/search/rdapTranslation.ts:77
 msgid ""
 "Signifies that the data of the object instance has been found to be accurate."
-msgstr "Bedeutet, dass die Daten der Objektinstanz als korrekt befunden wurden."
+msgstr ""
+"Bedeutet, dass die Daten der Objektinstanz als korrekt befunden wurden."
 
 #: assets/components/search/rdapTranslation.ts:78
 msgid "Renewal or reregistration of the object instance is forbidden."
@@ -311,37 +312,53 @@ msgid "Deletion of the registration of the object instance is forbidden."
 msgstr "Das Löschen der Registrierung der Objektinstanz ist verboten."
 
 #: assets/components/search/rdapTranslation.ts:82
+#, fuzzy
+#| msgid "Renewal or reregistration of the object instance is forbidden."
 msgid ""
-"The registration of the object instance has been performed by a third party. "
-"This is most commonly applied to entities."
-msgstr ""
+"The registration of the object instance has been performed by a third party."
+msgstr "Eine Erneuerung oder Neuregistrierung der Objektinstanz ist untersagt."
 
 #: assets/components/search/rdapTranslation.ts:83
+#, fuzzy
+#| msgid ""
+#| "The entity object instance is an administrative contact for the "
+#| "registration."
 msgid ""
 "The information of the object instance is not designated for public "
-"consumption. This is most commonly applied to entities."
+"consumption."
 msgstr ""
+"Die Entitätsobjektinstanz ist ein administrativer Kontakt für die "
+"Registrierung."
 
 #: assets/components/search/rdapTranslation.ts:84
+#, fuzzy
+#| msgid ""
+#| "Signifies that the data of the object instance has been found to be "
+#| "accurate."
 msgid ""
 "Some of the information of the object instance has not been made available "
-"and has been removed. This is most commonly applied to entities."
+"and has been removed."
 msgstr ""
+"Bedeutet, dass die Daten der Objektinstanz als korrekt befunden wurden."
 
 #: assets/components/search/rdapTranslation.ts:85
 msgid ""
 "Some of the information of the object instance has been altered for the "
 "purposes of not readily revealing the actual information of the object "
-"instance. This is most commonly applied to entities."
+"instance."
 msgstr ""
 
 #: assets/components/search/rdapTranslation.ts:86
+#, fuzzy
+#| msgid ""
+#| "The entity object instance is an administrative contact for the "
+#| "registration."
 msgid ""
 "The object instance is associated with other object instances in the "
-"registry. This is most commonly used to signify that a nameserver is "
-"associated with a domain or that an entity is associated with a network "
-"resource or domain."
+"registry."
 msgstr ""
+"Die Entitätsobjektinstanz ist ein administrativer Kontakt für die "
+"Registrierung."
 
 #: assets/components/search/rdapTranslation.ts:87
 msgid ""
