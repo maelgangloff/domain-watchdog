@@ -27,8 +27,8 @@ msgstr "Adresse e-mail"
 #: assets/components/tracking/connector/ConnectorForm.tsx:142
 #: assets/components/tracking/connector/ConnectorForm.tsx:156
 #: assets/components/tracking/connector/ConnectorForm.tsx:165
-#: assets/components/tracking/watchlist/WatchlistForm.tsx:109
-#: assets/components/tracking/watchlist/WatchlistForm.tsx:205
+#: assets/components/tracking/watchlist/WatchlistForm.tsx:110
+#: assets/components/tracking/watchlist/WatchlistForm.tsx:206
 msgid "Required"
 msgstr "Requis"
 
@@ -44,52 +44,379 @@ msgstr "Se connecter"
 msgid "Log in with SSO"
 msgstr "Se connecter par SSO"
 
-#: assets/components/search/EventTimeline.tsx:25
+#: assets/components/search/rdapEventActionDetailTranslation.ts:7
 msgid "Registration"
 msgstr "Enregistrement"
 
-#: assets/components/search/EventTimeline.tsx:26
+#: assets/components/search/rdapEventActionDetailTranslation.ts:8
 msgid "Reregistration"
 msgstr "Réenregistrement"
 
-#: assets/components/search/EventTimeline.tsx:27
+#: assets/components/search/rdapEventActionDetailTranslation.ts:9
 msgid "Changed"
 msgstr "Modification"
 
-#: assets/components/search/EventTimeline.tsx:28
+#: assets/components/search/rdapEventActionDetailTranslation.ts:10
 msgid "Expiration"
 msgstr "Expiration"
 
-#: assets/components/search/EventTimeline.tsx:29
+#: assets/components/search/rdapEventActionDetailTranslation.ts:11
 msgid "Deletion"
 msgstr "Suppression"
 
-#: assets/components/search/EventTimeline.tsx:30
+#: assets/components/search/rdapEventActionDetailTranslation.ts:12
 msgid "Reinstantiation"
 msgstr "Réinstanciation"
 
-#: assets/components/search/EventTimeline.tsx:31
+#: assets/components/search/rdapEventActionDetailTranslation.ts:13
 msgid "Transfer"
 msgstr "Transfert"
 
-#: assets/components/search/EventTimeline.tsx:32
+#: assets/components/search/rdapEventActionDetailTranslation.ts:14
 msgid "Locked"
 msgstr "Bloqué"
 
-#: assets/components/search/EventTimeline.tsx:33
+#: assets/components/search/rdapEventActionDetailTranslation.ts:15
 msgid "Unlocked"
 msgstr "Débloqué"
 
-#: assets/components/search/EventTimeline.tsx:34
+#: assets/components/search/rdapEventActionDetailTranslation.ts:16
 msgid "Registrar expiration"
 msgstr "Expiration du registraire"
 
-#: assets/components/search/EventTimeline.tsx:35
+#: assets/components/search/rdapEventActionDetailTranslation.ts:17
 msgid "ENUM validation expiration"
 msgstr "Expiration de la validation ENUM"
 
+#: assets/components/search/rdapEventActionDetailTranslation.ts:24
+msgid "The object instance was initially registered."
+msgstr ""
+
+#: assets/components/search/rdapEventActionDetailTranslation.ts:25
+msgid ""
+"The object instance was registered subsequently to initial registration."
+msgstr ""
+
+#: assets/components/search/rdapEventActionDetailTranslation.ts:26
+msgid ""
+"An action noting when the information in the object instance was last "
+"changed."
+msgstr ""
+
+#: assets/components/search/rdapEventActionDetailTranslation.ts:27
+msgid ""
+"The object instance has been removed or will be removed at a predetermined "
+"date and time from the registry."
+msgstr ""
+
+#: assets/components/search/rdapEventActionDetailTranslation.ts:28
+msgid ""
+"The object instance was removed from the registry at a point in time that "
+"was not predetermined."
+msgstr ""
+
+#: assets/components/search/rdapEventActionDetailTranslation.ts:29
+msgid ""
+"The object instance was reregistered after having been removed from the "
+"registry."
+msgstr ""
+
+#: assets/components/search/rdapEventActionDetailTranslation.ts:30
+msgid "The object instance was transferred from one registrar to another."
+msgstr ""
+
+#: assets/components/search/rdapEventActionDetailTranslation.ts:31
+msgid "The object instance was locked."
+msgstr ""
+
+#: assets/components/search/rdapEventActionDetailTranslation.ts:32
+msgid "The object instance was unlocked."
+msgstr ""
+
+#: assets/components/search/rdapEventActionDetailTranslation.ts:33
+msgid ""
+"An action noting the expiration date of the object in the registrar system."
+msgstr ""
+
+#: assets/components/search/rdapEventActionDetailTranslation.ts:34
+msgid ""
+"Association of phone number represented by this ENUM domain to registrant "
+"has expired or will expire at a predetermined date and time."
+msgstr ""
+
+#: assets/components/search/DomainResult.tsx:28
+msgid "EPP Status Codes"
+msgstr "Codes de statut EPP"
+
+#: assets/components/search/DomainResult.tsx:42
+msgid "Timeline"
+msgstr "Chronologie"
+
+#: assets/components/search/DomainResult.tsx:47
+msgid "Entities"
+msgstr "Entités"
+
+#: assets/components/search/rdapStatusCodeDetailTranslation.ts:7
+msgid ""
+"Signifies that the data of the object instance has been found to be "
+"accurate. This type of status is usually found on entity object instances to "
+"note the validity of identifying contact information."
+msgstr ""
+
+#: assets/components/search/rdapStatusCodeDetailTranslation.ts:8
+msgid "Renewal or reregistration of the object instance is forbidden."
+msgstr ""
+
+#: assets/components/search/rdapStatusCodeDetailTranslation.ts:9
+msgid "Updates to the object instance are forbidden."
+msgstr ""
+
+#: assets/components/search/rdapStatusCodeDetailTranslation.ts:10
+msgid ""
+"Transfers of the registration from one registrar to another are forbidden. "
+"This type of status normally applies to DNR domain names."
+msgstr ""
+
+#: assets/components/search/rdapStatusCodeDetailTranslation.ts:11
+msgid ""
+"Deletion of the registration of the object instance is forbidden. This type "
+"of status normally applies to DNR domain names."
+msgstr ""
+
+#: assets/components/search/rdapStatusCodeDetailTranslation.ts:12
+msgid ""
+"The registration of the object instance has been performed by a third party. "
+"This is most commonly applied to entities."
+msgstr ""
+
+#: assets/components/search/rdapStatusCodeDetailTranslation.ts:13
+msgid ""
+"The information of the object instance is not designated for public "
+"consumption. This is most commonly applied to entities."
+msgstr ""
+
+#: assets/components/search/rdapStatusCodeDetailTranslation.ts:14
+msgid ""
+"Some of the information of the object instance has not been made available "
+"and has been removed. This is most commonly applied to entities."
+msgstr ""
+
+#: assets/components/search/rdapStatusCodeDetailTranslation.ts:15
+msgid ""
+"Some of the information of the object instance has been altered for the "
+"purposes of not readily revealing the actual information of the object "
+"instance. This is most commonly applied to entities."
+msgstr ""
+
+#: assets/components/search/rdapStatusCodeDetailTranslation.ts:16
+msgid ""
+"The object instance is associated with other object instances in the "
+"registry. This is most commonly used to signify that a nameserver is "
+"associated with a domain or that an entity is associated with a network "
+"resource or domain."
+msgstr ""
+
+#: assets/components/search/rdapStatusCodeDetailTranslation.ts:17
+msgid ""
+"The object instance is in use. For domain names, it signifies that the "
+"domain name is published in DNS. For network and autnum registrations, it "
+"signifies that they are allocated or assigned for use in operational "
+"networks. This maps to the \"OK\" status of the Extensible Provisioning "
+"Protocol (EPP) [RFC5730]."
+msgstr ""
+
+#: assets/components/search/rdapStatusCodeDetailTranslation.ts:18
+msgid "The object instance is not in use."
+msgstr ""
+
+#: assets/components/search/rdapStatusCodeDetailTranslation.ts:19
+msgid ""
+"Changes to the object instance cannot be made, including the association of "
+"other object instances."
+msgstr ""
+
+#: assets/components/search/rdapStatusCodeDetailTranslation.ts:20
+msgid ""
+"A request has been received for the creation of the object instance, but "
+"this action is not yet complete."
+msgstr ""
+
+#: assets/components/search/rdapStatusCodeDetailTranslation.ts:21
+msgid ""
+"A request has been received for the renewal of the object instance, but this "
+"action is not yet complete."
+msgstr ""
+
+#: assets/components/search/rdapStatusCodeDetailTranslation.ts:22
+msgid ""
+"A request has been received for the transfer of the object instance, but "
+"this action is not yet complete."
+msgstr ""
+
+#: assets/components/search/rdapStatusCodeDetailTranslation.ts:23
+msgid ""
+"A request has been received for the update or modification of the object "
+"instance, but this action is not yet complete."
+msgstr ""
+
+#: assets/components/search/rdapStatusCodeDetailTranslation.ts:24
+msgid ""
+"A request has been received for the deletion or removal of the object "
+"instance, but this action is not yet complete. For domains, this might mean "
+"that the name is no longer published in DNS but has not yet been purged from "
+"the registry database."
+msgstr ""
+
+#: assets/components/search/rdapStatusCodeDetailTranslation.ts:25
+msgid ""
+"This grace period is provided after the initial registration of the object. "
+"If the object is deleted by the client during this period, the server "
+"provides a credit to the client for the cost of the registration. This maps "
+"to the Domain Registry Grace Period Mapping for the Extensible Provisioning "
+"Protocol (EPP) [RFC3915] 'addPeriod' status."
+msgstr ""
+
+#: assets/components/search/rdapStatusCodeDetailTranslation.ts:26
+msgid ""
+"This grace period is provided after an object registration period expires "
+"and is extended (renewed) automatically by the server. If the object is "
+"deleted by the client during this period, the server provides a credit to "
+"the client for the cost of the auto renewal. This maps to the Domain "
+"Registry Grace Period Mapping for the Extensible Provisioning Protocol (EPP) "
+"[RFC3915] 'autoRenewPeriod' status."
+msgstr ""
+
+#: assets/components/search/rdapStatusCodeDetailTranslation.ts:27
+msgid ""
+"The client requested that requests to delete the object MUST be rejected. "
+"This maps to the Extensible Provisioning Protocol (EPP) Domain Name Mapping "
+"[RFC5731], Extensible Provisioning Protocol (EPP) Host Mapping [RFC5732], "
+"and Extensible Provisioning Protocol (EPP) Contact Mapping [RFC5733] "
+"'clientDeleteProhibited' status."
+msgstr ""
+
+#: assets/components/search/rdapStatusCodeDetailTranslation.ts:28
+msgid ""
+"The client requested that the DNS delegation information MUST NOT be "
+"published for the object. This maps to the Extensible Provisioning Protocol "
+"(EPP) Domain Name Mapping [RFC5731] 'clientHold' status."
+msgstr ""
+
+#: assets/components/search/rdapStatusCodeDetailTranslation.ts:29
+msgid ""
+"The client requested that requests to renew the object MUST be rejected. "
+"This maps to the Extensible Provisioning Protocol (EPP) Domain Name Mapping "
+"[RFC5731] 'clientRenewProhibited' status."
+msgstr ""
+
+#: assets/components/search/rdapStatusCodeDetailTranslation.ts:30
+msgid ""
+"The client requested that requests to transfer the object MUST be rejected. "
+"This maps to the Extensible Provisioning Protocol (EPP) Domain Name Mapping "
+"[RFC5731] and Extensible Provisioning Protocol (EPP) Contact Mapping "
+"[RFC5733] 'clientTransferProhibited' status."
+msgstr ""
+
+#: assets/components/search/rdapStatusCodeDetailTranslation.ts:31
+msgid ""
+"The client requested that requests to update the object (other than to "
+"remove this status) MUST be rejected. This maps to the Extensible "
+"Provisioning Protocol (EPP) Domain Name Mapping [RFC5731], Extensible "
+"Provisioning Protocol (EPP) Host Mapping [RFC5732], and Extensible "
+"Provisioning Protocol (EPP) Contact Mapping [RFC5733] "
+"'clientUpdateProhibited' status."
+msgstr ""
+
+#: assets/components/search/rdapStatusCodeDetailTranslation.ts:32
+msgid ""
+"An object is in the process of being restored after being in the redemption "
+"period state. This maps to the Domain Registry Grace Period Mapping for the "
+"Extensible Provisioning Protocol (EPP) [RFC3915] 'pendingRestore' status."
+msgstr ""
+
+#: assets/components/search/rdapStatusCodeDetailTranslation.ts:33
+msgid ""
+"A delete has been received, but the object has not yet been purged because "
+"an opportunity exists to restore the object and abort the deletion process. "
+"This maps to the Domain Registry Grace Period Mapping for the Extensible "
+"Provisioning Protocol (EPP) [RFC3915] 'redemptionPeriod' status."
+msgstr ""
+
+#: assets/components/search/rdapStatusCodeDetailTranslation.ts:34
+msgid ""
+"This grace period is provided after an object registration period is "
+"explicitly extended (renewed) by the client. If the object is deleted by the "
+"client during this period, the server provides a credit to the client for "
+"the cost of the renewal. This maps to the Domain Registry Grace Period "
+"Mapping for the Extensible Provisioning Protocol (EPP) [RFC3915] "
+"'renewPeriod' status."
+msgstr ""
+
+#: assets/components/search/rdapStatusCodeDetailTranslation.ts:35
+msgid ""
+"The server set the status so that requests to delete the object MUST be "
+"rejected. This maps to the Extensible Provisioning Protocol (EPP) Domain "
+"Name Mapping [RFC5731], Extensible Provisioning Protocol (EPP) Host Mapping "
+"[RFC5732], and Extensible Provisioning Protocol (EPP) Contact Mapping "
+"[RFC5733] 'serverDeleteProhibited' status."
+msgstr ""
+
+#: assets/components/search/rdapStatusCodeDetailTranslation.ts:36
+msgid ""
+"The server set the status so that requests to renew the object MUST be "
+"rejected. This maps to the Extensible Provisioning Protocol (EPP) Domain "
+"Name Mapping [RFC5731] 'serverRenewProhibited' status."
+msgstr ""
+
+#: assets/components/search/rdapStatusCodeDetailTranslation.ts:37
+msgid ""
+"The server set the status so that requests to transfer the object MUST be "
+"rejected. This maps to the Extensible Provisioning Protocol (EPP) Domain "
+"Name Mapping [RFC5731] and Extensible Provisioning Protocol (EPP) Contact "
+"Mapping [RFC5733] 'serverTransferProhibited' status."
+msgstr ""
+
+#: assets/components/search/rdapStatusCodeDetailTranslation.ts:38
+msgid ""
+"The server set the status so that requests to update the object (other than "
+"to remove this status) MUST be rejected. This maps to the Extensible "
+"Provisioning Protocol (EPP) Domain Name Mapping [RFC5731], Extensible "
+"Provisioning Protocol (EPP) Host Mapping [RFC5732], and Extensible "
+"Provisioning Protocol (EPP) Contact Mapping [RFC5733] "
+"'serverUpdateProhibited' status."
+msgstr ""
+
+#: assets/components/search/rdapStatusCodeDetailTranslation.ts:39
+msgid ""
+"The server set the status so that DNS delegation information MUST NOT be "
+"published for the object. This maps to the Extensible Provisioning Protocol "
+"(EPP) Domain Name Mapping [RFC5731] 'serverHold' status."
+msgstr ""
+
+#: assets/components/search/rdapStatusCodeDetailTranslation.ts:40
+msgid ""
+"This grace period is provided after the successful transfer of object "
+"registration sponsorship from one client to another client. If the object is "
+"deleted by the client during this period, the server provides a credit to "
+"the client for the cost of the transfer. This maps to the Domain Registry "
+"Grace Period Mapping for the Extensible Provisioning Protocol (EPP) "
+"[RFC3915] 'transferPeriod' status."
+msgstr ""
+
+#: assets/components/search/rdapStatusCodeDetailTranslation.ts:41
+msgid ""
+"The object instance has been allocated administratively (i.e., not for use "
+"by the recipient in their own right in operational networks)."
+msgstr ""
+
+#: assets/components/search/rdapStatusCodeDetailTranslation.ts:42
+msgid ""
+"The object instance has been allocated to an IANA special-purpose address "
+"registry."
+msgstr ""
+
 #: assets/components/search/DomainSearchBar.tsx:26
-#: assets/components/tracking/watchlist/WatchlistForm.tsx:112
+#: assets/components/tracking/watchlist/WatchlistForm.tsx:113
 msgid "This domain name does not appear to be valid"
 msgstr "Ce nom de domaine ne semble pas être valide"
 
@@ -215,12 +542,12 @@ msgstr ""
 "noms de domaine via l'API du Fournisseur"
 
 #: assets/components/tracking/connector/ConnectorForm.tsx:176
-#: assets/components/tracking/watchlist/WatchlistForm.tsx:245
+#: assets/components/tracking/watchlist/WatchlistForm.tsx:246
 msgid "Create"
 msgstr "Créer"
 
 #: assets/components/tracking/connector/ConnectorForm.tsx:179
-#: assets/components/tracking/watchlist/WatchlistForm.tsx:248
+#: assets/components/tracking/watchlist/WatchlistForm.tsx:249
 msgid "Reset"
 msgstr "Réinitialiser"
 
@@ -255,52 +582,52 @@ msgstr "Oui"
 msgid "No"
 msgstr "Non"
 
-#: assets/components/tracking/watchlist/WatchlistForm.tsx:66
+#: assets/components/tracking/watchlist/WatchlistForm.tsx:67
 msgid "Name"
 msgstr "Nom"
 
-#: assets/components/tracking/watchlist/WatchlistForm.tsx:77
+#: assets/components/tracking/watchlist/WatchlistForm.tsx:78
 msgid "Watchlist Name"
 msgstr "Nom de la Watchlist"
 
-#: assets/components/tracking/watchlist/WatchlistForm.tsx:78
+#: assets/components/tracking/watchlist/WatchlistForm.tsx:79
 msgid "Naming the Watchlist makes it easier to find in the list below."
 msgstr ""
 "Nommer la Watchlist permet de la retrouver plus facilement dans la liste ci-"
 "dessous."
 
-#: assets/components/tracking/watchlist/WatchlistForm.tsx:89
+#: assets/components/tracking/watchlist/WatchlistForm.tsx:90
 msgid "At least one domain name"
 msgstr "Au moins un nom de domaine"
 
-#: assets/components/tracking/watchlist/WatchlistCard.tsx:26
-#: assets/components/tracking/watchlist/WatchlistForm.tsx:100
+#: assets/components/tracking/watchlist/WatchlistCard.tsx:27
+#: assets/components/tracking/watchlist/WatchlistForm.tsx:101
 msgid "Domain names"
 msgstr "Noms de domaines"
 
-#: assets/components/tracking/watchlist/WatchlistForm.tsx:118
+#: assets/components/tracking/watchlist/WatchlistForm.tsx:119
 msgid "Domain name"
 msgstr "Nom de domaine"
 
-#: assets/components/tracking/watchlist/WatchlistForm.tsx:135
+#: assets/components/tracking/watchlist/WatchlistForm.tsx:136
 msgid "Add a Domain name"
 msgstr "Ajouter un nom de domaine"
 
-#: assets/components/tracking/watchlist/WatchlistCard.tsx:30
-#: assets/components/tracking/watchlist/WatchlistForm.tsx:142
+#: assets/components/tracking/watchlist/WatchlistCard.tsx:31
+#: assets/components/tracking/watchlist/WatchlistForm.tsx:143
 msgid "Tracked events"
 msgstr "Événements suivis"
 
-#: assets/components/tracking/watchlist/WatchlistForm.tsx:144
+#: assets/components/tracking/watchlist/WatchlistForm.tsx:145
 msgid "At least one trigger"
 msgstr "Au moins un déclencheur"
 
-#: assets/components/tracking/watchlist/WatchlistForm.tsx:166
-#: assets/components/tracking/watchlist/WatchlistForm.tsx:180
+#: assets/components/tracking/watchlist/WatchlistForm.tsx:167
+#: assets/components/tracking/watchlist/WatchlistForm.tsx:181
 msgid "Connector"
 msgstr "Connecteur"
 
-#: assets/components/tracking/watchlist/WatchlistForm.tsx:176
+#: assets/components/tracking/watchlist/WatchlistForm.tsx:177
 msgid ""
 "Please make sure the connector information is valid to purchase a domain "
 "that may be available soon."
@@ -308,26 +635,26 @@ msgstr ""
 "Merci de vous assurer que les informations du connecteur sont valides pour "
 "acheter un domaine qui pourrait être disponible prochainement."
 
-#: assets/components/tracking/watchlist/WatchlistForm.tsx:196
+#: assets/components/tracking/watchlist/WatchlistForm.tsx:197
 msgid "DSN"
 msgstr "DSN"
 
-#: assets/components/tracking/watchlist/WatchlistForm.tsx:208
+#: assets/components/tracking/watchlist/WatchlistForm.tsx:209
 msgid "This DSN does not appear to be valid"
 msgstr "Ce DSN ne semble pas être valide"
 
-#: assets/components/tracking/watchlist/WatchlistForm.tsx:226
+#: assets/components/tracking/watchlist/WatchlistForm.tsx:227
 msgid ""
 "Check out this link to the Symfony documentation to help you build the DSN"
 msgstr ""
 "Consultez ce lien vers la documentation Symfony pour vous aider à construire "
 "le DSN"
 
-#: assets/components/tracking/watchlist/WatchlistForm.tsx:235
+#: assets/components/tracking/watchlist/WatchlistForm.tsx:236
 msgid "Add a Webhook"
 msgstr "Ajouter un Webhook"
 
-#: assets/components/tracking/watchlist/WatchlistForm.tsx:245
+#: assets/components/tracking/watchlist/WatchlistForm.tsx:246
 msgid "Update"
 msgstr "Mettre à jour"
 
@@ -377,11 +704,11 @@ msgstr "Supprimer la Watchlist"
 msgid "Are you sure to delete this Watchlist?"
 msgstr "Êtes-vous sûr de vouloir supprimer cette Watchlist ?"
 
-#: assets/components/tracking/watchlist/WatchlistCard.tsx:43
+#: assets/components/tracking/watchlist/WatchlistCard.tsx:44
 msgid "This Watchlist is not linked to a Connector."
 msgstr "Cette Watchlist n'est pas liée à un connecteur."
 
-#: assets/components/tracking/watchlist/WatchlistCard.tsx:46
+#: assets/components/tracking/watchlist/WatchlistCard.tsx:47
 msgid "Watchlist"
 msgstr "Watchlist"
 
@@ -458,27 +785,15 @@ msgstr "Se connecter"
 msgid "Register"
 msgstr "S'enregistrer"
 
-#: assets/pages/search/DomainSearchPage.tsx:22
+#: assets/pages/search/DomainSearchPage.tsx:18
 msgid "Found !"
 msgstr "Trouvé !"
 
-#: assets/pages/search/DomainSearchPage.tsx:30
+#: assets/pages/search/DomainSearchPage.tsx:26
 msgid "Domain finder"
 msgstr "Rechercher un domaine"
 
-#: assets/pages/search/DomainSearchPage.tsx:51
-msgid "EPP Status Codes"
-msgstr "Codes de statut EPP"
-
-#: assets/pages/search/DomainSearchPage.tsx:61
-msgid "Timeline"
-msgstr "Chronologie"
-
-#: assets/pages/search/DomainSearchPage.tsx:66
-msgid "Entities"
-msgstr "Entités"
-
-#: assets/pages/search/DomainSearchPage.tsx:75
+#: assets/pages/search/DomainSearchPage.tsx:35
 msgid ""
 "Although the domain exists in my database, it has been deleted from the "
 "WHOIS by its registrar."
