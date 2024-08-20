@@ -1,14 +1,14 @@
 import {Domain, Watchlist} from "../../../../utils/api";
-import {translateRoles} from "../../../search/EntitiesList";
+import {rdapRoleTranslation} from "../../../search/rdapTranslation";
 import {t} from "ttag";
 
-const rolesToColor = (roles: string[]) => roles.includes('registrant') ? 'green' :
+export const rolesToColor = (roles: string[]) => roles.includes('registrant') ? 'green' :
     roles.includes('administrative') ? 'blue' :
         roles.includes('technical') ? 'orange' :
             roles.includes('registrar') ? 'violet' : 'white'
 
 export function domainEntitiesToEdges(d: Domain, withRegistrar = false) {
-    const domainRole = translateRoles()
+    const rdapRoleTranslated = rdapRoleTranslation()
     return d.entities
         .filter(e => !withRegistrar ? !e.roles.includes('registrar') : true)
         .map(e => ({
@@ -17,7 +17,7 @@ export function domainEntitiesToEdges(d: Domain, withRegistrar = false) {
             target: e.roles.includes('registrant') || e.roles.includes('registrar') ? d.ldhName : e.entity.handle,
             style: {stroke: rolesToColor(e.roles), strokeWidth: 3},
             label: e.roles
-                .map(r => Object.keys(domainRole).includes(r) ? domainRole[r as keyof typeof domainRole] : r)
+                .map(r => r in rdapRoleTranslated ? rdapRoleTranslated[r as keyof typeof rdapRoleTranslated] : r)
                 .join(', '),
             animated: e.roles.includes('registrant'),
         }))

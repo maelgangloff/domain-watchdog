@@ -10,7 +10,7 @@ import {Timeline, Tooltip} from "antd";
 import React from "react";
 import {Domain, EventAction} from "../../utils/api";
 import useBreakpoint from "../../hooks/useBreakpoint";
-import {rdapEventDetailTranslation, rdapEventNameTranslation} from "./rdapEventActionDetailTranslation";
+import {rdapEventDetailTranslation, rdapEventNameTranslation} from "./rdapTranslation";
 
 export function actionToColor(a: EventAction) {
     return a === 'registration' ? 'green' :
@@ -50,7 +50,7 @@ export function EventTimeline({domain}: { domain: Domain }) {
                     dot = <ReloadOutlined style={{fontSize: '16px'}}/>
                 }
 
-                const eventName = Object.keys(rdapEventNameTranslated).includes(action) ? rdapEventNameTranslated[action as keyof typeof rdapEventNameTranslated] : action
+                const eventName = action in rdapEventNameTranslated ? rdapEventNameTranslated[action as keyof typeof rdapEventNameTranslated] : action
                 const dateStr = new Date(date).toLocaleString(locale)
                 const eventDetail = action in rdapEventDetailTranslated ? rdapEventDetailTranslated[action as keyof typeof rdapEventDetailTranslated] : undefined
 

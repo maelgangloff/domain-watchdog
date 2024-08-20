@@ -3,6 +3,76 @@ import {t} from "ttag";
 /**
  * @see https://www.iana.org/assignments/rdap-json-values/rdap-json-values.xhtml
  */
+export const rdapRoleTranslation = () => ({
+    registrant: t`Registrant`,
+    technical: t`Technical`,
+    administrative: t`Administrative`,
+    abuse: t`Abuse`,
+    billing: t`Billing`,
+    registrar: t`Registrar`,
+    reseller: t`Reseller`,
+    sponsor: t`Sponsor`,
+    proxy: t`Proxy`,
+    notifications: t`Notifications`,
+    noc: t`Noc`
+})
+
+
+/**
+ * @see https://www.iana.org/assignments/rdap-json-values/rdap-json-values.xhtml
+ */
+export const rdapRoleDetailTranslation = () => ({
+    registrant: t`The entity object instance is the registrant of the registration. In some registries, this is known as a maintainer.`,
+    technical: t`The entity object instance is a technical contact for the registration.`,
+    administrative: t`The entity object instance is an administrative contact for the registration.`,
+    abuse: t`The entity object instance handles network abuse issues on behalf of the registrant of the registration.`,
+    billing: t`The entity object instance handles payment and billing issues on behalf of the registrant of the registration.`,
+    registrar: t`The entity object instance represents the authority responsible for the registration in the registry.`,
+    reseller: t`The entity object instance represents a third party through which the registration was conducted (i.e., not the registry or registrar).`,
+    sponsor: t`The entity object instance represents a domain policy sponsor, such as an ICANN-approved sponsor.`,
+    proxy: t`The entity object instance represents a proxy for another entity object, such as a registrant.`,
+    notifications: t`An entity object instance designated to receive notifications about association object instances.`,
+    noc: t`The entity object instance handles communications related to a network operations center (NOC).`
+})
+
+
+/**
+ * @see https://www.iana.org/assignments/rdap-json-values/rdap-json-values.xhtml
+ */
+export const rdapEventNameTranslation = () => ({
+    registration: t`Registration`,
+    reregistration: t`Reregistration`,
+    'last changed': t`Changed`,
+    expiration: t`Expiration`,
+    deletion: t`Deletion`,
+    reinstantiation: t`Reinstantiation`,
+    transfer: t`Transfer`,
+    locked: t`Locked`,
+    unlocked: t`Unlocked`,
+    'registrar expiration': t`Registrar expiration`,
+    'enum validation expiration': t`ENUM validation expiration`
+})
+
+/**
+ * @see https://www.iana.org/assignments/rdap-json-values/rdap-json-values.xhtml
+ */
+export const rdapEventDetailTranslation = () => ({
+    registration: t`The object instance was initially registered.`,
+    reregistration: t`The object instance was registered subsequently to initial registration.`,
+    'last changed': t`An action noting when the information in the object instance was last changed.`,
+    expiration: t`The object instance has been removed or will be removed at a predetermined date and time from the registry.`,
+    deletion: t`The object instance was removed from the registry at a point in time that was not predetermined.`,
+    reinstantiation: t`The object instance was reregistered after having been removed from the registry.`,
+    transfer: t`The object instance was transferred from one registrar to another.`,
+    locked: t`The object instance was locked.`,
+    unlocked: t`The object instance was unlocked.`,
+    'registrar expiration': t`An action noting the expiration date of the object in the registrar system.`,
+    'enum validation expiration': t`Association of phone number represented by this ENUM domain to registrant has expired or will expire at a predetermined date and time.`
+})
+
+/**
+ * @see https://www.iana.org/assignments/rdap-json-values/rdap-json-values.xhtml
+ */
 export const rdapStatusCodeDetailTranslation = () => ({
     validated: t`Signifies that the data of the object instance has been found to be accurate.`,
     'renew prohibited': t`Renewal or reregistration of the object instance is forbidden.`,

@@ -1,28 +1,15 @@
 import vCard from "vcf";
-import {Avatar, List, Tooltip} from "antd";
+import {Avatar, List, Tag, Tooltip} from "antd";
 import {BankOutlined, IdcardOutlined, SignatureOutlined, ToolOutlined, UserOutlined} from "@ant-design/icons";
 import React from "react";
 import {Domain} from "../../utils/api";
-import {t} from "ttag";
+import {rdapRoleDetailTranslation, rdapRoleTranslation} from "./rdapTranslation";
+import {rolesToColor} from "../tracking/watchlist/diagram/watchlistToEdges";
 
-export function translateRoles() {
-    return {
-        registrant: t`Registrant`,
-        technical: t`Technical`,
-        administrative: t`Administrative`,
-        abuse: t`Abuse`,
-        billing: t`Billing`,
-        registrar: t`Registrar`,
-        reseller: t`Reseller`,
-        sponsor: t`Sponsor`,
-        proxy: t`Proxy`,
-        notifications: t`Notifications`,
-        noc: t`Noc`
-    }
-}
 
 export function EntitiesList({domain}: { domain: Domain }) {
-    const domainRole = translateRoles()
+    const rdapRoleTranslated = rdapRoleTranslation()
+    const rdapRoleDetailTranslated = rdapRoleDetailTranslation()
 
     return <List
         className="demo-loadmore-list"
@@ -50,7 +37,12 @@ export function EntitiesList({domain}: { domain: Domain }) {
                     title={e.entity.handle}
                     description={name}
                 />
-                <div>{e.roles.map((r) => Object.keys(domainRole).includes(r) ? domainRole[r as keyof typeof domainRole] : r).join(', ')}</div>
+                {e.roles.map((r) =>
+                    <Tooltip
+                        title={r in rdapRoleDetailTranslated ? rdapRoleDetailTranslated[r as keyof typeof rdapRoleDetailTranslated] : undefined}>
+                        <Tag
+                            color={rolesToColor([r])}>{rdapRoleTranslated[r as keyof typeof rdapRoleTranslated]}</Tag>
+                    </Tooltip>)}
             </List.Item>
         }}
     />

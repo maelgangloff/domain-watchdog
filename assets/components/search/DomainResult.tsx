@@ -5,7 +5,7 @@ import {EntitiesList} from "./EntitiesList";
 import {DomainDiagram} from "./DomainDiagram";
 import React from "react";
 import {Domain} from "../../utils/api";
-import {rdapStatusCodeDetailTranslation} from "./rdapStatusCodeDetailTranslation";
+import {rdapStatusCodeDetailTranslation} from "./rdapTranslation";
 
 export function DomainResult({domain}: { domain: Domain }) {
 
