@@ -43,104 +43,428 @@ msgstr "Senden"
 msgid "Log in with SSO"
 msgstr "Mit SSO anmelden"
 
-#: assets/components/search/rdapEventActionDetailTranslation.ts:7
+#: assets/components/search/rdapTranslation.ts:7
+msgid "Registrant"
+msgstr "Anmelder"
+
+#: assets/components/search/rdapTranslation.ts:8
+msgid "Technical"
+msgstr "Technischer"
+
+#: assets/components/search/rdapTranslation.ts:9
+msgid "Administrative"
+msgstr "Verwaltung"
+
+#: assets/components/search/rdapTranslation.ts:10
+msgid "Abuse"
+msgstr "Missbrauch"
+
+#: assets/components/search/rdapTranslation.ts:11
+msgid "Billing"
+msgstr "Rechnungsstellung"
+
+#: assets/components/search/rdapTranslation.ts:12
+msgid "Registrar"
+msgstr "Registrierungsstelle"
+
+#: assets/components/search/rdapTranslation.ts:13
+msgid "Reseller"
+msgstr "Wiederverkäufer"
+
+#: assets/components/search/rdapTranslation.ts:14
+msgid "Sponsor"
+msgstr "Sponsor"
+
+#: assets/components/search/rdapTranslation.ts:15
+msgid "Proxy"
+msgstr "Proxy"
+
+#: assets/components/search/rdapTranslation.ts:16
+msgid "Notifications"
+msgstr "Benachrichtigungen"
+
+#: assets/components/search/rdapTranslation.ts:17
+msgid "Noc"
+msgstr "Noc"
+
+#: assets/components/search/rdapTranslation.ts:25
+msgid ""
+"The entity object instance is the registrant of the registration. In some "
+"registries, this is known as a maintainer."
+msgstr ""
+
+#: assets/components/search/rdapTranslation.ts:26
+msgid "The entity object instance is a technical contact for the registration."
+msgstr ""
+
+#: assets/components/search/rdapTranslation.ts:27
+msgid ""
+"The entity object instance is an administrative contact for the registration."
+msgstr ""
+
+#: assets/components/search/rdapTranslation.ts:28
+msgid ""
+"The entity object instance handles network abuse issues on behalf of the "
+"registrant of the registration."
+msgstr ""
+
+#: assets/components/search/rdapTranslation.ts:29
+msgid ""
+"The entity object instance handles payment and billing issues on behalf of "
+"the registrant of the registration."
+msgstr ""
+
+#: assets/components/search/rdapTranslation.ts:30
+msgid ""
+"The entity object instance represents the authority responsible for the "
+"registration in the registry."
+msgstr ""
+
+#: assets/components/search/rdapTranslation.ts:31
+msgid ""
+"The entity object instance represents a third party through which the "
+"registration was conducted (i.e., not the registry or registrar)."
+msgstr ""
+
+#: assets/components/search/rdapTranslation.ts:32
+msgid ""
+"The entity object instance represents a domain policy sponsor, such as an "
+"ICANN-approved sponsor."
+msgstr ""
+
+#: assets/components/search/rdapTranslation.ts:33
+msgid ""
+"The entity object instance represents a proxy for another entity object, "
+"such as a registrant."
+msgstr ""
+
+#: assets/components/search/rdapTranslation.ts:34
+msgid ""
+"An entity object instance designated to receive notifications about "
+"association object instances."
+msgstr ""
+
+#: assets/components/search/rdapTranslation.ts:35
+msgid ""
+"The entity object instance handles communications related to a network "
+"operations center (NOC)."
+msgstr ""
+
+#: assets/components/search/rdapTranslation.ts:43
 msgid "Registration"
 msgstr "Registrierung"
 
-#: assets/components/search/rdapEventActionDetailTranslation.ts:8
+#: assets/components/search/rdapTranslation.ts:44
 msgid "Reregistration"
 msgstr "Neuregistrierung"
 
-#: assets/components/search/rdapEventActionDetailTranslation.ts:9
+#: assets/components/search/rdapTranslation.ts:45
 msgid "Changed"
 msgstr "Geändert"
 
-#: assets/components/search/rdapEventActionDetailTranslation.ts:10
+#: assets/components/search/rdapTranslation.ts:46
 msgid "Expiration"
 msgstr "Ablauf"
 
-#: assets/components/search/rdapEventActionDetailTranslation.ts:11
+#: assets/components/search/rdapTranslation.ts:47
 msgid "Deletion"
 msgstr "Löschung"
 
-#: assets/components/search/rdapEventActionDetailTranslation.ts:12
+#: assets/components/search/rdapTranslation.ts:48
 msgid "Reinstantiation"
 msgstr "Neuinstanzierung"
 
-#: assets/components/search/rdapEventActionDetailTranslation.ts:13
+#: assets/components/search/rdapTranslation.ts:49
 msgid "Transfer"
 msgstr "Übertragung"
 
-#: assets/components/search/rdapEventActionDetailTranslation.ts:14
+#: assets/components/search/rdapTranslation.ts:50
 msgid "Locked"
 msgstr "Gesperrt"
 
-#: assets/components/search/rdapEventActionDetailTranslation.ts:15
+#: assets/components/search/rdapTranslation.ts:51
 msgid "Unlocked"
 msgstr "Ungesperrt"
 
-#: assets/components/search/rdapEventActionDetailTranslation.ts:16
+#: assets/components/search/rdapTranslation.ts:52
 msgid "Registrar expiration"
 msgstr "Ablauf des Registrars"
 
-#: assets/components/search/rdapEventActionDetailTranslation.ts:17
+#: assets/components/search/rdapTranslation.ts:53
 msgid "ENUM validation expiration"
 msgstr "Ablauf der ENUM-Validierung"
 
-#: assets/components/search/rdapEventActionDetailTranslation.ts:24
+#: assets/components/search/rdapTranslation.ts:60
 msgid "The object instance was initially registered."
 msgstr ""
 
-#: assets/components/search/rdapEventActionDetailTranslation.ts:25
+#: assets/components/search/rdapTranslation.ts:61
 msgid ""
 "The object instance was registered subsequently to initial registration."
 msgstr ""
 
-#: assets/components/search/rdapEventActionDetailTranslation.ts:26
+#: assets/components/search/rdapTranslation.ts:62
 msgid ""
 "An action noting when the information in the object instance was last "
 "changed."
 msgstr ""
 
-#: assets/components/search/rdapEventActionDetailTranslation.ts:27
+#: assets/components/search/rdapTranslation.ts:63
 msgid ""
 "The object instance has been removed or will be removed at a predetermined "
 "date and time from the registry."
 msgstr ""
 
-#: assets/components/search/rdapEventActionDetailTranslation.ts:28
+#: assets/components/search/rdapTranslation.ts:64
 msgid ""
 "The object instance was removed from the registry at a point in time that "
 "was not predetermined."
 msgstr ""
 
-#: assets/components/search/rdapEventActionDetailTranslation.ts:29
+#: assets/components/search/rdapTranslation.ts:65
 msgid ""
 "The object instance was reregistered after having been removed from the "
 "registry."
 msgstr ""
 
-#: assets/components/search/rdapEventActionDetailTranslation.ts:30
+#: assets/components/search/rdapTranslation.ts:66
 msgid "The object instance was transferred from one registrar to another."
 msgstr ""
 
-#: assets/components/search/rdapEventActionDetailTranslation.ts:31
+#: assets/components/search/rdapTranslation.ts:67
 msgid "The object instance was locked."
 msgstr ""
 
-#: assets/components/search/rdapEventActionDetailTranslation.ts:32
+#: assets/components/search/rdapTranslation.ts:68
 msgid "The object instance was unlocked."
 msgstr ""
 
-#: assets/components/search/rdapEventActionDetailTranslation.ts:33
+#: assets/components/search/rdapTranslation.ts:69
 msgid ""
 "An action noting the expiration date of the object in the registrar system."
 msgstr ""
 
-#: assets/components/search/rdapEventActionDetailTranslation.ts:34
+#: assets/components/search/rdapTranslation.ts:70
 msgid ""
 "Association of phone number represented by this ENUM domain to registrant "
 "has expired or will expire at a predetermined date and time."
+msgstr ""
+
+#: assets/components/search/rdapTranslation.ts:77
+msgid ""
+"Signifies that the data of the object instance has been found to be accurate."
+msgstr ""
+
+#: assets/components/search/rdapTranslation.ts:78
+msgid "Renewal or reregistration of the object instance is forbidden."
+msgstr ""
+
+#: assets/components/search/rdapTranslation.ts:79
+msgid "Updates to the object instance are forbidden."
+msgstr ""
+
+#: assets/components/search/rdapTranslation.ts:80
+msgid ""
+"Transfers of the registration from one registrar to another are forbidden."
+msgstr ""
+
+#: assets/components/search/rdapTranslation.ts:81
+msgid "Deletion of the registration of the object instance is forbidden."
+msgstr ""
+
+#: assets/components/search/rdapTranslation.ts:82
+msgid ""
+"The registration of the object instance has been performed by a third party. "
+"This is most commonly applied to entities."
+msgstr ""
+
+#: assets/components/search/rdapTranslation.ts:83
+msgid ""
+"The information of the object instance is not designated for public "
+"consumption. This is most commonly applied to entities."
+msgstr ""
+
+#: assets/components/search/rdapTranslation.ts:84
+msgid ""
+"Some of the information of the object instance has not been made available "
+"and has been removed. This is most commonly applied to entities."
+msgstr ""
+
+#: assets/components/search/rdapTranslation.ts:85
+msgid ""
+"Some of the information of the object instance has been altered for the "
+"purposes of not readily revealing the actual information of the object "
+"instance. This is most commonly applied to entities."
+msgstr ""
+
+#: assets/components/search/rdapTranslation.ts:86
+msgid ""
+"The object instance is associated with other object instances in the "
+"registry. This is most commonly used to signify that a nameserver is "
+"associated with a domain or that an entity is associated with a network "
+"resource or domain."
+msgstr ""
+
+#: assets/components/search/rdapTranslation.ts:87
+msgid ""
+"The object instance is in use. For domain names, it signifies that the "
+"domain name is published in DNS. For network and autnum registrations, it "
+"signifies that they are allocated or assigned for use in operational "
+"networks."
+msgstr ""
+
+#: assets/components/search/rdapTranslation.ts:88
+msgid "The object instance is not in use."
+msgstr ""
+
+#: assets/components/search/rdapTranslation.ts:89
+msgid ""
+"Changes to the object instance cannot be made, including the association of "
+"other object instances."
+msgstr ""
+
+#: assets/components/search/rdapTranslation.ts:90
+msgid ""
+"A request has been received for the creation of the object instance, but "
+"this action is not yet complete."
+msgstr ""
+
+#: assets/components/search/rdapTranslation.ts:91
+msgid ""
+"A request has been received for the renewal of the object instance, but this "
+"action is not yet complete."
+msgstr ""
+
+#: assets/components/search/rdapTranslation.ts:92
+msgid ""
+"A request has been received for the transfer of the object instance, but "
+"this action is not yet complete."
+msgstr ""
+
+#: assets/components/search/rdapTranslation.ts:93
+msgid ""
+"A request has been received for the update or modification of the object "
+"instance, but this action is not yet complete."
+msgstr ""
+
+#: assets/components/search/rdapTranslation.ts:94
+msgid ""
+"A request has been received for the deletion or removal of the object "
+"instance, but this action is not yet complete. For domains, this might mean "
+"that the name is no longer published in DNS but has not yet been purged from "
+"the registry database."
+msgstr ""
+
+#: assets/components/search/rdapTranslation.ts:95
+msgid ""
+"This grace period is provided after the initial registration of the object. "
+"If the object is deleted by the client during this period, the server "
+"provides a credit to the client for the cost of the registration."
+msgstr ""
+
+#: assets/components/search/rdapTranslation.ts:96
+msgid ""
+"This grace period is provided after an object registration period expires "
+"and is extended (renewed) automatically by the server. If the object is "
+"deleted by the client during this period, the server provides a credit to "
+"the client for the cost of the auto renewal."
+msgstr ""
+
+#: assets/components/search/rdapTranslation.ts:97
+msgid ""
+"The client requested that requests to delete the object MUST be rejected."
+msgstr ""
+
+#: assets/components/search/rdapTranslation.ts:98
+msgid ""
+"The client requested that the DNS delegation information MUST NOT be "
+"published for the object."
+msgstr ""
+
+#: assets/components/search/rdapTranslation.ts:99
+msgid ""
+"The client requested that requests to renew the object MUST be rejected."
+msgstr ""
+
+#: assets/components/search/rdapTranslation.ts:100
+msgid ""
+"The client requested that requests to transfer the object MUST be rejected."
+msgstr ""
+
+#: assets/components/search/rdapTranslation.ts:101
+msgid ""
+"The client requested that requests to update the object (other than to "
+"remove this status) MUST be rejected."
+msgstr ""
+
+#: assets/components/search/rdapTranslation.ts:102
+msgid ""
+"An object is in the process of being restored after being in the redemption "
+"period state."
+msgstr ""
+
+#: assets/components/search/rdapTranslation.ts:103
+msgid ""
+"A delete has been received, but the object has not yet been purged because "
+"an opportunity exists to restore the object and abort the deletion process."
+msgstr ""
+
+#: assets/components/search/rdapTranslation.ts:104
+msgid ""
+"This grace period is provided after an object registration period is "
+"explicitly extended (renewed) by the client. If the object is deleted by the "
+"client during this period, the server provides a credit to the client for "
+"the cost of the renewal."
+msgstr ""
+
+#: assets/components/search/rdapTranslation.ts:105
+msgid ""
+"The server set the status so that requests to delete the object MUST be "
+"rejected."
+msgstr ""
+
+#: assets/components/search/rdapTranslation.ts:106
+msgid ""
+"The server set the status so that requests to renew the object MUST be "
+"rejected."
+msgstr ""
+
+#: assets/components/search/rdapTranslation.ts:107
+msgid ""
+"The server set the status so that requests to transfer the object MUST be "
+"rejected."
+msgstr ""
+
+#: assets/components/search/rdapTranslation.ts:108
+msgid ""
+"The server set the status so that requests to update the object (other than "
+"to remove this status) MUST be rejected."
+msgstr ""
+
+#: assets/components/search/rdapTranslation.ts:109
+msgid ""
+"The server set the status so that DNS delegation information MUST NOT be "
+"published for the object."
+msgstr ""
+
+#: assets/components/search/rdapTranslation.ts:110
+msgid ""
+"This grace period is provided after the successful transfer of object "
+"registration sponsorship from one client to another client. If the object is "
+"deleted by the client during this period, the server provides a credit to "
+"the client for the cost of the transfer."
+msgstr ""
+
+#: assets/components/search/rdapTranslation.ts:111
+msgid ""
+"The object instance has been allocated administratively (i.e., not for use "
+"by the recipient in their own right in operational networks)."
+msgstr ""
+
+#: assets/components/search/rdapTranslation.ts:112
+msgid ""
+"The object instance has been allocated to an IANA special-purpose address "
+"registry."
 msgstr ""
 
 #: assets/components/search/DomainResult.tsx:28
@@ -155,271 +479,10 @@ msgstr "Zeitleiste"
 msgid "Entities"
 msgstr "Entitäten"
 
-#: assets/components/search/rdapStatusCodeDetailTranslation.ts:7
-msgid ""
-"Signifies that the data of the object instance has been found to be accurate."
-msgstr ""
-
-#: assets/components/search/rdapStatusCodeDetailTranslation.ts:8
-msgid "Renewal or reregistration of the object instance is forbidden."
-msgstr ""
-
-#: assets/components/search/rdapStatusCodeDetailTranslation.ts:9
-msgid "Updates to the object instance are forbidden."
-msgstr ""
-
-#: assets/components/search/rdapStatusCodeDetailTranslation.ts:10
-msgid ""
-"Transfers of the registration from one registrar to another are forbidden."
-msgstr ""
-
-#: assets/components/search/rdapStatusCodeDetailTranslation.ts:11
-msgid "Deletion of the registration of the object instance is forbidden."
-msgstr ""
-
-#: assets/components/search/rdapStatusCodeDetailTranslation.ts:12
-msgid ""
-"The registration of the object instance has been performed by a third party. "
-"This is most commonly applied to entities."
-msgstr ""
-
-#: assets/components/search/rdapStatusCodeDetailTranslation.ts:13
-msgid ""
-"The information of the object instance is not designated for public "
-"consumption. This is most commonly applied to entities."
-msgstr ""
-
-#: assets/components/search/rdapStatusCodeDetailTranslation.ts:14
-msgid ""
-"Some of the information of the object instance has not been made available "
-"and has been removed. This is most commonly applied to entities."
-msgstr ""
-
-#: assets/components/search/rdapStatusCodeDetailTranslation.ts:15
-msgid ""
-"Some of the information of the object instance has been altered for the "
-"purposes of not readily revealing the actual information of the object "
-"instance. This is most commonly applied to entities."
-msgstr ""
-
-#: assets/components/search/rdapStatusCodeDetailTranslation.ts:16
-msgid ""
-"The object instance is associated with other object instances in the "
-"registry. This is most commonly used to signify that a nameserver is "
-"associated with a domain or that an entity is associated with a network "
-"resource or domain."
-msgstr ""
-
-#: assets/components/search/rdapStatusCodeDetailTranslation.ts:17
-msgid ""
-"The object instance is in use. For domain names, it signifies that the "
-"domain name is published in DNS. For network and autnum registrations, it "
-"signifies that they are allocated or assigned for use in operational "
-"networks."
-msgstr ""
-
-#: assets/components/search/rdapStatusCodeDetailTranslation.ts:18
-msgid "The object instance is not in use."
-msgstr ""
-
-#: assets/components/search/rdapStatusCodeDetailTranslation.ts:19
-msgid ""
-"Changes to the object instance cannot be made, including the association of "
-"other object instances."
-msgstr ""
-
-#: assets/components/search/rdapStatusCodeDetailTranslation.ts:20
-msgid ""
-"A request has been received for the creation of the object instance, but "
-"this action is not yet complete."
-msgstr ""
-
-#: assets/components/search/rdapStatusCodeDetailTranslation.ts:21
-msgid ""
-"A request has been received for the renewal of the object instance, but this "
-"action is not yet complete."
-msgstr ""
-
-#: assets/components/search/rdapStatusCodeDetailTranslation.ts:22
-msgid ""
-"A request has been received for the transfer of the object instance, but "
-"this action is not yet complete."
-msgstr ""
-
-#: assets/components/search/rdapStatusCodeDetailTranslation.ts:23
-msgid ""
-"A request has been received for the update or modification of the object "
-"instance, but this action is not yet complete."
-msgstr ""
-
-#: assets/components/search/rdapStatusCodeDetailTranslation.ts:24
-msgid ""
-"A request has been received for the deletion or removal of the object "
-"instance, but this action is not yet complete. For domains, this might mean "
-"that the name is no longer published in DNS but has not yet been purged from "
-"the registry database."
-msgstr ""
-
-#: assets/components/search/rdapStatusCodeDetailTranslation.ts:25
-msgid ""
-"This grace period is provided after the initial registration of the object. "
-"If the object is deleted by the client during this period, the server "
-"provides a credit to the client for the cost of the registration."
-msgstr ""
-
-#: assets/components/search/rdapStatusCodeDetailTranslation.ts:26
-msgid ""
-"This grace period is provided after an object registration period expires "
-"and is extended (renewed) automatically by the server. If the object is "
-"deleted by the client during this period, the server provides a credit to "
-"the client for the cost of the auto renewal."
-msgstr ""
-
-#: assets/components/search/rdapStatusCodeDetailTranslation.ts:27
-msgid ""
-"The client requested that requests to delete the object MUST be rejected."
-msgstr ""
-
-#: assets/components/search/rdapStatusCodeDetailTranslation.ts:28
-msgid ""
-"The client requested that the DNS delegation information MUST NOT be "
-"published for the object."
-msgstr ""
-
-#: assets/components/search/rdapStatusCodeDetailTranslation.ts:29
-msgid ""
-"The client requested that requests to renew the object MUST be rejected."
-msgstr ""
-
-#: assets/components/search/rdapStatusCodeDetailTranslation.ts:30
-msgid ""
-"The client requested that requests to transfer the object MUST be rejected."
-msgstr ""
-
-#: assets/components/search/rdapStatusCodeDetailTranslation.ts:31
-msgid ""
-"The client requested that requests to update the object (other than to "
-"remove this status) MUST be rejected."
-msgstr ""
-
-#: assets/components/search/rdapStatusCodeDetailTranslation.ts:32
-msgid ""
-"An object is in the process of being restored after being in the redemption "
-"period state."
-msgstr ""
-
-#: assets/components/search/rdapStatusCodeDetailTranslation.ts:33
-msgid ""
-"A delete has been received, but the object has not yet been purged because "
-"an opportunity exists to restore the object and abort the deletion process."
-msgstr ""
-
-#: assets/components/search/rdapStatusCodeDetailTranslation.ts:34
-msgid ""
-"This grace period is provided after an object registration period is "
-"explicitly extended (renewed) by the client. If the object is deleted by the "
-"client during this period, the server provides a credit to the client for "
-"the cost of the renewal."
-msgstr ""
-
-#: assets/components/search/rdapStatusCodeDetailTranslation.ts:35
-msgid ""
-"The server set the status so that requests to delete the object MUST be "
-"rejected."
-msgstr ""
-
-#: assets/components/search/rdapStatusCodeDetailTranslation.ts:36
-msgid ""
-"The server set the status so that requests to renew the object MUST be "
-"rejected."
-msgstr ""
-
-#: assets/components/search/rdapStatusCodeDetailTranslation.ts:37
-msgid ""
-"The server set the status so that requests to transfer the object MUST be "
-"rejected."
-msgstr ""
-
-#: assets/components/search/rdapStatusCodeDetailTranslation.ts:38
-msgid ""
-"The server set the status so that requests to update the object (other than "
-"to remove this status) MUST be rejected."
-msgstr ""
-
-#: assets/components/search/rdapStatusCodeDetailTranslation.ts:39
-msgid ""
-"The server set the status so that DNS delegation information MUST NOT be "
-"published for the object."
-msgstr ""
-
-#: assets/components/search/rdapStatusCodeDetailTranslation.ts:40
-msgid ""
-"This grace period is provided after the successful transfer of object "
-"registration sponsorship from one client to another client. If the object is "
-"deleted by the client during this period, the server provides a credit to "
-"the client for the cost of the transfer."
-msgstr ""
-
-#: assets/components/search/rdapStatusCodeDetailTranslation.ts:41
-msgid ""
-"The object instance has been allocated administratively (i.e., not for use "
-"by the recipient in their own right in operational networks)."
-msgstr ""
-
-#: assets/components/search/rdapStatusCodeDetailTranslation.ts:42
-msgid ""
-"The object instance has been allocated to an IANA special-purpose address "
-"registry."
-msgstr ""
-
 #: assets/components/search/DomainSearchBar.tsx:26
 #: assets/components/tracking/watchlist/WatchlistForm.tsx:113
 msgid "This domain name does not appear to be valid"
 msgstr "Dieser Domainname scheint nicht gültig zu sein"
-
-#: assets/components/search/EntitiesList.tsx:10
-msgid "Registrant"
-msgstr "Anmelder"
-
-#: assets/components/search/EntitiesList.tsx:11
-msgid "Technical"
-msgstr "Technischer"
-
-#: assets/components/search/EntitiesList.tsx:12
-msgid "Administrative"
-msgstr "Verwaltung"
-
-#: assets/components/search/EntitiesList.tsx:13
-msgid "Abuse"
-msgstr "Missbrauch"
-
-#: assets/components/search/EntitiesList.tsx:14
-msgid "Billing"
-msgstr "Rechnungsstellung"
-
-#: assets/components/search/EntitiesList.tsx:15
-msgid "Registrar"
-msgstr "Registrierungsstelle"
-
-#: assets/components/search/EntitiesList.tsx:16
-msgid "Reseller"
-msgstr "Wiederverkäufer"
-
-#: assets/components/search/EntitiesList.tsx:17
-msgid "Sponsor"
-msgstr "Sponsor"
-
-#: assets/components/search/EntitiesList.tsx:18
-msgid "Proxy"
-msgstr "Proxy"
-
-#: assets/components/search/EntitiesList.tsx:19
-msgid "Notifications"
-msgstr "Benachrichtigungen"
-
-#: assets/components/search/EntitiesList.tsx:20
-msgid "Noc"
-msgstr "Noc"
 
 #: assets/components/tracking/connector/ConnectorForm.tsx:40
 msgid "Provider"
