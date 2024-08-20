@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2024-08-20 16:07+0000\n"
+"PO-Revision-Date: 2024-08-20 16:30+0000\n"
 "Last-Translator: Maël Gangloff <contact@maelgangloff.fr>\n"
 "Language-Team: German <https://weblate.vinceh121.me/projects/domain-watchdog/"
 "domain-watchdog-dashboard/de/>\n"
@@ -312,34 +312,27 @@ msgid "Deletion of the registration of the object instance is forbidden."
 msgstr "Das Löschen der Registrierung der Objektinstanz ist verboten."
 
 #: assets/components/search/rdapTranslation.ts:82
-#, fuzzy
-#| msgid "Renewal or reregistration of the object instance is forbidden."
 msgid ""
 "The registration of the object instance has been performed by a third party."
-msgstr "Eine Erneuerung oder Neuregistrierung der Objektinstanz ist untersagt."
+msgstr ""
+"Die Registrierung der Objektinstanz wurde von einer dritten Partei "
+"durchgeführt."
 
 #: assets/components/search/rdapTranslation.ts:83
-#, fuzzy
-#| msgid ""
-#| "The entity object instance is an administrative contact for the "
-#| "registration."
 msgid ""
 "The information of the object instance is not designated for public "
 "consumption."
 msgstr ""
-"Die Entitätsobjektinstanz ist ein administrativer Kontakt für die "
-"Registrierung."
+"Die Informationen der Objektinstanz sind nicht für die öffentliche "
+"Verwendung bestimmt."
 
 #: assets/components/search/rdapTranslation.ts:84
-#, fuzzy
-#| msgid ""
-#| "Signifies that the data of the object instance has been found to be "
-#| "accurate."
 msgid ""
 "Some of the information of the object instance has not been made available "
 "and has been removed."
 msgstr ""
-"Bedeutet, dass die Daten der Objektinstanz als korrekt befunden wurden."
+"Einige Informationen der Objektinstanz wurden nicht bereitgestellt und "
+"entfernt."
 
 #: assets/components/search/rdapTranslation.ts:85
 msgid ""
@@ -347,18 +340,17 @@ msgid ""
 "purposes of not readily revealing the actual information of the object "
 "instance."
 msgstr ""
+"Einige der Informationen der Objektinstanz wurden geändert, um die "
+"tatsächlichen Informationen der Objektinstanz nicht ohne Weiteres "
+"preiszugeben."
 
 #: assets/components/search/rdapTranslation.ts:86
-#, fuzzy
-#| msgid ""
-#| "The entity object instance is an administrative contact for the "
-#| "registration."
 msgid ""
 "The object instance is associated with other object instances in the "
 "registry."
 msgstr ""
-"Die Entitätsobjektinstanz ist ein administrativer Kontakt für die "
-"Registrierung."
+"Die Objektinstanz ist mit anderen Objektinstanzen in der Registrierung "
+"verknüpft."
 
 #: assets/components/search/rdapTranslation.ts:87
 msgid ""
@@ -367,40 +359,54 @@ msgid ""
 "signifies that they are allocated or assigned for use in operational "
 "networks."
 msgstr ""
+"Die Objektinstanz ist in Gebrauch. Bei Domänennamen bedeutet es, dass der "
+"Domänenname im DNS veröffentlicht ist. Bei Netzwerk- und Autnum-"
+"Registrierungen bedeutet es, dass sie für die Verwendung in operativen "
+"Netzwerken zugewiesen oder zugewiesen sind."
 
 #: assets/components/search/rdapTranslation.ts:88
 msgid "The object instance is not in use."
-msgstr ""
+msgstr "Die Objektinstanz wird nicht verwendet."
 
 #: assets/components/search/rdapTranslation.ts:89
 msgid ""
 "Changes to the object instance cannot be made, including the association of "
 "other object instances."
 msgstr ""
+"Änderungen an der Objektinstanz können nicht vorgenommen werden, auch nicht "
+"die Verknüpfung mit anderen Objektinstanzen."
 
 #: assets/components/search/rdapTranslation.ts:90
 msgid ""
 "A request has been received for the creation of the object instance, but "
 "this action is not yet complete."
 msgstr ""
+"Es wurde eine Anfrage zur Erstellung der Objektinstanz empfangen, aber diese "
+"Aktion ist noch nicht abgeschlossen."
 
 #: assets/components/search/rdapTranslation.ts:91
 msgid ""
 "A request has been received for the renewal of the object instance, but this "
 "action is not yet complete."
 msgstr ""
+"Es liegt eine Anfrage zur Erneuerung der Objektinstanz vor, diese Aktion ist "
+"jedoch noch nicht abgeschlossen."
 
 #: assets/components/search/rdapTranslation.ts:92
 msgid ""
 "A request has been received for the transfer of the object instance, but "
 "this action is not yet complete."
 msgstr ""
+"Es liegt eine Anforderung zur Übertragung der Objektinstanz vor, diese "
+"Aktion ist jedoch noch nicht abgeschlossen."
 
 #: assets/components/search/rdapTranslation.ts:93
 msgid ""
 "A request has been received for the update or modification of the object "
 "instance, but this action is not yet complete."
 msgstr ""
+"Es liegt eine Anfrage zur Aktualisierung oder Änderung der Objektinstanz "
+"vor, die Aktion ist jedoch noch nicht abgeschlossen."
 
 #: assets/components/search/rdapTranslation.ts:94
 msgid ""
@@ -409,6 +415,10 @@ msgid ""
 "that the name is no longer published in DNS but has not yet been purged from "
 "the registry database."
 msgstr ""
+"Es liegt eine Anfrage zum Löschen oder Entfernen der Objektinstanz vor, "
+"diese Aktion ist jedoch noch nicht abgeschlossen. Bei Domänen kann dies "
+"bedeuten, dass der Name nicht mehr im DNS veröffentlicht wird, aber noch "
+"nicht aus der Registrierungsdatenbank gelöscht wurde."
 
 #: assets/components/search/rdapTranslation.ts:95
 msgid ""
@@ -416,6 +426,9 @@ msgid ""
 "If the object is deleted by the client during this period, the server "
 "provides a credit to the client for the cost of the registration."
 msgstr ""
+"Diese Nachfrist gilt nach der ersten Registrierung des Objekts. Wenn das "
+"Objekt während dieser Frist vom Client gelöscht wird, schreibt der Server "
+"dem Client die Kosten für die Registrierung gut."
 
 #: assets/components/search/rdapTranslation.ts:96
 msgid ""
@@ -424,45 +437,64 @@ msgid ""
 "deleted by the client during this period, the server provides a credit to "
 "the client for the cost of the auto renewal."
 msgstr ""
+"Diese Nachfrist wird nach Ablauf eines Objektregistrierungszeitraums gewährt "
+"und vom Server automatisch verlängert (erneuert). Wird das Objekt während "
+"dieses Zeitraums vom Kunden gelöscht, erhält der Kunde vom Server eine "
+"Gutschrift für die Kosten der automatischen Verlängerung."
 
 #: assets/components/search/rdapTranslation.ts:97
 msgid ""
 "The client requested that requests to delete the object MUST be rejected."
 msgstr ""
+"Der Client hat angefordert, dass Anforderungen zum Löschen des Objekts "
+"abgelehnt werden MÜSSEN."
 
 #: assets/components/search/rdapTranslation.ts:98
 msgid ""
 "The client requested that the DNS delegation information MUST NOT be "
 "published for the object."
 msgstr ""
+"Der Client hat angefordert, dass die DNS-Delegationsinformationen für das "
+"Objekt NICHT veröffentlicht werden DÜRFEN."
 
 #: assets/components/search/rdapTranslation.ts:99
 msgid ""
 "The client requested that requests to renew the object MUST be rejected."
 msgstr ""
+"Der Client forderte, dass Anfragen zur Erneuerung des Objekts abgelehnt "
+"werden MÜSSEN."
 
 #: assets/components/search/rdapTranslation.ts:100
 msgid ""
 "The client requested that requests to transfer the object MUST be rejected."
 msgstr ""
+"Der Client forderte, dass Anfragen zur Übertragung des Objekts abgelehnt "
+"werden MÜSSEN."
 
 #: assets/components/search/rdapTranslation.ts:101
 msgid ""
 "The client requested that requests to update the object (other than to "
 "remove this status) MUST be rejected."
 msgstr ""
+"Der Client hat angefordert, dass Anforderungen zur Aktualisierung des "
+"Objekts (außer zum Entfernen dieses Status) abgelehnt werden MÜSSEN."
 
 #: assets/components/search/rdapTranslation.ts:102
 msgid ""
 "An object is in the process of being restored after being in the redemption "
 "period state."
 msgstr ""
+"Ein Objekt wird gerade wiederhergestellt, nachdem es sich im Zustand des "
+"Tilgungszeitraums befunden hat."
 
 #: assets/components/search/rdapTranslation.ts:103
 msgid ""
 "A delete has been received, but the object has not yet been purged because "
 "an opportunity exists to restore the object and abort the deletion process."
 msgstr ""
+"Eine Löschung wurde empfangen, aber das Objekt wurde noch nicht bereinigt, "
+"da die Möglichkeit besteht, das Objekt wiederherzustellen und den "
+"Löschvorgang abzubrechen."
 
 #: assets/components/search/rdapTranslation.ts:104
 msgid ""
@@ -471,36 +503,50 @@ msgid ""
 "client during this period, the server provides a credit to the client for "
 "the cost of the renewal."
 msgstr ""
+"Diese Nachfrist wird gewährt, nachdem der Client die Registrierungsdauer "
+"eines Objekts ausdrücklich verlängert (erneuert) hat. Wenn das Objekt "
+"während dieser Frist vom Client gelöscht wird, schreibt der Server dem "
+"Client die Kosten für die Erneuerung gut."
 
 #: assets/components/search/rdapTranslation.ts:105
 msgid ""
 "The server set the status so that requests to delete the object MUST be "
 "rejected."
 msgstr ""
+"Der Server hat den Status so gesetzt, dass Anfragen zum Löschen des Objekts "
+"abgelehnt werden MÜSSEN."
 
 #: assets/components/search/rdapTranslation.ts:106
 msgid ""
 "The server set the status so that requests to renew the object MUST be "
 "rejected."
 msgstr ""
+"Der Server hat den Status so gesetzt, dass Anfragen zur Erneuerung des "
+"Objekts abgelehnt werden MÜSSEN."
 
 #: assets/components/search/rdapTranslation.ts:107
 msgid ""
 "The server set the status so that requests to transfer the object MUST be "
 "rejected."
 msgstr ""
+"Der Server hat den Status so gesetzt, dass Anfragen zur Übertragung des "
+"Objekts abgelehnt werden MÜSSEN."
 
 #: assets/components/search/rdapTranslation.ts:108
 msgid ""
 "The server set the status so that requests to update the object (other than "
 "to remove this status) MUST be rejected."
 msgstr ""
+"Der Server hat den Status so gesetzt, dass Anfragen zur Aktualisierung des "
+"Objekts (außer zum Entfernen dieses Status) abgelehnt werden MÜSSEN."
 
 #: assets/components/search/rdapTranslation.ts:109
 msgid ""
 "The server set the status so that DNS delegation information MUST NOT be "
 "published for the object."
 msgstr ""
+"Der Server hat den Status so festgelegt, dass DNS-Delegationsinformationen "
+"für das Objekt NICHT veröffentlicht werden DÜRFEN."
 
 #: assets/components/search/rdapTranslation.ts:110
 msgid ""
@@ -509,18 +555,25 @@ msgid ""
 "deleted by the client during this period, the server provides a credit to "
 "the client for the cost of the transfer."
 msgstr ""
+"Diese Nachfrist wird nach der erfolgreichen Übertragung der "
+"Objektregistrierungspatenschaft von einem Client auf einen anderen Client "
+"gewährt. Wird das Objekt während dieses Zeitraums vom Kunden gelöscht, "
+"schreibt der Server dem Kunden die Kosten für die Übertragung gut."
 
 #: assets/components/search/rdapTranslation.ts:111
 msgid ""
 "The object instance has been allocated administratively (i.e., not for use "
 "by the recipient in their own right in operational networks)."
 msgstr ""
+"Die Objektinstanz wurde administrativ zugewiesen (d. h. nicht zur eigenen "
+"Verwendung durch den Empfänger in operativen Netzen)."
 
 #: assets/components/search/rdapTranslation.ts:112
 msgid ""
 "The object instance has been allocated to an IANA special-purpose address "
 "registry."
 msgstr ""
+"Die Objektinstanz wurde einem speziellen Adressregister der IANA zugewiesen."
 
 #: assets/components/search/DomainResult.tsx:28
 msgid "EPP Status Codes"
