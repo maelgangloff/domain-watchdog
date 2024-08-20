@@ -29,6 +29,9 @@ services:
             DATABASE_URL: postgresql://${POSTGRES_USER:-app}:${POSTGRES_PASSWORD:-!ChangeMe!}@${POSTGRES_HOST:-database}:${POSTGRES_PORT:-5432}/${POSTGRES_DB:-app}?serverVersion=${POSTGRES_VERSION:-15}&charset=${POSTGRES_CHARSET:-utf8}
             APP_SECRET: ${APP_SECRET:-ChangeMe}
             MAILER_DSN: ${MAILER_DSN:-null://null}
+        healthcheck:
+            disable: true
+            test: [ ]
 
     database:
         image: postgres:${POSTGRES_VERSION:-16}-alpine
