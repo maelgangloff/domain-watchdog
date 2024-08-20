@@ -3,7 +3,8 @@ import {t} from "ttag";
 import {ApiOutlined, MinusCircleOutlined, PlusOutlined} from "@ant-design/icons";
 import React from "react";
 import {Connector} from "../../../utils/api/connectors";
-import {actionToColor, domainEvent} from "../../search/EventTimeline";
+import {actionToColor} from "../../search/EventTimeline";
+import {rdapEventNameTranslation} from "../../search/rdapEventActionDetailTranslation";
 
 type TagRender = SelectProps['tagRender'];
 
@@ -31,7 +32,7 @@ export function WatchlistForm({form, connectors, onFinish, isCreation}: {
     onFinish: (values: { domains: string[], triggers: string[], token: string }) => void
     isCreation: boolean
 }) {
-    const domainEventTranslated = domainEvent()
+    const rdapEventNameTranslated = rdapEventNameTranslation()
 
     const triggerTagRenderer: TagRender = (props) => {
         const {value, closable, onClose} = props;
@@ -47,7 +48,7 @@ export function WatchlistForm({form, connectors, onFinish, isCreation}: {
                 onClose={onClose}
                 style={{marginInlineEnd: 4}}
             >
-                {domainEventTranslated[value as keyof typeof domainEventTranslated]}
+                {rdapEventNameTranslated[value as keyof typeof rdapEventNameTranslated]}
             </Tag>
         )
     }
@@ -156,9 +157,9 @@ export function WatchlistForm({form, connectors, onFinish, isCreation}: {
                 mode="multiple"
                 tagRender={triggerTagRenderer}
                 style={{width: '100%'}}
-                options={Object.keys(domainEventTranslated).map(e => ({
+                options={Object.keys(rdapEventNameTranslated).map(e => ({
                     value: e,
-                    label: domainEventTranslated[e as keyof typeof domainEventTranslated]
+                    label: rdapEventNameTranslated[e as keyof typeof rdapEventNameTranslated]
                 }))}
             />
         </Form.Item>

@@ -1,5 +1,5 @@
 import vCard from "vcf";
-import {Avatar, List} from "antd";
+import {Avatar, List, Tooltip} from "antd";
 import {BankOutlined, IdcardOutlined, SignatureOutlined, ToolOutlined, UserOutlined} from "@ant-design/icons";
 import React from "react";
 import {Domain} from "../../utils/api";

@@ -1,16 +1,17 @@
-import {Card, Divider, Flex, Space, Table, Tag, Typography} from "antd";
+import {Card, Divider, Space, Table, Tag, Typography} from "antd";
 import {DisconnectOutlined, LinkOutlined} from "@ant-design/icons";
 import {t} from "ttag";
 import {ViewDiagramWatchlistButton} from "./diagram/ViewDiagramWatchlistButton";
 import {UpdateWatchlistButton} from "./UpdateWatchlistButton";
 import {DeleteWatchlistButton} from "./DeleteWatchlistButton";
 import punycode from "punycode/punycode";
-import {actionToColor, domainEvent} from "../../search/EventTimeline";
-import React, {useState} from "react";
+import {actionToColor} from "../../search/EventTimeline";
+import React from "react";
 import {Watchlist} from "../../../pages/tracking/WatchlistPage";
 import {Connector} from "../../../utils/api/connectors";
 import useBreakpoint from "../../../hooks/useBreakpoint";
 import {CalendarWatchlistButton} from "./CalendarWatchlistButton";
+import {rdapEventNameTranslation} from "../../search/rdapEventActionDetailTranslation";
 
 export function WatchlistCard({watchlist, onUpdateWatchlist, connectors, onDelete}: {
     watchlist: Watchlist,
@@ -19,7 +20,7 @@ export function WatchlistCard({watchlist, onUpdateWatchlist, connectors, onDelet
     onDelete: () => void
 }) {
     const sm = useBreakpoint('sm')
-    const domainEventTranslated = domainEvent()
+    const rdapEventNameTranslated = rdapEventNameTranslation()
 
     const columns = [
         {
@@ -75,7 +76,7 @@ export function WatchlistCard({watchlist, onUpdateWatchlist, connectors, onDelet
                     domains: watchlist.domains.map(d => <Tag>{punycode.toUnicode(d.ldhName)}</Tag>),
                     events: watchlist.triggers?.filter(t => t.action === 'email')
                         .map(t => <Tag color={actionToColor(t.event)}>
-                                {domainEventTranslated[t.event as keyof typeof domainEventTranslated]}
+                                {rdapEventNameTranslated[t.event as keyof typeof rdapEventNameTranslated]}
                             </Tag>
                         )
                 }]}
