@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2024-08-20 13:50+0000\n"
+"PO-Revision-Date: 2024-08-20 15:38+0000\n"
 "Last-Translator: Maël Gangloff <contact@maelgangloff.fr>\n"
 "Language-Team: French <https://weblate.vinceh121.me/projects/domain-watchdog/"
 "domain-watchdog-dashboard/fr/>\n"
@@ -93,89 +93,85 @@ msgid ""
 "The entity object instance is the registrant of the registration. In some "
 "registries, this is known as a maintainer."
 msgstr ""
+"L'instance de l'objet entité est le titulaire de l'enregistrement. Dans "
+"certains registres, on parle de mainteneur."
 
 #: assets/components/search/rdapTranslation.ts:26
-#, fuzzy
-#| msgid ""
-#| "The object instance was registered subsequently to initial registration."
 msgid "The entity object instance is a technical contact for the registration."
 msgstr ""
-"L'instance d'objet a été enregistrée postérieurement à l'enregistrement "
-"initial."
+"L'instance de l'objet entité est un contact technique pour l'enregistrement."
 
 #: assets/components/search/rdapTranslation.ts:27
-#, fuzzy
-#| msgid ""
-#| "The object instance was registered subsequently to initial registration."
 msgid ""
 "The entity object instance is an administrative contact for the registration."
 msgstr ""
-"L'instance d'objet a été enregistrée postérieurement à l'enregistrement "
-"initial."
+"L'instance de l'objet entité est un contact administratif pour "
+"l'enregistrement."
 
 #: assets/components/search/rdapTranslation.ts:28
-#, fuzzy
-#| msgid ""
-#| "The object instance was registered subsequently to initial registration."
 msgid ""
 "The entity object instance handles network abuse issues on behalf of the "
 "registrant of the registration."
 msgstr ""
-"L'instance d'objet a été enregistrée postérieurement à l'enregistrement "
-"initial."
+"L'instance de l'objet entité gère les problèmes d'abus de réseau pour le "
+"compte du titulaire de l'enregistrement."
 
 #: assets/components/search/rdapTranslation.ts:29
 msgid ""
 "The entity object instance handles payment and billing issues on behalf of "
 "the registrant of the registration."
 msgstr ""
+"L'instance de l'objet entité gère les questions de paiement et de "
+"facturation au nom du titulaire de l'enregistrement."
 
 #: assets/components/search/rdapTranslation.ts:30
-#, fuzzy
-#| msgid ""
-#| "The object instance was reregistered after having been removed from the "
-#| "registry."
 msgid ""
 "The entity object instance represents the authority responsible for the "
 "registration in the registry."
 msgstr ""
-"L'instance d'objet a été réenregistrée après avoir été supprimée du registre."
+"L'instance de l'objet entité représente l'autorité responsable de "
+"l'enregistrement dans le registre."
 
 #: assets/components/search/rdapTranslation.ts:31
 msgid ""
 "The entity object instance represents a third party through which the "
 "registration was conducted (i.e., not the registry or registrar)."
 msgstr ""
+"L'instance de l'objet entité représente un tiers par l'intermédiaire duquel "
+"l'enregistrement a été effectué (c'est-à-dire pas le registre ou le bureau "
+"d'enregistrement)."
 
 #: assets/components/search/rdapTranslation.ts:32
 msgid ""
 "The entity object instance represents a domain policy sponsor, such as an "
 "ICANN-approved sponsor."
 msgstr ""
+"L'instance de l'objet entité représente un sponsor de politique de domaine, "
+"tel qu'un sponsor approuvé par l'ICANN."
 
 #: assets/components/search/rdapTranslation.ts:33
 msgid ""
 "The entity object instance represents a proxy for another entity object, "
 "such as a registrant."
 msgstr ""
+"L'instance de l'objet entité représente un mandataire pour un autre objet "
+"d'entité, tel qu'un titulaire."
 
 #: assets/components/search/rdapTranslation.ts:34
-#, fuzzy
-#| msgid ""
-#| "Changes to the object instance cannot be made, including the association "
-#| "of other object instances."
 msgid ""
 "An entity object instance designated to receive notifications about "
 "association object instances."
 msgstr ""
-"Aucune modification ne peut être apportée à l'instance d'objet, y compris "
-"l'association d'autres instances d'objet."
+"Une instance de l'objet entité désignée pour recevoir des notifications sur "
+"les instances d'objet d'association."
 
 #: assets/components/search/rdapTranslation.ts:35
 msgid ""
 "The entity object instance handles communications related to a network "
 "operations center (NOC)."
 msgstr ""
+"L'instance de l'objet entité gère les communications liées à un centre "
+"d'opérations réseau (NOC)."
 
 #: assets/components/search/rdapTranslation.ts:43
 msgid "Registration"
