@@ -158,8 +158,7 @@ msgstr "Entitäten"
 #: assets/components/search/rdapStatusCodeDetailTranslation.ts:7
 msgid ""
 "Signifies that the data of the object instance has been found to be "
-"accurate. This type of status is usually found on entity object instances to "
-"note the validity of identifying contact information."
+"accurate. "
 msgstr ""
 
 #: assets/components/search/rdapStatusCodeDetailTranslation.ts:8
@@ -173,13 +172,10 @@ msgstr ""
 #: assets/components/search/rdapStatusCodeDetailTranslation.ts:10
 msgid ""
 "Transfers of the registration from one registrar to another are forbidden. "
-"This type of status normally applies to DNR domain names."
 msgstr ""
 
 #: assets/components/search/rdapStatusCodeDetailTranslation.ts:11
-msgid ""
-"Deletion of the registration of the object instance is forbidden. This type "
-"of status normally applies to DNR domain names."
+msgid "Deletion of the registration of the object instance is forbidden. "
 msgstr ""
 
 #: assets/components/search/rdapStatusCodeDetailTranslation.ts:12
@@ -220,8 +216,7 @@ msgid ""
 "The object instance is in use. For domain names, it signifies that the "
 "domain name is published in DNS. For network and autnum registrations, it "
 "signifies that they are allocated or assigned for use in operational "
-"networks. This maps to the \"OK\" status of the Extensible Provisioning "
-"Protocol (EPP) [RFC5730]."
+"networks."
 msgstr ""
 
 #: assets/components/search/rdapStatusCodeDetailTranslation.ts:18
@@ -270,9 +265,7 @@ msgstr ""
 msgid ""
 "This grace period is provided after the initial registration of the object. "
 "If the object is deleted by the client during this period, the server "
-"provides a credit to the client for the cost of the registration. This maps "
-"to the Domain Registry Grace Period Mapping for the Extensible Provisioning "
-"Protocol (EPP) [RFC3915] 'addPeriod' status."
+"provides a credit to the client for the cost of the registration."
 msgstr ""
 
 #: assets/components/search/rdapStatusCodeDetailTranslation.ts:26
@@ -280,65 +273,46 @@ msgid ""
 "This grace period is provided after an object registration period expires "
 "and is extended (renewed) automatically by the server. If the object is "
 "deleted by the client during this period, the server provides a credit to "
-"the client for the cost of the auto renewal. This maps to the Domain "
-"Registry Grace Period Mapping for the Extensible Provisioning Protocol (EPP) "
-"[RFC3915] 'autoRenewPeriod' status."
+"the client for the cost of the auto renewal."
 msgstr ""
 
 #: assets/components/search/rdapStatusCodeDetailTranslation.ts:27
 msgid ""
-"The client requested that requests to delete the object MUST be rejected. "
-"This maps to the Extensible Provisioning Protocol (EPP) Domain Name Mapping "
-"[RFC5731], Extensible Provisioning Protocol (EPP) Host Mapping [RFC5732], "
-"and Extensible Provisioning Protocol (EPP) Contact Mapping [RFC5733] "
-"'clientDeleteProhibited' status."
+"The client requested that requests to delete the object MUST be rejected."
 msgstr ""
 
 #: assets/components/search/rdapStatusCodeDetailTranslation.ts:28
 msgid ""
 "The client requested that the DNS delegation information MUST NOT be "
-"published for the object. This maps to the Extensible Provisioning Protocol "
-"(EPP) Domain Name Mapping [RFC5731] 'clientHold' status."
+"published for the object."
 msgstr ""
 
 #: assets/components/search/rdapStatusCodeDetailTranslation.ts:29
 msgid ""
-"The client requested that requests to renew the object MUST be rejected. "
-"This maps to the Extensible Provisioning Protocol (EPP) Domain Name Mapping "
-"[RFC5731] 'clientRenewProhibited' status."
+"The client requested that requests to renew the object MUST be rejected."
 msgstr ""
 
 #: assets/components/search/rdapStatusCodeDetailTranslation.ts:30
 msgid ""
-"The client requested that requests to transfer the object MUST be rejected. "
-"This maps to the Extensible Provisioning Protocol (EPP) Domain Name Mapping "
-"[RFC5731] and Extensible Provisioning Protocol (EPP) Contact Mapping "
-"[RFC5733] 'clientTransferProhibited' status."
+"The client requested that requests to transfer the object MUST be rejected."
 msgstr ""
 
 #: assets/components/search/rdapStatusCodeDetailTranslation.ts:31
 msgid ""
 "The client requested that requests to update the object (other than to "
-"remove this status) MUST be rejected. This maps to the Extensible "
-"Provisioning Protocol (EPP) Domain Name Mapping [RFC5731], Extensible "
-"Provisioning Protocol (EPP) Host Mapping [RFC5732], and Extensible "
-"Provisioning Protocol (EPP) Contact Mapping [RFC5733] "
-"'clientUpdateProhibited' status."
+"remove this status) MUST be rejected."
 msgstr ""
 
 #: assets/components/search/rdapStatusCodeDetailTranslation.ts:32
 msgid ""
 "An object is in the process of being restored after being in the redemption "
-"period state. This maps to the Domain Registry Grace Period Mapping for the "
-"Extensible Provisioning Protocol (EPP) [RFC3915] 'pendingRestore' status."
+"period state."
 msgstr ""
 
 #: assets/components/search/rdapStatusCodeDetailTranslation.ts:33
 msgid ""
 "A delete has been received, but the object has not yet been purged because "
-"an opportunity exists to restore the object and abort the deletion process. "
-"This maps to the Domain Registry Grace Period Mapping for the Extensible "
-"Provisioning Protocol (EPP) [RFC3915] 'redemptionPeriod' status."
+"an opportunity exists to restore the object and abort the deletion process."
 msgstr ""
 
 #: assets/components/search/rdapStatusCodeDetailTranslation.ts:34
@@ -346,50 +320,37 @@ msgid ""
 "This grace period is provided after an object registration period is "
 "explicitly extended (renewed) by the client. If the object is deleted by the "
 "client during this period, the server provides a credit to the client for "
-"the cost of the renewal. This maps to the Domain Registry Grace Period "
-"Mapping for the Extensible Provisioning Protocol (EPP) [RFC3915] "
-"'renewPeriod' status."
+"the cost of the renewal."
 msgstr ""
 
 #: assets/components/search/rdapStatusCodeDetailTranslation.ts:35
 msgid ""
 "The server set the status so that requests to delete the object MUST be "
-"rejected. This maps to the Extensible Provisioning Protocol (EPP) Domain "
-"Name Mapping [RFC5731], Extensible Provisioning Protocol (EPP) Host Mapping "
-"[RFC5732], and Extensible Provisioning Protocol (EPP) Contact Mapping "
-"[RFC5733] 'serverDeleteProhibited' status."
+"rejected."
 msgstr ""
 
 #: assets/components/search/rdapStatusCodeDetailTranslation.ts:36
 msgid ""
 "The server set the status so that requests to renew the object MUST be "
-"rejected. This maps to the Extensible Provisioning Protocol (EPP) Domain "
-"Name Mapping [RFC5731] 'serverRenewProhibited' status."
+"rejected."
 msgstr ""
 
 #: assets/components/search/rdapStatusCodeDetailTranslation.ts:37
 msgid ""
 "The server set the status so that requests to transfer the object MUST be "
-"rejected. This maps to the Extensible Provisioning Protocol (EPP) Domain "
-"Name Mapping [RFC5731] and Extensible Provisioning Protocol (EPP) Contact "
-"Mapping [RFC5733] 'serverTransferProhibited' status."
+"rejected."
 msgstr ""
 
 #: assets/components/search/rdapStatusCodeDetailTranslation.ts:38
 msgid ""
 "The server set the status so that requests to update the object (other than "
-"to remove this status) MUST be rejected. This maps to the Extensible "
-"Provisioning Protocol (EPP) Domain Name Mapping [RFC5731], Extensible "
-"Provisioning Protocol (EPP) Host Mapping [RFC5732], and Extensible "
-"Provisioning Protocol (EPP) Contact Mapping [RFC5733] "
-"'serverUpdateProhibited' status."
+"to remove this status) MUST be rejected."
 msgstr ""
 
 #: assets/components/search/rdapStatusCodeDetailTranslation.ts:39
 msgid ""
 "The server set the status so that DNS delegation information MUST NOT be "
-"published for the object. This maps to the Extensible Provisioning Protocol "
-"(EPP) Domain Name Mapping [RFC5731] 'serverHold' status."
+"published for the object."
 msgstr ""
 
 #: assets/components/search/rdapStatusCodeDetailTranslation.ts:40
@@ -397,9 +358,7 @@ msgid ""
 "This grace period is provided after the successful transfer of object "
 "registration sponsorship from one client to another client. If the object is "
 "deleted by the client during this period, the server provides a credit to "
-"the client for the cost of the transfer. This maps to the Domain Registry "
-"Grace Period Mapping for the Extensible Provisioning Protocol (EPP) "
-"[RFC3915] 'transferPeriod' status."
+"the client for the cost of the transfer."
 msgstr ""
 
 #: assets/components/search/rdapStatusCodeDetailTranslation.ts:41
