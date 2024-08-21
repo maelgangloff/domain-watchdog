@@ -4,8 +4,8 @@ import {Domain, getDomain} from "../../utils/api";
 import {AxiosError} from "axios"
 import {t} from 'ttag'
 import {DomainSearchBar, FieldType} from "../../components/search/DomainSearchBar";
-import {showErrorAPI} from "../../utils";
 import {DomainResult} from "../../components/search/DomainResult";
+import {showErrorAPI} from "../../utils/functions/showErrorAPI";
 
 export default function DomainSearchPage() {
     const [domain, setDomain] = useState<Domain | null>()

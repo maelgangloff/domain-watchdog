@@ -6,28 +6,14 @@ import {regionNames} from "../../i18n";
 import useBreakpoint from "../../hooks/useBreakpoint";
 import {ColumnType} from "antd/es/table";
 import punycode from "punycode/punycode";
+import {getCountryCode} from "../../utils/functions/getCountryCode";
+import {tldToEmoji} from "../../utils/functions/tldToEmoji";
 
 const {Text, Paragraph} = Typography
 
 type TldType = 'iTLD' | 'sTLD' | 'gTLD' | 'ccTLD'
 type FiltersType = { type: TldType, contractTerminated?: boolean, specification13?: boolean }
 
-const toEmoji = (tld: string) => {
-    if (tld.startsWith('xn--')) return '-'
-
-    return String.fromCodePoint(
-        ...getCountryCode(tld)
-            .toUpperCase()
-            .split('')
-            .map((char) => 127397 + char.charCodeAt(0))
-    )
-}
-
-const getCountryCode = (tld: string): string => {
-    const exceptions = {uk: 'gb', su: 'ru', tp: 'tl'}
-    if (tld in exceptions) return exceptions[tld as keyof typeof exceptions]
-    return tld.toUpperCase()
-}
 
 function TldTable(filters: FiltersType) {
     const sm = useBreakpoint('sm')
@@ -55,7 +41,7 @@ function TldTable(filters: FiltersType) {
 
                         return {
                             ...rowData,
-                            Flag: toEmoji(tld.tld),
+                            Flag: tldToEmoji(tld.tld),
                             Country: countryName
                         }
                     case 'gTLD':

@@ -26,7 +26,7 @@ export function ViewDiagramWatchlistButton({token}: { token: string }) {
         if (!open) return
         setLoading(true)
         getWatchlist(token).then(w => {
-            const e = getLayoutedElements(watchlistToNodes(w), watchlistToEdges(w))
+            const e = getLayoutedElements(watchlistToNodes(w, true), watchlistToEdges(w, true))
             setNodes(e.nodes)
             setEdges(e.edges)
         }).catch(() => setOpen(false)).finally(() => setLoading(false))

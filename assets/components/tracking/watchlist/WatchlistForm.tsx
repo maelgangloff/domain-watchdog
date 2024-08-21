@@ -4,7 +4,8 @@ import {ApiOutlined, MinusCircleOutlined, PlusOutlined} from "@ant-design/icons"
 import React from "react";
 import {Connector} from "../../../utils/api/connectors";
 import {rdapEventDetailTranslation, rdapEventNameTranslation} from "../../search/rdapTranslation";
-import {actionToColor, actionToIcon} from "../../../utils";
+import {actionToColor} from "../../../utils/functions/actionToColor";
+import {actionToIcon} from "../../../utils/functions/actionToIcon";
 
 type TagRender = SelectProps['tagRender'];
 

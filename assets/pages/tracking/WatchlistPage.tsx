@@ -6,7 +6,8 @@ import {t} from 'ttag'
 import {WatchlistForm} from "../../components/tracking/watchlist/WatchlistForm";
 import {WatchlistsList} from "../../components/tracking/watchlist/WatchlistsList";
 import {Connector, getConnectors} from "../../utils/api/connectors";
-import {showErrorAPI} from "../../utils";
+
+import {showErrorAPI} from "../../utils/functions/showErrorAPI";
 
 
 export type Watchlist = {

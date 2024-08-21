@@ -5,7 +5,8 @@ import {Connector, getConnectors, postConnector} from "../../utils/api/connector
 import {ConnectorForm} from "../../components/tracking/connector/ConnectorForm";
 import {AxiosError} from "axios";
 import {ConnectorElement, ConnectorsList} from "../../components/tracking/connector/ConnectorsList";
-import {showErrorAPI} from "../../utils";
+
+import {showErrorAPI} from "../../utils/functions/showErrorAPI";
 
 export default function ConnectorsPage() {
     const [form] = Form.useForm()

@@ -1,7 +1,8 @@
 import {Domain, Watchlist} from "../../../../utils/api";
 import {rdapRoleTranslation} from "../../../search/rdapTranslation";
 import {t} from "ttag";
-import {rolesToColor} from "../../../../utils";
+
+import {rolesToColor} from "../../../../utils/functions/rolesToColor";
 
 export function domainEntitiesToEdges(d: Domain, withRegistrar = false) {
     const rdapRoleTranslated = rdapRoleTranslation()

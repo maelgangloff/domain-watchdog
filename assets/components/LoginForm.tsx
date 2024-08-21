@@ -4,7 +4,8 @@ import React, {useContext, useEffect} from "react";
 import {getUser, login} from "../utils/api";
 import {AuthenticatedContext} from "../pages/LoginPage";
 import {useNavigate} from "react-router-dom";
-import {showErrorAPI} from "../utils";
+
+import {showErrorAPI} from "../utils/functions/showErrorAPI";
 
 
 type FieldType = {

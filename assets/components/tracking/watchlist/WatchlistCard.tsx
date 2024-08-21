@@ -11,7 +11,8 @@ import {Connector} from "../../../utils/api/connectors";
 import useBreakpoint from "../../../hooks/useBreakpoint";
 import {CalendarWatchlistButton} from "./CalendarWatchlistButton";
 import {rdapEventDetailTranslation, rdapEventNameTranslation} from "../../search/rdapTranslation";
-import {actionToColor} from "../../../utils";
+
+import {actionToColor} from "../../../utils/functions/actionToColor";
 
 export function WatchlistCard({watchlist, onUpdateWatchlist, connectors, onDelete}: {
     watchlist: Watchlist,

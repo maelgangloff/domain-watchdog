@@ -3,7 +3,8 @@ import React from "react";
 import {Domain} from "../../utils/api";
 import useBreakpoint from "../../hooks/useBreakpoint";
 import {rdapEventDetailTranslation, rdapEventNameTranslation} from "./rdapTranslation";
-import {actionToColor, actionToIcon} from "../../utils";
+import {actionToColor} from "../../utils/functions/actionToColor";
+import {actionToIcon} from "../../utils/functions/actionToIcon";
 
 export function EventTimeline({domain}: { domain: Domain }) {
     const sm = useBreakpoint('sm')

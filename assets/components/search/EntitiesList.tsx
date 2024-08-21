@@ -2,7 +2,10 @@ import {List, Tag, Tooltip} from "antd";
 import React from "react";
 import {Domain} from "../../utils/api";
 import {rdapRoleDetailTranslation, rdapRoleTranslation} from "./rdapTranslation";
-import {entityToName, rolesToColor, roleToAvatar, sortDomainEntities} from "../../utils";
+import {roleToAvatar} from "../../utils/functions/roleToAvatar";
+import {rolesToColor} from "../../utils/functions/rolesToColor";
+import {entityToName} from "../../utils/functions/entityToName";
+import {sortDomainEntities} from "../../utils/functions/sortDomainEntities";
 
 
 export function EntitiesList({domain}: { domain: Domain }) {

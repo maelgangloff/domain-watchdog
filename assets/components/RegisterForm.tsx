@@ -3,7 +3,8 @@ import {t} from "ttag";
 import React, {useState} from "react";
 import {register} from "../utils/api";
 import {useNavigate} from "react-router-dom";
-import {showErrorAPI} from "../utils";
+
+import {showErrorAPI} from "../utils/functions/showErrorAPI";
 
 
 type FieldType = {

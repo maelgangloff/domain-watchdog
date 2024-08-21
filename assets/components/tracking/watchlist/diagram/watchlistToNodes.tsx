@@ -1,7 +1,8 @@
 import {Domain, Nameserver, Tld, Watchlist} from "../../../../utils/api";
 import React from "react";
 import {t} from 'ttag'
-import {entityToName} from "../../../../utils";
+
+import {entityToName} from "../../../../utils/functions/entityToName";
 
 export const domainToNode = (d: Domain) => ({
     id: d.ldhName,
