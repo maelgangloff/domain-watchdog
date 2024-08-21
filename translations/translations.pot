@@ -697,11 +697,11 @@ msgstr ""
 msgid "Are you sure to delete this Watchlist?"
 msgstr ""
 
-#: assets/components/tracking/watchlist/WatchlistCard.tsx:46
+#: assets/components/tracking/watchlist/WatchlistCard.tsx:47
 msgid "This Watchlist is not linked to a Connector."
 msgstr ""
 
-#: assets/components/tracking/watchlist/WatchlistCard.tsx:49
+#: assets/components/tracking/watchlist/WatchlistCard.tsx:52
 msgid "Watchlist"
 msgstr ""
 

@@ -1,4 +1,4 @@
-import {Card, Divider, Space, Table, Tag, Tooltip, Typography} from "antd";
+import {Card, Divider, Space, Table, Tag, Tooltip} from "antd";
 import {DisconnectOutlined, LinkOutlined} from "@ant-design/icons";
 import {t} from "ttag";
 import {ViewDiagramWatchlistButton} from "./diagram/ViewDiagramWatchlistButton";
@@ -41,13 +41,16 @@ export function WatchlistCard({watchlist, onUpdateWatchlist, connectors, onDelet
             title={<>
                 {
                     watchlist.connector ?
-                        <Tag icon={<LinkOutlined/>} color="lime-inverse" title={watchlist.connector.id}/> :
-                        <Tag icon={<DisconnectOutlined/>} color="default"
-                             title={t`This Watchlist is not linked to a Connector.`}/>
+                        <Tooltip title={watchlist.connector.id}>
+                            <Tag icon={<LinkOutlined/>} color="lime-inverse"/>
+                        </Tooltip> :
+                        <Tooltip title={t`This Watchlist is not linked to a Connector.`}>
+                            <Tag icon={<DisconnectOutlined/>} color="default"/>
+                        </Tooltip>
                 }
-                <Typography.Text title={new Date(watchlist.createdAt).toLocaleString()}>
+                <Tooltip title={new Date(watchlist.createdAt).toLocaleString()}>
                     {t`Watchlist` + (watchlist.name ? ` (${watchlist.name})` : '')}
-                </Typography.Text>
+                </Tooltip>
             </>
             }
             size='small'
