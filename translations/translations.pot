@@ -12,7 +12,7 @@ msgstr ""
 #: assets/components/LoginForm.tsx:61
 #: assets/components/RegisterForm.tsx:40
 #: assets/components/RegisterForm.tsx:48
-#: assets/components/search/DomainSearchBar.tsx:23
+#: assets/components/search/DomainSearchBar.tsx:22
 #: assets/components/tracking/connector/ConnectorForm.tsx:43
 #: assets/components/tracking/connector/ConnectorForm.tsx:69
 #: assets/components/tracking/connector/ConnectorForm.tsx:77
@@ -22,8 +22,8 @@ msgstr ""
 #: assets/components/tracking/connector/ConnectorForm.tsx:142
 #: assets/components/tracking/connector/ConnectorForm.tsx:156
 #: assets/components/tracking/connector/ConnectorForm.tsx:165
-#: assets/components/tracking/watchlist/WatchlistForm.tsx:113
-#: assets/components/tracking/watchlist/WatchlistForm.tsx:210
+#: assets/components/tracking/watchlist/WatchlistForm.tsx:114
+#: assets/components/tracking/watchlist/WatchlistForm.tsx:211
 msgid "Required"
 msgstr ""
 
@@ -468,8 +468,8 @@ msgstr ""
 msgid "Entities"
 msgstr ""
 
-#: assets/components/search/DomainSearchBar.tsx:26
-#: assets/components/tracking/watchlist/WatchlistForm.tsx:116
+#: assets/components/search/DomainSearchBar.tsx:25
+#: assets/components/tracking/watchlist/WatchlistForm.tsx:117
 msgid "This domain name does not appear to be valid"
 msgstr ""
 
@@ -544,12 +544,12 @@ msgid ""
 msgstr ""
 
 #: assets/components/tracking/connector/ConnectorForm.tsx:176
-#: assets/components/tracking/watchlist/WatchlistForm.tsx:250
+#: assets/components/tracking/watchlist/WatchlistForm.tsx:251
 msgid "Create"
 msgstr ""
 
 #: assets/components/tracking/connector/ConnectorForm.tsx:179
-#: assets/components/tracking/watchlist/WatchlistForm.tsx:253
+#: assets/components/tracking/watchlist/WatchlistForm.tsx:254
 msgid "Reset"
 msgstr ""
 
@@ -582,72 +582,72 @@ msgstr ""
 msgid "No"
 msgstr ""
 
-#: assets/components/tracking/watchlist/WatchlistForm.tsx:70
+#: assets/components/tracking/watchlist/WatchlistForm.tsx:71
 msgid "Name"
 msgstr ""
 
-#: assets/components/tracking/watchlist/WatchlistForm.tsx:81
+#: assets/components/tracking/watchlist/WatchlistForm.tsx:82
 msgid "Watchlist Name"
 msgstr ""
 
-#: assets/components/tracking/watchlist/WatchlistForm.tsx:82
+#: assets/components/tracking/watchlist/WatchlistForm.tsx:83
 msgid "Naming the Watchlist makes it easier to find in the list below."
 msgstr ""
 
-#: assets/components/tracking/watchlist/WatchlistForm.tsx:93
+#: assets/components/tracking/watchlist/WatchlistForm.tsx:94
 msgid "At least one domain name"
 msgstr ""
 
 #: assets/components/tracking/watchlist/WatchlistCard.tsx:28
-#: assets/components/tracking/watchlist/WatchlistForm.tsx:104
+#: assets/components/tracking/watchlist/WatchlistForm.tsx:105
 msgid "Domain names"
 msgstr ""
 
-#: assets/components/tracking/watchlist/WatchlistForm.tsx:122
+#: assets/components/tracking/watchlist/WatchlistForm.tsx:123
 msgid "Domain name"
 msgstr ""
 
-#: assets/components/tracking/watchlist/WatchlistForm.tsx:139
+#: assets/components/tracking/watchlist/WatchlistForm.tsx:140
 msgid "Add a Domain name"
 msgstr ""
 
 #: assets/components/tracking/watchlist/WatchlistCard.tsx:32
-#: assets/components/tracking/watchlist/WatchlistForm.tsx:146
+#: assets/components/tracking/watchlist/WatchlistForm.tsx:147
 msgid "Tracked events"
 msgstr ""
 
-#: assets/components/tracking/watchlist/WatchlistForm.tsx:148
+#: assets/components/tracking/watchlist/WatchlistForm.tsx:149
 msgid "At least one trigger"
 msgstr ""
 
-#: assets/components/tracking/watchlist/WatchlistForm.tsx:171
-#: assets/components/tracking/watchlist/WatchlistForm.tsx:185
+#: assets/components/tracking/watchlist/WatchlistForm.tsx:172
+#: assets/components/tracking/watchlist/WatchlistForm.tsx:186
 msgid "Connector"
 msgstr ""
 
-#: assets/components/tracking/watchlist/WatchlistForm.tsx:181
+#: assets/components/tracking/watchlist/WatchlistForm.tsx:182
 msgid ""
 "Please make sure the connector information is valid to purchase a domain "
 "that may be available soon."
 msgstr ""
 
-#: assets/components/tracking/watchlist/WatchlistForm.tsx:201
+#: assets/components/tracking/watchlist/WatchlistForm.tsx:202
 msgid "DSN"
 msgstr ""
 
-#: assets/components/tracking/watchlist/WatchlistForm.tsx:213
+#: assets/components/tracking/watchlist/WatchlistForm.tsx:214
 msgid "This DSN does not appear to be valid"
 msgstr ""
 
-#: assets/components/tracking/watchlist/WatchlistForm.tsx:231
+#: assets/components/tracking/watchlist/WatchlistForm.tsx:232
 msgid "Check out this link to the Symfony documentation to help you build the DSN"
 msgstr ""
 
-#: assets/components/tracking/watchlist/WatchlistForm.tsx:240
+#: assets/components/tracking/watchlist/WatchlistForm.tsx:241
 msgid "Add a Webhook"
 msgstr ""
 
-#: assets/components/tracking/watchlist/WatchlistForm.tsx:250
+#: assets/components/tracking/watchlist/WatchlistForm.tsx:251
 msgid "Update"
 msgstr ""
 
@@ -671,11 +671,11 @@ msgstr ""
 msgid "Watchlist Entity Diagram"
 msgstr ""
 
-#: assets/components/tracking/watchlist/diagram/watchlistToEdges.tsx:42
+#: assets/components/tracking/watchlist/diagram/watchlistToEdges.tsx:36
 msgid "Registry"
 msgstr ""
 
-#: assets/components/tracking/watchlist/diagram/watchlistToNodes.tsx:33
+#: assets/components/tracking/watchlist/diagram/watchlistToNodes.tsx:29
 #, javascript-format
 msgid ".${ tld.tld } Registry"
 msgstr ""
@@ -705,44 +705,44 @@ msgstr ""
 msgid "Watchlist"
 msgstr ""
 
-#: assets/components/Sider.tsx:29
+#: assets/components/Sider.tsx:28
 msgid "Home"
 msgstr ""
 
-#: assets/components/Sider.tsx:35
+#: assets/components/Sider.tsx:34
 msgid "Search"
 msgstr ""
 
-#: assets/components/Sider.tsx:41
+#: assets/components/Sider.tsx:40
 msgid "Domain"
 msgstr ""
 
-#: assets/components/Sider.tsx:42
+#: assets/components/Sider.tsx:41
 msgid "Domain Finder"
 msgstr ""
 
-#: assets/components/Sider.tsx:49
+#: assets/components/Sider.tsx:48
 #: assets/pages/info/TldPage.tsx:79
 msgid "TLD"
 msgstr ""
 
-#: assets/components/Sider.tsx:50
+#: assets/components/Sider.tsx:49
 msgid "TLD list"
 msgstr ""
 
-#: assets/components/Sider.tsx:57
+#: assets/components/Sider.tsx:56
 msgid "Entity"
 msgstr ""
 
-#: assets/components/Sider.tsx:58
+#: assets/components/Sider.tsx:57
 msgid "Entity Finder"
 msgstr ""
 
-#: assets/components/Sider.tsx:65
+#: assets/components/Sider.tsx:64
 msgid "Nameserver"
 msgstr ""
 
-#: assets/components/Sider.tsx:66
+#: assets/components/Sider.tsx:65
 msgid "Nameserver Finder"
 msgstr ""
 
@@ -767,18 +767,18 @@ msgstr ""
 msgid "My Account"
 msgstr ""
 
-#: assets/components/Sider.tsx:111
+#: assets/components/Sider.tsx:110
 msgid "Log out"
 msgstr ""
 
-#: assets/components/Sider.tsx:119
-#: assets/pages/LoginPage.tsx:30
-#: assets/pages/LoginPage.tsx:38
+#: assets/components/Sider.tsx:118
+#: assets/pages/LoginPage.tsx:25
+#: assets/pages/LoginPage.tsx:33
 msgid "Log in"
 msgstr ""
 
 #: assets/components/RegisterForm.tsx:55
-#: assets/pages/LoginPage.tsx:30
+#: assets/pages/LoginPage.tsx:25
 msgid "Register"
 msgstr ""
 
@@ -881,15 +881,15 @@ msgstr ""
 msgid "Create a Connector"
 msgstr ""
 
-#: assets/pages/tracking/WatchlistPage.tsx:65
+#: assets/pages/tracking/WatchlistPage.tsx:64
 msgid "Watchlist created !"
 msgstr ""
 
-#: assets/pages/tracking/WatchlistPage.tsx:77
+#: assets/pages/tracking/WatchlistPage.tsx:76
 msgid "Watchlist updated !"
 msgstr ""
 
-#: assets/pages/tracking/WatchlistPage.tsx:102
+#: assets/pages/tracking/WatchlistPage.tsx:100
 msgid "Create a Watchlist"
 msgstr ""
 
@@ -897,7 +897,7 @@ msgstr ""
 msgid "Sorry, the page you visited does not exist."
 msgstr ""
 
-#: assets/pages/LoginPage.tsx:38
+#: assets/pages/LoginPage.tsx:33
 msgid "Create an account"
 msgstr ""
 

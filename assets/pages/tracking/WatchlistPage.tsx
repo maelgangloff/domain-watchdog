@@ -54,11 +54,10 @@ export default function WatchlistPage() {
 
     const [form] = Form.useForm()
     const [messageApi, contextHolder] = message.useMessage()
-    const [watchlists, setWatchlists] = useState<Watchlist[] | null>()
-    const [connectors, setConnectors] = useState<(Connector & { id: string })[] | null>()
+    const [watchlists, setWatchlists] = useState<Watchlist[]>()
+    const [connectors, setConnectors] = useState<(Connector & { id: string })[]>()
 
     const onCreateWatchlist = (values: FormValuesType) => {
-
         postWatchlist(getRequestDataFromForm(values)).then((w) => {
             form.resetFields()
             refreshWatchlists()
@@ -98,9 +97,10 @@ export default function WatchlistPage() {
     return <Flex gap="middle" align="center" justify="center" vertical>
         {contextHolder}
         {
-            connectors &&
-            <Card title={t`Create a Watchlist`} style={{width: '100%'}}>
-                <WatchlistForm form={form} onFinish={onCreateWatchlist} connectors={connectors} isCreation={true}/>
+            <Card loading={connectors === undefined} title={t`Create a Watchlist`} style={{width: '100%'}}>
+                {connectors &&
+                    <WatchlistForm form={form} onFinish={onCreateWatchlist} connectors={connectors} isCreation={true}/>
+                }
             </Card>
         }
         <Divider/>

@@ -19,9 +19,9 @@ export function DomainResult({domain}: { domain: Domain }) {
                                   domain.tld.type === 'gTLD' ? "green"
                                       : "cyan"
                       }>
-            <Card title={<>
+            <Card title={<Space>
                 {domain.ldhName}{domain.handle && <Typography.Text code>{domain.handle}</Typography.Text>}
-            </>}
+            </Space>}
                   size="small">
                 {domain.status.length > 0 &&
                     <>

@@ -16,7 +16,7 @@ const formItemLayoutWithOutLabel = {
         xs: {span: 24, offset: 0},
         sm: {span: 20, offset: 4},
     },
-};
+}
 
 export function ConnectorForm({form, onCreate}: { form: FormInstance, onCreate: (values: Connector) => void }) {
     const [provider, setProvider] = useState<string>()

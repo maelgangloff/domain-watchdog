@@ -5,13 +5,13 @@ import {ViewDiagramWatchlistButton} from "./diagram/ViewDiagramWatchlistButton";
 import {UpdateWatchlistButton} from "./UpdateWatchlistButton";
 import {DeleteWatchlistButton} from "./DeleteWatchlistButton";
 import punycode from "punycode/punycode";
-import {actionToColor} from "../../search/EventTimeline";
 import React from "react";
 import {Watchlist} from "../../../pages/tracking/WatchlistPage";
 import {Connector} from "../../../utils/api/connectors";
 import useBreakpoint from "../../../hooks/useBreakpoint";
 import {CalendarWatchlistButton} from "./CalendarWatchlistButton";
 import {rdapEventDetailTranslation, rdapEventNameTranslation} from "../../search/rdapTranslation";
+import {actionToColor, actionToIcon} from "../../../utils";
 
 export function WatchlistCard({watchlist, onUpdateWatchlist, connectors, onDelete}: {
     watchlist: Watchlist,
@@ -78,7 +78,7 @@ export function WatchlistCard({watchlist, onUpdateWatchlist, connectors, onDelet
                     events: watchlist.triggers?.filter(t => t.action === 'email')
                         .map(t => <Tooltip
                                 title={t.event in rdapEventDetailTranslated ? rdapEventDetailTranslated[t.event as keyof typeof rdapEventDetailTranslated] : undefined}>
-                                <Tag color={actionToColor(t.event)}>
+                                <Tag color={actionToColor(t.event)} icon={actionToIcon(t.event)}>
                                     {rdapEventNameTranslated[t.event as keyof typeof rdapEventNameTranslated]}
                                 </Tag>
                             </Tooltip>

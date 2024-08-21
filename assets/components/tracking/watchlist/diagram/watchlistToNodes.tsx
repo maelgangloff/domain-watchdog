@@ -1,7 +1,7 @@
 import {Domain, Nameserver, Tld, Watchlist} from "../../../../utils/api";
-import vCard from "vcf";
 import React from "react";
 import {t} from 'ttag'
+import {entityToName} from "../../../../utils";
 
 export const domainToNode = (d: Domain) => ({
     id: d.ldhName,
@@ -14,14 +14,10 @@ export const domainToNode = (d: Domain) => ({
 export const domainEntitiesToNode = (d: Domain, withRegistrar = false) => d.entities
     .filter(e => !withRegistrar ? !e.roles.includes('registrar') : true)
     .map(e => {
-        const jCard = vCard.fromJSON(e.entity.jCard)
-        let label = e.entity.handle
-        if (jCard.data.fn !== undefined && !Array.isArray(jCard.data.fn)) label = jCard.data.fn.valueOf()
-
         return {
             id: e.entity.handle,
             type: e.roles.includes('registrant') || e.roles.includes('registrar') ? 'input' : 'output',
-            data: {label},
+            data: {label: entityToName(e)},
             style: {
                 width: 200
             }

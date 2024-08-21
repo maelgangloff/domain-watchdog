@@ -3,8 +3,8 @@ import {t} from "ttag";
 import {ApiOutlined, MinusCircleOutlined, PlusOutlined} from "@ant-design/icons";
 import React from "react";
 import {Connector} from "../../../utils/api/connectors";
-import {actionToColor} from "../../search/EventTimeline";
 import {rdapEventDetailTranslation, rdapEventNameTranslation} from "../../search/rdapTranslation";
+import {actionToColor, actionToIcon} from "../../../utils";
 
 type TagRender = SelectProps['tagRender'];
 
@@ -44,6 +44,7 @@ export function WatchlistForm({form, connectors, onFinish, isCreation}: {
         return (<Tooltip
                 title={value in rdapEventDetailTranslated ? rdapEventDetailTranslated[value as keyof typeof rdapEventDetailTranslated] : undefined}>
                 <Tag
+                    icon={actionToIcon(value)}
                     color={actionToColor(value)}
                     onMouseDown={onPreventMouseDown}
                     closable={closable}
