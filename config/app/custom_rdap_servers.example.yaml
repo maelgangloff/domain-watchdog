@@ -1,0 +1,47 @@
+#############################################################
+#   WARNING                                                 #
+#                                                           #
+#   This list of RDAP servers is not published by IANA      #
+#           !!! Use it at your own risk !!!                 #
+#                                                           #
+#          This file must comply with RFC 9224              #
+#############################################################
+
+# Feel free to contribute to add missing RDAP servers to this file.
+# To generate the list of TLDs that do not have an RDAP server,
+# run this SQL query on a Domain Watchdog instance based on the official IANA list
+# SELECT t.tld FROM tld t LEFT JOIN rdap_server rs ON rs.tld_id = t.tld WHERE t.contract_terminated IS NOT TRUE and rs.url IS NULL;
+
+{
+    "description": "Custom RDAP bootstrap file for Domain Name System registrations",
+
+  # Remove the following line to use servers from this list as a priority
+  # Otherwise, those from the official IANA list will have a preponderant value
+    "publication": "1970-01-01T00:00:00Z",
+
+    "services": [
+        [ [ "ad" ],        [ "https://rdap.nic.ad/" ] ],
+        [ [ "ae" ],            [ "https://rdap.nic.ae/" ] ],
+        [ [ "ki" ],            [ "https://rdap.nic.ki/" ] ],
+        [ [ "af" ],            [ "https://rdap.nic.af/" ] ],
+        [ [ "ag", "me", "bz", "gi", "pr", "sc", "vc" ], [ "https://rdap.identitydigital.services/rdap/" ] ],
+        [ [ "ch" ],            [ "https://rdap.nic.ch/" ] ],
+        [ [ "co" ],            [ "https://rdap.nic.co/" ] ],
+        [ [ "de" ],            [ "https://rdap.denic.de/" ] ],
+        [ [ "ga" ],            [ "https://rdap.nic.ga/" ] ],
+        [ [ "ht" ],            [ "https://rdap.nic.ht/" ] ],
+        [ [ "kn" ],            [ "https://rdap.nic.kn/" ] ],
+        [ [ "li" ],            [ "https://rdap.nic.li/" ] ],
+        [ [ "ml" ],            [ "https://rdap.nic.ml/" ] ],
+        [ [ "mr" ],            [ "https://rdap.nic.mr/" ] ],
+        [ [ "mz" ],            [ "https://rdap.nic.mz/" ] ],
+        [ [ "sb" ],            [ "https://rdap.nic.sb/" ] ],
+        [ [ "sn" ],            [ "https://rdap.nic.sn/" ] ],
+        [ [ "so" ],            [ "https://rdap.nic.so/" ] ],
+        [ [ "td" ],            [ "https://rdap.nic.td/" ] ],
+        [ [ "tl" ],            [ "https://rdap.nic.tl/" ] ],
+        [ [ "us" ],            [ "https://rdap.nic.us/" ] ],
+        [ [ "ve" ],            [ "https://rdap.nic.ve/" ] ],
+    ],
+    "version": "1.0"
+}
