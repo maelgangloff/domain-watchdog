@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .header h1 {
+            font-size: 24px;
+            color: {{ email_color|default('#0056b3') }};
+        }
+
+        .content {
+            margin-bottom: 20px;
+        }
+
+        .content p {
+            margin: 0 0 10px;
+        }
+
+        .footer {
+            text-align: center;
+            color: #777;
+        }
+    </style>
+    <title>{{ title|default('Domain Watchdog - Notification') }}</title>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <h1>{{ title|default('Domain Watchdog - Notification') }}</h1>
+    </div>
+    <div class="content">
+        {% block content %}{% endblock %}
+    </div>
+    <div class="footer">
+        {% block footer %}
+            <p>&copy; Domain Watchdog</p>
+        {% endblock %}
+    </div>
+</div>
+</body>
+</html>
