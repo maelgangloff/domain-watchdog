@@ -943,13 +943,13 @@ msgid ""
 "another"
 msgstr ""
 
-#: assets/utils/index.tsx:101
+#: assets/utils/index.tsx:103
 #, javascript-format
 msgid "Please retry after ${ duration } seconds"
 msgstr ""
 
-#: assets/utils/index.tsx:105
-#: assets/utils/index.tsx:108
+#: assets/utils/index.tsx:107
+#: assets/utils/index.tsx:110
 msgid "An error occurred"
 msgstr ""
 
