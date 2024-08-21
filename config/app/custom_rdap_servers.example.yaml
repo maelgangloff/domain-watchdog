@@ -24,7 +24,20 @@
         [ [ "ae" ],            [ "https://rdap.nic.ae/" ] ],
         [ [ "ki" ],            [ "https://rdap.nic.ki/" ] ],
         [ [ "af" ],            [ "https://rdap.nic.af/" ] ],
-        [ [ "ag", "me", "bz", "gi", "pr", "sc", "vc" ], [ "https://rdap.identitydigital.services/rdap/" ] ],
+        [
+            [
+                "ag",
+                "me",
+                "bz",
+                "gi",
+                "pr",
+                "sc",
+                "vc"
+            ],
+            [
+                "https://rdap.identitydigital.services/rdap/"
+            ]
+        ],
         [ [ "ch" ],            [ "https://rdap.nic.ch/" ] ],
         [ [ "co" ],            [ "https://rdap.nic.co/" ] ],
         [ [ "de" ],            [ "https://rdap.denic.de/" ] ],
