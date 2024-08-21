@@ -41,7 +41,7 @@
         [ [ "td" ],            [ "https://rdap.nic.td/" ] ],
         [ [ "tl" ],            [ "https://rdap.nic.tl/" ] ],
         [ [ "us" ],            [ "https://rdap.nic.us/" ] ],
-        [ [ "ve" ],            [ "https://rdap.nic.ve/" ] ],
+        [ [ "ve" ],            [ "https://rdap.nic.ve/rdap/" ] ],
     ],
     "version": "1.0"
 }
