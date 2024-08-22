@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2024-08-20 16:30+0000\n"
+"PO-Revision-Date: 2024-08-22 17:55+0000\n"
 "Last-Translator: Maël Gangloff <contact@maelgangloff.fr>\n"
 "Language-Team: French <https://weblate.vinceh121.me/projects/domain-watchdog/"
 "domain-watchdog-dashboard/fr/>\n"
@@ -1044,39 +1044,35 @@ msgstr "Désolé, cette page n'existe pas."
 
 #: assets/pages/StatisticsPage.tsx:32
 msgid "RDAP queries"
-msgstr ""
+msgstr "Requêtes RDAP"
 
 #: assets/pages/StatisticsPage.tsx:41
 msgid "Alerts sent"
-msgstr ""
+msgstr "Alertes envoyées"
 
 #: assets/pages/StatisticsPage.tsx:55
-#, fuzzy
-#| msgid "Domain names"
 msgid "Domain names in database"
-msgstr "Noms de domaines"
+msgstr "Noms de domaine dans la base de données"
 
 #: assets/pages/StatisticsPage.tsx:66
-#, fuzzy
-#| msgid "Domain names"
 msgid "Tracked domain names"
-msgstr "Noms de domaines"
+msgstr "Noms de domaine suivis"
 
 #: assets/pages/StatisticsPage.tsx:80
-#, fuzzy
-#| msgid "At least one domain name"
 msgid "Purchased domain names"
-msgstr "Au moins un nom de domaine"
+msgstr "Noms de domaine achetés"
 
 #: assets/pages/StatisticsPage.tsx:90
 msgid ""
 "This value is based on the status code of the HTTP response from the "
 "providers following the domain order."
 msgstr ""
+"Cette valeur est basée sur le code d'état de la réponse HTTP des Providers "
+"suivant l'achat du domaine."
 
 #: assets/pages/StatisticsPage.tsx:93
 msgid "Success rate"
-msgstr ""
+msgstr "Taux de succès"
 
 #: assets/pages/LoginPage.tsx:33
 msgid "Create an account"
