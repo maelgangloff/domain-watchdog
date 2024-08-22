@@ -54,7 +54,7 @@ export default function StatisticsPage() {
                         loading={stats === undefined}
                         title={t`Domain names in database`}
                         prefix={<DatabaseOutlined/>}
-                        value={stats?.rdapQueries}
+                        value={stats?.domainCountTotal}
                         valueStyle={{color: 'darkblue'}}
                     />
                 </Card>
