@@ -857,7 +857,7 @@ msgstr "Domain"
 msgid "Domain Finder"
 msgstr "Domänenfinder"
 
-#: assets/components/Sider.tsx:48 assets/pages/info/TldPage.tsx:65
+#: assets/components/Sider.tsx:48 assets/pages/search/TldPage.tsx:65
 msgid "TLD"
 msgstr "TLD"
 
@@ -897,7 +897,7 @@ msgstr "Meine Konnektoren"
 msgid "Statistics"
 msgstr "Statistiken"
 
-#: assets/components/Sider.tsx:105 assets/pages/watchdog/UserPage.tsx:16
+#: assets/components/Sider.tsx:105 assets/pages/UserPage.tsx:16
 msgid "My Account"
 msgstr "Mein Konto"
 
@@ -930,25 +930,25 @@ msgstr ""
 "Obwohl die Domain in meiner Datenbank vorhanden ist, wurde sie von ihrem "
 "Registrar aus dem WHOIS gelöscht."
 
-#: assets/pages/info/TldPage.tsx:71
+#: assets/pages/search/TldPage.tsx:71
 msgid "Flag"
 msgstr "Landesflagge"
 
-#: assets/pages/info/TldPage.tsx:74
+#: assets/pages/search/TldPage.tsx:74
 msgid "Country"
 msgstr "Land"
 
-#: assets/pages/info/TldPage.tsx:79
+#: assets/pages/search/TldPage.tsx:79
 msgid "Registry Operator"
 msgstr "Registrierungsbetreiber"
 
-#: assets/pages/info/TldPage.tsx:106
+#: assets/pages/search/TldPage.tsx:106
 msgid "This page presents all active TLDs in the root zone database."
 msgstr ""
 "Auf dieser Seite werden alle aktiven TLDs in der Root-Zone-Datenbank "
 "angezeigt."
 
-#: assets/pages/info/TldPage.tsx:109
+#: assets/pages/search/TldPage.tsx:109
 msgid ""
 "IANA provides the list of currently active TLDs, regardless of their type, "
 "and ICANN provides the list of gTLDs.\n"
@@ -968,11 +968,11 @@ msgstr ""
 "erforderlich (zwei Anfragen an IANA und eine an ICANN).\n"
 " Gleichzeitig wird die Liste der Root-RDAP-Server aktualisiert."
 
-#: assets/pages/info/TldPage.tsx:120
+#: assets/pages/search/TldPage.tsx:120
 msgid "Sponsored Top-Level-Domains"
 msgstr "Gesponserte Top-Level-Domains"
 
-#: assets/pages/info/TldPage.tsx:122
+#: assets/pages/search/TldPage.tsx:122
 msgid ""
 "Top-level domains sponsored by specific organizations that set rules for "
 "registration and use, often related to particular interest groups or "
@@ -982,11 +982,11 @@ msgstr ""
 "Regeln für die Registrierung und Nutzung festlegen und oft mit bestimmten "
 "Interessengruppen oder Branchen in Zusammenhang stehen."
 
-#: assets/pages/info/TldPage.tsx:129
+#: assets/pages/search/TldPage.tsx:129
 msgid "Generic Top-Level-Domains"
 msgstr "Generische Top-Level-Domains"
 
-#: assets/pages/info/TldPage.tsx:131
+#: assets/pages/search/TldPage.tsx:131
 msgid ""
 "Generic top-level domains open to everyone, not restricted by specific "
 "criteria, representing various themes or industries."
@@ -995,11 +995,11 @@ msgstr ""
 "bestimmte Kriterien eingeschränkt sind und verschiedene Themen oder Branchen "
 "repräsentieren."
 
-#: assets/pages/info/TldPage.tsx:138
+#: assets/pages/search/TldPage.tsx:138
 msgid "Brand Generic Top-Level-Domains"
 msgstr "Markengenerische Top-Level-Domains"
 
-#: assets/pages/info/TldPage.tsx:140
+#: assets/pages/search/TldPage.tsx:140
 msgid ""
 "Generic top-level domains associated with specific brands, allowing "
 "companies to use their own brand names as domains."
@@ -1007,25 +1007,17 @@ msgstr ""
 "Generische Top-Level-Domains sind mit bestimmten Marken verknüpft und "
 "ermöglichen Unternehmen die Verwendung ihrer eigenen Markennamen als Domains."
 
-#: assets/pages/info/TldPage.tsx:147
+#: assets/pages/search/TldPage.tsx:147
 msgid "Country-Code Top-Level-Domains"
 msgstr "Länderspezifische Top-Level-Domains"
 
-#: assets/pages/info/TldPage.tsx:149
+#: assets/pages/search/TldPage.tsx:149
 msgid ""
 "Top-level domains based on country codes, identifying websites according to "
 "their country of origin."
 msgstr ""
 "Top-Level-Domains basieren auf Ländercodes und identifizieren Websites "
 "entsprechend ihrem Herkunftsland."
-
-#: assets/pages/watchdog/UserPage.tsx:18
-msgid "Username"
-msgstr "Benutzername"
-
-#: assets/pages/watchdog/UserPage.tsx:21
-msgid "Roles"
-msgstr "Rollen"
 
 #: assets/pages/tracking/ConnectorsPage.tsx:20
 msgid "Connector created !"
@@ -1051,9 +1043,53 @@ msgstr "Erstellen Sie eine Watchlist"
 msgid "Sorry, the page you visited does not exist."
 msgstr "Es tut uns leid, die von Ihnen besuchte Seite existiert nicht."
 
+#: assets/pages/StatisticsPage.tsx:32
+msgid "RDAP queries"
+msgstr ""
+
+#: assets/pages/StatisticsPage.tsx:41
+msgid "Alerts sent"
+msgstr ""
+
+#: assets/pages/StatisticsPage.tsx:55
+#, fuzzy
+#| msgid "Domain names"
+msgid "Domain names in database"
+msgstr "Domänennamen"
+
+#: assets/pages/StatisticsPage.tsx:66
+#, fuzzy
+#| msgid "Domain names"
+msgid "Tracked domain names"
+msgstr "Domänennamen"
+
+#: assets/pages/StatisticsPage.tsx:80
+#, fuzzy
+#| msgid "At least one domain name"
+msgid "Purchased domain names"
+msgstr "Mindestens ein Domänenname"
+
+#: assets/pages/StatisticsPage.tsx:90
+msgid ""
+"This value is based on the status code of the HTTP response from the "
+"providers following the domain order."
+msgstr ""
+
+#: assets/pages/StatisticsPage.tsx:93
+msgid "Success rate"
+msgstr ""
+
 #: assets/pages/LoginPage.tsx:33
 msgid "Create an account"
 msgstr "Ein Konto erstellen"
+
+#: assets/pages/UserPage.tsx:18
+msgid "Username"
+msgstr "Benutzername"
+
+#: assets/pages/UserPage.tsx:21
+msgid "Roles"
+msgstr "Rollen"
 
 #: assets/utils/functions/showErrorAPI.tsx:19
 #, javascript-format
@@ -1112,23 +1148,23 @@ msgstr ""
 "Die Domain ist kostenlos, kann aber Premium sein. Der Preis variiert von "
 "einer Domain zur anderen"
 
-#: assets/App.tsx:101
+#: assets/App.tsx:100
 msgid "TOS"
 msgstr "Nutzungsbedingungen"
 
-#: assets/App.tsx:102
+#: assets/App.tsx:101
 msgid "Privacy Policy"
 msgstr "Datenschutzrichtlinie"
 
-#: assets/App.tsx:103
+#: assets/App.tsx:102
 msgid "FAQ"
 msgstr "Häufig gestellte Fragen"
 
-#: assets/App.tsx:105
+#: assets/App.tsx:104
 msgid "Documentation"
 msgstr "Dokumentation"
 
-#: assets/App.tsx:108
+#: assets/App.tsx:107
 #, javascript-format
 msgid ""
 "${ ProjectLink } is an open source project distributed under the "
