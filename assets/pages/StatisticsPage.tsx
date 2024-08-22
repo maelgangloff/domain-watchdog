@@ -18,7 +18,7 @@ export default function StatisticsPage() {
         getStatistics().then(setStats)
     }, [])
 
-    const successRatio = stats !== undefined ?
+    const successRate = stats !== undefined ?
         (stats.domainPurchaseFailed === 0 ? undefined : stats.domainPurchased / stats.domainPurchaseFailed)
         : undefined
 
@@ -38,7 +38,7 @@ export default function StatisticsPage() {
                 <Card bordered={false}>
                     <Statistic
                         loading={stats === undefined}
-                        title={t`Alert sent`}
+                        title={t`Alerts sent`}
                         prefix={<NotificationOutlined/>}
                         value={stats?.alertSent}
                         valueStyle={{color: 'blueviolet'}}
@@ -52,7 +52,7 @@ export default function StatisticsPage() {
                 <Card bordered={false}>
                     <Statistic
                         loading={stats === undefined}
-                        title={t`Domain name in database`}
+                        title={t`Domain names in database`}
                         prefix={<DatabaseOutlined/>}
                         value={stats?.rdapQueries}
                         valueStyle={{color: 'darkblue'}}
@@ -63,7 +63,7 @@ export default function StatisticsPage() {
                 <Card bordered={false}>
                     <Statistic
                         loading={stats === undefined}
-                        title={t`Domain name tracked`}
+                        title={t`Tracked domain names`}
                         prefix={<AimOutlined/>}
                         value={stats?.domainTracked}
                         valueStyle={{color: 'darkviolet'}}
@@ -77,7 +77,7 @@ export default function StatisticsPage() {
                 <Card bordered={false}>
                     <Statistic
                         loading={stats === undefined}
-                        title={t`Domain name purchased`}
+                        title={t`Purchased domain names`}
                         prefix={<FieldTimeOutlined/>}
                         value={stats?.domainPurchased}
                         valueStyle={{color: '#3f8600'}}
@@ -87,31 +87,33 @@ export default function StatisticsPage() {
             <Col span={12}>
                 <Card bordered={false}>
                     <Tooltip
-                        title={t`This value is based on the status code of the HTTP response from the providers following the order.`}>
+                        title={t`This value is based on the status code of the HTTP response from the providers following the domain order.`}>
                         <Statistic
                             loading={stats === undefined}
-                            title={t`Success ratio`}
-                            value={successRatio === undefined ? '-' : successRatio * 100}
+                            title={t`Success rate`}
+                            value={successRate === undefined ? '-' : successRate * 100}
                             suffix='%'
                             precision={2}
-                            valueStyle={{color: successRatio === undefined ? 'black' : successRatio >= 0.5 ? 'darkgreen' : 'orange'}}
+                            valueStyle={{color: successRate === undefined ? 'grey' : successRate >= 0.5 ? 'darkgreen' : 'orange'}}
                         />
                     </Tooltip>
                 </Card>
             </Col>
         </Row>
         <Divider/>
-        <Row gutter={16}>
-            {stats?.domainCount.map(({domain, tld}) => <Col span={4}>
-                <Card bordered={false}>
-                    <Statistic
-                        loading={stats === undefined}
-                        title={`.${tld}`}
-                        value={domain}
-                        valueStyle={{color: 'darkblue'}}
-                    />
-                </Card>
-            </Col>)}
+        <Row gutter={16} justify='center' align='middle'>
+            {stats?.domainCount
+                .sort((a, b) => b.domain - a.domain)
+                .map(({domain, tld}) => <Col span={4}>
+                    <Card bordered={false}>
+                        <Statistic
+                            loading={stats === undefined}
+                            title={`.${tld}`}
+                            value={domain}
+                            valueStyle={{color: 'darkblue'}}
+                        />
+                    </Card>
+                </Col>)}
         </Row>
     </>
 }
