@@ -4,7 +4,7 @@ framework:
     #csrf_protection: true
 
     # Note that the session will be started ONLY if you read or write from it.
-    session: true
+    session: false
 
     #esi: true
     #fragments: true
