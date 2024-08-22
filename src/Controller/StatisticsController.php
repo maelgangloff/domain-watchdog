@@ -32,21 +32,26 @@ class StatisticsController extends AbstractController
             ->setDomainPurchased($this->pool->getItem('stats.domain.purchased')->get() ?? 0)
             ->setDomainPurchaseFailed($this->pool->getItem('stats.domain.purchase.failed')->get() ?? 0)
             ->setAlertSent($this->pool->getItem('stats.alert.sent')->get() ?? 0)
-            ->setWatchlistCount(
-                $this->getCachedItem('stats.watchlist.count', fn () => $this->watchListRepository->count()
-                ))
+            ->setDomainTracked(
+                $this->watchListRepository->createQueryBuilder('w')
+                    ->join('w.domains', 'd')
+                    ->select('COUNT(DISTINCT d.ldhName)')
+                    ->where('d.deleted = FALSE')
+                    ->getQuery()->getSingleColumnResult()[0]
+            )
             ->setDomainCount(
                 $this->getCachedItem('stats.domain.count', fn () => $this->domainRepository->createQueryBuilder('d')
                     ->join('d.tld', 't')
                     ->select('t.tld tld')
                     ->addSelect('COUNT(d.ldhName) AS domain')
                     ->addGroupBy('t.tld')
+                    ->where('d.deleted = FALSE')
                     ->orderBy('domain', 'DESC')
                     ->setMaxResults(5)
                     ->getQuery()->getArrayResult())
             )
             ->setDomainCountTotal(
-                $this->getCachedItem('stats.domain.total', fn () => $this->domainRepository->count()
+                $this->getCachedItem('stats.domain.total', fn () => $this->domainRepository->count(['deleted' => false])
                 ));
 
         return $stats;

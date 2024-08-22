@@ -48,7 +48,7 @@ export function Sider({isAuthenticated}: { isAuthenticated: boolean }) {
                     label: t`TLD`,
                     title: t`TLD list`,
                     disabled: !isAuthenticated,
-                    onClick: () => navigate('/info/tld')
+                    onClick: () => navigate('/search/tld')
                 },
                 {
                     key: 'entity-finder',
@@ -93,8 +93,8 @@ export function Sider({isAuthenticated}: { isAuthenticated: boolean }) {
             key: 'stats',
             icon: <LineChartOutlined/>,
             label: t`Statistics`,
-            disabled: true,
-            onClick: () => navigate('/info/stats')
+            disabled: !isAuthenticated,
+            onClick: () => navigate('/stats')
         }
     ]
 

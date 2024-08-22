@@ -88,6 +88,16 @@ export interface InstanceConfig {
     registerEnabled: boolean
 }
 
+export interface Statistics {
+    rdapQueries: number
+    alertSent: number
+    domainPurchased: number
+    domainPurchaseFailed: number
+    domainCount: {tld: string, domain: number}[]
+    domainCountTotal: number
+    domainTracked: number
+}
+
 export async function request<T = any, R = AxiosResponse<T>, D = any>(config: AxiosRequestConfig): Promise<R> {
     const axiosConfig: AxiosRequestConfig = {
         ...config,

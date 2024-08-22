@@ -4,10 +4,10 @@ import TextPage from "./pages/TextPage";
 import DomainSearchPage from "./pages/search/DomainSearchPage";
 import EntitySearchPage from "./pages/search/EntitySearchPage";
 import NameserverSearchPage from "./pages/search/NameserverSearchPage";
-import TldPage from "./pages/info/TldPage";
-import StatisticsPage from "./pages/info/StatisticsPage";
+import TldPage from "./pages/search/TldPage";
+import StatisticsPage from "./pages/StatisticsPage";
 import WatchlistPage from "./pages/tracking/WatchlistPage";
-import UserPage from "./pages/watchdog/UserPage";
+import UserPage from "./pages/UserPage";
 import React, {useCallback, useEffect, useMemo, useState} from "react";
 import {getUser} from "./utils/api";
 import LoginPage, {AuthenticatedContext} from "./pages/LoginPage";
@@ -77,13 +77,12 @@ export default function App() {
                             <Route path="/search/domain" element={<DomainSearchPage/>}/>
                             <Route path="/search/entity" element={<EntitySearchPage/>}/>
                             <Route path="/search/nameserver" element={<NameserverSearchPage/>}/>
-
-                            <Route path="/info/tld" element={<TldPage/>}/>
-                            <Route path="/info/stats" element={<StatisticsPage/>}/>
+                            <Route path="/search/tld" element={<TldPage/>}/>
 
                             <Route path="/tracking/watchlist" element={<WatchlistPage/>}/>
                             <Route path="/tracking/connectors" element={<ConnectorsPage/>}/>
 
+                            <Route path="/stats" element={<StatisticsPage/>}/>
                             <Route path="/user" element={<UserPage/>}/>
 
                             <Route path="/faq" element={<TextPage resource='faq.md'/>}/>

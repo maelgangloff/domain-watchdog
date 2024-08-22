@@ -25,8 +25,21 @@ class Statistics
     private ?int $domainPurchaseFailed = null;
 
     private ?array $domainCount = null;
+    private ?int $domainTracked = null;
     private ?int $domainCountTotal = null;
-    private ?int $watchlistCount = null;
+
+    public static function updateRDAPQueriesStat(CacheItemPoolInterface $pool, string $key): bool
+    {
+        try {
+            $item = $pool->getItem($key);
+            $item->set(($item->get() ?? 0) + 1);
+
+            return $pool->save($item);
+        } catch (\Throwable) {
+        }
+
+        return false;
+    }
 
     public function getRdapQueries(): ?int
     {
@@ -76,18 +89,6 @@ class Statistics
         return $this;
     }
 
-    public function getWatchlistCount(): ?int
-    {
-        return $this->watchlistCount;
-    }
-
-    public function setWatchlistCount(?int $watchlistCount): static
-    {
-        $this->watchlistCount = $watchlistCount;
-
-        return $this;
-    }
-
     public function getDomainCountTotal(): ?int
     {
         return $this->domainCountTotal;
@@ -110,16 +111,15 @@ class Statistics
         return $this;
     }
 
-    public static function updateRDAPQueriesStat(CacheItemPoolInterface $pool, string $key): bool
+    public function getDomainTracked(): ?int
     {
-        try {
-            $item = $pool->getItem($key);
-            $item->set(($item->get() ?? 0) + 1);
+        return $this->domainTracked;
+    }
 
-            return $pool->save($item);
-        } catch (\Throwable) {
-        }
+    public function setDomainTracked(?int $domainTracked): static
+    {
+        $this->domainTracked = $domainTracked;
 
-        return false;
+        return $this;
     }
 }
