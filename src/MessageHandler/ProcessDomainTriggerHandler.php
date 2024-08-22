@@ -7,6 +7,7 @@ use App\Config\TriggerAction;
 use App\Config\WebhookScheme;
 use App\Entity\Domain;
 use App\Entity\DomainEvent;
+use App\Entity\Statistics;
 use App\Entity\WatchList;
 use App\Entity\WatchListTrigger;
 use App\Message\ProcessDomainTrigger;
@@ -15,6 +16,7 @@ use App\Notifier\DomainOrderNotification;
 use App\Notifier\DomainUpdateNotification;
 use App\Repository\DomainRepository;
 use App\Repository\WatchListRepository;
+use Psr\Cache\CacheItemPoolInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
@@ -41,7 +43,7 @@ final readonly class ProcessDomainTriggerHandler
         private KernelInterface $kernel,
         private LoggerInterface $logger,
         private HttpClientInterface $client,
-        private MailerInterface $mailer
+        private MailerInterface $mailer, private CacheItemPoolInterface $cacheItemPool
     ) {
         $this->sender = new Address($mailerSenderEmail, $mailerSenderName);
     }
@@ -82,6 +84,8 @@ final readonly class ProcessDomainTriggerHandler
                 $notification = (new DomainOrderNotification($this->sender, $domain, $connector));
                 $this->mailer->send($notification->asEmailMessage(new Recipient($watchList->getUser()->getEmail()))->getMessage());
                 $this->sendChatNotification($watchList, $notification);
+
+                Statistics::updateRDAPQueriesStat($this->cacheItemPool, 'stats.domain.purchased');
             } catch (\Throwable) {
                 $this->logger->warning('Unable to complete purchase. An error message is sent to user {username}.', [
                     'username' => $watchList->getUser()->getUserIdentifier(),
@@ -90,6 +94,8 @@ final readonly class ProcessDomainTriggerHandler
                 $notification = (new DomainOrderErrorNotification($this->sender, $domain));
                 $this->mailer->send($notification->asEmailMessage(new Recipient($watchList->getUser()->getEmail()))->getMessage());
                 $this->sendChatNotification($watchList, $notification);
+
+                Statistics::updateRDAPQueriesStat($this->cacheItemPool, 'stats.domain.purchase.failed');
             }
         }
 
@@ -114,6 +120,8 @@ final readonly class ProcessDomainTriggerHandler
                 } elseif (TriggerAction::SendChat == $watchListTrigger->getAction()) {
                     $this->sendChatNotification($watchList, $notification);
                 }
+
+                Statistics::updateRDAPQueriesStat($this->cacheItemPool, 'stats.alert.sent');
             }
         }
     }

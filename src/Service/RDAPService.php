@@ -12,6 +12,7 @@ use App\Entity\EntityEvent;
 use App\Entity\Nameserver;
 use App\Entity\NameserverEntity;
 use App\Entity\RdapServer;
+use App\Entity\Statistics;
 use App\Entity\Tld;
 use App\Repository\DomainEntityRepository;
 use App\Repository\DomainEventRepository;
@@ -24,6 +25,7 @@ use App\Repository\RdapServerRepository;
 use App\Repository\TldRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Exception\ORMException;
+use Psr\Cache\CacheItemPoolInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpClient\Exception\ClientException;
 use Symfony\Component\HttpFoundation\Exception\BadRequestException;
@@ -87,7 +89,8 @@ readonly class RDAPService
         private RdapServerRepository $rdapServerRepository,
         private TldRepository $tldRepository,
         private EntityManagerInterface $em,
-        private LoggerInterface $logger
+        private LoggerInterface $logger,
+        private CacheItemPoolInterface $pool
     ) {
     }
 
@@ -162,6 +165,8 @@ readonly class RDAPService
         ]);
 
         try {
+            Statistics::updateRDAPQueriesStat($this->pool, 'stats.rdap_queries.count');
+
             $res = $this->client->request(
                 'GET', $rdapServerUrl.'domain/'.$idnDomain
             )->toArray();

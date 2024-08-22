@@ -40,6 +40,7 @@
     "runtime/frankenphp-symfony": "^0.2.0",
     "symfony/asset": "7.1.*",
     "symfony/asset-mapper": "7.1.*",
+    "symfony/cache": "7.1.*",
     "symfony/console": "7.1.*",
     "symfony/discord-notifier": "7.1.*",
     "symfony/doctrine-messenger": "7.1.*",
