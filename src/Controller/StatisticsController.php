@@ -32,12 +32,13 @@ class StatisticsController extends AbstractController
             ->setDomainPurchased($this->pool->getItem('stats.domain.purchased')->get() ?? 0)
             ->setDomainPurchaseFailed($this->pool->getItem('stats.domain.purchase.failed')->get() ?? 0)
             ->setAlertSent($this->pool->getItem('stats.alert.sent')->get() ?? 0)
+
             ->setDomainTracked(
-                $this->watchListRepository->createQueryBuilder('w')
+                $this->getCachedItem('stats.domain.tracked', fn () => $this->watchListRepository->createQueryBuilder('w')
                     ->join('w.domains', 'd')
                     ->select('COUNT(DISTINCT d.ldhName)')
                     ->where('d.deleted = FALSE')
-                    ->getQuery()->getSingleColumnResult()[0]
+                    ->getQuery()->getSingleColumnResult()[0])
             )
             ->setDomainCount(
                 $this->getCachedItem('stats.domain.count', fn () => $this->domainRepository->createQueryBuilder('d')
