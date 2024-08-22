@@ -246,211 +246,250 @@ msgid ""
 "has expired or will expire at a predetermined date and time."
 msgstr ""
 
-#: assets/components/search/rdapTranslation.ts:77
+#: assets/components/search/rdapTranslation.ts:78
 msgid ""
 "Signifies that the data of the object instance has been found to be "
 "accurate."
 msgstr ""
 
-#: assets/components/search/rdapTranslation.ts:78
+#: assets/components/search/rdapTranslation.ts:79
 msgid "Renewal or reregistration of the object instance is forbidden."
 msgstr ""
 
-#: assets/components/search/rdapTranslation.ts:79
+#: assets/components/search/rdapTranslation.ts:80
 msgid "Updates to the object instance are forbidden."
 msgstr ""
 
-#: assets/components/search/rdapTranslation.ts:80
+#: assets/components/search/rdapTranslation.ts:81
 msgid "Transfers of the registration from one registrar to another are forbidden."
 msgstr ""
 
-#: assets/components/search/rdapTranslation.ts:81
+#: assets/components/search/rdapTranslation.ts:82
 msgid "Deletion of the registration of the object instance is forbidden."
 msgstr ""
 
-#: assets/components/search/rdapTranslation.ts:82
+#: assets/components/search/rdapTranslation.ts:83
 msgid "The registration of the object instance has been performed by a third party."
 msgstr ""
 
-#: assets/components/search/rdapTranslation.ts:83
+#: assets/components/search/rdapTranslation.ts:84
 msgid ""
 "The information of the object instance is not designated for public "
 "consumption."
 msgstr ""
 
-#: assets/components/search/rdapTranslation.ts:84
+#: assets/components/search/rdapTranslation.ts:85
 msgid ""
 "Some of the information of the object instance has not been made available "
 "and has been removed."
 msgstr ""
 
-#: assets/components/search/rdapTranslation.ts:85
+#: assets/components/search/rdapTranslation.ts:86
 msgid ""
 "Some of the information of the object instance has been altered for the "
 "purposes of not readily revealing the actual information of the object "
 "instance."
 msgstr ""
 
-#: assets/components/search/rdapTranslation.ts:86
+#: assets/components/search/rdapTranslation.ts:87
 msgid ""
 "The object instance is associated with other object instances in the "
 "registry."
 msgstr ""
 
-#: assets/components/search/rdapTranslation.ts:87
-msgid ""
-"The object instance is in use. For domain names, it signifies that the "
-"domain name is published in DNS. For network and autnum registrations, it "
-"signifies that they are allocated or assigned for use in operational "
-"networks."
-msgstr ""
-
 #: assets/components/search/rdapTranslation.ts:88
-msgid "The object instance is not in use."
-msgstr ""
-
-#: assets/components/search/rdapTranslation.ts:89
 msgid ""
 "Changes to the object instance cannot be made, including the association of "
 "other object instances."
 msgstr ""
 
 #: assets/components/search/rdapTranslation.ts:90
+#: assets/components/search/rdapTranslation.ts:99
 msgid ""
-"A request has been received for the creation of the object instance, but "
-"this action is not yet complete."
+"This is the standard status for a domain, meaning it has no pending "
+"operations or prohibitions."
 msgstr ""
 
 #: assets/components/search/rdapTranslation.ts:91
 msgid ""
-"A request has been received for the renewal of the object instance, but "
-"this action is not yet complete."
+"This status code indicates that delegation information (name servers) has "
+"not been associated with your domain. Your domain is not activated in the "
+"DNS and will not resolve."
 msgstr ""
 
 #: assets/components/search/rdapTranslation.ts:92
 msgid ""
-"A request has been received for the transfer of the object instance, but "
-"this action is not yet complete."
+"This status code may be mixed with redemptionPeriod or pendingRestore. In "
+"such case, depending on the status (i.e. redemptionPeriod or "
+"pendingRestore) set in the domain name, the corresponding description "
+"presented above applies. If this status is not combined with the "
+"redemptionPeriod or pendingRestore status, the pendingDelete status code "
+"indicates that your domain has been in redemptionPeriod status for 30 days "
+"and you have not restored it within that 30-day period. Your domain will "
+"remain in this status for several days, after which time your domain will "
+"be purged and dropped from the registry database. Once deletion occurs, the "
+"domain is available for re-registration in accordance with the registry's "
+"policies."
 msgstr ""
 
 #: assets/components/search/rdapTranslation.ts:93
 msgid ""
-"A request has been received for the update or modification of the object "
-"instance, but this action is not yet complete."
+"This status code indicates that a request to renew your domain has been "
+"received and is being processed."
 msgstr ""
 
 #: assets/components/search/rdapTranslation.ts:94
 msgid ""
-"A request has been received for the deletion or removal of the object "
-"instance, but this action is not yet complete. For domains, this might mean "
-"that the name is no longer published in DNS but has not yet been purged "
-"from the registry database."
+"This status code indicates that a request to transfer your domain to a new "
+"registrar has been received and is being processed."
 msgstr ""
 
 #: assets/components/search/rdapTranslation.ts:95
 msgid ""
-"This grace period is provided after the initial registration of the object. "
-"If the object is deleted by the client during this period, the server "
-"provides a credit to the client for the cost of the registration."
+"This status code indicates that a request to update your domain has been "
+"received and is being processed."
 msgstr ""
 
 #: assets/components/search/rdapTranslation.ts:96
 msgid ""
-"This grace period is provided after an object registration period expires "
-"and is extended (renewed) automatically by the server. If the object is "
-"deleted by the client during this period, the server provides a credit to "
-"the client for the cost of the auto renewal."
+"This status code may be mixed with redemptionPeriod or pendingRestore. In "
+"such case, depending on the status (i.e. redemptionPeriod or "
+"pendingRestore) set in the domain name, the corresponding description "
+"presented above applies. If this status is not combined with the "
+"redemptionPeriod or pendingRestore status, the pendingDelete status code "
+"indicates that your domain has been in redemptionPeriod status for 30 days "
+"and you have not restored it within that 30-day period. Your domain will "
+"remain in this status for several days, after which time your domain will "
+"be purged and dropped from the registry database."
 msgstr ""
 
 #: assets/components/search/rdapTranslation.ts:97
-msgid "The client requested that requests to delete the object MUST be rejected."
+msgid ""
+"This grace period is provided after the initial registration of a domain "
+"name. If the registrar deletes the domain name during this period, the "
+"registry may provide credit to the registrar for the cost of the "
+"registration."
 msgstr ""
 
 #: assets/components/search/rdapTranslation.ts:98
 msgid ""
-"The client requested that the DNS delegation information MUST NOT be "
-"published for the object."
-msgstr ""
-
-#: assets/components/search/rdapTranslation.ts:99
-msgid "The client requested that requests to renew the object MUST be rejected."
+"This grace period is provided after a domain name registration period "
+"expires and is extended (renewed) automatically by the registry. If the "
+"registrar deletes the domain name during this period, the registry provides "
+"a credit to the registrar for the cost of the renewal."
 msgstr ""
 
 #: assets/components/search/rdapTranslation.ts:100
-msgid "The client requested that requests to transfer the object MUST be rejected."
+msgid ""
+"This status code tells your domain's registry to reject requests to delete "
+"the domain."
 msgstr ""
 
 #: assets/components/search/rdapTranslation.ts:101
 msgid ""
-"The client requested that requests to update the object (other than to "
-"remove this status) MUST be rejected."
+"This status code tells your domain's registry to not activate your domain "
+"in the DNS and as a consequence, it will not resolve. It is an uncommon "
+"status that is usually enacted during legal disputes, non-payment, or when "
+"your domain is subject to deletion."
 msgstr ""
 
 #: assets/components/search/rdapTranslation.ts:102
 msgid ""
-"An object is in the process of being restored after being in the redemption "
-"period state."
+"This status code tells your domain's registry to reject requests to renew "
+"your domain. It is an uncommon status that is usually enacted during legal "
+"disputes or when your domain is subject to deletion."
 msgstr ""
 
 #: assets/components/search/rdapTranslation.ts:103
 msgid ""
-"A delete has been received, but the object has not yet been purged because "
-"an opportunity exists to restore the object and abort the deletion process."
+"This status code tells your domain's registry to reject requests to "
+"transfer the domain from your current registrar to another."
 msgstr ""
 
 #: assets/components/search/rdapTranslation.ts:104
 msgid ""
-"This grace period is provided after an object registration period is "
-"explicitly extended (renewed) by the client. If the object is deleted by "
-"the client during this period, the server provides a credit to the client "
-"for the cost of the renewal."
+"This status code tells your domain's registry to reject requests to update "
+"the domain."
 msgstr ""
 
 #: assets/components/search/rdapTranslation.ts:105
 msgid ""
-"The server set the status so that requests to delete the object MUST be "
-"rejected."
+"This status code indicates that your registrar has asked the registry to "
+"restore your domain that was in redemptionPeriod status. Your registry will "
+"hold the domain in this status while waiting for your registrar to provide "
+"required restoration documentation. If your registrar fails to provide "
+"documentation to the registry operator within a set time period to confirm "
+"the restoration request, the domain will revert to redemptionPeriod status."
 msgstr ""
 
 #: assets/components/search/rdapTranslation.ts:106
 msgid ""
-"The server set the status so that requests to renew the object MUST be "
-"rejected."
+"This status code indicates that your registrar has asked the registry to "
+"delete your domain. Your domain will be held in this status for 30 days. "
+"After five calendar days following the end of the redemptionPeriod, your "
+"domain is purged from the registry database and becomes available for "
+"registration."
 msgstr ""
 
 #: assets/components/search/rdapTranslation.ts:107
 msgid ""
-"The server set the status so that requests to transfer the object MUST be "
-"rejected."
+"This grace period is provided after a domain name registration period is "
+"explicitly extended (renewed) by the registrar. If the registrar deletes "
+"the domain name during this period, the registry provides a credit to the "
+"registrar for the cost of the renewal."
 msgstr ""
 
 #: assets/components/search/rdapTranslation.ts:108
 msgid ""
-"The server set the status so that requests to update the object (other than "
-"to remove this status) MUST be rejected."
+"This status code prevents your domain from being deleted. It is an uncommon "
+"status that is usually enacted during legal disputes, at your request, or "
+"when a redemptionPeriod status is in place."
 msgstr ""
 
 #: assets/components/search/rdapTranslation.ts:109
 msgid ""
-"The server set the status so that DNS delegation information MUST NOT be "
-"published for the object."
+"This status code indicates your domain's Registry Operator will not allow "
+"your registrar to renew your domain. It is an uncommon status that is "
+"usually enacted during legal disputes or when your domain is subject to "
+"deletion."
 msgstr ""
 
 #: assets/components/search/rdapTranslation.ts:110
 msgid ""
-"This grace period is provided after the successful transfer of object "
-"registration sponsorship from one client to another client. If the object "
-"is deleted by the client during this period, the server provides a credit "
-"to the client for the cost of the transfer."
+"This status code prevents your domain from being transferred from your "
+"current registrar to another. It is an uncommon status that is usually "
+"enacted during legal or other disputes, at your request, or when a "
+"redemptionPeriod status is in place."
 msgstr ""
 
 #: assets/components/search/rdapTranslation.ts:111
+msgid ""
+"This status code locks your domain preventing it from being updated. It is "
+"an uncommon status that is usually enacted during legal disputes, at your "
+"request, or when a redemptionPeriod status is in place."
+msgstr ""
+
+#: assets/components/search/rdapTranslation.ts:112
+msgid ""
+"This status code is set by your domain's Registry Operator. Your domain is "
+"not activated in the DNS."
+msgstr ""
+
+#: assets/components/search/rdapTranslation.ts:113
+msgid ""
+"This grace period is provided after the successful transfer of a domain "
+"name from one registrar to another. If the new registrar deletes the domain "
+"name during this period, the registry provides a credit to the registrar "
+"for the cost of the transfer."
+msgstr ""
+
+#: assets/components/search/rdapTranslation.ts:115
 msgid ""
 "The object instance has been allocated administratively (i.e., not for use "
 "by the recipient in their own right in operational networks)."
 msgstr ""
 
-#: assets/components/search/rdapTranslation.ts:112
+#: assets/components/search/rdapTranslation.ts:116
 msgid ""
 "The object instance has been allocated to an IANA special-purpose address "
 "registry."
