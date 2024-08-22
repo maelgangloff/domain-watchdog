@@ -376,16 +376,8 @@ msgstr ""
 
 #: assets/components/search/rdapTranslation.ts:92
 msgid ""
-"This status code may be mixed with redemptionPeriod or pendingRestore. In "
-"such case, depending on the status (i.e. redemptionPeriod or pendingRestore) "
-"set in the domain name, the corresponding description presented above "
-"applies. If this status is not combined with the redemptionPeriod or "
-"pendingRestore status, the pendingDelete status code indicates that your "
-"domain has been in redemptionPeriod status for 30 days and you have not "
-"restored it within that 30-day period. Your domain will remain in this "
-"status for several days, after which time your domain will be purged and "
-"dropped from the registry database. Once deletion occurs, the domain is "
-"available for re-registration in accordance with the registry's policies."
+"This status code indicates that a request to create your domain has been "
+"received and is being processed."
 msgstr ""
 
 #: assets/components/search/rdapTranslation.ts:93
@@ -416,7 +408,8 @@ msgid ""
 "domain has been in redemptionPeriod status for 30 days and you have not "
 "restored it within that 30-day period. Your domain will remain in this "
 "status for several days, after which time your domain will be purged and "
-"dropped from the registry database."
+"dropped from the registry database. Once deletion occurs, the domain is "
+"available for re-registration in accordance with the registry's policies."
 msgstr ""
 
 #: assets/components/search/rdapTranslation.ts:97
