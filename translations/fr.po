@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2024-08-22 17:55+0000\n"
+"PO-Revision-Date: 2024-08-22 21:31+0000\n"
 "Last-Translator: Maël Gangloff <contact@maelgangloff.fr>\n"
 "Language-Team: French <https://weblate.vinceh121.me/projects/domain-watchdog/"
 "domain-watchdog-dashboard/fr/>\n"
@@ -363,6 +363,8 @@ msgid ""
 "This is the standard status for a domain, meaning it has no pending "
 "operations or prohibitions."
 msgstr ""
+"Il s'agit du statut standard d'un domaine, ce qui signifie qu'il n'a aucune "
+"opération ou interdiction en attente."
 
 #: assets/components/search/rdapTranslation.ts:91
 msgid ""
@@ -370,6 +372,9 @@ msgid ""
 "not been associated with your domain. Your domain is not activated in the "
 "DNS and will not resolve."
 msgstr ""
+"Ce code d'état indique que les informations de délégation (serveurs de noms) "
+"n'ont pas été associées à votre domaine. Votre domaine n'est pas activé dans "
+"le DNS et ne sera pas résolu."
 
 #: assets/components/search/rdapTranslation.ts:92
 msgid ""
@@ -384,24 +389,41 @@ msgid ""
 "dropped from the registry database. Once deletion occurs, the domain is "
 "available for re-registration in accordance with the registry's policies."
 msgstr ""
+"Ce code d'état peut être combiné avec redemptionPeriod ou pendingRestore. "
+"Dans ce cas, en fonction de l'état (c'est-à-dire redemptionPeriod ou "
+"pendingRestore) défini dans le nom de domaine, la description correspondante "
+"présentée ci-dessus s'applique. Si cet état n'est pas combiné avec l'état "
+"redemptionPeriod ou pendingRestore, le code d'état pendingDelete indique que "
+"votre domaine est dans l'état redemptionPeriod depuis 30 jours et que vous "
+"ne l'avez pas restauré au cours de cette période de 30 jours. Votre domaine "
+"restera dans cet état pendant plusieurs jours, après quoi il sera purgé et "
+"supprimé de la base de données du registre. Une fois la suppression "
+"effectuée, le domaine est disponible pour un réenregistrement conformément "
+"aux politiques du registre."
 
 #: assets/components/search/rdapTranslation.ts:93
 msgid ""
 "This status code indicates that a request to renew your domain has been "
 "received and is being processed."
 msgstr ""
+"Ce code d'état indique qu'une demande de renouvellement de votre domaine a "
+"été reçue et est en cours de traitement."
 
 #: assets/components/search/rdapTranslation.ts:94
 msgid ""
 "This status code indicates that a request to transfer your domain to a new "
 "registrar has been received and is being processed."
 msgstr ""
+"Ce code d'état indique qu'une demande de transfert de votre domaine vers un "
+"nouveau bureau d'enregistrement a été reçue et est en cours de traitement."
 
 #: assets/components/search/rdapTranslation.ts:95
 msgid ""
 "This status code indicates that a request to update your domain has been "
 "received and is being processed."
 msgstr ""
+"Ce code d'état indique qu'une demande de mise à jour de votre domaine a été "
+"reçue et est en cours de traitement."
 
 #: assets/components/search/rdapTranslation.ts:96
 msgid ""
