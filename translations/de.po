@@ -16,7 +16,7 @@ msgstr "E-Mail-Adresse"
 
 #: assets/components/LoginForm.tsx:54 assets/components/LoginForm.tsx:62
 #: assets/components/RegisterForm.tsx:41 assets/components/RegisterForm.tsx:49
-#: assets/components/search/DomainSearchBar.tsx:22
+#: assets/components/search/DomainSearchBar.tsx:21
 #: assets/components/tracking/connector/ConnectorForm.tsx:43
 #: assets/components/tracking/connector/ConnectorForm.tsx:69
 #: assets/components/tracking/connector/ConnectorForm.tsx:77
@@ -43,611 +43,43 @@ msgstr "Senden"
 msgid "Log in with SSO"
 msgstr "Mit SSO anmelden"
 
-#: assets/components/search/rdapTranslation.ts:7
-msgid "Registrant"
-msgstr "Anmelder"
-
-#: assets/components/search/rdapTranslation.ts:8
-msgid "Technical"
-msgstr "Technischer"
-
-#: assets/components/search/rdapTranslation.ts:9
-msgid "Administrative"
-msgstr "Verwaltung"
-
-#: assets/components/search/rdapTranslation.ts:10
-msgid "Abuse"
-msgstr "Missbrauch"
-
-#: assets/components/search/rdapTranslation.ts:11
-msgid "Billing"
-msgstr "Rechnungsstellung"
-
-#: assets/components/search/rdapTranslation.ts:12
-msgid "Registrar"
-msgstr "Registrierungsstelle"
-
-#: assets/components/search/rdapTranslation.ts:13
-msgid "Reseller"
-msgstr "Wiederverkäufer"
-
-#: assets/components/search/rdapTranslation.ts:14
-msgid "Sponsor"
-msgstr "Sponsor"
-
-#: assets/components/search/rdapTranslation.ts:15
-msgid "Proxy"
-msgstr "Proxy"
-
-#: assets/components/search/rdapTranslation.ts:16
-msgid "Notifications"
-msgstr "Benachrichtigungen"
-
-#: assets/components/search/rdapTranslation.ts:17
-msgid "Noc"
-msgstr "Noc"
-
-#: assets/components/search/rdapTranslation.ts:25
-msgid ""
-"The entity object instance is the registrant of the registration. In some "
-"registries, this is known as a maintainer."
-msgstr ""
-"Die Entitätsobjektinstanz ist der Registrant der Registrierung. In einigen "
-"Registern wird dies als Maintainer bezeichnet."
-
-#: assets/components/search/rdapTranslation.ts:26
-msgid "The entity object instance is a technical contact for the registration."
-msgstr ""
-"Die Entitätsobjektinstanz ist ein technischer Kontakt für die Registrierung."
-
-#: assets/components/search/rdapTranslation.ts:27
-msgid ""
-"The entity object instance is an administrative contact for the registration."
-msgstr ""
-"Die Entitätsobjektinstanz ist ein administrativer Kontakt für die "
-"Registrierung."
-
-#: assets/components/search/rdapTranslation.ts:28
-msgid ""
-"The entity object instance handles network abuse issues on behalf of the "
-"registrant of the registration."
-msgstr ""
-"Die Instanz des Entity-Objekts behandelt Fragen des Netzmissbrauchs im Namen "
-"des Registranten der Registrierung."
-
-#: assets/components/search/rdapTranslation.ts:29
-msgid ""
-"The entity object instance handles payment and billing issues on behalf of "
-"the registrant of the registration."
-msgstr ""
-"Die Instanz des Entitätsobjekts wickelt die Zahlungs- und "
-"Abrechnungsangelegenheiten im Namen des Registranten der Registrierung ab."
-
-#: assets/components/search/rdapTranslation.ts:30
-msgid ""
-"The entity object instance represents the authority responsible for the "
-"registration in the registry."
-msgstr ""
-"Die Instanz des Entitätsobjekts repräsentiert die für die Registrierung im "
-"Register zuständige Behörde."
-
-#: assets/components/search/rdapTranslation.ts:31
-msgid ""
-"The entity object instance represents a third party through which the "
-"registration was conducted (i.e., not the registry or registrar)."
-msgstr ""
-"Die Instanz des Entity-Objekts repräsentiert eine dritte Partei, über die "
-"die Registrierung durchgeführt wurde (d. h. nicht das Register oder die "
-"Registrierstelle)."
-
-#: assets/components/search/rdapTranslation.ts:32
-msgid ""
-"The entity object instance represents a domain policy sponsor, such as an "
-"ICANN-approved sponsor."
-msgstr ""
-"Die Instanz des Entity-Objekts repräsentiert einen Sponsor der "
-"Domänenpolitik, z. B. einen von der ICANN zugelassenen Sponsor."
-
-#: assets/components/search/rdapTranslation.ts:33
-msgid ""
-"The entity object instance represents a proxy for another entity object, "
-"such as a registrant."
-msgstr ""
-"Die Entitätsobjektinstanz stellt einen Stellvertreter für ein anderes "
-"Entitätsobjekt dar, z. B. einen Registranten."
-
-#: assets/components/search/rdapTranslation.ts:34
-msgid ""
-"An entity object instance designated to receive notifications about "
-"association object instances."
-msgstr ""
-"Eine Entitätsobjektinstanz, die für den Empfang von Benachrichtigungen über "
-"Assoziationsobjektinstanzen bestimmt ist."
-
-#: assets/components/search/rdapTranslation.ts:35
-msgid ""
-"The entity object instance handles communications related to a network "
-"operations center (NOC)."
-msgstr ""
-"Die Entity-Objektinstanz verarbeitet die Kommunikation im Zusammenhang mit "
-"einem Network Operations Center (NOC)."
-
-#: assets/components/search/rdapTranslation.ts:43
-msgid "Registration"
-msgstr "Registrierung"
-
-#: assets/components/search/rdapTranslation.ts:44
-msgid "Reregistration"
-msgstr "Neuregistrierung"
-
-#: assets/components/search/rdapTranslation.ts:45
-msgid "Changed"
-msgstr "Geändert"
-
-#: assets/components/search/rdapTranslation.ts:46
-msgid "Expiration"
-msgstr "Ablauf"
-
-#: assets/components/search/rdapTranslation.ts:47
-msgid "Deletion"
-msgstr "Löschung"
-
-#: assets/components/search/rdapTranslation.ts:48
-msgid "Reinstantiation"
-msgstr "Neuinstanzierung"
-
-#: assets/components/search/rdapTranslation.ts:49
-msgid "Transfer"
-msgstr "Übertragung"
-
-#: assets/components/search/rdapTranslation.ts:50
-msgid "Locked"
-msgstr "Gesperrt"
-
-#: assets/components/search/rdapTranslation.ts:51
-msgid "Unlocked"
-msgstr "Entsperrt"
-
-#: assets/components/search/rdapTranslation.ts:52
-msgid "Registrar expiration"
-msgstr "Ablauf des Registrars"
-
-#: assets/components/search/rdapTranslation.ts:53
-msgid "ENUM validation expiration"
-msgstr "Ablauf der ENUM-Validierung"
-
-#: assets/components/search/rdapTranslation.ts:60
-msgid "The object instance was initially registered."
-msgstr "Die Objektinstanz wurde zunächst registriert."
-
-#: assets/components/search/rdapTranslation.ts:61
-msgid ""
-"The object instance was registered subsequently to initial registration."
-msgstr ""
-"Die Objektinstanz wurde im Anschluss an die Erstregistrierung registriert."
-
-#: assets/components/search/rdapTranslation.ts:62
-msgid ""
-"An action noting when the information in the object instance was last "
-"changed."
-msgstr ""
-"Eine Aktion, die festhält, wann die Informationen in der Objektinstanz "
-"zuletzt geändert wurden."
-
-#: assets/components/search/rdapTranslation.ts:63
-msgid ""
-"The object instance has been removed or will be removed at a predetermined "
-"date and time from the registry."
-msgstr ""
-"Die Objektinstanz wurde entfernt oder wird zu einem festgelegten Datum und "
-"Zeitpunkt aus der Registrierung entfernt."
-
-#: assets/components/search/rdapTranslation.ts:64
-msgid ""
-"The object instance was removed from the registry at a point in time that "
-"was not predetermined."
-msgstr ""
-"Die Objektinstanz wurde zu einem nicht vorherbestimmten Zeitpunkt aus der "
-"Registry entfernt."
-
-#: assets/components/search/rdapTranslation.ts:65
-msgid ""
-"The object instance was reregistered after having been removed from the "
-"registry."
-msgstr ""
-"Die Objektinstanz wurde nach der Entfernung aus der Registry erneut "
-"registriert."
-
-#: assets/components/search/rdapTranslation.ts:66
-msgid "The object instance was transferred from one registrar to another."
-msgstr ""
-"Die Objektinstanz wurde von einem Registrar zu einem anderen übertragen."
-
-#: assets/components/search/rdapTranslation.ts:67
-msgid "The object instance was locked."
-msgstr "Die Objektinstanz wurde gesperrt."
-
-#: assets/components/search/rdapTranslation.ts:68
-msgid "The object instance was unlocked."
-msgstr "Die Objektinstanz wurde entsperrt."
-
-#: assets/components/search/rdapTranslation.ts:69
-msgid ""
-"An action noting the expiration date of the object in the registrar system."
-msgstr ""
-"Eine Aktion, die das Ablaufdatum des Objekts im Registrarsystem notiert."
-
-#: assets/components/search/rdapTranslation.ts:70
-msgid ""
-"Association of phone number represented by this ENUM domain to registrant "
-"has expired or will expire at a predetermined date and time."
-msgstr ""
-"Die Zuordnung der durch diese ENUM-Domäne repräsentierten Telefonnummer zum "
-"Registranten ist abgelaufen oder läuft zu einem festgelegten Datum und "
-"Zeitpunkt ab."
-
-#: assets/components/search/rdapTranslation.ts:78
-msgid ""
-"Signifies that the data of the object instance has been found to be accurate."
-msgstr ""
-"Bedeutet, dass die Daten der Objektinstanz als korrekt befunden wurden."
-
-#: assets/components/search/rdapTranslation.ts:79
-msgid "Renewal or reregistration of the object instance is forbidden."
-msgstr "Eine Erneuerung oder Neuregistrierung der Objektinstanz ist untersagt."
-
-#: assets/components/search/rdapTranslation.ts:80
-msgid "Updates to the object instance are forbidden."
-msgstr "Aktualisierungen der Objektinstanz sind verboten."
-
-#: assets/components/search/rdapTranslation.ts:81
-msgid ""
-"Transfers of the registration from one registrar to another are forbidden."
-msgstr ""
-"Eine Übertragung der Registrierung von einem Registrar auf einen anderen ist "
-"nicht zulässig."
-
-#: assets/components/search/rdapTranslation.ts:82
-msgid "Deletion of the registration of the object instance is forbidden."
-msgstr "Das Löschen der Registrierung der Objektinstanz ist verboten."
-
-#: assets/components/search/rdapTranslation.ts:83
-msgid ""
-"The registration of the object instance has been performed by a third party."
-msgstr ""
-"Die Registrierung der Objektinstanz wurde von einer dritten Partei "
-"durchgeführt."
-
-#: assets/components/search/rdapTranslation.ts:84
-msgid ""
-"The information of the object instance is not designated for public "
-"consumption."
-msgstr ""
-"Die Informationen der Objektinstanz sind nicht für die öffentliche "
-"Verwendung bestimmt."
-
-#: assets/components/search/rdapTranslation.ts:85
-msgid ""
-"Some of the information of the object instance has not been made available "
-"and has been removed."
-msgstr ""
-"Einige Informationen der Objektinstanz wurden nicht bereitgestellt und "
-"entfernt."
-
-#: assets/components/search/rdapTranslation.ts:86
-msgid ""
-"Some of the information of the object instance has been altered for the "
-"purposes of not readily revealing the actual information of the object "
-"instance."
-msgstr ""
-"Einige der Informationen der Objektinstanz wurden geändert, um die "
-"tatsächlichen Informationen der Objektinstanz nicht ohne Weiteres "
-"preiszugeben."
-
-#: assets/components/search/rdapTranslation.ts:87
-msgid ""
-"The object instance is associated with other object instances in the "
-"registry."
-msgstr ""
-"Die Objektinstanz ist mit anderen Objektinstanzen in der Registrierung "
-"verknüpft."
-
-#: assets/components/search/rdapTranslation.ts:88
-msgid ""
-"Changes to the object instance cannot be made, including the association of "
-"other object instances."
-msgstr ""
-"Änderungen an der Objektinstanz können nicht vorgenommen werden, auch nicht "
-"die Verknüpfung mit anderen Objektinstanzen."
-
-#: assets/components/search/rdapTranslation.ts:90
-#: assets/components/search/rdapTranslation.ts:99
-msgid ""
-"This is the standard status for a domain, meaning it has no pending "
-"operations or prohibitions."
-msgstr ""
-"Dies ist der Standardstatus einer Domäne. Dies bedeutet, dass keine Vorgänge "
-"oder Verbote ausstehen."
-
-#: assets/components/search/rdapTranslation.ts:91
-msgid ""
-"This status code indicates that delegation information (name servers) has "
-"not been associated with your domain. Your domain is not activated in the "
-"DNS and will not resolve."
-msgstr ""
-"Dieser Statuscode zeigt an, dass Ihrer Domain keine Delegationsinformationen "
-"(Nameserver) zugeordnet wurden. Ihre Domain ist im DNS nicht aktiviert und "
-"wird nicht aufgelöst."
-
-#: assets/components/search/rdapTranslation.ts:92
-msgid ""
-"This status code indicates that a request to create your domain has been "
-"received and is being processed."
-msgstr ""
-"Dieser Statuscode zeigt an, dass eine Anfrage zum Erstellen Ihrer Domäne "
-"eingegangen ist und bearbeitet wird."
-
-#: assets/components/search/rdapTranslation.ts:93
-msgid ""
-"This status code indicates that a request to renew your domain has been "
-"received and is being processed."
-msgstr ""
-"Dieser Statuscode zeigt an, dass eine Anfrage zur Verlängerung Ihrer Domain "
-"eingegangen ist und bearbeitet wird."
-
-#: assets/components/search/rdapTranslation.ts:94
-msgid ""
-"This status code indicates that a request to transfer your domain to a new "
-"registrar has been received and is being processed."
-msgstr ""
-"Dieser Statuscode zeigt an, dass eine Anfrage zum Übertragen Ihrer Domain an "
-"einen neuen Registrar eingegangen ist und bearbeitet wird."
-
-#: assets/components/search/rdapTranslation.ts:95
-msgid ""
-"This status code indicates that a request to update your domain has been "
-"received and is being processed."
-msgstr ""
-"Dieser Statuscode zeigt an, dass eine Anfrage zum Aktualisieren Ihrer Domäne "
-"eingegangen ist und bearbeitet wird."
-
-#: assets/components/search/rdapTranslation.ts:96
-msgid ""
-"This status code may be mixed with redemptionPeriod or pendingRestore. In "
-"such case, depending on the status (i.e. redemptionPeriod or pendingRestore) "
-"set in the domain name, the corresponding description presented above "
-"applies. If this status is not combined with the redemptionPeriod or "
-"pendingRestore status, the pendingDelete status code indicates that your "
-"domain has been in redemptionPeriod status for 30 days and you have not "
-"restored it within that 30-day period. Your domain will remain in this "
-"status for several days, after which time your domain will be purged and "
-"dropped from the registry database. Once deletion occurs, the domain is "
-"available for re-registration in accordance with the registry's policies."
-msgstr ""
-"Dieser Statuscode kann mit „redemptionPeriod“ oder „pendingRestore“ "
-"kombiniert werden. In diesem Fall gilt je nach dem im Domänennamen "
-"festgelegten Status (d. h. „redemptionPeriod“ oder „pendingRestore“) die "
-"entsprechende oben dargestellte Beschreibung. Wenn dieser Status nicht mit "
-"dem Status „redemptionPeriod“ oder „pendingRestore“ kombiniert wird, zeigt "
-"der Statuscode „pendingDelete“ an, dass sich Ihre Domäne 30 Tage lang im "
-"Status „redemptionPeriod“ befunden hat und Sie sie innerhalb dieses 30-"
-"tägigen Zeitraums nicht wiederhergestellt haben. Ihre Domäne bleibt mehrere "
-"Tage in diesem Status. Danach wird sie gelöscht und aus der "
-"Registrierungsdatenbank entfernt. Nach der Löschung ist die Domäne gemäß den "
-"Richtlinien der Registrierung für eine erneute Registrierung verfügbar."
-
-#: assets/components/search/rdapTranslation.ts:97
-msgid ""
-"This grace period is provided after the initial registration of a domain "
-"name. If the registrar deletes the domain name during this period, the "
-"registry may provide credit to the registrar for the cost of the "
-"registration."
-msgstr ""
-"Diese Nachfrist gilt nach der ersten Registrierung eines Domänennamens. Wenn "
-"der Registrar den Domänennamen während dieser Frist löscht, kann das "
-"Register dem Registrar die Kosten für die Registrierung gutschreiben."
-
-#: assets/components/search/rdapTranslation.ts:98
-msgid ""
-"This grace period is provided after a domain name registration period "
-"expires and is extended (renewed) automatically by the registry. If the "
-"registrar deletes the domain name during this period, the registry provides "
-"a credit to the registrar for the cost of the renewal."
-msgstr ""
-"Diese Nachfrist gilt nach Ablauf der Registrierungsfrist für einen "
-"Domänennamen und wird vom Register automatisch verlängert (erneuert). Wenn "
-"der Registrar den Domänennamen während dieser Frist löscht, schreibt das "
-"Register dem Registrar die Kosten für die Erneuerung gut."
-
-#: assets/components/search/rdapTranslation.ts:100
-msgid ""
-"This status code tells your domain's registry to reject requests to delete "
-"the domain."
-msgstr ""
-"Dieser Statuscode weist die Registrierungsstelle Ihrer Domain an, Anfragen "
-"zum Löschen der Domain abzulehnen."
-
-#: assets/components/search/rdapTranslation.ts:101
-msgid ""
-"This status code tells your domain's registry to not activate your domain in "
-"the DNS and as a consequence, it will not resolve. It is an uncommon status "
-"that is usually enacted during legal disputes, non-payment, or when your "
-"domain is subject to deletion."
-msgstr ""
-"Dieser Statuscode weist die Registrierungsstelle Ihrer Domain an, Ihre "
-"Domain nicht im DNS zu aktivieren und sie daher nicht aufzulösen. Dies ist "
-"ein ungewöhnlicher Status, der normalerweise bei Rechtsstreitigkeiten, "
-"Nichtzahlung oder wenn Ihre Domain gelöscht werden soll, in Kraft tritt."
-
-#: assets/components/search/rdapTranslation.ts:102
-msgid ""
-"This status code tells your domain's registry to reject requests to renew "
-"your domain. It is an uncommon status that is usually enacted during legal "
-"disputes or when your domain is subject to deletion."
-msgstr ""
-"Dieser Statuscode weist die Registrierungsstelle Ihrer Domain an, Anfragen "
-"zur Verlängerung Ihrer Domain abzulehnen. Dies ist ein ungewöhnlicher "
-"Status, der normalerweise bei Rechtsstreitigkeiten oder wenn Ihre Domain "
-"gelöscht werden soll, vergeben wird."
-
-#: assets/components/search/rdapTranslation.ts:103
-msgid ""
-"This status code tells your domain's registry to reject requests to transfer "
-"the domain from your current registrar to another."
-msgstr ""
-"Dieser Statuscode weist die Registrierungsstelle Ihrer Domain an, Anfragen "
-"zur Übertragung der Domain von Ihrem aktuellen Registrar zu einem anderen "
-"abzulehnen."
-
-#: assets/components/search/rdapTranslation.ts:104
-msgid ""
-"This status code tells your domain's registry to reject requests to update "
-"the domain."
-msgstr ""
-"Dieser Statuscode weist die Registrierungsstelle Ihrer Domäne an, Anfragen "
-"zur Aktualisierung der Domäne abzulehnen."
-
-#: assets/components/search/rdapTranslation.ts:105
-msgid ""
-"This status code indicates that your registrar has asked the registry to "
-"restore your domain that was in redemptionPeriod status. Your registry will "
-"hold the domain in this status while waiting for your registrar to provide "
-"required restoration documentation. If your registrar fails to provide "
-"documentation to the registry operator within a set time period to confirm "
-"the restoration request, the domain will revert to redemptionPeriod status."
-msgstr ""
-"Dieser Statuscode zeigt an, dass Ihre Registrierstelle die Registrierstelle "
-"gebeten hat, Ihre Domäne, die sich im Status redemptionPeriod befand, "
-"wiederherzustellen. Ihre Registrierstelle hält die Domäne in diesem Status, "
-"während sie darauf wartet, dass Ihre Registrierstelle die erforderlichen "
-"Wiederherstellungsunterlagen vorlegt. Wenn Ihre Registrierstelle dem "
-"Betreiber des Registers innerhalb einer bestimmten Frist keine Unterlagen "
-"zur Bestätigung des Wiederherstellungsantrags vorlegt, wird die Domäne "
-"wieder in den Status redemptionPeriod versetzt."
-
-#: assets/components/search/rdapTranslation.ts:106
-msgid ""
-"This status code indicates that your registrar has asked the registry to "
-"delete your domain. Your domain will be held in this status for 30 days. "
-"After five calendar days following the end of the redemptionPeriod, your "
-"domain is purged from the registry database and becomes available for "
-"registration."
-msgstr ""
-"Dieser Statuscode zeigt an, dass Ihr Registrar die Registrierungsstelle "
-"gebeten hat, Ihre Domain zu löschen. Ihre Domain wird 30 Tage lang in diesem "
-"Status gehalten. Fünf Kalendertage nach Ende der Rücknahmefrist wird Ihre "
-"Domain aus der Registrierungsdatenbank gelöscht und steht zur Registrierung "
-"zur Verfügung."
-
-#: assets/components/search/rdapTranslation.ts:107
-msgid ""
-"This grace period is provided after a domain name registration period is "
-"explicitly extended (renewed) by the registrar. If the registrar deletes the "
-"domain name during this period, the registry provides a credit to the "
-"registrar for the cost of the renewal."
-msgstr ""
-"Diese Nachfrist wird gewährt, nachdem der Registrierungszeitraum eines "
-"Domänennamens vom Registrar ausdrücklich verlängert (erneuert) wurde. Wenn "
-"der Registrar den Domänennamen während dieser Frist löscht, schreibt ihm das "
-"Register die Kosten für die Erneuerung gut."
-
-#: assets/components/search/rdapTranslation.ts:108
-msgid ""
-"This status code prevents your domain from being deleted. It is an uncommon "
-"status that is usually enacted during legal disputes, at your request, or "
-"when a redemptionPeriod status is in place."
-msgstr ""
-"Dieser Statuscode verhindert, dass Ihre Domain gelöscht wird. Es handelt "
-"sich um einen ungewöhnlichen Status, der normalerweise bei "
-"Rechtsstreitigkeiten, auf Ihre Anfrage oder wenn ein RedemptionPeriod-Status "
-"vorliegt, vergeben wird."
-
-#: assets/components/search/rdapTranslation.ts:109
-msgid ""
-"This status code indicates your domain's Registry Operator will not allow "
-"your registrar to renew your domain. It is an uncommon status that is "
-"usually enacted during legal disputes or when your domain is subject to "
-"deletion."
-msgstr ""
-"Dieser Statuscode gibt an, dass der Registry-Betreiber Ihrer Domain Ihrem "
-"Registrar die Verlängerung Ihrer Domain nicht gestattet. Dies ist ein "
-"ungewöhnlicher Status, der normalerweise bei Rechtsstreitigkeiten oder wenn "
-"Ihre Domain gelöscht werden soll, in Kraft tritt."
-
-#: assets/components/search/rdapTranslation.ts:110
-msgid ""
-"This status code prevents your domain from being transferred from your "
-"current registrar to another. It is an uncommon status that is usually "
-"enacted during legal or other disputes, at your request, or when a "
-"redemptionPeriod status is in place."
-msgstr ""
-"Dieser Statuscode verhindert, dass Ihre Domain von Ihrem aktuellen Registrar "
-"zu einem anderen übertragen wird. Dies ist ein ungewöhnlicher Status, der "
-"normalerweise während rechtlicher oder anderer Streitigkeiten, auf Ihre "
-"Anfrage oder wenn ein RedemptionPeriod-Status vorliegt, vergeben wird."
-
-#: assets/components/search/rdapTranslation.ts:111
-msgid ""
-"This status code locks your domain preventing it from being updated. It is "
-"an uncommon status that is usually enacted during legal disputes, at your "
-"request, or when a redemptionPeriod status is in place."
-msgstr ""
-"Dieser Statuscode sperrt Ihre Domain und verhindert, dass sie aktualisiert "
-"wird. Dies ist ein ungewöhnlicher Status, der normalerweise bei "
-"Rechtsstreitigkeiten, auf Ihre Anfrage oder wenn ein RedemptionPeriod-Status "
-"vorliegt, aktiviert wird."
-
-#: assets/components/search/rdapTranslation.ts:112
-msgid ""
-"This status code is set by your domain's Registry Operator. Your domain is "
-"not activated in the DNS."
-msgstr ""
-"Dieser Statuscode wird vom Registry Operator Ihrer Domain gesetzt. Ihre "
-"Domain ist im DNS nicht aktiviert."
-
-#: assets/components/search/rdapTranslation.ts:113
-msgid ""
-"This grace period is provided after the successful transfer of a domain name "
-"from one registrar to another. If the new registrar deletes the domain name "
-"during this period, the registry provides a credit to the registrar for the "
-"cost of the transfer."
-msgstr ""
-"Diese Nachfrist gilt nach der erfolgreichen Übertragung eines Domänennamens "
-"von einem Registrar zu einem anderen. Wenn der neue Registrar den "
-"Domänennamen während dieser Frist löscht, schreibt das Register dem "
-"Registrar die Kosten für die Übertragung gut."
-
-#: assets/components/search/rdapTranslation.ts:115
-msgid ""
-"The object instance has been allocated administratively (i.e., not for use "
-"by the recipient in their own right in operational networks)."
-msgstr ""
-"Die Objektinstanz wurde administrativ zugewiesen (d. h. nicht zur eigenen "
-"Verwendung durch den Empfänger in operativen Netzen)."
-
-#: assets/components/search/rdapTranslation.ts:116
-msgid ""
-"The object instance has been allocated to an IANA special-purpose address "
-"registry."
-msgstr ""
-"Die Objektinstanz wurde einem speziellen Adressregister der IANA zugewiesen."
-
-#: assets/components/search/DomainResult.tsx:39
+#: assets/components/search/DomainResult.tsx:45
 msgid "EPP Status Codes"
 msgstr "EPP-Statuscodes"
 
-#: assets/components/search/DomainResult.tsx:53
+#: assets/components/search/DomainResult.tsx:61
 msgid "Timeline"
 msgstr "Zeitleiste"
 
-#: assets/components/search/DomainResult.tsx:58
+#: assets/components/search/DomainResult.tsx:68
 msgid "Entities"
 msgstr "Entitäten"
 
-#: assets/components/search/DomainSearchBar.tsx:25
+#: assets/components/search/DomainSearchBar.tsx:24
 #: assets/components/tracking/watchlist/WatchlistForm.tsx:118
 msgid "This domain name does not appear to be valid"
 msgstr "Dieser Domainname scheint nicht gültig zu sein"
+
+#: assets/components/search/DomainLifecycleSteps.tsx:21
+#: assets/utils/functions/rdapTranslation.ts:43
+msgid "Registration"
+msgstr "Registrierung"
+
+#: assets/components/search/DomainLifecycleSteps.tsx:25
+msgid "Active"
+msgstr ""
+
+#: assets/components/search/DomainLifecycleSteps.tsx:29
+msgid "Renew Period"
+msgstr ""
+
+#: assets/components/search/DomainLifecycleSteps.tsx:34
+msgid "Redemption Period"
+msgstr ""
+
+#: assets/components/search/DomainLifecycleSteps.tsx:38
+msgid "Pending Delete"
+msgstr ""
 
 #: assets/components/tracking/connector/ConnectorForm.tsx:40
 msgid "Provider"
@@ -975,11 +407,7 @@ msgstr "Registrieren"
 msgid "Found !"
 msgstr "Gefunden !"
 
-#: assets/pages/search/DomainSearchPage.tsx:26
-msgid "Domain finder"
-msgstr "Domänenfinder"
-
-#: assets/pages/search/DomainSearchPage.tsx:35
+#: assets/pages/search/DomainSearchPage.tsx:34
 msgid ""
 "Although the domain exists in my database, it has been deleted from the "
 "WHOIS by its registrar."
@@ -1144,6 +572,591 @@ msgstr "Benutzername"
 msgid "Roles"
 msgstr "Rollen"
 
+#: assets/utils/functions/rdapTranslation.ts:7
+msgid "Registrant"
+msgstr "Anmelder"
+
+#: assets/utils/functions/rdapTranslation.ts:8
+msgid "Technical"
+msgstr "Technischer"
+
+#: assets/utils/functions/rdapTranslation.ts:9
+msgid "Administrative"
+msgstr "Verwaltung"
+
+#: assets/utils/functions/rdapTranslation.ts:10
+msgid "Abuse"
+msgstr "Missbrauch"
+
+#: assets/utils/functions/rdapTranslation.ts:11
+msgid "Billing"
+msgstr "Rechnungsstellung"
+
+#: assets/utils/functions/rdapTranslation.ts:12
+msgid "Registrar"
+msgstr "Registrierungsstelle"
+
+#: assets/utils/functions/rdapTranslation.ts:13
+msgid "Reseller"
+msgstr "Wiederverkäufer"
+
+#: assets/utils/functions/rdapTranslation.ts:14
+msgid "Sponsor"
+msgstr "Sponsor"
+
+#: assets/utils/functions/rdapTranslation.ts:15
+msgid "Proxy"
+msgstr "Proxy"
+
+#: assets/utils/functions/rdapTranslation.ts:16
+msgid "Notifications"
+msgstr "Benachrichtigungen"
+
+#: assets/utils/functions/rdapTranslation.ts:17
+msgid "Noc"
+msgstr "Noc"
+
+#: assets/utils/functions/rdapTranslation.ts:25
+msgid ""
+"The entity object instance is the registrant of the registration. In some "
+"registries, this is known as a maintainer."
+msgstr ""
+"Die Entitätsobjektinstanz ist der Registrant der Registrierung. In einigen "
+"Registern wird dies als Maintainer bezeichnet."
+
+#: assets/utils/functions/rdapTranslation.ts:26
+msgid "The entity object instance is a technical contact for the registration."
+msgstr ""
+"Die Entitätsobjektinstanz ist ein technischer Kontakt für die Registrierung."
+
+#: assets/utils/functions/rdapTranslation.ts:27
+msgid ""
+"The entity object instance is an administrative contact for the registration."
+msgstr ""
+"Die Entitätsobjektinstanz ist ein administrativer Kontakt für die "
+"Registrierung."
+
+#: assets/utils/functions/rdapTranslation.ts:28
+msgid ""
+"The entity object instance handles network abuse issues on behalf of the "
+"registrant of the registration."
+msgstr ""
+"Die Instanz des Entity-Objekts behandelt Fragen des Netzmissbrauchs im Namen "
+"des Registranten der Registrierung."
+
+#: assets/utils/functions/rdapTranslation.ts:29
+msgid ""
+"The entity object instance handles payment and billing issues on behalf of "
+"the registrant of the registration."
+msgstr ""
+"Die Instanz des Entitätsobjekts wickelt die Zahlungs- und "
+"Abrechnungsangelegenheiten im Namen des Registranten der Registrierung ab."
+
+#: assets/utils/functions/rdapTranslation.ts:30
+msgid ""
+"The entity object instance represents the authority responsible for the "
+"registration in the registry."
+msgstr ""
+"Die Instanz des Entitätsobjekts repräsentiert die für die Registrierung im "
+"Register zuständige Behörde."
+
+#: assets/utils/functions/rdapTranslation.ts:31
+msgid ""
+"The entity object instance represents a third party through which the "
+"registration was conducted (i.e., not the registry or registrar)."
+msgstr ""
+"Die Instanz des Entity-Objekts repräsentiert eine dritte Partei, über die "
+"die Registrierung durchgeführt wurde (d. h. nicht das Register oder die "
+"Registrierstelle)."
+
+#: assets/utils/functions/rdapTranslation.ts:32
+msgid ""
+"The entity object instance represents a domain policy sponsor, such as an "
+"ICANN-approved sponsor."
+msgstr ""
+"Die Instanz des Entity-Objekts repräsentiert einen Sponsor der "
+"Domänenpolitik, z. B. einen von der ICANN zugelassenen Sponsor."
+
+#: assets/utils/functions/rdapTranslation.ts:33
+msgid ""
+"The entity object instance represents a proxy for another entity object, "
+"such as a registrant."
+msgstr ""
+"Die Entitätsobjektinstanz stellt einen Stellvertreter für ein anderes "
+"Entitätsobjekt dar, z. B. einen Registranten."
+
+#: assets/utils/functions/rdapTranslation.ts:34
+msgid ""
+"An entity object instance designated to receive notifications about "
+"association object instances."
+msgstr ""
+"Eine Entitätsobjektinstanz, die für den Empfang von Benachrichtigungen über "
+"Assoziationsobjektinstanzen bestimmt ist."
+
+#: assets/utils/functions/rdapTranslation.ts:35
+msgid ""
+"The entity object instance handles communications related to a network "
+"operations center (NOC)."
+msgstr ""
+"Die Entity-Objektinstanz verarbeitet die Kommunikation im Zusammenhang mit "
+"einem Network Operations Center (NOC)."
+
+#: assets/utils/functions/rdapTranslation.ts:44
+msgid "Reregistration"
+msgstr "Neuregistrierung"
+
+#: assets/utils/functions/rdapTranslation.ts:45
+msgid "Changed"
+msgstr "Geändert"
+
+#: assets/utils/functions/rdapTranslation.ts:46
+msgid "Expiration"
+msgstr "Ablauf"
+
+#: assets/utils/functions/rdapTranslation.ts:47
+msgid "Deletion"
+msgstr "Löschung"
+
+#: assets/utils/functions/rdapTranslation.ts:48
+msgid "Reinstantiation"
+msgstr "Neuinstanzierung"
+
+#: assets/utils/functions/rdapTranslation.ts:49
+msgid "Transfer"
+msgstr "Übertragung"
+
+#: assets/utils/functions/rdapTranslation.ts:50
+msgid "Locked"
+msgstr "Gesperrt"
+
+#: assets/utils/functions/rdapTranslation.ts:51
+msgid "Unlocked"
+msgstr "Entsperrt"
+
+#: assets/utils/functions/rdapTranslation.ts:52
+msgid "Registrar expiration"
+msgstr "Ablauf des Registrars"
+
+#: assets/utils/functions/rdapTranslation.ts:53
+msgid "ENUM validation expiration"
+msgstr "Ablauf der ENUM-Validierung"
+
+#: assets/utils/functions/rdapTranslation.ts:60
+msgid "The object instance was initially registered."
+msgstr "Die Objektinstanz wurde zunächst registriert."
+
+#: assets/utils/functions/rdapTranslation.ts:61
+msgid ""
+"The object instance was registered subsequently to initial registration."
+msgstr ""
+"Die Objektinstanz wurde im Anschluss an die Erstregistrierung registriert."
+
+#: assets/utils/functions/rdapTranslation.ts:62
+msgid ""
+"An action noting when the information in the object instance was last "
+"changed."
+msgstr ""
+"Eine Aktion, die festhält, wann die Informationen in der Objektinstanz "
+"zuletzt geändert wurden."
+
+#: assets/utils/functions/rdapTranslation.ts:63
+msgid ""
+"The object instance has been removed or will be removed at a predetermined "
+"date and time from the registry."
+msgstr ""
+"Die Objektinstanz wurde entfernt oder wird zu einem festgelegten Datum und "
+"Zeitpunkt aus der Registrierung entfernt."
+
+#: assets/utils/functions/rdapTranslation.ts:64
+msgid ""
+"The object instance was removed from the registry at a point in time that "
+"was not predetermined."
+msgstr ""
+"Die Objektinstanz wurde zu einem nicht vorherbestimmten Zeitpunkt aus der "
+"Registry entfernt."
+
+#: assets/utils/functions/rdapTranslation.ts:65
+msgid ""
+"The object instance was reregistered after having been removed from the "
+"registry."
+msgstr ""
+"Die Objektinstanz wurde nach der Entfernung aus der Registry erneut "
+"registriert."
+
+#: assets/utils/functions/rdapTranslation.ts:66
+msgid "The object instance was transferred from one registrar to another."
+msgstr ""
+"Die Objektinstanz wurde von einem Registrar zu einem anderen übertragen."
+
+#: assets/utils/functions/rdapTranslation.ts:67
+msgid "The object instance was locked."
+msgstr "Die Objektinstanz wurde gesperrt."
+
+#: assets/utils/functions/rdapTranslation.ts:68
+msgid "The object instance was unlocked."
+msgstr "Die Objektinstanz wurde entsperrt."
+
+#: assets/utils/functions/rdapTranslation.ts:69
+msgid ""
+"An action noting the expiration date of the object in the registrar system."
+msgstr ""
+"Eine Aktion, die das Ablaufdatum des Objekts im Registrarsystem notiert."
+
+#: assets/utils/functions/rdapTranslation.ts:70
+msgid ""
+"Association of phone number represented by this ENUM domain to registrant "
+"has expired or will expire at a predetermined date and time."
+msgstr ""
+"Die Zuordnung der durch diese ENUM-Domäne repräsentierten Telefonnummer zum "
+"Registranten ist abgelaufen oder läuft zu einem festgelegten Datum und "
+"Zeitpunkt ab."
+
+#: assets/utils/functions/rdapTranslation.ts:78
+msgid ""
+"Signifies that the data of the object instance has been found to be accurate."
+msgstr ""
+"Bedeutet, dass die Daten der Objektinstanz als korrekt befunden wurden."
+
+#: assets/utils/functions/rdapTranslation.ts:79
+msgid "Renewal or reregistration of the object instance is forbidden."
+msgstr "Eine Erneuerung oder Neuregistrierung der Objektinstanz ist untersagt."
+
+#: assets/utils/functions/rdapTranslation.ts:80
+msgid "Updates to the object instance are forbidden."
+msgstr "Aktualisierungen der Objektinstanz sind verboten."
+
+#: assets/utils/functions/rdapTranslation.ts:81
+msgid ""
+"Transfers of the registration from one registrar to another are forbidden."
+msgstr ""
+"Eine Übertragung der Registrierung von einem Registrar auf einen anderen ist "
+"nicht zulässig."
+
+#: assets/utils/functions/rdapTranslation.ts:82
+msgid "Deletion of the registration of the object instance is forbidden."
+msgstr "Das Löschen der Registrierung der Objektinstanz ist verboten."
+
+#: assets/utils/functions/rdapTranslation.ts:83
+msgid ""
+"The registration of the object instance has been performed by a third party."
+msgstr ""
+"Die Registrierung der Objektinstanz wurde von einer dritten Partei "
+"durchgeführt."
+
+#: assets/utils/functions/rdapTranslation.ts:84
+msgid ""
+"The information of the object instance is not designated for public "
+"consumption."
+msgstr ""
+"Die Informationen der Objektinstanz sind nicht für die öffentliche "
+"Verwendung bestimmt."
+
+#: assets/utils/functions/rdapTranslation.ts:85
+msgid ""
+"Some of the information of the object instance has not been made available "
+"and has been removed."
+msgstr ""
+"Einige Informationen der Objektinstanz wurden nicht bereitgestellt und "
+"entfernt."
+
+#: assets/utils/functions/rdapTranslation.ts:86
+msgid ""
+"Some of the information of the object instance has been altered for the "
+"purposes of not readily revealing the actual information of the object "
+"instance."
+msgstr ""
+"Einige der Informationen der Objektinstanz wurden geändert, um die "
+"tatsächlichen Informationen der Objektinstanz nicht ohne Weiteres "
+"preiszugeben."
+
+#: assets/utils/functions/rdapTranslation.ts:87
+msgid ""
+"The object instance is associated with other object instances in the "
+"registry."
+msgstr ""
+"Die Objektinstanz ist mit anderen Objektinstanzen in der Registrierung "
+"verknüpft."
+
+#: assets/utils/functions/rdapTranslation.ts:88
+msgid ""
+"Changes to the object instance cannot be made, including the association of "
+"other object instances."
+msgstr ""
+"Änderungen an der Objektinstanz können nicht vorgenommen werden, auch nicht "
+"die Verknüpfung mit anderen Objektinstanzen."
+
+#: assets/utils/functions/rdapTranslation.ts:90
+#: assets/utils/functions/rdapTranslation.ts:99
+msgid ""
+"This is the standard status for a domain, meaning it has no pending "
+"operations or prohibitions."
+msgstr ""
+"Dies ist der Standardstatus einer Domäne. Dies bedeutet, dass keine Vorgänge "
+"oder Verbote ausstehen."
+
+#: assets/utils/functions/rdapTranslation.ts:91
+msgid ""
+"This status code indicates that delegation information (name servers) has "
+"not been associated with your domain. Your domain is not activated in the "
+"DNS and will not resolve."
+msgstr ""
+"Dieser Statuscode zeigt an, dass Ihrer Domain keine Delegationsinformationen "
+"(Nameserver) zugeordnet wurden. Ihre Domain ist im DNS nicht aktiviert und "
+"wird nicht aufgelöst."
+
+#: assets/utils/functions/rdapTranslation.ts:92
+msgid ""
+"This status code indicates that a request to create your domain has been "
+"received and is being processed."
+msgstr ""
+"Dieser Statuscode zeigt an, dass eine Anfrage zum Erstellen Ihrer Domäne "
+"eingegangen ist und bearbeitet wird."
+
+#: assets/utils/functions/rdapTranslation.ts:93
+msgid ""
+"This status code indicates that a request to renew your domain has been "
+"received and is being processed."
+msgstr ""
+"Dieser Statuscode zeigt an, dass eine Anfrage zur Verlängerung Ihrer Domain "
+"eingegangen ist und bearbeitet wird."
+
+#: assets/utils/functions/rdapTranslation.ts:94
+msgid ""
+"This status code indicates that a request to transfer your domain to a new "
+"registrar has been received and is being processed."
+msgstr ""
+"Dieser Statuscode zeigt an, dass eine Anfrage zum Übertragen Ihrer Domain an "
+"einen neuen Registrar eingegangen ist und bearbeitet wird."
+
+#: assets/utils/functions/rdapTranslation.ts:95
+msgid ""
+"This status code indicates that a request to update your domain has been "
+"received and is being processed."
+msgstr ""
+"Dieser Statuscode zeigt an, dass eine Anfrage zum Aktualisieren Ihrer Domäne "
+"eingegangen ist und bearbeitet wird."
+
+#: assets/utils/functions/rdapTranslation.ts:96
+msgid ""
+"This status code may be mixed with redemptionPeriod or pendingRestore. In "
+"such case, depending on the status (i.e. redemptionPeriod or pendingRestore) "
+"set in the domain name, the corresponding description presented above "
+"applies. If this status is not combined with the redemptionPeriod or "
+"pendingRestore status, the pendingDelete status code indicates that your "
+"domain has been in redemptionPeriod status for 30 days and you have not "
+"restored it within that 30-day period. Your domain will remain in this "
+"status for several days, after which time your domain will be purged and "
+"dropped from the registry database. Once deletion occurs, the domain is "
+"available for re-registration in accordance with the registry's policies."
+msgstr ""
+"Dieser Statuscode kann mit „redemptionPeriod“ oder „pendingRestore“ "
+"kombiniert werden. In diesem Fall gilt je nach dem im Domänennamen "
+"festgelegten Status (d. h. „redemptionPeriod“ oder „pendingRestore“) die "
+"entsprechende oben dargestellte Beschreibung. Wenn dieser Status nicht mit "
+"dem Status „redemptionPeriod“ oder „pendingRestore“ kombiniert wird, zeigt "
+"der Statuscode „pendingDelete“ an, dass sich Ihre Domäne 30 Tage lang im "
+"Status „redemptionPeriod“ befunden hat und Sie sie innerhalb dieses 30-"
+"tägigen Zeitraums nicht wiederhergestellt haben. Ihre Domäne bleibt mehrere "
+"Tage in diesem Status. Danach wird sie gelöscht und aus der "
+"Registrierungsdatenbank entfernt. Nach der Löschung ist die Domäne gemäß den "
+"Richtlinien der Registrierung für eine erneute Registrierung verfügbar."
+
+#: assets/utils/functions/rdapTranslation.ts:97
+msgid ""
+"This grace period is provided after the initial registration of a domain "
+"name. If the registrar deletes the domain name during this period, the "
+"registry may provide credit to the registrar for the cost of the "
+"registration."
+msgstr ""
+"Diese Nachfrist gilt nach der ersten Registrierung eines Domänennamens. Wenn "
+"der Registrar den Domänennamen während dieser Frist löscht, kann das "
+"Register dem Registrar die Kosten für die Registrierung gutschreiben."
+
+#: assets/utils/functions/rdapTranslation.ts:98
+msgid ""
+"This grace period is provided after a domain name registration period "
+"expires and is extended (renewed) automatically by the registry. If the "
+"registrar deletes the domain name during this period, the registry provides "
+"a credit to the registrar for the cost of the renewal."
+msgstr ""
+"Diese Nachfrist gilt nach Ablauf der Registrierungsfrist für einen "
+"Domänennamen und wird vom Register automatisch verlängert (erneuert). Wenn "
+"der Registrar den Domänennamen während dieser Frist löscht, schreibt das "
+"Register dem Registrar die Kosten für die Erneuerung gut."
+
+#: assets/utils/functions/rdapTranslation.ts:100
+msgid ""
+"This status code tells your domain's registry to reject requests to delete "
+"the domain."
+msgstr ""
+"Dieser Statuscode weist die Registrierungsstelle Ihrer Domain an, Anfragen "
+"zum Löschen der Domain abzulehnen."
+
+#: assets/utils/functions/rdapTranslation.ts:101
+msgid ""
+"This status code tells your domain's registry to not activate your domain in "
+"the DNS and as a consequence, it will not resolve. It is an uncommon status "
+"that is usually enacted during legal disputes, non-payment, or when your "
+"domain is subject to deletion."
+msgstr ""
+"Dieser Statuscode weist die Registrierungsstelle Ihrer Domain an, Ihre "
+"Domain nicht im DNS zu aktivieren und sie daher nicht aufzulösen. Dies ist "
+"ein ungewöhnlicher Status, der normalerweise bei Rechtsstreitigkeiten, "
+"Nichtzahlung oder wenn Ihre Domain gelöscht werden soll, in Kraft tritt."
+
+#: assets/utils/functions/rdapTranslation.ts:102
+msgid ""
+"This status code tells your domain's registry to reject requests to renew "
+"your domain. It is an uncommon status that is usually enacted during legal "
+"disputes or when your domain is subject to deletion."
+msgstr ""
+"Dieser Statuscode weist die Registrierungsstelle Ihrer Domain an, Anfragen "
+"zur Verlängerung Ihrer Domain abzulehnen. Dies ist ein ungewöhnlicher "
+"Status, der normalerweise bei Rechtsstreitigkeiten oder wenn Ihre Domain "
+"gelöscht werden soll, vergeben wird."
+
+#: assets/utils/functions/rdapTranslation.ts:103
+msgid ""
+"This status code tells your domain's registry to reject requests to transfer "
+"the domain from your current registrar to another."
+msgstr ""
+"Dieser Statuscode weist die Registrierungsstelle Ihrer Domain an, Anfragen "
+"zur Übertragung der Domain von Ihrem aktuellen Registrar zu einem anderen "
+"abzulehnen."
+
+#: assets/utils/functions/rdapTranslation.ts:104
+msgid ""
+"This status code tells your domain's registry to reject requests to update "
+"the domain."
+msgstr ""
+"Dieser Statuscode weist die Registrierungsstelle Ihrer Domäne an, Anfragen "
+"zur Aktualisierung der Domäne abzulehnen."
+
+#: assets/utils/functions/rdapTranslation.ts:105
+msgid ""
+"This status code indicates that your registrar has asked the registry to "
+"restore your domain that was in redemptionPeriod status. Your registry will "
+"hold the domain in this status while waiting for your registrar to provide "
+"required restoration documentation. If your registrar fails to provide "
+"documentation to the registry operator within a set time period to confirm "
+"the restoration request, the domain will revert to redemptionPeriod status."
+msgstr ""
+"Dieser Statuscode zeigt an, dass Ihre Registrierstelle die Registrierstelle "
+"gebeten hat, Ihre Domäne, die sich im Status redemptionPeriod befand, "
+"wiederherzustellen. Ihre Registrierstelle hält die Domäne in diesem Status, "
+"während sie darauf wartet, dass Ihre Registrierstelle die erforderlichen "
+"Wiederherstellungsunterlagen vorlegt. Wenn Ihre Registrierstelle dem "
+"Betreiber des Registers innerhalb einer bestimmten Frist keine Unterlagen "
+"zur Bestätigung des Wiederherstellungsantrags vorlegt, wird die Domäne "
+"wieder in den Status redemptionPeriod versetzt."
+
+#: assets/utils/functions/rdapTranslation.ts:106
+msgid ""
+"This status code indicates that your registrar has asked the registry to "
+"delete your domain. Your domain will be held in this status for 30 days. "
+"After five calendar days following the end of the redemptionPeriod, your "
+"domain is purged from the registry database and becomes available for "
+"registration."
+msgstr ""
+"Dieser Statuscode zeigt an, dass Ihr Registrar die Registrierungsstelle "
+"gebeten hat, Ihre Domain zu löschen. Ihre Domain wird 30 Tage lang in diesem "
+"Status gehalten. Fünf Kalendertage nach Ende der Rücknahmefrist wird Ihre "
+"Domain aus der Registrierungsdatenbank gelöscht und steht zur Registrierung "
+"zur Verfügung."
+
+#: assets/utils/functions/rdapTranslation.ts:107
+msgid ""
+"This grace period is provided after a domain name registration period is "
+"explicitly extended (renewed) by the registrar. If the registrar deletes the "
+"domain name during this period, the registry provides a credit to the "
+"registrar for the cost of the renewal."
+msgstr ""
+"Diese Nachfrist wird gewährt, nachdem der Registrierungszeitraum eines "
+"Domänennamens vom Registrar ausdrücklich verlängert (erneuert) wurde. Wenn "
+"der Registrar den Domänennamen während dieser Frist löscht, schreibt ihm das "
+"Register die Kosten für die Erneuerung gut."
+
+#: assets/utils/functions/rdapTranslation.ts:108
+msgid ""
+"This status code prevents your domain from being deleted. It is an uncommon "
+"status that is usually enacted during legal disputes, at your request, or "
+"when a redemptionPeriod status is in place."
+msgstr ""
+"Dieser Statuscode verhindert, dass Ihre Domain gelöscht wird. Es handelt "
+"sich um einen ungewöhnlichen Status, der normalerweise bei "
+"Rechtsstreitigkeiten, auf Ihre Anfrage oder wenn ein RedemptionPeriod-Status "
+"vorliegt, vergeben wird."
+
+#: assets/utils/functions/rdapTranslation.ts:109
+msgid ""
+"This status code indicates your domain's Registry Operator will not allow "
+"your registrar to renew your domain. It is an uncommon status that is "
+"usually enacted during legal disputes or when your domain is subject to "
+"deletion."
+msgstr ""
+"Dieser Statuscode gibt an, dass der Registry-Betreiber Ihrer Domain Ihrem "
+"Registrar die Verlängerung Ihrer Domain nicht gestattet. Dies ist ein "
+"ungewöhnlicher Status, der normalerweise bei Rechtsstreitigkeiten oder wenn "
+"Ihre Domain gelöscht werden soll, in Kraft tritt."
+
+#: assets/utils/functions/rdapTranslation.ts:110
+msgid ""
+"This status code prevents your domain from being transferred from your "
+"current registrar to another. It is an uncommon status that is usually "
+"enacted during legal or other disputes, at your request, or when a "
+"redemptionPeriod status is in place."
+msgstr ""
+"Dieser Statuscode verhindert, dass Ihre Domain von Ihrem aktuellen Registrar "
+"zu einem anderen übertragen wird. Dies ist ein ungewöhnlicher Status, der "
+"normalerweise während rechtlicher oder anderer Streitigkeiten, auf Ihre "
+"Anfrage oder wenn ein RedemptionPeriod-Status vorliegt, vergeben wird."
+
+#: assets/utils/functions/rdapTranslation.ts:111
+msgid ""
+"This status code locks your domain preventing it from being updated. It is "
+"an uncommon status that is usually enacted during legal disputes, at your "
+"request, or when a redemptionPeriod status is in place."
+msgstr ""
+"Dieser Statuscode sperrt Ihre Domain und verhindert, dass sie aktualisiert "
+"wird. Dies ist ein ungewöhnlicher Status, der normalerweise bei "
+"Rechtsstreitigkeiten, auf Ihre Anfrage oder wenn ein RedemptionPeriod-Status "
+"vorliegt, aktiviert wird."
+
+#: assets/utils/functions/rdapTranslation.ts:112
+msgid ""
+"This status code is set by your domain's Registry Operator. Your domain is "
+"not activated in the DNS."
+msgstr ""
+"Dieser Statuscode wird vom Registry Operator Ihrer Domain gesetzt. Ihre "
+"Domain ist im DNS nicht aktiviert."
+
+#: assets/utils/functions/rdapTranslation.ts:113
+msgid ""
+"This grace period is provided after the successful transfer of a domain name "
+"from one registrar to another. If the new registrar deletes the domain name "
+"during this period, the registry provides a credit to the registrar for the "
+"cost of the transfer."
+msgstr ""
+"Diese Nachfrist gilt nach der erfolgreichen Übertragung eines Domänennamens "
+"von einem Registrar zu einem anderen. Wenn der neue Registrar den "
+"Domänennamen während dieser Frist löscht, schreibt das Register dem "
+"Registrar die Kosten für die Übertragung gut."
+
+#: assets/utils/functions/rdapTranslation.ts:115
+msgid ""
+"The object instance has been allocated administratively (i.e., not for use "
+"by the recipient in their own right in operational networks)."
+msgstr ""
+"Die Objektinstanz wurde administrativ zugewiesen (d. h. nicht zur eigenen "
+"Verwendung durch den Empfänger in operativen Netzen)."
+
+#: assets/utils/functions/rdapTranslation.ts:116
+msgid ""
+"The object instance has been allocated to an IANA special-purpose address "
+"registry."
+msgstr ""
+"Die Objektinstanz wurde einem speziellen Adressregister der IANA zugewiesen."
+
 #: assets/utils/functions/showErrorAPI.tsx:19
 #, javascript-format
 msgid "Please retry after ${ duration } seconds"
@@ -1225,6 +1238,9 @@ msgid ""
 msgstr ""
 "${ ProjectLink } ist ein Open-Source-Projekt, das unter der ${ LicenseLink }-"
 "Lizenz vertrieben wird."
+
+#~ msgid "Domain finder"
+#~ msgstr "Domänenfinder"
 
 #~ msgid ""
 #~ "The object instance is in use. For domain names, it signifies that the "
