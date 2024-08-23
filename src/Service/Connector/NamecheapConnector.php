@@ -5,13 +5,13 @@ namespace App\Service\Connector;
 use App\Entity\Domain;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
-readonly class NamecheapConnector implements ConnectorInterface
+class NamecheapConnector extends AbstractConnector
 {
     public const BASE_URL = 'https://api.namecheap.com/xml.response';
 
     public const SANDBOX_BASE_URL = 'http://api.sandbox.namecheap.com/xml.response';
 
-    public function __construct(private array $authData, private HttpClientInterface $client)
+    public function __construct(private HttpClientInterface $client)
     {
     }
 

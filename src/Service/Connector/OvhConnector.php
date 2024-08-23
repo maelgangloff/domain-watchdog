@@ -8,7 +8,7 @@ use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
-readonly class OvhConnector implements ConnectorInterface
+class OvhConnector extends AbstractConnector
 {
     public const REQUIRED_ROUTES = [
         [
@@ -33,7 +33,7 @@ readonly class OvhConnector implements ConnectorInterface
         ],
     ];
 
-    public function __construct(private array $authData, private HttpClientInterface $client)
+    public function __construct(private HttpClientInterface $client)
     {
     }
 

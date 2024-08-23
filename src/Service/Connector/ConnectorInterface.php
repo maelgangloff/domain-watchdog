@@ -7,7 +7,7 @@ use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 interface ConnectorInterface
 {
-    public function __construct(array $authData, HttpClientInterface $client);
+    public function authenticate(array $authData);
 
     public function orderDomain(Domain $domain, bool $dryRun): void;
 

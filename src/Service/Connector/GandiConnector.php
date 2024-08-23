@@ -12,11 +12,11 @@ use Symfony\Contracts\HttpClient\Exception\DecodingExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
-readonly class GandiConnector implements ConnectorInterface
+class GandiConnector extends AbstractConnector
 {
     private const BASE_URL = 'https://api.gandi.net/v5';
 
-    public function __construct(private array $authData, private HttpClientInterface $client)
+    public function __construct(private HttpClientInterface $client)
     {
     }
 
