@@ -30,7 +30,7 @@ abstract class AbstractProvider
             $supportedTldList = $this->getSupportedTldList();
             $item
                 ->set($supportedTldList)
-                ->expiresAfter(new \DateInterval('P1M'));
+                ->expiresAfter(new \DateInterval('P1D'));
             $this->cacheItemPool->saveDeferred($item);
         } else {
             $supportedTldList = $item->get();

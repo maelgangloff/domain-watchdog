@@ -203,6 +203,8 @@ class WatchListController extends AbstractController
             /** @var AbstractProvider $connectorProvider */
             $connectorProvider = new $connectorProviderClass($connector->getAuthData(), $this->httpClient, $this->cacheItemPool, $this->kernel);
 
+            $connectorProvider::verifyAuthData($connector->getAuthData(), $this->httpClient); // We want to check if the tokens are OK
+
             $tldList = [];
             /** @var Domain $domain */
             foreach ($watchList->getDomains()->getIterator() as $domain) {
