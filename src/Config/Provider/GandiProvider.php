@@ -3,7 +3,6 @@
 namespace App\Config\Provider;
 
 use App\Entity\Domain;
-use http\Exception\InvalidArgumentException;
 use Psr\Cache\CacheItemInterface;
 use Symfony\Component\HttpClient\HttpOptions;
 use Symfony\Component\HttpFoundation\Response;
@@ -30,12 +29,12 @@ class GandiProvider extends AbstractProvider
     public function orderDomain(Domain $domain, bool $dryRun = false): void
     {
         if (!$domain->getDeleted()) {
-            throw new InvalidArgumentException('The domain name still appears in the WHOIS database');
+            throw new \Exception('The domain name still appears in the WHOIS database');
         }
 
         $ldhName = $domain->getLdhName();
         if (!$ldhName) {
-            throw new InvalidArgumentException('Domain name cannot be null');
+            throw new \Exception('Domain name cannot be null');
         }
 
         $authData = self::verifyAuthData($this->authData, $this->client);
