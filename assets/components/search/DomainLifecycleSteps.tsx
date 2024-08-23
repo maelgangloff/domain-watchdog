@@ -1,13 +1,7 @@
 import {StepProps, Steps, Tooltip} from "antd";
 import React from "react";
 import {t} from "ttag";
-import {
-    CheckOutlined,
-    DeleteOutlined,
-    ExclamationCircleOutlined,
-    ReloadOutlined,
-    SignatureOutlined
-} from "@ant-design/icons";
+import {CheckOutlined, DeleteOutlined, ExclamationCircleOutlined, SignatureOutlined} from "@ant-design/icons";
 import {rdapEventDetailTranslation, rdapStatusCodeDetailTranslation} from "../../utils/functions/rdapTranslation";
 
 export function DomainLifecycleSteps({status}: { status: string[] }) {
@@ -19,33 +13,29 @@ export function DomainLifecycleSteps({status}: { status: string[] }) {
     const steps: StepProps[] = [
         {
             title: <Tooltip title={rdapEventDetailTranslated.registration}>{t`Registration`}</Tooltip>,
-            icon: <SignatureOutlined/>
+            icon: <SignatureOutlined style={{color: 'green'}}/>
         },
         {
             title: <Tooltip title={rdapStatusCodeDetailTranslated.active}>{t`Active`}</Tooltip>,
             icon: <CheckOutlined/>
         },
         {
-            title: <Tooltip title={rdapStatusCodeDetailTranslated["renew period"]}>{t`Renew Period`}</Tooltip>,
-            icon: <ReloadOutlined/>
-        },
-        {
             title: <Tooltip
                 title={rdapStatusCodeDetailTranslated["redemption period"]}>{t`Redemption Period`}</Tooltip>,
-            icon: <ExclamationCircleOutlined/>
+            icon: <ExclamationCircleOutlined style={{color: 'orangered'}}/>
         },
         {
             title: <Tooltip title={rdapStatusCodeDetailTranslated["pending delete"]}>{t`Pending Delete`}</Tooltip>,
-            icon: <DeleteOutlined/>
+            icon: <DeleteOutlined style={{color: 'palevioletred'}}/>
         }
     ]
 
     let currentStep = 1
 
     if (status.includes('redemption period')) {
-        currentStep = 4
+        currentStep = 2
     } else if (status.includes('pending delete')) {
-        currentStep = 5
+        currentStep = 3
     }
 
     return <Steps

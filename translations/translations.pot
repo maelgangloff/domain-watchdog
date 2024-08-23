@@ -57,24 +57,20 @@ msgstr ""
 msgid "This domain name does not appear to be valid"
 msgstr ""
 
-#: assets/components/search/DomainLifecycleSteps.tsx:21
+#: assets/components/search/DomainLifecycleSteps.tsx:15
 #: assets/utils/functions/rdapTranslation.ts:43
 msgid "Registration"
 msgstr ""
 
-#: assets/components/search/DomainLifecycleSteps.tsx:25
+#: assets/components/search/DomainLifecycleSteps.tsx:19
 msgid "Active"
 msgstr ""
 
-#: assets/components/search/DomainLifecycleSteps.tsx:29
-msgid "Renew Period"
-msgstr ""
-
-#: assets/components/search/DomainLifecycleSteps.tsx:34
+#: assets/components/search/DomainLifecycleSteps.tsx:24
 msgid "Redemption Period"
 msgstr ""
 
-#: assets/components/search/DomainLifecycleSteps.tsx:38
+#: assets/components/search/DomainLifecycleSteps.tsx:28
 msgid "Pending Delete"
 msgstr ""
 
