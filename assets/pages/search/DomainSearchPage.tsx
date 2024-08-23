@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import {Card, Empty, Flex, FormProps, message, Skeleton} from "antd";
+import {Empty, Flex, FormProps, message, Skeleton} from "antd";
 import {Domain, getDomain} from "../../utils/api";
 import {AxiosError} from "axios"
 import {t} from 'ttag'
@@ -23,18 +23,16 @@ export default function DomainSearchPage() {
     }
 
     return <Flex gap="middle" align="center" justify="center" vertical>
-        <Card title={t`Domain finder`} style={{width: '100%'}}>
-            {contextHolder}
-            <DomainSearchBar onFinish={onFinish}/>
+        {contextHolder}
+        <DomainSearchBar onFinish={onFinish}/>
 
-            <Skeleton loading={domain === null} active>
-                {
-                    domain &&
-                    (!domain.deleted ? <DomainResult domain={domain}/>
-                        : <Empty
-                            description={t`Although the domain exists in my database, it has been deleted from the WHOIS by its registrar.`}/>)
-                }
-            </Skeleton>
-        </Card>
+        <Skeleton loading={domain === null} active>
+            {
+                domain &&
+                (!domain.deleted ? <DomainResult domain={domain}/>
+                    : <Empty
+                        description={t`Although the domain exists in my database, it has been deleted from the WHOIS by its registrar.`}/>)
+            }
+        </Skeleton>
     </Flex>
 }

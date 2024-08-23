@@ -43,7 +43,8 @@ final readonly class ProcessDomainTriggerHandler
         private KernelInterface $kernel,
         private LoggerInterface $logger,
         private HttpClientInterface $client,
-        private MailerInterface $mailer, private CacheItemPoolInterface $cacheItemPool
+        private MailerInterface $mailer,
+        private CacheItemPoolInterface $cacheItemPool
     ) {
         $this->sender = new Address($mailerSenderEmail, $mailerSenderName);
     }

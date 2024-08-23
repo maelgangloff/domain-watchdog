@@ -3,7 +3,7 @@ import {t} from "ttag";
 import {ApiOutlined, MinusCircleOutlined, PlusOutlined} from "@ant-design/icons";
 import React from "react";
 import {Connector} from "../../../utils/api/connectors";
-import {rdapEventDetailTranslation, rdapEventNameTranslation} from "../../search/rdapTranslation";
+import {rdapEventDetailTranslation, rdapEventNameTranslation} from "../../../utils/functions/rdapTranslation";
 import {actionToColor} from "../../../utils/functions/actionToColor";
 import {actionToIcon} from "../../../utils/functions/actionToIcon";
 

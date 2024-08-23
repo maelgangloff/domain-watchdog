@@ -1,7 +1,7 @@
 import {List, Tag, Tooltip} from "antd";
 import React from "react";
 import {Domain} from "../../utils/api";
-import {rdapRoleDetailTranslation, rdapRoleTranslation} from "./rdapTranslation";
+import {rdapRoleDetailTranslation, rdapRoleTranslation} from "../../utils/functions/rdapTranslation";
 import {roleToAvatar} from "../../utils/functions/roleToAvatar";
 import {rolesToColor} from "../../utils/functions/rolesToColor";
 import {entityToName} from "../../utils/functions/entityToName";

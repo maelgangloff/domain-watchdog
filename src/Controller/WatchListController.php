@@ -52,7 +52,10 @@ class WatchListController extends AbstractController
         private readonly SerializerInterface $serializer,
         private readonly EntityManagerInterface $em,
         private readonly WatchListRepository $watchListRepository,
-        private readonly LoggerInterface $logger, private readonly HttpClientInterface $httpClient, private readonly CacheItemPoolInterface $cacheItemPool, private readonly KernelInterface $kernel
+        private readonly LoggerInterface $logger,
+        private readonly HttpClientInterface $httpClient,
+        private readonly CacheItemPoolInterface $cacheItemPool,
+        private readonly KernelInterface $kernel
     ) {
     }
 

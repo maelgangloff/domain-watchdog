@@ -1,5 +1,5 @@
 import {Domain, Watchlist} from "../../../../utils/api";
-import {rdapRoleTranslation} from "../../../search/rdapTranslation";
+import {rdapRoleTranslation} from "../../../../utils/functions/rdapTranslation";
 import {t} from "ttag";
 
 import {rolesToColor} from "../../../../utils/functions/rolesToColor";

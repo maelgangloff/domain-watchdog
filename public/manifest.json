@@ -10,7 +10,6 @@
   ],
   "scope": "/",
   "start_url": "/",
-  "orientation": "landscape",
   "display": "standalone",
   "background_color": "#fff",
   "description": "A standalone app that collects open access information about domain names, helping users track the history and changes associated with domain names. "

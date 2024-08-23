@@ -10,10 +10,9 @@ export type FieldType = {
 export function DomainSearchBar({onFinish}: { onFinish: (values: FieldType) => void }) {
 
     return <Form
-        labelCol={{span: 8}}
-        wrapperCol={{span: 16}}
         onFinish={onFinish}
         autoComplete="off"
+        style={{width: '100%'}}
     >
         <Form.Item<FieldType>
             name="ldhName"

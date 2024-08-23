@@ -10,7 +10,7 @@ import {Watchlist} from "../../../pages/tracking/WatchlistPage";
 import {Connector} from "../../../utils/api/connectors";
 import useBreakpoint from "../../../hooks/useBreakpoint";
 import {CalendarWatchlistButton} from "./CalendarWatchlistButton";
-import {rdapEventDetailTranslation, rdapEventNameTranslation} from "../../search/rdapTranslation";
+import {rdapEventDetailTranslation, rdapEventNameTranslation} from "../../../utils/functions/rdapTranslation";
 
 import {actionToColor} from "../../../utils/functions/actionToColor";
 
