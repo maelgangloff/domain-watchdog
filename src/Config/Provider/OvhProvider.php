@@ -1,17 +1,18 @@
 <?php
 
-namespace App\Config\Connector;
+namespace App\Config\Provider;
 
 use App\Entity\Domain;
-use App\Entity\Tld;
 use GuzzleHttp\Exception\ClientException;
 use Ovh\Api;
 use Ovh\Exceptions\InvalidParameterException;
+use Psr\Cache\CacheItemInterface;
+use Psr\Cache\InvalidArgumentException;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
-readonly class OvhConnector implements ConnectorInterface
+class OvhProvider extends AbstractProvider
 {
     public const REQUIRED_ROUTES = [
         [
@@ -39,10 +40,6 @@ readonly class OvhConnector implements ConnectorInterface
             'path' => '/order/cart/*',
         ],
     ];
-
-    public function __construct(private array $authData, private HttpClientInterface $client)
-    {
-    }
 
     /**
      * Order a domain name with the OVH API.
@@ -219,7 +216,7 @@ readonly class OvhConnector implements ConnectorInterface
      * @throws \JsonException
      * @throws \Exception
      */
-    public function isSupported(Tld ...$tldList): bool
+    protected function getSupportedTldList(): array
     {
         $authData = self::verifyAuthData($this->authData, $this->client);
 
@@ -230,17 +227,16 @@ readonly class OvhConnector implements ConnectorInterface
             $authData['consumerKey']
         );
 
-        $supportedTldList = $conn->get('/domain/extensions', [
+        return $conn->get('/domain/extensions', [
             'ovhSubsidiary' => $authData['ovhSubsidiary'],
         ]);
+    }
 
-        /** @var string $tldString */
-        foreach (array_unique(array_map(fn (Tld $tld) => $tld->getTld(), $tldList)) as $tldString) {
-            if (!in_array($tldString, $supportedTldList)) {
-                return false;
-            }
-        }
-
-        return true;
+    /**
+     * @throws InvalidArgumentException
+     */
+    protected function getCachedTldList(): CacheItemInterface
+    {
+        return $this->cacheItemPool->getItem('app.provider.ovh.supported-tld');
     }
 }

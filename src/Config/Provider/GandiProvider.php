@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Config\Connector;
+namespace App\Config\Provider;
 
 use App\Entity\Domain;
-use App\Entity\Tld;
 use http\Exception\InvalidArgumentException;
+use Psr\Cache\CacheItemInterface;
 use Symfony\Component\HttpClient\HttpOptions;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
@@ -16,13 +16,9 @@ use Symfony\Contracts\HttpClient\Exception\ServerExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
-readonly class GandiConnector implements ConnectorInterface
+class GandiProvider extends AbstractProvider
 {
     private const BASE_URL = 'https://api.gandi.net';
-
-    public function __construct(private array $authData, private HttpClientInterface $client)
-    {
-    }
 
     /**
      * Order a domain name with the Gandi API.
@@ -142,7 +138,7 @@ readonly class GandiConnector implements ConnectorInterface
      * @throws DecodingExceptionInterface
      * @throws ClientExceptionInterface
      */
-    public function isSupported(Tld ...$tldList): bool
+    protected function getSupportedTldList(): array
     {
         $authData = self::verifyAuthData($this->authData, $this->client);
 
@@ -152,15 +148,14 @@ readonly class GandiConnector implements ConnectorInterface
             ->setBaseUri(self::BASE_URL)
             ->toArray())->toArray();
 
-        $supportedTldList = array_map(fn ($tld) => $tld['name'], $response);
+        return array_map(fn ($tld) => $tld['name'], $response);
+    }
 
-        /** @var string $tldString */
-        foreach (array_unique(array_map(fn (Tld $tld) => $tld->getTld(), $tldList)) as $tldString) {
-            if (!in_array($tldString, $supportedTldList)) {
-                return false;
-            }
-        }
-
-        return true;
+    /**
+     * @throws \Psr\Cache\InvalidArgumentException
+     */
+    protected function getCachedTldList(): CacheItemInterface
+    {
+        return $this->cacheItemPool->getItem('app.provider.ovh.supported-tld');
     }
 }

@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use App\Config\Connector\ConnectorInterface;
+use App\Config\Provider\AbstractProvider;
 use App\Entity\Connector;
 use App\Entity\User;
 use Doctrine\Common\Collections\Collection;
@@ -70,7 +70,7 @@ class ConnectorController extends AbstractController
             throw new \Exception('Provider not found');
         }
 
-        /** @var ConnectorInterface $connectorProviderClass */
+        /** @var AbstractProvider $connectorProviderClass */
         $connectorProviderClass = $provider->getConnectorProvider();
 
         $authData = $connectorProviderClass::verifyAuthData($connector->getAuthData(), $client);

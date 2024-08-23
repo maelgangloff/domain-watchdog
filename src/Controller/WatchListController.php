@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use App\Config\Connector\ConnectorInterface;
+use App\Config\Provider\AbstractProvider;
 use App\Config\WebhookScheme;
 use App\Entity\Connector;
 use App\Entity\Domain;
@@ -27,6 +27,7 @@ use Eluceo\iCal\Domain\ValueObject\Timestamp;
 use Eluceo\iCal\Presentation\Component\Property;
 use Eluceo\iCal\Presentation\Component\Property\Value\TextValue;
 use Eluceo\iCal\Presentation\Factory\CalendarFactory;
+use Psr\Cache\CacheItemPoolInterface;
 use Psr\Log\LoggerInterface;
 use Sabre\VObject\EofException;
 use Sabre\VObject\InvalidDataException;
@@ -37,6 +38,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
+use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Component\Notifier\Exception\InvalidArgumentException;
 use Symfony\Component\Notifier\Transport\AbstractTransportFactory;
 use Symfony\Component\Notifier\Transport\Dsn;
@@ -50,7 +52,7 @@ class WatchListController extends AbstractController
         private readonly SerializerInterface $serializer,
         private readonly EntityManagerInterface $em,
         private readonly WatchListRepository $watchListRepository,
-        private readonly LoggerInterface $logger, private readonly HttpClientInterface $httpClient
+        private readonly LoggerInterface $logger, private readonly HttpClientInterface $httpClient, private readonly CacheItemPoolInterface $cacheItemPool, private readonly KernelInterface $kernel
     ) {
     }
 
@@ -198,8 +200,8 @@ class WatchListController extends AbstractController
             }
 
             $connectorProviderClass = $connector->getProvider()->getConnectorProvider();
-            /** @var ConnectorInterface $connectorProvider */
-            $connectorProvider = new $connectorProviderClass($connector->getAuthData(), $this->httpClient);
+            /** @var AbstractProvider $connectorProvider */
+            $connectorProvider = new $connectorProviderClass($connector->getAuthData(), $this->httpClient, $this->cacheItemPool, $this->kernel);
 
             $tldList = [];
             /** @var Domain $domain */

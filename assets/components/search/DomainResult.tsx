@@ -43,7 +43,7 @@ export function DomainResult({domain}: { domain: Domain }) {
                                     <Tooltip
                                         placement='bottomLeft'
                                         title={s in rdapStatusCodeDetailTranslated ? rdapStatusCodeDetailTranslated[s as keyof typeof rdapStatusCodeDetailTranslated] : undefined}>
-                                        <Tag color={s === 'active' ? 'green' : 'blue'}>{s}</Tag>
+                                        <Tag color={['active', 'ok'].includes(s) ? 'green' : 'blue'}>{s}</Tag>
                                     </Tooltip>
                                 )
                             }

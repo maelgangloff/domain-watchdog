@@ -2,8 +2,8 @@
 
 namespace App\Config;
 
-use App\Config\Connector\GandiConnector;
-use App\Config\Connector\OvhConnector;
+use App\Config\Provider\GandiProvider;
+use App\Config\Provider\OvhProvider;
 
 enum ConnectorProvider: string
 {
@@ -13,8 +13,8 @@ enum ConnectorProvider: string
     public function getConnectorProvider(): string
     {
         return match ($this) {
-            ConnectorProvider::OVH => OvhConnector::class,
-            ConnectorProvider::GANDI => GandiConnector::class
+            ConnectorProvider::OVH => OvhProvider::class,
+            ConnectorProvider::GANDI => GandiProvider::class
         };
     }
 }

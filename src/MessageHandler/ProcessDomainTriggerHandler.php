@@ -2,7 +2,7 @@
 
 namespace App\MessageHandler;
 
-use App\Config\Connector\ConnectorInterface;
+use App\Config\Provider\AbstractProvider;
 use App\Config\TriggerAction;
 use App\Config\WebhookScheme;
 use App\Entity\Domain;
@@ -76,8 +76,8 @@ final readonly class ProcessDomainTriggerHandler
 
                 $connectorProviderClass = $provider->getConnectorProvider();
 
-                /** @var ConnectorInterface $connectorProvider */
-                $connectorProvider = new $connectorProviderClass($connector->getAuthData(), $this->client);
+                /** @var AbstractProvider $connectorProvider */
+                $connectorProvider = new $connectorProviderClass($connector->getAuthData(), $this->client, $this->cacheItemPool, $this->kernel);
 
                 $connectorProvider->orderDomain($domain, $this->kernel->isDebug());
 
