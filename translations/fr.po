@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2024-08-22 23:35+0000\n"
+"PO-Revision-Date: 2024-08-23 19:37+0000\n"
 "Last-Translator: Maël Gangloff <contact@maelgangloff.fr>\n"
 "Language-Team: French <https://weblate.vinceh121.me/projects/domain-watchdog/"
 "domain-watchdog-dashboard/fr/>\n"
@@ -68,7 +68,7 @@ msgstr "Enregistrement"
 
 #: assets/components/search/DomainLifecycleSteps.tsx:25
 msgid "Active"
-msgstr ""
+msgstr "Actif"
 
 #: assets/components/search/DomainLifecycleSteps.tsx:29
 msgid "Renew Period"
