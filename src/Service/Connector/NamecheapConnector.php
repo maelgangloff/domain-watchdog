@@ -11,20 +11,20 @@ class NamecheapConnector extends AbstractConnector
 
     public const SANDBOX_BASE_URL = 'http://api.sandbox.namecheap.com/xml.response';
 
-    public function __construct(private HttpClientInterface $client)
+    public function __construct(private HttpClientInterface $client, private string $outgoingIp)
     {
     }
 
     public function orderDomain(Domain $domain, $dryRun): void
     {
-        $addresses = $this->call('namecheap.users.address.getList');
+        $addresses = $this->call('namecheap.users.address.getList', [], $dryRun);
 
         if (count($addresses) < 1) {
             throw new \Exception('Namecheap account requires at least one address to purchase a domain');
         }
 
         $addressId = $addresses->{0}->AddressId;
-        $address = $this->call('namecheap.users.address.getinfo', ['AddressId' => $addressId]);
+        $address = $this->call('namecheap.users.address.getinfo', ['AddressId' => $addressId], $dryRun);
 
         $domainAddresses = [];
 
@@ -38,30 +38,26 @@ class NamecheapConnector extends AbstractConnector
             'Years' => 1,
             'AddFreeWhoisguard' => 'yes',
             'WGEnabled' => 'yes',
-        ], $domainAddresses));
+        ], $domainAddresses), $dryRun);
     }
 
     private static function mergePrefixKeys(string $prefix, array|object $src, array &$dest)
     {
         foreach ($src as $key => $value) {
-            $dest[$prefix.$key] = $value;
+            $dest[$prefix . $key] = $value;
         }
     }
 
-    private function call(string $command, array $parameters = [], ?array $authData = null): object
+    private function call(string $command, array $parameters = [], bool $dryRun = true): object
     {
-        if (is_null($authData)) {
-            $authData = $this->authData;
-        }
-
         $actualParams = array_merge([
             'Command' => $command,
-            'ApiUser' => $authData['ApiUser'],
-            'ApiKey' => $authData['ApiKey'],
-            'ClientIp' => '', // TODO DW instance IP envvar
+            'ApiUser' => $this->authData['ApiUser'],
+            'ApiKey' => $this->authData['ApiKey'],
+            'ClientIp' => $this->outgoingIp,
         ], $parameters);
 
-        $response = $this->client->request('POST', self::BASE_URL, [
+        $response = $this->client->request('POST', $dryRun ? self::SANDBOX_BASE_URL : self::BASE_URL, [
             'query' => $actualParams,
         ]);
 
