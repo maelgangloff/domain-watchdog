@@ -12,7 +12,7 @@ msgstr ""
 #: assets/components/LoginForm.tsx:62
 #: assets/components/RegisterForm.tsx:41
 #: assets/components/RegisterForm.tsx:49
-#: assets/components/search/DomainSearchBar.tsx:21
+#: assets/components/search/DomainSearchBar.tsx:20
 #: assets/components/tracking/connector/ConnectorForm.tsx:43
 #: assets/components/tracking/connector/ConnectorForm.tsx:69
 #: assets/components/tracking/connector/ConnectorForm.tsx:77
@@ -52,7 +52,7 @@ msgstr ""
 msgid "Entities"
 msgstr ""
 
-#: assets/components/search/DomainSearchBar.tsx:24
+#: assets/components/search/DomainSearchBar.tsx:23
 #: assets/components/tracking/watchlist/WatchlistForm.tsx:118
 msgid "This domain name does not appear to be valid"
 msgstr ""
@@ -1024,23 +1024,23 @@ msgid ""
 "another"
 msgstr ""
 
-#: assets/App.tsx:100
+#: assets/App.tsx:101
 msgid "TOS"
 msgstr ""
 
-#: assets/App.tsx:101
+#: assets/App.tsx:102
 msgid "Privacy Policy"
 msgstr ""
 
-#: assets/App.tsx:102
+#: assets/App.tsx:103
 msgid "FAQ"
 msgstr ""
 
-#: assets/App.tsx:104
+#: assets/App.tsx:105
 msgid "Documentation"
 msgstr ""
 
-#: assets/App.tsx:107
+#: assets/App.tsx:108
 #, javascript-format
 msgid ""
 "${ ProjectLink } is an open source project distributed under the ${ "

@@ -40,7 +40,8 @@ export default function App() {
     const contextValue = useMemo(() => ({
         authenticated,
         setIsAuthenticated
-    }), [authenticated, setIsAuthenticated]);
+    }), [authenticated, setIsAuthenticated])
+
 
     useEffect(() => {
         getUser().then(() => {
@@ -96,7 +97,7 @@ export default function App() {
                     </div>
                 </Layout.Content>
                 <Layout.Footer style={{textAlign: 'center'}}>
-                    <Space size='middle'>
+                    <Space size='middle' wrap align='center'>
                         <Link to='/tos'><Button type='text'>{t`TOS`}</Button></Link>
                         <Link to='/privacy'><Button type='text'>{t`Privacy Policy`}</Button></Link>
                         <Link to='/faq'><Button type='text'>{t`FAQ`}</Button></Link>
