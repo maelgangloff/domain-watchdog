@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2024-08-23 19:37+0000\n"
+"PO-Revision-Date: 2024-08-23 19:40+0000\n"
 "Last-Translator: Maël Gangloff <contact@maelgangloff.fr>\n"
 "Language-Team: French <https://weblate.vinceh121.me/projects/domain-watchdog/"
 "domain-watchdog-dashboard/fr/>\n"
@@ -72,11 +72,11 @@ msgstr "Actif"
 
 #: assets/components/search/DomainLifecycleSteps.tsx:24
 msgid "Redemption Period"
-msgstr ""
+msgstr "Période de rédemption"
 
 #: assets/components/search/DomainLifecycleSteps.tsx:28
 msgid "Pending Delete"
-msgstr ""
+msgstr "En attente de suppression"
 
 #: assets/components/tracking/connector/ConnectorForm.tsx:40
 msgid "Provider"
