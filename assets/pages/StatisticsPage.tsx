@@ -95,7 +95,6 @@ export default function StatisticsPage() {
                             title={t`Success rate`}
                             value={successRate === undefined ? '-' : successRate * 100}
                             suffix='%'
-                            precision={2}
                             valueStyle={{color: successRate === undefined ? 'grey' : successRate >= 0.5 ? 'darkgreen' : 'orange'}}
                         />
                     </Tooltip>
