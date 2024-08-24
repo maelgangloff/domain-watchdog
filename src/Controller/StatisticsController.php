@@ -69,7 +69,7 @@ class StatisticsController extends AbstractController
             $value = $getItemFunction();
             $item
                 ->set($value)
-                ->expiresAfter(24 * 60 * 60);
+                ->expiresAfter(new \DateInterval('PT6H'));
             $this->pool->save($item);
 
             return $value;

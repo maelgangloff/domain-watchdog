@@ -207,17 +207,7 @@ class WatchListController extends AbstractController
             $connectorProvider = new $connectorProviderClass($connector->getAuthData(), $this->httpClient, $this->cacheItemPool, $this->kernel);
 
             $connectorProvider::verifyAuthData($connector->getAuthData(), $this->httpClient); // We want to check if the tokens are OK
-
-            $tldList = [];
-            /** @var Domain $domain */
-            foreach ($watchList->getDomains()->getIterator() as $domain) {
-                $tld = $domain->getTld();
-                if (!in_array($tld, $tldList)) {
-                    $tldList[] = $tld;
-                }
-            }
-
-            $supported = $connectorProvider->isSupported(...$tldList);
+            $supported = $connectorProvider->isSupported(...$watchList->getDomains()->toArray());
 
             if (!$supported) {
                 $this->logger->notice('The Connector ({connector}) does not support all TLDs in this Watchlist', [

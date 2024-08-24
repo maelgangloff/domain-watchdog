@@ -3,7 +3,6 @@
 namespace App\Config\Provider;
 
 use App\Entity\Domain;
-use App\Entity\Tld;
 use Psr\Cache\CacheItemInterface;
 use Psr\Cache\CacheItemPoolInterface;
 use Symfony\Component\HttpKernel\KernelInterface;
@@ -23,22 +22,32 @@ abstract class AbstractProvider
 
     abstract public function orderDomain(Domain $domain, bool $dryRun): void;
 
-    public function isSupported(Tld ...$tldList): bool
+    public function isSupported(Domain ...$domainList): bool
     {
         $item = $this->getCachedTldList();
         if (!$item->isHit()) {
             $supportedTldList = $this->getSupportedTldList();
             $item
                 ->set($supportedTldList)
-                ->expiresAfter(new \DateInterval('P1D'));
+                ->expiresAfter(new \DateInterval('PT1H'));
             $this->cacheItemPool->saveDeferred($item);
         } else {
             $supportedTldList = $item->get();
         }
 
-        /** @var string $tldString */
-        foreach (array_unique(array_map(fn (Tld $tld) => $tld->getTld(), $tldList)) as $tldString) {
-            if (!in_array($tldString, $supportedTldList)) {
+        $extensionList = [];
+        foreach ($domainList as $domain) {
+            // We want to check the support of TLDs and SLDs here.
+            // For example, it is not enough for the Connector to support .fr for it to support the domain name example.asso.fr.
+            // It must support .asso.fr.
+            $extension = explode('.', $domain->getLdhName(), 2)[1];
+            if (!in_array($extension, $extensionList)) {
+                $extensionList[] = $extension;
+            }
+        }
+
+        foreach ($extensionList as $extension) {
+            if (!in_array($extension, $supportedTldList)) {
                 return false;
             }
         }
