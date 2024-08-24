@@ -76,7 +76,8 @@ readonly class RDAPService
         'xn--hlcj6aya9esc7a',
     ];
 
-    public const IMPORTANT_EVENTS = [EventAction::Deletion->value, EventAction::Expiration->value];
+    private const IMPORTANT_EVENTS = [EventAction::Deletion->value, EventAction::Expiration->value];
+    private const IMPORTANT_STATUS = ['auto renew period', 'redemption period', 'pending delete'];
 
     public function __construct(private HttpClientInterface $client,
         private EntityRepository $entityRepository,
@@ -104,6 +105,11 @@ readonly class RDAPService
     {
         if ($updatedAt->diff(new \DateTimeImmutable('now'))->days < 1) {
             return false;
+        }
+
+        $status = $domain->getStatus();
+        if (!empty($status) && count(array_intersect($status, self::IMPORTANT_STATUS))) {
+            return true;
         }
 
         /** @var DomainEvent[] $events */
