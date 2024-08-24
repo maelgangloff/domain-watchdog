@@ -486,33 +486,33 @@ msgstr ""
 msgid "Sorry, the page you visited does not exist."
 msgstr ""
 
-#: assets/pages/StatisticsPage.tsx:32
+#: assets/pages/StatisticsPage.tsx:34
 msgid "RDAP queries"
 msgstr ""
 
-#: assets/pages/StatisticsPage.tsx:41
+#: assets/pages/StatisticsPage.tsx:43
 msgid "Alerts sent"
 msgstr ""
 
-#: assets/pages/StatisticsPage.tsx:55
+#: assets/pages/StatisticsPage.tsx:57
 msgid "Domain names in database"
 msgstr ""
 
-#: assets/pages/StatisticsPage.tsx:66
+#: assets/pages/StatisticsPage.tsx:68
 msgid "Tracked domain names"
 msgstr ""
 
-#: assets/pages/StatisticsPage.tsx:80
+#: assets/pages/StatisticsPage.tsx:82
 msgid "Purchased domain names"
 msgstr ""
 
-#: assets/pages/StatisticsPage.tsx:90
+#: assets/pages/StatisticsPage.tsx:92
 msgid ""
 "This value is based on the status code of the HTTP response from the "
 "providers following the domain order."
 msgstr ""
 
-#: assets/pages/StatisticsPage.tsx:93
+#: assets/pages/StatisticsPage.tsx:95
 msgid "Success rate"
 msgstr ""
 
