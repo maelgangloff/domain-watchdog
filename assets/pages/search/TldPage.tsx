@@ -113,6 +113,7 @@ export default function TldPage() {
         </Paragraph>
         <Divider/>
         <Collapse
+            accordion
             size={sm ? 'small' : 'large'}
             items={[
                 {
