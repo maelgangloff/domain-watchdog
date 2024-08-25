@@ -12,7 +12,6 @@ use App\Entity\EntityEvent;
 use App\Entity\Nameserver;
 use App\Entity\NameserverEntity;
 use App\Entity\RdapServer;
-use App\Entity\Statistics;
 use App\Entity\Tld;
 use App\Repository\DomainEntityRepository;
 use App\Repository\DomainEventRepository;
@@ -25,7 +24,6 @@ use App\Repository\RdapServerRepository;
 use App\Repository\TldRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Exception\ORMException;
-use Psr\Cache\CacheItemPoolInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpClient\Exception\ClientException;
 use Symfony\Component\HttpFoundation\Exception\BadRequestException;
@@ -91,7 +89,7 @@ readonly class RDAPService
         private TldRepository $tldRepository,
         private EntityManagerInterface $em,
         private LoggerInterface $logger,
-        private CacheItemPoolInterface $pool
+        private StatService $statService
     ) {
     }
 
@@ -103,7 +101,7 @@ readonly class RDAPService
      */
     public static function isToBeWatchClosely(Domain $domain, \DateTimeImmutable $updatedAt): bool
     {
-        if ($updatedAt->diff(new \DateTimeImmutable('now'))->days < 1) {
+        if ($updatedAt->diff(new \DateTimeImmutable('now'))->h < 23) {
             return false;
         }
 
@@ -171,7 +169,7 @@ readonly class RDAPService
         ]);
 
         try {
-            Statistics::updateRDAPQueriesStat($this->pool, 'stats.rdap_queries.count');
+            $this->statService->incrementStat('stats.rdap_queries.count');
 
             $res = $this->client->request(
                 'GET', $rdapServerUrl.'domain/'.$idnDomain

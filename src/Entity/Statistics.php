@@ -5,7 +5,6 @@ namespace App\Entity;
 use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\Get;
 use App\Controller\StatisticsController;
-use Psr\Cache\CacheItemPoolInterface;
 
 #[ApiResource(
     operations: [
@@ -27,19 +26,6 @@ class Statistics
     private ?array $domainCount = null;
     private ?int $domainTracked = null;
     private ?int $domainCountTotal = null;
-
-    public static function updateRDAPQueriesStat(CacheItemPoolInterface $pool, string $key): bool
-    {
-        try {
-            $item = $pool->getItem($key);
-            $item->set(($item->get() ?? 0) + 1);
-
-            return $pool->save($item);
-        } catch (\Throwable) {
-        }
-
-        return false;
-    }
 
     public function getRdapQueries(): ?int
     {
