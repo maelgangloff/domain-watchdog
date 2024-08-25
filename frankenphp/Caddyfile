@@ -1,21 +1,21 @@
 {
-	{$CADDY_GLOBAL_OPTIONS}
+        {$CADDY_GLOBAL_OPTIONS}
 
-	frankenphp {
-		{$FRANKENPHP_CONFIG}
-	}
+        frankenphp {
+                {$FRANKENPHP_CONFIG}
+        }
 }
 
 {$CADDY_EXTRA_CONFIG}
 
-{$SERVER_NAME:localhost} {
-	root * /app/public
-	encode zstd br gzip
+{$SERVER_NAME: :80} {
+        root * /app/public
+        encode zstd br gzip
 
-	{$CADDY_SERVER_EXTRA_DIRECTIVES}
+        {$CADDY_SERVER_EXTRA_DIRECTIVES}
 
-	# Disable Topics tracking if not enabled explicitly: https://github.com/jkarlin/topics
-	header ?Permissions-Policy "browsing-topics=()"
+        # Disable Topics tracking if not enabled explicitly: https://github.com/jkarlin/topics
+        header ?Permissions-Policy "browsing-topics=()"
 
-	php_server
+        php_server
 }
