@@ -133,8 +133,9 @@ final readonly class ProcessDomainTriggerHandler
      */
     private function sendChatNotification(WatchList $watchList, ChatNotificationInterface $notification): void
     {
-        if (null !== $watchList->getWebhookDsn()) {
-            foreach ($watchList->getWebhookDsn() as $dsnString) {
+        $webhookDsn = $watchList->getWebhookDsn();
+        if (null !== $webhookDsn && 0 !== count($webhookDsn)) {
+            foreach ($webhookDsn as $dsnString) {
                 $dsn = new Dsn($dsnString);
 
                 $scheme = $dsn->getScheme();

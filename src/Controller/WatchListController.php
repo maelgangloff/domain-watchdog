@@ -157,8 +157,9 @@ class WatchListController extends AbstractController
 
     private function verifyWebhookDSN(WatchList $watchList): void
     {
-        if (null !== $watchList->getWebhookDsn()) {
-            foreach ($watchList->getWebhookDsn() as $dsnString) {
+        $webhookDsn = $watchList->getWebhookDsn();
+        if (null !== $webhookDsn && 0 !== count($webhookDsn)) {
+            foreach ($webhookDsn as $dsnString) {
                 try {
                     $dsn = new Dsn($dsnString);
                 } catch (InvalidArgumentException $exception) {
