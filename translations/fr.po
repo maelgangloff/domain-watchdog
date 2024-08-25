@@ -447,11 +447,11 @@ msgstr ""
 "requêtes à l'IANA et une à l'ICANN).\n"
 "Parallèlement, la liste des serveurs RDAP racine est mise à jour."
 
-#: assets/pages/search/TldPage.tsx:120
+#: assets/pages/search/TldPage.tsx:121
 msgid "Sponsored Top-Level-Domains"
 msgstr "Domaines de premier niveau parrainés"
 
-#: assets/pages/search/TldPage.tsx:122
+#: assets/pages/search/TldPage.tsx:123
 msgid ""
 "Top-level domains sponsored by specific organizations that set rules for "
 "registration and use, often related to particular interest groups or "
@@ -461,11 +461,11 @@ msgstr ""
 "établissent des règles d'enregistrement et d'utilisation, souvent liées à "
 "des groupes d'intérêt ou à des secteurs particuliers."
 
-#: assets/pages/search/TldPage.tsx:129
+#: assets/pages/search/TldPage.tsx:130
 msgid "Generic Top-Level-Domains"
 msgstr "Domaines de premier niveau générique"
 
-#: assets/pages/search/TldPage.tsx:131
+#: assets/pages/search/TldPage.tsx:132
 msgid ""
 "Generic top-level domains open to everyone, not restricted by specific "
 "criteria, representing various themes or industries."
@@ -474,11 +474,11 @@ msgstr ""
 "critères spécifiques, représentant des thèmes ou des secteurs d'activité "
 "variés."
 
-#: assets/pages/search/TldPage.tsx:138
+#: assets/pages/search/TldPage.tsx:139
 msgid "Brand Generic Top-Level-Domains"
 msgstr "Domaines de premier niveau générique de marque"
 
-#: assets/pages/search/TldPage.tsx:140
+#: assets/pages/search/TldPage.tsx:141
 msgid ""
 "Generic top-level domains associated with specific brands, allowing "
 "companies to use their own brand names as domains."
@@ -487,11 +487,11 @@ msgstr ""
 "permettant aux entreprises d'utiliser leurs propres noms de marque comme "
 "domaines."
 
-#: assets/pages/search/TldPage.tsx:147
+#: assets/pages/search/TldPage.tsx:148
 msgid "Country-Code Top-Level-Domains"
 msgstr "Domaines de premier niveau national"
 
-#: assets/pages/search/TldPage.tsx:149
+#: assets/pages/search/TldPage.tsx:150
 msgid ""
 "Top-level domains based on country codes, identifying websites according to "
 "their country of origin."

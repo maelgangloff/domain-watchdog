@@ -449,11 +449,11 @@ msgstr ""
 "erforderlich (zwei Anfragen an IANA und eine an ICANN).\n"
 " Gleichzeitig wird die Liste der Root-RDAP-Server aktualisiert."
 
-#: assets/pages/search/TldPage.tsx:120
+#: assets/pages/search/TldPage.tsx:121
 msgid "Sponsored Top-Level-Domains"
 msgstr "Gesponserte Top-Level-Domains"
 
-#: assets/pages/search/TldPage.tsx:122
+#: assets/pages/search/TldPage.tsx:123
 msgid ""
 "Top-level domains sponsored by specific organizations that set rules for "
 "registration and use, often related to particular interest groups or "
@@ -463,11 +463,11 @@ msgstr ""
 "Regeln für die Registrierung und Nutzung festlegen und oft mit bestimmten "
 "Interessengruppen oder Branchen in Zusammenhang stehen."
 
-#: assets/pages/search/TldPage.tsx:129
+#: assets/pages/search/TldPage.tsx:130
 msgid "Generic Top-Level-Domains"
 msgstr "Generische Top-Level-Domains"
 
-#: assets/pages/search/TldPage.tsx:131
+#: assets/pages/search/TldPage.tsx:132
 msgid ""
 "Generic top-level domains open to everyone, not restricted by specific "
 "criteria, representing various themes or industries."
@@ -476,11 +476,11 @@ msgstr ""
 "bestimmte Kriterien eingeschränkt sind und verschiedene Themen oder Branchen "
 "repräsentieren."
 
-#: assets/pages/search/TldPage.tsx:138
+#: assets/pages/search/TldPage.tsx:139
 msgid "Brand Generic Top-Level-Domains"
 msgstr "Markengenerische Top-Level-Domains"
 
-#: assets/pages/search/TldPage.tsx:140
+#: assets/pages/search/TldPage.tsx:141
 msgid ""
 "Generic top-level domains associated with specific brands, allowing "
 "companies to use their own brand names as domains."
@@ -488,11 +488,11 @@ msgstr ""
 "Generische Top-Level-Domains sind mit bestimmten Marken verknüpft und "
 "ermöglichen Unternehmen die Verwendung ihrer eigenen Markennamen als Domains."
 
-#: assets/pages/search/TldPage.tsx:147
+#: assets/pages/search/TldPage.tsx:148
 msgid "Country-Code Top-Level-Domains"
 msgstr "Länderspezifische Top-Level-Domains"
 
-#: assets/pages/search/TldPage.tsx:149
+#: assets/pages/search/TldPage.tsx:150
 msgid ""
 "Top-level domains based on country codes, identifying websites according to "
 "their country of origin."
