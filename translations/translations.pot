@@ -528,6 +528,11 @@ msgstr ""
 msgid "Roles"
 msgstr ""
 
+#: assets/pages/TextPage.tsx:26
+#, javascript-format
+msgid "📝 Please create /public/content/${ resource } file."
+msgstr ""
+
 #: assets/utils/functions/rdapTranslation.ts:7
 msgid "Registrant"
 msgstr ""

@@ -1,16 +1,29 @@
 import React, {useEffect, useState} from "react";
 import snarkdown from "snarkdown"
-import {Skeleton} from "antd";
+import {Skeleton, Typography} from "antd";
 import axios from "axios";
+import {t} from "ttag";
 
 export default function TextPage({resource}: { resource: string }) {
-    const [markdown, setMarkdown] = useState<string>()
+    const [loading, setLoading] = useState<boolean>(false)
+    const [markdown, setMarkdown] = useState<string | undefined>(undefined)
 
     useEffect(() => {
-        axios.get('/content/' + resource).then(res => setMarkdown(res.data))
+        setLoading(true)
+        axios.get('/content/' + resource)
+            .then(res => setMarkdown(res.data))
+            .catch(err => {
+                console.error(err)
+                setMarkdown(undefined)
+            })
+            .finally(() => setLoading(false))
     }, [resource])
 
-    return <Skeleton loading={markdown === undefined} active>
-        {markdown !== undefined && <div dangerouslySetInnerHTML={{__html: snarkdown(markdown)}}></div>}
+    return <Skeleton loading={loading} active>
+        {markdown !== undefined ? <div
+                dangerouslySetInnerHTML={{__html: snarkdown(markdown)}}></div> :
+            <Typography.Text strong>
+                {t`📝 Please create /public/content/${resource} file.`}
+            </Typography.Text>}
     </Skeleton>
 }
