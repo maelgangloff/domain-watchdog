@@ -19,6 +19,10 @@ use Symfony\Component\Messenger\Exception\ExceptionInterface;
 use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Mime\Address;
 use Symfony\Component\Notifier\Recipient\Recipient;
+use Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface;
+use Symfony\Contracts\HttpClient\Exception\DecodingExceptionInterface;
+use Symfony\Contracts\HttpClient\Exception\RedirectionExceptionInterface;
+use Symfony\Contracts\HttpClient\Exception\ServerExceptionInterface;
 
 #[AsMessageHandler]
 final readonly class UpdateDomainsFromWatchlistHandler
@@ -38,9 +42,15 @@ final readonly class UpdateDomainsFromWatchlistHandler
     }
 
     /**
-     * @throws TransportExceptionInterface
-     * @throws \Exception
+     * @param UpdateDomainsFromWatchlist $message
      * @throws ExceptionInterface
+     * @throws TransportExceptionInterface
+     * @throws ClientExceptionInterface
+     * @throws DecodingExceptionInterface
+     * @throws RedirectionExceptionInterface
+     * @throws ServerExceptionInterface
+     * @throws \Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface
+     * @throws \Throwable
      */
     public function __invoke(UpdateDomainsFromWatchlist $message): void
     {
@@ -63,6 +73,7 @@ final readonly class UpdateDomainsFromWatchlistHandler
 
             try {
                 $this->RDAPService->registerDomain($domain->getLdhName());
+                $this->bus->dispatch(new SendDomainEventNotif($watchList->getToken(), $domain->getLdhName(), $updatedAt));
             } catch (NotFoundHttpException) {
                 if (null !== $watchList->getConnector()) {
                     $this->bus->dispatch(new OrderDomain($watchList->getToken(), $domain->getLdhName(), $updatedAt));
@@ -75,9 +86,9 @@ final readonly class UpdateDomainsFromWatchlistHandler
                 $email = (new DomainUpdateErrorNotification($this->sender, $domain))
                     ->asEmailMessage(new Recipient($watchList->getUser()->getEmail()));
                 $this->mailer->send($email->getMessage());
-            }
 
-            $this->bus->dispatch(new SendDomainEventNotif($watchList->getToken(), $domain->getLdhName(), $updatedAt));
+                throw $e;
+            }
         }
     }
 }
