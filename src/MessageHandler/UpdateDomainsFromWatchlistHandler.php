@@ -11,6 +11,7 @@ use App\Notifier\DomainUpdateErrorNotification;
 use App\Repository\WatchListRepository;
 use App\Service\RDAPService;
 use Psr\Log\LoggerInterface;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
@@ -62,6 +63,10 @@ final readonly class UpdateDomainsFromWatchlistHandler
 
             try {
                 $this->RDAPService->registerDomain($domain->getLdhName());
+            } catch (NotFoundHttpException) {
+                if (null !== $watchList->getConnector()) {
+                    $this->bus->dispatch(new OrderDomain($watchList->getToken(), $domain->getLdhName(), $updatedAt));
+                }
             } catch (\Throwable $e) {
                 $this->logger->error('An update error email is sent to user {username}.', [
                     'username' => $watchList->getUser()->getUserIdentifier(),
@@ -73,10 +78,6 @@ final readonly class UpdateDomainsFromWatchlistHandler
             }
 
             $this->bus->dispatch(new SendDomainEventNotif($watchList->getToken(), $domain->getLdhName(), $updatedAt));
-
-            if (null !== $watchList->getConnector() && $domain->getDeleted()) {
-                $this->bus->dispatch(new OrderDomain($watchList->getToken(), $domain->getLdhName(), $updatedAt));
-            }
         }
     }
 }

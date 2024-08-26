@@ -10,6 +10,7 @@ use App\Notifier\DomainOrderErrorNotification;
 use App\Notifier\DomainOrderNotification;
 use App\Repository\DomainRepository;
 use App\Repository\WatchListRepository;
+use App\Service\ChatNotificationService;
 use App\Service\StatService;
 use Psr\Cache\CacheItemPoolInterface;
 use Psr\Log\LoggerInterface;
@@ -37,6 +38,7 @@ final readonly class OrderDomainHandler
         private MailerInterface $mailer,
         private LoggerInterface $logger,
         private StatService $statService,
+        private ChatNotificationService $chatNotificationService
     ) {
         $this->sender = new Address($mailerSenderEmail, $mailerSenderName);
     }
@@ -76,7 +78,7 @@ final readonly class OrderDomainHandler
 
                 $notification = (new DomainOrderNotification($this->sender, $domain, $connector));
                 $this->mailer->send($notification->asEmailMessage(new Recipient($watchList->getUser()->getEmail()))->getMessage());
-                SendDomainEventNotifHandler::sendChatNotification($watchList, $notification, $this->logger);
+                $this->chatNotificationService->sendChatNotification($watchList, $notification);
 
                 $this->statService->incrementStat('stats.domain.purchased');
             } catch (\Throwable $exception) {
@@ -86,7 +88,7 @@ final readonly class OrderDomainHandler
 
                 $notification = (new DomainOrderErrorNotification($this->sender, $domain));
                 $this->mailer->send($notification->asEmailMessage(new Recipient($watchList->getUser()->getEmail()))->getMessage());
-                SendDomainEventNotifHandler::sendChatNotification($watchList, $notification, $this->logger);
+                $this->chatNotificationService->sendChatNotification($watchList, $notification);
 
                 $this->statService->incrementStat('stats.domain.purchase.failed');
 

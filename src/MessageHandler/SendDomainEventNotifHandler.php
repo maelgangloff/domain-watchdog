@@ -3,7 +3,6 @@
 namespace App\MessageHandler;
 
 use App\Config\TriggerAction;
-use App\Config\WebhookScheme;
 use App\Entity\Domain;
 use App\Entity\DomainEvent;
 use App\Entity\WatchList;
@@ -12,6 +11,7 @@ use App\Message\SendDomainEventNotif;
 use App\Notifier\DomainUpdateNotification;
 use App\Repository\DomainRepository;
 use App\Repository\WatchListRepository;
+use App\Service\ChatNotificationService;
 use App\Service\StatService;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
@@ -19,10 +19,7 @@ use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 use Symfony\Component\Messenger\Exception\ExceptionInterface;
 use Symfony\Component\Mime\Address;
-use Symfony\Component\Notifier\Notification\ChatNotificationInterface;
 use Symfony\Component\Notifier\Recipient\Recipient;
-use Symfony\Component\Notifier\Transport\AbstractTransportFactory;
-use Symfony\Component\Notifier\Transport\Dsn;
 
 #[AsMessageHandler]
 final readonly class SendDomainEventNotifHandler
@@ -36,7 +33,8 @@ final readonly class SendDomainEventNotifHandler
         private MailerInterface $mailer,
         private StatService $statService,
         private DomainRepository $domainRepository,
-        private WatchListRepository $watchListRepository
+        private WatchListRepository $watchListRepository,
+        private ChatNotificationService $chatNotificationService
     ) {
         $this->sender = new Address($mailerSenderEmail, $mailerSenderName);
     }
@@ -72,46 +70,10 @@ final readonly class SendDomainEventNotifHandler
                 if (TriggerAction::SendEmail == $watchListTrigger->getAction()) {
                     $this->mailer->send($notification->asEmailMessage($recipient)->getMessage());
                 } elseif (TriggerAction::SendChat == $watchListTrigger->getAction()) {
-                    $this->sendChatNotification($watchList, $notification, $this->logger);
+                    $this->chatNotificationService->sendChatNotification($watchList, $notification);
                 }
 
                 $this->statService->incrementStat('stats.alert.sent');
-            }
-        }
-    }
-
-    /**
-     * @throws \Symfony\Component\Notifier\Exception\TransportExceptionInterface
-     */
-    public static function sendChatNotification(WatchList $watchList, ChatNotificationInterface $notification, LoggerInterface $logger): void
-    {
-        $webhookDsn = $watchList->getWebhookDsn();
-        if (null !== $webhookDsn && 0 !== count($webhookDsn)) {
-            foreach ($webhookDsn as $dsnString) {
-                $dsn = new Dsn($dsnString);
-
-                $scheme = $dsn->getScheme();
-                $webhookScheme = WebhookScheme::tryFrom($scheme);
-
-                if (null !== $webhookScheme) {
-                    $transportFactoryClass = $webhookScheme->getChatTransportFactory();
-                    /** @var AbstractTransportFactory $transportFactory */
-                    $transportFactory = new $transportFactoryClass();
-                    try {
-                        $transportFactory->create($dsn)->send($notification->asChatMessage(new Recipient()));
-                        $logger->info('Chat message sent with {schema} for Watchlist {token}',
-                            [
-                                'scheme' => $webhookScheme->name,
-                                'token' => $watchList->getToken(),
-                            ]);
-                    } catch (\Throwable) {
-                        $logger->error('Unable to send a chat message to {scheme} for Watchlist {token}',
-                            [
-                                'scheme' => $webhookScheme->name,
-                                'token' => $watchList->getToken(),
-                            ]);
-                    }
-                }
             }
         }
     }
