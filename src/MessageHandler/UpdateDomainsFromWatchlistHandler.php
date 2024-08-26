@@ -4,12 +4,14 @@ namespace App\MessageHandler;
 
 use App\Entity\Domain;
 use App\Entity\WatchList;
-use App\Message\ProcessDomainTrigger;
-use App\Message\ProcessWatchListTrigger;
+use App\Message\OrderDomain;
+use App\Message\SendDomainEventNotif;
+use App\Message\UpdateDomainsFromWatchlist;
 use App\Notifier\DomainUpdateErrorNotification;
 use App\Repository\WatchListRepository;
 use App\Service\RDAPService;
 use Psr\Log\LoggerInterface;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
@@ -19,7 +21,7 @@ use Symfony\Component\Mime\Address;
 use Symfony\Component\Notifier\Recipient\Recipient;
 
 #[AsMessageHandler]
-final readonly class ProcessWatchListTriggerHandler
+final readonly class UpdateDomainsFromWatchlistHandler
 {
     private Address $sender;
 
@@ -40,7 +42,7 @@ final readonly class ProcessWatchListTriggerHandler
      * @throws \Exception
      * @throws ExceptionInterface
      */
-    public function __invoke(ProcessWatchListTrigger $message): void
+    public function __invoke(UpdateDomainsFromWatchlist $message): void
     {
         /** @var WatchList $watchList */
         $watchList = $this->watchListRepository->findOneBy(['token' => $message->watchListToken]);
@@ -61,6 +63,10 @@ final readonly class ProcessWatchListTriggerHandler
 
             try {
                 $this->RDAPService->registerDomain($domain->getLdhName());
+            } catch (NotFoundHttpException) {
+                if (null !== $watchList->getConnector()) {
+                    $this->bus->dispatch(new OrderDomain($watchList->getToken(), $domain->getLdhName(), $updatedAt));
+                }
             } catch (\Throwable $e) {
                 $this->logger->error('An update error email is sent to user {username}.', [
                     'username' => $watchList->getUser()->getUserIdentifier(),
@@ -71,7 +77,7 @@ final readonly class ProcessWatchListTriggerHandler
                 $this->mailer->send($email->getMessage());
             }
 
-            $this->bus->dispatch(new ProcessDomainTrigger($watchList->getToken(), $domain->getLdhName(), $updatedAt));
+            $this->bus->dispatch(new SendDomainEventNotif($watchList->getToken(), $domain->getLdhName(), $updatedAt));
         }
     }
 }

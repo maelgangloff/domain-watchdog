@@ -2,7 +2,7 @@
 
 namespace App\Message;
 
-final class ProcessDomainTrigger
+final class OrderDomain
 {
     public function __construct(
         public string $watchListToken,
