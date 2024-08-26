@@ -23,7 +23,7 @@ export default function TextPage({resource}: { resource: string }) {
         {markdown !== undefined ? <div
                 dangerouslySetInnerHTML={{__html: snarkdown(markdown)}}></div> :
             <Typography.Text strong>
-                {t`📝 Please create /public/content/${resource} file.`}
+                {t`📝 Please create the /public/content/${resource} file.`}
             </Typography.Text>}
     </Skeleton>
 }
