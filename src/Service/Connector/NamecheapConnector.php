@@ -11,7 +11,7 @@ class NamecheapConnector extends AbstractConnector
 
     public const SANDBOX_BASE_URL = 'http://api.sandbox.namecheap.com/xml.response';
 
-    public function __construct(private HttpClientInterface $client, private string $outgoingIp)
+    public function __construct(private HttpClientInterface $client, private readonly string $outgoingIp)
     {
     }
 
@@ -44,7 +44,7 @@ class NamecheapConnector extends AbstractConnector
     private static function mergePrefixKeys(string $prefix, array|object $src, array &$dest)
     {
         foreach ($src as $key => $value) {
-            $dest[$prefix . $key] = $value;
+            $dest[$prefix.$key] = $value;
         }
     }
 
@@ -72,5 +72,6 @@ class NamecheapConnector extends AbstractConnector
 
     public static function verifyAuthData(array $authData, HttpClientInterface $client): array
     {
+        return $authData;
     }
 }

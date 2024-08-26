@@ -73,9 +73,10 @@ final readonly class ProcessDomainTriggerHandler
                 $connectorProvider->orderDomain($domain, $this->kernel->isDebug());
 
                 $this->sendEmailDomainOrdered($domain, $connector, $watchList->getUser());
-            } catch (\Throwable) {
-                $this->logger->warning('Unable to complete purchase. An error message is sent to user {username}.', [
+            } catch (\Throwable $t) {
+                $this->logger->error('Unable to complete purchase. An error message is sent to user {username}.', [
                     'username' => $watchList->getUser()->getUserIdentifier(),
+                    'error' => $t,
                 ]);
                 $this->sendEmailDomainOrderError($domain, $watchList->getUser());
             }

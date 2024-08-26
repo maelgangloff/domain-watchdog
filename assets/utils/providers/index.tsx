@@ -16,7 +16,7 @@ export const helpGetTokenLink = (provider?: string) => {
                 {t`Retrieve a Personal Access Token from your customer account on the Provider's website`}
             </Typography.Link>
         case ConnectorProvider.NAMECHEAP:
-            return <Typography.Link target='_blank' href="">
+            return <Typography.Link target='_blank' href="https://ap.www.namecheap.com/settings/tools/apiaccess/">
                 {t`Retreive an API key and whitelist this instance's IP address on Namecheap's website`}
             </Typography.Link>
         default:

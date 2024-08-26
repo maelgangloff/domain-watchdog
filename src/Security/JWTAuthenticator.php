@@ -46,7 +46,7 @@ class JWTAuthenticator implements AuthenticationSuccessHandlerInterface
                 time() + 7200, // expiration
                 '/',
                 null,
-                true,
+                false,
                 true,
                 false,
                 'strict'
