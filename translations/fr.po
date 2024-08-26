@@ -568,8 +568,9 @@ msgid "Roles"
 msgstr "Rôles"
 
 #: assets/pages/TextPage.tsx:26
-#, javascript-format
-msgid "📝 Please create /public/content/${ resource } file."
+#, fuzzy, javascript-format
+#| msgid "📝 Please create /public/content/${ resource } file."
+msgid "📝 Please create the /public/content/${ resource } file."
 msgstr "📝 Veuillez créer le fichier /public/content/${ resource }."
 
 #: assets/utils/functions/rdapTranslation.ts:7
