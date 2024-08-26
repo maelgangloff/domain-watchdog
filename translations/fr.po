@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2024-08-23 19:40+0000\n"
+"PO-Revision-Date: 2024-08-26 16:40+0000\n"
 "Last-Translator: Maël Gangloff <contact@maelgangloff.fr>\n"
 "Language-Team: French <https://weblate.vinceh121.me/projects/domain-watchdog/"
 "domain-watchdog-dashboard/fr/>\n"
@@ -570,7 +570,7 @@ msgstr "Rôles"
 #: assets/pages/TextPage.tsx:26
 #, javascript-format
 msgid "📝 Please create /public/content/${ resource } file."
-msgstr ""
+msgstr "📝 Veuillez créer le fichier /public/content/${ resource }."
 
 #: assets/utils/functions/rdapTranslation.ts:7
 msgid "Registrant"
