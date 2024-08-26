@@ -32,7 +32,7 @@ services:
         healthcheck:
             disable: true
             test: [ ]
-        volumes:
+#        volumes:
 #            - ./custom_rdap_servers.yaml:/app/config/app/custom_rdap_servers.yaml # Please see #41 issue
 
     database:
