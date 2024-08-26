@@ -42,7 +42,6 @@ final readonly class UpdateDomainsFromWatchlistHandler
     }
 
     /**
-     * @param UpdateDomainsFromWatchlist $message
      * @throws ExceptionInterface
      * @throws TransportExceptionInterface
      * @throws ClientExceptionInterface
