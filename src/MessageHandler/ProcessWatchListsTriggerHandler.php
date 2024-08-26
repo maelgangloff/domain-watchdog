@@ -4,7 +4,7 @@ namespace App\MessageHandler;
 
 use App\Entity\WatchList;
 use App\Message\ProcessWatchListsTrigger;
-use App\Message\ProcessWatchListTrigger;
+use App\Message\UpdateDomainsFromWatchlist;
 use App\Repository\WatchListRepository;
 use Random\Randomizer;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
@@ -30,7 +30,7 @@ final readonly class ProcessWatchListsTriggerHandler
 
         /** @var WatchList $watchList */
         foreach ($watchLists as $watchList) {
-            $this->bus->dispatch(new ProcessWatchListTrigger($watchList->getToken()));
+            $this->bus->dispatch(new UpdateDomainsFromWatchlist($watchList->getToken()));
         }
     }
 }

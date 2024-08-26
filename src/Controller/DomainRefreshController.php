@@ -4,7 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Domain;
 use App\Entity\WatchList;
-use App\Message\ProcessDomainTrigger;
+use App\Message\SendDomainEventNotif;
 use App\Repository\DomainRepository;
 use App\Service\RDAPService;
 use Psr\Log\LoggerInterface;
@@ -80,7 +80,7 @@ class DomainRefreshController extends AbstractController
 
         /** @var WatchList $watchList */
         foreach ($watchLists as $watchList) {
-            $this->bus->dispatch(new ProcessDomainTrigger($watchList->getToken(), $domain->getLdhName(), $updatedAt));
+            $this->bus->dispatch(new SendDomainEventNotif($watchList->getToken(), $domain->getLdhName(), $updatedAt));
         }
 
         return $domain;

@@ -25,6 +25,7 @@ framework:
             App\Message\ProcessWatchListsTrigger: async
             App\Message\ProcessWatchListTrigger: async
             App\Message\ProcessDomainTrigger: async
+            App\Message\OrderDomain: async
 
             # Route your messages to the transports
             # 'App\Message\YourMessage': async
