@@ -162,6 +162,15 @@
             "ref": "b97655f9a2fb8fc04d9f4081e0b5599d897b7f6e"
         }
     },
+    "symfony/engagespot-notifier": {
+        "version": "7.1",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "main",
+            "version": "6.1",
+            "ref": "99e2d9bebabbc56ec54bc93278989853ea6c9256"
+        }
+    },
     "symfony/flex": {
         "version": "2.4",
         "recipe": {
@@ -289,6 +298,15 @@
             "config/packages/notifier.yaml"
         ]
     },
+    "symfony/ntfy-notifier": {
+        "version": "7.1",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "main",
+            "version": "6.4",
+            "ref": "0d5e496659d7361bb4e6648eb8332f8cf097533d"
+        }
+    },
     "symfony/phpunit-bridge": {
         "version": "7.1",
         "recipe": {
@@ -303,6 +321,15 @@
             "phpunit.xml.dist",
             "tests/bootstrap.php"
         ]
+    },
+    "symfony/pushover-notifier": {
+        "version": "7.1",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "main",
+            "version": "6.3",
+            "ref": "b9dc3c716eb686c267d767eb3c78ad47c11c34cb"
+        }
     },
     "symfony/rocket-chat-notifier": {
         "version": "7.1",

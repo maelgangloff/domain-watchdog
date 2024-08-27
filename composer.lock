@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c99e351194c8053498e762ed4dac4864",
+    "content-hash": "1983a126aba2f9d83d15ac3d08b79418",
     "packages": [
         {
             "name": "api-platform/core",
@@ -4648,6 +4648,74 @@
             "time": "2024-05-31T14:57:53+00:00"
         },
         {
+            "name": "symfony/engagespot-notifier",
+            "version": "v7.1.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/engagespot-notifier.git",
+                "reference": "e1beca155abf4ecc838eb9093b82fd7c8c01383f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/engagespot-notifier/zipball/e1beca155abf4ecc838eb9093b82fd7c8c01383f",
+                "reference": "e1beca155abf4ecc838eb9093b82fd7c8c01383f",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.2",
+                "symfony/http-client": "^6.4|^7.0",
+                "symfony/notifier": "^6.4|^7.0"
+            },
+            "type": "symfony-notifier-bridge",
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\Component\\Notifier\\Bridge\\Engagespot\\": ""
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Daniel Gorgan",
+                    "homepage": "https://github.com/danut007ro"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Symfony Engagespot Notifier Bridge",
+            "homepage": "https://symfony.com",
+            "keywords": [
+                "engagespot",
+                "notifier",
+                "push"
+            ],
+            "support": {
+                "source": "https://github.com/symfony/engagespot-notifier/tree/v7.1.1"
+            },
+            "funding": [
+                {
+                    "url": "https://symfony.com/sponsor",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2024-05-31T14:57:53+00:00"
+        },
+        {
             "name": "symfony/error-handler",
             "version": "v7.1.2",
             "source": {
@@ -6604,6 +6672,73 @@
             "time": "2024-06-28T08:00:31+00:00"
         },
         {
+            "name": "symfony/ntfy-notifier",
+            "version": "v7.1.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/ntfy-notifier.git",
+                "reference": "9fa7e4991eb3f6879e4afdeb1a0112daac09d320"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/ntfy-notifier/zipball/9fa7e4991eb3f6879e4afdeb1a0112daac09d320",
+                "reference": "9fa7e4991eb3f6879e4afdeb1a0112daac09d320",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.2",
+                "symfony/http-client": "^6.4|^7.0",
+                "symfony/notifier": "^6.4|^7.0"
+            },
+            "type": "symfony-notifier-bridge",
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\Component\\Notifier\\Bridge\\Ntfy\\": ""
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Mickael Perraud",
+                    "email": "mikaelkael.fr@gmail.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Symfony Ntyf Notifier Bridge",
+            "homepage": "https://symfony.com",
+            "keywords": [
+                "Ntfy",
+                "notifier"
+            ],
+            "support": {
+                "source": "https://github.com/symfony/ntfy-notifier/tree/v7.1.1"
+            },
+            "funding": [
+                {
+                    "url": "https://symfony.com/sponsor",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2024-05-31T14:57:53+00:00"
+        },
+        {
             "name": "symfony/options-resolver",
             "version": "v7.1.1",
             "source": {
@@ -7524,6 +7659,76 @@
                 }
             ],
             "time": "2024-06-26T07:21:35+00:00"
+        },
+        {
+            "name": "symfony/pushover-notifier",
+            "version": "v7.1.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/pushover-notifier.git",
+                "reference": "76072ef5c5230e201f1ae83229b2d1b1a6455ede"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/pushover-notifier/zipball/76072ef5c5230e201f1ae83229b2d1b1a6455ede",
+                "reference": "76072ef5c5230e201f1ae83229b2d1b1a6455ede",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.2",
+                "symfony/http-client": "^6.4|^7.0",
+                "symfony/notifier": "^6.4|^7.0"
+            },
+            "require-dev": {
+                "symfony/event-dispatcher": "^6.4|^7.0"
+            },
+            "type": "symfony-notifier-bridge",
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\Component\\Notifier\\Bridge\\Pushover\\": ""
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "mocodo",
+                    "homepage": "https://github.com/mocodo"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Symfony Pushover Notifier Bridge",
+            "homepage": "https://symfony.com",
+            "keywords": [
+                "notifier",
+                "pushover"
+            ],
+            "support": {
+                "source": "https://github.com/symfony/pushover-notifier/tree/v7.1.1"
+            },
+            "funding": [
+                {
+                    "url": "https://symfony.com/sponsor",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2024-05-31T14:57:53+00:00"
         },
         {
             "name": "symfony/rate-limiter",

@@ -3,9 +3,12 @@
 namespace App\Config;
 
 use Symfony\Component\Notifier\Bridge\Discord\DiscordTransportFactory;
+use Symfony\Component\Notifier\Bridge\Engagespot\EngagespotTransportFactory;
 use Symfony\Component\Notifier\Bridge\GoogleChat\GoogleChatTransportFactory;
 use Symfony\Component\Notifier\Bridge\Mattermost\MattermostTransportFactory;
 use Symfony\Component\Notifier\Bridge\MicrosoftTeams\MicrosoftTeamsTransportFactory;
+use Symfony\Component\Notifier\Bridge\Ntfy\NtfyTransportFactory;
+use Symfony\Component\Notifier\Bridge\Pushover\PushoverTransportFactory;
 use Symfony\Component\Notifier\Bridge\RocketChat\RocketChatTransportFactory;
 use Symfony\Component\Notifier\Bridge\Slack\SlackTransportFactory;
 use Symfony\Component\Notifier\Bridge\Telegram\TelegramTransportFactory;
@@ -21,6 +24,9 @@ enum WebhookScheme: string
     case SLACK = 'slack';
     case TELEGRAM = 'telegram';
     case ZULIP = 'zulip';
+    case PUSHOVER = 'pushover';
+    case NTFY = 'ntfy';
+    case ENGAGESPOT = 'engagespot';
 
     public function getChatTransportFactory(): string
     {
@@ -32,7 +38,10 @@ enum WebhookScheme: string
             WebhookScheme::ROCKET_CHAT => RocketChatTransportFactory::class,
             WebhookScheme::SLACK => SlackTransportFactory::class,
             WebhookScheme::TELEGRAM => TelegramTransportFactory::class,
-            WebhookScheme::ZULIP => ZulipTransportFactory::class
+            WebhookScheme::ZULIP => ZulipTransportFactory::class,
+            WebhookScheme::PUSHOVER => PushoverTransportFactory::class,
+            WebhookScheme::NTFY => NtfyTransportFactory::class,
+            WebhookScheme::ENGAGESPOT => EngagespotTransportFactory::class
         };
     }
 }
