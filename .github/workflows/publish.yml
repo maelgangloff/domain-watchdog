@@ -69,7 +69,7 @@ jobs:
                     tags: ${{ steps.meta.outputs.tags }}
                     platforms: ${{ matrix.platform }}
                     labels: ${{ steps.meta.outputs.labels }}
-                    outputs: type=image,name=${{ github.repository }},push-by-digest=true,name-canonical=true,push=true
+                    outputs: type=image,name=${{ github.repository }},name-canonical=true,push=true
 
             -   name: Export digest
                 run: |
