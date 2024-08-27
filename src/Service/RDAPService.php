@@ -101,10 +101,6 @@ readonly class RDAPService
      */
     public static function isToBeWatchClosely(Domain $domain, \DateTimeImmutable $updatedAt): bool
     {
-        if ($updatedAt->diff(new \DateTimeImmutable('now'))->h < 23) {
-            return false;
-        }
-
         $status = $domain->getStatus();
         if (!empty($status) && count(array_intersect($status, self::IMPORTANT_STATUS))) {
             return true;
