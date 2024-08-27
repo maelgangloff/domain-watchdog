@@ -177,8 +177,18 @@ class WatchListController extends AbstractController
                 /** @var AbstractTransportFactory $transportFactory */
                 $transportFactory = new $transportFactoryClass();
 
+                $push = (new TestChatNotification())->asPushMessage();
+                $chat = (new TestChatNotification())->asChatMessage();
+
                 try {
-                    $transportFactory->create($dsn)->send((new TestChatNotification())->asChatMessage());
+                    $factory = $transportFactory->create($dsn);
+                    if ($factory->supports($push)) {
+                        $factory->send($push);
+                    } elseif ($factory->supports($chat)) {
+                        $factory->send($chat);
+                    } else {
+                        throw new BadRequestHttpException('Unsupported message type');
+                    }
                 } catch (\Throwable $exception) {
                     throw new BadRequestHttpException($exception->getMessage());
                 }

@@ -4,9 +4,10 @@ namespace App\Service;
 
 use App\Config\WebhookScheme;
 use App\Entity\WatchList;
+use App\Notifier\TestChatNotification;
 use Psr\Log\LoggerInterface;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\Notifier\Notification\ChatNotificationInterface;
-use Symfony\Component\Notifier\Recipient\Recipient;
 use Symfony\Component\Notifier\Transport\AbstractTransportFactory;
 use Symfony\Component\Notifier\Transport\Dsn;
 
@@ -31,8 +32,21 @@ readonly class ChatNotificationService
                     $transportFactoryClass = $webhookScheme->getChatTransportFactory();
                     /** @var AbstractTransportFactory $transportFactory */
                     $transportFactory = new $transportFactoryClass();
+
+                    $push = (new TestChatNotification())->asPushMessage();
+                    $chat = (new TestChatNotification())->asChatMessage();
+
                     try {
-                        $transportFactory->create($dsn)->send($notification->asChatMessage(new Recipient()));
+                        $factory = $transportFactory->create($dsn);
+
+                        if ($factory->supports($push)) {
+                            $factory->send($push);
+                        } elseif ($factory->supports($chat)) {
+                            $factory->send($chat);
+                        } else {
+                            throw new BadRequestHttpException('Unsupported message type');
+                        }
+
                         $this->logger->info('Chat message sent with {schema} for Watchlist {token}',
                             [
                                 'scheme' => $webhookScheme->name,
