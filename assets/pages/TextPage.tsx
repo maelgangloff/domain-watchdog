@@ -13,7 +13,7 @@ export default function TextPage({resource}: { resource: string }) {
         axios.get('/content/' + resource)
             .then(res => setMarkdown(res.data))
             .catch(err => {
-                console.error(err)
+                console.error(`Please create the /public/content/${resource} file.`)
                 setMarkdown(undefined)
             })
             .finally(() => setLoading(false))
