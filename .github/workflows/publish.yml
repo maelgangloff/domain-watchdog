@@ -9,14 +9,21 @@ env:
     IMAGE_NAME: ${{ github.repository }}
 
 jobs:
-    push_to_registries:
-        name: Push Docker image to multiple registries
+    build:
         runs-on: ubuntu-latest
+
         permissions:
             packages: write
             contents: read
             attestations: write
             id-token: write
+
+        strategy:
+            fail-fast: false
+            matrix:
+                platform:
+                    - linux/amd64
+                    - linux/arm64
         steps:
             -   name: Check out the repo
                 uses: actions/checkout@v4
@@ -34,35 +41,99 @@ jobs:
                     username: ${{ github.actor }}
                     password: ${{ secrets.GITHUB_TOKEN }}
 
-            -   name: Extract metadata (tags, labels) for Docker
+            -   name: Docker meta
                 id: meta
                 uses: docker/metadata-action@v5
                 with:
                     images: |
-                        maelgangloff/domain-watchdog
+                        ${{ github.repository }}
                         ghcr.io/${{ github.repository }}
+
+            -   name: Prepare
+                run: |
+                    platform=${{ matrix.platform }}
+                    echo "PLATFORM_PAIR=${platform//\//-}" >> $GITHUB_ENV          
 
             -   name: Set up QEMU
                 uses: docker/setup-qemu-action@v3
 
             -   name: Set up Docker Buildx
-                id: buildx
                 uses: docker/setup-buildx-action@v3
 
             -   name: Build and push Docker images
-                id: push
+                id: build
                 uses: docker/build-push-action@v6
                 with:
                     context: .
                     target: frankenphp_prod
-                    push: true
                     tags: ${{ steps.meta.outputs.tags }}
+                    platforms: ${{ matrix.platform }}
                     labels: ${{ steps.meta.outputs.labels }}
-                    platforms: linux/amd64,linux/arm64
+                    outputs: type=image,name=${{ github.repository }},push-by-digest=true,name-canonical=true,push=true
 
-            -   name: Generate artifact attestation
-                uses: actions/attest-build-provenance@v1
+            -   name: Export digest
+                run: |
+                    mkdir -p /tmp/digests
+                    digest="${{ steps.build.outputs.digest }}"
+                    touch "/tmp/digests/${digest#sha256:}"          
+
+            -   name: Upload digest
+                uses: actions/upload-artifact@v4
                 with:
-                    subject-name: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME}}
-                    subject-digest: ${{ steps.push.outputs.digest }}
-                    push-to-registry: true
+                    name: digests-${{ env.PLATFORM_PAIR }}
+                    path: /tmp/digests/*
+                    if-no-files-found: error
+                    retention-days: 1
+
+    merge:
+        runs-on: ubuntu-latest
+
+        permissions:
+            packages: write
+            contents: read
+            attestations: write
+            id-token: write
+
+        needs:
+            - build
+        steps:
+            -   name: Download digests
+                uses: actions/download-artifact@v4
+                with:
+                    path: /tmp/digests
+                    pattern: digests-*
+                    merge-multiple: true
+
+            -   name: Set up Docker Buildx
+                uses: docker/setup-buildx-action@v3
+
+            -   name: Docker meta
+                id: meta
+                uses: docker/metadata-action@v5
+                with:
+                    images: |
+                        ${{ github.repository }}
+                        ghcr.io/${{ github.repository }}
+
+            -   name: Log in to Docker Hub
+                uses: docker/login-action@v3
+                with:
+                    username: ${{ secrets.DOCKER_USERNAME }}
+                    password: ${{ secrets.DOCKER_PASSWORD }}
+
+            -   name: Log in to the Container registry
+                uses: docker/login-action@v3
+                with:
+                    registry: ghcr.io
+                    username: ${{ github.actor }}
+                    password: ${{ secrets.GITHUB_TOKEN }}
+
+            -   name: Create manifest list and push
+                working-directory: /tmp/digests
+                run: |
+                    docker buildx imagetools create $(jq -cr '.tags | map("-t " + .) | join(" ")' <<< "$DOCKER_METADATA_OUTPUT_JSON") \
+                      $(printf '${{ github.repository }}@sha256:%s ' *)          
+
+            -   name: Inspect image
+                run: |
+                    docker buildx imagetools inspect ${{ github.repository }}:${{ steps.meta.outputs.version }}
