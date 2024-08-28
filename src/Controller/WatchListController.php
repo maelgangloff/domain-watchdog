@@ -3,7 +3,6 @@
 namespace App\Controller;
 
 use App\Config\Provider\AbstractProvider;
-use App\Config\WebhookScheme;
 use App\Entity\Connector;
 use App\Entity\Domain;
 use App\Entity\DomainEntity;
@@ -12,6 +11,7 @@ use App\Entity\User;
 use App\Entity\WatchList;
 use App\Notifier\TestChatNotification;
 use App\Repository\WatchListRepository;
+use App\Service\ChatNotificationService;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Exception\ORMException;
@@ -39,9 +39,6 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\HttpKernel\KernelInterface;
-use Symfony\Component\Notifier\Exception\InvalidArgumentException;
-use Symfony\Component\Notifier\Transport\AbstractTransportFactory;
-use Symfony\Component\Notifier\Transport\Dsn;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
@@ -55,7 +52,8 @@ class WatchListController extends AbstractController
         private readonly LoggerInterface $logger,
         private readonly HttpClientInterface $httpClient,
         private readonly CacheItemPoolInterface $cacheItemPool,
-        private readonly KernelInterface $kernel
+        private readonly KernelInterface $kernel,
+        private readonly ChatNotificationService $chatNotificationService
     ) {
     }
 
@@ -124,7 +122,7 @@ class WatchListController extends AbstractController
             }
         }
 
-        $this->verifyWebhookDSN($watchList);
+        $this->chatNotificationService->sendChatNotification($watchList, new TestChatNotification());
         $this->verifyConnector($watchList, $watchList->getConnector());
 
         $this->logger->info('User {username} registers a Watchlist ({token}).', [
@@ -153,47 +151,6 @@ class WatchListController extends AbstractController
         $user = $this->getUser();
 
         return $user->getWatchLists();
-    }
-
-    private function verifyWebhookDSN(WatchList $watchList): void
-    {
-        $webhookDsn = $watchList->getWebhookDsn();
-        if (null !== $webhookDsn && 0 !== count($webhookDsn)) {
-            foreach ($webhookDsn as $dsnString) {
-                try {
-                    $dsn = new Dsn($dsnString);
-                } catch (InvalidArgumentException $exception) {
-                    throw new BadRequestHttpException($exception->getMessage());
-                }
-
-                $scheme = $dsn->getScheme();
-                $webhookScheme = WebhookScheme::tryFrom($scheme);
-
-                if (null === $webhookScheme) {
-                    throw new BadRequestHttpException("The DSN scheme ($scheme) is not supported");
-                }
-
-                $transportFactoryClass = $webhookScheme->getChatTransportFactory();
-                /** @var AbstractTransportFactory $transportFactory */
-                $transportFactory = new $transportFactoryClass();
-
-                $push = (new TestChatNotification())->asPushMessage();
-                $chat = (new TestChatNotification())->asChatMessage();
-
-                try {
-                    $factory = $transportFactory->create($dsn);
-                    if ($factory->supports($push)) {
-                        $factory->send($push);
-                    } elseif ($factory->supports($chat)) {
-                        $factory->send($chat);
-                    } else {
-                        throw new BadRequestHttpException('Unsupported message type');
-                    }
-                } catch (\Throwable $exception) {
-                    throw new BadRequestHttpException($exception->getMessage());
-                }
-            }
-        }
     }
 
     /**
@@ -285,7 +242,7 @@ class WatchListController extends AbstractController
             }
         }
 
-        $this->verifyWebhookDSN($watchList);
+        $this->chatNotificationService->sendChatNotification($watchList, new TestChatNotification());
         $this->verifyConnector($watchList, $watchList->getConnector());
 
         $this->logger->info('User {username} updates a Watchlist ({token}).', [

@@ -75,12 +75,11 @@ final readonly class OrderDomainHandler
                 $connectorProvider = new $connectorProviderClass($connector->getAuthData(), $this->client, $this->cacheItemPool, $this->kernel);
 
                 $connectorProvider->orderDomain($domain, $this->kernel->isDebug());
+                $this->statService->incrementStat('stats.domain.purchased');
 
                 $notification = (new DomainOrderNotification($this->sender, $domain, $connector));
                 $this->mailer->send($notification->asEmailMessage(new Recipient($watchList->getUser()->getEmail()))->getMessage());
                 $this->chatNotificationService->sendChatNotification($watchList, $notification);
-
-                $this->statService->incrementStat('stats.domain.purchased');
             } catch (\Throwable $exception) {
                 $this->logger->warning('Unable to complete purchase. An error message is sent to user {username}.', [
                     'username' => $watchList->getUser()->getUserIdentifier(),

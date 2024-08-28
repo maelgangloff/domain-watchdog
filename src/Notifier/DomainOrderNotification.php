@@ -10,14 +10,11 @@ use Symfony\Component\Mime\Email;
 use Symfony\Component\Notifier\Message\ChatMessage;
 use Symfony\Component\Notifier\Message\EmailMessage;
 use Symfony\Component\Notifier\Message\PushMessage;
-use Symfony\Component\Notifier\Notification\ChatNotificationInterface;
-use Symfony\Component\Notifier\Notification\EmailNotificationInterface;
 use Symfony\Component\Notifier\Notification\Notification;
-use Symfony\Component\Notifier\Notification\PushNotificationInterface;
 use Symfony\Component\Notifier\Recipient\EmailRecipientInterface;
 use Symfony\Component\Notifier\Recipient\RecipientInterface;
 
-class DomainOrderNotification extends Notification implements ChatNotificationInterface, EmailNotificationInterface, PushNotificationInterface
+class DomainOrderNotification extends DomainWatchdogNotification
 {
     public function __construct(
         private readonly Address $sender,
