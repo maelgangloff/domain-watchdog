@@ -356,7 +356,7 @@ readonly class RDAPService
         if (false === $lastDotPosition) {
             throw new BadRequestException('Domain must contain at least one dot');
         }
-        $tld = strtolower(substr($domain, $lastDotPosition + 1));
+        $tld = strtolower(idn_to_ascii(substr($domain, $lastDotPosition + 1)));
 
         return $this->tldRepository->findOneBy(['tld' => $tld]);
     }
