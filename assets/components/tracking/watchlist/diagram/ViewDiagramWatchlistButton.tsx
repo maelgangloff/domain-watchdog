@@ -60,7 +60,7 @@ export function ViewDiagramWatchlistButton({token}: { token: string }) {
             <Flex style={{width: '85vw', height: '85vh'}}>
                 <ReactFlow
                     fitView
-                    colorMode='system'
+                    colorMode='dark'
                     defaultEdges={[]}
                     defaultNodes={[]}
                     nodesConnectable={false}
