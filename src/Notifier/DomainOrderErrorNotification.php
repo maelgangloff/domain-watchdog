@@ -2,6 +2,7 @@
 
 namespace App\Notifier;
 
+use App\Config\WebhookScheme;
 use App\Entity\Domain;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\Mime\Address;
@@ -23,6 +24,8 @@ class DomainOrderErrorNotification extends DomainWatchdogNotification
 
     public function asChatMessage(?RecipientInterface $recipient = null, ?string $transport = null): ?ChatMessage
     {
+        $webhookScheme = WebhookScheme::from($transport);
+
         $ldhName = $this->domain->getLdhName();
         $this->subject("Error: Domain Order $ldhName")
             ->content("Domain name $ldhName tried to be purchased. The attempt failed.")
@@ -41,7 +44,7 @@ class DomainOrderErrorNotification extends DomainWatchdogNotification
         return PushMessage::fromNotification($this);
     }
 
-    public function asEmailMessage(EmailRecipientInterface $recipient, ?string $transport = null): EmailMessage
+    public function asEmailMessage(EmailRecipientInterface $recipient): EmailMessage
     {
         return new EmailMessage((new TemplatedEmail())
             ->from($this->sender)

@@ -42,7 +42,7 @@ readonly class ChatNotificationService
                 $transportFactory = new $transportFactoryClass();
 
                 $push = $notification->asPushMessage(new NoRecipient());
-                $chat = $notification->asChatMessage(new NoRecipient());
+                $chat = $notification->asChatMessage(new NoRecipient(), $webhookScheme->value);
 
                 try {
                     $factory = $transportFactory->create($dsn);

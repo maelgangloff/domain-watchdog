@@ -10,6 +10,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
@@ -67,7 +68,7 @@ class ConnectorController extends AbstractController
         ]);
 
         if (null === $provider) {
-            throw new \Exception('Provider not found');
+            throw new BadRequestHttpException('Provider not found');
         }
 
         /** @var AbstractProvider $connectorProviderClass */

@@ -41,7 +41,7 @@ class DomainUpdateErrorNotification extends DomainWatchdogNotification
         return PushMessage::fromNotification($this);
     }
 
-    public function asEmailMessage(EmailRecipientInterface $recipient, ?string $transport = null): EmailMessage
+    public function asEmailMessage(EmailRecipientInterface $recipient): EmailMessage
     {
         return new EmailMessage((new TemplatedEmail())
             ->from($this->sender)

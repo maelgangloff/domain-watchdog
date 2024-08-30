@@ -66,7 +66,7 @@ final readonly class OrderDomainHandler
             try {
                 $provider = $connector->getProvider();
                 if (null === $provider) {
-                    throw new \Exception('Provider not found');
+                    throw new \InvalidArgumentException('Provider not found');
                 }
 
                 $connectorProviderClass = $provider->getConnectorProvider();

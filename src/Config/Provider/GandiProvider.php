@@ -29,12 +29,12 @@ class GandiProvider extends AbstractProvider
     public function orderDomain(Domain $domain, bool $dryRun = false): void
     {
         if (!$domain->getDeleted()) {
-            throw new \Exception('The domain name still appears in the WHOIS database');
+            throw new \InvalidArgumentException('The domain name still appears in the WHOIS database');
         }
 
         $ldhName = $domain->getLdhName();
         if (!$ldhName) {
-            throw new \Exception('Domain name cannot be null');
+            throw new \InvalidArgumentException('Domain name cannot be null');
         }
 
         $authData = self::verifyAuthData($this->authData, $this->client);
