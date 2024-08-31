@@ -1,11 +1,10 @@
 <p align="center"><img src="https://github.com/user-attachments/assets/942ddfd0-2c76-4b00-bd9f-727cfddc0103" alt="Domain Watchdog" width="150" height="150" /></p>
 <h1 align="center"><b>Domain Watchdog</b></h1>
-<p align="center">Your companion in the quest for domain names<br/><a href="https://domainwatchdog.eu">domainwatchdog.eu »</a></p>
+<p align="center">Your companion in the quest for domain names 🔍 <br/><a href="https://domainwatchdog.eu">domainwatchdog.eu »</a></p>
 <br/>
 
-Domain Watchdog is a standalone application that utilizes RDAP to gather publicly accessible information about domain
-names, track their history, and automatically purchase them. For more information please
-check [the wiki](https://github.com/maelgangloff/domain-watchdog/wiki) !
+Domain Watchdog is an app that uses RDAP to collect publicly available info about domains, track their history, and purchase them.
+For more information please check [the wiki](https://github.com/maelgangloff/domain-watchdog/wiki) !
 
 ## Why use it?
 
