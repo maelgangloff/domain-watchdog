@@ -27,7 +27,6 @@ final class Version20240901190812 extends AbstractMigration
     public function down(Schema $schema): void
     {
         // this down() migration is auto-generated, please modify it to your needs
-        $this->addSql('CREATE SCHEMA public');
         $this->addSql('ALTER TABLE domain_event DROP deleted');
         $this->addSql('ALTER TABLE entity_event DROP deleted');
     }
