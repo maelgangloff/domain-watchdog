@@ -218,6 +218,11 @@ readonly class RDAPService
         $this->em->persist($domain);
         $this->em->flush();
 
+        /** @var DomainEvent $event */
+        foreach ($domain->getEvents()->getIterator() as $event) {
+            $event->setDeleted(true);
+        }
+
         foreach ($res['events'] as $rdapEvent) {
             if ($rdapEvent['eventAction'] === EventAction::LastUpdateOfRDAPDatabase->value) {
                 continue;
@@ -234,7 +239,9 @@ readonly class RDAPService
             }
             $domain->addEvent($event
                 ->setAction($rdapEvent['eventAction'])
-                ->setDate(new \DateTimeImmutable($rdapEvent['eventDate'])));
+                ->setDate(new \DateTimeImmutable($rdapEvent['eventDate']))
+                ->setDeleted(false)
+            );
         }
 
         if (array_key_exists('entities', $res) && is_array($res['entities'])) {
@@ -399,6 +406,14 @@ readonly class RDAPService
             return $entity;
         }
 
+        /** @var EntityEvent $event */
+        foreach ($entity->getEvents()->getIterator() as $event) {
+            $event->setDeleted(true);
+        }
+
+        $this->em->persist($entity);
+        $this->em->flush();
+
         foreach ($rdapEntity['events'] as $rdapEntityEvent) {
             $eventAction = $rdapEntityEvent['eventAction'];
             if ($eventAction === EventAction::LastChanged->value || $eventAction === EventAction::LastUpdateOfRDAPDatabase->value) {
@@ -410,13 +425,15 @@ readonly class RDAPService
             ]);
 
             if (null !== $event) {
+                $event->setDeleted(false);
                 continue;
             }
             $entity->addEvent(
                 (new EntityEvent())
                     ->setEntity($entity)
                     ->setAction($rdapEntityEvent['eventAction'])
-                    ->setDate(new \DateTimeImmutable($rdapEntityEvent['eventDate'])));
+                    ->setDate(new \DateTimeImmutable($rdapEntityEvent['eventDate']))
+                    ->setDeleted(false));
         }
 
         return $entity;

@@ -21,6 +21,7 @@ export type TriggerAction = 'email' | string
 export interface Event {
     action: EventAction
     date: string
+    deleted: boolean
 }
 
 export interface Entity {

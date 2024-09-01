@@ -25,7 +25,7 @@ class DomainRefreshController extends AbstractController
         private readonly RDAPService $RDAPService,
         private readonly RateLimiterFactory $rdapRequestsLimiter,
         private readonly MessageBusInterface $bus,
-        private readonly LoggerInterface $logger
+        private readonly LoggerInterface $logger, private readonly KernelInterface $kernel
     ) {
     }
 
@@ -55,6 +55,7 @@ class DomainRefreshController extends AbstractController
             && !$domain->getDeleted()
             && ($domain->getUpdatedAt()->diff(new \DateTimeImmutable('now'))->days < 7)
             && !$this->RDAPService::isToBeWatchClosely($domain, $domain->getUpdatedAt())
+            && !$this->kernel->isDebug()
         ) {
             $this->logger->info('It is not necessary to update the information of the domain name {idnDomain} with the RDAP protocol.', [
                 'idnDomain' => $idnDomain,

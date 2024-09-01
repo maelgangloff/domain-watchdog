@@ -1,4 +1,4 @@
-import {Progress, Timeline, Tooltip, Typography} from "antd";
+import {Timeline, Tooltip, Typography} from "antd";
 import React from "react";
 import {Event} from "../../utils/api";
 import useBreakpoint from "../../hooks/useBreakpoint";
@@ -18,14 +18,13 @@ export function EventTimeline({events}: { events: Event[] }) {
             mode={sm ? "left" : "right"}
             items={events.map(e => {
                     const sameEvents = events.filter(se => se.action === e.action)
-                    const isRelevant = !(sameEvents.length > 1 && sameEvents.indexOf(e) !== 0)
 
-                    const eventName = <Typography.Text style={{color: isRelevant ? 'default' : 'grey'}}>
+                    const eventName = <Typography.Text style={{color: e.deleted ? 'grey' : 'default'}}>
                         {e.action in rdapEventNameTranslated ? rdapEventNameTranslated[e.action as keyof typeof rdapEventNameTranslated] : e.action}
                     </Typography.Text>
 
                     const dateStr = <Typography.Text
-                        style={{color: isRelevant ? 'default' : 'grey'}}>{new Date(e.date).toLocaleString(locale)}
+                        style={{color: e.deleted ? 'grey' : 'default'}}>{new Date(e.date).toLocaleString(locale)}
                     </Typography.Text>
 
                     const eventDetail = e.action in rdapEventDetailTranslated ? rdapEventDetailTranslated[e.action as keyof typeof rdapEventDetailTranslated] : undefined
@@ -40,7 +39,7 @@ export function EventTimeline({events}: { events: Event[] }) {
                     }
 
                     return {
-                        color: isRelevant ? actionToColor(e.action) : 'grey',
+                        color: e.deleted ? 'grey' : actionToColor(e.action),
                         dot: actionToIcon(e.action),
                         pending: new Date(e.date).getTime() > new Date().getTime(),
                         ...text

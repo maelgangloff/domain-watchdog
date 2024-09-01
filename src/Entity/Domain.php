@@ -100,9 +100,9 @@ class Domain
     #[Groups(['domain:item'])]
     private ?Tld $tld = null;
 
-    #[ORM\Column]
+    #[ORM\Column(nullable: false)]
     #[Groups(['domain:item'])]
-    private ?bool $deleted = null;
+    private ?bool $deleted;
 
     public function __construct()
     {
