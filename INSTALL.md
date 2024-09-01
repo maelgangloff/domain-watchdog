@@ -8,7 +8,7 @@ on [How to deploy a Symfony application](https://symfony.com/doc/current/deploym
 ### Prerequisites
 
 - PHP 8.2 or higher
-- PostgreSQL
+- PostgreSQL 16 or higher
 
 In order to retrieve information about domain names, Domain Watchdog will query the RDAP server responsible for the TLD.
 It is crucial that the Domain Watchdog instance is placed in a clean environment from which these servers can be
