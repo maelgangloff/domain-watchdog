@@ -297,7 +297,7 @@ class WatchListController extends AbstractController
             }
 
             /** @var DomainEvent $event */
-            foreach ($domain->getEvents()->toArray() as $event) {
+            foreach ($domain->getEvents()->filter(fn (DomainEvent $e) => $e->getDate()->diff(new \DateTimeImmutable('now'))->y <= 10)->getIterator() as $event) {
                 $calendar->addEvent((new Event())
                     ->setLastModified(new Timestamp($domain->getUpdatedAt()))
                     ->setStatus(EventStatus::CONFIRMED())

@@ -37,7 +37,7 @@ class DomainRefreshController extends AbstractController
      * @throws HttpExceptionInterface
      * @throws \Throwable
      */
-    public function __invoke(string $ldhName, KernelInterface $kernel): ?Domain
+    public function __invoke(string $ldhName, KernelInterface $kernel): Domain
     {
         $idnDomain = strtolower(idn_to_ascii($ldhName));
         $userId = $this->getUser()->getUserIdentifier();
