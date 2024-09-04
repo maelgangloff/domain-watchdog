@@ -27,7 +27,6 @@ export interface Event {
 export interface Entity {
     handle: string
     jCard: any
-    deleted: boolean
 }
 
 export interface Nameserver {
@@ -55,6 +54,7 @@ export interface Domain {
         entity: Entity
         events: Event[]
         roles: string[]
+        deleted: boolean
     }[]
     nameservers: Nameserver[]
     tld: Tld
