@@ -244,6 +244,11 @@ readonly class RDAPService
             );
         }
 
+        /** @var DomainEntity $domainEntity */
+        foreach ($domain->getDomainEntities()->getIterator() as $domainEntity) {
+            $domainEntity->setDeleted(true);
+        }
+
         if (array_key_exists('entities', $res) && is_array($res['entities'])) {
             foreach ($res['entities'] as $rdapEntity) {
                 if (!array_key_exists('handle', $rdapEntity) || '' === $rdapEntity['handle']) {
@@ -282,8 +287,9 @@ readonly class RDAPService
                 $domain->addDomainEntity($domainEntity
                     ->setDomain($domain)
                     ->setEntity($entity)
-                    ->setRoles($roles))
-                    ->updateTimestamps();
+                    ->setRoles($roles)
+                    ->setDeleted(false)
+                );
 
                 $this->em->persist($domainEntity);
                 $this->em->flush();

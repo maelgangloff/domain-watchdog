@@ -27,6 +27,7 @@ export interface Event {
 export interface Entity {
     handle: string
     jCard: any
+    deleted: boolean
 }
 
 export interface Nameserver {
