@@ -13,7 +13,7 @@ export const domainToNode = (d: Domain) => ({
 })
 
 export const domainEntitiesToNode = (d: Domain, withRegistrar = false) => d.entities
-    .filter(e => !withRegistrar ? !e.roles.includes('registrar') : true)
+    .filter(e => !e.deleted && (!withRegistrar ? !e.roles.includes('registrar') : true))
     .map(e => {
         return {
             id: e.entity.handle,

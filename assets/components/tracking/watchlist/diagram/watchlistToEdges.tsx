@@ -7,7 +7,7 @@ import {rolesToColor} from "../../../../utils/functions/rolesToColor";
 export function domainEntitiesToEdges(d: Domain, withRegistrar = false) {
     const rdapRoleTranslated = rdapRoleTranslation()
     return d.entities
-        .filter(e => !withRegistrar ? !e.roles.includes('registrar') : true)
+        .filter(e => !e.deleted && (!withRegistrar ? !e.roles.includes('registrar') : true))
         .map(e => ({
             id: `e-${d.ldhName}-${e.entity.handle}`,
             source: e.roles.includes('registrant') || e.roles.includes('registrar') ? e.entity.handle : d.ldhName,
