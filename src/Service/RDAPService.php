@@ -99,7 +99,7 @@ readonly class RDAPService
      *
      * @throws \Exception
      */
-    public static function isToBeWatchClosely(Domain $domain, \DateTimeImmutable $updatedAt): bool
+    public static function isToBeWatchClosely(Domain $domain): bool
     {
         $status = $domain->getStatus();
         if (!empty($status) && count(array_intersect($status, self::IMPORTANT_STATUS))) {

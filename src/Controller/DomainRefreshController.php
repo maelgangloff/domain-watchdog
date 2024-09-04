@@ -54,7 +54,7 @@ class DomainRefreshController extends AbstractController
         if (null !== $domain
             && !$domain->getDeleted()
             && ($domain->getUpdatedAt()->diff(new \DateTimeImmutable('now'))->days < 7)
-            && !$this->RDAPService::isToBeWatchClosely($domain, $domain->getUpdatedAt())
+            && !$this->RDAPService::isToBeWatchClosely($domain)
             && !$this->kernel->isDebug()
         ) {
             $this->logger->info('It is not necessary to update the information of the domain name {idnDomain} with the RDAP protocol.', [

@@ -90,10 +90,10 @@ class Domain
     private Collection $nameservers;
 
     #[ORM\Column(type: Types::DATE_IMMUTABLE)]
-    private ?\DateTimeImmutable $createdAt = null;
+    private ?\DateTimeImmutable $createdAt;
 
-    #[ORM\Column(type: Types::DATE_IMMUTABLE)]
-    private ?\DateTimeImmutable $updatedAt = null;
+    #[ORM\Column(type: Types::DATETIME_IMMUTABLE)]
+    private ?\DateTimeImmutable $updatedAt;
 
     #[ORM\ManyToOne]
     #[ORM\JoinColumn(referencedColumnName: 'tld', nullable: false)]
