@@ -69,7 +69,7 @@ final readonly class UpdateDomainsFromWatchlistHandler
                              $this->RDAPService::isToBeWatchClosely($domain)
                              && $domain->getUpdatedAt()
                              ->diff(
-                                 new \DateTimeImmutable('now'))->h >= 1
+                                 new \DateTimeImmutable('now'))->i >= 55
                          )
                      ) as $domain
         ) {
