@@ -161,29 +161,38 @@ class WatchListController extends AbstractController
         /** @var User $user */
         $user = $this->getUser();
 
-        if (null !== $connector) {
-            if (!$user->getConnectors()->contains($connector)) {
-                $this->logger->notice('The Connector ({connector}) does not belong to the user.', [
-                    'username' => $user->getUserIdentifier(),
-                    'connector' => $connector->getId(),
-                ]);
-                throw new AccessDeniedHttpException('You cannot create a Watchlist with a connector that does not belong to you');
+        if (null === $connector) {
+            return;
+        }
+        if (!$user->getConnectors()->contains($connector)) {
+            $this->logger->notice('The Connector ({connector}) does not belong to the user.', [
+                'username' => $user->getUserIdentifier(),
+                'connector' => $connector->getId(),
+            ]);
+            throw new AccessDeniedHttpException('You cannot create a Watchlist with a connector that does not belong to you');
+        }
+
+        /** @var Domain $domain */
+        foreach ($watchList->getDomains()->getIterator() as $domain) {
+            if ($domain->getDeleted()) {
+                $ldhName = $domain->getLdhName();
+                throw new BadRequestHttpException("To add a connector, no domain in this Watchlist must have already expired ($ldhName)");
             }
+        }
 
-            $connectorProviderClass = $connector->getProvider()->getConnectorProvider();
-            /** @var AbstractProvider $connectorProvider */
-            $connectorProvider = new $connectorProviderClass($connector->getAuthData(), $this->httpClient, $this->cacheItemPool, $this->kernel);
+        $connectorProviderClass = $connector->getProvider()->getConnectorProvider();
+        /** @var AbstractProvider $connectorProvider */
+        $connectorProvider = new $connectorProviderClass($connector->getAuthData(), $this->httpClient, $this->cacheItemPool, $this->kernel);
 
-            $connectorProvider::verifyAuthData($connector->getAuthData(), $this->httpClient); // We want to check if the tokens are OK
-            $supported = $connectorProvider->isSupported(...$watchList->getDomains()->toArray());
+        $connectorProvider::verifyAuthData($connector->getAuthData(), $this->httpClient); // We want to check if the tokens are OK
+        $supported = $connectorProvider->isSupported(...$watchList->getDomains()->toArray());
 
-            if (!$supported) {
-                $this->logger->notice('The Connector ({connector}) does not support all TLDs in this Watchlist', [
-                    'username' => $user->getUserIdentifier(),
-                    'connector' => $connector->getId(),
-                ]);
-                throw new BadRequestHttpException('This connector does not support all TLDs in this Watchlist');
-            }
+        if (!$supported) {
+            $this->logger->notice('The Connector ({connector}) does not support all TLDs in this Watchlist', [
+                'username' => $user->getUserIdentifier(),
+                'connector' => $connector->getId(),
+            ]);
+            throw new BadRequestHttpException('This connector does not support all TLDs in this Watchlist');
         }
     }
 
