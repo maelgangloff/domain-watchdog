@@ -64,12 +64,14 @@ final readonly class UpdateDomainsFromWatchlistHandler
         foreach ($watchList->getDomains()
                      ->filter(fn ($domain) => $domain->getUpdatedAt()
                              ->diff(
-                                 new \DateTimeImmutable('now'))->days >= 7
+                                 new \DateTimeImmutable())->days >= 7
                          || (
-                             $this->RDAPService::isToBeWatchClosely($domain)
-                             && $domain->getUpdatedAt()
-                             ->diff(
-                                 new \DateTimeImmutable('now'))->i >= 55
+                             ($domain->getUpdatedAt()
+                                 ->diff(
+                                     new \DateTimeImmutable())->h * 60 + $domain->getUpdatedAt()
+                                 ->diff(
+                                     new \DateTimeImmutable())->i) >= 50
+                             && $this->RDAPService::isToBeWatchClosely($domain)
                          )
                      ) as $domain
         ) {
