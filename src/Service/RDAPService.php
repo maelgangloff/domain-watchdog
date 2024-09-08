@@ -86,7 +86,7 @@ readonly class RDAPService
         'pending update',
         'client hold',
         'server hold',
-        'add period'
+        'add period',
     ];
 
     public function __construct(private HttpClientInterface $client,
