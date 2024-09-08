@@ -75,7 +75,19 @@ readonly class RDAPService
     ];
 
     private const IMPORTANT_EVENTS = [EventAction::Deletion->value, EventAction::Expiration->value];
-    private const IMPORTANT_STATUS = ['auto renew period', 'redemption period', 'pending delete', 'client hold'];
+    private const IMPORTANT_STATUS = [
+        'auto renew period',
+        'redemption period',
+        'pending delete',
+        'pending create',
+        'pending renew',
+        'pending restore',
+        'pending transfer',
+        'pending update',
+        'client hold',
+        'server hold',
+        'add period'
+    ];
 
     public function __construct(private HttpClientInterface $client,
         private EntityRepository $entityRepository,
