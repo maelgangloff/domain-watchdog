@@ -12,8 +12,11 @@ use App\Entity\WatchListTrigger;
 use App\Message\ProcessDomainTrigger;
 use App\Repository\DomainRepository;
 use App\Repository\WatchListRepository;
+use App\Service\Connector\ConnectorInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Symfony\Component\Mailer\MailerInterface;
@@ -21,8 +24,6 @@ use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 use Symfony\Component\Mime\Address;
 use Symfony\Component\Mime\Email;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
-use App\Service\Connector\ConnectorInterface;
-use Symfony\Component\DependencyInjection\ParameterBag\ContainerBagInterface;
 
 #[AsMessageHandler]
 final readonly class ProcessDomainTriggerHandler
@@ -36,7 +37,8 @@ final readonly class ProcessDomainTriggerHandler
         private KernelInterface $kernel,
         private LoggerInterface $logger,
         private HttpClientInterface $client,
-        private ContainerBagInterface $container
+        #[Autowire(service: 'service_container')]
+        private ContainerInterface $locator
     ) {
     }
 
@@ -68,12 +70,14 @@ final readonly class ProcessDomainTriggerHandler
                 $connectorProviderClass = $provider->getConnectorProvider();
 
                 /** @var ConnectorInterface $connectorProvider */
-                $connectorProvider = $this->container->get($connectorProviderClass);
+                $connectorProvider = $this->locator->get($connectorProviderClass);
 
-                $connectorProvider->orderDomain($domain, $this->kernel->isDebug());
+                $connectorProvider->authenticate($connector->getAuthData());
+                $connectorProvider->orderDomain($domain, /* $this->kernel->isDebug() */ false);
 
                 $this->sendEmailDomainOrdered($domain, $connector, $watchList->getUser());
             } catch (\Throwable $t) {
+                dump($t);
                 $this->logger->error('Unable to complete purchase. An error message is sent to user {username}.', [
                     'username' => $watchList->getUser()->getUserIdentifier(),
                     'error' => $t,

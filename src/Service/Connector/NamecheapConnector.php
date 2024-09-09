@@ -3,8 +3,10 @@
 namespace App\Service\Connector;
 
 use App\Entity\Domain;
+use Symfony\Component\DependencyInjection\Attribute\Autoconfigure;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
+#[Autoconfigure(public: true)]
 class NamecheapConnector extends AbstractConnector
 {
     public const BASE_URL = 'https://api.namecheap.com/xml.response';
@@ -17,14 +19,19 @@ class NamecheapConnector extends AbstractConnector
 
     public function orderDomain(Domain $domain, $dryRun): void
     {
-        $addresses = $this->call('namecheap.users.address.getList', [], $dryRun);
+        $addressesRes = $this->call('namecheap.users.address.getList', [], $dryRun);
+        $addresses = $addressesRes->AddressGetListResult->List;
 
         if (count($addresses) < 1) {
             throw new \Exception('Namecheap account requires at least one address to purchase a domain');
         }
 
-        $addressId = $addresses->{0}->AddressId;
-        $address = $this->call('namecheap.users.address.getinfo', ['AddressId' => $addressId], $dryRun);
+        $addressId = (string) $addresses->attributes()['AddressId'];
+        $address = (array) $this->call('namecheap.users.address.getinfo', ['AddressId' => $addressId], $dryRun)->GetAddressInfoResult;
+
+        if (empty($address['PostalCode'])) {
+            $address['PostalCode'] = $address['Zip'];
+        }
 
         $domainAddresses = [];
 
@@ -32,6 +39,7 @@ class NamecheapConnector extends AbstractConnector
         self::mergePrefixKeys('Tech', $address, $domainAddresses);
         self::mergePrefixKeys('Admin', $address, $domainAddresses);
         self::mergePrefixKeys('AuxBilling', $address, $domainAddresses);
+
 
         $this->call('namecheap.domains.create', array_merge([
             'DomainName' => $domain->getLdhName(),
@@ -52,6 +60,7 @@ class NamecheapConnector extends AbstractConnector
     {
         $actualParams = array_merge([
             'Command' => $command,
+            'UserName' => $this->authData['ApiUser'],
             'ApiUser' => $this->authData['ApiUser'],
             'ApiKey' => $this->authData['ApiKey'],
             'ClientIp' => $this->outgoingIp,
@@ -63,8 +72,8 @@ class NamecheapConnector extends AbstractConnector
 
         $data = new \SimpleXMLElement($response->getContent());
 
-        if ($data->errors->error) {
-            throw new \Exception(implode(', ', $data->errors->error)); // FIXME better exception type
+        if ($data->Errors->Error) {
+            throw new \Exception($data->Errors->Error); // FIXME better exception type
         }
 
         return $data->CommandResponse;
