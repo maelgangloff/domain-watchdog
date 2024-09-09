@@ -307,12 +307,17 @@ readonly class RDAPService
 
         if (array_key_exists('nameservers', $res) && is_array($res['nameservers'])) {
             $domain->getNameservers()->clear();
-            $this->em->persist($domain);
 
             foreach ($res['nameservers'] as $rdapNameserver) {
                 $nameserver = $this->nameserverRepository->findOneBy([
                     'ldhName' => strtolower($rdapNameserver['ldhName']),
                 ]);
+
+                $domainNS = $domain->getNameservers()->findFirst(fn (Nameserver $ns) => $ns->getLdhName() === $rdapNameserver['ldhName']);
+
+                if (null !== $domainNS) {
+                    $nameserver = $domainNS;
+                }
                 if (null === $nameserver) {
                     $nameserver = new Nameserver();
                 }
