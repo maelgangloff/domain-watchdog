@@ -108,7 +108,7 @@ export default function WatchlistPage() {
         <Card title={
             <>
                 <Tag icon={<AimOutlined/>} color="cyan-inverse"/>
-                {t`Tracked Domains`}
+                {t`Tracked domain names`}
             </>
         }
               style={{width: '100%'}}>
