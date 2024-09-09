@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2024-08-26 17:11+0000\n"
+"PO-Revision-Date: 2024-09-09 09:41+0000\n"
 "Last-Translator: Maël Gangloff <contact@maelgangloff.fr>\n"
 "Language-Team: French <https://weblate.vinceh121.me/projects/domain-watchdog/"
 "domain-watchdog-dashboard/fr/>\n"
@@ -9,7 +9,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 5.6.2\n"
+"X-Generator: Weblate 5.7.2\n"
 
 #: assets/components/LoginForm.tsx:52 assets/components/RegisterForm.tsx:39
 msgid "Email address"
@@ -324,22 +324,16 @@ msgid "Domain"
 msgstr "Domaine"
 
 #: assets/components/tracking/watchlist/TrackedDomainTable.tsx:50
-#, fuzzy
-#| msgid "Expiration"
 msgid "Expiration date"
-msgstr "Expiration"
+msgstr "Date d'expiration"
 
 #: assets/components/tracking/watchlist/TrackedDomainTable.tsx:54
-#, fuzzy
-#| msgid "Statistics"
 msgid "Status"
-msgstr "Statistiques"
+msgstr "Statuts"
 
 #: assets/components/tracking/watchlist/TrackedDomainTable.tsx:58
-#, fuzzy
-#| msgid "Update"
 msgid "Updated at"
-msgstr "Mettre à jour"
+msgstr "Mis à jour le"
 
 #: assets/components/tracking/watchlist/WatchlistCard.tsx:47
 msgid "This Watchlist is not linked to a Connector."
