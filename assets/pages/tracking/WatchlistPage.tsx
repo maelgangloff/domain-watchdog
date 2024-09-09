@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {Card, Divider, Flex, Form, message} from "antd";
+import {Card, Divider, Flex, Form, message, Tag} from "antd";
 import {EventAction, getWatchlists, postWatchlist, putWatchlist} from "../../utils/api";
 import {AxiosError} from "axios";
 import {t} from 'ttag'
@@ -9,6 +9,7 @@ import {Connector, getConnectors} from "../../utils/api/connectors";
 
 import {showErrorAPI} from "../../utils/functions/showErrorAPI";
 import {TrackedDomainTable} from "../../components/tracking/watchlist/TrackedDomainTable";
+import {AimOutlined} from "@ant-design/icons";
 
 
 export type Watchlist = {
@@ -104,7 +105,13 @@ export default function WatchlistPage() {
             }
         </Card>
         <Divider/>
-        <Card title={t`Tracked Domains`} style={{width: '100%'}}>
+        <Card title={
+            <>
+                <Tag icon={<AimOutlined/>} color="cyan-inverse"/>
+                {t`Tracked Domains`}
+            </>
+        }
+              style={{width: '100%'}}>
             <TrackedDomainTable/>
         </Card>
         <Divider/>

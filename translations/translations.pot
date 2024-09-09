@@ -483,19 +483,19 @@ msgstr ""
 msgid "Create a Connector"
 msgstr ""
 
-#: assets/pages/tracking/WatchlistPage.tsx:66
+#: assets/pages/tracking/WatchlistPage.tsx:67
 msgid "Watchlist created !"
 msgstr ""
 
-#: assets/pages/tracking/WatchlistPage.tsx:78
+#: assets/pages/tracking/WatchlistPage.tsx:79
 msgid "Watchlist updated !"
 msgstr ""
 
-#: assets/pages/tracking/WatchlistPage.tsx:101
+#: assets/pages/tracking/WatchlistPage.tsx:102
 msgid "Create a Watchlist"
 msgstr ""
 
-#: assets/pages/tracking/WatchlistPage.tsx:107
+#: assets/pages/tracking/WatchlistPage.tsx:111
 msgid "Tracked Domains"
 msgstr ""
 
