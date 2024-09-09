@@ -1254,7 +1254,6 @@ msgstr ""
 "${ LicenseLink }."
 
 #, fuzzy
-#~| msgid "Tracked domain names"
 #~ msgid "Tracked Domains"
 #~ msgstr "Noms de domaine suivis"
 

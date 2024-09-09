@@ -1255,7 +1255,6 @@ msgstr ""
 "Lizenz vertrieben wird."
 
 #, fuzzy
-#~| msgid "Tracked domain names"
 #~ msgid "Tracked Domains"
 #~ msgstr "Verfolgte Domänennamen"
 
