@@ -539,10 +539,9 @@ msgstr "Watchlist aktualisiert !"
 msgid "Create a Watchlist"
 msgstr "Erstellen Sie eine Watchlist"
 
+#: assets/pages/StatisticsPage.tsx:68
 #: assets/pages/tracking/WatchlistPage.tsx:111
-#, fuzzy
-#| msgid "Tracked domain names"
-msgid "Tracked Domains"
+msgid "Tracked domain names"
 msgstr "Verfolgte Domänennamen"
 
 #: assets/pages/NotFoundPage.tsx:10
@@ -560,10 +559,6 @@ msgstr "Gesendete Warnungen"
 #: assets/pages/StatisticsPage.tsx:57
 msgid "Domain names in database"
 msgstr "Domänennamen in der Datenbank"
-
-#: assets/pages/StatisticsPage.tsx:68
-msgid "Tracked domain names"
-msgstr "Verfolgte Domänennamen"
 
 #: assets/pages/StatisticsPage.tsx:82
 msgid "Purchased domain names"
@@ -1264,6 +1259,11 @@ msgid ""
 msgstr ""
 "${ ProjectLink } ist ein Open-Source-Projekt, das unter der ${ LicenseLink }-"
 "Lizenz vertrieben wird."
+
+#, fuzzy
+#~| msgid "Tracked domain names"
+#~ msgid "Tracked Domains"
+#~ msgstr "Verfolgte Domänennamen"
 
 #~ msgid "Domain finder"
 #~ msgstr "Domänenfinder"
