@@ -1,4 +1,4 @@
-import {request, Watchlist, WatchlistRequest} from "./index";
+import {Domain, request, Watchlist, WatchlistRequest} from "./index";
 
 export async function getWatchlists() {
     const response = await request({
@@ -41,3 +41,13 @@ export async function putWatchlist(watchlist: Partial<WatchlistRequest> & { toke
     })
     return response.data
 }
+
+export async function getTrackedDomainList(params: { page: number, itemsPerPage: number }): Promise<any> {
+    const response = await request({
+        method: 'GET',
+        url: 'tracked',
+        params
+    })
+    return response.data
+}
+

@@ -8,6 +8,7 @@ import {WatchlistsList} from "../../components/tracking/watchlist/WatchlistsList
 import {Connector, getConnectors} from "../../utils/api/connectors";
 
 import {showErrorAPI} from "../../utils/functions/showErrorAPI";
+import {TrackedDomainTable} from "../../components/tracking/watchlist/TrackedDomainTable";
 
 
 export type Watchlist = {
@@ -97,13 +98,15 @@ export default function WatchlistPage() {
 
     return <Flex gap="middle" align="center" justify="center" vertical>
         {contextHolder}
-        {
-            <Card loading={connectors === undefined} title={t`Create a Watchlist`} style={{width: '100%'}}>
-                {connectors &&
-                    <WatchlistForm form={form} onFinish={onCreateWatchlist} connectors={connectors} isCreation={true}/>
-                }
-            </Card>
-        }
+        <Card loading={connectors === undefined} title={t`Create a Watchlist`} style={{width: '100%'}}>
+            {connectors &&
+                <WatchlistForm form={form} onFinish={onCreateWatchlist} connectors={connectors} isCreation={true}/>
+            }
+        </Card>
+        <Divider/>
+        <Card title={t`Tracked Domains`} style={{width: '100%'}}>
+            <TrackedDomainTable/>
+        </Card>
         <Divider/>
         {connectors && watchlists && watchlists.length > 0 &&
             <WatchlistsList watchlists={watchlists} onDelete={refreshWatchlists}

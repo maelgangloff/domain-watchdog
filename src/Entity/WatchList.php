@@ -8,7 +8,6 @@ use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Metadata\Post;
 use ApiPlatform\Metadata\Put;
-use App\Controller\WatchListController;
 use App\Repository\WatchListRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -27,6 +26,16 @@ use Symfony\Component\Uid\Uuid;
             normalizationContext: ['groups' => 'watchlist:list'],
             name: 'get_all_mine',
         ),
+        new GetCollection(
+            uriTemplate: '/tracked',
+            routeName: 'watchlist_get_tracked_domains',
+            normalizationContext: ['groups' => [
+                'domain:list',
+                'tld:list',
+                'event:list',
+            ]],
+            name: 'get_tracked_domains'
+        ),
         new Get(
             normalizationContext: ['groups' => [
                 'watchlist:item',
@@ -42,7 +51,6 @@ use Symfony\Component\Uid\Uuid;
         ),
         new Get(
             routeName: 'watchlist_calendar',
-            controller: WatchListController::class,
             openapiContext: [
                 'responses' => [
                     '200' => [

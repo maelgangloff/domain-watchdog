@@ -328,4 +328,56 @@ class WatchListController extends AbstractController
             'Content-Type' => 'text/calendar; charset=utf-8',
         ]);
     }
+
+    /**
+     * @throws \Exception
+     */
+    #[Route(
+        path: '/api/tracked',
+        name: 'watchlist_get_tracked_domains',
+        defaults: [
+            '_api_resource_class' => WatchList::class,
+            '_api_operation_name' => 'get_tracked_domains',
+        ]
+    )]
+    public function getTrackedDomains(): array
+    {
+        /** @var User $user */
+        $user = $this->getUser();
+
+        $domains = [];
+        /** @var WatchList $watchList */
+        foreach ($user->getWatchLists()->getIterator() as $watchList) {
+            /** @var Domain $domain */
+            foreach ($watchList->getDomains()->getIterator() as $domain) {
+                /** @var DomainEvent|null $exp */
+                $exp = $domain->getEvents()->findFirst(fn (int $key, DomainEvent $e) => !$e->getDeleted() && 'expiration' === $e->getAction());
+
+                if (!$domain->getDeleted()
+                    && null !== $exp && $exp->getDate() > new \DateTimeImmutable()
+                    && count(array_filter($domain->getEvents()->toArray(), fn (DomainEvent $e) => !$e->getDeleted() && 'expiration' === $e->getAction())) > 0
+                    && !in_array($domain, $domains)) {
+                    $domains[] = $domain;
+                }
+            }
+        }
+
+        usort($domains, function (Domain $d1, Domain $d2) {
+            $IMPORTANT_STATUS = ['pending delete', 'redemption period', 'auto renew period'];
+
+            /** @var \DateTimeImmutable $exp1 */
+            $exp1 = $d1->getEvents()->findFirst(fn (int $key, DomainEvent $e) => !$e->getDeleted() && 'expiration' === $e->getAction())->getDate();
+            /** @var \DateTimeImmutable $exp2 */
+            $exp2 = $d2->getEvents()->findFirst(fn (int $key, DomainEvent $e) => !$e->getDeleted() && 'expiration' === $e->getAction())->getDate();
+            $impStatus1 = count(array_intersect($IMPORTANT_STATUS, $d1->getStatus())) > 0;
+            $impStatus2 = count(array_intersect($IMPORTANT_STATUS, $d2->getStatus())) > 0;
+
+            return $impStatus1 && !$impStatus2 ? -1 : (
+                !$impStatus1 && $impStatus2 ? 2 :
+                    $exp1 <=> $exp2
+            );
+        });
+
+        return $domains;
+    }
 }

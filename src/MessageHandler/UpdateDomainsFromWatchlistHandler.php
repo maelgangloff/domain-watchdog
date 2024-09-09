@@ -63,15 +63,15 @@ final readonly class UpdateDomainsFromWatchlistHandler
         /** @var Domain $domain */
         foreach ($watchList->getDomains()
                      ->filter(fn ($domain) => $domain->getUpdatedAt()
-                             ->diff(
-                                 new \DateTimeImmutable())->days >= 7
+                             ->diff(new \DateTimeImmutable())->days >= 7
                          || (
                              ($domain->getUpdatedAt()
-                                 ->diff(
-                                     new \DateTimeImmutable())->h * 60 + $domain->getUpdatedAt()
-                                 ->diff(
-                                     new \DateTimeImmutable())->i) >= 50
+                                     ->diff(new \DateTimeImmutable())->h * 60 + $domain->getUpdatedAt()
+                                     ->diff(new \DateTimeImmutable())->i) >= 50
                              && $this->RDAPService::isToBeWatchClosely($domain)
+                         )
+                         || (count(array_intersect($domain->getStatus(), ['auto renew period', 'client hold', 'server hold'])) > 0
+                             && $domain->getUpdatedAt()->diff(new \DateTimeImmutable())->days >= 1
                          )
                      ) as $domain
         ) {

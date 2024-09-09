@@ -59,6 +59,7 @@ export interface Domain {
     nameservers: Nameserver[]
     tld: Tld
     deleted: boolean
+    updatedAt: string
 }
 
 export interface User {

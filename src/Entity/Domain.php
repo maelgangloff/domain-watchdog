@@ -57,7 +57,7 @@ class Domain
      * @var Collection<int, DomainEvent>
      */
     #[ORM\OneToMany(targetEntity: DomainEvent::class, mappedBy: 'domain', cascade: ['persist'], orphanRemoval: true)]
-    #[Groups(['domain:item'])]
+    #[Groups(['domain:item', 'domain:list'])]
     private Collection $events;
 
     /**
@@ -69,7 +69,7 @@ class Domain
     private Collection $domainEntities;
 
     #[ORM\Column(type: Types::SIMPLE_ARRAY, nullable: true)]
-    #[Groups(['domain:item'])]
+    #[Groups(['domain:item', 'domain:list'])]
     private array $status = [];
 
     /**
@@ -93,15 +93,16 @@ class Domain
     private ?\DateTimeImmutable $createdAt;
 
     #[ORM\Column(type: Types::DATETIME_IMMUTABLE)]
+    #[Groups(['domain:item', 'domain:list'])]
     private ?\DateTimeImmutable $updatedAt;
 
     #[ORM\ManyToOne]
     #[ORM\JoinColumn(referencedColumnName: 'tld', nullable: false)]
-    #[Groups(['domain:item'])]
+    #[Groups(['domain:item', 'domain:list'])]
     private ?Tld $tld = null;
 
     #[ORM\Column(nullable: false)]
-    #[Groups(['domain:item'])]
+    #[Groups(['domain:item', 'domain:list'])]
     private ?bool $deleted;
 
     public function __construct()

@@ -298,6 +298,23 @@ msgstr ""
 msgid "Are you sure to delete this Watchlist?"
 msgstr ""
 
+#: assets/components/Sider.tsx:40
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:46
+msgid "Domain"
+msgstr ""
+
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:50
+msgid "Expiration date"
+msgstr ""
+
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:54
+msgid "Status"
+msgstr ""
+
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:58
+msgid "Updated at"
+msgstr ""
+
 #: assets/components/tracking/watchlist/WatchlistCard.tsx:47
 msgid "This Watchlist is not linked to a Connector."
 msgstr ""
@@ -312,10 +329,6 @@ msgstr ""
 
 #: assets/components/Sider.tsx:34
 msgid "Search"
-msgstr ""
-
-#: assets/components/Sider.tsx:40
-msgid "Domain"
 msgstr ""
 
 #: assets/components/Sider.tsx:41
@@ -470,16 +483,20 @@ msgstr ""
 msgid "Create a Connector"
 msgstr ""
 
-#: assets/pages/tracking/WatchlistPage.tsx:65
+#: assets/pages/tracking/WatchlistPage.tsx:66
 msgid "Watchlist created !"
 msgstr ""
 
-#: assets/pages/tracking/WatchlistPage.tsx:77
+#: assets/pages/tracking/WatchlistPage.tsx:78
 msgid "Watchlist updated !"
 msgstr ""
 
 #: assets/pages/tracking/WatchlistPage.tsx:101
 msgid "Create a Watchlist"
+msgstr ""
+
+#: assets/pages/tracking/WatchlistPage.tsx:107
+msgid "Tracked Domains"
 msgstr ""
 
 #: assets/pages/NotFoundPage.tsx:10
