@@ -313,7 +313,7 @@ readonly class RDAPService
                     'ldhName' => strtolower($rdapNameserver['ldhName']),
                 ]);
 
-                $domainNS = $domain->getNameservers()->findFirst(fn (Nameserver $ns) => $ns->getLdhName() === $rdapNameserver['ldhName']);
+                $domainNS = $domain->getNameservers()->findFirst(fn (int $key, Nameserver $ns) => $ns->getLdhName() === $rdapNameserver['ldhName']);
 
                 if (null !== $domainNS) {
                     $nameserver = $domainNS;
