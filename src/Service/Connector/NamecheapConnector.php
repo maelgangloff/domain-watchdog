@@ -41,7 +41,6 @@ class NamecheapConnector extends AbstractProvider
         self::mergePrefixKeys('Admin', $address, $domainAddresses);
         self::mergePrefixKeys('AuxBilling', $address, $domainAddresses);
 
-
         $this->call('namecheap.domains.create', array_merge([
             'DomainName' => $domain->getLdhName(),
             'Years' => 1,
