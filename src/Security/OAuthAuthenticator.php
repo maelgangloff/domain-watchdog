@@ -75,7 +75,7 @@ class OAuthAuthenticator extends OAuth2Authenticator implements AuthenticationEn
             new Cookie(
                 'BEARER',
                 $token,
-                time() + 7200, // expiration
+                time() + 604800, // expiration
                 '/',
                 null,
                 true,

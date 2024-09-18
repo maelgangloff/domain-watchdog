@@ -1,0 +1,55 @@
+# Please see https://github.com/maelgangloff/domain-watchdog
+services:
+    domainwatchdog:
+        image: maelgangloff/domain-watchdog:latest
+        restart: unless-stopped
+        environment:
+            SERVER_NAME: ${SERVER_NAME:-:80}
+            DATABASE_URL: postgresql://${POSTGRES_USER:-app}:${POSTGRES_PASSWORD:-!ChangeMe!}@${POSTGRES_HOST:-database}:${POSTGRES_PORT:-5432}/${POSTGRES_DB:-app}?serverVersion=${POSTGRES_VERSION:-15}&charset=${POSTGRES_CHARSET:-utf8}
+            APP_SECRET: ${APP_SECRET:-ChangeMe}
+            REGISTRATION_ENABLED: ${REGISTRATION_ENABLED:-true}
+            REGISTRATION_VERIFY_EMAIL: ${REGISTRATION_VERIFY_EMAIL:-false}
+            LIMITED_FEATURES: ${LIMITED_FEATURES:-false}
+            LIMIT_MAX_WATCHLIST: ${LIMIT_MAX_WATCHLIST:-0}
+            LIMIT_MAX_WATCHLIST_DOMAINS: ${LIMIT_MAX_WATCHLIST_DOMAINS:-0}
+            LIMIT_MAX_WATCHLIST_WEBHOOKS: ${LIMIT_MAX_WATCHLIST_WEBHOOKS:-0}
+            MAILER_DSN: ${MAILER_DSN:-null://null}
+        volumes:
+            - caddy_data:/data
+            - caddy_config:/config
+            - ./public/content:/app/public/content
+        ports:
+            - 127.0.0.1:8080:80
+
+    php-worker:
+        image: maelgangloff/domain-watchdog:latest
+        restart: always
+        command: php /app/bin/console messenger:consume --all --time-limit=3600 -vvv
+        environment:
+            DATABASE_URL: postgresql://${POSTGRES_USER:-app}:${POSTGRES_PASSWORD:-!ChangeMe!}@${POSTGRES_HOST:-database}:${POSTGRES_PORT:-5432}/${POSTGRES_DB:-app}?serverVersion=${POSTGRES_VERSION:-15}&charset=${POSTGRES_CHARSET:-utf8}
+            APP_SECRET: ${APP_SECRET:-ChangeMe}
+            MAILER_DSN: ${MAILER_DSN:-null://null}
+        healthcheck:
+            disable: true
+            test: [ ]
+#        volumes:
+#            - ./custom_rdap_servers.yaml:/app/config/app/custom_rdap_servers.yaml # Please see #41 issue
+
+    database:
+        image: postgres:${POSTGRES_VERSION:-16}-alpine
+        environment:
+            POSTGRES_DB: ${POSTGRES_DB:-app}
+            POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-!ChangeMe!}
+            POSTGRES_USER: ${POSTGRES_USER:-app}
+        healthcheck:
+            test: [ "CMD", "pg_isready", "-d", "${POSTGRES_DB:-app}", "-U", "${POSTGRES_USER:-app}" ]
+            timeout: 5s
+            retries: 5
+            start_period: 60s
+        volumes:
+            - database_data:/var/lib/postgresql/data:rw
+
+volumes:
+    caddy_data:
+    caddy_config:
+    database_data:

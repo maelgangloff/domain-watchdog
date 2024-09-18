@@ -3,11 +3,12 @@
 namespace App\Service\Connector;
 
 use App\Entity\Domain;
+use Psr\Cache\CacheItemInterface;
 use Symfony\Component\DependencyInjection\Attribute\Autoconfigure;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 #[Autoconfigure(public: true)]
-class NamecheapConnector extends AbstractConnector
+class NamecheapConnector extends AbstractProvider
 {
     public const BASE_URL = 'https://api.namecheap.com/xml.response';
 
@@ -82,5 +83,15 @@ class NamecheapConnector extends AbstractConnector
     public static function verifyAuthData(array $authData, HttpClientInterface $client): array
     {
         return $authData;
+    }
+
+    protected function getCachedTldList(): CacheItemInterface
+    {
+        // TODO: Implement getCachedTldList() method.
+    }
+
+    protected function getSupportedTldList(): array
+    {
+        // TODO: Implement getSupportedTldList() method.
     }
 }

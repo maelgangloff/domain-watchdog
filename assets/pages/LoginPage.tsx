@@ -7,11 +7,6 @@ import {getConfiguration, InstanceConfig} from "../utils/api";
 import {RegisterForm} from "../components/RegisterForm";
 
 
-const gridStyle: React.CSSProperties = {
-    width: '50%',
-    textAlign: 'center',
-}
-
 export const AuthenticatedContext = createContext<any>(null)
 
 export default function LoginPage() {
@@ -28,7 +23,7 @@ export default function LoginPage() {
     }, [])
 
     return <Card title={wantRegister ? t`Register` : t`Log in`} style={{width: '100%'}}>
-        <Card.Grid style={gridStyle} hoverable={false}>
+        <Card.Grid style={{width: '50%', textAlign: 'center'}} hoverable={false}>
             {wantRegister ? <RegisterForm/> : <LoginForm ssoLogin={configuration?.ssoLogin}/>}
             {
                 configuration?.registerEnabled &&

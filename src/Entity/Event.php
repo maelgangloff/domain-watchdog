@@ -21,6 +21,15 @@ class Event
     #[Groups(['event:list'])]
     private ?\DateTimeImmutable $date = null;
 
+    #[ORM\Column]
+    #[Groups(['event:list'])]
+    private ?bool $deleted;
+
+    public function __construct()
+    {
+        $this->deleted = false;
+    }
+
     public function getId(): ?int
     {
         return $this->id;
@@ -46,6 +55,18 @@ class Event
     public function setDate(\DateTimeImmutable $date): static
     {
         $this->date = $date;
+
+        return $this;
+    }
+
+    public function getDeleted(): ?bool
+    {
+        return $this->deleted;
+    }
+
+    public function setDeleted(?bool $deleted): static
+    {
+        $this->deleted = $deleted;
 
         return $this;
     }

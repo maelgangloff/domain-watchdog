@@ -11,6 +11,7 @@ use Symfony\Component\HttpFoundation\Cookie;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
+use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationSuccessHandlerInterface;
@@ -21,6 +22,7 @@ class JWTAuthenticator implements AuthenticationSuccessHandlerInterface
     public function __construct(
         protected JWTTokenManagerInterface $jwtManager,
         protected EventDispatcherInterface $dispatcher,
+        protected KernelInterface $kernel
     ) {
     }
 
@@ -43,10 +45,10 @@ class JWTAuthenticator implements AuthenticationSuccessHandlerInterface
             new Cookie(
                 'BEARER',
                 $jwt,
-                time() + 7200, // expiration
+                time() + 604800, // expiration
                 '/',
                 null,
-                false,
+                !$this->kernel->isDebug(),
                 true,
                 false,
                 'strict'

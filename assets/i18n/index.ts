@@ -5,10 +5,10 @@ export const regionNames = new Intl.DisplayNames([locale], {type: 'region'})
 
 if (locale !== 'en') {
     fetch(`/locales/${locale}.po.json`).then(response => {
-        if (!response.ok) throw new Error(`Failed to load translations for locale ${locale}`);
+        if (!response.ok) throw new Error(`Failed to load translations for locale ${locale}`)
         response.json().then(translationsObj => {
-            addLocale(locale, translationsObj);
-            useLocale(locale);
+            addLocale(locale, translationsObj)
+            useLocale(locale)
         })
-    })
+    }).catch(() => console.error(`Unable to retrieve translation file ${locale}.po.json`))
 }

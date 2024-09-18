@@ -12,7 +12,7 @@
 
     <meta property="og:type" content="website"/>
     <meta property="og:title" content="Domain Watchdog"/>
-    <meta property="og:image" content="{{ asset('images/banner.png') }}">
+    <meta property="og:image" content="/images/banner.png">
     <meta property="og:description"
           content="A standalone app that collects open access information about domain names, helping users track the history and changes associated with domain names"/>
     <meta property="og:site_name" content="Domain Watchdog"/>
@@ -21,12 +21,13 @@
     <meta property="twitter:title" content="Domain Watchdog"/>
     <meta property="twitter:description"
           content="A standalone app that collects open access information about domain names, helping users track the history and changes associated with domain names"/>
-    <meta property="twitter:image" content="{{ asset('images/banner.png') }}"/>
+    <meta property="twitter:image" content="/images/banner.png"/>
 
 
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <link rel="manifest" href="{{ asset('manifest.json') }}"/>
     <title>Domain Watchdog</title>
+    <link rel="manifest" href="/manifest.json"/>
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
     {{ encore_entry_link_tags('app') }}
 </head>
 <body>

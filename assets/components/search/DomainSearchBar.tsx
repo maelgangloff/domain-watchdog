@@ -8,13 +8,10 @@ export type FieldType = {
 }
 
 export function DomainSearchBar({onFinish}: { onFinish: (values: FieldType) => void }) {
-
     return <Form
-        name="basic"
-        labelCol={{span: 8}}
-        wrapperCol={{span: 16}}
         onFinish={onFinish}
         autoComplete="off"
+        style={{width: '100%'}}
     >
         <Form.Item<FieldType>
             name="ldhName"
@@ -28,8 +25,13 @@ export function DomainSearchBar({onFinish}: { onFinish: (values: FieldType) => v
                 min: 2
             }]}
         >
-            <Input size="large" prefix={<SearchOutlined/>} placeholder="example.com" autoFocus={true}
-                   autoComplete='off'/>
+            <Input style={{textAlign: 'center'}}
+                   size="large"
+                   prefix={<SearchOutlined/>}
+                   placeholder="example.com"
+                   autoComplete='off'
+                   autoFocus
+            />
         </Form.Item>
     </Form>
 }

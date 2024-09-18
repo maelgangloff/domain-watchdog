@@ -19,18 +19,26 @@
     "@babel/preset-env": "^7.16.0",
     "@babel/preset-react": "^7.24.7",
     "@fontsource/noto-color-emoji": "^5.0.27",
+    "@hotwired/stimulus": "^3.0.0",
+    "@hotwired/turbo": "^7.1.1 || ^8.0",
+    "@symfony/stimulus-bridge": "^3.2.0",
+    "@symfony/ux-turbo": "file:vendor/symfony/ux-turbo/assets",
     "@symfony/webpack-encore": "^4.0.0",
     "@types/axios": "^0.14.0",
+    "@types/dagre": "^0.7.52",
     "@types/jsonld": "^1.5.15",
     "@types/punycode": "^2.1.4",
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
     "@types/react-responsive": "^8.0.8",
     "@types/vcf": "^2.0.7",
+    "@xyflow/react": "^12.1.0",
     "antd": "^5.19.3",
     "axios": "^1.7.2",
     "core-js": "^3.23.0",
+    "dagre": "^0.8.5",
     "html-loader": "^5.1.0",
+    "html-to-image": "^1.11.11",
     "jsonld": "^8.3.2",
     "punycode": "^2.3.1",
     "react": "^18.3.1",
@@ -57,9 +65,6 @@
     "build": "encore production --progress",
     "ttag:po2json": "cd translations; for i in $(find . -name \"*.po\"); do ttag po2json $i > ../public/locales/$i.json; done; cd ..",
     "ttag:extract": "ttag extract $(find assets -name '*.ts' -or -name '*.tsx') -o translations/translations.pot"
-  },
-  "dependencies": {
-    "remove": "^0.1.5"
   },
   "packageManager": "yarn@1.22.22+sha512.a6b2f7906b721bba3d67d4aff083df04dad64c399707841b7acf00f6b133b7ac24255f2652fa22ae3534329dc6180534e98d17432037ff6fd140556e2bb3137e"
 }

@@ -1,4 +1,4 @@
-import {ItemType, MenuItemType} from "antd/lib/menu/interface";
+import {ItemType} from "antd/lib/menu/interface";
 import {t} from "ttag";
 import {
     AimOutlined,
@@ -22,8 +22,7 @@ import {useNavigate} from "react-router-dom";
 export function Sider({isAuthenticated}: { isAuthenticated: boolean }) {
     const navigate = useNavigate()
 
-
-    const menuItems: ItemType<MenuItemType>[] = [
+    const menuItems: ItemType[] = [
         {
             key: 'home',
             label: t`Home`,
@@ -49,7 +48,7 @@ export function Sider({isAuthenticated}: { isAuthenticated: boolean }) {
                     label: t`TLD`,
                     title: t`TLD list`,
                     disabled: !isAuthenticated,
-                    onClick: () => navigate('/info/tld')
+                    onClick: () => navigate('/search/tld')
                 },
                 {
                     key: 'entity-finder',
@@ -64,7 +63,8 @@ export function Sider({isAuthenticated}: { isAuthenticated: boolean }) {
                     icon: <CloudServerOutlined/>,
                     label: t`Nameserver`,
                     title: t`Nameserver Finder`,
-                    disabled: true
+                    disabled: true,
+                    onClick: () => navigate('/search/nameserver')
                 }
             ]
         },
@@ -93,8 +93,8 @@ export function Sider({isAuthenticated}: { isAuthenticated: boolean }) {
             key: 'stats',
             icon: <LineChartOutlined/>,
             label: t`Statistics`,
-            disabled: true,
-            onClick: () => navigate('/info/stats')
+            disabled: !isAuthenticated,
+            onClick: () => navigate('/stats')
         }
     ]
 
@@ -103,7 +103,6 @@ export function Sider({isAuthenticated}: { isAuthenticated: boolean }) {
             key: 'account',
             icon: <UserOutlined/>,
             label: t`My Account`,
-            disabled: !isAuthenticated,
             onClick: () => navigate('/user')
         }, {
             key: 'logout',
@@ -122,7 +121,6 @@ export function Sider({isAuthenticated}: { isAuthenticated: boolean }) {
     }
 
     return <Menu
-        defaultSelectedKeys={['home']}
         defaultOpenKeys={['search', 'info', 'tracking', 'doc']}
         mode="inline"
         theme="dark"

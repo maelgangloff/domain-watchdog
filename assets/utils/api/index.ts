@@ -21,6 +21,7 @@ export type TriggerAction = 'email' | string
 export interface Event {
     action: EventAction
     date: string
+    deleted: boolean
 }
 
 export interface Entity {
@@ -53,10 +54,12 @@ export interface Domain {
         entity: Entity
         events: Event[]
         roles: string[]
+        deleted: boolean
     }[]
     nameservers: Nameserver[]
     tld: Tld
     deleted: boolean
+    updatedAt: string
 }
 
 export interface User {
@@ -64,17 +67,38 @@ export interface User {
     roles: string[]
 }
 
-export interface Watchlist {
+export interface WatchlistRequest {
     name?: string
     domains: string[],
     triggers: { event: EventAction, action: TriggerAction }[],
     connector?: string
+    dsn?: string[]
+}
+
+export interface Watchlist {
+    token: string
+    name?: string
+    domains: Domain[],
+    triggers: { event: EventAction, action: TriggerAction }[],
+    connector?: string
+    createdAt: string
+    dsn?: string[]
 }
 
 export interface InstanceConfig {
     ssoLogin: boolean
     limtedFeatures: boolean
     registerEnabled: boolean
+}
+
+export interface Statistics {
+    rdapQueries: number
+    alertSent: number
+    domainPurchased: number
+    domainPurchaseFailed: number
+    domainCount: {tld: string, domain: number}[]
+    domainCountTotal: number
+    domainTracked: number
 }
 
 export async function request<T = any, R = AxiosResponse<T>, D = any>(config: AxiosRequestConfig): Promise<R> {

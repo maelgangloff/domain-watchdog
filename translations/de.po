@@ -1,0 +1,1400 @@
+msgid ""
+msgstr ""
+"PO-Revision-Date: 2024-09-09 09:41+0000\n"
+"Last-Translator: Maël Gangloff <contact@maelgangloff.fr>\n"
+"Language-Team: German <https://weblate.vinceh121.me/projects/domain-watchdog/"
+"domain-watchdog-dashboard/de/>\n"
+"Language: de\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.7.2\n"
+
+#: assets/components/LoginForm.tsx:52 assets/components/RegisterForm.tsx:39
+msgid "Email address"
+msgstr "E-Mail-Adresse"
+
+#: assets/components/LoginForm.tsx:54 assets/components/LoginForm.tsx:62
+#: assets/components/RegisterForm.tsx:41 assets/components/RegisterForm.tsx:49
+#: assets/components/search/DomainSearchBar.tsx:20
+#: assets/components/tracking/connector/ConnectorForm.tsx:43
+#: assets/components/tracking/connector/ConnectorForm.tsx:69
+#: assets/components/tracking/connector/ConnectorForm.tsx:77
+#: assets/components/tracking/connector/ConnectorForm.tsx:84
+#: assets/components/tracking/connector/ConnectorForm.tsx:92
+#: assets/components/tracking/connector/ConnectorForm.tsx:122
+#: assets/components/tracking/connector/ConnectorForm.tsx:142
+#: assets/components/tracking/connector/ConnectorForm.tsx:156
+#: assets/components/tracking/connector/ConnectorForm.tsx:165
+#: assets/components/tracking/watchlist/WatchlistForm.tsx:115
+#: assets/components/tracking/watchlist/WatchlistForm.tsx:212
+msgid "Required"
+msgstr "Erforderlich"
+
+#: assets/components/LoginForm.tsx:60 assets/components/RegisterForm.tsx:47
+msgid "Password"
+msgstr "Passwort"
+
+#: assets/components/LoginForm.tsx:70
+msgid "Submit"
+msgstr "Senden"
+
+#: assets/components/LoginForm.tsx:75
+msgid "Log in with SSO"
+msgstr "Mit SSO anmelden"
+
+#: assets/components/search/DomainResult.tsx:45
+msgid "EPP Status Codes"
+msgstr "EPP-Statuscodes"
+
+#: assets/components/search/DomainResult.tsx:61
+msgid "Timeline"
+msgstr "Zeitleiste"
+
+#: assets/components/search/DomainResult.tsx:68
+msgid "Entities"
+msgstr "Entitäten"
+
+#: assets/components/search/DomainSearchBar.tsx:23
+#: assets/components/tracking/watchlist/WatchlistForm.tsx:118
+msgid "This domain name does not appear to be valid"
+msgstr "Dieser Domainname scheint nicht gültig zu sein"
+
+#: assets/components/search/DomainLifecycleSteps.tsx:15
+#: assets/utils/functions/rdapTranslation.ts:43
+msgid "Registration"
+msgstr "Registrierung"
+
+#: assets/components/search/DomainLifecycleSteps.tsx:19
+msgid "Active"
+msgstr "Aktiv"
+
+#: assets/components/search/DomainLifecycleSteps.tsx:24
+msgid "Redemption Period"
+msgstr "Einlösezeitraum"
+
+#: assets/components/search/DomainLifecycleSteps.tsx:28
+msgid "Pending Delete"
+msgstr "Ausstehende Löschung"
+
+#: assets/components/tracking/connector/ConnectorForm.tsx:40
+msgid "Provider"
+msgstr "Anbieter"
+
+#: assets/components/tracking/connector/ConnectorForm.tsx:47
+msgid "Please select a Provider"
+msgstr "Bitte wählen Sie einen Anbieter"
+
+#: assets/components/tracking/connector/ConnectorForm.tsx:75
+msgid "OVH Endpoint"
+msgstr "OVH Endpunkt"
+
+#: assets/components/tracking/connector/ConnectorForm.tsx:82
+msgid "OVH subsidiary"
+msgstr "OVH-Tochtergesellschaft"
+
+#: assets/components/tracking/connector/ConnectorForm.tsx:90
+msgid "OVH pricing mode"
+msgstr "OVH Preismodell"
+
+#: assets/components/tracking/connector/ConnectorForm.tsx:95
+msgid "Confirm pricing mode"
+msgstr "Preismodus bestätigen"
+
+#: assets/components/tracking/connector/ConnectorForm.tsx:96
+msgid ""
+"Are you sure about this setting? This may result in additional charges from "
+"the API Provider"
+msgstr ""
+"Sind Sie sich bei dieser Einstellung sicher? Dies kann zu zusätzlichen "
+"Gebühren durch den API-Anbieter führen"
+
+#: assets/components/tracking/connector/ConnectorForm.tsx:120
+msgid "Personal Access Token (PAT)"
+msgstr "Persönlicher Zugriffstoken (PAT)"
+
+#: assets/components/tracking/connector/ConnectorForm.tsx:126
+msgid "Organization sharing ID"
+msgstr "Freigabe-ID der Organisation"
+
+#: assets/components/tracking/connector/ConnectorForm.tsx:129
+msgid "It indicates the organization that will pay for the ordered product"
+msgstr "Es gibt die Organisation an, die für das bestellte Produkt bezahlt"
+
+#: assets/components/tracking/connector/ConnectorForm.tsx:140
+msgid "API Terms of Service"
+msgstr "API-Nutzungsbedingungen"
+
+#: assets/components/tracking/connector/ConnectorForm.tsx:148
+msgid ""
+"I have read and accepted the conditions of use of the Provider API, "
+"accessible from this hyperlink"
+msgstr ""
+"Ich habe die Nutzungsbedingungen der Provider-API gelesen und akzeptiert, "
+"die über diesen Hyperlink zugänglich sind"
+
+#: assets/components/tracking/connector/ConnectorForm.tsx:154
+msgid "Legal age"
+msgstr "Volljährigkeit"
+
+#: assets/components/tracking/connector/ConnectorForm.tsx:159
+msgid "I am of the minimum age required to consent to these conditions"
+msgstr ""
+"Ich habe das erforderliche Mindestalter erreicht, um diesen Bedingungen "
+"zuzustimmen"
+
+#: assets/components/tracking/connector/ConnectorForm.tsx:163
+msgid "Withdrawal period"
+msgstr "Rücktrittsfrist"
+
+#: assets/components/tracking/connector/ConnectorForm.tsx:168
+msgid ""
+"I waive my right of withdrawal regarding the purchase of domain names via "
+"the Provider's API"
+msgstr ""
+"Ich verzichte auf mein Widerrufsrecht beim Kauf von Domainnamen über die API "
+"des Anbieters"
+
+#: assets/components/tracking/connector/ConnectorForm.tsx:176
+#: assets/components/tracking/watchlist/WatchlistForm.tsx:252
+msgid "Create"
+msgstr "Erstellen"
+
+#: assets/components/tracking/connector/ConnectorForm.tsx:179
+#: assets/components/tracking/watchlist/WatchlistForm.tsx:255
+msgid "Reset"
+msgstr "Zurücksetzen"
+
+#: assets/components/tracking/connector/ConnectorsList.tsx:18
+msgid ""
+"An error occurred while deleting the Connector. Make sure it is not used in "
+"any Watchlist"
+msgstr ""
+"Beim Löschen des Connectors ist ein Fehler aufgetreten. Stellen Sie sicher, "
+"dass er in keiner Watchlist verwendet wird"
+
+#: assets/components/tracking/connector/ConnectorsList.tsx:25
+#, javascript-format
+msgid "Connector ${ connector.provider }"
+msgstr "Konnektor ${ connector.provider }"
+
+#: assets/components/tracking/connector/ConnectorsList.tsx:28
+msgid "Delete the Connector"
+msgstr "Löschen des Connectors"
+
+#: assets/components/tracking/connector/ConnectorsList.tsx:29
+msgid "Are you sure to delete this Connector?"
+msgstr "Möchten Sie diesen Connector wirklich löschen?"
+
+#: assets/components/tracking/connector/ConnectorsList.tsx:31
+#: assets/components/tracking/watchlist/DeleteWatchlistButton.tsx:15
+msgid "Yes"
+msgstr "Ja"
+
+#: assets/components/tracking/connector/ConnectorsList.tsx:32
+#: assets/components/tracking/watchlist/DeleteWatchlistButton.tsx:16
+msgid "No"
+msgstr "Nein"
+
+#: assets/components/tracking/watchlist/WatchlistForm.tsx:72
+msgid "Name"
+msgstr "Name"
+
+#: assets/components/tracking/watchlist/WatchlistForm.tsx:83
+msgid "Watchlist Name"
+msgstr "Name der Watchlist"
+
+#: assets/components/tracking/watchlist/WatchlistForm.tsx:84
+msgid "Naming the Watchlist makes it easier to find in the list below."
+msgstr ""
+"Durch die Benennung der Watchlist ist sie in der Liste weiter unten leichter "
+"zu finden."
+
+#: assets/components/tracking/watchlist/WatchlistForm.tsx:95
+msgid "At least one domain name"
+msgstr "Mindestens ein Domänenname"
+
+#: assets/components/tracking/watchlist/WatchlistCard.tsx:29
+#: assets/components/tracking/watchlist/WatchlistForm.tsx:106
+msgid "Domain names"
+msgstr "Domänennamen"
+
+#: assets/components/tracking/watchlist/WatchlistForm.tsx:124
+msgid "Domain name"
+msgstr "Domänenname"
+
+#: assets/components/tracking/watchlist/WatchlistForm.tsx:141
+msgid "Add a Domain name"
+msgstr "Einen Domänennamen hinzufügen"
+
+#: assets/components/tracking/watchlist/WatchlistCard.tsx:33
+#: assets/components/tracking/watchlist/WatchlistForm.tsx:148
+msgid "Tracked events"
+msgstr "Verfolgte Ereignisse"
+
+#: assets/components/tracking/watchlist/WatchlistForm.tsx:150
+msgid "At least one trigger"
+msgstr "Mindestens ein Auslöser"
+
+#: assets/components/tracking/watchlist/WatchlistForm.tsx:173
+#: assets/components/tracking/watchlist/WatchlistForm.tsx:187
+msgid "Connector"
+msgstr "Konnektor"
+
+#: assets/components/tracking/watchlist/WatchlistForm.tsx:183
+msgid ""
+"Please make sure the connector information is valid to purchase a domain "
+"that may be available soon."
+msgstr ""
+"Bitte stellen Sie sicher, dass die Connector-Informationen gültig sind, um "
+"eine Domäne zu erwerben, die möglicherweise bald verfügbar ist."
+
+#: assets/components/tracking/watchlist/WatchlistForm.tsx:203
+msgid "DSN"
+msgstr "DSN"
+
+#: assets/components/tracking/watchlist/WatchlistForm.tsx:215
+msgid "This DSN does not appear to be valid"
+msgstr "Dieser DSN scheint nicht gültig zu sein"
+
+#: assets/components/tracking/watchlist/WatchlistForm.tsx:233
+msgid ""
+"Check out this link to the Symfony documentation to help you build the DSN"
+msgstr ""
+"Sehen Sie sich diesen Link zur Symfony-Dokumentation an, der Ihnen beim "
+"Erstellen des DSN hilft"
+
+#: assets/components/tracking/watchlist/WatchlistForm.tsx:242
+msgid "Add a Webhook"
+msgstr "Einen Webhook hinzufügen"
+
+#: assets/components/tracking/watchlist/WatchlistForm.tsx:252
+msgid "Update"
+msgstr "Aktualisieren"
+
+#: assets/components/tracking/watchlist/UpdateWatchlistButton.tsx:31
+msgid "Edit the Watchlist"
+msgstr "Bearbeiten der Watchlist"
+
+#: assets/components/tracking/watchlist/UpdateWatchlistButton.tsx:44
+msgid "Update a Watchlist"
+msgstr "Aktualisieren einer Watchlist"
+
+#: assets/components/tracking/watchlist/UpdateWatchlistButton.tsx:54
+msgid "Cancel"
+msgstr "Abbrechen"
+
+#: assets/components/tracking/watchlist/diagram/ViewDiagramWatchlistButton.tsx:39
+msgid "View the Watchlist Entity Diagram"
+msgstr "Sehen Sie sich das Watchlist-Entitätsdiagramm an"
+
+#: assets/components/tracking/watchlist/diagram/ViewDiagramWatchlistButton.tsx:44
+msgid "Watchlist Entity Diagram"
+msgstr "Watchlist-Entitäten Diagramm"
+
+#: assets/components/tracking/watchlist/diagram/watchlistToEdges.tsx:37
+msgid "Registry"
+msgstr "Registrierung"
+
+#: assets/components/tracking/watchlist/diagram/watchlistToNodes.tsx:30
+#, javascript-format
+msgid ".${ tld.tld } Registry"
+msgstr ".${ tld.tld } Registrierung"
+
+#: assets/components/tracking/watchlist/CalendarWatchlistButton.tsx:14
+msgid "QR Code for iCalendar export"
+msgstr "QR-Code für iCalendar-Export"
+
+#: assets/components/tracking/watchlist/CalendarWatchlistButton.tsx:17
+msgid "Export events to iCalendar format"
+msgstr "Ereignisse in das iCalendar-Format exportieren"
+
+#: assets/components/tracking/watchlist/DeleteWatchlistButton.tsx:12
+#: assets/components/tracking/watchlist/DeleteWatchlistButton.tsx:19
+msgid "Delete the Watchlist"
+msgstr "Löschen der Watchlist"
+
+#: assets/components/tracking/watchlist/DeleteWatchlistButton.tsx:13
+msgid "Are you sure to delete this Watchlist?"
+msgstr "Möchten Sie diese Watchlist wirklich löschen?"
+
+#: assets/components/Sider.tsx:40
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:46
+msgid "Domain"
+msgstr "Domain"
+
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:50
+msgid "Expiration date"
+msgstr "Verfallsdatum"
+
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:54
+msgid "Status"
+msgstr "Status"
+
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:58
+msgid "Updated at"
+msgstr "Aktualisiert am"
+
+#: assets/components/tracking/watchlist/WatchlistCard.tsx:47
+msgid "This Watchlist is not linked to a Connector."
+msgstr "Diese Beobachtungsliste ist nicht mit einem Connector verknüpft."
+
+#: assets/components/tracking/watchlist/WatchlistCard.tsx:52
+msgid "Watchlist"
+msgstr "Watchlist"
+
+#: assets/components/Sider.tsx:28
+msgid "Home"
+msgstr "Startseite"
+
+#: assets/components/Sider.tsx:34
+msgid "Search"
+msgstr "Suchen"
+
+#: assets/components/Sider.tsx:41
+msgid "Domain Finder"
+msgstr "Domänenfinder"
+
+#: assets/components/Sider.tsx:48 assets/pages/search/TldPage.tsx:65
+msgid "TLD"
+msgstr "TLD"
+
+#: assets/components/Sider.tsx:49
+msgid "TLD list"
+msgstr "TLD-Liste"
+
+#: assets/components/Sider.tsx:56
+msgid "Entity"
+msgstr "Entität"
+
+#: assets/components/Sider.tsx:57
+msgid "Entity Finder"
+msgstr "Entitätsfinder"
+
+#: assets/components/Sider.tsx:64
+msgid "Nameserver"
+msgstr "Nameserver"
+
+#: assets/components/Sider.tsx:65
+msgid "Nameserver Finder"
+msgstr "Nameserver-Finder"
+
+#: assets/components/Sider.tsx:73
+msgid "Tracking"
+msgstr "Nachverfolgung"
+
+#: assets/components/Sider.tsx:79
+msgid "My Watchlists"
+msgstr "Meine Watchlists"
+
+#: assets/components/Sider.tsx:86
+msgid "My Connectors"
+msgstr "Meine Konnektoren"
+
+#: assets/components/Sider.tsx:95
+msgid "Statistics"
+msgstr "Statistiken"
+
+#: assets/components/Sider.tsx:105 assets/pages/UserPage.tsx:16
+msgid "My Account"
+msgstr "Mein Konto"
+
+#: assets/components/Sider.tsx:110
+msgid "Log out"
+msgstr "Abmelden"
+
+#: assets/components/Sider.tsx:118 assets/pages/LoginPage.tsx:25
+#: assets/pages/LoginPage.tsx:33
+msgid "Log in"
+msgstr "Anmelden"
+
+#: assets/components/RegisterForm.tsx:56 assets/pages/LoginPage.tsx:25
+msgid "Register"
+msgstr "Registrieren"
+
+#: assets/pages/search/DomainSearchPage.tsx:18
+msgid "Found !"
+msgstr "Gefunden !"
+
+#: assets/pages/search/DomainSearchPage.tsx:34
+msgid ""
+"Although the domain exists in my database, it has been deleted from the "
+"WHOIS by its registrar."
+msgstr ""
+"Obwohl die Domain in meiner Datenbank vorhanden ist, wurde sie von ihrem "
+"Registrar aus dem WHOIS gelöscht."
+
+#: assets/pages/search/TldPage.tsx:71
+msgid "Flag"
+msgstr "Landesflagge"
+
+#: assets/pages/search/TldPage.tsx:74
+msgid "Country"
+msgstr "Land"
+
+#: assets/pages/search/TldPage.tsx:79
+msgid "Registry Operator"
+msgstr "Registrierungsbetreiber"
+
+#: assets/pages/search/TldPage.tsx:106
+msgid "This page presents all active TLDs in the root zone database."
+msgstr ""
+"Auf dieser Seite werden alle aktiven TLDs in der Root-Zone-Datenbank "
+"angezeigt."
+
+#: assets/pages/search/TldPage.tsx:109
+msgid ""
+"IANA provides the list of currently active TLDs, regardless of their type, "
+"and ICANN provides the list of gTLDs.\n"
+"In most cases, the two-letter ccTLD assigned to a country is made in "
+"accordance with the ISO 3166-1 standard.\n"
+"This data is updated every month. Three HTTP requests are needed for the "
+"complete update of TLDs in Domain Watchdog (two requests to IANA and one to "
+"ICANN).\n"
+"At the same time, the list of root RDAP servers is updated."
+msgstr ""
+"IANA stellt die Liste der derzeit aktiven TLDs unabhängig von ihrem Typ "
+"bereit und ICANN stellt die Liste der gTLDs bereit.\n"
+" In den meisten Fällen erfolgt die Zuweisung der zweistelligen ccTLD an ein "
+"Land gemäß der Norm ISO 3166-1.\n"
+" Diese Daten werden jeden Monat aktualisiert. Für die vollständige "
+"Aktualisierung der TLDs in Domain Watchdog sind drei HTTP-Anfragen "
+"erforderlich (zwei Anfragen an IANA und eine an ICANN).\n"
+" Gleichzeitig wird die Liste der Root-RDAP-Server aktualisiert."
+
+#: assets/pages/search/TldPage.tsx:121
+msgid "Sponsored Top-Level-Domains"
+msgstr "Gesponserte Top-Level-Domains"
+
+#: assets/pages/search/TldPage.tsx:123
+msgid ""
+"Top-level domains sponsored by specific organizations that set rules for "
+"registration and use, often related to particular interest groups or "
+"industries."
+msgstr ""
+"Top-Level-Domains werden von bestimmten Organisationen gesponsert, die "
+"Regeln für die Registrierung und Nutzung festlegen und oft mit bestimmten "
+"Interessengruppen oder Branchen in Zusammenhang stehen."
+
+#: assets/pages/search/TldPage.tsx:130
+msgid "Generic Top-Level-Domains"
+msgstr "Generische Top-Level-Domains"
+
+#: assets/pages/search/TldPage.tsx:132
+msgid ""
+"Generic top-level domains open to everyone, not restricted by specific "
+"criteria, representing various themes or industries."
+msgstr ""
+"Generische Top-Level-Domains, die für jeden offen sind, nicht durch "
+"bestimmte Kriterien eingeschränkt sind und verschiedene Themen oder Branchen "
+"repräsentieren."
+
+#: assets/pages/search/TldPage.tsx:139
+msgid "Brand Generic Top-Level-Domains"
+msgstr "Markengenerische Top-Level-Domains"
+
+#: assets/pages/search/TldPage.tsx:141
+msgid ""
+"Generic top-level domains associated with specific brands, allowing "
+"companies to use their own brand names as domains."
+msgstr ""
+"Generische Top-Level-Domains sind mit bestimmten Marken verknüpft und "
+"ermöglichen Unternehmen die Verwendung ihrer eigenen Markennamen als Domains."
+
+#: assets/pages/search/TldPage.tsx:148
+msgid "Country-Code Top-Level-Domains"
+msgstr "Länderspezifische Top-Level-Domains"
+
+#: assets/pages/search/TldPage.tsx:150
+msgid ""
+"Top-level domains based on country codes, identifying websites according to "
+"their country of origin."
+msgstr ""
+"Top-Level-Domains basieren auf Ländercodes und identifizieren Websites "
+"entsprechend ihrem Herkunftsland."
+
+#: assets/pages/tracking/ConnectorsPage.tsx:20
+msgid "Connector created !"
+msgstr "Connector erstellt!"
+
+#: assets/pages/tracking/ConnectorsPage.tsx:39
+msgid "Create a Connector"
+msgstr "Erstellen eines Connectors"
+
+#: assets/pages/tracking/WatchlistPage.tsx:67
+msgid "Watchlist created !"
+msgstr "Watchlist erstellt !"
+
+#: assets/pages/tracking/WatchlistPage.tsx:79
+msgid "Watchlist updated !"
+msgstr "Watchlist aktualisiert !"
+
+#: assets/pages/tracking/WatchlistPage.tsx:102
+msgid "Create a Watchlist"
+msgstr "Erstellen Sie eine Watchlist"
+
+#: assets/pages/StatisticsPage.tsx:68
+#: assets/pages/tracking/WatchlistPage.tsx:111
+msgid "Tracked domain names"
+msgstr "Verfolgte Domänennamen"
+
+#: assets/pages/NotFoundPage.tsx:10
+msgid "Sorry, the page you visited does not exist."
+msgstr "Es tut uns leid, die von Ihnen besuchte Seite existiert nicht."
+
+#: assets/pages/StatisticsPage.tsx:34
+msgid "RDAP queries"
+msgstr "RDAP-Abfragen"
+
+#: assets/pages/StatisticsPage.tsx:43
+msgid "Alerts sent"
+msgstr "Gesendete Warnungen"
+
+#: assets/pages/StatisticsPage.tsx:57
+msgid "Domain names in database"
+msgstr "Domänennamen in der Datenbank"
+
+#: assets/pages/StatisticsPage.tsx:82
+msgid "Purchased domain names"
+msgstr "Gekaufte Domänennamen"
+
+#: assets/pages/StatisticsPage.tsx:92
+msgid ""
+"This value is based on the status code of the HTTP response from the "
+"providers following the domain order."
+msgstr ""
+"Dieser Wert basiert auf dem Statuscode der HTTP-Antwort der Anbieter nach "
+"dem Domainkauf."
+
+#: assets/pages/StatisticsPage.tsx:95
+msgid "Success rate"
+msgstr "Erfolgsrate"
+
+#: assets/pages/LoginPage.tsx:33
+msgid "Create an account"
+msgstr "Ein Konto erstellen"
+
+#: assets/pages/UserPage.tsx:18
+msgid "Username"
+msgstr "Benutzername"
+
+#: assets/pages/UserPage.tsx:21
+msgid "Roles"
+msgstr "Rollen"
+
+#: assets/pages/TextPage.tsx:26
+#, javascript-format
+msgid "📝 Please create the /public/content/${ resource } file."
+msgstr "📝 Bitte erstellen Sie die Datei /public/content/${ resource }."
+
+#: assets/utils/functions/rdapTranslation.ts:7
+msgid "Registrant"
+msgstr "Anmelder"
+
+#: assets/utils/functions/rdapTranslation.ts:8
+msgid "Technical"
+msgstr "Technischer"
+
+#: assets/utils/functions/rdapTranslation.ts:9
+msgid "Administrative"
+msgstr "Verwaltung"
+
+#: assets/utils/functions/rdapTranslation.ts:10
+msgid "Abuse"
+msgstr "Missbrauch"
+
+#: assets/utils/functions/rdapTranslation.ts:11
+msgid "Billing"
+msgstr "Rechnungsstellung"
+
+#: assets/utils/functions/rdapTranslation.ts:12
+msgid "Registrar"
+msgstr "Registrierungsstelle"
+
+#: assets/utils/functions/rdapTranslation.ts:13
+msgid "Reseller"
+msgstr "Wiederverkäufer"
+
+#: assets/utils/functions/rdapTranslation.ts:14
+msgid "Sponsor"
+msgstr "Sponsor"
+
+#: assets/utils/functions/rdapTranslation.ts:15
+msgid "Proxy"
+msgstr "Proxy"
+
+#: assets/utils/functions/rdapTranslation.ts:16
+msgid "Notifications"
+msgstr "Benachrichtigungen"
+
+#: assets/utils/functions/rdapTranslation.ts:17
+msgid "Noc"
+msgstr "Noc"
+
+#: assets/utils/functions/rdapTranslation.ts:25
+msgid ""
+"The entity object instance is the registrant of the registration. In some "
+"registries, this is known as a maintainer."
+msgstr ""
+"Die Entitätsobjektinstanz ist der Registrant der Registrierung. In einigen "
+"Registern wird dies als Maintainer bezeichnet."
+
+#: assets/utils/functions/rdapTranslation.ts:26
+msgid "The entity object instance is a technical contact for the registration."
+msgstr ""
+"Die Entitätsobjektinstanz ist ein technischer Kontakt für die Registrierung."
+
+#: assets/utils/functions/rdapTranslation.ts:27
+msgid ""
+"The entity object instance is an administrative contact for the registration."
+msgstr ""
+"Die Entitätsobjektinstanz ist ein administrativer Kontakt für die "
+"Registrierung."
+
+#: assets/utils/functions/rdapTranslation.ts:28
+msgid ""
+"The entity object instance handles network abuse issues on behalf of the "
+"registrant of the registration."
+msgstr ""
+"Die Instanz des Entity-Objekts behandelt Fragen des Netzmissbrauchs im Namen "
+"des Registranten der Registrierung."
+
+#: assets/utils/functions/rdapTranslation.ts:29
+msgid ""
+"The entity object instance handles payment and billing issues on behalf of "
+"the registrant of the registration."
+msgstr ""
+"Die Instanz des Entitätsobjekts wickelt die Zahlungs- und "
+"Abrechnungsangelegenheiten im Namen des Registranten der Registrierung ab."
+
+#: assets/utils/functions/rdapTranslation.ts:30
+msgid ""
+"The entity object instance represents the authority responsible for the "
+"registration in the registry."
+msgstr ""
+"Die Instanz des Entitätsobjekts repräsentiert die für die Registrierung im "
+"Register zuständige Behörde."
+
+#: assets/utils/functions/rdapTranslation.ts:31
+msgid ""
+"The entity object instance represents a third party through which the "
+"registration was conducted (i.e., not the registry or registrar)."
+msgstr ""
+"Die Instanz des Entity-Objekts repräsentiert eine dritte Partei, über die "
+"die Registrierung durchgeführt wurde (d. h. nicht das Register oder die "
+"Registrierstelle)."
+
+#: assets/utils/functions/rdapTranslation.ts:32
+msgid ""
+"The entity object instance represents a domain policy sponsor, such as an "
+"ICANN-approved sponsor."
+msgstr ""
+"Die Instanz des Entity-Objekts repräsentiert einen Sponsor der "
+"Domänenpolitik, z. B. einen von der ICANN zugelassenen Sponsor."
+
+#: assets/utils/functions/rdapTranslation.ts:33
+msgid ""
+"The entity object instance represents a proxy for another entity object, "
+"such as a registrant."
+msgstr ""
+"Die Entitätsobjektinstanz stellt einen Stellvertreter für ein anderes "
+"Entitätsobjekt dar, z. B. einen Registranten."
+
+#: assets/utils/functions/rdapTranslation.ts:34
+msgid ""
+"An entity object instance designated to receive notifications about "
+"association object instances."
+msgstr ""
+"Eine Entitätsobjektinstanz, die für den Empfang von Benachrichtigungen über "
+"Assoziationsobjektinstanzen bestimmt ist."
+
+#: assets/utils/functions/rdapTranslation.ts:35
+msgid ""
+"The entity object instance handles communications related to a network "
+"operations center (NOC)."
+msgstr ""
+"Die Entity-Objektinstanz verarbeitet die Kommunikation im Zusammenhang mit "
+"einem Network Operations Center (NOC)."
+
+#: assets/utils/functions/rdapTranslation.ts:44
+msgid "Reregistration"
+msgstr "Neuregistrierung"
+
+#: assets/utils/functions/rdapTranslation.ts:45
+msgid "Changed"
+msgstr "Geändert"
+
+#: assets/utils/functions/rdapTranslation.ts:46
+msgid "Expiration"
+msgstr "Ablauf"
+
+#: assets/utils/functions/rdapTranslation.ts:47
+msgid "Deletion"
+msgstr "Löschung"
+
+#: assets/utils/functions/rdapTranslation.ts:48
+msgid "Reinstantiation"
+msgstr "Neuinstanzierung"
+
+#: assets/utils/functions/rdapTranslation.ts:49
+msgid "Transfer"
+msgstr "Übertragung"
+
+#: assets/utils/functions/rdapTranslation.ts:50
+msgid "Locked"
+msgstr "Gesperrt"
+
+#: assets/utils/functions/rdapTranslation.ts:51
+msgid "Unlocked"
+msgstr "Entsperrt"
+
+#: assets/utils/functions/rdapTranslation.ts:52
+msgid "Registrar expiration"
+msgstr "Ablauf des Registrars"
+
+#: assets/utils/functions/rdapTranslation.ts:53
+msgid "ENUM validation expiration"
+msgstr "Ablauf der ENUM-Validierung"
+
+#: assets/utils/functions/rdapTranslation.ts:60
+msgid "The object instance was initially registered."
+msgstr "Die Objektinstanz wurde zunächst registriert."
+
+#: assets/utils/functions/rdapTranslation.ts:61
+msgid ""
+"The object instance was registered subsequently to initial registration."
+msgstr ""
+"Die Objektinstanz wurde im Anschluss an die Erstregistrierung registriert."
+
+#: assets/utils/functions/rdapTranslation.ts:62
+msgid ""
+"An action noting when the information in the object instance was last "
+"changed."
+msgstr ""
+"Eine Aktion, die festhält, wann die Informationen in der Objektinstanz "
+"zuletzt geändert wurden."
+
+#: assets/utils/functions/rdapTranslation.ts:63
+msgid ""
+"The object instance has been removed or will be removed at a predetermined "
+"date and time from the registry."
+msgstr ""
+"Die Objektinstanz wurde entfernt oder wird zu einem festgelegten Datum und "
+"Zeitpunkt aus der Registrierung entfernt."
+
+#: assets/utils/functions/rdapTranslation.ts:64
+msgid ""
+"The object instance was removed from the registry at a point in time that "
+"was not predetermined."
+msgstr ""
+"Die Objektinstanz wurde zu einem nicht vorherbestimmten Zeitpunkt aus der "
+"Registry entfernt."
+
+#: assets/utils/functions/rdapTranslation.ts:65
+msgid ""
+"The object instance was reregistered after having been removed from the "
+"registry."
+msgstr ""
+"Die Objektinstanz wurde nach der Entfernung aus der Registry erneut "
+"registriert."
+
+#: assets/utils/functions/rdapTranslation.ts:66
+msgid "The object instance was transferred from one registrar to another."
+msgstr ""
+"Die Objektinstanz wurde von einem Registrar zu einem anderen übertragen."
+
+#: assets/utils/functions/rdapTranslation.ts:67
+msgid "The object instance was locked."
+msgstr "Die Objektinstanz wurde gesperrt."
+
+#: assets/utils/functions/rdapTranslation.ts:68
+msgid "The object instance was unlocked."
+msgstr "Die Objektinstanz wurde entsperrt."
+
+#: assets/utils/functions/rdapTranslation.ts:69
+msgid ""
+"An action noting the expiration date of the object in the registrar system."
+msgstr ""
+"Eine Aktion, die das Ablaufdatum des Objekts im Registrarsystem notiert."
+
+#: assets/utils/functions/rdapTranslation.ts:70
+msgid ""
+"Association of phone number represented by this ENUM domain to registrant "
+"has expired or will expire at a predetermined date and time."
+msgstr ""
+"Die Zuordnung der durch diese ENUM-Domäne repräsentierten Telefonnummer zum "
+"Registranten ist abgelaufen oder läuft zu einem festgelegten Datum und "
+"Zeitpunkt ab."
+
+#: assets/utils/functions/rdapTranslation.ts:78
+msgid ""
+"Signifies that the data of the object instance has been found to be accurate."
+msgstr ""
+"Bedeutet, dass die Daten der Objektinstanz als korrekt befunden wurden."
+
+#: assets/utils/functions/rdapTranslation.ts:79
+msgid "Renewal or reregistration of the object instance is forbidden."
+msgstr "Eine Erneuerung oder Neuregistrierung der Objektinstanz ist untersagt."
+
+#: assets/utils/functions/rdapTranslation.ts:80
+msgid "Updates to the object instance are forbidden."
+msgstr "Aktualisierungen der Objektinstanz sind verboten."
+
+#: assets/utils/functions/rdapTranslation.ts:81
+msgid ""
+"Transfers of the registration from one registrar to another are forbidden."
+msgstr ""
+"Eine Übertragung der Registrierung von einem Registrar auf einen anderen ist "
+"nicht zulässig."
+
+#: assets/utils/functions/rdapTranslation.ts:82
+msgid "Deletion of the registration of the object instance is forbidden."
+msgstr "Das Löschen der Registrierung der Objektinstanz ist verboten."
+
+#: assets/utils/functions/rdapTranslation.ts:83
+msgid ""
+"The registration of the object instance has been performed by a third party."
+msgstr ""
+"Die Registrierung der Objektinstanz wurde von einer dritten Partei "
+"durchgeführt."
+
+#: assets/utils/functions/rdapTranslation.ts:84
+msgid ""
+"The information of the object instance is not designated for public "
+"consumption."
+msgstr ""
+"Die Informationen der Objektinstanz sind nicht für die öffentliche "
+"Verwendung bestimmt."
+
+#: assets/utils/functions/rdapTranslation.ts:85
+msgid ""
+"Some of the information of the object instance has not been made available "
+"and has been removed."
+msgstr ""
+"Einige Informationen der Objektinstanz wurden nicht bereitgestellt und "
+"entfernt."
+
+#: assets/utils/functions/rdapTranslation.ts:86
+msgid ""
+"Some of the information of the object instance has been altered for the "
+"purposes of not readily revealing the actual information of the object "
+"instance."
+msgstr ""
+"Einige der Informationen der Objektinstanz wurden geändert, um die "
+"tatsächlichen Informationen der Objektinstanz nicht ohne Weiteres "
+"preiszugeben."
+
+#: assets/utils/functions/rdapTranslation.ts:87
+msgid ""
+"The object instance is associated with other object instances in the "
+"registry."
+msgstr ""
+"Die Objektinstanz ist mit anderen Objektinstanzen in der Registrierung "
+"verknüpft."
+
+#: assets/utils/functions/rdapTranslation.ts:88
+msgid ""
+"Changes to the object instance cannot be made, including the association of "
+"other object instances."
+msgstr ""
+"Änderungen an der Objektinstanz können nicht vorgenommen werden, auch nicht "
+"die Verknüpfung mit anderen Objektinstanzen."
+
+#: assets/utils/functions/rdapTranslation.ts:90
+#: assets/utils/functions/rdapTranslation.ts:99
+msgid ""
+"This is the standard status for a domain, meaning it has no pending "
+"operations or prohibitions."
+msgstr ""
+"Dies ist der Standardstatus einer Domäne. Dies bedeutet, dass keine Vorgänge "
+"oder Verbote ausstehen."
+
+#: assets/utils/functions/rdapTranslation.ts:91
+msgid ""
+"This status code indicates that delegation information (name servers) has "
+"not been associated with your domain. Your domain is not activated in the "
+"DNS and will not resolve."
+msgstr ""
+"Dieser Statuscode zeigt an, dass Ihrer Domain keine Delegationsinformationen "
+"(Nameserver) zugeordnet wurden. Ihre Domain ist im DNS nicht aktiviert und "
+"wird nicht aufgelöst."
+
+#: assets/utils/functions/rdapTranslation.ts:92
+msgid ""
+"This status code indicates that a request to create your domain has been "
+"received and is being processed."
+msgstr ""
+"Dieser Statuscode zeigt an, dass eine Anfrage zum Erstellen Ihrer Domäne "
+"eingegangen ist und bearbeitet wird."
+
+#: assets/utils/functions/rdapTranslation.ts:93
+msgid ""
+"This status code indicates that a request to renew your domain has been "
+"received and is being processed."
+msgstr ""
+"Dieser Statuscode zeigt an, dass eine Anfrage zur Verlängerung Ihrer Domain "
+"eingegangen ist und bearbeitet wird."
+
+#: assets/utils/functions/rdapTranslation.ts:94
+msgid ""
+"This status code indicates that a request to transfer your domain to a new "
+"registrar has been received and is being processed."
+msgstr ""
+"Dieser Statuscode zeigt an, dass eine Anfrage zum Übertragen Ihrer Domain an "
+"einen neuen Registrar eingegangen ist und bearbeitet wird."
+
+#: assets/utils/functions/rdapTranslation.ts:95
+msgid ""
+"This status code indicates that a request to update your domain has been "
+"received and is being processed."
+msgstr ""
+"Dieser Statuscode zeigt an, dass eine Anfrage zum Aktualisieren Ihrer Domäne "
+"eingegangen ist und bearbeitet wird."
+
+#: assets/utils/functions/rdapTranslation.ts:96
+msgid ""
+"This status code may be mixed with redemptionPeriod or pendingRestore. In "
+"such case, depending on the status (i.e. redemptionPeriod or pendingRestore) "
+"set in the domain name, the corresponding description presented above "
+"applies. If this status is not combined with the redemptionPeriod or "
+"pendingRestore status, the pendingDelete status code indicates that your "
+"domain has been in redemptionPeriod status for 30 days and you have not "
+"restored it within that 30-day period. Your domain will remain in this "
+"status for several days, after which time your domain will be purged and "
+"dropped from the registry database. Once deletion occurs, the domain is "
+"available for re-registration in accordance with the registry's policies."
+msgstr ""
+"Dieser Statuscode kann mit „redemptionPeriod“ oder „pendingRestore“ "
+"kombiniert werden. In diesem Fall gilt je nach dem im Domänennamen "
+"festgelegten Status (d. h. „redemptionPeriod“ oder „pendingRestore“) die "
+"entsprechende oben dargestellte Beschreibung. Wenn dieser Status nicht mit "
+"dem Status „redemptionPeriod“ oder „pendingRestore“ kombiniert wird, zeigt "
+"der Statuscode „pendingDelete“ an, dass sich Ihre Domäne 30 Tage lang im "
+"Status „redemptionPeriod“ befunden hat und Sie sie innerhalb dieses 30-"
+"tägigen Zeitraums nicht wiederhergestellt haben. Ihre Domäne bleibt mehrere "
+"Tage in diesem Status. Danach wird sie gelöscht und aus der "
+"Registrierungsdatenbank entfernt. Nach der Löschung ist die Domäne gemäß den "
+"Richtlinien der Registrierung für eine erneute Registrierung verfügbar."
+
+#: assets/utils/functions/rdapTranslation.ts:97
+msgid ""
+"This grace period is provided after the initial registration of a domain "
+"name. If the registrar deletes the domain name during this period, the "
+"registry may provide credit to the registrar for the cost of the "
+"registration."
+msgstr ""
+"Diese Nachfrist gilt nach der ersten Registrierung eines Domänennamens. Wenn "
+"der Registrar den Domänennamen während dieser Frist löscht, kann das "
+"Register dem Registrar die Kosten für die Registrierung gutschreiben."
+
+#: assets/utils/functions/rdapTranslation.ts:98
+msgid ""
+"This grace period is provided after a domain name registration period "
+"expires and is extended (renewed) automatically by the registry. If the "
+"registrar deletes the domain name during this period, the registry provides "
+"a credit to the registrar for the cost of the renewal."
+msgstr ""
+"Diese Nachfrist gilt nach Ablauf der Registrierungsfrist für einen "
+"Domänennamen und wird vom Register automatisch verlängert (erneuert). Wenn "
+"der Registrar den Domänennamen während dieser Frist löscht, schreibt das "
+"Register dem Registrar die Kosten für die Erneuerung gut."
+
+#: assets/utils/functions/rdapTranslation.ts:100
+msgid ""
+"This status code tells your domain's registry to reject requests to delete "
+"the domain."
+msgstr ""
+"Dieser Statuscode weist die Registrierungsstelle Ihrer Domain an, Anfragen "
+"zum Löschen der Domain abzulehnen."
+
+#: assets/utils/functions/rdapTranslation.ts:101
+msgid ""
+"This status code tells your domain's registry to not activate your domain in "
+"the DNS and as a consequence, it will not resolve. It is an uncommon status "
+"that is usually enacted during legal disputes, non-payment, or when your "
+"domain is subject to deletion."
+msgstr ""
+"Dieser Statuscode weist die Registrierungsstelle Ihrer Domain an, Ihre "
+"Domain nicht im DNS zu aktivieren und sie daher nicht aufzulösen. Dies ist "
+"ein ungewöhnlicher Status, der normalerweise bei Rechtsstreitigkeiten, "
+"Nichtzahlung oder wenn Ihre Domain gelöscht werden soll, in Kraft tritt."
+
+#: assets/utils/functions/rdapTranslation.ts:102
+msgid ""
+"This status code tells your domain's registry to reject requests to renew "
+"your domain. It is an uncommon status that is usually enacted during legal "
+"disputes or when your domain is subject to deletion."
+msgstr ""
+"Dieser Statuscode weist die Registrierungsstelle Ihrer Domain an, Anfragen "
+"zur Verlängerung Ihrer Domain abzulehnen. Dies ist ein ungewöhnlicher "
+"Status, der normalerweise bei Rechtsstreitigkeiten oder wenn Ihre Domain "
+"gelöscht werden soll, vergeben wird."
+
+#: assets/utils/functions/rdapTranslation.ts:103
+msgid ""
+"This status code tells your domain's registry to reject requests to transfer "
+"the domain from your current registrar to another."
+msgstr ""
+"Dieser Statuscode weist die Registrierungsstelle Ihrer Domain an, Anfragen "
+"zur Übertragung der Domain von Ihrem aktuellen Registrar zu einem anderen "
+"abzulehnen."
+
+#: assets/utils/functions/rdapTranslation.ts:104
+msgid ""
+"This status code tells your domain's registry to reject requests to update "
+"the domain."
+msgstr ""
+"Dieser Statuscode weist die Registrierungsstelle Ihrer Domäne an, Anfragen "
+"zur Aktualisierung der Domäne abzulehnen."
+
+#: assets/utils/functions/rdapTranslation.ts:105
+msgid ""
+"This status code indicates that your registrar has asked the registry to "
+"restore your domain that was in redemptionPeriod status. Your registry will "
+"hold the domain in this status while waiting for your registrar to provide "
+"required restoration documentation. If your registrar fails to provide "
+"documentation to the registry operator within a set time period to confirm "
+"the restoration request, the domain will revert to redemptionPeriod status."
+msgstr ""
+"Dieser Statuscode zeigt an, dass Ihre Registrierstelle die Registrierstelle "
+"gebeten hat, Ihre Domäne, die sich im Status redemptionPeriod befand, "
+"wiederherzustellen. Ihre Registrierstelle hält die Domäne in diesem Status, "
+"während sie darauf wartet, dass Ihre Registrierstelle die erforderlichen "
+"Wiederherstellungsunterlagen vorlegt. Wenn Ihre Registrierstelle dem "
+"Betreiber des Registers innerhalb einer bestimmten Frist keine Unterlagen "
+"zur Bestätigung des Wiederherstellungsantrags vorlegt, wird die Domäne "
+"wieder in den Status redemptionPeriod versetzt."
+
+#: assets/utils/functions/rdapTranslation.ts:106
+msgid ""
+"This status code indicates that your registrar has asked the registry to "
+"delete your domain. Your domain will be held in this status for 30 days. "
+"After five calendar days following the end of the redemptionPeriod, your "
+"domain is purged from the registry database and becomes available for "
+"registration."
+msgstr ""
+"Dieser Statuscode zeigt an, dass Ihr Registrar die Registrierungsstelle "
+"gebeten hat, Ihre Domain zu löschen. Ihre Domain wird 30 Tage lang in diesem "
+"Status gehalten. Fünf Kalendertage nach Ende der Rücknahmefrist wird Ihre "
+"Domain aus der Registrierungsdatenbank gelöscht und steht zur Registrierung "
+"zur Verfügung."
+
+#: assets/utils/functions/rdapTranslation.ts:107
+msgid ""
+"This grace period is provided after a domain name registration period is "
+"explicitly extended (renewed) by the registrar. If the registrar deletes the "
+"domain name during this period, the registry provides a credit to the "
+"registrar for the cost of the renewal."
+msgstr ""
+"Diese Nachfrist wird gewährt, nachdem der Registrierungszeitraum eines "
+"Domänennamens vom Registrar ausdrücklich verlängert (erneuert) wurde. Wenn "
+"der Registrar den Domänennamen während dieser Frist löscht, schreibt ihm das "
+"Register die Kosten für die Erneuerung gut."
+
+#: assets/utils/functions/rdapTranslation.ts:108
+msgid ""
+"This status code prevents your domain from being deleted. It is an uncommon "
+"status that is usually enacted during legal disputes, at your request, or "
+"when a redemptionPeriod status is in place."
+msgstr ""
+"Dieser Statuscode verhindert, dass Ihre Domain gelöscht wird. Es handelt "
+"sich um einen ungewöhnlichen Status, der normalerweise bei "
+"Rechtsstreitigkeiten, auf Ihre Anfrage oder wenn ein RedemptionPeriod-Status "
+"vorliegt, vergeben wird."
+
+#: assets/utils/functions/rdapTranslation.ts:109
+msgid ""
+"This status code indicates your domain's Registry Operator will not allow "
+"your registrar to renew your domain. It is an uncommon status that is "
+"usually enacted during legal disputes or when your domain is subject to "
+"deletion."
+msgstr ""
+"Dieser Statuscode gibt an, dass der Registry-Betreiber Ihrer Domain Ihrem "
+"Registrar die Verlängerung Ihrer Domain nicht gestattet. Dies ist ein "
+"ungewöhnlicher Status, der normalerweise bei Rechtsstreitigkeiten oder wenn "
+"Ihre Domain gelöscht werden soll, in Kraft tritt."
+
+#: assets/utils/functions/rdapTranslation.ts:110
+msgid ""
+"This status code prevents your domain from being transferred from your "
+"current registrar to another. It is an uncommon status that is usually "
+"enacted during legal or other disputes, at your request, or when a "
+"redemptionPeriod status is in place."
+msgstr ""
+"Dieser Statuscode verhindert, dass Ihre Domain von Ihrem aktuellen Registrar "
+"zu einem anderen übertragen wird. Dies ist ein ungewöhnlicher Status, der "
+"normalerweise während rechtlicher oder anderer Streitigkeiten, auf Ihre "
+"Anfrage oder wenn ein RedemptionPeriod-Status vorliegt, vergeben wird."
+
+#: assets/utils/functions/rdapTranslation.ts:111
+msgid ""
+"This status code locks your domain preventing it from being updated. It is "
+"an uncommon status that is usually enacted during legal disputes, at your "
+"request, or when a redemptionPeriod status is in place."
+msgstr ""
+"Dieser Statuscode sperrt Ihre Domain und verhindert, dass sie aktualisiert "
+"wird. Dies ist ein ungewöhnlicher Status, der normalerweise bei "
+"Rechtsstreitigkeiten, auf Ihre Anfrage oder wenn ein RedemptionPeriod-Status "
+"vorliegt, aktiviert wird."
+
+#: assets/utils/functions/rdapTranslation.ts:112
+msgid ""
+"This status code is set by your domain's Registry Operator. Your domain is "
+"not activated in the DNS."
+msgstr ""
+"Dieser Statuscode wird vom Registry Operator Ihrer Domain gesetzt. Ihre "
+"Domain ist im DNS nicht aktiviert."
+
+#: assets/utils/functions/rdapTranslation.ts:113
+msgid ""
+"This grace period is provided after the successful transfer of a domain name "
+"from one registrar to another. If the new registrar deletes the domain name "
+"during this period, the registry provides a credit to the registrar for the "
+"cost of the transfer."
+msgstr ""
+"Diese Nachfrist gilt nach der erfolgreichen Übertragung eines Domänennamens "
+"von einem Registrar zu einem anderen. Wenn der neue Registrar den "
+"Domänennamen während dieser Frist löscht, schreibt das Register dem "
+"Registrar die Kosten für die Übertragung gut."
+
+#: assets/utils/functions/rdapTranslation.ts:115
+msgid ""
+"The object instance has been allocated administratively (i.e., not for use "
+"by the recipient in their own right in operational networks)."
+msgstr ""
+"Die Objektinstanz wurde administrativ zugewiesen (d. h. nicht zur eigenen "
+"Verwendung durch den Empfänger in operativen Netzen)."
+
+#: assets/utils/functions/rdapTranslation.ts:116
+msgid ""
+"The object instance has been allocated to an IANA special-purpose address "
+"registry."
+msgstr ""
+"Die Objektinstanz wurde einem speziellen Adressregister der IANA zugewiesen."
+
+#: assets/utils/functions/showErrorAPI.tsx:19
+#, javascript-format
+msgid "Please retry after ${ duration } seconds"
+msgstr "Bitte versuchen Sie es nach ${ duration } Sekunden erneut"
+
+#: assets/utils/functions/showErrorAPI.tsx:23
+#: assets/utils/functions/showErrorAPI.tsx:26
+msgid "An error occurred"
+msgstr "Es ist ein Fehler aufgetreten"
+
+#: assets/utils/providers/index.tsx:11
+msgid ""
+"Retrieve a set of tokens from your customer account on the Provider's website"
+msgstr ""
+"Abrufen eines Token-Satzes aus Ihrem Kundenkonto auf der Website des "
+"Anbieters"
+
+#: assets/utils/providers/index.tsx:16
+msgid ""
+"Retrieve a Personal Access Token from your customer account on the "
+"Provider's website"
+msgstr ""
+"Abrufen eines persönlichen Zugriffstokens aus Ihrem Kundenkonto auf der "
+"Website des Anbieters"
+
+#: assets/utils/providers/ovh.tsx:5
+msgid "Application key"
+msgstr "Anwendungsschlüssel"
+
+#: assets/utils/providers/ovh.tsx:6
+msgid "Application secret"
+msgstr "Geheimer Schlüssel der Anwendung"
+
+#: assets/utils/providers/ovh.tsx:7
+msgid "Consumer key"
+msgstr "Verbraucherschlüssel"
+
+#: assets/utils/providers/ovh.tsx:12
+msgid "European Region"
+msgstr "Europäische Region"
+
+#: assets/utils/providers/ovh.tsx:19
+msgid "Europe"
+msgstr "Europa"
+
+#: assets/utils/providers/ovh.tsx:22
+msgid "The domain is free and at the standard price"
+msgstr "Die Domain ist kostenlos und zum Standardpreis"
+
+#: assets/utils/providers/ovh.tsx:25
+msgid ""
+"The domain is free but can be premium. Its price varies from one domain to "
+"another"
+msgstr ""
+"Die Domain ist kostenlos, kann aber Premium sein. Der Preis variiert von "
+"einer Domain zur anderen"
+
+#: assets/App.tsx:101
+msgid "TOS"
+msgstr "Nutzungsbedingungen"
+
+#: assets/App.tsx:102
+msgid "Privacy Policy"
+msgstr "Datenschutzrichtlinie"
+
+#: assets/App.tsx:103
+msgid "FAQ"
+msgstr "Häufig gestellte Fragen"
+
+#: assets/App.tsx:105
+msgid "Documentation"
+msgstr "Dokumentation"
+
+#: assets/App.tsx:108
+#, javascript-format
+msgid ""
+"${ ProjectLink } is an open source project distributed under the "
+"${ LicenseLink } license."
+msgstr ""
+"${ ProjectLink } ist ein Open-Source-Projekt, das unter der ${ LicenseLink }-"
+"Lizenz vertrieben wird."
+
+#, fuzzy
+#~ msgid "Tracked Domains"
+#~ msgstr "Verfolgte Domänennamen"
+
+#~ msgid "Domain finder"
+#~ msgstr "Domänenfinder"
+
+#~ msgid ""
+#~ "The object instance is in use. For domain names, it signifies that the "
+#~ "domain name is published in DNS. For network and autnum registrations, it "
+#~ "signifies that they are allocated or assigned for use in operational "
+#~ "networks."
+#~ msgstr ""
+#~ "Die Objektinstanz ist in Gebrauch. Bei Domänennamen bedeutet es, dass der "
+#~ "Domänenname im DNS veröffentlicht ist. Bei Netzwerk- und Autnum-"
+#~ "Registrierungen bedeutet es, dass sie für die Verwendung in operativen "
+#~ "Netzwerken zugewiesen oder zugewiesen sind."
+
+#~ msgid "The object instance is not in use."
+#~ msgstr "Die Objektinstanz wird nicht verwendet."
+
+#~ msgid ""
+#~ "A request has been received for the creation of the object instance, but "
+#~ "this action is not yet complete."
+#~ msgstr ""
+#~ "Es wurde eine Anfrage zur Erstellung der Objektinstanz empfangen, aber "
+#~ "diese Aktion ist noch nicht abgeschlossen."
+
+#~ msgid ""
+#~ "A request has been received for the renewal of the object instance, but "
+#~ "this action is not yet complete."
+#~ msgstr ""
+#~ "Es liegt eine Anfrage zur Erneuerung der Objektinstanz vor, diese Aktion "
+#~ "ist jedoch noch nicht abgeschlossen."
+
+#~ msgid ""
+#~ "A request has been received for the transfer of the object instance, but "
+#~ "this action is not yet complete."
+#~ msgstr ""
+#~ "Es liegt eine Anforderung zur Übertragung der Objektinstanz vor, diese "
+#~ "Aktion ist jedoch noch nicht abgeschlossen."
+
+#~ msgid ""
+#~ "A request has been received for the update or modification of the object "
+#~ "instance, but this action is not yet complete."
+#~ msgstr ""
+#~ "Es liegt eine Anfrage zur Aktualisierung oder Änderung der Objektinstanz "
+#~ "vor, die Aktion ist jedoch noch nicht abgeschlossen."
+
+#~ msgid ""
+#~ "A request has been received for the deletion or removal of the object "
+#~ "instance, but this action is not yet complete. For domains, this might "
+#~ "mean that the name is no longer published in DNS but has not yet been "
+#~ "purged from the registry database."
+#~ msgstr ""
+#~ "Es liegt eine Anfrage zum Löschen oder Entfernen der Objektinstanz vor, "
+#~ "diese Aktion ist jedoch noch nicht abgeschlossen. Bei Domänen kann dies "
+#~ "bedeuten, dass der Name nicht mehr im DNS veröffentlicht wird, aber noch "
+#~ "nicht aus der Registrierungsdatenbank gelöscht wurde."
+
+#~ msgid ""
+#~ "The client requested that requests to delete the object MUST be rejected."
+#~ msgstr ""
+#~ "Der Client hat angefordert, dass Anforderungen zum Löschen des Objekts "
+#~ "abgelehnt werden MÜSSEN."
+
+#~ msgid ""
+#~ "The client requested that the DNS delegation information MUST NOT be "
+#~ "published for the object."
+#~ msgstr ""
+#~ "Der Client hat angefordert, dass die DNS-Delegationsinformationen für das "
+#~ "Objekt NICHT veröffentlicht werden DÜRFEN."
+
+#~ msgid ""
+#~ "The client requested that requests to renew the object MUST be rejected."
+#~ msgstr ""
+#~ "Der Client forderte, dass Anfragen zur Erneuerung des Objekts abgelehnt "
+#~ "werden MÜSSEN."
+
+#~ msgid ""
+#~ "The client requested that requests to transfer the object MUST be "
+#~ "rejected."
+#~ msgstr ""
+#~ "Der Client forderte, dass Anfragen zur Übertragung des Objekts abgelehnt "
+#~ "werden MÜSSEN."
+
+#~ msgid ""
+#~ "The client requested that requests to update the object (other than to "
+#~ "remove this status) MUST be rejected."
+#~ msgstr ""
+#~ "Der Client hat angefordert, dass Anforderungen zur Aktualisierung des "
+#~ "Objekts (außer zum Entfernen dieses Status) abgelehnt werden MÜSSEN."
+
+#~ msgid ""
+#~ "An object is in the process of being restored after being in the "
+#~ "redemption period state."
+#~ msgstr ""
+#~ "Ein Objekt wird gerade wiederhergestellt, nachdem es sich im Zustand des "
+#~ "Tilgungszeitraums befunden hat."
+
+#~ msgid ""
+#~ "A delete has been received, but the object has not yet been purged "
+#~ "because an opportunity exists to restore the object and abort the "
+#~ "deletion process."
+#~ msgstr ""
+#~ "Eine Löschung wurde empfangen, aber das Objekt wurde noch nicht "
+#~ "bereinigt, da die Möglichkeit besteht, das Objekt wiederherzustellen und "
+#~ "den Löschvorgang abzubrechen."
+
+#~ msgid ""
+#~ "The server set the status so that requests to delete the object MUST be "
+#~ "rejected."
+#~ msgstr ""
+#~ "Der Server hat den Status so gesetzt, dass Anfragen zum Löschen des "
+#~ "Objekts abgelehnt werden MÜSSEN."
+
+#~ msgid ""
+#~ "The server set the status so that requests to renew the object MUST be "
+#~ "rejected."
+#~ msgstr ""
+#~ "Der Server hat den Status so gesetzt, dass Anfragen zur Erneuerung des "
+#~ "Objekts abgelehnt werden MÜSSEN."
+
+#~ msgid ""
+#~ "The server set the status so that requests to transfer the object MUST be "
+#~ "rejected."
+#~ msgstr ""
+#~ "Der Server hat den Status so gesetzt, dass Anfragen zur Übertragung des "
+#~ "Objekts abgelehnt werden MÜSSEN."
+
+#~ msgid ""
+#~ "The server set the status so that requests to update the object (other "
+#~ "than to remove this status) MUST be rejected."
+#~ msgstr ""
+#~ "Der Server hat den Status so gesetzt, dass Anfragen zur Aktualisierung "
+#~ "des Objekts (außer zum Entfernen dieses Status) abgelehnt werden MÜSSEN."
+
+#~ msgid ""
+#~ "The server set the status so that DNS delegation information MUST NOT be "
+#~ "published for the object."
+#~ msgstr ""
+#~ "Der Server hat den Status so festgelegt, dass DNS-"
+#~ "Delegationsinformationen für das Objekt NICHT veröffentlicht werden "
+#~ "DÜRFEN."

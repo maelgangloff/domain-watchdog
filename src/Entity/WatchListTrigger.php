@@ -12,17 +12,17 @@ class WatchListTrigger
 {
     #[ORM\Id]
     #[ORM\Column(length: 255)]
-    #[Groups(['watchlist:list', 'watchlist:item', 'watchlist:create', 'watchlist:update'])]
+    #[Groups(['watchlist:list', 'watchlist:item', 'watchlist:create'])]
     private ?string $event = null;
 
     #[ORM\Id]
-    #[ORM\ManyToOne(targetEntity: WatchList::class, inversedBy: 'watchListTriggers')]
+    #[ORM\ManyToOne(targetEntity: WatchList::class, cascade: ['persist'], inversedBy: 'watchListTriggers')]
     #[ORM\JoinColumn(referencedColumnName: 'token', nullable: false, onDelete: 'CASCADE')]
     private ?WatchList $watchList = null;
 
     #[ORM\Id]
     #[ORM\Column(enumType: TriggerAction::class)]
-    #[Groups(['watchlist:list', 'watchlist:item', 'watchlist:create', 'watchlist:update'])]
+    #[Groups(['watchlist:list', 'watchlist:item', 'watchlist:create'])]
     private ?TriggerAction $action = null;
 
     public function getEvent(): ?string

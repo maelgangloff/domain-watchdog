@@ -1,7 +1,10 @@
-# Domain Watchdog
+<p align="center"><img src="https://github.com/user-attachments/assets/942ddfd0-2c76-4b00-bd9f-727cfddc0103" alt="Domain Watchdog" width="150" height="150" /></p>
+<h1 align="center"><b>Domain Watchdog</b></h1>
+<p align="center">Your companion in the quest for domain names 🔍 <br/><a href="https://domainwatchdog.eu">domainwatchdog.eu »</a></p>
+<br/>
 
-Domain Watchdog is a standalone application that utilizes RDAP to gather publicly accessible information about domain
-names, track their history, and automatically purchase them. For more information please check [the wiki](https://github.com/maelgangloff/domain-watchdog/wiki) !
+Domain Watchdog is an app that uses RDAP to collect publicly available info about domains, track their history, and purchase them.
+For more information please check [the wiki](https://github.com/maelgangloff/domain-watchdog/wiki) !
 
 ## Why use it?
 
@@ -14,20 +17,30 @@ Although the RDAP and WHOIS protocols allow you to obtain precise information ab
 perform a reverse search to discover a list of domain names associated with an entity. Additionally, accessing a
 detailed history of events (ownership changes, renewals, etc.) is not feasible with these protocols.
 
-## How it works?
+## Install
 
-### RDAP search
+> [!TIP]
+> For more details on the installation procedure, please refer to [INSTALL.md](/INSTALL.md).
 
-The latest version of the WHOIS protocol was standardized in 2004 by RFC 3912.[^1] This protocol allows anyone to
-retrieve key information concerning a domain name, an IP address, or an entity registered with a registry.
+### Docker Deployment
 
-ICANN launched a global vote in 2023 to propose replacing the WHOIS protocol with RDAP. As a result, registries and
-registrars will no longer be required to support WHOIS from 2025 (*WHOIS Sunset Date*).[^2]
+1. Clone the repository
+2. Modify environment variables (.env) and add static files to customize your instance (see [INSTALL.md](/INSTALL.md))
+3. Pull the latest version of the Domain Watchdog image from Docker Hub.
+    ```shell
+    docker compose pull
+    ```
+4. Start the project in production environment. If you want, you can also build the Docker image to use yourself.
+    ```shell
+    docker compose up
+    ```
 
-Domain Watchdog uses the RDAP protocol, which will soon be the new standard for retrieving information concerning domain
-names. The data is organized in a SQL database to minimize space by ensuring an entity is not repeated.
+By default, the container listens on http://localhost:8080, but you can configure this in environment variables.
+See the [Docker Compose file](./docker-compose.yml).
 
-### Connector Provider
+## Features
+
+### Auto-purchase domain
 
 A connector is a way to order a domain name. It is important to mention that this project does not act as a payment
 intermediary.
@@ -42,17 +55,45 @@ The table below lists the supported API connector providers:
 |   GANDI   | https://api.gandi.net/docs/domains/                           |  **Yes**  |
 | NAMECHEAP | https://www.namecheap.com/support/api/methods/domains/create/ |           |
 
-### Watchlist
-
-A watchlist is a list of domain names, triggers and possibly an API connector.
-They allow you to follow the life of the listed domain names and send you a notification when a change has been
-detected.
-
 If a domain has expired and a connector is linked to the Watchlist, then Domain Watchdog will try to order it via the
 connector provider's API.
 
-Note: If the same domain name is present on several Watchlists, on the same principle as the raise condition, it is not
-possible to predict in advance which user will win the domain name. The choice is left to chance.
+Note: If the same domain name is present on several Watchlists, it is not possible to predict in advance which user will
+win the domain name. The choice is left to chance.
+
+### Monitoring
+
+![Watchlist Diagram](https://github.com/user-attachments/assets/c3454572-3ac5-4b39-bc5e-6b7cf72fab92)
+
+
+A watchlist is a list of domain names, triggers and possibly an API connector.
+
+They allow you to follow the life of the listed domain names and send you a notification when a change has been
+detected.
+
+A notification to the user is sent when a new event occurs on one of the domain names in the Watchlist. This can be an
+email or a chat via Webhook (Slack, Mattermost, Discord, ...). An iCalendar export of domain events is possible.
+
+### RDAP search
+
+The latest version of the WHOIS protocol was standardized in 2004 by RFC 3912.[^1] This protocol allows anyone to
+retrieve key information concerning a domain name, an IP address, or an entity registered with a registry.
+
+ICANN launched a global vote in 2023 to propose replacing the WHOIS protocol with RDAP. As a result, registries and
+registrars will no longer be required to support WHOIS from 2025 (*WHOIS Sunset Date*).[^2]
+
+Domain Watchdog uses the RDAP protocol, which will soon be the new standard for retrieving information concerning domain
+names.
+
+## Disclaimer
+
+> [!IMPORTANT]
+> * Domain Watchdog is an opensource project distributed under *GNU Affero General Public License v3.0 or later* license
+> * In the internal operation, everything is done to perform the least possible RDAP requests: rate limit, intelligent
+    caching system, etc.
+> * Please note that this project is NOT affiliated IN ANY WAY with the API Providers used to order domain names.
+> * The project installers are responsible for the use of their own instance.
+> * Under no circumstances will the owner of this project be held responsible for other cases over which he has no control.
 
 ## Useful documentation
 
@@ -60,16 +101,6 @@ possible to predict in advance which user will win the domain name. The choice i
 > - [RFC 7482 : Registration Data Access Protocol (RDAP) Query Format](https://datatracker.ietf.org/doc/html/rfc7482)
 > - [RFC 7483 : JSON Responses for the Registration Data Access Protocol (RDAP)](https://datatracker.ietf.org/doc/html/rfc7483)
 > - [RFC 7484 : Finding the Authoritative Registration Data (RDAP) Service](https://datatracker.ietf.org/doc/html/rfc7484)
-
-## Disclaimer
-
-> [!WARNING]
-> * Domain Watchdog is an opensource project distributed under *GNU Affero General Public License v3.0 or later* license
-> * In the internal opration, everything is done to perform the least possible RDAP requests: rate limit, intelligent
-    caching system, etc.
-> * Please note that this project is NOT affiliated IN ANY WAY with the API Providers used to order domain names.
-> * The project installers are responsible for the use of their own instance.
-> * In no event the owner of this project will not be held responsible for other instances over which he has no control.
 
 ## Licensing
 

@@ -4,7 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Domain;
 use App\Entity\WatchList;
-use App\Message\ProcessDomainTrigger;
+use App\Message\SendDomainEventNotif;
 use App\Repository\DomainRepository;
 use App\Service\RDAPService;
 use Psr\Log\LoggerInterface;
@@ -25,7 +25,7 @@ class DomainRefreshController extends AbstractController
         private readonly RDAPService $RDAPService,
         private readonly RateLimiterFactory $rdapRequestsLimiter,
         private readonly MessageBusInterface $bus,
-        private readonly LoggerInterface $logger
+        private readonly LoggerInterface $logger, private readonly KernelInterface $kernel
     ) {
     }
 
@@ -35,8 +35,9 @@ class DomainRefreshController extends AbstractController
      * @throws ExceptionInterface
      * @throws \Exception
      * @throws HttpExceptionInterface
+     * @throws \Throwable
      */
-    public function __invoke(string $ldhName, KernelInterface $kernel): ?Domain
+    public function __invoke(string $ldhName, KernelInterface $kernel): Domain
     {
         $idnDomain = strtolower(idn_to_ascii($ldhName));
         $userId = $this->getUser()->getUserIdentifier();
@@ -53,7 +54,8 @@ class DomainRefreshController extends AbstractController
         if (null !== $domain
             && !$domain->getDeleted()
             && ($domain->getUpdatedAt()->diff(new \DateTimeImmutable('now'))->days < 7)
-            && !$this->RDAPService::isToBeWatchClosely($domain, $domain->getUpdatedAt())
+            && !$this->RDAPService::isToBeWatchClosely($domain)
+            && !$this->kernel->isDebug()
         ) {
             $this->logger->info('It is not necessary to update the information of the domain name {idnDomain} with the RDAP protocol.', [
                 'idnDomain' => $idnDomain,
@@ -79,7 +81,7 @@ class DomainRefreshController extends AbstractController
 
         /** @var WatchList $watchList */
         foreach ($watchLists as $watchList) {
-            $this->bus->dispatch(new ProcessDomainTrigger($watchList->getToken(), $domain->getLdhName(), $updatedAt));
+            $this->bus->dispatch(new SendDomainEventNotif($watchList->getToken(), $domain->getLdhName(), $updatedAt));
         }
 
         return $domain;

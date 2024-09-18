@@ -1,85 +1,52 @@
-import {
-    ClockCircleOutlined,
-    DeleteOutlined,
-    ReloadOutlined,
-    ShareAltOutlined,
-    SignatureOutlined,
-    SyncOutlined
-} from "@ant-design/icons";
-import {Timeline} from "antd";
+import {Timeline, Tooltip, Typography} from "antd";
 import React from "react";
-import {Domain, EventAction} from "../../utils/api";
-import {t} from "ttag";
+import {Event} from "../../utils/api";
 import useBreakpoint from "../../hooks/useBreakpoint";
+import {rdapEventDetailTranslation, rdapEventNameTranslation} from "../../utils/functions/rdapTranslation";
+import {actionToColor} from "../../utils/functions/actionToColor";
+import {actionToIcon} from "../../utils/functions/actionToIcon";
 
-export function actionToColor(a: EventAction) {
-    return a === 'registration' ? 'green' :
-        a === 'reregistration' ? 'cyan' :
-            a === 'expiration' ? 'red' :
-                a === 'deletion' ? 'magenta' :
-                    a === 'transfer' ? 'orange' :
-                        a === 'last changed' ? 'blue' : 'default'
-}
-
-export const domainEvent = () => ({
-    registration: t`Registration`,
-    reregistration: t`Reregistration`,
-    'last changed': t`Last changed`,
-    expiration: t`Expiration`,
-    deletion: t`Deletion`,
-    reinstantiation: t`Reinstantiation`,
-    transfer: t`Transfer`,
-    locked: t`Locked`,
-    unlocked: t`Unlocked`,
-    'registrar expiration': t`Registrar expiration`,
-    'enum validation expiration': t`ENUM validation expiration`
-})
-
-export function EventTimeline({domain}: { domain: Domain }) {
+export function EventTimeline({events}: { events: Event[] }) {
     const sm = useBreakpoint('sm')
 
-
     const locale = navigator.language.split('-')[0]
-    const domainEventTranslated = domainEvent()
+    const rdapEventNameTranslated = rdapEventNameTranslation()
+    const rdapEventDetailTranslated = rdapEventDetailTranslation()
 
-    return <Timeline
-        mode={sm ? "left" : "right"}
-        items={domain.events
-            .sort((e1, e2) => new Date(e2.date).getTime() - new Date(e1.date).getTime())
-            .map(({action, date}) => {
-                    let dot
-                    if (action === 'registration') {
-                        dot = <SignatureOutlined style={{fontSize: '16px'}}/>
-                    } else if (action === 'expiration') {
-                        dot = <ClockCircleOutlined style={{fontSize: '16px'}}/>
-                    } else if (action === 'transfer') {
-                        dot = <ShareAltOutlined style={{fontSize: '16px'}}/>
-                    } else if (action === 'last changed') {
-                        dot = <SyncOutlined style={{fontSize: '16px'}}/>
-                    } else if (action === 'deletion') {
-                        dot = <DeleteOutlined style={{fontSize: '16px'}}/>
-                    } else if (action === 'reregistration') {
-                        dot = <ReloadOutlined style={{fontSize: '16px'}}/>
-                    }
+    return <>
+        <Timeline
+            mode={sm ? "left" : "right"}
+            items={events.map(e => {
+                    const sameEvents = events.filter(se => se.action === e.action)
 
-                    const eventName = Object.keys(domainEventTranslated).includes(action) ? domainEventTranslated[action as keyof typeof domainEventTranslated] : action
-                    const dateStr = new Date(date).toLocaleString(locale)
+                    const eventName = <Typography.Text style={{color: e.deleted ? 'grey' : 'default'}}>
+                        {e.action in rdapEventNameTranslated ? rdapEventNameTranslated[e.action as keyof typeof rdapEventNameTranslated] : e.action}
+                    </Typography.Text>
+
+                    const dateStr = <Typography.Text
+                        style={{color: e.deleted ? 'grey' : 'default'}}>{new Date(e.date).toLocaleString(locale)}
+                    </Typography.Text>
+
+                    const eventDetail = e.action in rdapEventDetailTranslated ? rdapEventDetailTranslated[e.action as keyof typeof rdapEventDetailTranslated] : undefined
 
                     const text = sm ? {
-                        children: <>{eventName}&emsp;{dateStr}</>
+                        children: <Tooltip placement='bottom' title={eventDetail}>
+                            {eventName}&emsp;{dateStr}
+                        </Tooltip>
                     } : {
                         label: dateStr,
-                        children: eventName,
+                        children: <Tooltip placement='left' title={eventDetail}>{eventName}</Tooltip>,
                     }
 
                     return {
-                        color: actionToColor(action),
-                        dot,
-                        pending: new Date(date).getTime() > new Date().getTime(),
+                        color: e.deleted ? 'grey' : actionToColor(e.action),
+                        dot: actionToIcon(e.action),
+                        pending: new Date(e.date).getTime() > new Date().getTime(),
                         ...text
                     }
                 }
             )
-        }
-    />
+            }
+        />
+    </>
 }

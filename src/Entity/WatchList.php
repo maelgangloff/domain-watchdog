@@ -6,12 +6,12 @@ use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\Delete;
 use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\GetCollection;
-use ApiPlatform\Metadata\Patch;
 use ApiPlatform\Metadata\Post;
-use App\Controller\WatchListController;
+use ApiPlatform\Metadata\Put;
 use App\Repository\WatchListRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Attribute\Groups;
 use Symfony\Component\Serializer\Attribute\SerializedName;
@@ -26,13 +26,31 @@ use Symfony\Component\Uid\Uuid;
             normalizationContext: ['groups' => 'watchlist:list'],
             name: 'get_all_mine',
         ),
+        new GetCollection(
+            uriTemplate: '/tracked',
+            routeName: 'watchlist_get_tracked_domains',
+            normalizationContext: ['groups' => [
+                'domain:list',
+                'tld:list',
+                'event:list',
+            ]],
+            name: 'get_tracked_domains'
+        ),
         new Get(
-            normalizationContext: ['groups' => 'watchlist:item'],
+            normalizationContext: ['groups' => [
+                'watchlist:item',
+                'domain:item',
+                'event:list',
+                'domain-entity:entity',
+                'nameserver-entity:nameserver',
+                'nameserver-entity:entity',
+                'tld:item',
+            ],
+            ],
             security: 'object.user == user'
         ),
         new Get(
             routeName: 'watchlist_calendar',
-            controller: WatchListController::class,
             openapiContext: [
                 'responses' => [
                     '200' => [
@@ -58,24 +76,27 @@ use Symfony\Component\Uid\Uuid;
             denormalizationContext: ['groups' => 'watchlist:create'],
             name: 'create'
         ),
-        new Patch(
+        new Put(
+            routeName: 'watchlist_update',
             normalizationContext: ['groups' => 'watchlist:item'],
-            denormalizationContext: ['groups' => 'watchlist:update']
+            denormalizationContext: ['groups' => ['watchlist:create', 'watchlist:token']],
+            security: 'object.user == user',
+            name: 'update'
         ),
-        new Delete(),
+        new Delete(
+            security: 'object.user == user'
+        ),
     ],
 )]
 class WatchList
 {
-    #[ORM\Id]
-    #[ORM\Column(type: 'uuid')]
-    #[Groups(['watchlist:item', 'watchlist:list'])]
-    private string $token;
-
     #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'watchLists')]
     #[ORM\JoinColumn(nullable: false, onDelete: 'CASCADE')]
     public ?User $user = null;
-
+    #[ORM\Id]
+    #[ORM\Column(type: 'uuid')]
+    #[Groups(['watchlist:item', 'watchlist:list', 'watchlist:token'])]
+    private string $token;
     /**
      * @var Collection<int, Domain>
      */
@@ -83,28 +104,33 @@ class WatchList
     #[ORM\JoinTable(name: 'watch_lists_domains',
         joinColumns: [new ORM\JoinColumn(name: 'watch_list_token', referencedColumnName: 'token', onDelete: 'CASCADE')],
         inverseJoinColumns: [new ORM\JoinColumn(name: 'domain_ldh_name', referencedColumnName: 'ldh_name', onDelete: 'CASCADE')])]
-    #[Groups(['watchlist:list', 'watchlist:item', 'watchlist:create', 'watchlist:update'])]
+    #[Groups(['watchlist:list', 'watchlist:item', 'watchlist:create'])]
     private Collection $domains;
 
     /**
      * @var Collection<int, WatchListTrigger>
      */
     #[ORM\OneToMany(targetEntity: WatchListTrigger::class, mappedBy: 'watchList', cascade: ['persist'], orphanRemoval: true)]
-    #[Groups(['watchlist:list', 'watchlist:item', 'watchlist:create', 'watchlist:update'])]
+    #[Groups(['watchlist:list', 'watchlist:item', 'watchlist:create'])]
     #[SerializedName('triggers')]
     private Collection $watchListTriggers;
 
     #[ORM\ManyToOne(inversedBy: 'watchLists')]
-    #[Groups(['watchlist:list', 'watchlist:item', 'watchlist:create', 'watchlist:update'])]
+    #[Groups(['watchlist:list', 'watchlist:item', 'watchlist:create'])]
     private ?Connector $connector = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    #[Groups(['watchlist:list', 'watchlist:item', 'watchlist:create', 'watchlist:update'])]
+    #[Groups(['watchlist:list', 'watchlist:item', 'watchlist:create'])]
     private ?string $name = null;
 
     #[ORM\Column]
     #[Groups(['watchlist:list', 'watchlist:item'])]
     private ?\DateTimeImmutable $createdAt = null;
+
+    #[SerializedName('dsn')]
+    #[ORM\Column(type: Types::SIMPLE_ARRAY, nullable: true)]
+    #[Groups(['watchlist:list', 'watchlist:item', 'watchlist:create'])]
+    private ?array $webhookDsn = null;
 
     public function __construct()
     {
@@ -117,6 +143,11 @@ class WatchList
     public function getToken(): ?string
     {
         return $this->token;
+    }
+
+    public function setToken(string $token): void
+    {
+        $this->token = $token;
     }
 
     public function getUser(): ?User
@@ -217,6 +248,18 @@ class WatchList
     public function setCreatedAt(\DateTimeImmutable $createdAt): static
     {
         $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    public function getWebhookDsn(): ?array
+    {
+        return $this->webhookDsn;
+    }
+
+    public function setWebhookDsn(?array $webhookDsn): static
+    {
+        $this->webhookDsn = $webhookDsn;
 
         return $this;
     }

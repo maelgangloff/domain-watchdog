@@ -28,6 +28,7 @@ use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpClient\Exception\ClientException;
 use Symfony\Component\HttpFoundation\Exception\BadRequestException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\Yaml\Yaml;
 use Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\DecodingExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\HttpExceptionInterface;
@@ -73,7 +74,17 @@ readonly class RDAPService
         'xn--hlcj6aya9esc7a',
     ];
 
-    public const IMPORTANT_EVENTS = [EventAction::Deletion->value, EventAction::Expiration->value];
+    private const IMPORTANT_EVENTS = [EventAction::Deletion->value, EventAction::Expiration->value];
+    private const IMPORTANT_STATUS = [
+        'redemption period',
+        'pending delete',
+        'pending create',
+        'pending renew',
+        'pending restore',
+        'pending transfer',
+        'pending update',
+        'add period',
+    ];
 
     public function __construct(private HttpClientInterface $client,
         private EntityRepository $entityRepository,
@@ -86,7 +97,8 @@ readonly class RDAPService
         private RdapServerRepository $rdapServerRepository,
         private TldRepository $tldRepository,
         private EntityManagerInterface $em,
-        private LoggerInterface $logger
+        private LoggerInterface $logger,
+        private StatService $statService
     ) {
     }
 
@@ -96,10 +108,11 @@ readonly class RDAPService
      *
      * @throws \Exception
      */
-    public static function isToBeWatchClosely(Domain $domain, \DateTimeImmutable $updatedAt): bool
+    public static function isToBeWatchClosely(Domain $domain): bool
     {
-        if ($updatedAt->diff(new \DateTimeImmutable('now'))->days < 1) {
-            return false;
+        $status = $domain->getStatus();
+        if ((!empty($status) && count(array_intersect($status, self::IMPORTANT_STATUS))) || $domain->getDeleted()) {
+            return true;
         }
 
         /** @var DomainEvent[] $events */
@@ -162,6 +175,8 @@ readonly class RDAPService
         ]);
 
         try {
+            $this->statService->incrementStat('stats.rdap_queries.count');
+
             $res = $this->client->request(
                 'GET', $rdapServerUrl.'domain/'.$idnDomain
             )->toArray();
@@ -213,6 +228,11 @@ readonly class RDAPService
         $this->em->persist($domain);
         $this->em->flush();
 
+        /** @var DomainEvent $event */
+        foreach ($domain->getEvents()->getIterator() as $event) {
+            $event->setDeleted(true);
+        }
+
         foreach ($res['events'] as $rdapEvent) {
             if ($rdapEvent['eventAction'] === EventAction::LastUpdateOfRDAPDatabase->value) {
                 continue;
@@ -229,7 +249,14 @@ readonly class RDAPService
             }
             $domain->addEvent($event
                 ->setAction($rdapEvent['eventAction'])
-                ->setDate(new \DateTimeImmutable($rdapEvent['eventDate'])));
+                ->setDate(new \DateTimeImmutable($rdapEvent['eventDate']))
+                ->setDeleted(false)
+            );
+        }
+
+        /** @var DomainEntity $domainEntity */
+        foreach ($domain->getDomainEntities()->getIterator() as $domainEntity) {
+            $domainEntity->setDeleted(true);
         }
 
         if (array_key_exists('entities', $res) && is_array($res['entities'])) {
@@ -270,8 +297,9 @@ readonly class RDAPService
                 $domain->addDomainEntity($domainEntity
                     ->setDomain($domain)
                     ->setEntity($entity)
-                    ->setRoles($roles))
-                    ->updateTimestamps();
+                    ->setRoles($roles)
+                    ->setDeleted(false)
+                );
 
                 $this->em->persist($domainEntity);
                 $this->em->flush();
@@ -279,10 +307,18 @@ readonly class RDAPService
         }
 
         if (array_key_exists('nameservers', $res) && is_array($res['nameservers'])) {
+            $domain->getNameservers()->clear();
+
             foreach ($res['nameservers'] as $rdapNameserver) {
                 $nameserver = $this->nameserverRepository->findOneBy([
                     'ldhName' => strtolower($rdapNameserver['ldhName']),
                 ]);
+
+                $domainNS = $domain->getNameservers()->findFirst(fn (int $key, Nameserver $ns) => $ns->getLdhName() === $rdapNameserver['ldhName']);
+
+                if (null !== $domainNS) {
+                    $nameserver = $domainNS;
+                }
                 if (null === $nameserver) {
                     $nameserver = new Nameserver();
                 }
@@ -349,7 +385,7 @@ readonly class RDAPService
         if (false === $lastDotPosition) {
             throw new BadRequestException('Domain must contain at least one dot');
         }
-        $tld = strtolower(substr($domain, $lastDotPosition + 1));
+        $tld = strtolower(idn_to_ascii(substr($domain, $lastDotPosition + 1)));
 
         return $this->tldRepository->findOneBy(['tld' => $tld]);
     }
@@ -365,7 +401,7 @@ readonly class RDAPService
 
         if (null === $entity) {
             $entity = new Entity();
-        } else {
+
             $this->logger->info('The entity {handle} was not known to this Domain Watchdog instance.', [
                 'handle' => $rdapEntity['handle'],
             ]);
@@ -392,6 +428,14 @@ readonly class RDAPService
             return $entity;
         }
 
+        /** @var EntityEvent $event */
+        foreach ($entity->getEvents()->getIterator() as $event) {
+            $event->setDeleted(true);
+        }
+
+        $this->em->persist($entity);
+        $this->em->flush();
+
         foreach ($rdapEntity['events'] as $rdapEntityEvent) {
             $eventAction = $rdapEntityEvent['eventAction'];
             if ($eventAction === EventAction::LastChanged->value || $eventAction === EventAction::LastUpdateOfRDAPDatabase->value) {
@@ -403,13 +447,15 @@ readonly class RDAPService
             ]);
 
             if (null !== $event) {
+                $event->setDeleted(false);
                 continue;
             }
             $entity->addEvent(
                 (new EntityEvent())
                     ->setEntity($entity)
                     ->setAction($rdapEntityEvent['eventAction'])
-                    ->setDate(new \DateTimeImmutable($rdapEntityEvent['eventDate'])));
+                    ->setDate(new \DateTimeImmutable($rdapEntityEvent['eventDate']))
+                    ->setDeleted(false));
         }
 
         return $entity;
@@ -423,14 +469,23 @@ readonly class RDAPService
      * @throws ClientExceptionInterface
      * @throws ORMException
      */
-    public function updateRDAPServers(): void
+    public function updateRDAPServersFromIANA(): void
     {
-        $this->logger->info('Started updating the RDAP server list.');
+        $this->logger->info('Start of update the RDAP server list from IANA.');
 
         $dnsRoot = $this->client->request(
             'GET', 'https://data.iana.org/rdap/dns.json'
         )->toArray();
 
+        $this->updateRDAPServers($dnsRoot);
+    }
+
+    /**
+     * @throws ORMException
+     * @throws \Exception
+     */
+    private function updateRDAPServers(array $dnsRoot): void
+    {
         foreach ($dnsRoot['services'] as $service) {
             foreach ($service[0] as $tld) {
                 if ('' === $tld) {
@@ -442,13 +497,29 @@ readonly class RDAPService
                     if (null === $server) {
                         $server = new RdapServer();
                     }
-                    $server->setTld($tldReference)->setUrl($rdapServerUrl)->updateTimestamps();
+                    $server
+                        ->setTld($tldReference)
+                        ->setUrl($rdapServerUrl)
+                        ->setUpdatedAt(new \DateTimeImmutable(array_key_exists('publication', $dnsRoot) ? $dnsRoot['publication'] : 'now'));
 
                     $this->em->persist($server);
                 }
             }
         }
         $this->em->flush();
+    }
+
+    /**
+     * @throws ORMException
+     */
+    public function updateRDAPServersFromFile(string $fileName): void
+    {
+        if (!file_exists($fileName)) {
+            return;
+        }
+
+        $this->logger->info('Start of update the RDAP server list from custom config file.');
+        $this->updateRDAPServers(Yaml::parseFile($fileName));
     }
 
     /**

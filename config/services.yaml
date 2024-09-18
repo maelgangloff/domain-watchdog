@@ -4,14 +4,18 @@
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices.html#use-parameters-for-application-configuration
 parameters:
+    custom_rdap_servers_file: '%kernel.project_dir%/config/app/custom_rdap_servers.yaml'
+
     mailer_sender_email: '%env(string:MAILER_SENDER_EMAIL)%'
     mailer_sender_name: '%env(string:MAILER_SENDER_NAME)%'
     oauth_enabled: '%env(OAUTH_CLIENT_ID)%'
     registration_enabled: '%env(bool:REGISTRATION_ENABLED)%'
+    registration_verify_email: '%env(bool:REGISTRATION_VERIFY_EMAIL)%'
 
     limited_features: '%env(bool:LIMITED_FEATURES)%'
     limit_max_watchlist: '%env(int:LIMIT_MAX_WATCHLIST)%'
     limit_max_watchlist_domains: '%env(int:LIMIT_MAX_WATCHLIST_DOMAINS)%'
+    limit_max_watchlist_webhooks: '%env(int:LIMIT_MAX_WATCHLIST_WEBHOOKS)%'
 
     outgoing_ip: '%env(string:OUTGOING_IP)%'
 

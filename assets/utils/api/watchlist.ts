@@ -1,4 +1,4 @@
-import {Event, request, Watchlist} from "./index";
+import {Domain, request, Watchlist, WatchlistRequest} from "./index";
 
 export async function getWatchlists() {
     const response = await request({
@@ -8,13 +8,13 @@ export async function getWatchlists() {
 }
 
 export async function getWatchlist(token: string) {
-    const response = await request<Watchlist & { token: string }>({
+    const response = await request<Watchlist>({
         url: 'watchlists/' + token
     })
     return response.data
 }
 
-export async function postWatchlist(watchlist: Watchlist) {
+export async function postWatchlist(watchlist: WatchlistRequest) {
     const response = await request<{ token: string }>({
         method: 'POST',
         url: 'watchlists',
@@ -33,17 +33,21 @@ export async function deleteWatchlist(token: string): Promise<void> {
     })
 }
 
-export async function patchWatchlist(domains: string[], triggers: Event[]) {
-    const response = await request<Watchlist>({
-        method: 'PATCH',
-        url: 'watchlists',
-        data: {
-            domains,
-            triggers
-        },
-        headers: {
-            "Content-Type": 'application/merge-patch+json'
-        }
+export async function putWatchlist(watchlist: Partial<WatchlistRequest> & { token: string }) {
+    const response = await request<WatchlistRequest>({
+        method: 'PUT',
+        url: 'watchlists/' + watchlist.token,
+        data: watchlist,
     })
     return response.data
 }
+
+export async function getTrackedDomainList(params: { page: number, itemsPerPage: number }): Promise<any> {
+    const response = await request({
+        method: 'GET',
+        url: 'tracked',
+        params
+    })
+    return response.data
+}
+

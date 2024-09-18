@@ -1,12 +1,15 @@
 import React, {useEffect, useState} from "react";
-import {Card, Divider, Flex, Form, message} from "antd";
-import {EventAction, getWatchlists, postWatchlist} from "../../utils/api";
+import {Card, Divider, Flex, Form, message, Tag} from "antd";
+import {EventAction, getWatchlists, postWatchlist, putWatchlist} from "../../utils/api";
 import {AxiosError} from "axios";
 import {t} from 'ttag'
-import {WatchlistForm} from "../../components/tracking/WatchlistForm";
-import {WatchlistsList} from "../../components/tracking/WatchlistsList";
+import {WatchlistForm} from "../../components/tracking/watchlist/WatchlistForm";
+import {WatchlistsList} from "../../components/tracking/watchlist/WatchlistsList";
 import {Connector, getConnectors} from "../../utils/api/connectors";
-import {showErrorAPI} from "../../utils";
+
+import {showErrorAPI} from "../../utils/functions/showErrorAPI";
+import {TrackedDomainTable} from "../../components/tracking/watchlist/TrackedDomainTable";
+import {AimOutlined} from "@ant-design/icons";
 
 
 export type Watchlist = {
@@ -14,6 +17,7 @@ export type Watchlist = {
     token: string,
     domains: { ldhName: string }[],
     triggers?: { event: EventAction, action: string }[],
+    dsn?: string[]
     connector?: {
         id: string
         provider: string
@@ -22,26 +26,42 @@ export type Watchlist = {
     createdAt: string
 }
 
+type FormValuesType = {
+    name?: string
+    domains: string[],
+    triggers: string[]
+    connector?: string,
+    dsn?: string[]
+}
+
+const getRequestDataFromForm = (values: FormValuesType) => {
+    const domainsURI = values.domains.map(d => '/api/domains/' + d.toLowerCase())
+    let triggers = values.triggers.map(t => ({event: t, action: 'email'}))
+
+    if (values.dsn !== undefined) {
+        triggers = [...triggers, ...values.triggers.map(t => ({
+            event: t,
+            action: 'chat'
+        }))]
+    }
+    return {
+        name: values.name,
+        domains: domainsURI,
+        triggers,
+        connector: values.connector !== undefined ? ('/api/connectors/' + values.connector) : undefined,
+        dsn: values.dsn
+    }
+}
+
 export default function WatchlistPage() {
 
     const [form] = Form.useForm()
     const [messageApi, contextHolder] = message.useMessage()
-    const [watchlists, setWatchlists] = useState<Watchlist[] | null>()
-    const [connectors, setConnectors] = useState<(Connector & { id: string })[] | null>()
+    const [watchlists, setWatchlists] = useState<Watchlist[]>()
+    const [connectors, setConnectors] = useState<(Connector & { id: string })[]>()
 
-    const onCreateWatchlist = (values: {
-        name?: string
-        domains: string[],
-        emailTriggers: string[]
-        connector?: string
-    }) => {
-        const domainsURI = values.domains.map(d => '/api/domains/' + d)
-        postWatchlist({
-            name: values.name,
-            domains: domainsURI,
-            triggers: values.emailTriggers.map(t => ({event: t, action: 'email'})),
-            connector: values.connector !== undefined ? '/api/connectors/' + values.connector : undefined
-        }).then((w) => {
+    const onCreateWatchlist = (values: FormValuesType) => {
+        postWatchlist(getRequestDataFromForm(values)).then((w) => {
             form.resetFields()
             refreshWatchlists()
             messageApi.success(t`Watchlist created !`)
@@ -49,6 +69,17 @@ export default function WatchlistPage() {
             showErrorAPI(e, messageApi)
         })
     }
+
+    const onUpdateWatchlist = async (values: FormValuesType & { token: string }) => putWatchlist({
+            token: values.token,
+            ...getRequestDataFromForm(values)
+        }
+    ).then((w) => {
+        refreshWatchlists()
+        messageApi.success(t`Watchlist updated !`)
+    }).catch((e: AxiosError) => {
+        throw showErrorAPI(e, messageApi)
+    })
 
     const refreshWatchlists = () => getWatchlists().then(w => {
         setWatchlists(w['hydra:member'])
@@ -67,17 +98,27 @@ export default function WatchlistPage() {
     }, [])
 
     return <Flex gap="middle" align="center" justify="center" vertical>
-        <Card title={t`Create a Watchlist`} style={{width: '100%'}}>
-            {contextHolder}
-            {
-                connectors &&
-                <WatchlistForm form={form} onCreateWatchlist={onCreateWatchlist} connectors={connectors}/>
+        {contextHolder}
+        <Card loading={connectors === undefined} title={t`Create a Watchlist`} style={{width: '100%'}}>
+            {connectors &&
+                <WatchlistForm form={form} onFinish={onCreateWatchlist} connectors={connectors} isCreation={true}/>
             }
         </Card>
-
         <Divider/>
-
-        {watchlists && watchlists.length > 0 &&
-            <WatchlistsList watchlists={watchlists} onDelete={refreshWatchlists}/>}
+        <Card title={
+            <>
+                <Tag icon={<AimOutlined/>} color="cyan-inverse"/>
+                {t`Tracked domain names`}
+            </>
+        }
+              style={{width: '100%'}}>
+            <TrackedDomainTable/>
+        </Card>
+        <Divider/>
+        {connectors && watchlists && watchlists.length > 0 &&
+            <WatchlistsList watchlists={watchlists} onDelete={refreshWatchlists}
+                            connectors={connectors}
+                            onUpdateWatchlist={onUpdateWatchlist}
+            />}
     </Flex>
 }

@@ -8,7 +8,7 @@ on [How to deploy a Symfony application](https://symfony.com/doc/current/deploym
 ### Prerequisites
 
 - PHP 8.2 or higher
-- PostgreSQL
+- PostgreSQL 16 or higher
 
 In order to retrieve information about domain names, Domain Watchdog will query the RDAP server responsible for the TLD.
 It is crucial that the Domain Watchdog instance is placed in a clean environment from which these servers can be
@@ -45,7 +45,11 @@ git clone https://github.com/maelgangloff/domain-watchdog.git
     ```shell
     symfony server:start
     ```
-6. Don't forget to set up workers to process the [message queue](https://symfony.com/doc/current/messenger.html)
+6. Build assets:
+   ```shell
+   php bin/console assets:install
+   ```
+7. Don't forget to set up workers to process the [message queue](https://symfony.com/doc/current/messenger.html)
 
 #### Frontend
 
@@ -63,10 +67,10 @@ git clone https://github.com/maelgangloff/domain-watchdog.git
     ```
 4. Add and modify the following files as you wish:
    ~~~
-   public/contents/home.md
-   public/contents/privacy.md
-   public/contents/tos.md
-   public/contents/faq.md
+   public/content/home.md
+   public/content/privacy.md
+   public/content/tos.md
+   public/content/faq.md
    public/images/icons-512.png
    public/images/banner.png
    public/favicon.ico
@@ -96,6 +100,10 @@ git pull origin master
    ```shell
    php bin/console cache:clear
     ```
+4. Build assets:
+   ```shell
+   php bin/console assets:install
+   ```
 
 ### Frontend
 

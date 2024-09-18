@@ -1,7 +1,17 @@
 framework:
     notifier:
         chatter_transports:
+            zulip: '%env(ZULIP_DSN)%'
+            telegram: '%env(TELEGRAM_DSN)%'
+            slack: '%env(SLACK_DSN)%'
+            rocketchat: '%env(ROCKETCHAT_DSN)%'
+            microsoftteams: '%env(MICROSOFT_TEAMS_DSN)%'
+            mattermost: '%env(MATTERMOST_DSN)%'
+            googlechat: '%env(GOOGLE_CHAT_DSN)%'
+            discord: '%env(DISCORD_DSN)%'
         texter_transports:
+            engagespot: '%env(ENGAGESPOT_DSN)%'
+            pushover: '%env(PUSHOVER_DSN)%'
         channel_policy:
             # use chat/slack, chat/telegram, sms/twilio or sms/nexmo
             urgent: ['email']

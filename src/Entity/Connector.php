@@ -32,7 +32,9 @@ use Symfony\Component\Uid\Uuid;
             normalizationContext: ['groups' => ['connector:create', 'connector:list']], denormalizationContext: ['groups' => 'connector:create'],
             name: 'create'
         ),
-        new Delete(),
+        new Delete(
+            security: 'object.user == user'
+        ),
     ]
 )]
 #[ORM\Entity(repositoryClass: ConnectorRepository::class)]
