@@ -165,7 +165,6 @@ readonly class RDAPService
 
         /** @var ?Domain $domain */
         $domain = $this->domainRepository->findOneBy(['ldhName' => $idnDomain]);
-        return $domain;
 
         $rdapServerUrl = $rdapServer->getUrl();
 

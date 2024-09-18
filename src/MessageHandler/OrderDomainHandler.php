@@ -14,6 +14,8 @@ use App\Service\Connector\AbstractProvider;
 use App\Service\StatService;
 use Psr\Cache\CacheItemPoolInterface;
 use Psr\Log\LoggerInterface;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Symfony\Component\Mailer\MailerInterface;
@@ -33,8 +35,6 @@ final readonly class OrderDomainHandler
         private WatchListRepository $watchListRepository,
         private DomainRepository $domainRepository,
         private KernelInterface $kernel,
-        private HttpClientInterface $client,
-        private CacheItemPoolInterface $cacheItemPool,
         private MailerInterface $mailer,
         private LoggerInterface $logger,
         private StatService $statService,
