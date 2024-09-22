@@ -53,6 +53,7 @@ The table below lists the supported API connector providers:
 |:---------:|---------------------------------------------------------------|:---------:|
 |    OVH    | https://api.ovh.com                                           |  **Yes**  |
 |   GANDI   | https://api.gandi.net/docs/domains/                           |  **Yes**  |
+|  AUTODNS  | https://cloud.autodns.com/                                    |  **Yes**  |
 | NAMECHEAP | https://www.namecheap.com/support/api/methods/domains/create/ |           |
 
 If a domain has expired and a connector is linked to the Watchlist, then Domain Watchdog will try to order it via the
