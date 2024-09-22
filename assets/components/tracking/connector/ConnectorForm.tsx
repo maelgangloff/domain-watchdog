@@ -135,6 +135,7 @@ export function ConnectorForm({form, onCreate}: { form: FormInstance, onCreate: 
         {
             provider === ConnectorProvider.AUTODNS && <>
                 <Alert message={t`Because of some limitations in API of AutoDNS, we suggest to create an dedicated user for API with limited rights.`} type="info" />
+                <Alert message={t`This provider does not provide a list of supported TLD. Please double check if the domain you want to register is supported.`} type="warning" />
                 <br />
                 <Form.Item
                     label={t`AutoDNS Username`}
@@ -170,19 +171,9 @@ export function ConnectorForm({form, onCreate}: { form: FormInstance, onCreate: 
                     required={false}>
                     <Input autoComplete='off' required={false} placeholder='4' />
                 </Form.Item>
-                <Form.Item
-                    label={t`DNS Entry for Domain`}
-                    name={['authData', 'dns_ip']}
-                    help={<Typography.Text
-                        type='secondary'>{t`It is required, that a domain, which should registerd, is available in DNS`}</Typography.Text>}
 
-                    required={false}>
-                    <Input autoComplete='off' required={false} placeholder='4' />
-                </Form.Item>
-
-                
                 <Form.Item
-                    valuePropName="checked"
+                    valuePropName='checked'
                     label={t`Owner confirmation`}
                     name={['authData', 'ownerConfirm']}
                     
