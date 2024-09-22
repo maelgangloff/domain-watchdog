@@ -15,6 +15,7 @@ export const helpGetTokenLink = (provider?: string) => {
             return <Typography.Link target='_blank' href="https://admin.gandi.net/organizations/account/pat">
                 {t`Retrieve a Personal Access Token from your customer account on the Provider's website`}
             </Typography.Link>
+
         default:
             return <></>
 
@@ -27,6 +28,8 @@ export const tosHyperlink = (provider?: string) => {
             return 'https://www.ovhcloud.com/fr/terms-and-conditions/contracts/'
         case ConnectorProvider.GANDI:
             return 'https://www.gandi.net/en/contracts/terms-of-service'
+        case ConnectorProvider.AUTODNS:
+            return 'https://www.internetx.com/agb/'
         default:
             return ''
     }

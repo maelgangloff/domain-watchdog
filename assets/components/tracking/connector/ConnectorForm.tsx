@@ -1,4 +1,4 @@
-import {Button, Checkbox, Form, FormInstance, Input, Popconfirm, Select, Space, Typography} from "antd";
+import {Alert, Button, Checkbox, Form, FormInstance, Input, Popconfirm, Select, Space, Typography } from "antd";
 import React, {useState} from "react";
 import {Connector, ConnectorProvider} from "../../../utils/api/connectors";
 import {t} from "ttag";
@@ -130,6 +130,68 @@ export function ConnectorForm({form, onCreate}: { form: FormInstance, onCreate: 
                     required={false}>
                     <Input autoComplete='off' placeholder='xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx'/>
                 </Form.Item>
+            </>
+        }
+        {
+            provider === ConnectorProvider.AUTODNS && <>
+                <Alert message={t`Because of some limitations in API of AutoDNS, we suggest to create an dedicated user for API with limited rights.`} type="info" />
+                <br />
+                <Form.Item
+                    label={t`AutoDNS Username`}
+                    name={['authData', 'username']}
+                    help={<Typography.Text
+                        type='secondary'>{t`Attention: AutoDNS do not support 2-Factor Authentication on API Users for automated systems`}</Typography.Text>}
+                    rules={[{required: true, message: t`Required`}]}>
+                    <Input autoComplete='off' required={true}/>
+                </Form.Item>
+                <Form.Item
+                    label={t`AutoDNS Password`}
+                    name={['authData', 'password']}
+                    rules={[{required: true, message: t`Required`}]}
+                    required={true}>
+                    <Input.Password autoComplete='off' required={true} placeholder=''/>
+                </Form.Item>
+                <Form.Item
+                    label={t`Domain Contact Handle ID`}
+                    name={['authData', 'contactid']}
+                    help={<Typography.Text
+                        type='secondary'>{t`The Contact ID for ownership of registered Domains. `}<a href="https://cloud.autodns.com/contacts/domain">{t`You got from this page`}</a></Typography.Text>}
+                        rules={[{required: true, message: t`Required`}]}
+                    required={true}>
+                    <Input autoComplete='off' required={true} placeholder=''/>
+                </Form.Item>
+
+                <Form.Item
+                    label={t`Context Value`}
+                    name={['authData', 'context']}
+                    help={<Typography.Text
+                        type='secondary'>{t`If you not sure, use the default value 4`}</Typography.Text>}
+
+                    required={false}>
+                    <Input autoComplete='off' required={false} placeholder='4' />
+                </Form.Item>
+                <Form.Item
+                    label={t`DNS Entry for Domain`}
+                    name={['authData', 'dns_ip']}
+                    help={<Typography.Text
+                        type='secondary'>{t`It is required, that a domain, which should registerd, is available in DNS`}</Typography.Text>}
+
+                    required={false}>
+                    <Input autoComplete='off' required={false} placeholder='4' />
+                </Form.Item>
+
+                
+                <Form.Item
+                    valuePropName="checked"
+                    label={t`Owner confirmation`}
+                    name={['authData', 'ownerConfirm']}
+                    
+                    rules={[{required: true, message: t`Required`}]}
+                >
+                    <Checkbox
+                        required={true}>{t`Owner confirms his consent of domain order jobs`}</Checkbox>
+                </Form.Item>                
+
             </>
         }
 
