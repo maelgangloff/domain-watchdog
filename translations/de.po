@@ -10,6 +10,31 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Generator: Weblate 5.7.2\n"
 
+#: assets/App.tsx:101
+msgid "TOS"
+msgstr "Nutzungsbedingungen"
+
+#: assets/App.tsx:102
+msgid "Privacy Policy"
+msgstr "Datenschutzrichtlinie"
+
+#: assets/App.tsx:103
+msgid "FAQ"
+msgstr "Häufig gestellte Fragen"
+
+#: assets/App.tsx:105
+msgid "Documentation"
+msgstr "Dokumentation"
+
+#: assets/App.tsx:108
+#, javascript-format
+msgid ""
+"${ ProjectLink } is an open source project distributed under the "
+"${ LicenseLink } license."
+msgstr ""
+"${ ProjectLink } ist ein Open-Source-Projekt, das unter der ${ LicenseLink }-"
+"Lizenz vertrieben wird."
+
 #: assets/components/LoginForm.tsx:52 assets/components/RegisterForm.tsx:39
 msgid "Email address"
 msgstr "E-Mail-Adresse"
@@ -43,22 +68,9 @@ msgstr "Senden"
 msgid "Log in with SSO"
 msgstr "Mit SSO anmelden"
 
-#: assets/components/search/DomainResult.tsx:45
-msgid "EPP Status Codes"
-msgstr "EPP-Statuscodes"
-
-#: assets/components/search/DomainResult.tsx:61
-msgid "Timeline"
-msgstr "Zeitleiste"
-
-#: assets/components/search/DomainResult.tsx:68
-msgid "Entities"
-msgstr "Entitäten"
-
-#: assets/components/search/DomainSearchBar.tsx:23
-#: assets/components/tracking/watchlist/WatchlistForm.tsx:118
-msgid "This domain name does not appear to be valid"
-msgstr "Dieser Domainname scheint nicht gültig zu sein"
+#: assets/components/RegisterForm.tsx:56 assets/pages/LoginPage.tsx:25
+msgid "Register"
+msgstr "Registrieren"
 
 #: assets/components/search/DomainLifecycleSteps.tsx:15
 #: assets/utils/functions/rdapTranslation.ts:43
@@ -76,6 +88,93 @@ msgstr "Einlösezeitraum"
 #: assets/components/search/DomainLifecycleSteps.tsx:28
 msgid "Pending Delete"
 msgstr "Ausstehende Löschung"
+
+#: assets/components/search/DomainResult.tsx:45
+msgid "EPP Status Codes"
+msgstr "EPP-Statuscodes"
+
+#: assets/components/search/DomainResult.tsx:61
+msgid "Timeline"
+msgstr "Zeitleiste"
+
+#: assets/components/search/DomainResult.tsx:68
+msgid "Entities"
+msgstr "Entitäten"
+
+#: assets/components/search/DomainSearchBar.tsx:23
+#: assets/components/tracking/watchlist/WatchlistForm.tsx:118
+msgid "This domain name does not appear to be valid"
+msgstr "Dieser Domainname scheint nicht gültig zu sein"
+
+#: assets/components/Sider.tsx:28
+msgid "Home"
+msgstr "Startseite"
+
+#: assets/components/Sider.tsx:34
+msgid "Search"
+msgstr "Suchen"
+
+#: assets/components/Sider.tsx:40
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:46
+msgid "Domain"
+msgstr "Domain"
+
+#: assets/components/Sider.tsx:41
+msgid "Domain Finder"
+msgstr "Domänenfinder"
+
+#: assets/components/Sider.tsx:48 assets/pages/search/TldPage.tsx:65
+msgid "TLD"
+msgstr "TLD"
+
+#: assets/components/Sider.tsx:49
+msgid "TLD list"
+msgstr "TLD-Liste"
+
+#: assets/components/Sider.tsx:56
+msgid "Entity"
+msgstr "Entität"
+
+#: assets/components/Sider.tsx:57
+msgid "Entity Finder"
+msgstr "Entitätsfinder"
+
+#: assets/components/Sider.tsx:64
+msgid "Nameserver"
+msgstr "Nameserver"
+
+#: assets/components/Sider.tsx:65
+msgid "Nameserver Finder"
+msgstr "Nameserver-Finder"
+
+#: assets/components/Sider.tsx:73
+msgid "Tracking"
+msgstr "Nachverfolgung"
+
+#: assets/components/Sider.tsx:79
+msgid "My Watchlists"
+msgstr "Meine Watchlists"
+
+#: assets/components/Sider.tsx:86
+msgid "My Connectors"
+msgstr "Meine Konnektoren"
+
+#: assets/components/Sider.tsx:95
+msgid "Statistics"
+msgstr "Statistiken"
+
+#: assets/components/Sider.tsx:105 assets/pages/UserPage.tsx:16
+msgid "My Account"
+msgstr "Mein Konto"
+
+#: assets/components/Sider.tsx:110
+msgid "Log out"
+msgstr "Abmelden"
+
+#: assets/components/Sider.tsx:118 assets/pages/LoginPage.tsx:25
+#: assets/pages/LoginPage.tsx:33
+msgid "Log in"
+msgstr "Anmelden"
 
 #: assets/components/tracking/connector/ConnectorForm.tsx:40
 msgid "Provider"
@@ -196,6 +295,82 @@ msgstr "Ja"
 msgid "No"
 msgstr "Nein"
 
+#: assets/components/tracking/watchlist/CalendarWatchlistButton.tsx:14
+msgid "QR Code for iCalendar export"
+msgstr "QR-Code für iCalendar-Export"
+
+#: assets/components/tracking/watchlist/CalendarWatchlistButton.tsx:17
+msgid "Export events to iCalendar format"
+msgstr "Ereignisse in das iCalendar-Format exportieren"
+
+#: assets/components/tracking/watchlist/DeleteWatchlistButton.tsx:12
+#: assets/components/tracking/watchlist/DeleteWatchlistButton.tsx:19
+msgid "Delete the Watchlist"
+msgstr "Löschen der Watchlist"
+
+#: assets/components/tracking/watchlist/DeleteWatchlistButton.tsx:13
+msgid "Are you sure to delete this Watchlist?"
+msgstr "Möchten Sie diese Watchlist wirklich löschen?"
+
+#: assets/components/tracking/watchlist/diagram/ViewDiagramWatchlistButton.tsx:39
+msgid "View the Watchlist Entity Diagram"
+msgstr "Sehen Sie sich das Watchlist-Entitätsdiagramm an"
+
+#: assets/components/tracking/watchlist/diagram/ViewDiagramWatchlistButton.tsx:44
+msgid "Watchlist Entity Diagram"
+msgstr "Watchlist-Entitäten Diagramm"
+
+#: assets/components/tracking/watchlist/diagram/watchlistToEdges.tsx:37
+msgid "Registry"
+msgstr "Registrierung"
+
+#: assets/components/tracking/watchlist/diagram/watchlistToNodes.tsx:30
+#, javascript-format
+msgid ".${ tld.tld } Registry"
+msgstr ".${ tld.tld } Registrierung"
+
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:50
+msgid "Expiration date"
+msgstr "Verfallsdatum"
+
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:54
+msgid "Status"
+msgstr "Status"
+
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:58
+msgid "Updated at"
+msgstr "Aktualisiert am"
+
+#: assets/components/tracking/watchlist/UpdateWatchlistButton.tsx:31
+msgid "Edit the Watchlist"
+msgstr "Bearbeiten der Watchlist"
+
+#: assets/components/tracking/watchlist/UpdateWatchlistButton.tsx:44
+msgid "Update a Watchlist"
+msgstr "Aktualisieren einer Watchlist"
+
+#: assets/components/tracking/watchlist/UpdateWatchlistButton.tsx:54
+msgid "Cancel"
+msgstr "Abbrechen"
+
+#: assets/components/tracking/watchlist/WatchlistCard.tsx:29
+#: assets/components/tracking/watchlist/WatchlistForm.tsx:106
+msgid "Domain names"
+msgstr "Domänennamen"
+
+#: assets/components/tracking/watchlist/WatchlistCard.tsx:33
+#: assets/components/tracking/watchlist/WatchlistForm.tsx:148
+msgid "Tracked events"
+msgstr "Verfolgte Ereignisse"
+
+#: assets/components/tracking/watchlist/WatchlistCard.tsx:47
+msgid "This Watchlist is not linked to a Connector."
+msgstr "Diese Beobachtungsliste ist nicht mit einem Connector verknüpft."
+
+#: assets/components/tracking/watchlist/WatchlistCard.tsx:52
+msgid "Watchlist"
+msgstr "Watchlist"
+
 #: assets/components/tracking/watchlist/WatchlistForm.tsx:72
 msgid "Name"
 msgstr "Name"
@@ -214,11 +389,6 @@ msgstr ""
 msgid "At least one domain name"
 msgstr "Mindestens ein Domänenname"
 
-#: assets/components/tracking/watchlist/WatchlistCard.tsx:29
-#: assets/components/tracking/watchlist/WatchlistForm.tsx:106
-msgid "Domain names"
-msgstr "Domänennamen"
-
 #: assets/components/tracking/watchlist/WatchlistForm.tsx:124
 msgid "Domain name"
 msgstr "Domänenname"
@@ -226,11 +396,6 @@ msgstr "Domänenname"
 #: assets/components/tracking/watchlist/WatchlistForm.tsx:141
 msgid "Add a Domain name"
 msgstr "Einen Domänennamen hinzufügen"
-
-#: assets/components/tracking/watchlist/WatchlistCard.tsx:33
-#: assets/components/tracking/watchlist/WatchlistForm.tsx:148
-msgid "Tracked events"
-msgstr "Verfolgte Ereignisse"
 
 #: assets/components/tracking/watchlist/WatchlistForm.tsx:150
 msgid "At least one trigger"
@@ -272,145 +437,13 @@ msgstr "Einen Webhook hinzufügen"
 msgid "Update"
 msgstr "Aktualisieren"
 
-#: assets/components/tracking/watchlist/UpdateWatchlistButton.tsx:31
-msgid "Edit the Watchlist"
-msgstr "Bearbeiten der Watchlist"
-
-#: assets/components/tracking/watchlist/UpdateWatchlistButton.tsx:44
-msgid "Update a Watchlist"
-msgstr "Aktualisieren einer Watchlist"
-
-#: assets/components/tracking/watchlist/UpdateWatchlistButton.tsx:54
-msgid "Cancel"
-msgstr "Abbrechen"
-
-#: assets/components/tracking/watchlist/diagram/ViewDiagramWatchlistButton.tsx:39
-msgid "View the Watchlist Entity Diagram"
-msgstr "Sehen Sie sich das Watchlist-Entitätsdiagramm an"
-
-#: assets/components/tracking/watchlist/diagram/ViewDiagramWatchlistButton.tsx:44
-msgid "Watchlist Entity Diagram"
-msgstr "Watchlist-Entitäten Diagramm"
-
-#: assets/components/tracking/watchlist/diagram/watchlistToEdges.tsx:37
-msgid "Registry"
-msgstr "Registrierung"
-
-#: assets/components/tracking/watchlist/diagram/watchlistToNodes.tsx:30
-#, javascript-format
-msgid ".${ tld.tld } Registry"
-msgstr ".${ tld.tld } Registrierung"
-
-#: assets/components/tracking/watchlist/CalendarWatchlistButton.tsx:14
-msgid "QR Code for iCalendar export"
-msgstr "QR-Code für iCalendar-Export"
-
-#: assets/components/tracking/watchlist/CalendarWatchlistButton.tsx:17
-msgid "Export events to iCalendar format"
-msgstr "Ereignisse in das iCalendar-Format exportieren"
-
-#: assets/components/tracking/watchlist/DeleteWatchlistButton.tsx:12
-#: assets/components/tracking/watchlist/DeleteWatchlistButton.tsx:19
-msgid "Delete the Watchlist"
-msgstr "Löschen der Watchlist"
-
-#: assets/components/tracking/watchlist/DeleteWatchlistButton.tsx:13
-msgid "Are you sure to delete this Watchlist?"
-msgstr "Möchten Sie diese Watchlist wirklich löschen?"
-
-#: assets/components/Sider.tsx:40
-#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:46
-msgid "Domain"
-msgstr "Domain"
-
-#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:50
-msgid "Expiration date"
-msgstr "Verfallsdatum"
-
-#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:54
-msgid "Status"
-msgstr "Status"
-
-#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:58
-msgid "Updated at"
-msgstr "Aktualisiert am"
-
-#: assets/components/tracking/watchlist/WatchlistCard.tsx:47
-msgid "This Watchlist is not linked to a Connector."
-msgstr "Diese Beobachtungsliste ist nicht mit einem Connector verknüpft."
-
-#: assets/components/tracking/watchlist/WatchlistCard.tsx:52
-msgid "Watchlist"
-msgstr "Watchlist"
-
-#: assets/components/Sider.tsx:28
-msgid "Home"
-msgstr "Startseite"
-
-#: assets/components/Sider.tsx:34
-msgid "Search"
-msgstr "Suchen"
-
-#: assets/components/Sider.tsx:41
-msgid "Domain Finder"
-msgstr "Domänenfinder"
-
-#: assets/components/Sider.tsx:48 assets/pages/search/TldPage.tsx:65
-msgid "TLD"
-msgstr "TLD"
-
-#: assets/components/Sider.tsx:49
-msgid "TLD list"
-msgstr "TLD-Liste"
-
-#: assets/components/Sider.tsx:56
-msgid "Entity"
-msgstr "Entität"
-
-#: assets/components/Sider.tsx:57
-msgid "Entity Finder"
-msgstr "Entitätsfinder"
-
-#: assets/components/Sider.tsx:64
-msgid "Nameserver"
-msgstr "Nameserver"
-
-#: assets/components/Sider.tsx:65
-msgid "Nameserver Finder"
-msgstr "Nameserver-Finder"
-
-#: assets/components/Sider.tsx:73
-msgid "Tracking"
-msgstr "Nachverfolgung"
-
-#: assets/components/Sider.tsx:79
-msgid "My Watchlists"
-msgstr "Meine Watchlists"
-
-#: assets/components/Sider.tsx:86
-msgid "My Connectors"
-msgstr "Meine Konnektoren"
-
-#: assets/components/Sider.tsx:95
-msgid "Statistics"
-msgstr "Statistiken"
-
-#: assets/components/Sider.tsx:105 assets/pages/UserPage.tsx:16
-msgid "My Account"
-msgstr "Mein Konto"
-
-#: assets/components/Sider.tsx:110
-msgid "Log out"
-msgstr "Abmelden"
-
-#: assets/components/Sider.tsx:118 assets/pages/LoginPage.tsx:25
 #: assets/pages/LoginPage.tsx:33
-msgid "Log in"
-msgstr "Anmelden"
+msgid "Create an account"
+msgstr "Ein Konto erstellen"
 
-#: assets/components/RegisterForm.tsx:56 assets/pages/LoginPage.tsx:25
-msgid "Register"
-msgstr "Registrieren"
+#: assets/pages/NotFoundPage.tsx:10
+msgid "Sorry, the page you visited does not exist."
+msgstr "Es tut uns leid, die von Ihnen besuchte Seite existiert nicht."
 
 #: assets/pages/search/DomainSearchPage.tsx:18
 msgid "Found !"
@@ -513,6 +546,44 @@ msgstr ""
 "Top-Level-Domains basieren auf Ländercodes und identifizieren Websites "
 "entsprechend ihrem Herkunftsland."
 
+#: assets/pages/StatisticsPage.tsx:34
+msgid "RDAP queries"
+msgstr "RDAP-Abfragen"
+
+#: assets/pages/StatisticsPage.tsx:43
+msgid "Alerts sent"
+msgstr "Gesendete Warnungen"
+
+#: assets/pages/StatisticsPage.tsx:57
+msgid "Domain names in database"
+msgstr "Domänennamen in der Datenbank"
+
+#: assets/pages/StatisticsPage.tsx:68
+#: assets/pages/tracking/WatchlistPage.tsx:111
+msgid "Tracked domain names"
+msgstr "Verfolgte Domänennamen"
+
+#: assets/pages/StatisticsPage.tsx:82
+msgid "Purchased domain names"
+msgstr "Gekaufte Domänennamen"
+
+#: assets/pages/StatisticsPage.tsx:92
+msgid ""
+"This value is based on the status code of the HTTP response from the "
+"providers following the domain order."
+msgstr ""
+"Dieser Wert basiert auf dem Statuscode der HTTP-Antwort der Anbieter nach "
+"dem Domainkauf."
+
+#: assets/pages/StatisticsPage.tsx:95
+msgid "Success rate"
+msgstr "Erfolgsrate"
+
+#: assets/pages/TextPage.tsx:26
+#, javascript-format
+msgid "📝 Please create the /public/content/${ resource } file."
+msgstr "📝 Bitte erstellen Sie die Datei /public/content/${ resource }."
+
 #: assets/pages/tracking/ConnectorsPage.tsx:20
 msgid "Connector created !"
 msgstr "Connector erstellt!"
@@ -533,47 +604,6 @@ msgstr "Watchlist aktualisiert !"
 msgid "Create a Watchlist"
 msgstr "Erstellen Sie eine Watchlist"
 
-#: assets/pages/StatisticsPage.tsx:68
-#: assets/pages/tracking/WatchlistPage.tsx:111
-msgid "Tracked domain names"
-msgstr "Verfolgte Domänennamen"
-
-#: assets/pages/NotFoundPage.tsx:10
-msgid "Sorry, the page you visited does not exist."
-msgstr "Es tut uns leid, die von Ihnen besuchte Seite existiert nicht."
-
-#: assets/pages/StatisticsPage.tsx:34
-msgid "RDAP queries"
-msgstr "RDAP-Abfragen"
-
-#: assets/pages/StatisticsPage.tsx:43
-msgid "Alerts sent"
-msgstr "Gesendete Warnungen"
-
-#: assets/pages/StatisticsPage.tsx:57
-msgid "Domain names in database"
-msgstr "Domänennamen in der Datenbank"
-
-#: assets/pages/StatisticsPage.tsx:82
-msgid "Purchased domain names"
-msgstr "Gekaufte Domänennamen"
-
-#: assets/pages/StatisticsPage.tsx:92
-msgid ""
-"This value is based on the status code of the HTTP response from the "
-"providers following the domain order."
-msgstr ""
-"Dieser Wert basiert auf dem Statuscode der HTTP-Antwort der Anbieter nach "
-"dem Domainkauf."
-
-#: assets/pages/StatisticsPage.tsx:95
-msgid "Success rate"
-msgstr "Erfolgsrate"
-
-#: assets/pages/LoginPage.tsx:33
-msgid "Create an account"
-msgstr "Ein Konto erstellen"
-
 #: assets/pages/UserPage.tsx:18
 msgid "Username"
 msgstr "Benutzername"
@@ -581,11 +611,6 @@ msgstr "Benutzername"
 #: assets/pages/UserPage.tsx:21
 msgid "Roles"
 msgstr "Rollen"
-
-#: assets/pages/TextPage.tsx:26
-#, javascript-format
-msgid "📝 Please create the /public/content/${ resource } file."
-msgstr "📝 Bitte erstellen Sie die Datei /public/content/${ resource }."
 
 #: assets/utils/functions/rdapTranslation.ts:7
 msgid "Registrant"
@@ -1228,31 +1253,6 @@ msgid ""
 msgstr ""
 "Die Domain ist kostenlos, kann aber Premium sein. Der Preis variiert von "
 "einer Domain zur anderen"
-
-#: assets/App.tsx:101
-msgid "TOS"
-msgstr "Nutzungsbedingungen"
-
-#: assets/App.tsx:102
-msgid "Privacy Policy"
-msgstr "Datenschutzrichtlinie"
-
-#: assets/App.tsx:103
-msgid "FAQ"
-msgstr "Häufig gestellte Fragen"
-
-#: assets/App.tsx:105
-msgid "Documentation"
-msgstr "Dokumentation"
-
-#: assets/App.tsx:108
-#, javascript-format
-msgid ""
-"${ ProjectLink } is an open source project distributed under the "
-"${ LicenseLink } license."
-msgstr ""
-"${ ProjectLink } ist ein Open-Source-Projekt, das unter der ${ LicenseLink }-"
-"Lizenz vertrieben wird."
 
 #, fuzzy
 #~ msgid "Tracked Domains"
