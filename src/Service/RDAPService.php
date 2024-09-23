@@ -232,25 +232,27 @@ readonly class RDAPService
             $event->setDeleted(true);
         }
 
-        foreach ($res['events'] as $rdapEvent) {
-            if ($rdapEvent['eventAction'] === EventAction::LastUpdateOfRDAPDatabase->value) {
-                continue;
-            }
+        if (array_key_exists('events', $res) && is_array($res['events'])) {
+            foreach ($res['events'] as $rdapEvent) {
+                if ($rdapEvent['eventAction'] === EventAction::LastUpdateOfRDAPDatabase->value) {
+                    continue;
+                }
 
-            $event = $this->domainEventRepository->findOneBy([
-                'action' => $rdapEvent['eventAction'],
-                'date' => new \DateTimeImmutable($rdapEvent['eventDate']),
-                'domain' => $domain,
-            ]);
+                $event = $this->domainEventRepository->findOneBy([
+                    'action' => $rdapEvent['eventAction'],
+                    'date' => new \DateTimeImmutable($rdapEvent['eventDate']),
+                    'domain' => $domain,
+                ]);
 
-            if (null === $event) {
-                $event = new DomainEvent();
+                if (null === $event) {
+                    $event = new DomainEvent();
+                }
+                $domain->addEvent($event
+                    ->setAction($rdapEvent['eventAction'])
+                    ->setDate(new \DateTimeImmutable($rdapEvent['eventDate']))
+                    ->setDeleted(false)
+                );
             }
-            $domain->addEvent($event
-                ->setAction($rdapEvent['eventAction'])
-                ->setDate(new \DateTimeImmutable($rdapEvent['eventDate']))
-                ->setDeleted(false)
-            );
         }
 
         /** @var DomainEntity $domainEntity */
