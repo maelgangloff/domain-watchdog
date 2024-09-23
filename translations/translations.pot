@@ -3,6 +3,29 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Plural-Forms: nplurals=2; plural=(n!=1);\n"
 
+#: assets/App.tsx:101
+msgid "TOS"
+msgstr ""
+
+#: assets/App.tsx:102
+msgid "Privacy Policy"
+msgstr ""
+
+#: assets/App.tsx:103
+msgid "FAQ"
+msgstr ""
+
+#: assets/App.tsx:105
+msgid "Documentation"
+msgstr ""
+
+#: assets/App.tsx:108
+#, javascript-format
+msgid ""
+"${ ProjectLink } is an open source project distributed under the ${ "
+"LicenseLink } license."
+msgstr ""
+
 #: assets/components/LoginForm.tsx:52
 #: assets/components/RegisterForm.tsx:39
 msgid "Email address"
@@ -40,21 +63,9 @@ msgstr ""
 msgid "Log in with SSO"
 msgstr ""
 
-#: assets/components/search/DomainResult.tsx:45
-msgid "EPP Status Codes"
-msgstr ""
-
-#: assets/components/search/DomainResult.tsx:61
-msgid "Timeline"
-msgstr ""
-
-#: assets/components/search/DomainResult.tsx:68
-msgid "Entities"
-msgstr ""
-
-#: assets/components/search/DomainSearchBar.tsx:23
-#: assets/components/tracking/watchlist/WatchlistForm.tsx:118
-msgid "This domain name does not appear to be valid"
+#: assets/components/RegisterForm.tsx:56
+#: assets/pages/LoginPage.tsx:25
+msgid "Register"
 msgstr ""
 
 #: assets/components/search/DomainLifecycleSteps.tsx:15
@@ -72,6 +83,96 @@ msgstr ""
 
 #: assets/components/search/DomainLifecycleSteps.tsx:28
 msgid "Pending Delete"
+msgstr ""
+
+#: assets/components/search/DomainResult.tsx:45
+msgid "EPP Status Codes"
+msgstr ""
+
+#: assets/components/search/DomainResult.tsx:61
+msgid "Timeline"
+msgstr ""
+
+#: assets/components/search/DomainResult.tsx:68
+msgid "Entities"
+msgstr ""
+
+#: assets/components/search/DomainSearchBar.tsx:23
+#: assets/components/tracking/watchlist/WatchlistForm.tsx:118
+msgid "This domain name does not appear to be valid"
+msgstr ""
+
+#: assets/components/Sider.tsx:28
+msgid "Home"
+msgstr ""
+
+#: assets/components/Sider.tsx:34
+msgid "Search"
+msgstr ""
+
+#: assets/components/Sider.tsx:40
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:46
+msgid "Domain"
+msgstr ""
+
+#: assets/components/Sider.tsx:41
+msgid "Domain Finder"
+msgstr ""
+
+#: assets/components/Sider.tsx:48
+#: assets/pages/search/TldPage.tsx:65
+msgid "TLD"
+msgstr ""
+
+#: assets/components/Sider.tsx:49
+msgid "TLD list"
+msgstr ""
+
+#: assets/components/Sider.tsx:56
+msgid "Entity"
+msgstr ""
+
+#: assets/components/Sider.tsx:57
+msgid "Entity Finder"
+msgstr ""
+
+#: assets/components/Sider.tsx:64
+msgid "Nameserver"
+msgstr ""
+
+#: assets/components/Sider.tsx:65
+msgid "Nameserver Finder"
+msgstr ""
+
+#: assets/components/Sider.tsx:73
+msgid "Tracking"
+msgstr ""
+
+#: assets/components/Sider.tsx:79
+msgid "My Watchlists"
+msgstr ""
+
+#: assets/components/Sider.tsx:86
+msgid "My Connectors"
+msgstr ""
+
+#: assets/components/Sider.tsx:95
+msgid "Statistics"
+msgstr ""
+
+#: assets/components/Sider.tsx:105
+#: assets/pages/UserPage.tsx:16
+msgid "My Account"
+msgstr ""
+
+#: assets/components/Sider.tsx:110
+msgid "Log out"
+msgstr ""
+
+#: assets/components/Sider.tsx:118
+#: assets/pages/LoginPage.tsx:25
+#: assets/pages/LoginPage.tsx:33
+msgid "Log in"
 msgstr ""
 
 #: assets/components/tracking/connector/ConnectorForm.tsx:40
@@ -183,6 +284,82 @@ msgstr ""
 msgid "No"
 msgstr ""
 
+#: assets/components/tracking/watchlist/CalendarWatchlistButton.tsx:14
+msgid "QR Code for iCalendar export"
+msgstr ""
+
+#: assets/components/tracking/watchlist/CalendarWatchlistButton.tsx:17
+msgid "Export events to iCalendar format"
+msgstr ""
+
+#: assets/components/tracking/watchlist/DeleteWatchlistButton.tsx:12
+#: assets/components/tracking/watchlist/DeleteWatchlistButton.tsx:19
+msgid "Delete the Watchlist"
+msgstr ""
+
+#: assets/components/tracking/watchlist/DeleteWatchlistButton.tsx:13
+msgid "Are you sure to delete this Watchlist?"
+msgstr ""
+
+#: assets/components/tracking/watchlist/diagram/ViewDiagramWatchlistButton.tsx:39
+msgid "View the Watchlist Entity Diagram"
+msgstr ""
+
+#: assets/components/tracking/watchlist/diagram/ViewDiagramWatchlistButton.tsx:44
+msgid "Watchlist Entity Diagram"
+msgstr ""
+
+#: assets/components/tracking/watchlist/diagram/watchlistToEdges.tsx:37
+msgid "Registry"
+msgstr ""
+
+#: assets/components/tracking/watchlist/diagram/watchlistToNodes.tsx:30
+#, javascript-format
+msgid ".${ tld.tld } Registry"
+msgstr ""
+
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:50
+msgid "Expiration date"
+msgstr ""
+
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:54
+msgid "Status"
+msgstr ""
+
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:58
+msgid "Updated at"
+msgstr ""
+
+#: assets/components/tracking/watchlist/UpdateWatchlistButton.tsx:31
+msgid "Edit the Watchlist"
+msgstr ""
+
+#: assets/components/tracking/watchlist/UpdateWatchlistButton.tsx:44
+msgid "Update a Watchlist"
+msgstr ""
+
+#: assets/components/tracking/watchlist/UpdateWatchlistButton.tsx:54
+msgid "Cancel"
+msgstr ""
+
+#: assets/components/tracking/watchlist/WatchlistCard.tsx:29
+#: assets/components/tracking/watchlist/WatchlistForm.tsx:106
+msgid "Domain names"
+msgstr ""
+
+#: assets/components/tracking/watchlist/WatchlistCard.tsx:33
+#: assets/components/tracking/watchlist/WatchlistForm.tsx:148
+msgid "Tracked events"
+msgstr ""
+
+#: assets/components/tracking/watchlist/WatchlistCard.tsx:47
+msgid "This Watchlist is not linked to a Connector."
+msgstr ""
+
+#: assets/components/tracking/watchlist/WatchlistCard.tsx:52
+msgid "Watchlist"
+msgstr ""
+
 #: assets/components/tracking/watchlist/WatchlistForm.tsx:72
 msgid "Name"
 msgstr ""
@@ -199,22 +376,12 @@ msgstr ""
 msgid "At least one domain name"
 msgstr ""
 
-#: assets/components/tracking/watchlist/WatchlistCard.tsx:29
-#: assets/components/tracking/watchlist/WatchlistForm.tsx:106
-msgid "Domain names"
-msgstr ""
-
 #: assets/components/tracking/watchlist/WatchlistForm.tsx:124
 msgid "Domain name"
 msgstr ""
 
 #: assets/components/tracking/watchlist/WatchlistForm.tsx:141
 msgid "Add a Domain name"
-msgstr ""
-
-#: assets/components/tracking/watchlist/WatchlistCard.tsx:33
-#: assets/components/tracking/watchlist/WatchlistForm.tsx:148
-msgid "Tracked events"
 msgstr ""
 
 #: assets/components/tracking/watchlist/WatchlistForm.tsx:150
@@ -252,148 +419,12 @@ msgstr ""
 msgid "Update"
 msgstr ""
 
-#: assets/components/tracking/watchlist/UpdateWatchlistButton.tsx:31
-msgid "Edit the Watchlist"
-msgstr ""
-
-#: assets/components/tracking/watchlist/UpdateWatchlistButton.tsx:44
-msgid "Update a Watchlist"
-msgstr ""
-
-#: assets/components/tracking/watchlist/UpdateWatchlistButton.tsx:54
-msgid "Cancel"
-msgstr ""
-
-#: assets/components/tracking/watchlist/diagram/ViewDiagramWatchlistButton.tsx:39
-msgid "View the Watchlist Entity Diagram"
-msgstr ""
-
-#: assets/components/tracking/watchlist/diagram/ViewDiagramWatchlistButton.tsx:44
-msgid "Watchlist Entity Diagram"
-msgstr ""
-
-#: assets/components/tracking/watchlist/diagram/watchlistToEdges.tsx:37
-msgid "Registry"
-msgstr ""
-
-#: assets/components/tracking/watchlist/diagram/watchlistToNodes.tsx:30
-#, javascript-format
-msgid ".${ tld.tld } Registry"
-msgstr ""
-
-#: assets/components/tracking/watchlist/CalendarWatchlistButton.tsx:14
-msgid "QR Code for iCalendar export"
-msgstr ""
-
-#: assets/components/tracking/watchlist/CalendarWatchlistButton.tsx:17
-msgid "Export events to iCalendar format"
-msgstr ""
-
-#: assets/components/tracking/watchlist/DeleteWatchlistButton.tsx:12
-#: assets/components/tracking/watchlist/DeleteWatchlistButton.tsx:19
-msgid "Delete the Watchlist"
-msgstr ""
-
-#: assets/components/tracking/watchlist/DeleteWatchlistButton.tsx:13
-msgid "Are you sure to delete this Watchlist?"
-msgstr ""
-
-#: assets/components/Sider.tsx:40
-#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:46
-msgid "Domain"
-msgstr ""
-
-#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:50
-msgid "Expiration date"
-msgstr ""
-
-#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:54
-msgid "Status"
-msgstr ""
-
-#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:58
-msgid "Updated at"
-msgstr ""
-
-#: assets/components/tracking/watchlist/WatchlistCard.tsx:47
-msgid "This Watchlist is not linked to a Connector."
-msgstr ""
-
-#: assets/components/tracking/watchlist/WatchlistCard.tsx:52
-msgid "Watchlist"
-msgstr ""
-
-#: assets/components/Sider.tsx:28
-msgid "Home"
-msgstr ""
-
-#: assets/components/Sider.tsx:34
-msgid "Search"
-msgstr ""
-
-#: assets/components/Sider.tsx:41
-msgid "Domain Finder"
-msgstr ""
-
-#: assets/components/Sider.tsx:48
-#: assets/pages/search/TldPage.tsx:65
-msgid "TLD"
-msgstr ""
-
-#: assets/components/Sider.tsx:49
-msgid "TLD list"
-msgstr ""
-
-#: assets/components/Sider.tsx:56
-msgid "Entity"
-msgstr ""
-
-#: assets/components/Sider.tsx:57
-msgid "Entity Finder"
-msgstr ""
-
-#: assets/components/Sider.tsx:64
-msgid "Nameserver"
-msgstr ""
-
-#: assets/components/Sider.tsx:65
-msgid "Nameserver Finder"
-msgstr ""
-
-#: assets/components/Sider.tsx:73
-msgid "Tracking"
-msgstr ""
-
-#: assets/components/Sider.tsx:79
-msgid "My Watchlists"
-msgstr ""
-
-#: assets/components/Sider.tsx:86
-msgid "My Connectors"
-msgstr ""
-
-#: assets/components/Sider.tsx:95
-msgid "Statistics"
-msgstr ""
-
-#: assets/components/Sider.tsx:105
-#: assets/pages/UserPage.tsx:16
-msgid "My Account"
-msgstr ""
-
-#: assets/components/Sider.tsx:110
-msgid "Log out"
-msgstr ""
-
-#: assets/components/Sider.tsx:118
-#: assets/pages/LoginPage.tsx:25
 #: assets/pages/LoginPage.tsx:33
-msgid "Log in"
+msgid "Create an account"
 msgstr ""
 
-#: assets/components/RegisterForm.tsx:56
-#: assets/pages/LoginPage.tsx:25
-msgid "Register"
+#: assets/pages/NotFoundPage.tsx:10
+msgid "Sorry, the page you visited does not exist."
 msgstr ""
 
 #: assets/pages/search/DomainSearchPage.tsx:18
@@ -475,6 +506,42 @@ msgid ""
 "their country of origin."
 msgstr ""
 
+#: assets/pages/StatisticsPage.tsx:34
+msgid "RDAP queries"
+msgstr ""
+
+#: assets/pages/StatisticsPage.tsx:43
+msgid "Alerts sent"
+msgstr ""
+
+#: assets/pages/StatisticsPage.tsx:57
+msgid "Domain names in database"
+msgstr ""
+
+#: assets/pages/StatisticsPage.tsx:68
+#: assets/pages/tracking/WatchlistPage.tsx:111
+msgid "Tracked domain names"
+msgstr ""
+
+#: assets/pages/StatisticsPage.tsx:82
+msgid "Purchased domain names"
+msgstr ""
+
+#: assets/pages/StatisticsPage.tsx:92
+msgid ""
+"This value is based on the status code of the HTTP response from the "
+"providers following the domain order."
+msgstr ""
+
+#: assets/pages/StatisticsPage.tsx:95
+msgid "Success rate"
+msgstr ""
+
+#: assets/pages/TextPage.tsx:26
+#, javascript-format
+msgid "📝 Please create the /public/content/${ resource } file."
+msgstr ""
+
 #: assets/pages/tracking/ConnectorsPage.tsx:20
 msgid "Connector created !"
 msgstr ""
@@ -495,56 +562,12 @@ msgstr ""
 msgid "Create a Watchlist"
 msgstr ""
 
-#: assets/pages/StatisticsPage.tsx:68
-#: assets/pages/tracking/WatchlistPage.tsx:111
-msgid "Tracked domain names"
-msgstr ""
-
-#: assets/pages/NotFoundPage.tsx:10
-msgid "Sorry, the page you visited does not exist."
-msgstr ""
-
-#: assets/pages/StatisticsPage.tsx:34
-msgid "RDAP queries"
-msgstr ""
-
-#: assets/pages/StatisticsPage.tsx:43
-msgid "Alerts sent"
-msgstr ""
-
-#: assets/pages/StatisticsPage.tsx:57
-msgid "Domain names in database"
-msgstr ""
-
-#: assets/pages/StatisticsPage.tsx:82
-msgid "Purchased domain names"
-msgstr ""
-
-#: assets/pages/StatisticsPage.tsx:92
-msgid ""
-"This value is based on the status code of the HTTP response from the "
-"providers following the domain order."
-msgstr ""
-
-#: assets/pages/StatisticsPage.tsx:95
-msgid "Success rate"
-msgstr ""
-
-#: assets/pages/LoginPage.tsx:33
-msgid "Create an account"
-msgstr ""
-
 #: assets/pages/UserPage.tsx:18
 msgid "Username"
 msgstr ""
 
 #: assets/pages/UserPage.tsx:21
 msgid "Roles"
-msgstr ""
-
-#: assets/pages/TextPage.tsx:26
-#, javascript-format
-msgid "📝 Please create the /public/content/${ resource } file."
 msgstr ""
 
 #: assets/utils/functions/rdapTranslation.ts:7
@@ -1041,27 +1064,4 @@ msgstr ""
 msgid ""
 "The domain is free but can be premium. Its price varies from one domain to "
 "another"
-msgstr ""
-
-#: assets/App.tsx:101
-msgid "TOS"
-msgstr ""
-
-#: assets/App.tsx:102
-msgid "Privacy Policy"
-msgstr ""
-
-#: assets/App.tsx:103
-msgid "FAQ"
-msgstr ""
-
-#: assets/App.tsx:105
-msgid "Documentation"
-msgstr ""
-
-#: assets/App.tsx:108
-#, javascript-format
-msgid ""
-"${ ProjectLink } is an open source project distributed under the ${ "
-"LicenseLink } license."
 msgstr ""
