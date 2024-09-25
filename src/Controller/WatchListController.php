@@ -34,6 +34,8 @@ use Sabre\VObject\InvalidDataException;
 use Sabre\VObject\ParseException;
 use Sabre\VObject\Reader;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
@@ -53,7 +55,9 @@ class WatchListController extends AbstractController
         private readonly HttpClientInterface $httpClient,
         private readonly CacheItemPoolInterface $cacheItemPool,
         private readonly KernelInterface $kernel,
-        private readonly ChatNotificationService $chatNotificationService
+        private readonly ChatNotificationService $chatNotificationService,
+        #[Autowire(service: 'service_container')]
+        private ContainerInterface $locator
     ) {
     }
 
@@ -182,9 +186,10 @@ class WatchListController extends AbstractController
 
         $connectorProviderClass = $connector->getProvider()->getConnectorProvider();
         /** @var AbstractProvider $connectorProvider */
-        $connectorProvider = new $connectorProviderClass($connector->getAuthData(), $this->httpClient, $this->cacheItemPool, $this->kernel);
+        $connectorProvider = $this->locator->get($connectorProviderClass);
 
         $connectorProvider::verifyAuthData($connector->getAuthData(), $this->httpClient); // We want to check if the tokens are OK
+        $connectorProvider->authenticate($connector->getAuthData());
         $supported = $connectorProvider->isSupported(...$watchList->getDomains()->toArray());
 
         if (!$supported) {
