@@ -83,7 +83,16 @@ class NamecheapConnector extends AbstractProvider
 
     public static function verifyAuthData(array $authData, HttpClientInterface $client): array
     {
-        return $authData;
+        // TODO call gettldlist to introspect authentication
+        // need to make verifyAuthData local to do this properly...
+
+        return [
+            'ApiUser' => $authData['ApiUser'],
+            'ApiKey' => $authData['ApiKey'],
+            'acceptConditions' => $authData['acceptConditions'],
+            'ownerLegalAge' => $authData['ownerLegalAge'],
+            'waiveRetractionPeriod' => $authData['waiveRetractionPeriod'],
+        ];
     }
 
     protected function getCachedTldList(): CacheItemInterface
