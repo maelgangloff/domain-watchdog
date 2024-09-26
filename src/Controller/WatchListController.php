@@ -53,8 +53,6 @@ class WatchListController extends AbstractController
         private readonly WatchListRepository $watchListRepository,
         private readonly LoggerInterface $logger,
         private readonly HttpClientInterface $httpClient,
-        private readonly CacheItemPoolInterface $cacheItemPool,
-        private readonly KernelInterface $kernel,
         private readonly ChatNotificationService $chatNotificationService,
         #[Autowire(service: 'service_container')]
         private ContainerInterface $locator
