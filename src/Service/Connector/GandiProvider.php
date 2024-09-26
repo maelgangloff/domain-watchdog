@@ -4,6 +4,7 @@ namespace App\Service\Connector;
 
 use App\Entity\Domain;
 use Psr\Cache\CacheItemInterface;
+use Psr\Cache\CacheItemPoolInterface;
 use Symfony\Component\HttpClient\HttpOptions;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
@@ -19,8 +20,9 @@ class GandiProvider extends AbstractProvider
 {
     private const BASE_URL = 'https://api.gandi.net';
 
-    public function __construct(private HttpClientInterface $client)
+    public function __construct(CacheItemPoolInterface $cacheItemPool, private HttpClientInterface $client)
     {
+        parent::__construct($cacheItemPool);
     }
 
     /**
