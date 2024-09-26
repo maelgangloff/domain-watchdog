@@ -29,8 +29,8 @@ class NamecheapConnector extends AbstractProvider
             throw new \Exception('Namecheap account requires at least one address to purchase a domain');
         }
 
-        $addressId = (string)$addresses->attributes()['AddressId'];
-        $address = (array)$this->call('namecheap.users.address.getinfo', ['AddressId' => $addressId], $dryRun)->GetAddressInfoResult;
+        $addressId = (string) $addresses->attributes()['AddressId'];
+        $address = (array) $this->call('namecheap.users.address.getinfo', ['AddressId' => $addressId], $dryRun)->GetAddressInfoResult;
 
         if (empty($address['PostalCode'])) {
             $address['PostalCode'] = $address['Zip'];
@@ -54,7 +54,7 @@ class NamecheapConnector extends AbstractProvider
     private static function mergePrefixKeys(string $prefix, array|object $src, array &$dest)
     {
         foreach ($src as $key => $value) {
-            $dest[$prefix . $key] = $value;
+            $dest[$prefix.$key] = $value;
         }
     }
 
