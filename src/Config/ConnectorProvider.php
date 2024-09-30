@@ -3,7 +3,7 @@
 namespace App\Config;
 
 use App\Service\Connector\GandiProvider;
-use App\Service\Connector\NamecheapConnector;
+use App\Service\Connector\NamecheapProvider;
 use App\Service\Connector\OvhProvider;
 
 enum ConnectorProvider: string
@@ -17,7 +17,7 @@ enum ConnectorProvider: string
         return match ($this) {
             ConnectorProvider::OVH => OvhProvider::class,
             ConnectorProvider::GANDI => GandiProvider::class,
-            ConnectorProvider::NAMECHEAP => NamecheapConnector::class,
+            ConnectorProvider::NAMECHEAP => NamecheapProvider::class,
         };
     }
 }

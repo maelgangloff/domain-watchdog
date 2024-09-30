@@ -7,10 +7,10 @@ use GuzzleHttp\Exception\ClientException;
 use Ovh\Api;
 use Ovh\Exceptions\InvalidParameterException;
 use Psr\Cache\CacheItemInterface;
+use Psr\Cache\CacheItemPoolInterface;
 use Psr\Cache\InvalidArgumentException;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\HttpKernel\Exception\HttpException;
-use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 class OvhProvider extends AbstractProvider
 {
@@ -41,8 +41,9 @@ class OvhProvider extends AbstractProvider
         ],
     ];
 
-    public function __construct(private HttpClientInterface $client)
+    public function __construct(CacheItemPoolInterface $cacheItemPool)
     {
+        parent::__construct($cacheItemPool);
     }
 
     /**
@@ -61,21 +62,19 @@ class OvhProvider extends AbstractProvider
             throw new \InvalidArgumentException('Domain name cannot be null');
         }
 
-        $authData = self::verifyAuthData($this->authData, $this->client);
-
-        $acceptConditions = $authData['acceptConditions'];
-        $ownerLegalAge = $authData['ownerLegalAge'];
-        $waiveRetractationPeriod = $authData['waiveRetractationPeriod'];
+        $acceptConditions = $this->authData['acceptConditions'];
+        $ownerLegalAge = $this->authData['ownerLegalAge'];
+        $waiveRetractationPeriod = $this->authData['waiveRetractationPeriod'];
 
         $conn = new Api(
-            $authData['appKey'],
-            $authData['appSecret'],
-            $authData['apiEndpoint'],
-            $authData['consumerKey']
+            $this->authData['appKey'],
+            $this->authData['appSecret'],
+            $this->authData['apiEndpoint'],
+            $this->authData['consumerKey']
         );
 
         $cart = $conn->post('/order/cart', [
-            'ovhSubsidiary' => $authData['ovhSubsidiary'],
+            'ovhSubsidiary' => $this->authData['ovhSubsidiary'],
             'description' => 'Domain Watchdog',
         ]);
         $cartId = $cart['cartId'];
@@ -85,8 +84,8 @@ class OvhProvider extends AbstractProvider
         ]);
 
         $pricingModes = ['create-default'];
-        if ('create-default' !== $authData['pricingMode']) {
-            $pricingModes[] = $authData['pricingMode'];
+        if ('create-default' !== $this->authData['pricingMode']) {
+            $pricingModes[] = $this->authData['pricingMode'];
         }
 
         $offer = array_filter($offers, fn ($offer) => 'create' === $offer['action']
@@ -135,7 +134,7 @@ class OvhProvider extends AbstractProvider
     /**
      * @throws \Exception
      */
-    public static function verifyAuthData(array $authData, HttpClientInterface $client): array
+    public function verifyAuthData(array $authData): array
     {
         $appKey = $authData['appKey'];
         $appSecret = $authData['appSecret'];
@@ -164,11 +163,26 @@ class OvhProvider extends AbstractProvider
             throw new HttpException(451, 'The user has not given explicit consent');
         }
 
+        return [
+            'appKey' => $appKey,
+            'appSecret' => $appSecret,
+            'apiEndpoint' => $apiEndpoint,
+            'consumerKey' => $consumerKey,
+            'ovhSubsidiary' => $ovhSubsidiary,
+            'pricingMode' => $pricingMode,
+            'acceptConditions' => $acceptConditions,
+            'ownerLegalAge' => $ownerLegalAge,
+            'waiveRetractationPeriod' => $waiveRetractationPeriod,
+        ];
+    }
+
+    public function assertAuthentication(): void
+    {
         $conn = new Api(
-            $appKey,
-            $appSecret,
-            $apiEndpoint,
-            $consumerKey
+            $this->authData['appKey'],
+            $this->authData['appSecret'],
+            $this->authData['apiEndpoint'],
+            $this->authData['consumerKey'],
         );
 
         try {
@@ -201,18 +215,6 @@ class OvhProvider extends AbstractProvider
                 throw new BadRequestHttpException('This Connector does not have enough permissions on the Provider API. Please recreate this Connector.');
             }
         }
-
-        return [
-            'appKey' => $appKey,
-            'appSecret' => $appSecret,
-            'apiEndpoint' => $apiEndpoint,
-            'consumerKey' => $consumerKey,
-            'ovhSubsidiary' => $ovhSubsidiary,
-            'pricingMode' => $pricingMode,
-            'acceptConditions' => $acceptConditions,
-            'ownerLegalAge' => $ownerLegalAge,
-            'waiveRetractationPeriod' => $waiveRetractationPeriod,
-        ];
     }
 
     /**
@@ -222,17 +224,15 @@ class OvhProvider extends AbstractProvider
      */
     protected function getSupportedTldList(): array
     {
-        $authData = self::verifyAuthData($this->authData, $this->client);
-
         $conn = new Api(
-            $authData['appKey'],
-            $authData['appSecret'],
-            $authData['apiEndpoint'],
-            $authData['consumerKey']
+            $this->authData['appKey'],
+            $this->authData['appSecret'],
+            $this->authData['apiEndpoint'],
+            $this->authData['consumerKey']
         );
 
         return $conn->get('/domain/extensions', [
-            'ovhSubsidiary' => $authData['ovhSubsidiary'],
+            'ovhSubsidiary' => $this->authData['ovhSubsidiary'],
         ]);
     }
 

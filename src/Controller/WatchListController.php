@@ -41,7 +41,6 @@ use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Serializer\SerializerInterface;
-use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 class WatchListController extends AbstractController
 {
@@ -50,7 +49,6 @@ class WatchListController extends AbstractController
         private readonly EntityManagerInterface $em,
         private readonly WatchListRepository $watchListRepository,
         private readonly LoggerInterface $logger,
-        private readonly HttpClientInterface $httpClient,
         private readonly ChatNotificationService $chatNotificationService,
         #[Autowire(service: 'service_container')]
         private ContainerInterface $locator
@@ -184,7 +182,6 @@ class WatchListController extends AbstractController
         /** @var AbstractProvider $connectorProvider */
         $connectorProvider = $this->locator->get($connectorProviderClass);
 
-        $connectorProvider::verifyAuthData($connector->getAuthData(), $this->httpClient); // We want to check if the tokens are OK
         $connectorProvider->authenticate($connector->getAuthData());
         $supported = $connectorProvider->isSupported(...$watchList->getDomains()->toArray());
 

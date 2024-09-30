@@ -43,17 +43,15 @@ class GandiProvider extends AbstractProvider
             throw new \InvalidArgumentException('Domain name cannot be null');
         }
 
-        $authData = self::verifyAuthData($this->authData, $this->client);
-
         $user = $this->client->request('GET', '/v5/organization/user-info', (new HttpOptions())
-            ->setAuthBearer($authData['token'])
+            ->setAuthBearer($this->authData['token'])
             ->setHeader('Accept', 'application/json')
             ->setBaseUri(self::BASE_URL)
             ->toArray()
         )->toArray();
 
         $httpOptions = (new HttpOptions())
-            ->setAuthBearer($authData['token'])
+            ->setAuthBearer($this->authData['token'])
             ->setHeader('Accept', 'application/json')
             ->setBaseUri(self::BASE_URL)
             ->setHeader('Dry-Run', $dryRun ? '1' : '0')
@@ -74,9 +72,9 @@ class GandiProvider extends AbstractProvider
                 'tld_period' => 'golive',
             ]);
 
-        if (array_key_exists('sharingId', $authData)) {
+        if (array_key_exists('sharingId', $this->authData)) {
             $httpOptions->setQuery([
-                'sharing_id' => $authData['sharingId'],
+                'sharing_id' => $this->authData['sharingId'],
             ]);
         }
 
@@ -91,7 +89,7 @@ class GandiProvider extends AbstractProvider
     /**
      * @throws TransportExceptionInterface
      */
-    public static function verifyAuthData(array $authData, HttpClientInterface $client): array
+    public function verifyAuthData(array $authData): array
     {
         $token = $authData['token'];
 
@@ -111,17 +109,6 @@ class GandiProvider extends AbstractProvider
             throw new HttpException(451, 'The user has not given explicit consent');
         }
 
-        $response = $client->request('GET', '/v5/organization/user-info', (new HttpOptions())
-            ->setAuthBearer($token)
-            ->setHeader('Accept', 'application/json')
-            ->setBaseUri(self::BASE_URL)
-            ->toArray()
-        );
-
-        if (Response::HTTP_OK !== $response->getStatusCode()) {
-            throw new BadRequestHttpException('The status of these credentials is not valid');
-        }
-
         $authDataReturned = [
             'token' => $token,
             'acceptConditions' => $acceptConditions,
@@ -136,6 +123,20 @@ class GandiProvider extends AbstractProvider
         return $authDataReturned;
     }
 
+    public function assertAuthentication(): void
+    {
+        $response = $this->client->request('GET', '/v5/organization/user-info', (new HttpOptions())
+            ->setAuthBearer($this->authData['token'])
+            ->setHeader('Accept', 'application/json')
+            ->setBaseUri(self::BASE_URL)
+            ->toArray()
+        );
+
+        if (Response::HTTP_OK !== $response->getStatusCode()) {
+            throw new BadRequestHttpException('The status of these credentials is not valid');
+        }
+    }
+
     /**
      * @throws TransportExceptionInterface
      * @throws ServerExceptionInterface
@@ -145,10 +146,8 @@ class GandiProvider extends AbstractProvider
      */
     protected function getSupportedTldList(): array
     {
-        $authData = self::verifyAuthData($this->authData, $this->client);
-
         $response = $this->client->request('GET', '/v5/domain/tlds', (new HttpOptions())
-            ->setAuthBearer($authData['token'])
+            ->setAuthBearer($this->authData['token'])
             ->setHeader('Accept', 'application/json')
             ->setBaseUri(self::BASE_URL)
             ->toArray())->toArray();

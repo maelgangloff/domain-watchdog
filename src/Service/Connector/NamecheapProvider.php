@@ -9,7 +9,7 @@ use Symfony\Component\DependencyInjection\Attribute\Autoconfigure;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 #[Autoconfigure(public: true)]
-class NamecheapConnector extends AbstractProvider
+class NamecheapProvider extends AbstractProvider
 {
     public const BASE_URL = 'https://api.namecheap.com/xml.response';
 
@@ -81,18 +81,19 @@ class NamecheapConnector extends AbstractProvider
         return $data->CommandResponse;
     }
 
-    public static function verifyAuthData(array $authData, HttpClientInterface $client): array
+    public function verifyAuthData(array $authData): array
     {
-        // TODO call gettldlist to introspect authentication
-        // need to make verifyAuthData local to do this properly...
-
         return [
             'ApiUser' => $authData['ApiUser'],
             'ApiKey' => $authData['ApiKey'],
             'acceptConditions' => $authData['acceptConditions'],
             'ownerLegalAge' => $authData['ownerLegalAge'],
-            'waiveRetractionPeriod' => $authData['waiveRetractionPeriod'],
         ];
+    }
+
+    public function assertAuthentication(): void
+    {
+        $this->call('namecheap.domains.gettldlist', [], false);
     }
 
     protected function getCachedTldList(): CacheItemInterface
