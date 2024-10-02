@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2024-09-09 09:41+0000\n"
+"PO-Revision-Date: 2024-10-02 16:05+0000\n"
 "Last-Translator: Maël Gangloff <contact@maelgangloff.fr>\n"
 "Language-Team: French <https://weblate.vinceh121.me/projects/domain-watchdog/"
 "domain-watchdog-dashboard/fr/>\n"
@@ -228,7 +228,7 @@ msgstr "Nom d'utilisateur"
 
 #: assets/components/tracking/connector/ConnectorForm.tsx:144
 msgid "API key"
-msgstr ""
+msgstr "Clé API"
 
 #: assets/components/tracking/connector/ConnectorForm.tsx:156
 msgid "API Terms of Service"
@@ -1231,6 +1231,8 @@ msgid ""
 "Retreive an API key and whitelist this instance's IP address on Namecheap's "
 "website"
 msgstr ""
+"Récupérez une clé API et ajoutez l'adresse IP de cette instance à la liste "
+"blanche sur le site Web de Namecheap"
 
 #: assets/utils/providers/ovh.tsx:5
 msgid "Application key"
