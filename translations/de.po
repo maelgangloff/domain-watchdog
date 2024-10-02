@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2024-09-09 09:41+0000\n"
+"PO-Revision-Date: 2024-10-02 16:06+0000\n"
 "Last-Translator: Maël Gangloff <contact@maelgangloff.fr>\n"
 "Language-Team: German <https://weblate.vinceh121.me/projects/domain-watchdog/"
 "domain-watchdog-dashboard/de/>\n"
@@ -48,9 +48,9 @@ msgstr "E-Mail-Adresse"
 #: assets/components/tracking/connector/ConnectorForm.tsx:84
 #: assets/components/tracking/connector/ConnectorForm.tsx:92
 #: assets/components/tracking/connector/ConnectorForm.tsx:122
-#: assets/components/tracking/connector/ConnectorForm.tsx:142
-#: assets/components/tracking/connector/ConnectorForm.tsx:156
-#: assets/components/tracking/connector/ConnectorForm.tsx:165
+#: assets/components/tracking/connector/ConnectorForm.tsx:158
+#: assets/components/tracking/connector/ConnectorForm.tsx:172
+#: assets/components/tracking/connector/ConnectorForm.tsx:181
 #: assets/components/tracking/watchlist/WatchlistForm.tsx:115
 #: assets/components/tracking/watchlist/WatchlistForm.tsx:212
 msgid "Required"
@@ -220,11 +220,20 @@ msgstr "Freigabe-ID der Organisation"
 msgid "It indicates the organization that will pay for the ordered product"
 msgstr "Es gibt die Organisation an, die für das bestellte Produkt bezahlt"
 
-#: assets/components/tracking/connector/ConnectorForm.tsx:140
+#: assets/components/tracking/connector/ConnectorForm.tsx:138
+#: assets/pages/UserPage.tsx:18
+msgid "Username"
+msgstr "Benutzername"
+
+#: assets/components/tracking/connector/ConnectorForm.tsx:144
+msgid "API key"
+msgstr "API-Schlüssel"
+
+#: assets/components/tracking/connector/ConnectorForm.tsx:156
 msgid "API Terms of Service"
 msgstr "API-Nutzungsbedingungen"
 
-#: assets/components/tracking/connector/ConnectorForm.tsx:148
+#: assets/components/tracking/connector/ConnectorForm.tsx:164
 msgid ""
 "I have read and accepted the conditions of use of the Provider API, "
 "accessible from this hyperlink"
@@ -232,21 +241,21 @@ msgstr ""
 "Ich habe die Nutzungsbedingungen der Provider-API gelesen und akzeptiert, "
 "die über diesen Hyperlink zugänglich sind"
 
-#: assets/components/tracking/connector/ConnectorForm.tsx:154
+#: assets/components/tracking/connector/ConnectorForm.tsx:170
 msgid "Legal age"
 msgstr "Volljährigkeit"
 
-#: assets/components/tracking/connector/ConnectorForm.tsx:159
+#: assets/components/tracking/connector/ConnectorForm.tsx:175
 msgid "I am of the minimum age required to consent to these conditions"
 msgstr ""
 "Ich habe das erforderliche Mindestalter erreicht, um diesen Bedingungen "
 "zuzustimmen"
 
-#: assets/components/tracking/connector/ConnectorForm.tsx:163
+#: assets/components/tracking/connector/ConnectorForm.tsx:179
 msgid "Withdrawal period"
 msgstr "Rücktrittsfrist"
 
-#: assets/components/tracking/connector/ConnectorForm.tsx:168
+#: assets/components/tracking/connector/ConnectorForm.tsx:184
 msgid ""
 "I waive my right of withdrawal regarding the purchase of domain names via "
 "the Provider's API"
@@ -254,12 +263,12 @@ msgstr ""
 "Ich verzichte auf mein Widerrufsrecht beim Kauf von Domainnamen über die API "
 "des Anbieters"
 
-#: assets/components/tracking/connector/ConnectorForm.tsx:176
+#: assets/components/tracking/connector/ConnectorForm.tsx:192
 #: assets/components/tracking/watchlist/WatchlistForm.tsx:252
 msgid "Create"
 msgstr "Erstellen"
 
-#: assets/components/tracking/connector/ConnectorForm.tsx:179
+#: assets/components/tracking/connector/ConnectorForm.tsx:195
 #: assets/components/tracking/watchlist/WatchlistForm.tsx:255
 msgid "Reset"
 msgstr "Zurücksetzen"
@@ -603,10 +612,6 @@ msgstr "Watchlist aktualisiert !"
 #: assets/pages/tracking/WatchlistPage.tsx:102
 msgid "Create a Watchlist"
 msgstr "Erstellen Sie eine Watchlist"
-
-#: assets/pages/UserPage.tsx:18
-msgid "Username"
-msgstr "Benutzername"
 
 #: assets/pages/UserPage.tsx:21
 msgid "Roles"
@@ -1221,6 +1226,14 @@ msgid ""
 msgstr ""
 "Abrufen eines persönlichen Zugriffstokens aus Ihrem Kundenkonto auf der "
 "Website des Anbieters"
+
+#: assets/utils/providers/index.tsx:20
+msgid ""
+"Retreive an API key and whitelist this instance's IP address on Namecheap's "
+"website"
+msgstr ""
+"Rufen Sie einen API-Schlüssel ab und setzen Sie die IP-Adresse dieser "
+"Instanz auf die Whitelist der Website von Namecheap"
 
 #: assets/utils/providers/ovh.tsx:5
 msgid "Application key"
