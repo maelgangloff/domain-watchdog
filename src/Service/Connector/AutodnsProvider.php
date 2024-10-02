@@ -1,9 +1,11 @@
 <?php
 
-namespace App\Config\Provider;
+namespace App\Service\Connector;
 
 use App\Entity\Domain;
 use Psr\Cache\CacheItemInterface;
+use Psr\Cache\CacheItemPoolInterface;
+use Psr\Cache\InvalidArgumentException;
 use Symfony\Component\HttpClient\HttpOptions;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
@@ -17,6 +19,11 @@ use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 class AutodnsProvider extends AbstractProvider
 {
+    public function __construct(CacheItemPoolInterface $cacheItemPool, private readonly HttpClientInterface $client)
+    {
+        parent::__construct($cacheItemPool);
+    }
+
     private const BASE_URL = 'https://api.autodns.com';
 
     /**
@@ -37,9 +44,7 @@ class AutodnsProvider extends AbstractProvider
             throw new \InvalidArgumentException('Domain name cannot be null');
         }
 
-        $authData = self::verifyAuthData($this->authData, $this->client);
-
-        if($dryRun) {
+        if ($dryRun) {
             return;
         }
 
@@ -47,49 +52,55 @@ class AutodnsProvider extends AbstractProvider
             'POST',
             '/v1/domain',
             (new HttpOptions())
-                ->setAuthBasic($authData['username'], $authData['password'])
+                ->setAuthBasic($this->authData['username'], $this->authData['password'])
                 ->setHeader('Accept', 'application/json')
-                ->setHeader('X-Domainrobot-Context', $authData['context'])
-
+                ->setHeader('X-Domainrobot-Context', $this->authData['context'])
                 ->setBaseUri(self::BASE_URL)
                 ->setJson([
                     'name' => $ldhName,
                     'ownerc' => [
-                        'id' => $authData['contactid'],
+                        'id' => $this->authData['contactid'],
                     ],
                     'adminc' => [
-                        'id' => $authData['contactid'],
+                        'id' => $this->authData['contactid'],
                     ],
                     'techc' => [
-                        'id' => $authData['contactid'],
+                        'id' => $this->authData['contactid'],
                     ],
-                    'confirmOrder' => $authData['ownerConfirm'],
+                    'confirmOrder' => $this->authData['ownerConfirm'],
                     'nameServers' => [
                         [
-                            'name' => 'a.ns14.net'
+                            'name' => 'a.ns14.net',
                         ],
                         [
-                            'name' => 'b.ns14.net'
+                            'name' => 'b.ns14.net',
                         ],
                         [
-                            'name' => 'c.ns14.net'
+                            'name' => 'c.ns14.net',
                         ],
                         [
-                            'name' => 'd.ns14.net'
+                            'name' => 'd.ns14.net',
                         ],
-                    ]
+                    ],
                 ])
                 ->toArray()
         )->toArray();
     }
 
+    /**
+     * @throws RedirectionExceptionInterface
+     * @throws DecodingExceptionInterface
+     * @throws ClientExceptionInterface
+     * @throws TransportExceptionInterface
+     * @throws ServerExceptionInterface
+     */
     public function registerZone(Domain $domain, bool $dryRun = false): void
     {
         $authData = $this->authData;
 
         $ldhName = $domain->getLdhName();
 
-        if($dryRun) {
+        if ($dryRun) {
             return;
         }
 
@@ -100,7 +111,6 @@ class AutodnsProvider extends AbstractProvider
                 ->setAuthBasic($authData['username'], $authData['password'])
                 ->setHeader('Accept', 'application/json')
                 ->setHeader('X-Domainrobot-Context', $authData['context'])
-
                 ->setBaseUri(self::BASE_URL)
                 ->setJson([
                     'filters' => [
@@ -108,7 +118,7 @@ class AutodnsProvider extends AbstractProvider
                             'key' => 'name',
                             'value' => $ldhName,
                             'operator' => 'EQUAL',
-                        ]
+                        ],
                     ],
                 ])
                 ->toArray()
@@ -126,48 +136,42 @@ class AutodnsProvider extends AbstractProvider
                     ->setAuthBasic($authData['username'], $authData['password'])
                     ->setHeader('Accept', 'application/json')
                     ->setHeader('X-Domainrobot-Context', $authData['context'])
-
                     ->setBaseUri(self::BASE_URL)
                     ->setJson([
                         'origin' => $ldhName,
                         'main' => [
-                            'address' => $authData['dns_ip']
+                            'address' => $authData['dns_ip'],
                         ],
                         'soa' => [
                             'refresh' => 3600,
                             'retry' => 7200,
                             'expire' => 604800,
-                            'ttl' => 600
+                            'ttl' => 600,
                         ],
                         'action' => 'COMPLETE',
                         'wwwInclude' => true,
                         'nameServers' => [
                             [
-                                'name' => 'a.ns14.net'
+                                'name' => 'a.ns14.net',
                             ],
                             [
-                                'name' => 'b.ns14.net'
+                                'name' => 'b.ns14.net',
                             ],
                             [
-                                'name' => 'c.ns14.net'
+                                'name' => 'c.ns14.net',
                             ],
                             [
-                                'name' => 'd.ns14.net'
+                                'name' => 'd.ns14.net',
                             ],
-                        ]
-
+                        ],
                     ])
                     ->toArray()
             )->toArray();
         }
     }
-    
-    /**
-     * @throws TransportExceptionInterface
-     */
-    public static function verifyAuthData(array $authData, HttpClientInterface $client): array
-    {
 
+    public function verifyAuthData(array $authData): array
+    {
         $username = $authData['username'];
         $password = $authData['password'];
 
@@ -187,33 +191,22 @@ class AutodnsProvider extends AbstractProvider
 
         if (
             true !== $acceptConditions
-            || empty($authData['ownerConfirm'])
+            || true !== $authData['ownerConfirm']
             || true !== $ownerLegalAge
             || true !== $waiveRetractationPeriod
         ) {
             throw new HttpException(451, 'The user has not given explicit consent');
         }
 
-        try {
-            $response = $client->request(
-                'GET',
-                '/v1/hello',
-                (new HttpOptions())
-                    ->setAuthBasic($authData['username'], $authData['password'])
-                    ->setHeader('Accept', 'application/json')
-                    ->setHeader('X-Domainrobot-Context', $authData['context'])
-                    ->setBaseUri(self::BASE_URL)
-                    ->toArray()
-            );
-        } catch (\Exception $exp) {
-            throw new BadRequestHttpException('Invalid Login');
-        }
-
-        if (Response::HTTP_OK !== $response->getStatusCode()) {
-            throw new BadRequestHttpException('The status of these credentials is not valid');
-        }
-
-        return $authData;
+        return [
+            'username' => $authData['username'],
+            'password' => $authData['password'],
+            'acceptConditions' => $authData['acceptConditions'],
+            'ownerLegalAge' => $authData['ownerLegalAge'],
+            'ownerConfirm' => $authData['ownerConfirm'],
+            'waiveRetractationPeriod' => $authData['waiveRetractationPeriod'],
+            'context' => $authData['context'],
+        ];
     }
 
     public function isSupported(Domain ...$domainList): bool
@@ -221,14 +214,41 @@ class AutodnsProvider extends AbstractProvider
         return true;
     }
 
-    protected function getSupportedTldList(): array { 
+    protected function getSupportedTldList(): array
+    {
         return [];
     }
+
     /**
-     * @throws \Psr\Cache\InvalidArgumentException
+     * @throws InvalidArgumentException
      */
     protected function getCachedTldList(): CacheItemInterface
     {
         return $this->cacheItemPool->getItem('app.provider.autodns.supported-tld');
+    }
+
+    /**
+     * @throws TransportExceptionInterface
+     */
+    public function assertAuthentication(): void
+    {
+        try {
+            $response = $this->client->request(
+                'GET',
+                '/v1/hello',
+                (new HttpOptions())
+                    ->setAuthBasic($this->authData['username'], $this->authData['password'])
+                    ->setHeader('Accept', 'application/json')
+                    ->setHeader('X-Domainrobot-Context', $this->authData['context'])
+                    ->setBaseUri(self::BASE_URL)
+                    ->toArray()
+            );
+        } catch (\Exception) {
+            throw new BadRequestHttpException('Invalid Login');
+        }
+
+        if (Response::HTTP_OK !== $response->getStatusCode()) {
+            throw new BadRequestHttpException('The status of these credentials is not valid');
+        }
     }
 }

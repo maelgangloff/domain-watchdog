@@ -1,4 +1,4 @@
-import {Alert, Button, Checkbox, Form, FormInstance, Input, Popconfirm, Select, Space, Typography } from "antd";
+import {Alert, Button, Checkbox, Form, FormInstance, Input, Popconfirm, Select, Space, Typography} from "antd";
 import React, {useState} from "react";
 import {Connector, ConnectorProvider} from "../../../utils/api/connectors";
 import {t} from "ttag";
@@ -134,9 +134,10 @@ export function ConnectorForm({form, onCreate}: { form: FormInstance, onCreate: 
         }
         {
             provider === ConnectorProvider.AUTODNS && <>
-                <Alert message={t`Because of some limitations in API of AutoDNS, we suggest to create an dedicated user for API with limited rights.`} type="info" />
-                <Alert message={t`This provider does not provide a list of supported TLD. Please double check if the domain you want to register is supported.`} type="warning" />
-                <br />
+                <Alert
+                    message={t`This provider does not provide a list of supported TLD. Please double check if the domain you want to register is supported.`}
+                    type="warning"/>
+                <br/>
                 <Form.Item
                     label={t`AutoDNS Username`}
                     name={['authData', 'username']}
@@ -156,8 +157,9 @@ export function ConnectorForm({form, onCreate}: { form: FormInstance, onCreate: 
                     label={t`Domain Contact Handle ID`}
                     name={['authData', 'contactid']}
                     help={<Typography.Text
-                        type='secondary'>{t`The Contact ID for ownership of registered Domains. `}<a href="https://cloud.autodns.com/contacts/domain">{t`You got from this page`}</a></Typography.Text>}
-                        rules={[{required: true, message: t`Required`}]}
+                        type='secondary'>{t`The Contact ID for ownership of registered Domains. `}<a
+                        href="https://cloud.autodns.com/contacts/domain">{t`You got from this page`}</a></Typography.Text>}
+                    rules={[{required: true, message: t`Required`}]}
                     required={true}>
                     <Input autoComplete='off' required={true} placeholder=''/>
                 </Form.Item>
@@ -169,20 +171,36 @@ export function ConnectorForm({form, onCreate}: { form: FormInstance, onCreate: 
                         type='secondary'>{t`If you not sure, use the default value 4`}</Typography.Text>}
 
                     required={false}>
-                    <Input autoComplete='off' required={false} placeholder='4' />
+                    <Input autoComplete='off' required={false} placeholder='4'/>
                 </Form.Item>
 
                 <Form.Item
                     valuePropName='checked'
                     label={t`Owner confirmation`}
                     name={['authData', 'ownerConfirm']}
-                    
+
                     rules={[{required: true, message: t`Required`}]}
                 >
                     <Checkbox
                         required={true}>{t`Owner confirms his consent of domain order jobs`}</Checkbox>
-                </Form.Item>                
+                </Form.Item>
+            </>
 
+        }
+        {
+            provider === ConnectorProvider.NAMECHEAP && <>
+                <Form.Item
+                    label={t`Username`}
+                    name={['authData', 'ApiUser']}
+                >
+                    <Input autoComplete='off'></Input>
+                </Form.Item>
+                <Form.Item
+                    label={t`API key`}
+                    name={['authData', 'ApiKey']}
+                >
+                    <Input autoComplete='off'></Input>
+                </Form.Item>
             </>
         }
 

@@ -2,7 +2,6 @@
 
 namespace App\MessageHandler;
 
-use App\Config\Provider\AbstractProvider;
 use App\Entity\Domain;
 use App\Entity\WatchList;
 use App\Message\OrderDomain;
@@ -11,16 +10,17 @@ use App\Notifier\DomainOrderNotification;
 use App\Repository\DomainRepository;
 use App\Repository\WatchListRepository;
 use App\Service\ChatNotificationService;
+use App\Service\Connector\AbstractProvider;
 use App\Service\StatService;
-use Psr\Cache\CacheItemPoolInterface;
 use Psr\Log\LoggerInterface;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 use Symfony\Component\Mime\Address;
 use Symfony\Component\Notifier\Recipient\Recipient;
-use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 #[AsMessageHandler]
 final readonly class OrderDomainHandler
@@ -33,12 +33,12 @@ final readonly class OrderDomainHandler
         private WatchListRepository $watchListRepository,
         private DomainRepository $domainRepository,
         private KernelInterface $kernel,
-        private HttpClientInterface $client,
-        private CacheItemPoolInterface $cacheItemPool,
         private MailerInterface $mailer,
         private LoggerInterface $logger,
         private StatService $statService,
-        private ChatNotificationService $chatNotificationService
+        private ChatNotificationService $chatNotificationService,
+        #[Autowire(service: 'service_container')]
+        private ContainerInterface $locator
     ) {
         $this->sender = new Address($mailerSenderEmail, $mailerSenderName);
     }
@@ -72,7 +72,8 @@ final readonly class OrderDomainHandler
                 $connectorProviderClass = $provider->getConnectorProvider();
 
                 /** @var AbstractProvider $connectorProvider */
-                $connectorProvider = new $connectorProviderClass($connector->getAuthData(), $this->client, $this->cacheItemPool, $this->kernel);
+                $connectorProvider = $this->locator->get($connectorProviderClass);
+                $connectorProvider->authenticate($connector->getAuthData());
 
                 $connectorProvider->orderDomain($domain, $this->kernel->isDebug());
                 $this->statService->incrementStat('stats.domain.purchased');

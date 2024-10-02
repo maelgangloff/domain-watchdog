@@ -3,6 +3,29 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Plural-Forms: nplurals=2; plural=(n!=1);\n"
 
+#: assets/App.tsx:101
+msgid "TOS"
+msgstr ""
+
+#: assets/App.tsx:102
+msgid "Privacy Policy"
+msgstr ""
+
+#: assets/App.tsx:103
+msgid "FAQ"
+msgstr ""
+
+#: assets/App.tsx:105
+msgid "Documentation"
+msgstr ""
+
+#: assets/App.tsx:108
+#, javascript-format
+msgid ""
+"${ ProjectLink } is an open source project distributed under the ${ "
+"LicenseLink } license."
+msgstr ""
+
 #: assets/components/LoginForm.tsx:52
 #: assets/components/RegisterForm.tsx:39
 msgid "Email address"
@@ -19,9 +42,13 @@ msgstr ""
 #: assets/components/tracking/connector/ConnectorForm.tsx:84
 #: assets/components/tracking/connector/ConnectorForm.tsx:92
 #: assets/components/tracking/connector/ConnectorForm.tsx:122
-#: assets/components/tracking/connector/ConnectorForm.tsx:142
-#: assets/components/tracking/connector/ConnectorForm.tsx:156
-#: assets/components/tracking/connector/ConnectorForm.tsx:165
+#: assets/components/tracking/connector/ConnectorForm.tsx:146
+#: assets/components/tracking/connector/ConnectorForm.tsx:152
+#: assets/components/tracking/connector/ConnectorForm.tsx:162
+#: assets/components/tracking/connector/ConnectorForm.tsx:182
+#: assets/components/tracking/connector/ConnectorForm.tsx:213
+#: assets/components/tracking/connector/ConnectorForm.tsx:227
+#: assets/components/tracking/connector/ConnectorForm.tsx:236
 #: assets/components/tracking/watchlist/WatchlistForm.tsx:115
 #: assets/components/tracking/watchlist/WatchlistForm.tsx:212
 msgid "Required"
@@ -40,21 +67,9 @@ msgstr ""
 msgid "Log in with SSO"
 msgstr ""
 
-#: assets/components/search/DomainResult.tsx:45
-msgid "EPP Status Codes"
-msgstr ""
-
-#: assets/components/search/DomainResult.tsx:61
-msgid "Timeline"
-msgstr ""
-
-#: assets/components/search/DomainResult.tsx:68
-msgid "Entities"
-msgstr ""
-
-#: assets/components/search/DomainSearchBar.tsx:23
-#: assets/components/tracking/watchlist/WatchlistForm.tsx:118
-msgid "This domain name does not appear to be valid"
+#: assets/components/RegisterForm.tsx:56
+#: assets/pages/LoginPage.tsx:25
+msgid "Register"
 msgstr ""
 
 #: assets/components/search/DomainLifecycleSteps.tsx:15
@@ -74,253 +89,21 @@ msgstr ""
 msgid "Pending Delete"
 msgstr ""
 
-#: assets/components/tracking/connector/ConnectorForm.tsx:40
-msgid "Provider"
+#: assets/components/search/DomainResult.tsx:45
+msgid "EPP Status Codes"
 msgstr ""
 
-#: assets/components/tracking/connector/ConnectorForm.tsx:47
-msgid "Please select a Provider"
+#: assets/components/search/DomainResult.tsx:61
+msgid "Timeline"
 msgstr ""
 
-#: assets/components/tracking/connector/ConnectorForm.tsx:75
-msgid "OVH Endpoint"
+#: assets/components/search/DomainResult.tsx:68
+msgid "Entities"
 msgstr ""
 
-#: assets/components/tracking/connector/ConnectorForm.tsx:82
-msgid "OVH subsidiary"
-msgstr ""
-
-#: assets/components/tracking/connector/ConnectorForm.tsx:90
-msgid "OVH pricing mode"
-msgstr ""
-
-#: assets/components/tracking/connector/ConnectorForm.tsx:95
-msgid "Confirm pricing mode"
-msgstr ""
-
-#: assets/components/tracking/connector/ConnectorForm.tsx:96
-msgid ""
-"Are you sure about this setting? This may result in additional charges from "
-"the API Provider"
-msgstr ""
-
-#: assets/components/tracking/connector/ConnectorForm.tsx:120
-msgid "Personal Access Token (PAT)"
-msgstr ""
-
-#: assets/components/tracking/connector/ConnectorForm.tsx:126
-msgid "Organization sharing ID"
-msgstr ""
-
-#: assets/components/tracking/connector/ConnectorForm.tsx:129
-msgid "It indicates the organization that will pay for the ordered product"
-msgstr ""
-
-#: assets/components/tracking/connector/ConnectorForm.tsx:140
-msgid "API Terms of Service"
-msgstr ""
-
-#: assets/components/tracking/connector/ConnectorForm.tsx:148
-msgid ""
-"I have read and accepted the conditions of use of the Provider API, "
-"accessible from this hyperlink"
-msgstr ""
-
-#: assets/components/tracking/connector/ConnectorForm.tsx:154
-msgid "Legal age"
-msgstr ""
-
-#: assets/components/tracking/connector/ConnectorForm.tsx:159
-msgid "I am of the minimum age required to consent to these conditions"
-msgstr ""
-
-#: assets/components/tracking/connector/ConnectorForm.tsx:163
-msgid "Withdrawal period"
-msgstr ""
-
-#: assets/components/tracking/connector/ConnectorForm.tsx:168
-msgid ""
-"I waive my right of withdrawal regarding the purchase of domain names via "
-"the Provider's API"
-msgstr ""
-
-#: assets/components/tracking/connector/ConnectorForm.tsx:176
-#: assets/components/tracking/watchlist/WatchlistForm.tsx:252
-msgid "Create"
-msgstr ""
-
-#: assets/components/tracking/connector/ConnectorForm.tsx:179
-#: assets/components/tracking/watchlist/WatchlistForm.tsx:255
-msgid "Reset"
-msgstr ""
-
-#: assets/components/tracking/connector/ConnectorsList.tsx:18
-msgid ""
-"An error occurred while deleting the Connector. Make sure it is not used in "
-"any Watchlist"
-msgstr ""
-
-#: assets/components/tracking/connector/ConnectorsList.tsx:25
-#, javascript-format
-msgid "Connector ${ connector.provider }"
-msgstr ""
-
-#: assets/components/tracking/connector/ConnectorsList.tsx:28
-msgid "Delete the Connector"
-msgstr ""
-
-#: assets/components/tracking/connector/ConnectorsList.tsx:29
-msgid "Are you sure to delete this Connector?"
-msgstr ""
-
-#: assets/components/tracking/connector/ConnectorsList.tsx:31
-#: assets/components/tracking/watchlist/DeleteWatchlistButton.tsx:15
-msgid "Yes"
-msgstr ""
-
-#: assets/components/tracking/connector/ConnectorsList.tsx:32
-#: assets/components/tracking/watchlist/DeleteWatchlistButton.tsx:16
-msgid "No"
-msgstr ""
-
-#: assets/components/tracking/watchlist/WatchlistForm.tsx:72
-msgid "Name"
-msgstr ""
-
-#: assets/components/tracking/watchlist/WatchlistForm.tsx:83
-msgid "Watchlist Name"
-msgstr ""
-
-#: assets/components/tracking/watchlist/WatchlistForm.tsx:84
-msgid "Naming the Watchlist makes it easier to find in the list below."
-msgstr ""
-
-#: assets/components/tracking/watchlist/WatchlistForm.tsx:95
-msgid "At least one domain name"
-msgstr ""
-
-#: assets/components/tracking/watchlist/WatchlistCard.tsx:29
-#: assets/components/tracking/watchlist/WatchlistForm.tsx:106
-msgid "Domain names"
-msgstr ""
-
-#: assets/components/tracking/watchlist/WatchlistForm.tsx:124
-msgid "Domain name"
-msgstr ""
-
-#: assets/components/tracking/watchlist/WatchlistForm.tsx:141
-msgid "Add a Domain name"
-msgstr ""
-
-#: assets/components/tracking/watchlist/WatchlistCard.tsx:33
-#: assets/components/tracking/watchlist/WatchlistForm.tsx:148
-msgid "Tracked events"
-msgstr ""
-
-#: assets/components/tracking/watchlist/WatchlistForm.tsx:150
-msgid "At least one trigger"
-msgstr ""
-
-#: assets/components/tracking/watchlist/WatchlistForm.tsx:173
-#: assets/components/tracking/watchlist/WatchlistForm.tsx:187
-msgid "Connector"
-msgstr ""
-
-#: assets/components/tracking/watchlist/WatchlistForm.tsx:183
-msgid ""
-"Please make sure the connector information is valid to purchase a domain "
-"that may be available soon."
-msgstr ""
-
-#: assets/components/tracking/watchlist/WatchlistForm.tsx:203
-msgid "DSN"
-msgstr ""
-
-#: assets/components/tracking/watchlist/WatchlistForm.tsx:215
-msgid "This DSN does not appear to be valid"
-msgstr ""
-
-#: assets/components/tracking/watchlist/WatchlistForm.tsx:233
-msgid "Check out this link to the Symfony documentation to help you build the DSN"
-msgstr ""
-
-#: assets/components/tracking/watchlist/WatchlistForm.tsx:242
-msgid "Add a Webhook"
-msgstr ""
-
-#: assets/components/tracking/watchlist/WatchlistForm.tsx:252
-msgid "Update"
-msgstr ""
-
-#: assets/components/tracking/watchlist/UpdateWatchlistButton.tsx:31
-msgid "Edit the Watchlist"
-msgstr ""
-
-#: assets/components/tracking/watchlist/UpdateWatchlistButton.tsx:44
-msgid "Update a Watchlist"
-msgstr ""
-
-#: assets/components/tracking/watchlist/UpdateWatchlistButton.tsx:54
-msgid "Cancel"
-msgstr ""
-
-#: assets/components/tracking/watchlist/diagram/ViewDiagramWatchlistButton.tsx:39
-msgid "View the Watchlist Entity Diagram"
-msgstr ""
-
-#: assets/components/tracking/watchlist/diagram/ViewDiagramWatchlistButton.tsx:44
-msgid "Watchlist Entity Diagram"
-msgstr ""
-
-#: assets/components/tracking/watchlist/diagram/watchlistToEdges.tsx:37
-msgid "Registry"
-msgstr ""
-
-#: assets/components/tracking/watchlist/diagram/watchlistToNodes.tsx:30
-#, javascript-format
-msgid ".${ tld.tld } Registry"
-msgstr ""
-
-#: assets/components/tracking/watchlist/CalendarWatchlistButton.tsx:14
-msgid "QR Code for iCalendar export"
-msgstr ""
-
-#: assets/components/tracking/watchlist/CalendarWatchlistButton.tsx:17
-msgid "Export events to iCalendar format"
-msgstr ""
-
-#: assets/components/tracking/watchlist/DeleteWatchlistButton.tsx:12
-#: assets/components/tracking/watchlist/DeleteWatchlistButton.tsx:19
-msgid "Delete the Watchlist"
-msgstr ""
-
-#: assets/components/tracking/watchlist/DeleteWatchlistButton.tsx:13
-msgid "Are you sure to delete this Watchlist?"
-msgstr ""
-
-#: assets/components/Sider.tsx:40
-#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:46
-msgid "Domain"
-msgstr ""
-
-#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:50
-msgid "Expiration date"
-msgstr ""
-
-#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:54
-msgid "Status"
-msgstr ""
-
-#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:58
-msgid "Updated at"
-msgstr ""
-
-#: assets/components/tracking/watchlist/WatchlistCard.tsx:47
-msgid "This Watchlist is not linked to a Connector."
-msgstr ""
-
-#: assets/components/tracking/watchlist/WatchlistCard.tsx:52
-msgid "Watchlist"
+#: assets/components/search/DomainSearchBar.tsx:23
+#: assets/components/tracking/watchlist/WatchlistForm.tsx:118
+msgid "This domain name does not appear to be valid"
 msgstr ""
 
 #: assets/components/Sider.tsx:28
@@ -329,6 +112,11 @@ msgstr ""
 
 #: assets/components/Sider.tsx:34
 msgid "Search"
+msgstr ""
+
+#: assets/components/Sider.tsx:40
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:46
+msgid "Domain"
 msgstr ""
 
 #: assets/components/Sider.tsx:41
@@ -391,9 +179,313 @@ msgstr ""
 msgid "Log in"
 msgstr ""
 
-#: assets/components/RegisterForm.tsx:56
-#: assets/pages/LoginPage.tsx:25
-msgid "Register"
+#: assets/components/tracking/connector/ConnectorForm.tsx:40
+msgid "Provider"
+msgstr ""
+
+#: assets/components/tracking/connector/ConnectorForm.tsx:47
+msgid "Please select a Provider"
+msgstr ""
+
+#: assets/components/tracking/connector/ConnectorForm.tsx:75
+msgid "OVH Endpoint"
+msgstr ""
+
+#: assets/components/tracking/connector/ConnectorForm.tsx:82
+msgid "OVH subsidiary"
+msgstr ""
+
+#: assets/components/tracking/connector/ConnectorForm.tsx:90
+msgid "OVH pricing mode"
+msgstr ""
+
+#: assets/components/tracking/connector/ConnectorForm.tsx:95
+msgid "Confirm pricing mode"
+msgstr ""
+
+#: assets/components/tracking/connector/ConnectorForm.tsx:96
+msgid ""
+"Are you sure about this setting? This may result in additional charges from "
+"the API Provider"
+msgstr ""
+
+#: assets/components/tracking/connector/ConnectorForm.tsx:120
+msgid "Personal Access Token (PAT)"
+msgstr ""
+
+#: assets/components/tracking/connector/ConnectorForm.tsx:126
+msgid "Organization sharing ID"
+msgstr ""
+
+#: assets/components/tracking/connector/ConnectorForm.tsx:129
+msgid "It indicates the organization that will pay for the ordered product"
+msgstr ""
+
+#: assets/components/tracking/connector/ConnectorForm.tsx:138
+msgid ""
+"This provider does not provide a list of supported TLD. Please double check "
+"if the domain you want to register is supported."
+msgstr ""
+
+#: assets/components/tracking/connector/ConnectorForm.tsx:142
+msgid "AutoDNS Username"
+msgstr ""
+
+#: assets/components/tracking/connector/ConnectorForm.tsx:145
+msgid ""
+"Attention: AutoDNS do not support 2-Factor Authentication on API Users for "
+"automated systems"
+msgstr ""
+
+#: assets/components/tracking/connector/ConnectorForm.tsx:150
+msgid "AutoDNS Password"
+msgstr ""
+
+#: assets/components/tracking/connector/ConnectorForm.tsx:157
+msgid "Domain Contact Handle ID"
+msgstr ""
+
+#: assets/components/tracking/connector/ConnectorForm.tsx:160
+msgid "The Contact ID for ownership of registered Domains. "
+msgstr ""
+
+#: assets/components/tracking/connector/ConnectorForm.tsx:161
+msgid "You got from this page"
+msgstr ""
+
+#: assets/components/tracking/connector/ConnectorForm.tsx:168
+msgid "Context Value"
+msgstr ""
+
+#: assets/components/tracking/connector/ConnectorForm.tsx:171
+msgid "If you not sure, use the default value 4"
+msgstr ""
+
+#: assets/components/tracking/connector/ConnectorForm.tsx:179
+msgid "Owner confirmation"
+msgstr ""
+
+#: assets/components/tracking/connector/ConnectorForm.tsx:185
+msgid "Owner confirms his consent of domain order jobs"
+msgstr ""
+
+#: assets/components/tracking/connector/ConnectorForm.tsx:193
+#: assets/pages/UserPage.tsx:18
+msgid "Username"
+msgstr ""
+
+#: assets/components/tracking/connector/ConnectorForm.tsx:199
+msgid "API key"
+msgstr ""
+
+#: assets/components/tracking/connector/ConnectorForm.tsx:211
+msgid "API Terms of Service"
+msgstr ""
+
+#: assets/components/tracking/connector/ConnectorForm.tsx:219
+msgid ""
+"I have read and accepted the conditions of use of the Provider API, "
+"accessible from this hyperlink"
+msgstr ""
+
+#: assets/components/tracking/connector/ConnectorForm.tsx:225
+msgid "Legal age"
+msgstr ""
+
+#: assets/components/tracking/connector/ConnectorForm.tsx:230
+msgid "I am of the minimum age required to consent to these conditions"
+msgstr ""
+
+#: assets/components/tracking/connector/ConnectorForm.tsx:234
+msgid "Withdrawal period"
+msgstr ""
+
+#: assets/components/tracking/connector/ConnectorForm.tsx:239
+msgid ""
+"I waive my right of withdrawal regarding the purchase of domain names via "
+"the Provider's API"
+msgstr ""
+
+#: assets/components/tracking/connector/ConnectorForm.tsx:247
+#: assets/components/tracking/watchlist/WatchlistForm.tsx:252
+msgid "Create"
+msgstr ""
+
+#: assets/components/tracking/connector/ConnectorForm.tsx:250
+#: assets/components/tracking/watchlist/WatchlistForm.tsx:255
+msgid "Reset"
+msgstr ""
+
+#: assets/components/tracking/connector/ConnectorsList.tsx:18
+msgid ""
+"An error occurred while deleting the Connector. Make sure it is not used in "
+"any Watchlist"
+msgstr ""
+
+#: assets/components/tracking/connector/ConnectorsList.tsx:25
+#, javascript-format
+msgid "Connector ${ connector.provider }"
+msgstr ""
+
+#: assets/components/tracking/connector/ConnectorsList.tsx:28
+msgid "Delete the Connector"
+msgstr ""
+
+#: assets/components/tracking/connector/ConnectorsList.tsx:29
+msgid "Are you sure to delete this Connector?"
+msgstr ""
+
+#: assets/components/tracking/connector/ConnectorsList.tsx:31
+#: assets/components/tracking/watchlist/DeleteWatchlistButton.tsx:15
+msgid "Yes"
+msgstr ""
+
+#: assets/components/tracking/connector/ConnectorsList.tsx:32
+#: assets/components/tracking/watchlist/DeleteWatchlistButton.tsx:16
+msgid "No"
+msgstr ""
+
+#: assets/components/tracking/watchlist/CalendarWatchlistButton.tsx:14
+msgid "QR Code for iCalendar export"
+msgstr ""
+
+#: assets/components/tracking/watchlist/CalendarWatchlistButton.tsx:17
+msgid "Export events to iCalendar format"
+msgstr ""
+
+#: assets/components/tracking/watchlist/DeleteWatchlistButton.tsx:12
+#: assets/components/tracking/watchlist/DeleteWatchlistButton.tsx:19
+msgid "Delete the Watchlist"
+msgstr ""
+
+#: assets/components/tracking/watchlist/DeleteWatchlistButton.tsx:13
+msgid "Are you sure to delete this Watchlist?"
+msgstr ""
+
+#: assets/components/tracking/watchlist/diagram/ViewDiagramWatchlistButton.tsx:39
+msgid "View the Watchlist Entity Diagram"
+msgstr ""
+
+#: assets/components/tracking/watchlist/diagram/ViewDiagramWatchlistButton.tsx:44
+msgid "Watchlist Entity Diagram"
+msgstr ""
+
+#: assets/components/tracking/watchlist/diagram/watchlistToEdges.tsx:37
+msgid "Registry"
+msgstr ""
+
+#: assets/components/tracking/watchlist/diagram/watchlistToNodes.tsx:30
+#, javascript-format
+msgid ".${ tld.tld } Registry"
+msgstr ""
+
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:50
+msgid "Expiration date"
+msgstr ""
+
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:54
+msgid "Status"
+msgstr ""
+
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:58
+msgid "Updated at"
+msgstr ""
+
+#: assets/components/tracking/watchlist/UpdateWatchlistButton.tsx:31
+msgid "Edit the Watchlist"
+msgstr ""
+
+#: assets/components/tracking/watchlist/UpdateWatchlistButton.tsx:44
+msgid "Update a Watchlist"
+msgstr ""
+
+#: assets/components/tracking/watchlist/UpdateWatchlistButton.tsx:54
+msgid "Cancel"
+msgstr ""
+
+#: assets/components/tracking/watchlist/WatchlistCard.tsx:29
+#: assets/components/tracking/watchlist/WatchlistForm.tsx:106
+msgid "Domain names"
+msgstr ""
+
+#: assets/components/tracking/watchlist/WatchlistCard.tsx:33
+#: assets/components/tracking/watchlist/WatchlistForm.tsx:148
+msgid "Tracked events"
+msgstr ""
+
+#: assets/components/tracking/watchlist/WatchlistCard.tsx:47
+msgid "This Watchlist is not linked to a Connector."
+msgstr ""
+
+#: assets/components/tracking/watchlist/WatchlistCard.tsx:52
+msgid "Watchlist"
+msgstr ""
+
+#: assets/components/tracking/watchlist/WatchlistForm.tsx:72
+msgid "Name"
+msgstr ""
+
+#: assets/components/tracking/watchlist/WatchlistForm.tsx:83
+msgid "Watchlist Name"
+msgstr ""
+
+#: assets/components/tracking/watchlist/WatchlistForm.tsx:84
+msgid "Naming the Watchlist makes it easier to find in the list below."
+msgstr ""
+
+#: assets/components/tracking/watchlist/WatchlistForm.tsx:95
+msgid "At least one domain name"
+msgstr ""
+
+#: assets/components/tracking/watchlist/WatchlistForm.tsx:124
+msgid "Domain name"
+msgstr ""
+
+#: assets/components/tracking/watchlist/WatchlistForm.tsx:141
+msgid "Add a Domain name"
+msgstr ""
+
+#: assets/components/tracking/watchlist/WatchlistForm.tsx:150
+msgid "At least one trigger"
+msgstr ""
+
+#: assets/components/tracking/watchlist/WatchlistForm.tsx:173
+#: assets/components/tracking/watchlist/WatchlistForm.tsx:187
+msgid "Connector"
+msgstr ""
+
+#: assets/components/tracking/watchlist/WatchlistForm.tsx:183
+msgid ""
+"Please make sure the connector information is valid to purchase a domain "
+"that may be available soon."
+msgstr ""
+
+#: assets/components/tracking/watchlist/WatchlistForm.tsx:203
+msgid "DSN"
+msgstr ""
+
+#: assets/components/tracking/watchlist/WatchlistForm.tsx:215
+msgid "This DSN does not appear to be valid"
+msgstr ""
+
+#: assets/components/tracking/watchlist/WatchlistForm.tsx:233
+msgid "Check out this link to the Symfony documentation to help you build the DSN"
+msgstr ""
+
+#: assets/components/tracking/watchlist/WatchlistForm.tsx:242
+msgid "Add a Webhook"
+msgstr ""
+
+#: assets/components/tracking/watchlist/WatchlistForm.tsx:252
+msgid "Update"
+msgstr ""
+
+#: assets/pages/LoginPage.tsx:33
+msgid "Create an account"
+msgstr ""
+
+#: assets/pages/NotFoundPage.tsx:10
+msgid "Sorry, the page you visited does not exist."
 msgstr ""
 
 #: assets/pages/search/DomainSearchPage.tsx:18
@@ -475,6 +567,42 @@ msgid ""
 "their country of origin."
 msgstr ""
 
+#: assets/pages/StatisticsPage.tsx:34
+msgid "RDAP queries"
+msgstr ""
+
+#: assets/pages/StatisticsPage.tsx:43
+msgid "Alerts sent"
+msgstr ""
+
+#: assets/pages/StatisticsPage.tsx:57
+msgid "Domain names in database"
+msgstr ""
+
+#: assets/pages/StatisticsPage.tsx:68
+#: assets/pages/tracking/WatchlistPage.tsx:111
+msgid "Tracked domain names"
+msgstr ""
+
+#: assets/pages/StatisticsPage.tsx:82
+msgid "Purchased domain names"
+msgstr ""
+
+#: assets/pages/StatisticsPage.tsx:92
+msgid ""
+"This value is based on the status code of the HTTP response from the "
+"providers following the domain order."
+msgstr ""
+
+#: assets/pages/StatisticsPage.tsx:95
+msgid "Success rate"
+msgstr ""
+
+#: assets/pages/TextPage.tsx:26
+#, javascript-format
+msgid "📝 Please create the /public/content/${ resource } file."
+msgstr ""
+
 #: assets/pages/tracking/ConnectorsPage.tsx:20
 msgid "Connector created !"
 msgstr ""
@@ -495,56 +623,8 @@ msgstr ""
 msgid "Create a Watchlist"
 msgstr ""
 
-#: assets/pages/StatisticsPage.tsx:68
-#: assets/pages/tracking/WatchlistPage.tsx:111
-msgid "Tracked domain names"
-msgstr ""
-
-#: assets/pages/NotFoundPage.tsx:10
-msgid "Sorry, the page you visited does not exist."
-msgstr ""
-
-#: assets/pages/StatisticsPage.tsx:34
-msgid "RDAP queries"
-msgstr ""
-
-#: assets/pages/StatisticsPage.tsx:43
-msgid "Alerts sent"
-msgstr ""
-
-#: assets/pages/StatisticsPage.tsx:57
-msgid "Domain names in database"
-msgstr ""
-
-#: assets/pages/StatisticsPage.tsx:82
-msgid "Purchased domain names"
-msgstr ""
-
-#: assets/pages/StatisticsPage.tsx:92
-msgid ""
-"This value is based on the status code of the HTTP response from the "
-"providers following the domain order."
-msgstr ""
-
-#: assets/pages/StatisticsPage.tsx:95
-msgid "Success rate"
-msgstr ""
-
-#: assets/pages/LoginPage.tsx:33
-msgid "Create an account"
-msgstr ""
-
-#: assets/pages/UserPage.tsx:18
-msgid "Username"
-msgstr ""
-
 #: assets/pages/UserPage.tsx:21
 msgid "Roles"
-msgstr ""
-
-#: assets/pages/TextPage.tsx:26
-#, javascript-format
-msgid "📝 Please create the /public/content/${ resource } file."
 msgstr ""
 
 #: assets/utils/functions/rdapTranslation.ts:7
@@ -1013,6 +1093,18 @@ msgid ""
 "Provider's website"
 msgstr ""
 
+#: assets/utils/providers/index.tsx:20
+msgid ""
+"Retreive an API key and whitelist this instance's IP address on Namecheap's "
+"website"
+msgstr ""
+
+#: assets/utils/providers/index.tsx:24
+msgid ""
+"Because of some limitations in API of AutoDNS, we suggest to create an "
+"dedicated user for API with limited rights."
+msgstr ""
+
 #: assets/utils/providers/ovh.tsx:5
 msgid "Application key"
 msgstr ""
@@ -1041,27 +1133,4 @@ msgstr ""
 msgid ""
 "The domain is free but can be premium. Its price varies from one domain to "
 "another"
-msgstr ""
-
-#: assets/App.tsx:101
-msgid "TOS"
-msgstr ""
-
-#: assets/App.tsx:102
-msgid "Privacy Policy"
-msgstr ""
-
-#: assets/App.tsx:103
-msgid "FAQ"
-msgstr ""
-
-#: assets/App.tsx:105
-msgid "Documentation"
-msgstr ""
-
-#: assets/App.tsx:108
-#, javascript-format
-msgid ""
-"${ ProjectLink } is an open source project distributed under the ${ "
-"LicenseLink } license."
 msgstr ""
