@@ -2,19 +2,22 @@
 
 namespace App\Config;
 
-use App\Config\Provider\GandiProvider;
-use App\Config\Provider\OvhProvider;
+use App\Service\Connector\GandiProvider;
+use App\Service\Connector\NamecheapProvider;
+use App\Service\Connector\OvhProvider;
 
 enum ConnectorProvider: string
 {
     case OVH = 'ovh';
     case GANDI = 'gandi';
+    case NAMECHEAP = 'namecheap';
 
     public function getConnectorProvider(): string
     {
         return match ($this) {
             ConnectorProvider::OVH => OvhProvider::class,
-            ConnectorProvider::GANDI => GandiProvider::class
+            ConnectorProvider::GANDI => GandiProvider::class,
+            ConnectorProvider::NAMECHEAP => NamecheapProvider::class,
         };
     }
 }

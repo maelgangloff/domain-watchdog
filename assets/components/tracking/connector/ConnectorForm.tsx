@@ -132,6 +132,22 @@ export function ConnectorForm({form, onCreate}: { form: FormInstance, onCreate: 
                 </Form.Item>
             </>
         }
+        {
+            provider === ConnectorProvider.NAMECHEAP && <>
+                <Form.Item
+                    label={t`Username`}
+                    name={['authData', 'ApiUser']}
+                >
+                    <Input autoComplete='off'></Input>
+                </Form.Item>
+                <Form.Item
+                    label={t`API key`}
+                    name={['authData', 'ApiKey']}
+                >
+                    <Input autoComplete='off'></Input>
+                </Form.Item>
+            </>
+        }
 
         {
             provider !== undefined && <>

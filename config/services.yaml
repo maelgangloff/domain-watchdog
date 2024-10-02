@@ -17,6 +17,8 @@ parameters:
     limit_max_watchlist_domains: '%env(int:LIMIT_MAX_WATCHLIST_DOMAINS)%'
     limit_max_watchlist_webhooks: '%env(int:LIMIT_MAX_WATCHLIST_WEBHOOKS)%'
 
+    outgoing_ip: '%env(string:OUTGOING_IP)%'
+
 services:
     # default configuration for services in *this* file
     _defaults:
@@ -25,6 +27,7 @@ services:
         bind:
             $mailerSenderEmail: '%mailer_sender_email%'
             $mailerSenderName: '%mailer_sender_name%'
+            $outgoingIp: '%outgoing_ip%'
 
     # makes classes in src/ available to be used as services
     # this creates a service per class whose id is the fully-qualified class name

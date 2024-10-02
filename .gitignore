@@ -43,6 +43,11 @@ yarn-error.log
 phpstan.neon
 ###< phpstan/phpstan ###
 
+# Eclipse
+.project
+.buildpath
+/.settings/
+
 public/images/*.png
 public/content/*.md
 public/favicon.ico

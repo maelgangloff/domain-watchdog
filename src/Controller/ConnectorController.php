@@ -2,13 +2,15 @@
 
 namespace App\Controller;
 
-use App\Config\Provider\AbstractProvider;
 use App\Entity\Connector;
 use App\Entity\User;
+use App\Service\Connector\AbstractProvider;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\Routing\Attribute\Route;
@@ -20,7 +22,9 @@ class ConnectorController extends AbstractController
     public function __construct(
         private readonly SerializerInterface $serializer,
         private readonly EntityManagerInterface $em,
-        private readonly LoggerInterface $logger
+        private readonly LoggerInterface $logger,
+        #[Autowire(service: 'service_container')]
+        private ContainerInterface $locator
     ) {
     }
 
@@ -71,10 +75,9 @@ class ConnectorController extends AbstractController
             throw new BadRequestHttpException('Provider not found');
         }
 
-        /** @var AbstractProvider $connectorProviderClass */
-        $connectorProviderClass = $provider->getConnectorProvider();
-
-        $authData = $connectorProviderClass::verifyAuthData($connector->getAuthData(), $client);
+        /** @var AbstractProvider $providerClient */
+        $providerClient = $this->locator->get($provider->getConnectorProvider());
+        $authData = $providerClient->verifyAuthData($connector->getAuthData());
         $connector->setAuthData($authData);
 
         $this->logger->info('User {username} authentication data with the {provider} provider has been validated.', [

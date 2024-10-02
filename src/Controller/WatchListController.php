@@ -2,7 +2,6 @@
 
 namespace App\Controller;
 
-use App\Config\Provider\AbstractProvider;
 use App\Entity\Connector;
 use App\Entity\Domain;
 use App\Entity\DomainEntity;
@@ -12,6 +11,7 @@ use App\Entity\WatchList;
 use App\Notifier\TestChatNotification;
 use App\Repository\WatchListRepository;
 use App\Service\ChatNotificationService;
+use App\Service\Connector\AbstractProvider;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Exception\ORMException;
@@ -27,21 +27,20 @@ use Eluceo\iCal\Domain\ValueObject\Timestamp;
 use Eluceo\iCal\Presentation\Component\Property;
 use Eluceo\iCal\Presentation\Component\Property\Value\TextValue;
 use Eluceo\iCal\Presentation\Factory\CalendarFactory;
-use Psr\Cache\CacheItemPoolInterface;
 use Psr\Log\LoggerInterface;
 use Sabre\VObject\EofException;
 use Sabre\VObject\InvalidDataException;
 use Sabre\VObject\ParseException;
 use Sabre\VObject\Reader;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
-use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Serializer\SerializerInterface;
-use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 class WatchListController extends AbstractController
 {
@@ -50,10 +49,9 @@ class WatchListController extends AbstractController
         private readonly EntityManagerInterface $em,
         private readonly WatchListRepository $watchListRepository,
         private readonly LoggerInterface $logger,
-        private readonly HttpClientInterface $httpClient,
-        private readonly CacheItemPoolInterface $cacheItemPool,
-        private readonly KernelInterface $kernel,
-        private readonly ChatNotificationService $chatNotificationService
+        private readonly ChatNotificationService $chatNotificationService,
+        #[Autowire(service: 'service_container')]
+        private ContainerInterface $locator
     ) {
     }
 
@@ -182,9 +180,9 @@ class WatchListController extends AbstractController
 
         $connectorProviderClass = $connector->getProvider()->getConnectorProvider();
         /** @var AbstractProvider $connectorProvider */
-        $connectorProvider = new $connectorProviderClass($connector->getAuthData(), $this->httpClient, $this->cacheItemPool, $this->kernel);
+        $connectorProvider = $this->locator->get($connectorProviderClass);
 
-        $connectorProvider::verifyAuthData($connector->getAuthData(), $this->httpClient); // We want to check if the tokens are OK
+        $connectorProvider->authenticate($connector->getAuthData());
         $supported = $connectorProvider->isSupported(...$watchList->getDomains()->toArray());
 
         if (!$supported) {
