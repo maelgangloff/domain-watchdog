@@ -3,9 +3,15 @@
 namespace App\Service\Connector;
 
 use App\Entity\Domain;
+use Exception;
 use Psr\Cache\CacheItemInterface;
 use Psr\Cache\CacheItemPoolInterface;
+use Psr\Cache\InvalidArgumentException;
 use Symfony\Component\DependencyInjection\Attribute\Autoconfigure;
+use Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface;
+use Symfony\Contracts\HttpClient\Exception\RedirectionExceptionInterface;
+use Symfony\Contracts\HttpClient\Exception\ServerExceptionInterface;
+use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 #[Autoconfigure(public: true)]
@@ -13,13 +19,17 @@ class NamecheapProvider extends AbstractProvider
 {
     public const BASE_URL = 'https://api.namecheap.com/xml.response';
 
-    public const SANDBOX_BASE_URL = 'http://api.sandbox.namecheap.com/xml.response';
+    public const SANDBOX_BASE_URL = 'https://api.sandbox.namecheap.com/xml.response';
 
     public function __construct(CacheItemPoolInterface $cacheItemPool, private HttpClientInterface $client, private readonly string $outgoingIp)
     {
         parent::__construct($cacheItemPool);
     }
 
+    /**
+     * @throws \Exception
+     * @throws TransportExceptionInterface
+     */
     public function orderDomain(Domain $domain, $dryRun): void
     {
         $addressesRes = $this->call('namecheap.users.address.getList', [], $dryRun);
@@ -51,13 +61,20 @@ class NamecheapProvider extends AbstractProvider
         ], $domainAddresses), $dryRun);
     }
 
-    private static function mergePrefixKeys(string $prefix, array|object $src, array &$dest)
+    private static function mergePrefixKeys(string $prefix, array|object $src, array &$dest): void
     {
         foreach ($src as $key => $value) {
             $dest[$prefix.$key] = $value;
         }
     }
 
+    /**
+     * @throws TransportExceptionInterface
+     * @throws ServerExceptionInterface
+     * @throws RedirectionExceptionInterface
+     * @throws ClientExceptionInterface
+     * @throws \Exception
+     */
     private function call(string $command, array $parameters = [], bool $dryRun = true): object
     {
         $actualParams = array_merge([
@@ -91,16 +108,31 @@ class NamecheapProvider extends AbstractProvider
         ];
     }
 
+    /**
+     * @throws TransportExceptionInterface
+     * @throws ServerExceptionInterface
+     * @throws RedirectionExceptionInterface
+     * @throws ClientExceptionInterface
+     */
     public function assertAuthentication(): void
     {
         $this->call('namecheap.domains.gettldlist', [], false);
     }
 
+    /**
+     * @throws InvalidArgumentException
+     */
     protected function getCachedTldList(): CacheItemInterface
     {
         return $this->cacheItemPool->getItem('app.provider.namecheap.supported-tld');
     }
 
+    /**
+     * @throws TransportExceptionInterface
+     * @throws ServerExceptionInterface
+     * @throws RedirectionExceptionInterface
+     * @throws ClientExceptionInterface
+     */
     protected function getSupportedTldList(): array
     {
         $supported = [];

@@ -86,9 +86,6 @@ class GandiProvider extends AbstractProvider
         }
     }
 
-    /**
-     * @throws TransportExceptionInterface
-     */
     public function verifyAuthData(array $authData): array
     {
         $token = $authData['token'];
@@ -123,6 +120,9 @@ class GandiProvider extends AbstractProvider
         return $authDataReturned;
     }
 
+    /**
+     * @throws TransportExceptionInterface
+     */
     public function assertAuthentication(): void
     {
         $response = $this->client->request('GET', '/v5/organization/user-info', (new HttpOptions())
