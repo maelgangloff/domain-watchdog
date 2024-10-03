@@ -3,11 +3,12 @@
 namespace App\Service\Connector;
 
 use App\Entity\Domain;
-use Exception;
 use Psr\Cache\CacheItemInterface;
 use Psr\Cache\CacheItemPoolInterface;
 use Psr\Cache\InvalidArgumentException;
 use Symfony\Component\DependencyInjection\Attribute\Autoconfigure;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\RedirectionExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\ServerExceptionInterface;
@@ -92,7 +93,7 @@ class NamecheapProvider extends AbstractProvider
         $data = new \SimpleXMLElement($response->getContent());
 
         if ($data->Errors->Error) {
-            throw new \Exception($data->Errors->Error); // FIXME better exception type
+            throw new BadRequestHttpException($data->Errors->Error);
         }
 
         return $data->CommandResponse;
@@ -100,11 +101,31 @@ class NamecheapProvider extends AbstractProvider
 
     public function verifyAuthData(array $authData): array
     {
+        $apiUser = $authData['ApiUser'];
+        $apiKey = $authData['ApiKey'];
+
+        $acceptConditions = $authData['acceptConditions'];
+        $ownerLegalAge = $authData['ownerLegalAge'];
+        $waiveRetractationPeriod = $authData['waiveRetractationPeriod'];
+
+        if (!is_string($apiUser) || empty($apiUser)
+            || !is_string($apiKey) || empty($apiKey)
+        ) {
+            throw new BadRequestHttpException('Bad authData schema');
+        }
+
+        if (true !== $acceptConditions
+            || true !== $ownerLegalAge
+            || true !== $waiveRetractationPeriod) {
+            throw new HttpException(451, 'The user has not given explicit consent');
+        }
+
         return [
             'ApiUser' => $authData['ApiUser'],
             'ApiKey' => $authData['ApiKey'],
             'acceptConditions' => $authData['acceptConditions'],
             'ownerLegalAge' => $authData['ownerLegalAge'],
+            'waiveRetractationPeriod' => $authData['waiveRetractationPeriod'],
         ];
     }
 
