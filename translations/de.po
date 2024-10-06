@@ -249,15 +249,15 @@ msgid "AutoDNS Password"
 msgstr "Passwort"
 
 #: assets/components/tracking/connector/ConnectorForm.tsx:157
-msgid "Domain Contact Handle ID"
+msgid "Owner nic-handle"
 msgstr ""
 
 #: assets/components/tracking/connector/ConnectorForm.tsx:160
-msgid "The Contact ID for ownership of registered Domains. "
+msgid "The nic-handle of the domain name owner"
 msgstr ""
 
 #: assets/components/tracking/connector/ConnectorForm.tsx:161
-msgid "You got from this page"
+msgid "You can get it from this page"
 msgstr ""
 
 #: assets/components/tracking/connector/ConnectorForm.tsx:168
@@ -1294,7 +1294,7 @@ msgstr ""
 #: assets/utils/providers/index.tsx:24
 msgid ""
 "Because of some limitations in API of AutoDNS, we suggest to create an "
-"dedicated user for API with limited rights."
+"dedicated user for API with limited rights"
 msgstr ""
 
 #: assets/utils/providers/ovh.tsx:5
