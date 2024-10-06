@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2024-10-06 14:49+0000\n"
+"PO-Revision-Date: 2024-10-06 18:41+0000\n"
 "Last-Translator: Maël Gangloff <contact@maelgangloff.fr>\n"
 "Language-Team: French <https://weblate.vinceh121.me/projects/domain-watchdog/"
 "domain-watchdog-dashboard/fr/>\n"
@@ -251,17 +251,15 @@ msgstr "Mot de passe AutoDNS"
 
 #: assets/components/tracking/connector/ConnectorForm.tsx:157
 msgid "Owner nic-handle"
-msgstr ""
+msgstr "Nic-handle du propriétaire"
 
 #: assets/components/tracking/connector/ConnectorForm.tsx:160
 msgid "The nic-handle of the domain name owner"
-msgstr ""
+msgstr "Le nic-handle du propriétaire du nom de domaine"
 
 #: assets/components/tracking/connector/ConnectorForm.tsx:161
-#, fuzzy
-#| msgid "You got from this page"
 msgid "You can get it from this page"
-msgstr "Vous pouvez l'obtenir depuis cette page"
+msgstr "Vous pouvez l'obtenir à partir de cette page"
 
 #: assets/components/tracking/connector/ConnectorForm.tsx:168
 msgid "Context Value"
@@ -1293,10 +1291,6 @@ msgstr ""
 "blanche sur le site Web de Namecheap"
 
 #: assets/utils/providers/index.tsx:24
-#, fuzzy
-#| msgid ""
-#| "Because of some limitations in API of AutoDNS, we suggest to create an "
-#| "dedicated user for API with limited rights."
 msgid ""
 "Because of some limitations in API of AutoDNS, we suggest to create an "
 "dedicated user for API with limited rights"
