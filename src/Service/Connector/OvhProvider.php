@@ -134,7 +134,7 @@ class OvhProvider extends AbstractProvider
     /**
      * @throws \Exception
      */
-    public function verifyAuthData(array $authData): array
+    protected function verifyAuthData(array $authData): array
     {
         $appKey = $authData['appKey'];
         $appSecret = $authData['appSecret'];
@@ -176,7 +176,7 @@ class OvhProvider extends AbstractProvider
         ];
     }
 
-    public function assertAuthentication(): void
+    protected function assertAuthentication(): void
     {
         $conn = new Api(
             $this->authData['appKey'],

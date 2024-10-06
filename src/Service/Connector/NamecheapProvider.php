@@ -99,7 +99,7 @@ class NamecheapProvider extends AbstractProvider
         return $data->CommandResponse;
     }
 
-    public function verifyAuthData(array $authData): array
+    protected function verifyAuthData(array $authData): array
     {
         $apiUser = $authData['ApiUser'];
         $apiKey = $authData['ApiKey'];
@@ -135,7 +135,7 @@ class NamecheapProvider extends AbstractProvider
      * @throws RedirectionExceptionInterface
      * @throws ClientExceptionInterface
      */
-    public function assertAuthentication(): void
+    protected function assertAuthentication(): void
     {
         $this->call('namecheap.domains.gettldlist', [], false);
     }

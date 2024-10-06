@@ -77,9 +77,8 @@ class ConnectorController extends AbstractController
 
         /** @var AbstractProvider $providerClient */
         $providerClient = $this->locator->get($provider->getConnectorProvider());
-        $authData = $providerClient->verifyAuthData($connector->getAuthData());
+        $authData = $providerClient->authenticate($connector->getAuthData());
         $connector->setAuthData($authData);
-        $providerClient->authenticate($authData);
 
         $this->logger->info('User {username} authentication data with the {provider} provider has been validated.', [
             'username' => $user->getUserIdentifier(),

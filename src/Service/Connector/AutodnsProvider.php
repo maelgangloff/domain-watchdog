@@ -27,7 +27,7 @@ class AutodnsProvider extends AbstractProvider
     private const BASE_URL = 'https://api.autodns.com';
 
     /**
-     * Order a domain name with the Gandi API.
+     * Order a domain name with the AutoDNS API.
      *
      * @throws \Exception
      * @throws TransportExceptionInterface
@@ -170,7 +170,7 @@ class AutodnsProvider extends AbstractProvider
         }
     }
 
-    public function verifyAuthData(array $authData): array
+    protected function verifyAuthData(array $authData): array
     {
         $username = $authData['username'];
         $password = $authData['password'];
@@ -230,7 +230,7 @@ class AutodnsProvider extends AbstractProvider
     /**
      * @throws TransportExceptionInterface
      */
-    public function assertAuthentication(): void
+    protected function assertAuthentication(): void
     {
         try {
             $response = $this->client->request(

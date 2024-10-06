@@ -3,6 +3,7 @@
 namespace App\Service\Connector;
 
 use App\Entity\Domain;
+use Exception;
 use Psr\Cache\CacheItemInterface;
 use Psr\Cache\CacheItemPoolInterface;
 
@@ -23,17 +24,27 @@ abstract class AbstractProvider
     }
 
     /**
+     * Checks the consistency of the authentication data and returns sanitized data.
+     *
      * @param array $authData raw authentication data as supplied by the user
      *
      * @return array a cleaned up version of the authentication data
      */
-    abstract public function verifyAuthData(array $authData): array;
+    abstract protected function verifyAuthData(array $authData): array;
 
     /**
+     * Throws an error if the authentication data is incorrect.
+     *
      * @throws \Exception when the registrar denies the authentication
      */
-    abstract public function assertAuthentication(): void; // TODO use dedicated exception type
+    abstract protected function assertAuthentication(): void; // TODO use dedicated exception type
 
+    /**
+     * Order a domain name.
+     *
+     * @param Domain $domain The domain name to be ordered
+     * @param bool   $dryRun If true, the domain name will not be purchased
+     */
     abstract public function orderDomain(Domain $domain, bool $dryRun): void;
 
     public function isSupported(Domain ...$domainList): bool
@@ -70,12 +81,16 @@ abstract class AbstractProvider
     }
 
     /**
-     * @throws \Exception
+     * Authenticates the user to the registrar API.
+     *
+     * @throws \Exception when the registrar denies the authentication
      */
-    public function authenticate(array $authData): void
+    public function authenticate(array $authData): array
     {
         $this->authData = $this->verifyAuthData($authData);
         $this->assertAuthentication();
+
+        return $this->authData;
     }
 
     abstract protected function getCachedTldList(): CacheItemInterface;
