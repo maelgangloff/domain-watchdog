@@ -154,11 +154,11 @@ export function ConnectorForm({form, onCreate}: { form: FormInstance, onCreate: 
                     <Input.Password autoComplete='off' required={true} placeholder=''/>
                 </Form.Item>
                 <Form.Item
-                    label={t`Domain Contact Handle ID`}
+                    label={t`Owner nic-handle`}
                     name={['authData', 'contactid']}
                     help={<Typography.Text
-                        type='secondary'>{t`The Contact ID for ownership of registered Domains. `}<a
-                        href="https://cloud.autodns.com/contacts/domain">{t`You got from this page`}</a></Typography.Text>}
+                        type='secondary'>{t`The nic-handle of the domain name owner`}<a
+                        href="https://cloud.autodns.com/contacts/domain">{t`You can get it from this page`}</a></Typography.Text>}
                     rules={[{required: true, message: t`Required`}]}
                     required={true}>
                     <Input autoComplete='off' required={true} placeholder=''/>
