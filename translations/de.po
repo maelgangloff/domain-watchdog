@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2024-10-02 16:06+0000\n"
+"PO-Revision-Date: 2024-10-06 18:47+0000\n"
 "Last-Translator: Maël Gangloff <contact@maelgangloff.fr>\n"
 "Language-Team: German <https://weblate.vinceh121.me/projects/domain-watchdog/"
 "domain-watchdog-dashboard/de/>\n"
@@ -229,52 +229,53 @@ msgid ""
 "This provider does not provide a list of supported TLD. Please double check "
 "if the domain you want to register is supported."
 msgstr ""
+"Dieser Anbieter stellt keine Liste unterstützter TLDs zur Verfügung. Bitte "
+"überprüfen Sie, ob die Domain, die Sie registrieren möchten, unterstützt "
+"wird."
 
 #: assets/components/tracking/connector/ConnectorForm.tsx:142
-#, fuzzy
-#| msgid "Username"
 msgid "AutoDNS Username"
-msgstr "Benutzername"
+msgstr "AutoDNS-Benutzername"
 
 #: assets/components/tracking/connector/ConnectorForm.tsx:145
 msgid ""
 "Attention: AutoDNS do not support 2-Factor Authentication on API Users for "
 "automated systems"
 msgstr ""
+"Achtung: AutoDNS unterstützt keine 2-Faktor-Authentifizierung für API-"
+"Benutzer für automatisierte Systeme"
 
 #: assets/components/tracking/connector/ConnectorForm.tsx:150
-#, fuzzy
-#| msgid "Password"
 msgid "AutoDNS Password"
-msgstr "Passwort"
+msgstr "AutoDNS-Passwort"
 
 #: assets/components/tracking/connector/ConnectorForm.tsx:157
 msgid "Owner nic-handle"
-msgstr ""
+msgstr "Inhaber nic-handle"
 
 #: assets/components/tracking/connector/ConnectorForm.tsx:160
 msgid "The nic-handle of the domain name owner"
-msgstr ""
+msgstr "Der Nic-Handle des Domain-Namen-Inhabers"
 
 #: assets/components/tracking/connector/ConnectorForm.tsx:161
 msgid "You can get it from this page"
-msgstr ""
+msgstr "Sie können es von dieser Seite erhalten"
 
 #: assets/components/tracking/connector/ConnectorForm.tsx:168
 msgid "Context Value"
-msgstr ""
+msgstr "Kontextwert"
 
 #: assets/components/tracking/connector/ConnectorForm.tsx:171
 msgid "If you not sure, use the default value 4"
-msgstr ""
+msgstr "Wenn Sie nicht sicher sind, verwenden Sie den Standardwert 4"
 
 #: assets/components/tracking/connector/ConnectorForm.tsx:179
 msgid "Owner confirmation"
-msgstr ""
+msgstr "Bestätigung des Eigentümers"
 
 #: assets/components/tracking/connector/ConnectorForm.tsx:185
 msgid "Owner confirms his consent of domain order jobs"
-msgstr ""
+msgstr "Inhaber bestätigt sein Einverständnis mit Domain-Bestellaufträgen"
 
 #: assets/components/tracking/connector/ConnectorForm.tsx:193
 #: assets/pages/UserPage.tsx:18
@@ -1296,6 +1297,8 @@ msgid ""
 "Because of some limitations in API of AutoDNS, we suggest to create an "
 "dedicated user for API with limited rights"
 msgstr ""
+"Aufgrund einiger Einschränkungen in der API von AutoDNS empfehlen wir, einen "
+"dedizierten Benutzer für die API mit eingeschränkten Rechten zu erstellen"
 
 #: assets/utils/providers/ovh.tsx:5
 msgid "Application key"
