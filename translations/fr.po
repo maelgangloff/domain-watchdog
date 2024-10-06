@@ -49,9 +49,13 @@ msgstr "Adresse e-mail"
 #: assets/components/tracking/connector/ConnectorForm.tsx:84
 #: assets/components/tracking/connector/ConnectorForm.tsx:92
 #: assets/components/tracking/connector/ConnectorForm.tsx:122
-#: assets/components/tracking/connector/ConnectorForm.tsx:158
-#: assets/components/tracking/connector/ConnectorForm.tsx:172
-#: assets/components/tracking/connector/ConnectorForm.tsx:181
+#: assets/components/tracking/connector/ConnectorForm.tsx:146
+#: assets/components/tracking/connector/ConnectorForm.tsx:152
+#: assets/components/tracking/connector/ConnectorForm.tsx:162
+#: assets/components/tracking/connector/ConnectorForm.tsx:182
+#: assets/components/tracking/connector/ConnectorForm.tsx:213
+#: assets/components/tracking/connector/ConnectorForm.tsx:227
+#: assets/components/tracking/connector/ConnectorForm.tsx:236
 #: assets/components/tracking/watchlist/WatchlistForm.tsx:115
 #: assets/components/tracking/watchlist/WatchlistForm.tsx:212
 msgid "Required"
@@ -222,19 +226,73 @@ msgid "It indicates the organization that will pay for the ordered product"
 msgstr "Il indique l'organisation qui paiera le produit commandé"
 
 #: assets/components/tracking/connector/ConnectorForm.tsx:138
+msgid ""
+"This provider does not provide a list of supported TLD. Please double check "
+"if the domain you want to register is supported."
+msgstr ""
+
+#: assets/components/tracking/connector/ConnectorForm.tsx:142
+#, fuzzy
+#| msgid "Username"
+msgid "AutoDNS Username"
+msgstr "Nom d'utilisateur"
+
+#: assets/components/tracking/connector/ConnectorForm.tsx:145
+msgid ""
+"Attention: AutoDNS do not support 2-Factor Authentication on API Users for "
+"automated systems"
+msgstr ""
+
+#: assets/components/tracking/connector/ConnectorForm.tsx:150
+#, fuzzy
+#| msgid "Password"
+msgid "AutoDNS Password"
+msgstr "Mot de passe"
+
+#: assets/components/tracking/connector/ConnectorForm.tsx:157
+msgid "Domain Contact Handle ID"
+msgstr ""
+
+#: assets/components/tracking/connector/ConnectorForm.tsx:160
+msgid "The Contact ID for ownership of registered Domains. "
+msgstr ""
+
+#: assets/components/tracking/connector/ConnectorForm.tsx:161
+msgid "You got from this page"
+msgstr ""
+
+#: assets/components/tracking/connector/ConnectorForm.tsx:168
+msgid "Context Value"
+msgstr ""
+
+#: assets/components/tracking/connector/ConnectorForm.tsx:171
+msgid "If you not sure, use the default value 4"
+msgstr ""
+
+#: assets/components/tracking/connector/ConnectorForm.tsx:179
+#, fuzzy
+#| msgid "Information"
+msgid "Owner confirmation"
+msgstr "Information"
+
+#: assets/components/tracking/connector/ConnectorForm.tsx:185
+msgid "Owner confirms his consent of domain order jobs"
+msgstr ""
+
+#: assets/components/tracking/connector/ConnectorForm.tsx:193
 #: assets/pages/UserPage.tsx:18
 msgid "Username"
 msgstr "Nom d'utilisateur"
 
-#: assets/components/tracking/connector/ConnectorForm.tsx:144
+#: assets/components/tracking/connector/ConnectorForm.tsx:199
 msgid "API key"
 msgstr "Clé API"
 
-#: assets/components/tracking/connector/ConnectorForm.tsx:156
+#: assets/components/tracking/connector/ConnectorForm.tsx:211
 msgid "API Terms of Service"
 msgstr "Conditions d'utilisation de l'API"
 
-#: assets/components/tracking/connector/ConnectorForm.tsx:164
+#: assets/components/tracking/connector/ConnectorForm.tsx:219
 msgid ""
 "I have read and accepted the conditions of use of the Provider API, "
 "accessible from this hyperlink"
@@ -242,20 +300,20 @@ msgstr ""
 "J'ai lu et j'accepte les conditions d'utilisation de l'API du Fournisseur, "
 "accessibles à partir de ce lien hypertexte"
 
-#: assets/components/tracking/connector/ConnectorForm.tsx:170
+#: assets/components/tracking/connector/ConnectorForm.tsx:225
 msgid "Legal age"
 msgstr "Âge minimum légal"
 
-#: assets/components/tracking/connector/ConnectorForm.tsx:175
+#: assets/components/tracking/connector/ConnectorForm.tsx:230
 msgid "I am of the minimum age required to consent to these conditions"
 msgstr ""
 "Je certifie que j'ai l'âge minimum requis pour consentir à ces conditions"
 
-#: assets/components/tracking/connector/ConnectorForm.tsx:179
+#: assets/components/tracking/connector/ConnectorForm.tsx:234
 msgid "Withdrawal period"
 msgstr "Délai de rétractation"
 
-#: assets/components/tracking/connector/ConnectorForm.tsx:184
+#: assets/components/tracking/connector/ConnectorForm.tsx:239
 msgid ""
 "I waive my right of withdrawal regarding the purchase of domain names via "
 "the Provider's API"
@@ -263,12 +321,12 @@ msgstr ""
 "Je renonce expressément à mon droit de rétractation concernant l'achat de "
 "noms de domaine via l'API du Fournisseur"
 
-#: assets/components/tracking/connector/ConnectorForm.tsx:192
+#: assets/components/tracking/connector/ConnectorForm.tsx:247
 #: assets/components/tracking/watchlist/WatchlistForm.tsx:252
 msgid "Create"
 msgstr "Créer"
 
-#: assets/components/tracking/connector/ConnectorForm.tsx:195
+#: assets/components/tracking/connector/ConnectorForm.tsx:250
 #: assets/components/tracking/watchlist/WatchlistForm.tsx:255
 msgid "Reset"
 msgstr "Réinitialiser"
@@ -1234,6 +1292,12 @@ msgstr ""
 "Récupérez une clé API et ajoutez l'adresse IP de cette instance à la liste "
 "blanche sur le site Web de Namecheap"
 
+#: assets/utils/providers/index.tsx:24
+msgid ""
+"Because of some limitations in API of AutoDNS, we suggest to create an "
+"dedicated user for API with limited rights."
+msgstr ""
+
 #: assets/utils/providers/ovh.tsx:5
 msgid "Application key"
 msgstr "Clé d'application"
@@ -1560,9 +1624,6 @@ msgstr ""
 #, fuzzy
 #~ msgid "Terms of service"
 #~ msgstr "Conditions d'utilisation"
-
-#~ msgid "Information"
-#~ msgstr "Information"
 
 #~ msgid "My Watchdog"
 #~ msgstr "Mon Watchdog"
