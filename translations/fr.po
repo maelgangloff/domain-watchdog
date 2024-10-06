@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2024-10-06 18:41+0000\n"
+"PO-Revision-Date: 2024-10-06 18:47+0000\n"
 "Last-Translator: Maël Gangloff <contact@maelgangloff.fr>\n"
 "Language-Team: French <https://weblate.vinceh121.me/projects/domain-watchdog/"
 "domain-watchdog-dashboard/fr/>\n"
@@ -275,7 +275,7 @@ msgstr "Confirmation du propriétaire"
 
 #: assets/components/tracking/connector/ConnectorForm.tsx:185
 msgid "Owner confirms his consent of domain order jobs"
-msgstr "Le propriétaire confirme son consentement aux commandes de domaines"
+msgstr "Le propriétaire donne son consentement aux commandes de domaines"
 
 #: assets/components/tracking/connector/ConnectorForm.tsx:193
 #: assets/pages/UserPage.tsx:18
