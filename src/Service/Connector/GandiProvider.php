@@ -20,7 +20,7 @@ class GandiProvider extends AbstractProvider
 {
     private const BASE_URL = 'https://api.gandi.net';
 
-    public function __construct(CacheItemPoolInterface $cacheItemPool, private HttpClientInterface $client)
+    public function __construct(CacheItemPoolInterface $cacheItemPool, private readonly HttpClientInterface $client)
     {
         parent::__construct($cacheItemPool);
     }

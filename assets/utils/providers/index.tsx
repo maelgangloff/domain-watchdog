@@ -19,6 +19,10 @@ export const helpGetTokenLink = (provider?: string) => {
             return <Typography.Link target='_blank' href="https://ap.www.namecheap.com/settings/tools/apiaccess/">
                 {t`Retreive an API key and whitelist this instance's IP address on Namecheap's website`}
             </Typography.Link>
+        case ConnectorProvider.AUTODNS:
+            return <Typography.Link target='_blank' href="https://en.autodns.com/domain-robot-api/">
+                {t`Because of some limitations in API of AutoDNS, we suggest to create an dedicated user for API with limited rights.`}
+            </Typography.Link>
         default:
             return <></>
 
@@ -31,6 +35,8 @@ export const tosHyperlink = (provider?: string) => {
             return 'https://www.ovhcloud.com/fr/terms-and-conditions/contracts/'
         case ConnectorProvider.GANDI:
             return 'https://www.gandi.net/en/contracts/terms-of-service'
+        case ConnectorProvider.AUTODNS:
+            return 'https://www.internetx.com/agb/'
         default:
             return ''
     }

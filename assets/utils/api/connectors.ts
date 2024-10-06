@@ -3,6 +3,7 @@ import {request} from "./index";
 export enum ConnectorProvider {
     OVH = 'ovh',
     GANDI = 'gandi',
+    AUTODNS = 'autodns',
     NAMECHEAP = 'namecheap'
 }
 
