@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2024-10-02 16:05+0000\n"
+"PO-Revision-Date: 2024-10-06 14:49+0000\n"
 "Last-Translator: Maël Gangloff <contact@maelgangloff.fr>\n"
 "Language-Team: French <https://weblate.vinceh121.me/projects/domain-watchdog/"
 "domain-watchdog-dashboard/fr/>\n"
@@ -230,54 +230,52 @@ msgid ""
 "This provider does not provide a list of supported TLD. Please double check "
 "if the domain you want to register is supported."
 msgstr ""
+"Ce fournisseur ne fournit pas la liste des TLD pris en charge. Veuillez "
+"vérifier si le domaine que vous souhaitez enregistrer est compatible."
 
 #: assets/components/tracking/connector/ConnectorForm.tsx:142
-#, fuzzy
-#| msgid "Username"
 msgid "AutoDNS Username"
-msgstr "Nom d'utilisateur"
+msgstr "Nom d'utilisateur AutoDNS"
 
 #: assets/components/tracking/connector/ConnectorForm.tsx:145
 msgid ""
 "Attention: AutoDNS do not support 2-Factor Authentication on API Users for "
 "automated systems"
 msgstr ""
+"Attention : AutoDNS ne supporte pas l'authentification à 2 facteurs sur les "
+"utilisateurs API pour les systèmes automatisés"
 
 #: assets/components/tracking/connector/ConnectorForm.tsx:150
-#, fuzzy
-#| msgid "Password"
 msgid "AutoDNS Password"
-msgstr "Mot de passe"
+msgstr "Mot de passe AutoDNS"
 
 #: assets/components/tracking/connector/ConnectorForm.tsx:157
 msgid "Domain Contact Handle ID"
-msgstr ""
+msgstr "Nic-handle de contact du domaine"
 
 #: assets/components/tracking/connector/ConnectorForm.tsx:160
 msgid "The Contact ID for ownership of registered Domains. "
-msgstr ""
+msgstr "Nic-handle du propriétaire du domaine "
 
 #: assets/components/tracking/connector/ConnectorForm.tsx:161
 msgid "You got from this page"
-msgstr ""
+msgstr "Vous pouvez l'obtenir depuis cette page"
 
 #: assets/components/tracking/connector/ConnectorForm.tsx:168
 msgid "Context Value"
-msgstr ""
+msgstr "Valeur du contexte"
 
 #: assets/components/tracking/connector/ConnectorForm.tsx:171
 msgid "If you not sure, use the default value 4"
-msgstr ""
+msgstr "Si vous n'êtes pas sûr, utilisez la valeur par défaut 4"
 
 #: assets/components/tracking/connector/ConnectorForm.tsx:179
-#, fuzzy
-#| msgid "Information"
 msgid "Owner confirmation"
-msgstr "Information"
+msgstr "Confirmation du propriétaire"
 
 #: assets/components/tracking/connector/ConnectorForm.tsx:185
 msgid "Owner confirms his consent of domain order jobs"
-msgstr ""
+msgstr "Le propriétaire confirme son consentement aux commandes de domaines"
 
 #: assets/components/tracking/connector/ConnectorForm.tsx:193
 #: assets/pages/UserPage.tsx:18
@@ -1297,6 +1295,8 @@ msgid ""
 "Because of some limitations in API of AutoDNS, we suggest to create an "
 "dedicated user for API with limited rights."
 msgstr ""
+"En raison de certaines limitations de l'API d'AutoDNS, nous suggérons de "
+"créer un utilisateur dédié à l'API avec des droits limités."
 
 #: assets/utils/providers/ovh.tsx:5
 msgid "Application key"
