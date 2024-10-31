@@ -7,7 +7,7 @@ use Psr\Cache\CacheItemPoolInterface;
 readonly class StatService
 {
     public function __construct(
-        private CacheItemPoolInterface $pool
+        private CacheItemPoolInterface $pool,
     ) {
     }
 

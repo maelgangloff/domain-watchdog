@@ -9,9 +9,10 @@ use Ovh\Exceptions\InvalidParameterException;
 use Psr\Cache\CacheItemInterface;
 use Psr\Cache\CacheItemPoolInterface;
 use Psr\Cache\InvalidArgumentException;
+use Symfony\Component\DependencyInjection\Attribute\Autoconfigure;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
-use Symfony\Component\HttpKernel\Exception\HttpException;
 
+#[Autoconfigure(public: true)]
 class OvhProvider extends AbstractProvider
 {
     public const REQUIRED_ROUTES = [
@@ -130,7 +131,7 @@ class OvhProvider extends AbstractProvider
     /**
      * @throws \Exception
      */
-    public function verifyAuthData(array $authData): array
+    public function verifySpecificAuthData(array $authData): array
     {
         $appKey = $authData['appKey'];
         $appSecret = $authData['appSecret'];
@@ -138,10 +139,6 @@ class OvhProvider extends AbstractProvider
         $consumerKey = $authData['consumerKey'];
         $ovhSubsidiary = $authData['ovhSubsidiary'];
         $pricingMode = $authData['pricingMode'];
-
-        $acceptConditions = $authData['acceptConditions'];
-        $ownerLegalAge = $authData['ownerLegalAge'];
-        $waiveRetractationPeriod = $authData['waiveRetractationPeriod'];
 
         if (!is_string($appKey) || empty($appKey)
             || !is_string($appSecret) || empty($appSecret)
@@ -153,12 +150,6 @@ class OvhProvider extends AbstractProvider
             throw new BadRequestHttpException('Bad authData schema');
         }
 
-        if (true !== $acceptConditions
-            || true !== $ownerLegalAge
-            || true !== $waiveRetractationPeriod) {
-            throw new HttpException(451, 'The user has not given explicit consent');
-        }
-
         return [
             'appKey' => $appKey,
             'appSecret' => $appSecret,
@@ -166,9 +157,6 @@ class OvhProvider extends AbstractProvider
             'consumerKey' => $consumerKey,
             'ovhSubsidiary' => $ovhSubsidiary,
             'pricingMode' => $pricingMode,
-            'acceptConditions' => $acceptConditions,
-            'ownerLegalAge' => $ownerLegalAge,
-            'waiveRetractationPeriod' => $waiveRetractationPeriod,
         ];
     }
 

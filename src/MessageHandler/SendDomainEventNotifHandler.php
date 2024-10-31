@@ -34,7 +34,7 @@ final readonly class SendDomainEventNotifHandler
         private StatService $statService,
         private DomainRepository $domainRepository,
         private WatchListRepository $watchListRepository,
-        private ChatNotificationService $chatNotificationService
+        private ChatNotificationService $chatNotificationService,
     ) {
         $this->sender = new Address($mailerSenderEmail, $mailerSenderName);
     }

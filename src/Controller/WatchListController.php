@@ -51,7 +51,7 @@ class WatchListController extends AbstractController
         private readonly LoggerInterface $logger,
         private readonly ChatNotificationService $chatNotificationService,
         #[Autowire(service: 'service_container')]
-        private ContainerInterface $locator
+        private ContainerInterface $locator,
     ) {
     }
 

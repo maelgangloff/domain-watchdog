@@ -15,7 +15,7 @@ use Symfony\Component\Notifier\Transport\Dsn;
 readonly class ChatNotificationService
 {
     public function __construct(
-        private LoggerInterface $logger
+        private LoggerInterface $logger,
     ) {
     }
 

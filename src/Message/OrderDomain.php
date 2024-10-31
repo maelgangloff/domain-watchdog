@@ -7,7 +7,7 @@ final class OrderDomain
     public function __construct(
         public string $watchListToken,
         public string $ldhName,
-        public \DateTimeImmutable $updatedAt
+        public \DateTimeImmutable $updatedAt,
     ) {
     }
 }

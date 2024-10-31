@@ -6,10 +6,10 @@ use App\Entity\Domain;
 use Psr\Cache\CacheItemInterface;
 use Psr\Cache\CacheItemPoolInterface;
 use Psr\Cache\InvalidArgumentException;
+use Symfony\Component\DependencyInjection\Attribute\Autoconfigure;
 use Symfony\Component\HttpClient\HttpOptions;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
-use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\DecodingExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\RedirectionExceptionInterface;
@@ -17,6 +17,7 @@ use Symfony\Contracts\HttpClient\Exception\ServerExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
+#[Autoconfigure(public: true)]
 class AutodnsProvider extends AbstractProvider
 {
     public function __construct(CacheItemPoolInterface $cacheItemPool, private readonly HttpClientInterface $client)
@@ -166,14 +167,10 @@ class AutodnsProvider extends AbstractProvider
         }
     }
 
-    public function verifyAuthData(array $authData): array
+    public function verifySpecificAuthData(array $authData): array
     {
         $username = $authData['username'];
         $password = $authData['password'];
-
-        $acceptConditions = $authData['acceptConditions'];
-        $ownerLegalAge = $authData['ownerLegalAge'];
-        $waiveRetractationPeriod = $authData['waiveRetractationPeriod'];
 
         if (empty($authData['context'])) {
             $authData['context'] = 4;
@@ -185,22 +182,10 @@ class AutodnsProvider extends AbstractProvider
             throw new BadRequestHttpException('Bad authData schema');
         }
 
-        if (
-            true !== $acceptConditions
-            || true !== $authData['ownerConfirm']
-            || true !== $ownerLegalAge
-            || true !== $waiveRetractationPeriod
-        ) {
-            throw new HttpException(451, 'The user has not given explicit consent');
-        }
-
         return [
             'username' => $authData['username'],
             'password' => $authData['password'],
-            'acceptConditions' => $authData['acceptConditions'],
-            'ownerLegalAge' => $authData['ownerLegalAge'],
             'ownerConfirm' => $authData['ownerConfirm'],
-            'waiveRetractationPeriod' => $authData['waiveRetractationPeriod'],
             'context' => $authData['context'],
         ];
     }

@@ -17,7 +17,7 @@ final readonly class UpdateRdapServersHandler
 {
     public function __construct(
         private RDAPService $RDAPService,
-        private ParameterBagInterface $bag
+        private ParameterBagInterface $bag,
     ) {
     }
 

@@ -36,7 +36,7 @@ final readonly class UpdateDomainsFromWatchlistHandler
         string $mailerSenderName,
         private MessageBusInterface $bus,
         private WatchListRepository $watchListRepository,
-        private LoggerInterface $logger
+        private LoggerInterface $logger,
     ) {
         $this->sender = new Address($mailerSenderEmail, $mailerSenderName);
     }

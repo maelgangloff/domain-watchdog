@@ -16,7 +16,7 @@ class StatisticsController extends AbstractController
         private readonly CacheItemPoolInterface $pool,
         private readonly DomainRepository $domainRepository,
         private readonly WatchListRepository $watchListRepository,
-        private readonly KernelInterface $kernel
+        private readonly KernelInterface $kernel,
     ) {
     }
 

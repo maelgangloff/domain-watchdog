@@ -41,7 +41,7 @@ enum WebhookScheme: string
             WebhookScheme::ZULIP => ZulipTransportFactory::class,
             WebhookScheme::PUSHOVER => PushoverTransportFactory::class,
             WebhookScheme::NTFY => NtfyTransportFactory::class,
-            WebhookScheme::ENGAGESPOT => EngagespotTransportFactory::class
+            WebhookScheme::ENGAGESPOT => EngagespotTransportFactory::class,
         };
     }
 }

@@ -8,7 +8,6 @@ use Psr\Cache\CacheItemPoolInterface;
 use Psr\Cache\InvalidArgumentException;
 use Symfony\Component\DependencyInjection\Attribute\Autoconfigure;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
-use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\RedirectionExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\ServerExceptionInterface;
@@ -99,14 +98,10 @@ class NamecheapProvider extends AbstractProvider
         return $data->CommandResponse;
     }
 
-    public function verifyAuthData(array $authData): array
+    public function verifySpecificAuthData(array $authData): array
     {
         $apiUser = $authData['ApiUser'];
         $apiKey = $authData['ApiKey'];
-
-        $acceptConditions = $authData['acceptConditions'];
-        $ownerLegalAge = $authData['ownerLegalAge'];
-        $waiveRetractationPeriod = $authData['waiveRetractationPeriod'];
 
         if (!is_string($apiUser) || empty($apiUser)
             || !is_string($apiKey) || empty($apiKey)
@@ -114,18 +109,9 @@ class NamecheapProvider extends AbstractProvider
             throw new BadRequestHttpException('Bad authData schema');
         }
 
-        if (true !== $acceptConditions
-            || true !== $ownerLegalAge
-            || true !== $waiveRetractationPeriod) {
-            throw new HttpException(451, 'The user has not given explicit consent');
-        }
-
         return [
             'ApiUser' => $authData['ApiUser'],
             'ApiKey' => $authData['ApiKey'],
-            'acceptConditions' => $authData['acceptConditions'],
-            'ownerLegalAge' => $authData['ownerLegalAge'],
-            'waiveRetractationPeriod' => $authData['waiveRetractationPeriod'],
         ];
     }
 

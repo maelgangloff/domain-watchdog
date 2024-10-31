@@ -19,7 +19,7 @@ class DomainOrderNotification extends DomainWatchdogNotification
     public function __construct(
         private readonly Address $sender,
         private readonly Domain $domain,
-        private readonly Connector $connector
+        private readonly Connector $connector,
     ) {
         parent::__construct();
     }

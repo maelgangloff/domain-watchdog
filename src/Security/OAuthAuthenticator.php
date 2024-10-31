@@ -27,7 +27,7 @@ class OAuthAuthenticator extends OAuth2Authenticator implements AuthenticationEn
         private readonly UserRepository $userRepository,
         private readonly EntityManagerInterface $em,
         private readonly RouterInterface $router,
-        private readonly JWTTokenManagerInterface $JWTManager
+        private readonly JWTTokenManagerInterface $JWTManager,
     ) {
     }
 

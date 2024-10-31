@@ -16,7 +16,7 @@ final readonly class ProcessWatchListsTriggerHandler
 {
     public function __construct(
         private WatchListRepository $watchListRepository,
-        private MessageBusInterface $bus
+        private MessageBusInterface $bus,
     ) {
     }
 

@@ -5,6 +5,7 @@ namespace App\Service\Connector;
 use App\Entity\Domain;
 use Psr\Cache\CacheItemInterface;
 use Psr\Cache\CacheItemPoolInterface;
+use Symfony\Component\DependencyInjection\Attribute\Autoconfigure;
 use Symfony\Component\HttpClient\HttpOptions;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
@@ -16,6 +17,7 @@ use Symfony\Contracts\HttpClient\Exception\ServerExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
+#[Autoconfigure(public: true)]
 class GandiProvider extends AbstractProvider
 {
     private const BASE_URL = 'https://api.gandi.net';
@@ -82,13 +84,9 @@ class GandiProvider extends AbstractProvider
         }
     }
 
-    public function verifyAuthData(array $authData): array
+    public function verifySpecificAuthData(array $authData): array
     {
         $token = $authData['token'];
-
-        $acceptConditions = $authData['acceptConditions'];
-        $ownerLegalAge = $authData['ownerLegalAge'];
-        $waiveRetractationPeriod = $authData['waiveRetractationPeriod'];
 
         if (!is_string($token) || empty($token)
             || (array_key_exists('sharingId', $authData) && !is_string($authData['sharingId']))
@@ -96,17 +94,8 @@ class GandiProvider extends AbstractProvider
             throw new BadRequestHttpException('Bad authData schema');
         }
 
-        if (true !== $acceptConditions
-            || true !== $ownerLegalAge
-            || true !== $waiveRetractationPeriod) {
-            throw new HttpException(451, 'The user has not given explicit consent');
-        }
-
         $authDataReturned = [
             'token' => $token,
-            'acceptConditions' => $acceptConditions,
-            'ownerLegalAge' => $ownerLegalAge,
-            'waiveRetractationPeriod' => $waiveRetractationPeriod,
         ];
 
         if (array_key_exists('sharingId', $authData)) {

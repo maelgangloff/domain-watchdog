@@ -25,7 +25,7 @@ class DomainRefreshController extends AbstractController
         private readonly RDAPService $RDAPService,
         private readonly RateLimiterFactory $rdapRequestsLimiter,
         private readonly MessageBusInterface $bus,
-        private readonly LoggerInterface $logger, private readonly KernelInterface $kernel
+        private readonly LoggerInterface $logger, private readonly KernelInterface $kernel,
     ) {
     }
 

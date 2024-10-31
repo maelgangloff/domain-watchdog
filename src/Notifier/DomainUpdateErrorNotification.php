@@ -16,7 +16,7 @@ class DomainUpdateErrorNotification extends DomainWatchdogNotification
 {
     public function __construct(
         private readonly Address $sender,
-        private readonly Domain $domain
+        private readonly Domain $domain,
     ) {
         parent::__construct();
     }

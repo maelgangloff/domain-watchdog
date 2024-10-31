@@ -32,7 +32,7 @@ class RegistrationController extends AbstractController
         private readonly EntityManagerInterface $em,
         private readonly SerializerInterface $serializer,
         private readonly LoggerInterface $logger,
-        private readonly KernelInterface $kernel
+        private readonly KernelInterface $kernel,
     ) {
     }
 

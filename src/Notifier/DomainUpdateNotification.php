@@ -17,7 +17,7 @@ class DomainUpdateNotification extends DomainWatchdogNotification
 {
     public function __construct(
         private readonly Address $sender,
-        private readonly DomainEvent $domainEvent
+        private readonly DomainEvent $domainEvent,
     ) {
         parent::__construct();
     }

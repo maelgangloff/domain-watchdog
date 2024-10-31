@@ -98,7 +98,7 @@ readonly class RDAPService
         private TldRepository $tldRepository,
         private EntityManagerInterface $em,
         private LoggerInterface $logger,
-        private StatService $statService
+        private StatService $statService,
     ) {
     }
 

@@ -38,7 +38,7 @@ final readonly class OrderDomainHandler
         private StatService $statService,
         private ChatNotificationService $chatNotificationService,
         #[Autowire(service: 'service_container')]
-        private ContainerInterface $locator
+        private ContainerInterface $locator,
     ) {
         $this->sender = new Address($mailerSenderEmail, $mailerSenderName);
     }
