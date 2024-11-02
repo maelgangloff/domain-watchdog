@@ -315,19 +315,20 @@ readonly class RDAPService
                     'ldhName' => strtolower($rdapNameserver['ldhName']),
                 ]);
 
-                $domainNS = $domain->getNameservers()->findFirst(fn (int $key, Nameserver $ns) => $ns->getLdhName() === $rdapNameserver['ldhName']);
+                $existingDomainNS = $domain->getNameservers()->findFirst(fn (int $key, Nameserver $ns) => $ns->getLdhName() === $rdapNameserver['ldhName']);
 
-                if (null !== $domainNS) {
-                    $nameserver = $domainNS;
-                }
-                if (null === $nameserver) {
+                if (null !== $existingDomainNS) {
+                    $nameserver = $existingDomainNS;
+                } elseif (null === $nameserver) {
                     $nameserver = new Nameserver();
                 }
 
                 $nameserver->setLdhName($rdapNameserver['ldhName']);
 
                 if (!array_key_exists('entities', $rdapNameserver) || !is_array($rdapNameserver['entities'])) {
-                    $domain->addNameserver($nameserver);
+                    if (!$domain->getNameservers()->contains($nameserver)) {
+                        $domain->addNameserver($nameserver);
+                    }
                     continue;
                 }
 
@@ -365,7 +366,9 @@ readonly class RDAPService
                         ->setRoles($roles));
                 }
 
-                $domain->addNameserver($nameserver);
+                if (!$domain->getNameservers()->contains($nameserver)) {
+                    $domain->addNameserver($nameserver);
+                }
             }
         } else {
             $this->logger->warning('The domain name {idnDomain} has no nameservers.', [
