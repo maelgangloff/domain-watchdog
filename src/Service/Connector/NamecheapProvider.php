@@ -21,8 +21,11 @@ class NamecheapProvider extends AbstractProvider
 
     public const SANDBOX_BASE_URL = 'https://api.sandbox.namecheap.com/xml.response';
 
-    public function __construct(CacheItemPoolInterface $cacheItemPool, private HttpClientInterface $client, private readonly string $outgoingIp)
-    {
+    public function __construct(
+        CacheItemPoolInterface $cacheItemPool,
+        private readonly HttpClientInterface $client,
+        private readonly string $outgoingIp,
+    ) {
         parent::__construct($cacheItemPool);
     }
 
@@ -32,11 +35,10 @@ class NamecheapProvider extends AbstractProvider
      */
     public function orderDomain(Domain $domain, $dryRun): void
     {
-        $addressesRes = $this->call('namecheap.users.address.getList', [], $dryRun);
-        $addresses = $addressesRes->AddressGetListResult->List;
+        $addresses = $this->call('namecheap.users.address.getList', [], $dryRun)->AddressGetListResult->List;
 
         if (count($addresses) < 1) {
-            throw new \Exception('Namecheap account requires at least one address to purchase a domain');
+            throw new BadRequestHttpException('Namecheap account requires at least one address to purchase a domain');
         }
 
         $addressId = (string) $addresses->attributes()['AddressId'];
@@ -54,10 +56,11 @@ class NamecheapProvider extends AbstractProvider
         self::mergePrefixKeys('AuxBilling', $address, $domainAddresses);
 
         $this->call('namecheap.domains.create', array_merge([
-            'DomainName' => $domain->getLdhName(),
-            'Years' => 1,
-            'AddFreeWhoisguard' => 'yes',
-            'WGEnabled' => 'yes',
+            'DomainName' => $domain->getLdhName(), // Domain name to register
+            'Years' => 1, // Number of years to register
+            'AddFreeWhoisguard' => 'yes', // Adds free domain privacy for the domain
+            'WGEnabled' => 'yes', // Enables free domain privacy for the domain
+            'IsPremiumDomain' => 'False',
         ], $domainAddresses), $dryRun);
     }
 
@@ -100,13 +103,10 @@ class NamecheapProvider extends AbstractProvider
 
     public function verifySpecificAuthData(array $authData): array
     {
-        $apiUser = $authData['ApiUser'];
-        $apiKey = $authData['ApiKey'];
-
-        if (!is_string($apiUser) || empty($apiUser)
-            || !is_string($apiKey) || empty($apiKey)
-        ) {
-            throw new BadRequestHttpException('Bad authData schema');
+        foreach (['ApiUser', 'ApiKey'] as $key) {
+            if (empty($authData[$key]) || !is_string($authData[$key])) {
+                throw new BadRequestHttpException("Bad authData schema: missing or invalid '$key'");
+            }
         }
 
         return [
@@ -121,9 +121,13 @@ class NamecheapProvider extends AbstractProvider
      * @throws RedirectionExceptionInterface
      * @throws ClientExceptionInterface
      */
-    public function assertAuthentication(): void
+    protected function assertAuthentication(): void
     {
-        $this->call('namecheap.domains.gettldlist', [], false);
+        $addresses = $this->call('namecheap.users.address.getList', [], false)->AddressGetListResult->List;
+
+        if (count($addresses) < 1) {
+            throw new BadRequestHttpException('Namecheap account requires at least one address to purchase a domain');
+        }
     }
 
     /**

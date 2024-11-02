@@ -108,7 +108,7 @@ class GandiProvider extends AbstractProvider
     /**
      * @throws TransportExceptionInterface
      */
-    public function assertAuthentication(): void
+    protected function assertAuthentication(): void
     {
         $response = $this->client->request('GET', '/v5/organization/user-info', (new HttpOptions())
             ->setAuthBearer($this->authData['token'])

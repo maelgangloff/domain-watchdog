@@ -177,7 +177,9 @@ class AutodnsProvider extends AbstractProvider
         }
 
         if (
-            empty($username) || empty($password)
+            !is_string($username) || empty($username)
+            || !is_string($password) || empty($password)
+            || true !== $authData['ownerConfirm']
         ) {
             throw new BadRequestHttpException('Bad authData schema');
         }
@@ -211,7 +213,7 @@ class AutodnsProvider extends AbstractProvider
     /**
      * @throws TransportExceptionInterface
      */
-    public function assertAuthentication(): void
+    protected function assertAuthentication(): void
     {
         try {
             $response = $this->client->request(

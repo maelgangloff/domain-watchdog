@@ -79,7 +79,7 @@ abstract class AbstractProvider
     /**
      * @throws \Exception when the registrar denies the authentication
      */
-    abstract public function assertAuthentication(): void; // TODO use dedicated exception type
+    abstract protected function assertAuthentication(): void; // TODO use dedicated exception type
 
     abstract public function orderDomain(Domain $domain, bool $dryRun): void;
 

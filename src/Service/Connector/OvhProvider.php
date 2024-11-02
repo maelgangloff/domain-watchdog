@@ -133,34 +133,30 @@ class OvhProvider extends AbstractProvider
      */
     public function verifySpecificAuthData(array $authData): array
     {
-        $appKey = $authData['appKey'];
-        $appSecret = $authData['appSecret'];
-        $apiEndpoint = $authData['apiEndpoint'];
-        $consumerKey = $authData['consumerKey'];
-        $ovhSubsidiary = $authData['ovhSubsidiary'];
-        $pricingMode = $authData['pricingMode'];
-
-        if (!is_string($appKey) || empty($appKey)
-            || !is_string($appSecret) || empty($appSecret)
-            || !is_string($consumerKey) || empty($consumerKey)
-            || !is_string($apiEndpoint) || empty($apiEndpoint)
-            || !is_string($ovhSubsidiary) || empty($ovhSubsidiary)
-            || !is_string($pricingMode) || empty($pricingMode)
-        ) {
-            throw new BadRequestHttpException('Bad authData schema');
+        foreach ([
+            'appKey',
+            'appSecret',
+            'apiEndpoint',
+            'consumerKey',
+            'ovhSubsidiary',
+            'pricingMode',
+        ] as $key) {
+            if (empty($authData[$key]) || !is_string($authData[$key])) {
+                throw new BadRequestHttpException("Bad authData schema: missing or invalid '$key'");
+            }
         }
 
         return [
-            'appKey' => $appKey,
-            'appSecret' => $appSecret,
-            'apiEndpoint' => $apiEndpoint,
-            'consumerKey' => $consumerKey,
-            'ovhSubsidiary' => $ovhSubsidiary,
-            'pricingMode' => $pricingMode,
+            'appKey' => $authData['appKey'],
+            'appSecret' => $authData['appSecret'],
+            'apiEndpoint' => $authData['apiEndpoint'],
+            'consumerKey' => $authData['consumerKey'],
+            'ovhSubsidiary' => $authData['ovhSubsidiary'],
+            'pricingMode' => $authData['pricingMode'],
         ];
     }
 
-    public function assertAuthentication(): void
+    protected function assertAuthentication(): void
     {
         $conn = new Api(
             $this->authData['appKey'],
