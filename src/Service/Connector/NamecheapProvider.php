@@ -60,7 +60,6 @@ class NamecheapProvider extends AbstractProvider
             'Years' => 1, // Number of years to register
             'AddFreeWhoisguard' => 'yes', // Adds free domain privacy for the domain
             'WGEnabled' => 'yes', // Enables free domain privacy for the domain
-            'IsPremiumDomain' => 'False',
         ], $domainAddresses), $dryRun);
     }
 

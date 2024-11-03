@@ -51,3 +51,4 @@ phpstan.neon
 public/images/*.png
 public/content/*.md
 public/favicon.ico
+config/app/custom_rdap_servers.yaml

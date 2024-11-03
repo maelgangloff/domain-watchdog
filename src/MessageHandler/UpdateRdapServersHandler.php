@@ -47,12 +47,6 @@ final readonly class UpdateRdapServersHandler
         }
 
         try {
-            $this->RDAPService->updateRDAPServersFromIANA();
-        } catch (\Throwable $throwable) {
-            $throws[] = $throwable;
-        }
-
-        try {
             $this->RDAPService->updateRDAPServersFromFile($this->bag->get('custom_rdap_servers_file'));
         } catch (\Throwable $throwable) {
             $throws[] = $throwable;
