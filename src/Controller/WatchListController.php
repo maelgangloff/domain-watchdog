@@ -351,10 +351,7 @@ class WatchListController extends AbstractController
                 /** @var DomainEvent|null $exp */
                 $exp = $domain->getEvents()->findFirst(fn (int $key, DomainEvent $e) => !$e->getDeleted() && 'expiration' === $e->getAction());
 
-                if (!$domain->getDeleted()
-                    && null !== $exp && $exp->getDate() > new \DateTimeImmutable()
-                    && count(array_filter($domain->getEvents()->toArray(), fn (DomainEvent $e) => !$e->getDeleted() && 'expiration' === $e->getAction())) > 0
-                    && !in_array($domain, $domains)) {
+                if (!$domain->getDeleted() && null !== $exp && !in_array($domain, $domains)) {
                     $domains[] = $domain;
                 }
             }
