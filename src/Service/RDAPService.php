@@ -252,6 +252,9 @@ readonly class RDAPService
                     ->setDate(new \DateTimeImmutable($rdapEvent['eventDate']))
                     ->setDeleted(false)
                 );
+
+                $this->em->persist($domain);
+                $this->em->flush();
             }
         }
 

@@ -291,16 +291,21 @@ class WatchListController extends AbstractController
         foreach ($watchList->getDomains()->getIterator() as $domain) {
             $attendees = [];
 
-            /** @var DomainEntity $entity */
-            foreach ($domain->getDomainEntities()->toArray() as $entity) {
-                $vCard = Reader::readJson($entity->getEntity()->getJCard());
-                if (isset($vCard->EMAIL) && isset($vCard->FN)) {
-                    $email = (string) $vCard->EMAIL;
-                    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-                        continue;
-                    }
-                    $attendees[] = (new Attendee(new EmailAddress($email)))->setDisplayName((string) $vCard->FN);
+            /* @var DomainEntity $entity */
+            foreach ($domain->getDomainEntities()->filter(fn (DomainEntity $domainEntity) => !$domainEntity->getDeleted())->getIterator() as $domainEntity) {
+                $vCardData = Reader::readJson($domainEntity->getEntity()->getJCard());
+
+                if (empty($vCardData->EMAIL) || empty($vCardData->FN)) {
+                    continue;
                 }
+
+                $email = (string) $vCardData->EMAIL;
+
+                if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                    continue;
+                }
+
+                $attendees[] = (new Attendee(new EmailAddress($email)))->setDisplayName((string) $vCardData->FN);
             }
 
             /** @var DomainEvent $event */
