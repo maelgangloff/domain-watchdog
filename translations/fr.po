@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2024-10-06 18:47+0000\n"
+"PO-Revision-Date: 2024-12-01 23:07+0000\n"
 "Last-Translator: Maël Gangloff <contact@maelgangloff.fr>\n"
 "Language-Team: French <https://weblate.vinceh121.me/projects/domain-watchdog/"
 "domain-watchdog-dashboard/fr/>\n"
@@ -9,7 +9,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 5.7.2\n"
+"X-Generator: Weblate 5.8.3\n"
 
 #: assets/App.tsx:101
 msgid "TOS"
@@ -421,7 +421,7 @@ msgstr "Annuler"
 #: assets/components/tracking/watchlist/WatchlistCard.tsx:29
 #: assets/components/tracking/watchlist/WatchlistForm.tsx:106
 msgid "Domain names"
-msgstr "Noms de domaines"
+msgstr "Noms de domaine"
 
 #: assets/components/tracking/watchlist/WatchlistCard.tsx:33
 #: assets/components/tracking/watchlist/WatchlistForm.tsx:148
