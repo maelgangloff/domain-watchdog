@@ -60,6 +60,13 @@ final readonly class UpdateDomainsFromWatchlistHandler
             'token' => $message->watchListToken,
         ]);
 
+        /*
+         * A domain name is updated if one or more of these conditions are met:
+         * - was updated more than 7 days ago
+         * - has statuses that suggest it will expire soon AND was updated more than an hour ago
+         * - has specific statuses that suggest there is a dispute between the registrant and the registrar AND was updated more than a day ago
+         */
+
         /** @var Domain $domain */
         foreach ($watchList->getDomains()
                      ->filter(fn ($domain) => $domain->getUpdatedAt()
@@ -78,13 +85,25 @@ final readonly class UpdateDomainsFromWatchlistHandler
             $updatedAt = $domain->getUpdatedAt();
 
             try {
+                /*
+                 * Domain name update
+                 * We send messages that correspond to the sending of notifications that will not be processed here.
+                 */
                 $this->RDAPService->registerDomain($domain->getLdhName());
                 $this->bus->dispatch(new SendDomainEventNotif($watchList->getToken(), $domain->getLdhName(), $updatedAt));
             } catch (NotFoundHttpException) {
                 if (null !== $watchList->getConnector()) {
+                    /*
+                     * If the domain name no longer appears in the WHOIS AND a connector is associated with this Watchlist,
+                     * this connector is used to purchase the domain name.
+                     */
                     $this->bus->dispatch(new OrderDomain($watchList->getToken(), $domain->getLdhName(), $updatedAt));
                 }
             } catch (\Throwable $e) {
+                /*
+                 * In case of another unknown error,
+                 * the owner of the Watchlist is informed that an error occurred in updating the domain name.
+                 */
                 $this->logger->error('An update error email is sent to user {username}.', [
                     'username' => $watchList->getUser()->getUserIdentifier(),
                     'error' => $e,

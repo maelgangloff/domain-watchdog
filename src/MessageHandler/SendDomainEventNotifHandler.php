@@ -51,10 +51,18 @@ final readonly class SendDomainEventNotifHandler
         /** @var Domain $domain */
         $domain = $this->domainRepository->findOneBy(['ldhName' => $message->ldhName]);
 
+        /*
+         * For each new event whose date is after the domain name update date (before the current domain name update)
+         */
+
         /** @var DomainEvent $event */
         foreach ($domain->getEvents()->filter(fn ($event) => $message->updatedAt < $event->getDate() && $event->getDate() < new \DateTime()) as $event) {
             $watchListTriggers = $watchList->getWatchListTriggers()
                 ->filter(fn ($trigger) => $trigger->getEvent() === $event->getAction());
+
+            /*
+             * For each trigger, we perform the appropriate action: send email or send push notification (for now)
+             */
 
             /** @var WatchListTrigger $watchListTrigger */
             foreach ($watchListTriggers->getIterator() as $watchListTrigger) {

@@ -33,6 +33,11 @@ final readonly class UpdateRdapServersHandler
         /** @var \Throwable[] $throws */
         $throws = [];
 
+        /*
+         * First, we update the list of TLDs from IANA because it is the official list of TLDs.
+         * Then, we update from ICANN because it allows to have information about generic top-level domains (gTLDs).
+         */
+
         try {
             $this->RDAPService->updateTldListIANA();
             $this->RDAPService->updateGTldListICANN();
@@ -40,11 +45,19 @@ final readonly class UpdateRdapServersHandler
             $throws[] = $throwable;
         }
 
+        /*
+         * Finally, we take the list from IANA and import it again to allow the classification of the latest types of TLDs.
+         */
+
         try {
             $this->RDAPService->updateRDAPServersFromIANA();
         } catch (\Throwable $throwable) {
             $throws[] = $throwable;
         }
+
+        /*
+         * If it exists, the list of custom RDAP servers is updated at this time.
+         */
 
         try {
             $this->RDAPService->updateRDAPServersFromFile($this->bag->get('custom_rdap_servers_file'));

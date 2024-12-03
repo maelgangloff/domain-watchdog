@@ -56,44 +56,73 @@ final readonly class OrderDomainHandler
         $domain = $this->domainRepository->findOneBy(['ldhName' => $message->ldhName]);
 
         $connector = $watchList->getConnector();
-        if (null !== $connector && $domain->getDeleted()) {
-            $this->logger->notice('Watchlist {watchlist} is linked to connector {connector}. A purchase attempt will be made for domain name {ldhName} with provider {provider}.', [
+
+        /*
+         * We make sure that the domain name is marked absent from WHOIS in the database before continuing.
+         * A connector must also be associated with the Watchlist to allow the purchase of the domain name.
+         * Otherwise, we do nothing.
+         */
+
+        if (null === $connector || !$domain->getDeleted()) {
+            return;
+        }
+
+        $this->logger->notice('Watchlist {watchlist} is linked to connector {connector}. A purchase attempt will be made for domain name {ldhName} with provider {provider}.', [
+            'watchlist' => $message->watchListToken,
+            'connector' => $connector->getId(),
+            'ldhName' => $message->ldhName,
+            'provider' => $connector->getProvider()->value,
+        ]);
+
+        try {
+            $provider = $connector->getProvider();
+
+            if (null === $provider) {
+                throw new \InvalidArgumentException('Provider not found');
+            }
+
+            $connectorProviderClass = $provider->getConnectorProvider();
+            /** @var AbstractProvider $connectorProvider */
+            $connectorProvider = $this->locator->get($connectorProviderClass);
+
+            /*
+             * The user is authenticated to ensure that the credentials are still valid.
+             * If no errors occur, the purchase is attempted.
+             */
+
+            $connectorProvider->authenticate($connector->getAuthData());
+
+            $connectorProvider->orderDomain($domain, $this->kernel->isDebug());
+
+            /*
+             * If the purchase was successful, the statistics are updated and a success message is sent to the user.
+             */
+            $this->logger->notice('Watchlist {watchlist} is linked to connector {connector}. A purchase was successfully made for domain {ldhName} with provider {provider}.', [
                 'watchlist' => $message->watchListToken,
                 'connector' => $connector->getId(),
                 'ldhName' => $message->ldhName,
                 'provider' => $connector->getProvider()->value,
             ]);
-            try {
-                $provider = $connector->getProvider();
-                if (null === $provider) {
-                    throw new \InvalidArgumentException('Provider not found');
-                }
 
-                $connectorProviderClass = $provider->getConnectorProvider();
+            $this->statService->incrementStat('stats.domain.purchased');
+            $notification = (new DomainOrderNotification($this->sender, $domain, $connector));
+            $this->mailer->send($notification->asEmailMessage(new Recipient($watchList->getUser()->getEmail()))->getMessage());
+            $this->chatNotificationService->sendChatNotification($watchList, $notification);
+        } catch (\Throwable $exception) {
+            /*
+             * The purchase was not successful (for several possible reasons that we have not determined).
+             * The user is informed and the exception is raised, which may allow you to try again.
+             */
+            $this->logger->warning('Unable to complete purchase. An error message is sent to user {username}.', [
+                'username' => $watchList->getUser()->getUserIdentifier(),
+            ]);
 
-                /** @var AbstractProvider $connectorProvider */
-                $connectorProvider = $this->locator->get($connectorProviderClass);
-                $connectorProvider->authenticate($connector->getAuthData());
+            $this->statService->incrementStat('stats.domain.purchase.failed');
+            $notification = (new DomainOrderErrorNotification($this->sender, $domain));
+            $this->mailer->send($notification->asEmailMessage(new Recipient($watchList->getUser()->getEmail()))->getMessage());
+            $this->chatNotificationService->sendChatNotification($watchList, $notification);
 
-                $connectorProvider->orderDomain($domain, $this->kernel->isDebug());
-                $this->statService->incrementStat('stats.domain.purchased');
-
-                $notification = (new DomainOrderNotification($this->sender, $domain, $connector));
-                $this->mailer->send($notification->asEmailMessage(new Recipient($watchList->getUser()->getEmail()))->getMessage());
-                $this->chatNotificationService->sendChatNotification($watchList, $notification);
-            } catch (\Throwable $exception) {
-                $this->logger->warning('Unable to complete purchase. An error message is sent to user {username}.', [
-                    'username' => $watchList->getUser()->getUserIdentifier(),
-                ]);
-
-                $notification = (new DomainOrderErrorNotification($this->sender, $domain));
-                $this->mailer->send($notification->asEmailMessage(new Recipient($watchList->getUser()->getEmail()))->getMessage());
-                $this->chatNotificationService->sendChatNotification($watchList, $notification);
-
-                $this->statService->incrementStat('stats.domain.purchase.failed');
-
-                throw $exception;
-            }
+            throw $exception;
         }
     }
 }

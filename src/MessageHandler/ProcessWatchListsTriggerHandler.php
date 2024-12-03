@@ -25,6 +25,11 @@ final readonly class ProcessWatchListsTriggerHandler
      */
     public function __invoke(ProcessWatchListsTrigger $message): void
     {
+        /*
+         * We shuffle the watch lists to process them in an order that we consider random.
+         * The shuffling is provided by a high-level API of a CSPRNG number generator.
+         */
+
         $randomizer = new Randomizer();
         $watchLists = $randomizer->shuffleArray($this->watchListRepository->findAll());
 

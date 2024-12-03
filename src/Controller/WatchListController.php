@@ -363,7 +363,7 @@ class WatchListController extends AbstractController
         }
 
         usort($domains, function (Domain $d1, Domain $d2) {
-            $IMPORTANT_STATUS = ['pending delete', 'redemption period', 'auto renew period'];
+            $IMPORTANT_STATUS = ['pending delete', 'redemption period'];
 
             /** @var \DateTimeImmutable $exp1 */
             $exp1 = $d1->getEvents()->findFirst(fn (int $key, DomainEvent $e) => !$e->getDeleted() && 'expiration' === $e->getAction())->getDate();
