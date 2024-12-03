@@ -31,7 +31,8 @@ export function TrackedDomainTable() {
                             <Tag color={eppStatusCodeToColor(s)}>{s}</Tag>
                         </Tooltip>
                     ),
-                    updatedAt: new Date(d.updatedAt).toLocaleString()
+                    updatedAt: new Date(d.updatedAt).toLocaleString(),
+                    domain: d
                 }
             }))
         })
@@ -48,15 +49,36 @@ export function TrackedDomainTable() {
         },
         {
             title: t`Expiration date`,
-            dataIndex: 'expirationDate'
+            dataIndex: 'expirationDate',
+            sorter: (a: { domain: Domain }, b: { domain: Domain }) => {
+
+                const expirationDate1 = a.domain.events.find(e => e.action === 'expiration' && !e.deleted)?.date
+                const expirationDate2 = b.domain.events.find(e => e.action === 'expiration' && !e.deleted)?.date
+
+                if (expirationDate1 === undefined || expirationDate2 === undefined) return 0
+                return new Date(expirationDate1).getTime() - new Date(expirationDate2).getTime()
+            }
         },
         {
             title: t`Status`,
-            dataIndex: 'status'
+            dataIndex: 'status',
+            showSorterTooltip: {target: 'full-header'},
+            filters: [...new Set(dataTable.map((d: any) => d.domain.status).flat())].map(s => ({
+                text: <Tooltip
+                    placement='bottomLeft'
+                    title={s in rdapStatusCodeDetailTranslated ? rdapStatusCodeDetailTranslated[s as keyof typeof rdapStatusCodeDetailTranslated] : undefined}>
+                    <Tag color={eppStatusCodeToColor(s)}>{s}</Tag>
+                </Tooltip>,
+                value: s,
+            })),
+            onFilter: (value, record: { domain: Domain }) => record.domain.status.includes(value as string)
         },
         {
             title: t`Updated at`,
-            dataIndex: 'updatedAt'
+            dataIndex: 'updatedAt',
+            sorter: (a: { domain: Domain }, b: {
+                domain: Domain
+            }) => new Date(a.domain.updatedAt).getTime() - new Date(b.domain.updatedAt).getTime()
         }
     ]
 

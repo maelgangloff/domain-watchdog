@@ -99,12 +99,6 @@ export default function WatchlistPage() {
 
     return <Flex gap="middle" align="center" justify="center" vertical>
         {contextHolder}
-        <Card loading={connectors === undefined} title={t`Create a Watchlist`} style={{width: '100%'}}>
-            {connectors &&
-                <WatchlistForm form={form} onFinish={onCreateWatchlist} connectors={connectors} isCreation={true}/>
-            }
-        </Card>
-        <Divider/>
         <Card title={
             <>
                 <Tag icon={<AimOutlined/>} color="cyan-inverse"/>
@@ -113,6 +107,12 @@ export default function WatchlistPage() {
         }
               style={{width: '100%'}}>
             <TrackedDomainTable/>
+        </Card>
+        <Divider/>
+        <Card loading={connectors === undefined} title={t`Create a Watchlist`} style={{width: '100%'}}>
+            {connectors &&
+                <WatchlistForm form={form} onFinish={onCreateWatchlist} connectors={connectors} isCreation={true}/>
+            }
         </Card>
         <Divider/>
         {connectors && watchlists && watchlists.length > 0 &&
