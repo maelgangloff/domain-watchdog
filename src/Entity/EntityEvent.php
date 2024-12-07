@@ -6,6 +6,9 @@ use App\Repository\EntityEventRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: EntityEventRepository::class)]
+#[ORM\UniqueConstraint(
+    columns: ['action', 'date', 'entity_id']
+)]
 class EntityEvent extends Event
 {
     #[ORM\ManyToOne(targetEntity: Entity::class, inversedBy: 'events')]
