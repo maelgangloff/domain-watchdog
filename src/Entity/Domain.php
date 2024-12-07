@@ -368,12 +368,11 @@ class Domain
     {
         return $this->getUpdatedAt()
                 ->diff(new \DateTimeImmutable())->days >= 7
-            || (
-                ($fromUser || ($this->getUpdatedAt()
-                            ->diff(new \DateTimeImmutable())->h * 60 + $this->getUpdatedAt()
-                            ->diff(new \DateTimeImmutable())->i) >= 50)
-                && $this->isToBeWatchClosely()
-            )
+            || (($fromUser || ($this->getUpdatedAt()
+                                ->diff(new \DateTimeImmutable())->h * 60 + $this->getUpdatedAt()
+                                ->diff(new \DateTimeImmutable())->i) >= 50)
+                && $this->isToBeWatchClosely())
+
             || (count(array_intersect($this->getStatus(), ['auto renew period', 'client hold', 'server hold'])) > 0
                 && $this->getUpdatedAt()->diff(new \DateTimeImmutable())->days >= 1);
     }
