@@ -23,12 +23,14 @@
     "php": ">=8.2",
     "ext-ctype": "*",
     "ext-iconv": "*",
+    "ext-simplexml": "*",
     "api-platform/core": "^3.3",
     "doctrine/dbal": "^3",
     "doctrine/doctrine-bundle": "^2.12",
     "doctrine/doctrine-migrations-bundle": "^3.3",
     "doctrine/orm": "^3.2",
     "eluceo/ical": "^2.14",
+    "influxdata/influxdb-client-php": "^3.6",
     "knpuniversity/oauth2-client-bundle": "^2.18",
     "lexik/jwt-authentication-bundle": "^3.1",
     "nelmio/cors-bundle": "^2.5",
@@ -87,13 +89,13 @@
     "symfony/zulip-notifier": "7.1.*",
     "symfonycasts/verify-email-bundle": "*",
     "twig/extra-bundle": "^2.12|^3.0",
-    "twig/twig": "^2.12|^3.0",
-    "ext-simplexml": "*"
+    "twig/twig": "^2.12|^3.0"
   },
   "config": {
     "allow-plugins": {
       "symfony/flex": true,
-      "symfony/runtime": true
+      "symfony/runtime": true,
+      "php-http/discovery": true
     },
     "sort-packages": true
   },

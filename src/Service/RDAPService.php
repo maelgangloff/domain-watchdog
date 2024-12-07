@@ -87,6 +87,8 @@ readonly class RDAPService
         private EntityManagerInterface $em,
         private LoggerInterface $logger,
         private StatService $statService,
+        private InfluxdbService $influxService,
+        private bool $influxdbEnable = false,
     ) {
     }
 
@@ -154,6 +156,10 @@ readonly class RDAPService
                         ->updateTimestamps();
                     $this->em->persist($domain);
                     $this->em->flush();
+                }
+
+                if ($this->influxdbEnable) {
+                    $this->influxService->addRdapRequest($rdapServer, $domain, false);
                 }
 
                 throw new NotFoundHttpException('The domain name is not present in the WHOIS database.');
@@ -347,6 +353,10 @@ readonly class RDAPService
         $domain->updateTimestamps();
         $this->em->persist($domain);
         $this->em->flush();
+
+        if ($this->influxdbEnable) {
+            $this->influxService->addRdapRequest($rdapServer, $domain, true);
+        }
 
         return $domain;
     }
