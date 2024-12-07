@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\Get;
+use App\Config\EventAction;
 use App\Controller\DomainRefreshController;
 use App\Repository\DomainRepository;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -104,6 +105,20 @@ class Domain
     #[ORM\Column(nullable: false)]
     #[Groups(['domain:item', 'domain:list'])]
     private ?bool $deleted;
+
+    private const IMPORTANT_EVENTS = [EventAction::Deletion->value, EventAction::Expiration->value];
+    private const IMPORTANT_STATUS = [
+        'redemption period',
+        'pending delete',
+        'pending create',
+        'pending renew',
+        'pending restore',
+        'pending transfer',
+        'pending update',
+        'add period',
+        'client hold',
+        'server hold',
+    ];
 
     public function __construct()
     {
@@ -316,5 +331,50 @@ class Domain
         $this->deleted = $deleted;
 
         return $this;
+    }
+
+    /**
+     * Determines if a domain name needs special attention.
+     * These domain names are those whose last event was expiration or deletion.
+     *
+     * @throws \Exception
+     */
+    private function isToBeWatchClosely(): bool
+    {
+        $status = $this->getStatus();
+        if ((!empty($status) && count(array_intersect($status, self::IMPORTANT_STATUS))) || $this->getDeleted()) {
+            return true;
+        }
+
+        /** @var DomainEvent[] $events */
+        $events = $this->getEvents()
+            ->filter(fn (DomainEvent $e) => $e->getDate() <= new \DateTimeImmutable('now'))
+            ->toArray();
+
+        usort($events, fn (DomainEvent $e1, DomainEvent $e2) => $e2->getDate() <=> $e1->getDate());
+
+        return !empty($events) && in_array($events[0]->getAction(), self::IMPORTANT_EVENTS);
+    }
+
+    /**
+     * Returns true if one or more of these conditions are met:
+     * - It has been more than 7 days since the domain name was last updated
+     * - It has been more than 1 hour and the domain name has statuses that suggest it is not stable
+     * - It has been more than 1 day and the domain name is blocked in DNS
+     *
+     * @throws \Exception
+     */
+    public function isToBeUpdated(bool $fromUser = true): bool
+    {
+        return $this->getUpdatedAt()
+                ->diff(new \DateTimeImmutable())->days >= 7
+            || (
+                ($fromUser || ($this->getUpdatedAt()
+                            ->diff(new \DateTimeImmutable())->h * 60 + $this->getUpdatedAt()
+                            ->diff(new \DateTimeImmutable())->i) >= 50)
+                && $this->isToBeWatchClosely()
+            )
+            || (count(array_intersect($this->getStatus(), ['auto renew period', 'client hold', 'server hold'])) > 0
+                && $this->getUpdatedAt()->diff(new \DateTimeImmutable())->days >= 1);
     }
 }

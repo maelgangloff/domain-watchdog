@@ -53,8 +53,7 @@ class DomainRefreshController extends AbstractController
         // If the domain name exists in the database, recently updated and not important, we return the stored Domain
         if (null !== $domain
             && !$domain->getDeleted()
-            && ($domain->getUpdatedAt()->diff(new \DateTimeImmutable('now'))->days < 7)
-            && !$this->RDAPService::isToBeWatchClosely($domain)
+            && !$domain->isToBeUpdated()
             && !$this->kernel->isDebug()
         ) {
             $this->logger->info('It is not necessary to update the information of the domain name {idnDomain} with the RDAP protocol.', [

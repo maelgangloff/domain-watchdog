@@ -74,18 +74,6 @@ readonly class RDAPService
         'xn--hlcj6aya9esc7a',
     ];
 
-    private const IMPORTANT_EVENTS = [EventAction::Deletion->value, EventAction::Expiration->value];
-    private const IMPORTANT_STATUS = [
-        'redemption period',
-        'pending delete',
-        'pending create',
-        'pending renew',
-        'pending restore',
-        'pending transfer',
-        'pending update',
-        'add period',
-    ];
-
     public function __construct(private HttpClientInterface $client,
         private EntityRepository $entityRepository,
         private DomainRepository $domainRepository,
@@ -103,33 +91,9 @@ readonly class RDAPService
     }
 
     /**
-     * Determines if a domain name needs special attention.
-     * These domain names are those whose last event was expiration or deletion.
-     *
-     * @throws \Exception
-     */
-    public static function isToBeWatchClosely(Domain $domain): bool
-    {
-        $status = $domain->getStatus();
-        if ((!empty($status) && count(array_intersect($status, self::IMPORTANT_STATUS))) || $domain->getDeleted()) {
-            return true;
-        }
-
-        /** @var DomainEvent[] $events */
-        $events = $domain->getEvents()
-            ->filter(fn (DomainEvent $e) => $e->getDate() <= new \DateTimeImmutable('now'))
-            ->toArray();
-
-        usort($events, fn (DomainEvent $e1, DomainEvent $e2) => $e2->getDate() <=> $e1->getDate());
-
-        return !empty($events) && in_array($events[0]->getAction(), self::IMPORTANT_EVENTS);
-    }
-
-    /**
      * @throws HttpExceptionInterface
      * @throws TransportExceptionInterface
      * @throws DecodingExceptionInterface
-     * @throws \Throwable
      */
     public function registerDomains(array $domains): void
     {
@@ -144,7 +108,7 @@ readonly class RDAPService
      * @throws RedirectionExceptionInterface
      * @throws DecodingExceptionInterface
      * @throws ClientExceptionInterface
-     * @throws \Throwable
+     * @throws \Exception
      */
     public function registerDomain(string $fqdn): Domain
     {
@@ -179,7 +143,7 @@ readonly class RDAPService
             $res = $this->client->request(
                 'GET', $rdapServerUrl.'domain/'.$idnDomain
             )->toArray();
-        } catch (\Throwable $e) {
+        } catch (\Exception $e) {
             if ($e instanceof ClientException && 404 === $e->getResponse()->getStatusCode()) {
                 if (null !== $domain) {
                     $this->logger->notice('The domain name {idnDomain} has been deleted from the WHOIS database.', [
