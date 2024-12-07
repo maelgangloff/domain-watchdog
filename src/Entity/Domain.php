@@ -348,7 +348,7 @@ class Domain
 
         /** @var DomainEvent[] $events */
         $events = $this->getEvents()
-            ->filter(fn (DomainEvent $e) => $e->getDate() <= new \DateTimeImmutable('now'))
+            ->filter(fn (DomainEvent $e) => !$e->getDeleted() && $e->getDate() <= new \DateTimeImmutable('now'))
             ->toArray();
 
         usort($events, fn (DomainEvent $e1, DomainEvent $e2) => $e2->getDate() <=> $e1->getDate());
