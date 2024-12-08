@@ -2,21 +2,28 @@
 
 namespace App\Service;
 
+use App\Config\TriggerAction;
+use App\Entity\Connector;
 use App\Entity\Domain;
 use App\Entity\RdapServer;
 use InfluxDB2\Client;
 use InfluxDB2\Model\WritePrecision;
 use InfluxDB2\Point;
 use InfluxDB2\WriteType;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
 
 readonly class InfluxdbService
 {
     private Client $client;
 
     public function __construct(
+        #[Autowire(param: 'influxdb_url')]
         private string $influxdbUrl = 'http://influxdb:8086',
+        #[Autowire(param: 'influxdb_token')]
         private string $influxdbToken = '',
+        #[Autowire(param: 'influxdb_bucket')]
         private string $influxdbBucket = 'domainwatchdog',
+        #[Autowire(param: 'influxdb_org')]
         private string $influxdbOrg = 'domainwatchdog',
     ) {
         $this->client = new Client([
@@ -28,18 +35,47 @@ readonly class InfluxdbService
         ]);
     }
 
-    public function addRdapRequest(RdapServer $rdapServer, Domain $domain, bool $success): void
+    public function addRdapQueryPoint(RdapServer $rdapServer, Domain $domain, array $info): void
     {
-        $this->writePoints(new Point('rdap_request', [
+        $this->writePoints(new Point('rdap_query', [
             'domain' => $domain->getLdhName(),
             'tld' => $domain->getTld()->getTld(),
             'rdap_server' => $rdapServer->getUrl(),
+            'primary_ip' => $info['primary_ip'],
+        ], [
+            'http_code' => $info['http_code'],
+            'total_time_us' => $info['total_time_us'],
+            'namelookup_time_us' => $info['namelookup_time_us'],
+            'connect_time_us' => $info['connect_time_us'],
+            'starttransfer_time_us' => $info['starttransfer_time_us'],
+            'size_download' => $info['size_download'],
+            'ssl_verify_result' => $info['ssl_verify_result'],
+        ]));
+    }
+
+    public function addDomainOrderPoint(Connector $connector, Domain $domain, bool $success): void
+    {
+        $this->writePoints(new Point('domain_order', [
+            'domain' => $domain->getLdhName(),
+            'tld' => $domain->getTld()->getTld(),
+            'provider' => $connector->getProvider()->value,
         ], [
             'success' => $success,
         ]));
     }
 
-    public function writePoints(Point ...$points): void
+    public function addDomainNotificationPoint(Domain $domain, TriggerAction $triggerAction, bool $success): void
+    {
+        $this->writePoints(new Point('domain_notification', [
+            'domain' => $domain->getLdhName(),
+            'tld' => $domain->getTld()->getTld(),
+            'medium' => $triggerAction->value,
+        ], [
+            'success' => $success,
+        ]));
+    }
+
+    private function writePoints(Point ...$points): void
     {
         $writeApi = $this->client->createWriteApi(['writeType' => WriteType::BATCHING, 'batchSize' => count($points)]);
         foreach ($points as $point) {

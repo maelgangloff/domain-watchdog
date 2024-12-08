@@ -11,6 +11,7 @@ use App\Repository\DomainRepository;
 use App\Repository\WatchListRepository;
 use App\Service\ChatNotificationService;
 use App\Service\Connector\AbstractProvider;
+use App\Service\InfluxdbService;
 use App\Service\StatService;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
@@ -37,8 +38,11 @@ final readonly class OrderDomainHandler
         private LoggerInterface $logger,
         private StatService $statService,
         private ChatNotificationService $chatNotificationService,
+        private InfluxdbService $influxdbService,
         #[Autowire(service: 'service_container')]
         private ContainerInterface $locator,
+        #[Autowire(param: 'influxdb_enabled')]
+        private bool $influxdbEnabled,
     ) {
         $this->sender = new Address($mailerSenderEmail, $mailerSenderName);
     }
@@ -105,6 +109,9 @@ final readonly class OrderDomainHandler
             ]);
 
             $this->statService->incrementStat('stats.domain.purchased');
+            if ($this->influxdbEnabled) {
+                $this->influxdbService->addDomainOrderPoint($connector, $domain, true);
+            }
             $notification = (new DomainOrderNotification($this->sender, $domain, $connector));
             $this->mailer->send($notification->asEmailMessage(new Recipient($watchList->getUser()->getEmail()))->getMessage());
             $this->chatNotificationService->sendChatNotification($watchList, $notification);
@@ -118,6 +125,9 @@ final readonly class OrderDomainHandler
             ]);
 
             $this->statService->incrementStat('stats.domain.purchase.failed');
+            if ($this->influxdbEnabled) {
+                $this->influxdbService->addDomainOrderPoint($connector, $domain, false);
+            }
             $notification = (new DomainOrderErrorNotification($this->sender, $domain));
             $this->mailer->send($notification->asEmailMessage(new Recipient($watchList->getUser()->getEmail()))->getMessage());
             $this->chatNotificationService->sendChatNotification($watchList, $notification);

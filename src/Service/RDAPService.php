@@ -25,6 +25,7 @@ use App\Repository\TldRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Exception\ORMException;
 use Psr\Log\LoggerInterface;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\HttpClient\Exception\ClientException;
 use Symfony\Component\HttpFoundation\Exception\BadRequestException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -88,7 +89,8 @@ readonly class RDAPService
         private LoggerInterface $logger,
         private StatService $statService,
         private InfluxdbService $influxService,
-        private bool $influxdbEnable = false,
+        #[Autowire(param: 'influxdb_enabled')]
+        private bool $influxdbEnabled,
     ) {
     }
 
@@ -142,9 +144,10 @@ readonly class RDAPService
         try {
             $this->statService->incrementStat('stats.rdap_queries.count');
 
-            $res = $this->client->request(
+            $req = $this->client->request(
                 'GET', $rdapServerUrl.'domain/'.$idnDomain
-            )->toArray();
+            );
+            $res = $req->toArray();
         } catch (\Exception $e) {
             if ($e instanceof ClientException && 404 === $e->getResponse()->getStatusCode()) {
                 if (null !== $domain) {
@@ -158,14 +161,14 @@ readonly class RDAPService
                     $this->em->flush();
                 }
 
-                if ($this->influxdbEnable) {
-                    $this->influxService->addRdapRequest($rdapServer, $domain, false);
-                }
-
                 throw new NotFoundHttpException('The domain name is not present in the WHOIS database.');
             }
 
             throw $e;
+        } finally {
+            if ($this->influxdbEnabled && isset($req)) {
+                $this->influxService->addRdapQueryPoint($rdapServer, $domain, $req->getInfo());
+            }
         }
 
         if (null === $domain) {
@@ -353,10 +356,6 @@ readonly class RDAPService
         $domain->updateTimestamps();
         $this->em->persist($domain);
         $this->em->flush();
-
-        if ($this->influxdbEnable) {
-            $this->influxService->addRdapRequest($rdapServer, $domain, true);
-        }
 
         return $domain;
     }

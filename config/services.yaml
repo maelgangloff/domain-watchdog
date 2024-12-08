@@ -19,7 +19,7 @@ parameters:
 
     outgoing_ip: '%env(string:OUTGOING_IP)%'
 
-    influxdb_enable: '%env(bool:INFLUXDB_ENABLE)'
+    influxdb_enabled: '%env(bool:INFLUXDB_ENABLED)%'
     influxdb_url: '%env(string:INFLUXDB_URL)%'
     influxdb_token: '%env(string:INFLUXDB_TOKEN)%'
     influxdb_bucket: '%env(string:INFLUXDB_BUCKET)%'

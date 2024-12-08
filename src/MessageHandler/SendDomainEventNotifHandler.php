@@ -12,8 +12,10 @@ use App\Notifier\DomainUpdateNotification;
 use App\Repository\DomainRepository;
 use App\Repository\WatchListRepository;
 use App\Service\ChatNotificationService;
+use App\Service\InfluxdbService;
 use App\Service\StatService;
 use Psr\Log\LoggerInterface;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
@@ -35,6 +37,9 @@ final readonly class SendDomainEventNotifHandler
         private DomainRepository $domainRepository,
         private WatchListRepository $watchListRepository,
         private ChatNotificationService $chatNotificationService,
+        #[Autowire(param: 'influxdb_enabled')]
+        private bool $influxdbEnabled,
+        private InfluxdbService $influxdbService,
     ) {
         $this->sender = new Address($mailerSenderEmail, $mailerSenderName);
     }
@@ -82,6 +87,9 @@ final readonly class SendDomainEventNotifHandler
                 }
 
                 $this->statService->incrementStat('stats.alert.sent');
+                if ($this->influxdbEnabled) {
+                    $this->influxdbService->addDomainNotificationPoint($domain, $watchListTrigger->getAction(), true);
+                }
             }
         }
     }
