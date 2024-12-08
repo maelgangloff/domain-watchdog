@@ -35,11 +35,11 @@ readonly class InfluxdbService
         ]);
     }
 
-    public function addRdapQueryPoint(RdapServer $rdapServer, Domain $domain, array $info): void
+    public function addRdapQueryPoint(RdapServer $rdapServer, string $ldhName, array $info): void
     {
         $this->writePoints(new Point('rdap_query', [
-            'domain' => $domain->getLdhName(),
-            'tld' => $domain->getTld()->getTld(),
+            'ldh_name' => $ldhName,
+            'tld' => $rdapServer->getTld()->getTld(),
             'rdap_server' => $rdapServer->getUrl(),
             'primary_ip' => $info['primary_ip'],
         ], [

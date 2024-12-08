@@ -167,7 +167,7 @@ readonly class RDAPService
             throw $e;
         } finally {
             if ($this->influxdbEnabled && isset($req)) {
-                $this->influxService->addRdapQueryPoint($rdapServer, $domain, $req->getInfo());
+                $this->influxService->addRdapQueryPoint($rdapServer, $idnDomain, $req->getInfo());
             }
         }
 
