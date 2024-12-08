@@ -50,7 +50,7 @@ readonly class InfluxdbService
             'starttransfer_time_us' => $info['starttransfer_time_us'],
             'size_download' => $info['size_download'],
             'ssl_verify_result' => $info['ssl_verify_result'],
-        ], floor($info['start_time'] * 3),
+        ], (int) floor($info['start_time'] * 1e3),
             WritePrecision::MS)
         );
     }
