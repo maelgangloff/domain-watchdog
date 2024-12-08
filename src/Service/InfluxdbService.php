@@ -42,15 +42,17 @@ readonly class InfluxdbService
             'tld' => $rdapServer->getTld()->getTld(),
             'rdap_server' => $rdapServer->getUrl(),
             'primary_ip' => $info['primary_ip'],
-        ], [
             'http_code' => $info['http_code'],
+        ], [
             'total_time_us' => $info['total_time_us'],
             'namelookup_time_us' => $info['namelookup_time_us'],
             'connect_time_us' => $info['connect_time_us'],
             'starttransfer_time_us' => $info['starttransfer_time_us'],
             'size_download' => $info['size_download'],
             'ssl_verify_result' => $info['ssl_verify_result'],
-        ]));
+        ], floor($info['start_time'] * 3),
+            WritePrecision::MS)
+        );
     }
 
     public function addDomainOrderPoint(Connector $connector, Domain $domain, bool $success): void
