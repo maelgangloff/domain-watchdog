@@ -19,7 +19,7 @@ services:
             - caddy_config:/config
             - ./public/content:/app/public/content
         ports:
-            - 127.0.0.1:8080:80
+            - "127.0.0.1:8080:80"
 
     php-worker:
         image: maelgangloff/domain-watchdog:latest
@@ -32,8 +32,8 @@ services:
         healthcheck:
             disable: true
             test: [ ]
-#        volumes:
-#            - ./custom_rdap_servers.yaml:/app/config/app/custom_rdap_servers.yaml # Please see #41 issue
+    #        volumes:
+    #            - ./custom_rdap_servers.yaml:/app/config/app/custom_rdap_servers.yaml # Please see #41 issue
 
     database:
         image: postgres:${POSTGRES_VERSION:-16}-alpine
@@ -48,6 +48,26 @@ services:
             start_period: 60s
         volumes:
             - database_data:/var/lib/postgresql/data:rw
+
+#    keydb:
+#        image: eqalpha/keydb:latest
+#        container_name: keydb
+#        restart: always
+#        ports:
+#            - "127.0.0.1:6379:6379"
+
+#    influxdb2:
+#        image: influxdb:2
+#        ports:
+#            - "127.0.0.1:8086:8086"
+#        environment:
+#            DOCKER_INFLUXDB_INIT_MODE: setup
+#            DOCKER_INFLUXDB_INIT_USERNAME: USERNAME # Please modify
+#            DOCKER_INFLUXDB_INIT_PASSWORD: PASSWORD # Please modify
+#            DOCKER_INFLUXDB_INIT_ADMIN_TOKEN: my-super-secret-auth-token # Please modify
+#            DOCKER_INFLUXDB_INIT_RETENTION: 0
+#            DOCKER_INFLUXDB_INIT_ORG: domainwatchdog
+#            DOCKER_INFLUXDB_INIT_BUCKET: domainwatchdog
 
 volumes:
     caddy_data:
