@@ -83,13 +83,17 @@ final readonly class SendDomainEventNotifHandler
                 if (TriggerAction::SendEmail == $watchListTrigger->getAction()) {
                     $this->mailer->send($notification->asEmailMessage($recipient)->getMessage());
                 } elseif (TriggerAction::SendChat == $watchListTrigger->getAction()) {
+                    $webhookDsn = $watchList->getWebhookDsn();
+                    if (null === $webhookDsn || 0 === count($webhookDsn)) {
+                        continue;
+                    }
                     $this->chatNotificationService->sendChatNotification($watchList, $notification);
                 }
 
-                $this->statService->incrementStat('stats.alert.sent');
                 if ($this->influxdbEnabled) {
-                    $this->influxdbService->addDomainNotificationPoint($domain, $watchListTrigger->getAction(), true);
+                    $this->influxdbService->addDomainNotificationPoint($domain, TriggerAction::SendChat, true);
                 }
+                $this->statService->incrementStat('stats.alert.sent');
             }
         }
     }
