@@ -7,6 +7,7 @@ use App\Config\TldType;
 use App\Entity\Domain;
 use App\Entity\DomainEntity;
 use App\Entity\DomainEvent;
+use App\Entity\DomainStatus;
 use App\Entity\Entity;
 use App\Entity\EntityEvent;
 use App\Entity\Nameserver;
@@ -182,7 +183,22 @@ readonly class RDAPService
         $domain->setTld($tld)->setLdhName($idnDomain)->setDeleted(false);
 
         if (array_key_exists('status', $res)) {
+            $addedStatus = array_diff($res['status'], $domain->getStatus());
+            $deletedStatus = array_diff($domain->getStatus(), $res['status']);
             $domain->setStatus($res['status']);
+
+            if (count($addedStatus) > 0 || count($deletedStatus) > 0) {
+                $this->em->persist($domain);
+                $this->em->flush();
+
+                $domainStatus = (new DomainStatus())
+                    ->setDomain($domain)
+                    ->setDate($domain->getUpdatedAt())
+                    ->setAddStatus($addedStatus)
+                    ->setDeleteStatus($deletedStatus);
+
+                $this->em->persist($domainStatus);
+            }
         } else {
             $this->logger->warning('The domain name {idnDomain} has no WHOIS status.', [
                 'idnDomain' => $idnDomain,

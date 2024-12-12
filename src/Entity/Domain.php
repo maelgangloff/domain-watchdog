@@ -106,6 +106,12 @@ class Domain
     #[Groups(['domain:item', 'domain:list'])]
     private ?bool $deleted;
 
+    /**
+     * @var Collection<int, DomainStatus>
+     */
+    #[ORM\OneToMany(targetEntity: DomainStatus::class, mappedBy: 'domain', orphanRemoval: true)]
+    private Collection $domainStatuses;
+
     private const IMPORTANT_EVENTS = [EventAction::Deletion->value, EventAction::Expiration->value];
     private const IMPORTANT_STATUS = [
         'redemption period',
@@ -128,8 +134,8 @@ class Domain
         $this->nameservers = new ArrayCollection();
         $this->createdAt = new \DateTimeImmutable('now');
         $this->updatedAt = new \DateTimeImmutable('now');
-
         $this->deleted = false;
+        $this->domainStatuses = new ArrayCollection();
     }
 
     public function getLdhName(): ?string
@@ -375,5 +381,35 @@ class Domain
 
             || (count(array_intersect($this->getStatus(), ['auto renew period', 'client hold', 'server hold'])) > 0
                 && $this->getUpdatedAt()->diff(new \DateTimeImmutable())->days >= 1);
+    }
+
+    /**
+     * @return Collection<int, DomainStatus>
+     */
+    public function getDomainStatuses(): Collection
+    {
+        return $this->domainStatuses;
+    }
+
+    public function addDomainStatus(DomainStatus $domainStatus): static
+    {
+        if (!$this->domainStatuses->contains($domainStatus)) {
+            $this->domainStatuses->add($domainStatus);
+            $domainStatus->setDomain($this);
+        }
+
+        return $this;
+    }
+
+    public function removeDomainStatus(DomainStatus $domainStatus): static
+    {
+        if ($this->domainStatuses->removeElement($domainStatus)) {
+            // set the owning side to null (unless already changed)
+            if ($domainStatus->getDomain() === $this) {
+                $domainStatus->setDomain(null);
+            }
+        }
+
+        return $this;
     }
 }
