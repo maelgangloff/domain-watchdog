@@ -21,10 +21,10 @@ class DomainStatus
     #[ORM\Column]
     private ?\DateTimeImmutable $date = null;
 
-    #[ORM\Column(type: Types::SIMPLE_ARRAY)]
+    #[ORM\Column(type: Types::SIMPLE_ARRAY, nullable: true)]
     private array $addStatus = [];
 
-    #[ORM\Column(type: Types::SIMPLE_ARRAY)]
+    #[ORM\Column(type: Types::SIMPLE_ARRAY, nullable: true)]
     private array $deleteStatus = [];
 
     public function __construct()
