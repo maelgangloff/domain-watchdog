@@ -132,8 +132,8 @@ class Domain
         $this->domainEntities = new ArrayCollection();
         $this->watchLists = new ArrayCollection();
         $this->nameservers = new ArrayCollection();
-        $this->createdAt = new \DateTimeImmutable('now');
         $this->updatedAt = new \DateTimeImmutable('now');
+        $this->createdAt = $this->updatedAt;
         $this->deleted = false;
         $this->domainStatuses = new ArrayCollection();
     }
@@ -296,7 +296,7 @@ class Domain
     {
         $this->setUpdatedAt(new \DateTimeImmutable('now'));
         if (null === $this->getCreatedAt()) {
-            $this->setCreatedAt(new \DateTimeImmutable('now'));
+            $this->setCreatedAt($this->getUpdatedAt());
         }
     }
 
