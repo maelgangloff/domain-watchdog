@@ -189,7 +189,6 @@ readonly class RDAPService
 
             if (count($addedStatus) > 0 || count($deletedStatus) > 0) {
                 $this->em->persist($domain);
-                $this->em->flush();
 
                 if ($domain->getUpdatedAt() !== $domain->getCreatedAt()) {
                     $this->em->persist((new DomainStatus())
@@ -214,7 +213,6 @@ readonly class RDAPService
         }
 
         $this->em->persist($domain);
-        $this->em->flush();
 
         /** @var DomainEvent $event */
         foreach ($domain->getEvents()->getIterator() as $event) {
@@ -243,7 +241,6 @@ readonly class RDAPService
                 );
 
                 $this->em->persist($domain);
-                $this->em->flush();
             }
         }
 
@@ -295,7 +292,6 @@ readonly class RDAPService
                 );
 
                 $this->em->persist($domainEntity);
-                $this->em->flush();
             }
         }
 
@@ -431,7 +427,6 @@ readonly class RDAPService
         }
 
         $this->em->persist($entity);
-        $this->em->flush();
 
         foreach ($rdapEntity['events'] as $rdapEntityEvent) {
             $eventAction = $rdapEntityEvent['eventAction'];
