@@ -180,7 +180,7 @@ readonly class RDAPService
             ]);
         }
 
-        $domain->setTld($tld)->setLdhName($idnDomain)->setDeleted(false);
+        $domain->setTld($tld)->setLdhName($idnDomain)->setDeleted(false)->updateTimestamps();
 
         if (array_key_exists('status', $res)) {
             $addedStatus = array_diff($res['status'], $domain->getStatus());
@@ -365,7 +365,6 @@ readonly class RDAPService
             ]);
         }
 
-        $domain->updateTimestamps();
         $this->em->persist($domain);
         $this->em->flush();
 
