@@ -191,13 +191,13 @@ readonly class RDAPService
                 $this->em->persist($domain);
                 $this->em->flush();
 
-                $domainStatus = (new DomainStatus())
-                    ->setDomain($domain)
-                    ->setDate($domain->getUpdatedAt())
-                    ->setAddStatus($addedStatus)
-                    ->setDeleteStatus($deletedStatus);
-
-                $this->em->persist($domainStatus);
+                if ($domain->getUpdatedAt() !== $domain->getCreatedAt()) {
+                    $this->em->persist((new DomainStatus())
+                        ->setDomain($domain)
+                        ->setDate($domain->getUpdatedAt())
+                        ->setAddStatus($addedStatus)
+                        ->setDeleteStatus($deletedStatus));
+                }
             }
         } else {
             $this->logger->warning('The domain name {idnDomain} has no WHOIS status.', [
