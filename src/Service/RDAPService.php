@@ -190,7 +190,7 @@ readonly class RDAPService
             if (count($addedStatus) > 0 || count($deletedStatus) > 0) {
                 $this->em->persist($domain);
 
-                if ($domain->getUpdatedAt() !== $domain->getCreatedAt()) {
+                if ($domain->getUpdatedAt() == $domain->getCreatedAt()) {
                     $this->em->persist((new DomainStatus())
                         ->setDomain($domain)
                         ->setDate($domain->getUpdatedAt())
