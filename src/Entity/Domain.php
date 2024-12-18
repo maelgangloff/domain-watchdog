@@ -372,15 +372,22 @@ class Domain
      */
     public function isToBeUpdated(bool $fromUser = true): bool
     {
-        return $this->getUpdatedAt()
-                ->diff(new \DateTimeImmutable())->days >= 7
-            || (($fromUser || ($this->getUpdatedAt()
+        return $this->getUpdatedAt()->diff(new \DateTimeImmutable())->days >= 7
+        || $this->getDeleted()
+            ? $fromUser
+            : (
+                ($fromUser || ($this->getUpdatedAt()
                             ->diff(new \DateTimeImmutable())->h * 60 + $this->getUpdatedAt()
-                            ->diff(new \DateTimeImmutable())->i) >= 50)
-                && $this->isToBeWatchClosely())
-
-            || (count(array_intersect($this->getStatus(), ['auto renew period', 'client hold', 'server hold'])) > 0
-                && $this->getUpdatedAt()->diff(new \DateTimeImmutable())->days >= 1);
+                            ->diff(new \DateTimeImmutable())->i) >= 50
+                )
+                && $this->isToBeWatchClosely()
+            )
+            || (
+                false == $this->getDeleted() && (
+                    count(array_intersect($this->getStatus(), ['auto renew period', 'client hold', 'server hold'])) > 0
+                    && $this->getUpdatedAt()->diff(new \DateTimeImmutable())->days >= 1
+                )
+            );
     }
 
     /**

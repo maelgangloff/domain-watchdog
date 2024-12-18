@@ -80,7 +80,7 @@ export function WatchlistCard({watchlist, onUpdateWatchlist, connectors, onDelet
                 dataSource={[{
                     domains: watchlist.domains.map(d => <Tag
                         color={
-                            d.deleted ? 'red' : // If the domain is deleted
+                            d.deleted ? 'magenta' : // If the domain is deleted
                                 d.status.includes('redemption period') ? 'yellow' :
                                     d.status.includes('pending delete') ? 'volcano' : 'default'
                         }
