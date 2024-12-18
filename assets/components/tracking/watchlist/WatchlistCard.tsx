@@ -1,5 +1,5 @@
 import {Card, Divider, Space, Table, Tag, Tooltip} from "antd";
-import {ClockCircleOutlined, DeleteOutlined, DisconnectOutlined, LinkOutlined} from "@ant-design/icons";
+import {DeleteOutlined, DisconnectOutlined, ExclamationCircleOutlined, LinkOutlined} from "@ant-design/icons";
 import {t} from "ttag";
 import {ViewDiagramWatchlistButton} from "./diagram/ViewDiagramWatchlistButton";
 import {UpdateWatchlistButton} from "./UpdateWatchlistButton";
@@ -82,11 +82,11 @@ export function WatchlistCard({watchlist, onUpdateWatchlist, connectors, onDelet
                         color={
                             d.deleted ? 'red' : // If the domain is deleted
                                 d.status.includes('redemption period') ? 'yellow' :
-                                    d.status.includes('pending delete') ? 'orange' : 'default'
+                                    d.status.includes('pending delete') ? 'volcano' : 'default'
                         }
                         icon={
                             d.deleted ? <DeleteOutlined/> : // If the domain is deleted
-                                d.status.includes('redemption period') ? <ClockCircleOutlined/> :
+                                d.status.includes('redemption period') ? <ExclamationCircleOutlined/> :
                                     d.status.includes('pending delete') ? <DeleteOutlined/> : null
                         }>{punycode.toUnicode(d.ldhName)}</Tag>),
                     events: watchlist.triggers?.filter(t => t.action === 'email')
