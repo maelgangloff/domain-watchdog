@@ -1,5 +1,5 @@
 import {Card, Divider, Space, Table, Tag, Tooltip} from "antd";
-import {DisconnectOutlined, LinkOutlined} from "@ant-design/icons";
+import {ClockCircleOutlined, DeleteOutlined, DisconnectOutlined, LinkOutlined} from "@ant-design/icons";
 import {t} from "ttag";
 import {ViewDiagramWatchlistButton} from "./diagram/ViewDiagramWatchlistButton";
 import {UpdateWatchlistButton} from "./UpdateWatchlistButton";
@@ -78,7 +78,17 @@ export function WatchlistCard({watchlist, onUpdateWatchlist, connectors, onDelet
                 pagination={false}
                 style={{width: '100%'}}
                 dataSource={[{
-                    domains: watchlist.domains.map(d => <Tag>{punycode.toUnicode(d.ldhName)}</Tag>),
+                    domains: watchlist.domains.map(d => <Tag
+                        color={
+                            d.deleted ? 'red' : // If the domain is deleted
+                                d.status.includes('redemption period') ? 'yellow' :
+                                    d.status.includes('pending delete') ? 'orange' : 'default'
+                        }
+                        icon={
+                            d.deleted ? <DeleteOutlined/> : // If the domain is deleted
+                                d.status.includes('redemption period') ? <ClockCircleOutlined/> :
+                                    d.status.includes('pending delete') ? <DeleteOutlined/> : null
+                        }>{punycode.toUnicode(d.ldhName)}</Tag>),
                     events: watchlist.triggers?.filter(t => t.action === 'email')
                         .map(t => <Tooltip
                                 title={t.event in rdapEventDetailTranslated ? rdapEventDetailTranslated[t.event as keyof typeof rdapEventDetailTranslated] : undefined}>

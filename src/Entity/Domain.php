@@ -70,7 +70,7 @@ class Domain
     private Collection $domainEntities;
 
     #[ORM\Column(type: Types::SIMPLE_ARRAY, nullable: true)]
-    #[Groups(['domain:item', 'domain:list'])]
+    #[Groups(['domain:item', 'domain:list', 'watchlist:item', 'watchlist:list'])]
     private array $status = [];
 
     /**
@@ -103,7 +103,7 @@ class Domain
     private ?Tld $tld = null;
 
     #[ORM\Column(nullable: false)]
-    #[Groups(['domain:item', 'domain:list'])]
+    #[Groups(['domain:item', 'domain:list', 'watchlist:item', 'watchlist:list'])]
     private ?bool $deleted;
 
     /**
@@ -375,8 +375,8 @@ class Domain
         return $this->getUpdatedAt()
                 ->diff(new \DateTimeImmutable())->days >= 7
             || (($fromUser || ($this->getUpdatedAt()
-                                ->diff(new \DateTimeImmutable())->h * 60 + $this->getUpdatedAt()
-                                ->diff(new \DateTimeImmutable())->i) >= 50)
+                            ->diff(new \DateTimeImmutable())->h * 60 + $this->getUpdatedAt()
+                            ->diff(new \DateTimeImmutable())->i) >= 50)
                 && $this->isToBeWatchClosely())
 
             || (count(array_intersect($this->getStatus(), ['auto renew period', 'client hold', 'server hold'])) > 0

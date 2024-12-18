@@ -15,7 +15,7 @@ import {AimOutlined} from "@ant-design/icons";
 export type Watchlist = {
     name?: string
     token: string,
-    domains: { ldhName: string }[],
+    domains: { ldhName: string, deleted: boolean, status: string[] }[],
     triggers?: { event: EventAction, action: string }[],
     dsn?: string[]
     connector?: {
