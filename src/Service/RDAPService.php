@@ -183,9 +183,10 @@ readonly class RDAPService
         $domain->setTld($tld)->setLdhName($idnDomain)->setDeleted(false)->updateTimestamps();
 
         if (array_key_exists('status', $res)) {
-            $addedStatus = array_diff($res['status'], $domain->getStatus());
-            $deletedStatus = array_diff($domain->getStatus(), $res['status']);
-            $domain->setStatus($res['status']);
+            $status = array_unique($res['status']); // It was observed that a registry was applying the same EPP status code twice.
+            $addedStatus = array_diff($status, $domain->getStatus());
+            $deletedStatus = array_diff($domain->getStatus(), $status);
+            $domain->setStatus($status);
 
             if (count($addedStatus) > 0 || count($deletedStatus) > 0) {
                 $this->em->persist($domain);
@@ -351,7 +352,7 @@ readonly class RDAPService
                     $nameserver->addNameserverEntity($nameserverEntity
                         ->setNameserver($nameserver)
                         ->setEntity($entity)
-                        ->setStatus($rdapNameserver['status'])
+                        ->setStatus(array_unique($rdapNameserver['status']))
                         ->setRoles($roles));
                 }
 
