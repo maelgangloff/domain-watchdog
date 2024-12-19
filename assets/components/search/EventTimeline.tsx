@@ -17,8 +17,6 @@ export function EventTimeline({events}: { events: Event[] }) {
         <Timeline
             mode={sm ? "left" : "right"}
             items={events.map(e => {
-                    const sameEvents = events.filter(se => se.action === e.action)
-
                     const eventName = <Typography.Text style={{color: e.deleted ? 'grey' : 'default'}}>
                         {e.action in rdapEventNameTranslated ? rdapEventNameTranslated[e.action as keyof typeof rdapEventNameTranslated] : e.action}
                     </Typography.Text>

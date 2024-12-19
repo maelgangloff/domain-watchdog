@@ -80,12 +80,12 @@ export function WatchlistCard({watchlist, onUpdateWatchlist, connectors, onDelet
                 dataSource={[{
                     domains: watchlist.domains.map(d => <Tag
                         color={
-                            d.deleted ? 'magenta' : // If the domain is deleted
+                            d.deleted ? 'magenta' :
                                 d.status.includes('redemption period') ? 'yellow' :
                                     d.status.includes('pending delete') ? 'volcano' : 'default'
                         }
                         icon={
-                            d.deleted ? <DeleteOutlined/> : // If the domain is deleted
+                            d.deleted ? <DeleteOutlined/> :
                                 d.status.includes('redemption period') ? <ExclamationCircleOutlined/> :
                                     d.status.includes('pending delete') ? <DeleteOutlined/> : null
                         }>{punycode.toUnicode(d.ldhName)}</Tag>),

@@ -3,6 +3,7 @@ import {
     ClockCircleOutlined,
     DeleteOutlined,
     LockOutlined,
+    PushpinOutlined,
     ReloadOutlined,
     ShareAltOutlined,
     SignatureOutlined,
@@ -23,4 +24,5 @@ export const actionToIcon = (a: EventAction) => a === 'registration' ?
                                     <ClockCircleOutlined
                                         style={{fontSize: '16px'}}/> : a === 'enum validation expiration' ?
                                         <ClockCircleOutlined style={{fontSize: '16px'}}/> : a === 'reinstantiation' ?
-                                            <ReloadOutlined style={{fontSize: '16px'}}/> : undefined
+                                            <ReloadOutlined style={{fontSize: '16px'}}/> :
+                                            <PushpinOutlined style={{fontSize: '16px'}}/>
