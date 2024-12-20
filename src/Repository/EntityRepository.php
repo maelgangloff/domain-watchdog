@@ -23,7 +23,7 @@ class EntityRepository extends ServiceEntityRepository
     public function findByjCard(array $vCardArray): array
     {
         return $this->getEntityManager()->getConnection()
-            ->prepare('SELECT * FROM entity WHERE j_Card @> :data')
+            ->prepare('SELECT * FROM entity WHERE j_Card @> :data AND j_Card <@ :data')
             ->executeQuery(['data' => json_encode($vCardArray)])
             ->fetchAllAssociative();
     }
