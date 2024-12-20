@@ -14,7 +14,7 @@ final class Version20241220161843 extends AbstractMigration
 {
     public function getDescription(): string
     {
-        return '';
+        return 'Use JSONB columns instead of JSON in database';
     }
 
     public function up(Schema $schema): void

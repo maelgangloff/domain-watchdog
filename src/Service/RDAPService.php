@@ -275,10 +275,6 @@ readonly class RDAPService
                     )
                 );
 
-                if (0 == count($roles)) {
-                    dd($entity);
-                }
-
                 /*
                  * Flatten the array
                  */
