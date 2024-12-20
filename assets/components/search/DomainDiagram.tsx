@@ -12,16 +12,22 @@ export function DomainDiagram({domain}: { domain: Domain }) {
 
 
     useEffect(() => {
-        const e = getLayoutedElements([
+        const nodes = [
             domainToNode(domain),
             ...domainEntitiesToNode(domain, true),
-            tldToNode(domain.tld),
             ...domain.nameservers.map(nsToNode)
-        ].flat(), [
+        ].flat()
+        const edges = [
             domainEntitiesToEdges(domain, true),
-            tldToEdge(domain),
             ...domainNSToEdges(domain)
-        ].flat())
+        ].flat()
+
+        if (domain.tld.tld !== '.') {
+            nodes.push(tldToNode(domain.tld))
+            edges.push(tldToEdge(domain))
+        }
+
+        const e = getLayoutedElements(nodes, edges)
 
         setNodes(e.nodes)
         setEdges(e.edges)

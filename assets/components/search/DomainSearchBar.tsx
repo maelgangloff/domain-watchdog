@@ -19,7 +19,7 @@ export function DomainSearchBar({onFinish}: { onFinish: (values: FieldType) => v
                 required: true,
                 message: t`Required`
             }, {
-                pattern: /^(?=.*\.)\S*[^.\s]$/,
+                pattern: /^(?=.*\.)?\S*[^.\s]$/,
                 message: t`This domain name does not appear to be valid`,
                 max: 63,
                 min: 2

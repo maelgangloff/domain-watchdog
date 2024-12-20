@@ -191,7 +191,7 @@ readonly class RDAPService
             if (count($addedStatus) > 0 || count($deletedStatus) > 0) {
                 $this->em->persist($domain);
 
-                if ($domain->getUpdatedAt() == $domain->getCreatedAt()) {
+                if ($domain->getUpdatedAt() != $domain->getCreatedAt()) {
                     $this->em->persist((new DomainStatus())
                         ->setDomain($domain)
                         ->setDate($domain->getUpdatedAt())
@@ -252,10 +252,6 @@ readonly class RDAPService
 
         if (array_key_exists('entities', $res) && is_array($res['entities'])) {
             foreach ($res['entities'] as $rdapEntity) {
-                if (!array_key_exists('handle', $rdapEntity) || '' === $rdapEntity['handle']) {
-                    continue;
-                }
-
                 $entity = $this->registerEntity($rdapEntity);
 
                 $this->em->persist($entity);
@@ -274,9 +270,13 @@ readonly class RDAPService
                     fn ($e) => $e['roles'],
                     array_filter(
                         $res['entities'],
-                        fn ($e) => array_key_exists('handle', $e) && $e['handle'] === $rdapEntity['handle']
+                        fn ($e) => $rdapEntity === $e
                     )
                 );
+
+                if (0 == count($roles)) {
+                    dd($entity);
+                }
 
                 /*
                  * Flatten the array
@@ -344,7 +344,7 @@ readonly class RDAPService
                             fn (array $e): array => $e['roles'],
                             array_filter(
                                 $rdapNameserver['entities'],
-                                fn ($e) => array_key_exists('handle', $e) && $e['handle'] === $rdapEntity['handle']
+                                fn ($e) => $rdapEntity === $e
                             )
                         )
                     );
@@ -374,6 +374,9 @@ readonly class RDAPService
 
     private function getTld($domain): ?object
     {
+        if (!str_contains($domain, '.')) {
+            return $this->tldRepository->findOneBy(['tld' => '']);
+        }
         $lastDotPosition = strrpos($domain, '.');
         if (false === $lastDotPosition) {
             throw new BadRequestException('Domain must contain at least one dot');
@@ -388,6 +391,21 @@ readonly class RDAPService
      */
     private function registerEntity(array $rdapEntity): Entity
     {
+        $conn = $this->em->getConnection();
+        $sql = 'SELECT * FROM entity WHERE j_Card @> :data';
+        $stmt = $conn->prepare($sql)->executeQuery(['data' => json_encode($rdapEntity['vcardArray'])]);
+
+        $result = $stmt->fetchAllAssociative();
+
+        $rdapEntity['handle'] = array_key_exists('handle', $rdapEntity) && '' !== $rdapEntity['handle']
+            ? $rdapEntity['handle']
+            : (
+                count($result) > 0
+                    ? $result[0]['handle']
+                    : 'DW-NOHANDLE-'.hash('md5', json_encode($rdapEntity)
+                    )
+            );
+
         $entity = $this->entityRepository->findOneBy([
             'handle' => $rdapEntity['handle'],
         ]);
@@ -481,9 +499,13 @@ readonly class RDAPService
         foreach ($dnsRoot['services'] as $service) {
             foreach ($service[0] as $tld) {
                 if ('' === $tld) {
-                    continue;
+                    if (null === $this->tldRepository->findOneBy(['tld' => $tld])) {
+                        $this->em->persist((new Tld())->setTld('.')->setType(TldType::root));
+                        $this->em->flush();
+                    }
                 }
                 $tldReference = $this->em->getReference(Tld::class, $tld);
+
                 foreach ($service[1] as $rdapServerUrl) {
                     $server = $this->rdapServerRepository->findOneBy(['tld' => $tldReference, 'url' => $rdapServerUrl]);
                     if (null === $server) {
@@ -601,10 +623,10 @@ readonly class RDAPService
             if ('' === $gTld['gTLD']) {
                 continue;
             }
-            /** @var Tld $gtTldEntity */
+            /** @var Tld|null $gtTldEntity */
             $gtTldEntity = $this->tldRepository->findOneBy(['tld' => $gTld['gTLD']]);
 
-            if (null == $gtTldEntity) {
+            if (null === $gtTldEntity) {
                 $gtTldEntity = new Tld();
                 $gtTldEntity->setTld($gTld['gTLD']);
                 $this->logger->notice('New gTLD detected according to ICANN ({tld}).', [

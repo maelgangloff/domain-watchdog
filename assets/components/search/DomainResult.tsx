@@ -23,7 +23,7 @@ export function DomainResult({domain}: { domain: Domain }) {
         <Badge.Ribbon text={
             <Tooltip
                 title={tld.type === 'ccTLD' ? regionNames.of(getCountryCode(tld.tld)) : tld.type === 'gTLD' ? tld?.registryOperator : undefined}>
-                {`.${domain.tld.tld.toUpperCase()} (${tld.type})`}
+                {`${(domain.tld.tld === '.' ? '' : '.') + domain.tld.tld.toUpperCase()} (${tld.type})`}
             </Tooltip>
         }
                       color={

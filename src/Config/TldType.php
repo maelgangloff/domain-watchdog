@@ -9,4 +9,5 @@ enum TldType: string
     case sTLD = 'sTLD';
     case ccTLD = 'ccTLD';
     case tTLD = 'tTLD';
+    case root = 'root';
 }

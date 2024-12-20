@@ -47,7 +47,7 @@ export function watchlistToNodes(watchlist: Watchlist, withRegistrar = false, wi
 
     const domains = watchlist.domains.map(domainToNode)
     const entities = [...new Set(watchlist.domains.map(d => domainEntitiesToNode(d, withRegistrar)).flat())]
-    const tlds = [...new Set(watchlist.domains.map(d => d.tld))].map(tldToNode)
+    const tlds = [...new Set(watchlist.domains.map(d => d.tld))].filter(t => t.tld !== '.').map(tldToNode)
     const nameservers = [...new Set(watchlist.domains.map(d => d.nameservers))].flat().map(nsToNode, withRegistrar)
 
     return [...domains, ...entities, ...nameservers, ...(withTld ? tlds : [])]

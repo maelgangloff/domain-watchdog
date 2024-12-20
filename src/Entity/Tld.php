@@ -107,7 +107,7 @@ class Tld
 
     public function getTld(): ?string
     {
-        return $this->tld;
+        return '' === $this->tld ? '.' : $this->tld;
     }
 
     public function setTld(string $tld): static
@@ -194,8 +194,10 @@ class Tld
         return $this->type;
     }
 
-    public function setType(?TldType $type): void
+    public function setType(?TldType $type): static
     {
         $this->type = $type;
+
+        return $this;
     }
 }
