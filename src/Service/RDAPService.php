@@ -117,248 +117,28 @@ readonly class RDAPService
      */
     public function registerDomain(string $fqdn): Domain
     {
-        $idnDomain = strtolower(idn_to_ascii($fqdn));
-
+        $idnDomain = $this->convertToIdn($fqdn);
         $tld = $this->getTld($idnDomain);
 
         $this->logger->info('An update request for domain name {idnDomain} is requested.', [
             'idnDomain' => $idnDomain,
         ]);
 
-        /** @var RdapServer|null $rdapServer */
-        $rdapServer = $this->rdapServerRepository->findOneBy(['tld' => $tld], ['updatedAt' => 'DESC']);
-
-        if (null === $rdapServer) {
-            throw new NotFoundHttpException('Unable to determine which RDAP server to contact');
-        }
-
-        /** @var ?Domain $domain */
+        $rdapServer = $this->fetchRdapServer($tld);
         $domain = $this->domainRepository->findOneBy(['ldhName' => $idnDomain]);
 
-        $rdapServerUrl = $rdapServer->getUrl();
-
-        $this->logger->notice('An RDAP query to update the domain name {idnDomain} will be made to {server}.', [
-            'idnDomain' => $idnDomain,
-            'server' => $rdapServerUrl,
-        ]);
-
-        try {
-            $this->statService->incrementStat('stats.rdap_queries.count');
-
-            $req = $this->client->request(
-                'GET', $rdapServerUrl.'domain/'.$idnDomain
-            );
-            $res = $req->toArray();
-        } catch (\Exception $e) {
-            if ($e instanceof ClientException && 404 === $e->getResponse()->getStatusCode()) {
-                if (null !== $domain) {
-                    $this->logger->notice('The domain name {idnDomain} has been deleted from the WHOIS database.', [
-                        'idnDomain' => $idnDomain,
-                    ]);
-
-                    $domain->setDeleted(true)
-                        ->updateTimestamps();
-                    $this->em->persist($domain);
-                    $this->em->flush();
-                }
-
-                throw new NotFoundHttpException('The domain name is not present in the WHOIS database.');
-            }
-
-            throw $e;
-        } finally {
-            if ($this->influxdbEnabled && isset($req)) {
-                $this->influxService->addRdapQueryPoint($rdapServer, $idnDomain, $req->getInfo());
-            }
-        }
+        $rdapData = $this->fetchRdapResponse($rdapServer, $idnDomain, $domain);
 
         if (null === $domain) {
-            $domain = new Domain();
-
-            $this->logger->info('The domain name {idnDomain} was not known to this Domain Watchdog instance.', [
-                'idnDomain' => $idnDomain,
-            ]);
+            $domain = $this->initNewDomain($idnDomain, $tld);
         }
 
-        $domain->setTld($tld)->setLdhName($idnDomain)->setDeleted(false)->updateTimestamps();
+        $this->updateDomainStatus($domain, $rdapData);
+        $this->updateDomainHandle($domain, $rdapData);
 
-        if (array_key_exists('status', $res)) {
-            $status = array_unique($res['status']); // It was observed that a registry was applying the same EPP status code twice.
-            $addedStatus = array_diff($status, $domain->getStatus());
-            $deletedStatus = array_diff($domain->getStatus(), $status);
-            $domain->setStatus($status);
-
-            if (count($addedStatus) > 0 || count($deletedStatus) > 0) {
-                $this->em->persist($domain);
-
-                if ($domain->getUpdatedAt() != $domain->getCreatedAt()) {
-                    $this->em->persist((new DomainStatus())
-                        ->setDomain($domain)
-                        ->setDate($domain->getUpdatedAt())
-                        ->setAddStatus($addedStatus)
-                        ->setDeleteStatus($deletedStatus));
-                }
-            }
-        } else {
-            $this->logger->warning('The domain name {idnDomain} has no WHOIS status.', [
-                'idnDomain' => $idnDomain,
-            ]);
-        }
-
-        if (array_key_exists('handle', $res)) {
-            $domain->setHandle($res['handle']);
-        } else {
-            $this->logger->warning('The domain name {idnDomain} has no handle key.', [
-                'idnDomain' => $idnDomain,
-            ]);
-        }
-
-        $this->em->persist($domain);
-
-        /** @var DomainEvent $event */
-        foreach ($domain->getEvents()->getIterator() as $event) {
-            $event->setDeleted(true);
-        }
-
-        if (array_key_exists('events', $res) && is_array($res['events'])) {
-            foreach ($res['events'] as $rdapEvent) {
-                if ($rdapEvent['eventAction'] === EventAction::LastUpdateOfRDAPDatabase->value) {
-                    continue;
-                }
-
-                $event = $this->domainEventRepository->findOneBy([
-                    'action' => $rdapEvent['eventAction'],
-                    'date' => new \DateTimeImmutable($rdapEvent['eventDate']),
-                    'domain' => $domain,
-                ]);
-
-                if (null === $event) {
-                    $event = new DomainEvent();
-                }
-                $domain->addEvent($event
-                    ->setAction($rdapEvent['eventAction'])
-                    ->setDate(new \DateTimeImmutable($rdapEvent['eventDate']))
-                    ->setDeleted(false)
-                );
-
-                $this->em->persist($domain);
-            }
-        }
-
-        /** @var DomainEntity $domainEntity */
-        foreach ($domain->getDomainEntities()->getIterator() as $domainEntity) {
-            $domainEntity->setDeleted(true);
-        }
-
-        if (array_key_exists('entities', $res) && is_array($res['entities'])) {
-            foreach ($res['entities'] as $rdapEntity) {
-                $roles = array_map(
-                    fn ($e) => $e['roles'],
-                    array_filter(
-                        $res['entities'],
-                        fn ($e) => $rdapEntity === $e
-                    )
-                );
-
-                /*
-                 * Flatten the array
-                 */
-                if (count($roles) !== count($roles, COUNT_RECURSIVE)) {
-                    $roles = array_merge(...$roles);
-                }
-
-                $entity = $this->registerEntity($rdapEntity, $roles, $domain->getLdhName());
-
-                $domainEntity = $this->domainEntityRepository->findOneBy([
-                    'domain' => $domain,
-                    'entity' => $entity,
-                ]);
-
-                if (null === $domainEntity) {
-                    $domainEntity = new DomainEntity();
-                }
-
-                $domain->addDomainEntity($domainEntity
-                    ->setDomain($domain)
-                    ->setEntity($entity)
-                    ->setRoles($roles)
-                    ->setDeleted(false)
-                );
-
-                $this->em->persist($domainEntity);
-            }
-        }
-
-        if (array_key_exists('nameservers', $res) && is_array($res['nameservers'])) {
-            $domain->getNameservers()->clear();
-            $this->em->persist($domain);
-
-            foreach ($res['nameservers'] as $rdapNameserver) {
-                $nameserver = $this->nameserverRepository->findOneBy([
-                    'ldhName' => strtolower($rdapNameserver['ldhName']),
-                ]);
-
-                $existingDomainNS = $domain->getNameservers()->findFirst(fn (int $key, Nameserver $ns) => $ns->getLdhName() === $rdapNameserver['ldhName']);
-
-                if (null !== $existingDomainNS) {
-                    $nameserver = $existingDomainNS;
-                } elseif (null === $nameserver) {
-                    $nameserver = new Nameserver();
-                }
-
-                $nameserver->setLdhName($rdapNameserver['ldhName']);
-
-                if (!array_key_exists('entities', $rdapNameserver) || !is_array($rdapNameserver['entities'])) {
-                    if (!$domain->getNameservers()->contains($nameserver)) {
-                        $domain->addNameserver($nameserver);
-                    }
-                    continue;
-                }
-
-                foreach ($rdapNameserver['entities'] as $rdapEntity) {
-                    $roles = array_merge(
-                        ...array_map(
-                            fn (array $e): array => $e['roles'],
-                            array_filter(
-                                $rdapNameserver['entities'],
-                                fn ($e) => $rdapEntity === $e
-                            )
-                        )
-                    );
-
-                    /*
-                     * Flatten the array
-                     */
-                    if (count($roles) !== count($roles, COUNT_RECURSIVE)) {
-                        $roles = array_merge(...$roles);
-                    }
-
-                    $entity = $this->registerEntity($rdapEntity, $roles, $nameserver->getLdhName());
-
-                    $nameserverEntity = $this->nameserverEntityRepository->findOneBy([
-                        'nameserver' => $nameserver,
-                        'entity' => $entity,
-                    ]);
-                    if (null === $nameserverEntity) {
-                        $nameserverEntity = new NameserverEntity();
-                    }
-
-                    $nameserver->addNameserverEntity($nameserverEntity
-                        ->setNameserver($nameserver)
-                        ->setEntity($entity)
-                        ->setStatus(array_unique($rdapNameserver['status']))
-                        ->setRoles($roles));
-                }
-
-                if (!$domain->getNameservers()->contains($nameserver)) {
-                    $domain->addNameserver($nameserver);
-                }
-            }
-        } else {
-            $this->logger->warning('The domain name {idnDomain} has no nameservers.', [
-                'idnDomain' => $idnDomain,
-            ]);
-        }
+        $this->updateDomainEvents($domain, $rdapData);
+        $this->updateDomainEntities($domain, $rdapData);
+        $this->updateDomainNameservers($domain, $rdapData);
 
         $this->em->persist($domain);
         $this->em->flush();
@@ -380,7 +160,281 @@ readonly class RDAPService
         return $this->tldRepository->findOneBy(['tld' => $tld]);
     }
 
+    private function convertToIdn(string $fqdn): string
+    {
+        return strtolower(idn_to_ascii($fqdn));
+    }
+
+    private function fetchRdapServer(Tld $tld): RdapServer
+    {
+        $rdapServer = $this->rdapServerRepository->findOneBy(['tld' => $tld], ['updatedAt' => 'DESC']);
+
+        if (null === $rdapServer) {
+            throw new NotFoundHttpException('Unable to determine which RDAP server to contact');
+        }
+
+        return $rdapServer;
+    }
+
     /**
+     * @throws TransportExceptionInterface
+     * @throws ServerExceptionInterface
+     * @throws RedirectionExceptionInterface
+     * @throws DecodingExceptionInterface
+     * @throws ClientExceptionInterface
+     * @throws \Exception
+     */
+    private function fetchRdapResponse(RdapServer $rdapServer, string $idnDomain, ?Domain $domain): array
+    {
+        $rdapServerUrl = $rdapServer->getUrl();
+        $this->logger->notice('An RDAP query to update the domain name {idnDomain} will be made to {server}.', [
+            'idnDomain' => $idnDomain,
+            'server' => $rdapServerUrl,
+        ]);
+
+        try {
+            $this->statService->incrementStat('stats.rdap_queries.count');
+
+            $req = $this->client->request('GET', $rdapServerUrl.'domain/'.$idnDomain);
+
+            return $req->toArray();
+        } catch (\Exception $e) {
+            throw $this->handleRdapException($e, $idnDomain, $domain);
+        } finally {
+            if ($this->influxdbEnabled && isset($req)) {
+                $this->influxService->addRdapQueryPoint($rdapServer, $idnDomain, $req->getInfo());
+            }
+        }
+    }
+
+    /**
+     * @throws TransportExceptionInterface
+     * @throws \Exception
+     */
+    private function handleRdapException(\Exception $e, string $idnDomain, ?Domain $domain): \Exception
+    {
+        if ($e instanceof ClientException && 404 === $e->getResponse()->getStatusCode()) {
+            if (null !== $domain) {
+                $this->logger->notice('The domain name {idnDomain} has been deleted from the WHOIS database.', [
+                    'idnDomain' => $idnDomain,
+                ]);
+
+                $domain->setDeleted(true)->updateTimestamps();
+                $this->em->persist($domain);
+                $this->em->flush();
+            }
+
+            throw new NotFoundHttpException('The domain name is not present in the WHOIS database.');
+        }
+
+        return $e;
+    }
+
+    private function initNewDomain(string $idnDomain, Tld $tld): Domain
+    {
+        $domain = new Domain();
+
+        $this->logger->info('The domain name {idnDomain} was not known to this Domain Watchdog instance.', [
+            'idnDomain' => $idnDomain,
+        ]);
+
+        return $domain->setTld($tld)->setLdhName($idnDomain)->setDeleted(false)->updateTimestamps();
+    }
+
+    private function updateDomainStatus(Domain $domain, array $rdapData): void
+    {
+        if (array_key_exists('status', $rdapData)) {
+            $status = array_unique($rdapData['status']);
+            $addedStatus = array_diff($status, $domain->getStatus());
+            $deletedStatus = array_diff($domain->getStatus(), $status);
+            $domain->setStatus($status);
+
+            if (count($addedStatus) > 0 || count($deletedStatus) > 0) {
+                $this->em->persist($domain);
+
+                if ($domain->getUpdatedAt() != $domain->getCreatedAt()) {
+                    $this->em->persist((new DomainStatus())
+                        ->setDomain($domain)
+                        ->setDate($domain->getUpdatedAt())
+                        ->setAddStatus($addedStatus)
+                        ->setDeleteStatus($deletedStatus));
+                }
+            }
+        } else {
+            $this->logger->warning('The domain name {idnDomain} has no WHOIS status.', [
+                'idnDomain' => $domain->getLdhName(),
+            ]);
+        }
+    }
+
+    private function updateDomainHandle(Domain $domain, array $rdapData): void
+    {
+        if (array_key_exists('handle', $rdapData)) {
+            $domain->setHandle($rdapData['handle']);
+        } else {
+            $this->logger->warning('The domain name {idnDomain} has no handle key.', [
+                'idnDomain' => $domain->getLdhName(),
+            ]);
+        }
+    }
+
+    /**
+     * @throws \DateMalformedStringException
+     * @throws \Exception
+     */
+    private function updateDomainEvents(Domain $domain, array $rdapData): void
+    {
+        foreach ($domain->getEvents()->getIterator() as $event) {
+            $event->setDeleted(true);
+        }
+
+        if (array_key_exists('events', $rdapData) && is_array($rdapData['events'])) {
+            foreach ($rdapData['events'] as $rdapEvent) {
+                if ($rdapEvent['eventAction'] === EventAction::LastUpdateOfRDAPDatabase->value) {
+                    continue;
+                }
+
+                $event = $this->domainEventRepository->findOneBy([
+                    'action' => $rdapEvent['eventAction'],
+                    'date' => new \DateTimeImmutable($rdapEvent['eventDate']),
+                    'domain' => $domain,
+                ]);
+
+                if (null === $event) {
+                    $event = new DomainEvent();
+                }
+
+                $domain->addEvent($event
+                    ->setAction($rdapEvent['eventAction'])
+                    ->setDate(new \DateTimeImmutable($rdapEvent['eventDate']))
+                    ->setDeleted(false));
+
+                $this->em->persist($domain);
+            }
+        }
+    }
+
+    /**
+     * @throws \DateMalformedStringException
+     */
+    private function updateDomainEntities(Domain $domain, array $rdapData): void
+    {
+        foreach ($domain->getDomainEntities()->getIterator() as $domainEntity) {
+            $domainEntity->setDeleted(true);
+        }
+
+        if (array_key_exists('entities', $rdapData) && is_array($rdapData['entities'])) {
+            foreach ($rdapData['entities'] as $rdapEntity) {
+                $roles = $this->extractEntityRoles($rdapData['entities'], $rdapEntity);
+                $entity = $this->registerEntity($rdapEntity, $roles, $domain->getLdhName());
+
+                $domainEntity = $this->domainEntityRepository->findOneBy([
+                    'domain' => $domain,
+                    'entity' => $entity,
+                ]);
+
+                if (null === $domainEntity) {
+                    $domainEntity = new DomainEntity();
+                }
+
+                $domain->addDomainEntity($domainEntity
+                    ->setDomain($domain)
+                    ->setEntity($entity)
+                    ->setRoles($roles)
+                    ->setDeleted(false));
+
+                $this->em->persist($domainEntity);
+            }
+        }
+    }
+
+    private function updateDomainNameservers(Domain $domain, array $rdapData): void
+    {
+        if (array_key_exists('nameservers', $rdapData) && is_array($rdapData['nameservers'])) {
+            $domain->getNameservers()->clear();
+            $this->em->persist($domain);
+
+            foreach ($rdapData['nameservers'] as $rdapNameserver) {
+                $nameserver = $this->fetchOrCreateNameserver($rdapNameserver, $domain);
+                $this->updateNameserverEntities($nameserver, $rdapNameserver);
+
+                if (!$domain->getNameservers()->contains($nameserver)) {
+                    $domain->addNameserver($nameserver);
+                }
+            }
+        } else {
+            $this->logger->warning('The domain name {idnDomain} has no nameservers.', [
+                'idnDomain' => $domain->getLdhName(),
+            ]);
+        }
+    }
+
+    private function fetchOrCreateNameserver(array $rdapNameserver, Domain $domain): Nameserver
+    {
+        $nameserver = $this->nameserverRepository->findOneBy([
+            'ldhName' => strtolower($rdapNameserver['ldhName']),
+        ]);
+
+        $existingDomainNS = $domain->getNameservers()->findFirst(fn (int $key, Nameserver $ns) => $ns->getLdhName() === $rdapNameserver['ldhName']);
+
+        if (null !== $existingDomainNS) {
+            return $existingDomainNS;
+        } elseif (null === $nameserver) {
+            $nameserver = new Nameserver();
+        }
+
+        $nameserver->setLdhName($rdapNameserver['ldhName']);
+
+        return $nameserver;
+    }
+
+    private function updateNameserverEntities(Nameserver $nameserver, array $rdapNameserver): void
+    {
+        if (!array_key_exists('entities', $rdapNameserver) || !is_array($rdapNameserver['entities'])) {
+            return;
+        }
+
+        foreach ($rdapNameserver['entities'] as $rdapEntity) {
+            $roles = $this->extractEntityRoles($rdapNameserver['entities'], $rdapEntity);
+
+            $entity = $this->registerEntity($rdapEntity, $roles, $nameserver->getLdhName());
+
+            $nameserverEntity = $this->nameserverEntityRepository->findOneBy([
+                'nameserver' => $nameserver,
+                'entity' => $entity,
+            ]);
+
+            if (null === $nameserverEntity) {
+                $nameserverEntity = new NameserverEntity();
+            }
+
+            $nameserver->addNameserverEntity($nameserverEntity
+                ->setNameserver($nameserver)
+                ->setEntity($entity)
+                ->setStatus(array_unique($rdapNameserver['status']))
+                ->setRoles($roles));
+        }
+    }
+
+    private function extractEntityRoles(array $entities, array $targetEntity): array
+    {
+        $roles = array_map(
+            fn ($e) => $e['roles'],
+            array_filter(
+                $entities,
+                fn ($e) => $targetEntity === $e
+            )
+        );
+
+        if (count($roles) !== count($roles, COUNT_RECURSIVE)) {
+            $roles = array_merge(...$roles);
+        }
+
+        return $roles;
+    }
+
+    /**
+     * @throws \DateMalformedStringException
      * @throws \Exception
      */
     private function registerEntity(array $rdapEntity, array $roles, string $domain): Entity

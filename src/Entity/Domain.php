@@ -292,12 +292,14 @@ class Domain
 
     #[ORM\PrePersist]
     #[ORM\PreUpdate]
-    public function updateTimestamps(): void
+    public function updateTimestamps(): static
     {
         $this->setUpdatedAt(new \DateTimeImmutable('now'));
         if (null === $this->getCreatedAt()) {
             $this->setCreatedAt($this->getUpdatedAt());
         }
+
+        return $this;
     }
 
     private function setUpdatedAt(?\DateTimeImmutable $updatedAt): void
