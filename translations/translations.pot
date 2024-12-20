@@ -3,23 +3,23 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Plural-Forms: nplurals=2; plural=(n!=1);\n"
 
-#: assets/App.tsx:101
+#: assets/App.tsx:116
 msgid "TOS"
 msgstr ""
 
-#: assets/App.tsx:102
+#: assets/App.tsx:117
 msgid "Privacy Policy"
 msgstr ""
 
-#: assets/App.tsx:103
+#: assets/App.tsx:118
 msgid "FAQ"
 msgstr ""
 
-#: assets/App.tsx:105
+#: assets/App.tsx:120
 msgid "Documentation"
 msgstr ""
 
-#: assets/App.tsx:108
+#: assets/App.tsx:123
 #, javascript-format
 msgid ""
 "${ ProjectLink } is an open source project distributed under the ${ "
@@ -89,15 +89,15 @@ msgstr ""
 msgid "Pending Delete"
 msgstr ""
 
-#: assets/components/search/DomainResult.tsx:45
+#: assets/components/search/DomainResult.tsx:49
 msgid "EPP Status Codes"
 msgstr ""
 
-#: assets/components/search/DomainResult.tsx:61
+#: assets/components/search/DomainResult.tsx:65
 msgid "Timeline"
 msgstr ""
 
-#: assets/components/search/DomainResult.tsx:68
+#: assets/components/search/DomainResult.tsx:72
 msgid "Entities"
 msgstr ""
 
@@ -115,7 +115,7 @@ msgid "Search"
 msgstr ""
 
 #: assets/components/Sider.tsx:40
-#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:46
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:47
 msgid "Domain"
 msgstr ""
 
@@ -379,15 +379,15 @@ msgstr ""
 msgid ".${ tld.tld } Registry"
 msgstr ""
 
-#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:50
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:51
 msgid "Expiration date"
 msgstr ""
 
-#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:54
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:63
 msgid "Status"
 msgstr ""
 
-#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:58
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:77
 msgid "Updated at"
 msgstr ""
 
@@ -580,7 +580,7 @@ msgid "Domain names in database"
 msgstr ""
 
 #: assets/pages/StatisticsPage.tsx:68
-#: assets/pages/tracking/WatchlistPage.tsx:111
+#: assets/pages/tracking/WatchlistPage.tsx:105
 msgid "Tracked domain names"
 msgstr ""
 
@@ -619,7 +619,7 @@ msgstr ""
 msgid "Watchlist updated !"
 msgstr ""
 
-#: assets/pages/tracking/WatchlistPage.tsx:102
+#: assets/pages/tracking/WatchlistPage.tsx:112
 msgid "Create a Watchlist"
 msgstr ""
 
