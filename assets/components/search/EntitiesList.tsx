@@ -4,9 +4,8 @@ import {Domain} from "../../utils/api";
 import {rdapRoleDetailTranslation, rdapRoleTranslation} from "../../utils/functions/rdapTranslation";
 import {roleToAvatar} from "../../utils/functions/roleToAvatar";
 import {rolesToColor} from "../../utils/functions/rolesToColor";
-import {entityToName} from "../../utils/functions/entityToName";
 import {sortDomainEntities} from "../../utils/functions/sortDomainEntities";
-
+import {extractDetailsFromJCard} from "../../utils/functions/extractDetailsFromJCard";
 
 export function EntitiesList({domain}: { domain: Domain }) {
     const rdapRoleTranslated = rdapRoleTranslation()
@@ -23,15 +22,21 @@ export function EntitiesList({domain}: { domain: Domain }) {
         className="demo-loadmore-list"
         itemLayout="horizontal"
         dataSource={sortDomainEntities(domain)}
-        renderItem={(e) =>
-            <List.Item>
+        renderItem={(e) => {
+            const details = extractDetailsFromJCard(e)
+
+            return <List.Item>
                 <List.Item.Meta
                     avatar={roleToAvatar(e)}
                     title={e.entity.handle}
-                    description={entityToName(e)}
+                    description={<>
+                        {details.fn && <div>👤 {details.fn}</div>}
+                        {details.organization && <div>🏢 {details.organization}</div>}
+                    </>}
                 />
                 {e.roles.map(roleToTag)}
             </List.Item>
+        }
         }
     />
 }

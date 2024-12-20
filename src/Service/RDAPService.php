@@ -252,10 +252,10 @@ readonly class RDAPService
 
         if (array_key_exists('entities', $res) && is_array($res['entities'])) {
             foreach ($res['entities'] as $rdapEntity) {
+                if ((!array_key_exists('handle', $rdapEntity) || '' === $rdapEntity['handle']) && !array_key_exists('vcardArray', $rdapEntity)) {
+                    continue;
+                }
                 $entity = $this->registerEntity($rdapEntity);
-
-                $this->em->persist($entity);
-                $this->em->flush();
 
                 $domainEntity = $this->domainEntityRepository->findOneBy([
                     'domain' => $domain,
@@ -323,13 +323,10 @@ readonly class RDAPService
                 }
 
                 foreach ($rdapNameserver['entities'] as $rdapEntity) {
-                    if (!array_key_exists('handle', $rdapEntity) || '' === $rdapEntity['handle']) {
+                    if ((!array_key_exists('handle', $rdapEntity) || '' === $rdapEntity['handle']) && !array_key_exists('vcardArray', $rdapEntity)) {
                         continue;
                     }
                     $entity = $this->registerEntity($rdapEntity);
-
-                    $this->em->persist($entity);
-                    $this->em->flush();
 
                     $nameserverEntity = $this->nameserverEntityRepository->findOneBy([
                         'nameserver' => $nameserver,
@@ -391,20 +388,31 @@ readonly class RDAPService
      */
     private function registerEntity(array $rdapEntity): Entity
     {
-        $conn = $this->em->getConnection();
-        $sql = 'SELECT * FROM entity WHERE j_Card @> :data';
-        $stmt = $conn->prepare($sql)->executeQuery(['data' => json_encode($rdapEntity['vcardArray'])]);
+        if (array_key_exists('vcardArray', $rdapEntity)) {
+            $result = $this->entityRepository->findByjCard($rdapEntity['vcardArray']);
 
-        $result = $stmt->fetchAllAssociative();
+            if (!array_key_exists('handle', $rdapEntity) || '' === $rdapEntity['handle']) {
+                if (count($result) > 0) {
+                    $rdapEntity['handle'] = $result[0]['handle'];
+                } else {
+                    $rdapEntity['handle'] = 'DW-NOHANDLE-'.hash('md5', json_encode($rdapEntity['vcardArray']));
+                }
+            } else {
+                if (count($result) > 0) {
+                    $entity = $this->entityRepository->findOneBy(['handle' => $result[0]['handle']]);
 
-        $rdapEntity['handle'] = array_key_exists('handle', $rdapEntity) && '' !== $rdapEntity['handle']
-            ? $rdapEntity['handle']
-            : (
-                count($result) > 0
-                    ? $result[0]['handle']
-                    : 'DW-NOHANDLE-'.hash('md5', json_encode($rdapEntity)
-                    )
-            );
+                    if (null !== $entity) {
+                        $domainEntities = $this->domainEntityRepository->findBy([
+                            'entity' => $entity,
+                        ]);
+
+                        $nameserverEntities = $this->nameserverEntityRepository->findBy([
+                            'entity' => $entity,
+                        ]);
+                    }
+                }
+            }
+        }
 
         $entity = $this->entityRepository->findOneBy([
             'handle' => $rdapEntity['handle'],
@@ -466,6 +474,23 @@ readonly class RDAPService
                     ->setAction($rdapEntityEvent['eventAction'])
                     ->setDate(new \DateTimeImmutable($rdapEntityEvent['eventDate']))
                     ->setDeleted(false));
+        }
+
+        $this->em->persist($entity);
+        $this->em->flush();
+
+        if (isset($domainEntities)) {
+            /** @var DomainEntity[] $domainEntities */
+            foreach ($domainEntities as $domainEntity) {
+                $domainEntity->setEntity($entity);
+            }
+        }
+
+        if (isset($nameserverEntities)) {
+            /** @var NameserverEntity[] $nameserverEntities */
+            foreach ($nameserverEntities as $nameserverEntity) {
+                $nameserverEntity->setEntity($entity);
+            }
         }
 
         return $entity;
