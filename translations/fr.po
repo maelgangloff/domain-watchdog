@@ -11,23 +11,23 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
 "X-Generator: Weblate 5.8.3\n"
 
-#: assets/App.tsx:101
+#: assets/App.tsx:116
 msgid "TOS"
 msgstr "CGU"
 
-#: assets/App.tsx:102
+#: assets/App.tsx:117
 msgid "Privacy Policy"
 msgstr "Politique de confidentialité"
 
-#: assets/App.tsx:103
+#: assets/App.tsx:118
 msgid "FAQ"
 msgstr "FAQ"
 
-#: assets/App.tsx:105
+#: assets/App.tsx:120
 msgid "Documentation"
 msgstr "Documentation"
 
-#: assets/App.tsx:108
+#: assets/App.tsx:123
 #, javascript-format
 msgid ""
 "${ ProjectLink } is an open source project distributed under the "
@@ -94,15 +94,15 @@ msgstr "Période de rédemption"
 msgid "Pending Delete"
 msgstr "En attente de suppression"
 
-#: assets/components/search/DomainResult.tsx:45
+#: assets/components/search/DomainResult.tsx:49
 msgid "EPP Status Codes"
 msgstr "Codes de statut EPP"
 
-#: assets/components/search/DomainResult.tsx:61
+#: assets/components/search/DomainResult.tsx:65
 msgid "Timeline"
 msgstr "Chronologie"
 
-#: assets/components/search/DomainResult.tsx:68
+#: assets/components/search/DomainResult.tsx:72
 msgid "Entities"
 msgstr "Entités"
 
@@ -120,7 +120,7 @@ msgid "Search"
 msgstr "Rechercher"
 
 #: assets/components/Sider.tsx:40
-#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:46
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:47
 msgid "Domain"
 msgstr "Domaine"
 
@@ -394,15 +394,15 @@ msgstr "Registre"
 msgid ".${ tld.tld } Registry"
 msgstr "Registre .${ tld.tld }"
 
-#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:50
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:51
 msgid "Expiration date"
 msgstr "Date d'expiration"
 
-#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:54
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:63
 msgid "Status"
 msgstr "Statuts"
 
-#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:58
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:77
 msgid "Updated at"
 msgstr "Mis à jour le"
 
@@ -623,7 +623,7 @@ msgid "Domain names in database"
 msgstr "Noms de domaine dans la base de données"
 
 #: assets/pages/StatisticsPage.tsx:68
-#: assets/pages/tracking/WatchlistPage.tsx:111
+#: assets/pages/tracking/WatchlistPage.tsx:105
 msgid "Tracked domain names"
 msgstr "Noms de domaine suivis"
 
@@ -664,7 +664,7 @@ msgstr "Watchlist créée !"
 msgid "Watchlist updated !"
 msgstr "Watchlist mise à jour !"
 
-#: assets/pages/tracking/WatchlistPage.tsx:102
+#: assets/pages/tracking/WatchlistPage.tsx:112
 msgid "Create a Watchlist"
 msgstr "Créer une Watchlist"
 
