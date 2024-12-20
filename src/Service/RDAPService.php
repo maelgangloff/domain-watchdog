@@ -252,21 +252,6 @@ readonly class RDAPService
 
         if (array_key_exists('entities', $res) && is_array($res['entities'])) {
             foreach ($res['entities'] as $rdapEntity) {
-                if ((!array_key_exists('handle', $rdapEntity) || '' === $rdapEntity['handle']) && !array_key_exists('vcardArray', $rdapEntity)) {
-                    continue;
-                }
-                $entity = $this->registerEntity($rdapEntity);
-                $this->em->flush();
-
-                $domainEntity = $this->domainEntityRepository->findOneBy([
-                    'domain' => $domain,
-                    'entity' => $entity,
-                ]);
-
-                if (null === $domainEntity) {
-                    $domainEntity = new DomainEntity();
-                }
-
                 $roles = array_map(
                     fn ($e) => $e['roles'],
                     array_filter(
@@ -280,6 +265,17 @@ readonly class RDAPService
                  */
                 if (count($roles) !== count($roles, COUNT_RECURSIVE)) {
                     $roles = array_merge(...$roles);
+                }
+
+                $entity = $this->registerEntity($rdapEntity, $roles, $domain->getLdhName());
+
+                $domainEntity = $this->domainEntityRepository->findOneBy([
+                    'domain' => $domain,
+                    'entity' => $entity,
+                ]);
+
+                if (null === $domainEntity) {
+                    $domainEntity = new DomainEntity();
                 }
 
                 $domain->addDomainEntity($domainEntity
@@ -320,20 +316,6 @@ readonly class RDAPService
                 }
 
                 foreach ($rdapNameserver['entities'] as $rdapEntity) {
-                    if ((!array_key_exists('handle', $rdapEntity) || '' === $rdapEntity['handle']) && !array_key_exists('vcardArray', $rdapEntity)) {
-                        continue;
-                    }
-                    $entity = $this->registerEntity($rdapEntity);
-                    $this->em->flush();
-
-                    $nameserverEntity = $this->nameserverEntityRepository->findOneBy([
-                        'nameserver' => $nameserver,
-                        'entity' => $entity,
-                    ]);
-                    if (null === $nameserverEntity) {
-                        $nameserverEntity = new NameserverEntity();
-                    }
-
                     $roles = array_merge(
                         ...array_map(
                             fn (array $e): array => $e['roles'],
@@ -343,6 +325,23 @@ readonly class RDAPService
                             )
                         )
                     );
+
+                    /*
+                     * Flatten the array
+                     */
+                    if (count($roles) !== count($roles, COUNT_RECURSIVE)) {
+                        $roles = array_merge(...$roles);
+                    }
+
+                    $entity = $this->registerEntity($rdapEntity, $roles, $nameserver->getLdhName());
+
+                    $nameserverEntity = $this->nameserverEntityRepository->findOneBy([
+                        'nameserver' => $nameserver,
+                        'entity' => $entity,
+                    ]);
+                    if (null === $nameserverEntity) {
+                        $nameserverEntity = new NameserverEntity();
+                    }
 
                     $nameserver->addNameserverEntity($nameserverEntity
                         ->setNameserver($nameserver)
@@ -384,32 +383,14 @@ readonly class RDAPService
     /**
      * @throws \Exception
      */
-    private function registerEntity(array $rdapEntity): Entity
+    private function registerEntity(array $rdapEntity, array $roles, string $domain): Entity
     {
-        if (array_key_exists('vcardArray', $rdapEntity)) {
-            $result = $this->entityRepository->findByjCard($rdapEntity['vcardArray']);
+        if (!array_key_exists('handle', $rdapEntity) || '' === $rdapEntity['handle']) {
+            $rdapEntity['handle'] = 'DW-FAKEHANDLE-'.$domain.'-'.join(',', $roles);
 
-            if (!array_key_exists('handle', $rdapEntity) || '' === $rdapEntity['handle']) {
-                if (count($result) > 0) {
-                    $rdapEntity['handle'] = $result[0]['handle'];
-                } else {
-                    $rdapEntity['handle'] = 'DW-NOHANDLE-'.hash('md5', json_encode($rdapEntity['vcardArray']));
-                }
-            } else {
-                if (count($result) > 0) {
-                    $entity = $this->entityRepository->findOneBy(['handle' => $result[0]['handle']]);
-
-                    if (null !== $entity) {
-                        $domainEntities = $this->domainEntityRepository->findBy([
-                            'entity' => $entity,
-                        ]);
-
-                        $nameserverEntities = $this->nameserverEntityRepository->findBy([
-                            'entity' => $entity,
-                        ]);
-                    }
-                }
-            }
+            $this->logger->warning('The entity {handle} has no handle key.', [
+                'handle' => $rdapEntity['handle'],
+            ]);
         }
 
         $entity = $this->entityRepository->findOneBy([
@@ -475,20 +456,7 @@ readonly class RDAPService
         }
 
         $this->em->persist($entity);
-
-        if (isset($domainEntities)) {
-            /** @var DomainEntity[] $domainEntities */
-            foreach ($domainEntities as $domainEntity) {
-                $domainEntity->setEntity($entity);
-            }
-        }
-
-        if (isset($nameserverEntities)) {
-            /** @var NameserverEntity[] $nameserverEntities */
-            foreach ($nameserverEntities as $nameserverEntity) {
-                $nameserverEntity->setEntity($entity);
-            }
-        }
+        $this->em->flush();
 
         return $entity;
     }
