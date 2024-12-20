@@ -43,7 +43,7 @@ export default function StatisticsPage() {
                         title={t`Alerts sent`}
                         prefix={<NotificationOutlined/>}
                         value={stats?.alertSent}
-                        valueStyle={{color: 'blueviolet'}}
+                        valueStyle={{color: 'violet'}}
                     />
                 </Card>
             </Col>
@@ -57,7 +57,7 @@ export default function StatisticsPage() {
                         title={t`Domain names in database`}
                         prefix={<DatabaseOutlined/>}
                         value={stats?.domainCountTotal}
-                        valueStyle={{color: 'darkblue'}}
+                        valueStyle={{color: 'orange'}}
                     />
                 </Card>
             </Col>
@@ -68,7 +68,7 @@ export default function StatisticsPage() {
                         title={t`Tracked domain names`}
                         prefix={<AimOutlined/>}
                         value={stats?.domainTracked}
-                        valueStyle={{color: 'darkviolet'}}
+                        valueStyle={{color: 'violet'}}
                     />
                 </Card>
             </Col>
@@ -82,7 +82,7 @@ export default function StatisticsPage() {
                         title={t`Purchased domain names`}
                         prefix={<FieldTimeOutlined/>}
                         value={stats?.domainPurchased}
-                        valueStyle={{color: '#3f8600'}}
+                        valueStyle={{color: 'green'}}
                     />
                 </Card>
             </Col>
@@ -111,7 +111,7 @@ export default function StatisticsPage() {
                             loading={stats === undefined}
                             title={`.${tld}`}
                             value={domain}
-                            valueStyle={{color: 'darkblue'}}
+                            valueStyle={{color: 'darkorange'}}
                         />
                     </Card>
                 </Col>)}
