@@ -36,7 +36,7 @@ export function DomainDiagram({domain}: { domain: Domain }) {
     return <Flex style={{width: '100%', height: '100vh'}}>
         <ReactFlow
             fitView
-            colorMode='dark'
+            colorMode='system'
             nodesConnectable={false}
             edgesReconnectable={false}
             nodes={nodes}

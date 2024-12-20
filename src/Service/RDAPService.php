@@ -256,6 +256,7 @@ readonly class RDAPService
                     continue;
                 }
                 $entity = $this->registerEntity($rdapEntity);
+                $this->em->flush();
 
                 $domainEntity = $this->domainEntityRepository->findOneBy([
                     'domain' => $domain,
@@ -327,6 +328,7 @@ readonly class RDAPService
                         continue;
                     }
                     $entity = $this->registerEntity($rdapEntity);
+                    $this->em->flush();
 
                     $nameserverEntity = $this->nameserverEntityRepository->findOneBy([
                         'nameserver' => $nameserver,
@@ -477,7 +479,6 @@ readonly class RDAPService
         }
 
         $this->em->persist($entity);
-        $this->em->flush();
 
         if (isset($domainEntities)) {
             /** @var DomainEntity[] $domainEntities */

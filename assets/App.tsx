@@ -1,4 +1,4 @@
-import {Button, Layout, Space, theme, Typography} from "antd";
+import {Button, ConfigProvider, Layout, Space, theme, Typography} from "antd";
 import {Link, Navigate, Route, Routes, useLocation, useNavigate} from "react-router-dom";
 import TextPage from "./pages/TextPage";
 import DomainSearchPage from "./pages/search/DomainSearchPage";
@@ -21,9 +21,6 @@ const ProjectLink = <Link to='https://github.com/maelgangloff/domain-watchdog'>D
 const LicenseLink = <Link to='https://www.gnu.org/licenses/agpl-3.0.txt'>AGPL-3.0-or-later</Link>
 
 export default function App() {
-    const {
-        token: {colorBgContainer, borderRadiusLG},
-    } = theme.useToken()
 
     const navigate = useNavigate()
     const location = useLocation()
@@ -31,7 +28,6 @@ export default function App() {
 
 
     const [isAuthenticated, setIsAuthenticated] = useState(false)
-
 
     const authenticated = useCallback((authenticated: boolean) => {
         setIsAuthenticated(authenticated)
@@ -42,6 +38,23 @@ export default function App() {
         setIsAuthenticated
     }), [authenticated, setIsAuthenticated])
 
+    const [darkMode, setDarkMode] = useState(false);
+
+    const windowQuery = window.matchMedia("(prefers-color-scheme:dark)");
+    const darkModeChange = useCallback((event: MediaQueryListEvent) => {
+        setDarkMode(event.matches)
+    }, [])
+
+    useEffect(() => {
+        windowQuery.addEventListener("change", darkModeChange)
+        return () => {
+            windowQuery.removeEventListener("change", darkModeChange)
+        }
+    }, [windowQuery, darkModeChange])
+
+    useEffect(() => {
+        setDarkMode(windowQuery.matches)
+    }, [])
 
     useEffect(() => {
         getUser().then(() => {
@@ -52,63 +65,66 @@ export default function App() {
             const pathname = location.pathname
             if (!['/login', '/tos', '/faq', '/privacy'].includes(pathname)) navigate('/home')
         })
-    }, []);
+    }, [])
 
 
-    return <AuthenticatedContext.Provider value={contextValue}>
-        <Layout hasSider style={{minHeight: '100vh'}}>
-            {/* Ant will use a break-off tab to toggle the collapse of the sider when collapseWidth = 0*/}
-            <Layout.Sider collapsible breakpoint="sm" {...(sm ? {collapsedWidth: 0} : {})}>
-                <Sider isAuthenticated={isAuthenticated}/>
-            </Layout.Sider>
-            <Layout>
-                <Layout.Header style={{padding: 0, background: colorBgContainer}}/>
-                <Layout.Content style={sm ? {margin: '24px 0'} : {margin: '24px 16px 0'}}>
-                    <div style={{
-                        padding: 24,
-                        minHeight: 360,
-                        background: colorBgContainer,
-                        borderRadius: borderRadiusLG,
-                    }}>
+    return <ConfigProvider
+        theme={{
+            algorithm: darkMode ? theme.darkAlgorithm : theme.compactAlgorithm
+        }}
+    >
+        <AuthenticatedContext.Provider value={contextValue}>
+            <Layout hasSider style={{minHeight: '100vh'}}>
+                {/* Ant will use a break-off tab to toggle the collapse of the sider when collapseWidth = 0*/}
+                <Layout.Sider collapsible breakpoint="sm" {...(sm ? {collapsedWidth: 0} : {})}>
+                    <Sider isAuthenticated={isAuthenticated}/>
+                </Layout.Sider>
+                <Layout>
+                    <Layout.Header style={{padding: 0}}/>
+                    <Layout.Content style={sm ? {margin: '24px 0'} : {margin: '24px 16px 0'}}>
+                        <div style={{
+                            padding: 24,
+                            minHeight: 360,
+                        }}>
+                            <Routes>
+                                <Route path="/" element={<Navigate to="/login"/>}/>
+                                <Route path="/home" element={<TextPage resource='home.md'/>}/>
 
-                        <Routes>
-                            <Route path="/" element={<Navigate to="/login"/>}/>
-                            <Route path="/home" element={<TextPage resource='home.md'/>}/>
+                                <Route path="/search/domain" element={<DomainSearchPage/>}/>
+                                <Route path="/search/entity" element={<EntitySearchPage/>}/>
+                                <Route path="/search/nameserver" element={<NameserverSearchPage/>}/>
+                                <Route path="/search/tld" element={<TldPage/>}/>
 
-                            <Route path="/search/domain" element={<DomainSearchPage/>}/>
-                            <Route path="/search/entity" element={<EntitySearchPage/>}/>
-                            <Route path="/search/nameserver" element={<NameserverSearchPage/>}/>
-                            <Route path="/search/tld" element={<TldPage/>}/>
+                                <Route path="/tracking/watchlist" element={<WatchlistPage/>}/>
+                                <Route path="/tracking/connectors" element={<ConnectorsPage/>}/>
 
-                            <Route path="/tracking/watchlist" element={<WatchlistPage/>}/>
-                            <Route path="/tracking/connectors" element={<ConnectorsPage/>}/>
+                                <Route path="/stats" element={<StatisticsPage/>}/>
+                                <Route path="/user" element={<UserPage/>}/>
 
-                            <Route path="/stats" element={<StatisticsPage/>}/>
-                            <Route path="/user" element={<UserPage/>}/>
+                                <Route path="/faq" element={<TextPage resource='faq.md'/>}/>
+                                <Route path="/tos" element={<TextPage resource='tos.md'/>}/>
+                                <Route path="/privacy" element={<TextPage resource='privacy.md'/>}/>
 
-                            <Route path="/faq" element={<TextPage resource='faq.md'/>}/>
-                            <Route path="/tos" element={<TextPage resource='tos.md'/>}/>
-                            <Route path="/privacy" element={<TextPage resource='privacy.md'/>}/>
+                                <Route path="/login" element={<LoginPage/>}/>
 
-                            <Route path="/login" element={<LoginPage/>}/>
-
-                            <Route path="*" element={<NotFoundPage/>}/>
-                        </Routes>
-                    </div>
-                </Layout.Content>
-                <Layout.Footer style={{textAlign: 'center'}}>
-                    <Space size='middle' wrap align='center'>
-                        <Link to='/tos'><Button type='text'>{t`TOS`}</Button></Link>
-                        <Link to='/privacy'><Button type='text'>{t`Privacy Policy`}</Button></Link>
-                        <Link to='/faq'><Button type='text'>{t`FAQ`}</Button></Link>
-                        <Typography.Link href='https://github.com/maelgangloff/domain-watchdog/wiki'><Button
-                            type='text'>{t`Documentation`}</Button></Typography.Link>
-                    </Space>
-                    <Typography.Paragraph style={{marginTop: '1em'}}>
-                        {jt`${ProjectLink} is an open source project distributed under the ${LicenseLink} license.`}
-                    </Typography.Paragraph>
-                </Layout.Footer>
+                                <Route path="*" element={<NotFoundPage/>}/>
+                            </Routes>
+                        </div>
+                    </Layout.Content>
+                    <Layout.Footer style={{textAlign: 'center'}}>
+                        <Space size='middle' wrap align='center'>
+                            <Link to='/tos'><Button type='text'>{t`TOS`}</Button></Link>
+                            <Link to='/privacy'><Button type='text'>{t`Privacy Policy`}</Button></Link>
+                            <Link to='/faq'><Button type='text'>{t`FAQ`}</Button></Link>
+                            <Typography.Link href='https://github.com/maelgangloff/domain-watchdog/wiki'><Button
+                                type='text'>{t`Documentation`}</Button></Typography.Link>
+                        </Space>
+                        <Typography.Paragraph style={{marginTop: '1em'}}>
+                            {jt`${ProjectLink} is an open source project distributed under the ${LicenseLink} license.`}
+                        </Typography.Paragraph>
+                    </Layout.Footer>
+                </Layout>
             </Layout>
-        </Layout>
-    </AuthenticatedContext.Provider>
+        </AuthenticatedContext.Provider>
+    </ConfigProvider>
 }
