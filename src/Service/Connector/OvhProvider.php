@@ -167,7 +167,7 @@ class OvhProvider extends AbstractProvider
 
         try {
             $res = $conn->get('/auth/currentCredential');
-            if (null !== $res['expiration'] && new \DateTime($res['expiration']) < new \DateTime()) {
+            if (null !== $res['expiration'] && new \DateTimeImmutable($res['expiration']) < new \DateTimeImmutable()) {
                 throw new BadRequestHttpException('These credentials have expired');
             }
 

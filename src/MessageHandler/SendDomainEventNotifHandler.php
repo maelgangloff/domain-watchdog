@@ -61,7 +61,9 @@ final readonly class SendDomainEventNotifHandler
          */
 
         /** @var DomainEvent $event */
-        foreach ($domain->getEvents()->filter(fn ($event) => $message->updatedAt < $event->getDate() && $event->getDate() < new \DateTime()) as $event) {
+        foreach ($domain->getEvents()->filter(
+            fn ($event) => $message->updatedAt < $event->getDate() && $event->getDate() < new \DateTimeImmutable()) as $event
+        ) {
             $watchListTriggers = $watchList->getWatchListTriggers()
                 ->filter(fn ($trigger) => $trigger->getEvent() === $event->getAction());
 
