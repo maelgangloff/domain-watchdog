@@ -140,6 +140,8 @@ readonly class RDAPService
         $this->updateDomainEntities($domain, $rdapData);
         $this->updateDomainNameservers($domain, $rdapData);
 
+        $domain->updateTimestamps();
+
         $this->em->persist($domain);
         $this->em->flush();
 
@@ -238,7 +240,7 @@ readonly class RDAPService
             'idnDomain' => $idnDomain,
         ]);
 
-        return $domain->setTld($tld)->setLdhName($idnDomain)->setDeleted(false)->updateTimestamps();
+        return $domain->setTld($tld)->setLdhName($idnDomain)->setDeleted(false);
     }
 
     private function updateDomainStatus(Domain $domain, array $rdapData): void
