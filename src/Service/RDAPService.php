@@ -323,6 +323,7 @@ readonly class RDAPService
 
     /**
      * @throws \DateMalformedStringException
+     * @throws \Exception
      */
     private function updateDomainEntities(Domain $domain, array $rdapData): void
     {
@@ -351,6 +352,7 @@ readonly class RDAPService
                     ->setDeleted(false));
 
                 $this->em->persist($domainEntity);
+                $this->em->flush();
             }
         }
     }
@@ -395,6 +397,9 @@ readonly class RDAPService
         return $nameserver;
     }
 
+    /**
+     * @throws \DateMalformedStringException
+     */
     private function updateNameserverEntities(Nameserver $nameserver, array $rdapNameserver): void
     {
         if (!array_key_exists('entities', $rdapNameserver) || !is_array($rdapNameserver['entities'])) {
@@ -403,7 +408,6 @@ readonly class RDAPService
 
         foreach ($rdapNameserver['entities'] as $rdapEntity) {
             $roles = $this->extractEntityRoles($rdapNameserver['entities'], $rdapEntity);
-
             $entity = $this->registerEntity($rdapEntity, $roles, $nameserver->getLdhName());
 
             $nameserverEntity = $this->nameserverEntityRepository->findOneBy([
@@ -429,7 +433,13 @@ readonly class RDAPService
             fn ($e) => $e['roles'],
             array_filter(
                 $entities,
-                fn ($e) => $targetEntity === $e
+                fn ($e) => array_key_exists('handle', $targetEntity) && array_key_exists('handle', $e)
+                    ? $targetEntity['handle'] === $e['handle']
+                    : (
+                        array_key_exists('vcardArray', $targetEntity) && array_key_exists('vcardArray', $e)
+                            ? $targetEntity['vcardArray'] === $e['vcardArray']
+                            : $targetEntity === $e
+                    )
             )
         );
 
