@@ -110,6 +110,8 @@ class Domain
      * @var Collection<int, DomainStatus>
      */
     #[ORM\OneToMany(targetEntity: DomainStatus::class, mappedBy: 'domain', orphanRemoval: true)]
+    #[Groups(['domain:item'])]
+    #[SerializedName('oldStatus')]
     private Collection $domainStatuses;
 
     private const IMPORTANT_EVENTS = [EventAction::Deletion->value, EventAction::Expiration->value];

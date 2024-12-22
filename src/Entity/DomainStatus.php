@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\DomainStatusRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Attribute\Groups;
 
 #[ORM\Entity(repositoryClass: DomainStatusRepository::class)]
 class DomainStatus
@@ -19,12 +20,15 @@ class DomainStatus
     private ?Domain $domain = null;
 
     #[ORM\Column]
+    #[Groups(['domain:item'])]
     private ?\DateTimeImmutable $date = null;
 
     #[ORM\Column(type: Types::SIMPLE_ARRAY, nullable: true)]
+    #[Groups(['domain:item'])]
     private array $addStatus = [];
 
     #[ORM\Column(type: Types::SIMPLE_ARRAY, nullable: true)]
+    #[Groups(['domain:item'])]
     private array $deleteStatus = [];
 
     public function __construct()
