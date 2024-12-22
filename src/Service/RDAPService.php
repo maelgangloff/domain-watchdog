@@ -134,6 +134,11 @@ readonly class RDAPService
         }
 
         $this->updateDomainStatus($domain, $rdapData);
+
+        if (in_array('free', $domain->getStatus())) {
+            throw new NotFoundHttpException('The domain name is not present in the WHOIS database.');
+        }
+
         $this->updateDomainHandle($domain, $rdapData);
 
         $this->updateDomainEvents($domain, $rdapData);
