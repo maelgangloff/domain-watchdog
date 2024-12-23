@@ -13,12 +13,13 @@ import {rolesToColor} from "./rolesToColor";
 
 export const roleToAvatar = (e: { roles: string[] }) => <Avatar style={{backgroundColor: rolesToColor(e.roles)}}
                                                                 icon={e.roles.includes('registrant') ?
-                                                                    <SignatureOutlined/> : e.roles.includes('registrar') ?
+                                                                    <SignatureOutlined/> :
+                                                                    e.roles.includes('registrar') ?
                                                                         <BankOutlined/> :
-                                                                        e.roles.includes('technical') ?
-                                                                            <ToolOutlined/> :
-                                                                            e.roles.includes('administrative') ?
-                                                                                <IdcardOutlined/> :
+                                                                        e.roles.includes('administrative') ?
+                                                                            <IdcardOutlined/> :
+                                                                            e.roles.includes('technical') ?
+                                                                                <ToolOutlined/> :
                                                                                 e.roles.includes('billing') ?
                                                                                     <DollarOutlined/> :
                                                                                     <UserOutlined/>}/>

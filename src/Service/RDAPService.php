@@ -357,6 +357,9 @@ readonly class RDAPService
         }
     }
 
+    /**
+     * @throws \DateMalformedStringException
+     */
     private function updateDomainNameservers(Domain $domain, array $rdapData): void
     {
         if (array_key_exists('nameservers', $rdapData) && is_array($rdapData['nameservers'])) {

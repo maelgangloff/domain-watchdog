@@ -1,4 +1,4 @@
-import {List, Tag, Tooltip} from "antd";
+import {List, Tag, Tooltip, Typography} from "antd";
 import React from "react";
 import {Domain} from "../../utils/api";
 import {rdapRoleDetailTranslation, rdapRoleTranslation} from "../../utils/functions/rdapTranslation";
@@ -28,7 +28,7 @@ export function EntitiesList({domain}: { domain: Domain }) {
             return <List.Item>
                 <List.Item.Meta
                     avatar={roleToAvatar(e)}
-                    title={e.entity.handle}
+                    title={<Typography.Text code>{e.entity.handle}</Typography.Text>}
                     description={<>
                         {details.fn && <div>👤 {details.fn}</div>}
                         {details.organization && <div>🏢 {details.organization}</div>}
