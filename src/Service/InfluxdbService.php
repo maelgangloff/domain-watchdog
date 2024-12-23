@@ -79,11 +79,15 @@ readonly class InfluxdbService
 
     private function writePoints(Point ...$points): void
     {
-        $writeApi = $this->client->createWriteApi(['writeType' => WriteType::BATCHING, 'batchSize' => count($points)]);
-        foreach ($points as $point) {
-            $writeApi->write($point);
-        }
+        try {
+            $writeApi = $this->client->createWriteApi(['writeType' => WriteType::BATCHING, 'batchSize' => count($points)]);
+            foreach ($points as $point) {
+                $writeApi->write($point);
+            }
 
-        $writeApi->close();
+            $writeApi->close();
+        } catch (\Throwable) {
+            // TODO: Add a retry mechanism if writing fails
+        }
     }
 }

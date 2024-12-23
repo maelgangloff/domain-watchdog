@@ -19,6 +19,7 @@ readonly class StatService
 
             return $this->pool->save($item);
         } catch (\Throwable) {
+            // TODO: Add a retry mechanism if writing fails
         }
 
         return false;
