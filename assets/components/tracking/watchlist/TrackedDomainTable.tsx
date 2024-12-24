@@ -84,6 +84,7 @@ export function TrackedDomainTable() {
 
 
     return <Table
+        style={{height: '80vh'}}
         loading={total === undefined}
         columns={columns}
         dataSource={dataTable}
