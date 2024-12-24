@@ -84,7 +84,6 @@ export function TrackedDomainTable() {
 
 
     return <Table
-        style={{height: '80vh'}}
         loading={total === undefined}
         columns={columns}
         dataSource={dataTable}
@@ -96,7 +95,6 @@ export function TrackedDomainTable() {
                 fetchData({page, itemsPerPage})
             }
         }}
-
-        {...(sm ? {scroll: {y: 'max-content'}} : {scroll: {y: 240}})}
+        scroll={{y: '60vh'}}
     />
 }
