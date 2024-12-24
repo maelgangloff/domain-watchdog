@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2024-12-01 23:07+0000\n"
+"PO-Revision-Date: 2024-12-24 17:22+0000\n"
 "Last-Translator: Maël Gangloff <contact@maelgangloff.fr>\n"
 "Language-Team: French <https://weblate.vinceh121.me/projects/domain-watchdog/"
 "domain-watchdog-dashboard/fr/>\n"
@@ -38,11 +38,11 @@ msgstr ""
 
 #: assets/App.tsx:143
 msgid "Official git repository"
-msgstr ""
+msgstr "Dépôt git officiel"
 
 #: assets/App.tsx:146
 msgid "Submit an issue"
-msgstr ""
+msgstr "Signaler un bug"
 
 #: assets/components/LoginForm.tsx:52 assets/components/RegisterForm.tsx:39
 msgid "Email address"
