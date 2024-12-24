@@ -1,4 +1,4 @@
-import {Button, ConfigProvider, Layout, Space, theme, Typography} from "antd";
+import {Button, ConfigProvider, FloatButton, Layout, Space, theme, Tooltip, Typography} from "antd";
 import {Link, Navigate, Route, Routes, useLocation, useNavigate} from "react-router-dom";
 import TextPage from "./pages/TextPage";
 import DomainSearchPage from "./pages/search/DomainSearchPage";
@@ -16,9 +16,13 @@ import NotFoundPage from "./pages/NotFoundPage";
 import useBreakpoint from "./hooks/useBreakpoint";
 import {Sider} from "./components/Sider";
 import {jt, t} from "ttag";
+import {BugOutlined, InfoCircleOutlined, MergeOutlined} from '@ant-design/icons'
 
-const ProjectLink = <Link to='https://github.com/maelgangloff/domain-watchdog'>Domain Watchdog</Link>
-const LicenseLink = <Link to='https://www.gnu.org/licenses/agpl-3.0.txt'>AGPL-3.0-or-later</Link>
+const PROJECT_LINK = 'https://github.com/maelgangloff/domain-watchdog'
+const LICENSE_LINK = 'https://www.gnu.org/licenses/agpl-3.0.txt'
+
+const ProjectLink = <Typography.Link target='_blank' href={PROJECT_LINK}>Domain Watchdog</Typography.Link>
+const LicenseLink = <Typography.Link target='_blank' href={LICENSE_LINK}>AGPL-3.0-or-later</Typography.Link>
 
 export default function App() {
 
@@ -116,7 +120,8 @@ export default function App() {
                             <Link to='/tos'><Button type='text'>{t`TOS`}</Button></Link>
                             <Link to='/privacy'><Button type='text'>{t`Privacy Policy`}</Button></Link>
                             <Link to='/faq'><Button type='text'>{t`FAQ`}</Button></Link>
-                            <Typography.Link href='https://github.com/maelgangloff/domain-watchdog/wiki'><Button
+                            <Typography.Link target='_blank'
+                                             href='https://github.com/maelgangloff/domain-watchdog/wiki'><Button
                                 type='text'>{t`Documentation`}</Button></Typography.Link>
                         </Space>
                         <Typography.Paragraph style={{marginTop: '1em'}}>
@@ -124,6 +129,22 @@ export default function App() {
                         </Typography.Paragraph>
                     </Layout.Footer>
                 </Layout>
+                <FloatButton.Group
+                    trigger='hover'
+                    style={{
+                        position: 'fixed',
+                        insetInlineEnd: (100 - 40) / 2,
+                        bottom: 100 - 40 / 2,
+                    }}
+                    icon={<InfoCircleOutlined/>}
+                >
+                    <Tooltip title={t`Official git repository`} placement='left'>
+                        <FloatButton icon={<MergeOutlined/>} target='_blank' href={PROJECT_LINK}/>
+                    </Tooltip>
+                    <Tooltip title={t`Submit an issue`} placement='left'>
+                        <FloatButton icon={<BugOutlined/>} target='_blank' href={PROJECT_LINK + '/issues'}/>
+                    </Tooltip>
+                </FloatButton.Group>
             </Layout>
         </AuthenticatedContext.Provider>
     </ConfigProvider>

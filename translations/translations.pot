@@ -3,27 +3,35 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Plural-Forms: nplurals=2; plural=(n!=1);\n"
 
-#: assets/App.tsx:116
+#: assets/App.tsx:120
 msgid "TOS"
 msgstr ""
 
-#: assets/App.tsx:117
+#: assets/App.tsx:121
 msgid "Privacy Policy"
 msgstr ""
 
-#: assets/App.tsx:118
+#: assets/App.tsx:122
 msgid "FAQ"
 msgstr ""
 
-#: assets/App.tsx:120
+#: assets/App.tsx:125
 msgid "Documentation"
 msgstr ""
 
-#: assets/App.tsx:123
+#: assets/App.tsx:128
 #, javascript-format
 msgid ""
 "${ ProjectLink } is an open source project distributed under the ${ "
 "LicenseLink } license."
+msgstr ""
+
+#: assets/App.tsx:141
+msgid "Official git repository"
+msgstr ""
+
+#: assets/App.tsx:144
+msgid "Submit an issue"
 msgstr ""
 
 #: assets/components/LoginForm.tsx:52
