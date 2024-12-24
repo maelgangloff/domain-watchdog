@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2024-10-06 18:47+0000\n"
+"PO-Revision-Date: 2024-12-24 17:22+0000\n"
 "Last-Translator: Maël Gangloff <contact@maelgangloff.fr>\n"
 "Language-Team: German <https://weblate.vinceh121.me/projects/domain-watchdog/"
 "domain-watchdog-dashboard/de/>\n"
@@ -8,7 +8,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.7.2\n"
+"X-Generator: Weblate 5.8.3\n"
 
 #: assets/App.tsx:122
 msgid "TOS"
@@ -37,11 +37,11 @@ msgstr ""
 
 #: assets/App.tsx:143
 msgid "Official git repository"
-msgstr ""
+msgstr "Offizielles Git-Repository"
 
 #: assets/App.tsx:146
 msgid "Submit an issue"
-msgstr ""
+msgstr "Ein Problem melden"
 
 #: assets/components/LoginForm.tsx:52 assets/components/RegisterForm.tsx:39
 msgid "Email address"
