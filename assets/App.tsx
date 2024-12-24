@@ -11,12 +11,13 @@ import UserPage from "./pages/UserPage";
 import React, {useCallback, useEffect, useMemo, useState} from "react";
 import {getUser} from "./utils/api";
 import LoginPage, {AuthenticatedContext} from "./pages/LoginPage";
-import ConnectorsPage from "./pages/tracking/ConnectorsPage";
+import ConnectorPage from "./pages/tracking/ConnectorPage";
 import NotFoundPage from "./pages/NotFoundPage";
 import useBreakpoint from "./hooks/useBreakpoint";
 import {Sider} from "./components/Sider";
 import {jt, t} from "ttag";
 import {BugOutlined, InfoCircleOutlined, MergeOutlined} from '@ant-design/icons'
+import TrackedDomainPage from "./pages/tracking/TrackedDomainPage";
 
 const PROJECT_LINK = 'https://github.com/maelgangloff/domain-watchdog'
 const LICENSE_LINK = 'https://www.gnu.org/licenses/agpl-3.0.txt'
@@ -100,7 +101,8 @@ export default function App() {
                                 <Route path="/search/tld" element={<TldPage/>}/>
 
                                 <Route path="/tracking/watchlist" element={<WatchlistPage/>}/>
-                                <Route path="/tracking/connectors" element={<ConnectorsPage/>}/>
+                                <Route path="/tracking/domains" element={<TrackedDomainPage/>}/>
+                                <Route path="/tracking/connectors" element={<ConnectorPage/>}/>
 
                                 <Route path="/stats" element={<StatisticsPage/>}/>
                                 <Route path="/user" element={<UserPage/>}/>

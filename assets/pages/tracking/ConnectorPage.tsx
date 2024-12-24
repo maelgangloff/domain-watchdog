@@ -8,7 +8,7 @@ import {ConnectorElement, ConnectorsList} from "../../components/tracking/connec
 
 import {showErrorAPI} from "../../utils/functions/showErrorAPI";
 
-export default function ConnectorsPage() {
+export default function ConnectorPage() {
     const [form] = Form.useForm()
     const [messageApi, contextHolder] = message.useMessage()
     const [connectors, setConnectors] = useState<ConnectorElement[] | null>()

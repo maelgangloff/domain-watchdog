@@ -4,7 +4,6 @@ import {
     AimOutlined,
     ApiOutlined,
     BankOutlined,
-    CloudServerOutlined,
     CompassOutlined,
     FileSearchOutlined,
     HomeOutlined,
@@ -12,10 +11,10 @@ import {
     LoginOutlined,
     LogoutOutlined,
     SearchOutlined,
-    TeamOutlined,
+    TableOutlined,
     UserOutlined
 } from "@ant-design/icons";
-import {Badge, Menu} from "antd";
+import {Menu} from "antd";
 import React from "react";
 import {useNavigate} from "react-router-dom";
 
@@ -50,6 +49,7 @@ export function Sider({isAuthenticated}: { isAuthenticated: boolean }) {
                     disabled: !isAuthenticated,
                     onClick: () => navigate('/search/tld')
                 },
+                /*
                 {
                     key: 'entity-finder',
                     icon: <TeamOutlined/>,
@@ -66,6 +66,7 @@ export function Sider({isAuthenticated}: { isAuthenticated: boolean }) {
                     disabled: true,
                     onClick: () => navigate('/search/nameserver')
                 }
+                 */
             ]
         },
         {
@@ -75,10 +76,17 @@ export function Sider({isAuthenticated}: { isAuthenticated: boolean }) {
             children: [
                 {
                     key: 'watchlist',
-                    icon: <Badge count={0} size="small"><FileSearchOutlined/></Badge>,
+                    icon: <FileSearchOutlined/>,
                     label: t`My Watchlists`,
                     disabled: !isAuthenticated,
                     onClick: () => navigate('/tracking/watchlist')
+                },
+                {
+                    key: 'tracked-domain',
+                    icon: <TableOutlined/>,
+                    label: t`Tracked domain names`,
+                    disabled: !isAuthenticated,
+                    onClick: () => navigate('/tracking/domains')
                 },
                 {
                     key: 'connectors',
