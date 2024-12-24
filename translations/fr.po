@@ -11,23 +11,23 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
 "X-Generator: Weblate 5.8.3\n"
 
-#: assets/App.tsx:116
+#: assets/App.tsx:122
 msgid "TOS"
 msgstr "CGU"
 
-#: assets/App.tsx:117
+#: assets/App.tsx:123
 msgid "Privacy Policy"
 msgstr "Politique de confidentialité"
 
-#: assets/App.tsx:118
+#: assets/App.tsx:124
 msgid "FAQ"
 msgstr "FAQ"
 
-#: assets/App.tsx:120
+#: assets/App.tsx:127
 msgid "Documentation"
 msgstr "Documentation"
 
-#: assets/App.tsx:123
+#: assets/App.tsx:130
 #, javascript-format
 msgid ""
 "${ ProjectLink } is an open source project distributed under the "
@@ -35,6 +35,14 @@ msgid ""
 msgstr ""
 "${ ProjectLink } est un projet open source distribué sous licence "
 "${ LicenseLink }."
+
+#: assets/App.tsx:143
+msgid "Official git repository"
+msgstr ""
+
+#: assets/App.tsx:146
+msgid "Submit an issue"
+msgstr ""
 
 #: assets/components/LoginForm.tsx:52 assets/components/RegisterForm.tsx:39
 msgid "Email address"
@@ -111,72 +119,61 @@ msgstr "Entités"
 msgid "This domain name does not appear to be valid"
 msgstr "Ce nom de domaine ne semble pas être valide"
 
-#: assets/components/Sider.tsx:28
+#: assets/components/Sider.tsx:27
 msgid "Home"
 msgstr "Accueil"
 
-#: assets/components/Sider.tsx:34
+#: assets/components/Sider.tsx:33
 msgid "Search"
 msgstr "Rechercher"
 
-#: assets/components/Sider.tsx:40
+#: assets/components/Sider.tsx:39
 #: assets/components/tracking/watchlist/TrackedDomainTable.tsx:47
 msgid "Domain"
 msgstr "Domaine"
 
-#: assets/components/Sider.tsx:41
+#: assets/components/Sider.tsx:40
 msgid "Domain Finder"
 msgstr "Rechercher un domaine"
 
-#: assets/components/Sider.tsx:48 assets/pages/search/TldPage.tsx:65
+#: assets/components/Sider.tsx:47 assets/pages/search/TldPage.tsx:65
 msgid "TLD"
 msgstr "TLD"
 
-#: assets/components/Sider.tsx:49
+#: assets/components/Sider.tsx:48
 msgid "TLD list"
 msgstr "Liste des TLD"
 
-#: assets/components/Sider.tsx:56
-msgid "Entity"
-msgstr "Entité"
-
-#: assets/components/Sider.tsx:57
-msgid "Entity Finder"
-msgstr "Rechercher une entité"
-
-#: assets/components/Sider.tsx:64
-msgid "Nameserver"
-msgstr "Serveur DNS"
-
-#: assets/components/Sider.tsx:65
-msgid "Nameserver Finder"
-msgstr "Rechercher un serveur DNS"
-
-#: assets/components/Sider.tsx:73
+#: assets/components/Sider.tsx:74
 msgid "Tracking"
 msgstr "Suivi"
 
-#: assets/components/Sider.tsx:79
+#: assets/components/Sider.tsx:80
 msgid "My Watchlists"
 msgstr "Mes Watchlists"
 
-#: assets/components/Sider.tsx:86
+#: assets/components/Sider.tsx:87 assets/pages/StatisticsPage.tsx:68
+#: assets/pages/tracking/TrackedDomainPage.tsx:9
+msgid "Tracked domain names"
+msgstr "Noms de domaine suivis"
+
+#: assets/components/Sider.tsx:94
 msgid "My Connectors"
 msgstr "Mes Connecteurs"
 
-#: assets/components/Sider.tsx:95
+#: assets/components/Sider.tsx:103
 msgid "Statistics"
 msgstr "Statistiques"
 
-#: assets/components/Sider.tsx:105 assets/pages/UserPage.tsx:16
+#: assets/components/Sider.tsx:113 assets/pages/UserPage.tsx:16
 msgid "My Account"
 msgstr "Mon compte"
 
-#: assets/components/Sider.tsx:110
+#: assets/components/Sider.tsx:118
 msgid "Log out"
 msgstr "Se déconnecter"
 
-#: assets/components/Sider.tsx:118 assets/pages/LoginPage.tsx:25
+#: assets/components/Sider.tsx:126 assets/pages/LoginPage.tsx:25
 #: assets/pages/LoginPage.tsx:33
 msgid "Log in"
 msgstr "Se connecter"
@@ -622,11 +619,6 @@ msgstr "Alertes envoyées"
 msgid "Domain names in database"
 msgstr "Noms de domaine dans la base de données"
 
-#: assets/pages/StatisticsPage.tsx:68
-#: assets/pages/tracking/WatchlistPage.tsx:105
-msgid "Tracked domain names"
-msgstr "Noms de domaine suivis"
-
 #: assets/pages/StatisticsPage.tsx:82
 msgid "Purchased domain names"
 msgstr "Noms de domaine achetés"
@@ -648,23 +640,23 @@ msgstr "Taux de succès"
 msgid "📝 Please create the /public/content/${ resource } file."
 msgstr "📝 Veuillez créer le fichier /public/content/${ resource }."
 
-#: assets/pages/tracking/ConnectorsPage.tsx:20
+#: assets/pages/tracking/ConnectorPage.tsx:20
 msgid "Connector created !"
 msgstr "Connecteur créé !"
 
-#: assets/pages/tracking/ConnectorsPage.tsx:39
+#: assets/pages/tracking/ConnectorPage.tsx:39
 msgid "Create a Connector"
 msgstr "Créer un Connecteur"
 
-#: assets/pages/tracking/WatchlistPage.tsx:67
+#: assets/pages/tracking/WatchlistPage.tsx:65
 msgid "Watchlist created !"
 msgstr "Watchlist créée !"
 
-#: assets/pages/tracking/WatchlistPage.tsx:79
+#: assets/pages/tracking/WatchlistPage.tsx:77
 msgid "Watchlist updated !"
 msgstr "Watchlist mise à jour !"
 
-#: assets/pages/tracking/WatchlistPage.tsx:112
+#: assets/pages/tracking/WatchlistPage.tsx:100
 msgid "Create a Watchlist"
 msgstr "Créer une Watchlist"
 
@@ -1329,6 +1321,18 @@ msgid ""
 msgstr ""
 "Le domaine est libre mais il peut être premium. Son prix est variable d'un "
 "domaine à l'autre"
+
+#~ msgid "Entity"
+#~ msgstr "Entité"
+
+#~ msgid "Entity Finder"
+#~ msgstr "Rechercher une entité"
+
+#~ msgid "Nameserver"
+#~ msgstr "Serveur DNS"
+
+#~ msgid "Nameserver Finder"
+#~ msgstr "Rechercher un serveur DNS"
 
 #~ msgid "Domain Contact Handle ID"
 #~ msgstr "Nic-handle de contact du domaine"
