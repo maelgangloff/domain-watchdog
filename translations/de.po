@@ -127,7 +127,7 @@ msgid "Search"
 msgstr "Suchen"
 
 #: assets/components/Sider.tsx:39
-#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:47
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:68
 msgid "Domain"
 msgstr "Domain"
 
@@ -152,7 +152,6 @@ msgid "My Watchlists"
 msgstr "Meine Watchlists"
 
 #: assets/components/Sider.tsx:87 assets/pages/StatisticsPage.tsx:68
-#: assets/pages/tracking/TrackedDomainPage.tsx:9
 msgid "Tracked domain names"
 msgstr "Verfolgte Domänennamen"
 
@@ -392,17 +391,47 @@ msgstr "Registrierung"
 msgid ".${ tld.tld } Registry"
 msgstr ".${ tld.tld } Registrierung"
 
-#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:51
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:14
+msgid ""
+"At least one domain name is in redemption period and will potentially be "
+"deleted soon"
+msgstr ""
+
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:19
+msgid ""
+"At least one domain name is pending deletion and will soon become available "
+"for registration again"
+msgstr ""
+
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:72
 msgid "Expiration date"
 msgstr "Verfallsdatum"
 
-#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:63
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:85
+msgid "Updated at"
+msgstr "Aktualisiert am"
+
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:92
 msgid "Status"
 msgstr "Status"
 
-#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:77
-msgid "Updated at"
-msgstr "Aktualisiert am"
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:110
+msgid "No tracked domain names were found, please create your first Watchlist"
+msgstr ""
+
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:118
+msgid ""
+"Please note that this table does not include domain names marked as expired "
+"or those with an unknown expiration date"
+msgstr ""
+
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:122
+msgid "At least one domain name you are tracking requires special attention"
+msgstr ""
+
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:127
+msgid "The domain names below are subject to special monitoring"
+msgstr ""
 
 #: assets/components/tracking/watchlist/UpdateWatchlistButton.tsx:31
 msgid "Edit the Watchlist"
