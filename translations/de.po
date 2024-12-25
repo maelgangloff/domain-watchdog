@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2024-12-24 17:22+0000\n"
+"PO-Revision-Date: 2024-12-25 21:53+0000\n"
 "Last-Translator: Maël Gangloff <contact@maelgangloff.fr>\n"
 "Language-Team: German <https://weblate.vinceh121.me/projects/domain-watchdog/"
 "domain-watchdog-dashboard/de/>\n"
@@ -396,12 +396,16 @@ msgid ""
 "At least one domain name is in redemption period and will potentially be "
 "deleted soon"
 msgstr ""
+"Mindestens ein Domainname befindet sich im Einlösezeitraum und könnte bald "
+"gelöscht werden"
 
 #: assets/components/tracking/watchlist/TrackedDomainTable.tsx:19
 msgid ""
 "At least one domain name is pending deletion and will soon become available "
 "for registration again"
 msgstr ""
+"Mindestens ein Domänenname steht zur Löschung an und wird bald wieder zur "
+"Registrierung verfügbar sein"
 
 #: assets/components/tracking/watchlist/TrackedDomainTable.tsx:72
 msgid "Expiration date"
@@ -418,20 +422,27 @@ msgstr "Status"
 #: assets/components/tracking/watchlist/TrackedDomainTable.tsx:110
 msgid "No tracked domain names were found, please create your first Watchlist"
 msgstr ""
+"Es wurden keine getrackten Domainnamen gefunden, bitte erstellen Sie Ihre "
+"erste Watchlist"
 
 #: assets/components/tracking/watchlist/TrackedDomainTable.tsx:118
 msgid ""
 "Please note that this table does not include domain names marked as expired "
 "or those with an unknown expiration date"
 msgstr ""
+"Bitte beachten Sie, dass diese Tabelle keine Domänennamen enthält, die als "
+"abgelaufen markiert sind oder deren Ablaufdatum unbekannt ist"
 
 #: assets/components/tracking/watchlist/TrackedDomainTable.tsx:122
 msgid "At least one domain name you are tracking requires special attention"
 msgstr ""
+"Mindestens ein Domänenname, den Sie verfolgen, erfordert besondere "
+"Aufmerksamkeit"
 
 #: assets/components/tracking/watchlist/TrackedDomainTable.tsx:127
 msgid "The domain names below are subject to special monitoring"
 msgstr ""
+"Die unten aufgeführten Domänennamen unterliegen einer besonderen Überwachung"
 
 #: assets/components/tracking/watchlist/UpdateWatchlistButton.tsx:31
 msgid "Edit the Watchlist"
