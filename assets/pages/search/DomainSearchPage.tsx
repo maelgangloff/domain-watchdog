@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {Empty, Flex, FormProps, message, Skeleton} from "antd";
 import {Domain, getDomain} from "../../utils/api";
 import {AxiosError} from "axios"
@@ -6,10 +6,13 @@ import {t} from 'ttag'
 import {DomainSearchBar, FieldType} from "../../components/search/DomainSearchBar";
 import {DomainResult} from "../../components/search/DomainResult";
 import {showErrorAPI} from "../../utils/functions/showErrorAPI";
+import {useParams} from "react-router-dom";
 
 export default function DomainSearchPage() {
     const [domain, setDomain] = useState<Domain | null>()
     const [messageApi, contextHolder] = message.useMessage()
+
+    const {query} = useParams()
 
     const onFinish: FormProps<FieldType>['onFinish'] = (values) => {
         setDomain(null)
@@ -21,6 +24,10 @@ export default function DomainSearchPage() {
             showErrorAPI(e, messageApi)
         })
     }
+
+    useEffect(() => {
+        if (query) onFinish({ldhName: query})
+    }, [query])
 
     return <Flex gap="middle" align="center" justify="center" vertical>
         {contextHolder}

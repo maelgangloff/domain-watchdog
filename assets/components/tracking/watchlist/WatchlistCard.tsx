@@ -1,10 +1,9 @@
 import {Card, Divider, Space, Table, Tag, Tooltip} from "antd";
-import {DeleteOutlined, DisconnectOutlined, ExclamationCircleOutlined, LinkOutlined} from "@ant-design/icons";
+import {DisconnectOutlined, LinkOutlined} from "@ant-design/icons";
 import {t} from "ttag";
 import {ViewDiagramWatchlistButton} from "./diagram/ViewDiagramWatchlistButton";
 import {UpdateWatchlistButton} from "./UpdateWatchlistButton";
 import {DeleteWatchlistButton} from "./DeleteWatchlistButton";
-import punycode from "punycode/punycode";
 import React from "react";
 import {Watchlist} from "../../../pages/tracking/WatchlistPage";
 import {Connector} from "../../../utils/api/connectors";
@@ -13,6 +12,7 @@ import {CalendarWatchlistButton} from "./CalendarWatchlistButton";
 import {rdapEventDetailTranslation, rdapEventNameTranslation} from "../../../utils/functions/rdapTranslation";
 
 import {actionToColor} from "../../../utils/functions/actionToColor";
+import {DomainToTag} from "../DomainToTag";
 
 export function WatchlistCard({watchlist, onUpdateWatchlist, connectors, onDelete}: {
     watchlist: Watchlist,
@@ -78,17 +78,7 @@ export function WatchlistCard({watchlist, onUpdateWatchlist, connectors, onDelet
                 pagination={false}
                 style={{width: '100%'}}
                 dataSource={[{
-                    domains: watchlist.domains.map(d => <Tag
-                        color={
-                            d.deleted ? 'magenta' :
-                                d.status.includes('redemption period') ? 'yellow' :
-                                    d.status.includes('pending delete') ? 'volcano' : 'default'
-                        }
-                        icon={
-                            d.deleted ? <DeleteOutlined/> :
-                                d.status.includes('redemption period') ? <ExclamationCircleOutlined/> :
-                                    d.status.includes('pending delete') ? <DeleteOutlined/> : null
-                        }>{punycode.toUnicode(d.ldhName)}</Tag>),
+                    domains: watchlist.domains.map(d => <DomainToTag domain={d}/>),
                     events: watchlist.triggers?.filter(t => t.action === 'email')
                         .map(t => <Tooltip
                                 title={t.event in rdapEventDetailTranslated ? rdapEventDetailTranslated[t.event as keyof typeof rdapEventDetailTranslated] : undefined}>

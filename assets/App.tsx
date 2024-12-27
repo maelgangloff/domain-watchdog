@@ -96,6 +96,7 @@ export default function App() {
                                 <Route path="/home" element={<TextPage resource='home.md'/>}/>
 
                                 <Route path="/search/domain" element={<DomainSearchPage/>}/>
+                                <Route path="/search/domain/:query" element={<DomainSearchPage/>}/>
                                 <Route path="/search/entity" element={<EntitySearchPage/>}/>
                                 <Route path="/search/nameserver" element={<NameserverSearchPage/>}/>
                                 <Route path="/search/tld" element={<TldPage/>}/>

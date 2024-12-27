@@ -3,34 +3,34 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Plural-Forms: nplurals=2; plural=(n!=1);\n"
 
-#: assets/App.tsx:122
+#: assets/App.tsx:123
 msgid "TOS"
 msgstr ""
 
-#: assets/App.tsx:123
+#: assets/App.tsx:124
 msgid "Privacy Policy"
 msgstr ""
 
-#: assets/App.tsx:124
+#: assets/App.tsx:125
 msgid "FAQ"
 msgstr ""
 
-#: assets/App.tsx:127
+#: assets/App.tsx:128
 msgid "Documentation"
 msgstr ""
 
-#: assets/App.tsx:130
+#: assets/App.tsx:131
 #, javascript-format
 msgid ""
 "${ ProjectLink } is an open source project distributed under the ${ "
 "LicenseLink } license."
 msgstr ""
 
-#: assets/App.tsx:143
+#: assets/App.tsx:144
 msgid "Official git repository"
 msgstr ""
 
-#: assets/App.tsx:146
+#: assets/App.tsx:147
 msgid "Submit an issue"
 msgstr ""
 
@@ -123,7 +123,7 @@ msgid "Search"
 msgstr ""
 
 #: assets/components/Sider.tsx:39
-#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:68
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:69
 msgid "Domain"
 msgstr ""
 
@@ -367,54 +367,54 @@ msgstr ""
 msgid "Watchlist Entity Diagram"
 msgstr ""
 
-#: assets/components/tracking/watchlist/diagram/watchlistToEdges.tsx:37
+#: assets/components/tracking/watchlist/diagram/watchlistToEdges.tsx:42
 msgid "Registry"
 msgstr ""
 
-#: assets/components/tracking/watchlist/diagram/watchlistToNodes.tsx:30
+#: assets/components/tracking/watchlist/diagram/watchlistToNodes.tsx:37
 #, javascript-format
 msgid ".${ tld.tld } Registry"
 msgstr ""
 
-#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:14
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:15
 msgid ""
 "At least one domain name is in redemption period and will potentially be "
 "deleted soon"
 msgstr ""
 
-#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:19
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:20
 msgid ""
 "At least one domain name is pending deletion and will soon become available "
 "for registration again"
 msgstr ""
 
-#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:72
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:73
 msgid "Expiration date"
 msgstr ""
 
-#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:85
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:86
 msgid "Updated at"
 msgstr ""
 
-#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:92
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:93
 msgid "Status"
 msgstr ""
 
-#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:110
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:111
 msgid "No tracked domain names were found, please create your first Watchlist"
 msgstr ""
 
-#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:118
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:119
 msgid ""
 "Please note that this table does not include domain names marked as expired "
 "or those with an unknown expiration date"
 msgstr ""
 
-#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:122
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:123
 msgid "At least one domain name you are tracking requires special attention"
 msgstr ""
 
-#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:127
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:128
 msgid "The domain names below are subject to special monitoring"
 msgstr ""
 
@@ -515,11 +515,11 @@ msgstr ""
 msgid "Sorry, the page you visited does not exist."
 msgstr ""
 
-#: assets/pages/search/DomainSearchPage.tsx:18
+#: assets/pages/search/DomainSearchPage.tsx:21
 msgid "Found !"
 msgstr ""
 
-#: assets/pages/search/DomainSearchPage.tsx:34
+#: assets/pages/search/DomainSearchPage.tsx:41
 msgid ""
 "Although the domain exists in my database, it has been deleted from the "
 "WHOIS by its registrar."

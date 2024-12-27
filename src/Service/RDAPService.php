@@ -83,7 +83,7 @@ readonly class RDAPService
     ];
 
     /* @see https://www.iana.org/assignments/registrar-ids/registrar-ids.xhtml */
-    public const ENTITY_IANA_RESERVED_IDS = [
+    public const IANA_RESERVED_IDS = [
         1, 3, 8, 119, 365, 376, 9994, 9995, 9996, 9997, 9998, 9999, 10009, 4000001, 8888888,
     ];
 
@@ -509,7 +509,7 @@ readonly class RDAPService
 
         $entity->setHandle($rdapEntity['handle']);
 
-        if (array_key_exists('vcardArray', $rdapEntity) && !in_array($rdapEntity['handle'], self::ENTITY_IANA_RESERVED_IDS)) {
+        if (array_key_exists('vcardArray', $rdapEntity) && !in_array($rdapEntity['handle'], self::IANA_RESERVED_IDS)) {
             if (empty($entity->getJCard())) {
                 $entity->setJCard($rdapEntity['vcardArray']);
             } else {
@@ -524,7 +524,7 @@ readonly class RDAPService
             }
         }
 
-        if ($isIANAid || !array_key_exists('events', $rdapEntity) || in_array($rdapEntity['handle'], self::ENTITY_IANA_RESERVED_IDS)) {
+        if ($isIANAid || !array_key_exists('events', $rdapEntity) || in_array($rdapEntity['handle'], self::IANA_RESERVED_IDS)) {
             return $entity;
         }
 

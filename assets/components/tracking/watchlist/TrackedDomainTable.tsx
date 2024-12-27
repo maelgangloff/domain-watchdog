@@ -7,6 +7,7 @@ import {rdapStatusCodeDetailTranslation} from "../../../utils/functions/rdapTran
 import {eppStatusCodeToColor} from "../../../utils/functions/eppStatusCodeToColor";
 import {Link} from "react-router-dom";
 import {ExceptionOutlined, MonitorOutlined} from '@ant-design/icons'
+import {DomainToTag} from "../DomainToTag";
 
 
 export function TrackedDomainTable() {
@@ -42,7 +43,7 @@ export function TrackedDomainTable() {
 
                 return {
                     key: d.ldhName,
-                    ldhName: d.ldhName,
+                    ldhName: <DomainToTag domain={d}/>,
                     expirationDate: expirationDate ? new Date(expirationDate).toLocaleString() : '-',
                     status: d.status.map(s => <Tooltip
                             placement='bottomLeft'
