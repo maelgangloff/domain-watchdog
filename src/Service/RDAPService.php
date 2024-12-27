@@ -476,7 +476,7 @@ readonly class RDAPService
         $isIANAid = false;
         if (array_key_exists('publicIds', $rdapEntity)) {
             foreach ($rdapEntity['publicIds'] as $publicId) {
-                if ('IANA Registrar ID' === $publicId['type'] && array_key_exists('identifier', $publicId)) {
+                if ('IANA Registrar ID' === $publicId['type'] && array_key_exists('identifier', $publicId) && '' !== $publicId['identifier']) {
                     $rdapEntity['handle'] = $publicId['identifier'];
                     $isIANAid = true;
                     break;
