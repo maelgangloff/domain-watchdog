@@ -12,18 +12,25 @@ export const domainToNode = (d: Domain) => ({
     }
 })
 
-export const domainEntitiesToNode = (d: Domain, withRegistrar = false) => d.entities
-    .filter(e => !e.deleted && (!withRegistrar ? !e.roles.includes('registrar') : true))
-    .map(e => {
-        return {
-            id: e.entity.handle,
-            type: e.roles.includes('registrant') || e.roles.includes('registrar') ? 'input' : 'output',
-            data: {label: entityToName(e)},
-            style: {
-                width: 200
+export const domainEntitiesToNode = (d: Domain, withRegistrar = false) => {
+    const sponsor = d.entities.find(e => !e.deleted && e.roles.includes('sponsor'))
+    return d.entities
+        .filter(e =>
+            !e.deleted &&
+            (withRegistrar || !e.roles.includes('registrar')) &&
+            (!sponsor || !e.roles.includes('registrar') || e.roles.includes('sponsor'))
+        )
+        .map(e => {
+            return {
+                id: e.entity.handle,
+                type: e.roles.includes('registrant') || e.roles.includes('registrar') ? 'input' : 'output',
+                data: {label: entityToName(e)},
+                style: {
+                    width: 200
+                }
             }
-        }
-    })
+        })
+}
 
 export const tldToNode = (tld: Tld) => ({
     id: tld.tld,
