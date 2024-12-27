@@ -76,6 +76,11 @@ readonly class RDAPService
         'xn--hlcj6aya9esc7a',
     ];
 
+    public const ENTITY_HANDLE_BLACKLIST = [
+        'REDACTED_FOR_PRIVACY',
+        'ANO00-FRNIC',
+    ];
+
     public function __construct(private HttpClientInterface $client,
         private EntityRepository $entityRepository,
         private DomainRepository $domainRepository,
@@ -333,6 +338,10 @@ readonly class RDAPService
 
         if (array_key_exists('entities', $rdapData) && is_array($rdapData['entities'])) {
             foreach ($rdapData['entities'] as $rdapEntity) {
+                if (array_key_exists('handle', $rdapEntity) && in_array($rdapEntity['handle'], self::ENTITY_HANDLE_BLACKLIST)) {
+                    continue;
+                }
+
                 $roles = $this->extractEntityRoles($rdapData['entities'], $rdapEntity);
                 $entity = $this->registerEntity($rdapEntity, $roles, $domain->getLdhName());
 

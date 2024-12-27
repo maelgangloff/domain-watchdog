@@ -2,11 +2,8 @@
 
 namespace App\Entity;
 
-use ApiPlatform\Doctrine\Orm\Filter\SearchFilter;
-use ApiPlatform\Metadata\ApiFilter;
 use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\Get;
-use ApiPlatform\Metadata\GetCollection;
 use App\Repository\EntityRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -15,13 +12,14 @@ use Symfony\Component\Serializer\Attribute\Groups;
 use Symfony\Component\Serializer\Attribute\SerializedName;
 
 #[ORM\Entity(repositoryClass: EntityRepository::class)]
-#[ApiFilter(SearchFilter::class, properties: ['jCard' => 'partial'])]
 #[ApiResource(
     operations: [
+        /*
         new GetCollection(
             uriTemplate: '/entities',
             normalizationContext: ['groups' => ['entity:list', 'event:list']]
         ),
+        */
         new Get(
             uriTemplate: '/entities/{handle}',
             normalizationContext: [
