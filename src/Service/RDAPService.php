@@ -79,6 +79,12 @@ readonly class RDAPService
     public const ENTITY_HANDLE_BLACKLIST = [
         'REDACTED_FOR_PRIVACY',
         'ANO00-FRNIC',
+        'not applicable',
+    ];
+
+    /* @see https://www.iana.org/assignments/registrar-ids/registrar-ids.xhtml */
+    public const ENTITY_IANA_RESERVED_IDS = [
+        1, 3, 8, 119, 365, 376, 9994, 9995, 9996, 9997, 9998, 9999, 10009, 4000001, 8888888,
     ];
 
     public function __construct(private HttpClientInterface $client,
@@ -338,10 +344,6 @@ readonly class RDAPService
 
         if (array_key_exists('entities', $rdapData) && is_array($rdapData['entities'])) {
             foreach ($rdapData['entities'] as $rdapEntity) {
-                if (array_key_exists('handle', $rdapEntity) && in_array($rdapEntity['handle'], self::ENTITY_HANDLE_BLACKLIST)) {
-                    continue;
-                }
-
                 $roles = $this->extractEntityRoles($rdapData['entities'], $rdapEntity);
                 $entity = $this->registerEntity($rdapEntity, $roles, $domain->getLdhName());
 
@@ -468,7 +470,22 @@ readonly class RDAPService
      */
     private function registerEntity(array $rdapEntity, array $roles, string $domain): Entity
     {
-        if (!array_key_exists('handle', $rdapEntity) || '' === $rdapEntity['handle']) {
+        /*
+         * If the RDAP server transmits the entity's IANA number, it is used as a priority to identify the entity
+         */
+        if (array_key_exists('publicIds', $rdapEntity)) {
+            foreach ($rdapEntity['publicIds'] as $publicId) {
+                if ('IANA Registrar ID' === $publicId['type'] && array_key_exists('identifier', $publicId)) {
+                    $rdapEntity['handle'] = $publicId['identifier'];
+                    break;
+                }
+            }
+        }
+
+        /*
+         * If there is no number to identify the entity, one is generated from the domain name and the roles associated with this entity
+         */
+        if (!array_key_exists('handle', $rdapEntity) || '' === $rdapEntity['handle'] || in_array($rdapEntity['handle'], self::ENTITY_HANDLE_BLACKLIST)) {
             $rdapEntity['handle'] = 'DW-FAKEHANDLE-'.$domain.'-'.join(',', $roles);
 
             $this->logger->warning('The entity {handle} has no handle key.', [
@@ -490,7 +507,7 @@ readonly class RDAPService
 
         $entity->setHandle($rdapEntity['handle']);
 
-        if (array_key_exists('vcardArray', $rdapEntity)) {
+        if (array_key_exists('vcardArray', $rdapEntity) && !in_array($rdapEntity['handle'], self::ENTITY_IANA_RESERVED_IDS)) {
             if (empty($entity->getJCard())) {
                 $entity->setJCard($rdapEntity['vcardArray']);
             } else {
@@ -505,7 +522,7 @@ readonly class RDAPService
             }
         }
 
-        if (!array_key_exists('events', $rdapEntity)) {
+        if (!array_key_exists('events', $rdapEntity) || in_array($rdapEntity['handle'], self::ENTITY_IANA_RESERVED_IDS)) {
             return $entity;
         }
 
