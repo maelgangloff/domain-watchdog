@@ -6,27 +6,30 @@ import {t} from 'ttag'
 import {DomainSearchBar, FieldType} from "../../components/search/DomainSearchBar";
 import {DomainResult} from "../../components/search/DomainResult";
 import {showErrorAPI} from "../../utils/functions/showErrorAPI";
-import {useParams} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 
 export default function DomainSearchPage() {
     const [domain, setDomain] = useState<Domain | null>()
     const [messageApi, contextHolder] = message.useMessage()
+    const navigate = useNavigate()
 
     const {query} = useParams()
 
     const onFinish: FormProps<FieldType>['onFinish'] = (values) => {
+        navigate('/search/domain/' + values.ldhName)
+    }
+
+    useEffect(() => {
+        if (query === undefined) return
+
         setDomain(null)
-        getDomain(values.ldhName).then(d => {
+        getDomain(query).then(d => {
             setDomain(d)
             messageApi.success(t`Found !`)
         }).catch((e: AxiosError) => {
             setDomain(undefined)
             showErrorAPI(e, messageApi)
         })
-    }
-
-    useEffect(() => {
-        if (query) onFinish({ldhName: query})
     }, [query])
 
     return <Flex gap="middle" align="center" justify="center" vertical>

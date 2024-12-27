@@ -515,11 +515,11 @@ msgstr ""
 msgid "Sorry, the page you visited does not exist."
 msgstr ""
 
-#: assets/pages/search/DomainSearchPage.tsx:21
+#: assets/pages/search/DomainSearchPage.tsx:28
 msgid "Found !"
 msgstr ""
 
-#: assets/pages/search/DomainSearchPage.tsx:41
+#: assets/pages/search/DomainSearchPage.tsx:44
 msgid ""
 "Although the domain exists in my database, it has been deleted from the "
 "WHOIS by its registrar."
