@@ -473,10 +473,12 @@ readonly class RDAPService
         /*
          * If the RDAP server transmits the entity's IANA number, it is used as a priority to identify the entity
          */
+        $isIANAid = false;
         if (array_key_exists('publicIds', $rdapEntity)) {
             foreach ($rdapEntity['publicIds'] as $publicId) {
                 if ('IANA Registrar ID' === $publicId['type'] && array_key_exists('identifier', $publicId)) {
                     $rdapEntity['handle'] = $publicId['identifier'];
+                    $isIANAid = true;
                     break;
                 }
             }
@@ -522,7 +524,7 @@ readonly class RDAPService
             }
         }
 
-        if (!array_key_exists('events', $rdapEntity) || in_array($rdapEntity['handle'], self::ENTITY_IANA_RESERVED_IDS)) {
+        if ($isIANAid || !array_key_exists('events', $rdapEntity) || in_array($rdapEntity['handle'], self::ENTITY_IANA_RESERVED_IDS)) {
             return $entity;
         }
 
