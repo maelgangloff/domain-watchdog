@@ -152,9 +152,11 @@ msgstr "Suivi"
 msgid "My Watchlists"
 msgstr "Mes Watchlists"
 
-#: assets/components/Sider.tsx:88 assets/pages/StatisticsPage.tsx:68
-msgid "Tracked domain names"
-msgstr "Noms de domaine suivis"
+#: assets/components/Sider.tsx:88
+#, fuzzy
+#| msgid "Tracking"
+msgid "Tracking table"
+msgstr "Suivi"
 
 #: assets/components/Sider.tsx:95
 msgid "My Connectors"
@@ -658,6 +660,10 @@ msgstr "Alertes envoyées"
 #: assets/pages/StatisticsPage.tsx:57
 msgid "Domain names in database"
 msgstr "Noms de domaine dans la base de données"
+
+#: assets/pages/StatisticsPage.tsx:68
+msgid "Tracked domain names"
+msgstr "Noms de domaine suivis"
 
 #: assets/pages/StatisticsPage.tsx:82
 msgid "Purchased domain names"
