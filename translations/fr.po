@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2024-12-28 20:41+0000\n"
+"PO-Revision-Date: 2024-12-29 21:07+0000\n"
 "Last-Translator: Maël Gangloff <contact@maelgangloff.fr>\n"
 "Language-Team: French <https://weblate.vinceh121.me/projects/domain-watchdog/"
 "domain-watchdog-dashboard/fr/>\n"
@@ -1332,7 +1332,7 @@ msgid ""
 "dedicated user for API with limited rights"
 msgstr ""
 "En raison de certaines limitations de l'API d'AutoDNS, nous suggérons de "
-"créer un utilisateur dédié à l'API avec des droits limités."
+"créer un utilisateur dédié à l'API avec des droits limités"
 
 #: assets/utils/providers/ovh.tsx:5
 msgid "Application key"
