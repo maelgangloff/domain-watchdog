@@ -509,6 +509,10 @@ readonly class RDAPService
 
         $entity->setHandle($rdapEntity['handle']);
 
+        if (array_key_exists('remarks', $rdapEntity) && is_array($rdapEntity['remarks'])) {
+            $entity->setRemarks($rdapEntity['remarks']);
+        }
+
         if (array_key_exists('vcardArray', $rdapEntity) && !in_array($rdapEntity['handle'], self::IANA_RESERVED_IDS)) {
             if (empty($entity->getJCard())) {
                 $entity->setJCard($rdapEntity['vcardArray']);

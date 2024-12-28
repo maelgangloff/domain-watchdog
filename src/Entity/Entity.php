@@ -69,6 +69,10 @@ class Entity
     #[Groups(['entity:item', 'domain:item'])]
     private array $jCard = [];
 
+    #[ORM\Column(nullable: true)]
+    #[Groups(['entity:item', 'domain:item'])]
+    private ?array $remarks = null;
+
     public function __construct()
     {
         $this->domainEntities = new ArrayCollection();
@@ -186,6 +190,18 @@ class Entity
     public function setJCard(array $jCard): static
     {
         $this->jCard = $jCard;
+
+        return $this;
+    }
+
+    public function getRemarks(): ?array
+    {
+        return $this->remarks;
+    }
+
+    public function setRemarks(?array $remarks): static
+    {
+        $this->remarks = $remarks;
 
         return $this;
     }
