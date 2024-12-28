@@ -509,7 +509,7 @@ readonly class RDAPService
 
         $entity->setHandle($rdapEntity['handle']);
 
-        if (array_key_exists('remarks', $rdapEntity) && is_array($rdapEntity['remarks'])) {
+        if (array_key_exists('remarks', $rdapEntity) && is_array($rdapEntity['remarks']) && !in_array($rdapEntity['handle'], self::IANA_RESERVED_IDS)) {
             $entity->setRemarks($rdapEntity['remarks']);
         }
 
