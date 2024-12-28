@@ -149,8 +149,7 @@ msgid "My Watchlists"
 msgstr ""
 
 #: assets/components/Sider.tsx:88
-#: assets/pages/StatisticsPage.tsx:68
-msgid "Tracked domain names"
+msgid "Tracking table"
 msgstr ""
 
 #: assets/components/Sider.tsx:95
@@ -604,6 +603,10 @@ msgstr ""
 
 #: assets/pages/StatisticsPage.tsx:57
 msgid "Domain names in database"
+msgstr ""
+
+#: assets/pages/StatisticsPage.tsx:68
+msgid "Tracked domain names"
 msgstr ""
 
 #: assets/pages/StatisticsPage.tsx:82

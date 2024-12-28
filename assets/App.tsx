@@ -78,7 +78,7 @@ export default function App() {
         <AuthenticatedContext.Provider value={contextValue}>
             <Layout hasSider style={{minHeight: '100vh'}}>
                 {/* Ant will use a break-off tab to toggle the collapse of the sider when collapseWidth = 0*/}
-                <Layout.Sider collapsible breakpoint="sm" {...(sm ? {collapsedWidth: 0} : {})}>
+                <Layout.Sider collapsible breakpoint="sm" width={220} {...(sm ? {collapsedWidth: 0} : {})}>
                     <Sider isAuthenticated={isAuthenticated}/>
                 </Layout.Sider>
                 <Layout>

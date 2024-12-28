@@ -85,7 +85,7 @@ export function Sider({isAuthenticated}: { isAuthenticated: boolean }) {
                 {
                     key: '/tracking/domains',
                     icon: <TableOutlined/>,
-                    label: t`Tracked domain names`,
+                    label: t`Tracking table`,
                     disabled: !isAuthenticated,
                     onClick: () => navigate('/tracking/domains')
                 },
