@@ -59,9 +59,6 @@ export default function App() {
 
     useEffect(() => {
         setDarkMode(windowQuery.matches)
-    }, [])
-
-    useEffect(() => {
         getUser().then(() => {
             setIsAuthenticated(true)
             if (location.pathname === '/login') navigate('/home')

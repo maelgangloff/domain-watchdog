@@ -16,14 +16,15 @@ import {
 } from "@ant-design/icons";
 import {Menu} from "antd";
 import React from "react";
-import {useNavigate} from "react-router-dom";
+import {useLocation, useNavigate} from "react-router-dom";
 
 export function Sider({isAuthenticated}: { isAuthenticated: boolean }) {
     const navigate = useNavigate()
+    const location = useLocation()
 
     const menuItems: ItemType[] = [
         {
-            key: 'home',
+            key: '/home',
             label: t`Home`,
             icon: <HomeOutlined/>,
             onClick: () => navigate('/home')
@@ -34,7 +35,7 @@ export function Sider({isAuthenticated}: { isAuthenticated: boolean }) {
             icon: <SearchOutlined/>,
             children: [
                 {
-                    key: 'domain-finder',
+                    key: '/search/domain',
                     icon: <CompassOutlined/>,
                     label: t`Domain`,
                     title: t`Domain Finder`,
@@ -42,7 +43,7 @@ export function Sider({isAuthenticated}: { isAuthenticated: boolean }) {
                     onClick: () => navigate('/search/domain')
                 },
                 {
-                    key: 'tld-list',
+                    key: '/search/tld',
                     icon: <BankOutlined/>,
                     label: t`TLD`,
                     title: t`TLD list`,
@@ -66,7 +67,7 @@ export function Sider({isAuthenticated}: { isAuthenticated: boolean }) {
                     disabled: true,
                     onClick: () => navigate('/search/nameserver')
                 }
-                 */
+                */
             ]
         },
         {
@@ -75,21 +76,21 @@ export function Sider({isAuthenticated}: { isAuthenticated: boolean }) {
             icon: <AimOutlined/>,
             children: [
                 {
-                    key: 'watchlist',
+                    key: '/tracking/watchlist',
                     icon: <FileSearchOutlined/>,
                     label: t`My Watchlists`,
                     disabled: !isAuthenticated,
                     onClick: () => navigate('/tracking/watchlist')
                 },
                 {
-                    key: 'tracked-domain',
+                    key: '/tracking/domains',
                     icon: <TableOutlined/>,
                     label: t`Tracked domain names`,
                     disabled: !isAuthenticated,
                     onClick: () => navigate('/tracking/domains')
                 },
                 {
-                    key: 'connectors',
+                    key: '/tracking/connectors',
                     icon: <ApiOutlined/>,
                     label: t`My Connectors`,
                     disabled: !isAuthenticated,
@@ -98,7 +99,7 @@ export function Sider({isAuthenticated}: { isAuthenticated: boolean }) {
             ]
         },
         {
-            key: 'stats',
+            key: '/stats',
             icon: <LineChartOutlined/>,
             label: t`Statistics`,
             disabled: !isAuthenticated,
@@ -108,12 +109,12 @@ export function Sider({isAuthenticated}: { isAuthenticated: boolean }) {
 
     if (isAuthenticated) {
         menuItems.push(...[{
-            key: 'account',
+            key: '/user',
             icon: <UserOutlined/>,
             label: t`My Account`,
             onClick: () => navigate('/user')
         }, {
-            key: 'logout',
+            key: '/logout',
             icon: <LogoutOutlined/>,
             label: t`Log out`,
             danger: true,
@@ -121,7 +122,7 @@ export function Sider({isAuthenticated}: { isAuthenticated: boolean }) {
         }])
     } else {
         menuItems.push({
-            key: 'login',
+            key: '/login',
             icon: <LoginOutlined/>,
             label: t`Log in`,
             onClick: () => navigate('/login')
@@ -130,6 +131,7 @@ export function Sider({isAuthenticated}: { isAuthenticated: boolean }) {
 
     return <Menu
         defaultOpenKeys={['search', 'info', 'tracking', 'doc']}
+        selectedKeys={[location.pathname.includes('/search/domain') ? '/search/domain' : location.pathname]}
         mode="inline"
         theme="dark"
         items={menuItems}

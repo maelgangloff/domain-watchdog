@@ -3,34 +3,34 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Plural-Forms: nplurals=2; plural=(n!=1);\n"
 
-#: assets/App.tsx:123
+#: assets/App.tsx:120
 msgid "TOS"
 msgstr ""
 
-#: assets/App.tsx:124
+#: assets/App.tsx:121
 msgid "Privacy Policy"
 msgstr ""
 
-#: assets/App.tsx:125
+#: assets/App.tsx:122
 msgid "FAQ"
 msgstr ""
 
-#: assets/App.tsx:128
+#: assets/App.tsx:125
 msgid "Documentation"
 msgstr ""
 
-#: assets/App.tsx:131
+#: assets/App.tsx:128
 #, javascript-format
 msgid ""
 "${ ProjectLink } is an open source project distributed under the ${ "
 "LicenseLink } license."
 msgstr ""
 
-#: assets/App.tsx:144
+#: assets/App.tsx:141
 msgid "Official git repository"
 msgstr ""
 
-#: assets/App.tsx:147
+#: assets/App.tsx:144
 msgid "Submit an issue"
 msgstr ""
 
@@ -114,63 +114,63 @@ msgstr ""
 msgid "This domain name does not appear to be valid"
 msgstr ""
 
-#: assets/components/Sider.tsx:27
+#: assets/components/Sider.tsx:28
 msgid "Home"
 msgstr ""
 
-#: assets/components/Sider.tsx:33
+#: assets/components/Sider.tsx:34
 msgid "Search"
 msgstr ""
 
-#: assets/components/Sider.tsx:39
+#: assets/components/Sider.tsx:40
 #: assets/components/tracking/watchlist/TrackedDomainTable.tsx:69
 msgid "Domain"
 msgstr ""
 
-#: assets/components/Sider.tsx:40
+#: assets/components/Sider.tsx:41
 msgid "Domain Finder"
 msgstr ""
 
-#: assets/components/Sider.tsx:47
+#: assets/components/Sider.tsx:48
 #: assets/pages/search/TldPage.tsx:65
 msgid "TLD"
 msgstr ""
 
-#: assets/components/Sider.tsx:48
+#: assets/components/Sider.tsx:49
 msgid "TLD list"
 msgstr ""
 
-#: assets/components/Sider.tsx:74
+#: assets/components/Sider.tsx:75
 msgid "Tracking"
 msgstr ""
 
-#: assets/components/Sider.tsx:80
+#: assets/components/Sider.tsx:81
 msgid "My Watchlists"
 msgstr ""
 
-#: assets/components/Sider.tsx:87
+#: assets/components/Sider.tsx:88
 #: assets/pages/StatisticsPage.tsx:68
 msgid "Tracked domain names"
 msgstr ""
 
-#: assets/components/Sider.tsx:94
+#: assets/components/Sider.tsx:95
 msgid "My Connectors"
 msgstr ""
 
-#: assets/components/Sider.tsx:103
+#: assets/components/Sider.tsx:104
 msgid "Statistics"
 msgstr ""
 
-#: assets/components/Sider.tsx:113
+#: assets/components/Sider.tsx:114
 #: assets/pages/UserPage.tsx:16
 msgid "My Account"
 msgstr ""
 
-#: assets/components/Sider.tsx:118
+#: assets/components/Sider.tsx:119
 msgid "Log out"
 msgstr ""
 
-#: assets/components/Sider.tsx:126
+#: assets/components/Sider.tsx:127
 #: assets/pages/LoginPage.tsx:25
 #: assets/pages/LoginPage.tsx:33
 msgid "Log in"
