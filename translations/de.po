@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2024-12-25 21:53+0000\n"
+"PO-Revision-Date: 2024-12-28 20:41+0000\n"
 "Last-Translator: Maël Gangloff <contact@maelgangloff.fr>\n"
 "Language-Team: German <https://weblate.vinceh121.me/projects/domain-watchdog/"
 "domain-watchdog-dashboard/de/>\n"
@@ -152,10 +152,8 @@ msgid "My Watchlists"
 msgstr "Meine Watchlists"
 
 #: assets/components/Sider.tsx:88
-#, fuzzy
-#| msgid "Tracking"
 msgid "Tracking table"
-msgstr "Nachverfolgung"
+msgstr "Tracking-Tabelle"
 
 #: assets/components/Sider.tsx:95
 msgid "My Connectors"
