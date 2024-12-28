@@ -11,23 +11,23 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
 "X-Generator: Weblate 5.8.3\n"
 
-#: assets/App.tsx:123
+#: assets/App.tsx:120
 msgid "TOS"
 msgstr "CGU"
 
-#: assets/App.tsx:124
+#: assets/App.tsx:121
 msgid "Privacy Policy"
 msgstr "Politique de confidentialité"
 
-#: assets/App.tsx:125
+#: assets/App.tsx:122
 msgid "FAQ"
 msgstr "FAQ"
 
-#: assets/App.tsx:128
+#: assets/App.tsx:125
 msgid "Documentation"
 msgstr "Documentation"
 
-#: assets/App.tsx:131
+#: assets/App.tsx:128
 #, javascript-format
 msgid ""
 "${ ProjectLink } is an open source project distributed under the "
@@ -36,11 +36,11 @@ msgstr ""
 "${ ProjectLink } est un projet open source distribué sous licence "
 "${ LicenseLink }."
 
-#: assets/App.tsx:144
+#: assets/App.tsx:141
 msgid "Official git repository"
 msgstr "Dépôt git officiel"
 
-#: assets/App.tsx:147
+#: assets/App.tsx:144
 msgid "Submit an issue"
 msgstr "Signaler un bug"
 
@@ -119,60 +119,60 @@ msgstr "Entités"
 msgid "This domain name does not appear to be valid"
 msgstr "Ce nom de domaine ne semble pas être valide"
 
-#: assets/components/Sider.tsx:27
+#: assets/components/Sider.tsx:28
 msgid "Home"
 msgstr "Accueil"
 
-#: assets/components/Sider.tsx:33
+#: assets/components/Sider.tsx:34
 msgid "Search"
 msgstr "Rechercher"
 
-#: assets/components/Sider.tsx:39
+#: assets/components/Sider.tsx:40
 #: assets/components/tracking/watchlist/TrackedDomainTable.tsx:69
 msgid "Domain"
 msgstr "Domaine"
 
-#: assets/components/Sider.tsx:40
+#: assets/components/Sider.tsx:41
 msgid "Domain Finder"
 msgstr "Rechercher un domaine"
 
-#: assets/components/Sider.tsx:47 assets/pages/search/TldPage.tsx:65
+#: assets/components/Sider.tsx:48 assets/pages/search/TldPage.tsx:65
 msgid "TLD"
 msgstr "TLD"
 
-#: assets/components/Sider.tsx:48
+#: assets/components/Sider.tsx:49
 msgid "TLD list"
 msgstr "Liste des TLD"
 
-#: assets/components/Sider.tsx:74
+#: assets/components/Sider.tsx:75
 msgid "Tracking"
 msgstr "Suivi"
 
-#: assets/components/Sider.tsx:80
+#: assets/components/Sider.tsx:81
 msgid "My Watchlists"
 msgstr "Mes Watchlists"
 
-#: assets/components/Sider.tsx:87 assets/pages/StatisticsPage.tsx:68
+#: assets/components/Sider.tsx:88 assets/pages/StatisticsPage.tsx:68
 msgid "Tracked domain names"
 msgstr "Noms de domaine suivis"
 
-#: assets/components/Sider.tsx:94
+#: assets/components/Sider.tsx:95
 msgid "My Connectors"
 msgstr "Mes Connecteurs"
 
-#: assets/components/Sider.tsx:103
+#: assets/components/Sider.tsx:104
 msgid "Statistics"
 msgstr "Statistiques"
 
-#: assets/components/Sider.tsx:113 assets/pages/UserPage.tsx:16
+#: assets/components/Sider.tsx:114 assets/pages/UserPage.tsx:16
 msgid "My Account"
 msgstr "Mon compte"
 
-#: assets/components/Sider.tsx:118
+#: assets/components/Sider.tsx:119
 msgid "Log out"
 msgstr "Se déconnecter"
 
-#: assets/components/Sider.tsx:126 assets/pages/LoginPage.tsx:25
+#: assets/components/Sider.tsx:127 assets/pages/LoginPage.tsx:25
 #: assets/pages/LoginPage.tsx:33
 msgid "Log in"
 msgstr "Se connecter"
