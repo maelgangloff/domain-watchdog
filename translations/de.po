@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2024-12-29 21:43+0000\n"
+"PO-Revision-Date: 2024-12-29 23:11+0000\n"
 "Last-Translator: Maël Gangloff <contact@maelgangloff.fr>\n"
 "Language-Team: German <https://weblate.vinceh121.me/projects/domain-watchdog/"
 "domain-watchdog-dashboard/de/>\n"
@@ -95,11 +95,9 @@ msgstr "Aktiv"
 
 #: assets/components/search/DomainLifecycleSteps.tsx:29
 msgid "Auto-Renew Grace Period"
-msgstr ""
+msgstr "Nachfrist für automatische Verlängerung"
 
 #: assets/components/search/DomainLifecycleSteps.tsx:34
-#, fuzzy
-#| msgid "Redemption Period"
 msgid "Redemption Grace Period"
 msgstr "Einlösezeitraum"
 
