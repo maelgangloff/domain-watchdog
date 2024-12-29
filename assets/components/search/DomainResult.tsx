@@ -72,16 +72,10 @@ export function DomainResult({domain}: { domain: Domain }) {
                         {domain.status.length > 0 &&
                             <>
                                 <Divider orientation="left">{t`EPP Status Codes`}</Divider>
-                                {
-                                    serverStatus && <Flex gap="4px 0" wrap>
-                                        {serverStatus.map(statusToTag)}
-                                    </Flex>
-                                }
-                                {
-                                    clientStatus && <Flex gap="4px 0" wrap>
-                                        {clientStatus.map(statusToTag)}
-                                    </Flex>
-                                }
+                                <Flex gap="4px 0" wrap>
+                                    {serverStatus.map(statusToTag)}
+                                    {clientStatus.map(statusToTag)}
+                                </Flex>
                             </>
                         }
                         {
