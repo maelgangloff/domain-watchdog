@@ -49,7 +49,7 @@ msgstr "E-Mail-Adresse"
 
 #: assets/components/LoginForm.tsx:54 assets/components/LoginForm.tsx:62
 #: assets/components/RegisterForm.tsx:41 assets/components/RegisterForm.tsx:49
-#: assets/components/search/DomainSearchBar.tsx:20
+#: assets/components/search/DomainSearchBar.tsx:21
 #: assets/components/tracking/connector/ConnectorForm.tsx:43
 #: assets/components/tracking/connector/ConnectorForm.tsx:69
 #: assets/components/tracking/connector/ConnectorForm.tsx:77
@@ -113,7 +113,7 @@ msgstr "Zeitleiste"
 msgid "Entities"
 msgstr "Entitäten"
 
-#: assets/components/search/DomainSearchBar.tsx:23
+#: assets/components/search/DomainSearchBar.tsx:24
 #: assets/components/tracking/watchlist/WatchlistForm.tsx:118
 msgid "This domain name does not appear to be valid"
 msgstr "Dieser Domainname scheint nicht gültig zu sein"
@@ -548,11 +548,11 @@ msgstr "Ein Konto erstellen"
 msgid "Sorry, the page you visited does not exist."
 msgstr "Es tut uns leid, die von Ihnen besuchte Seite existiert nicht."
 
-#: assets/pages/search/DomainSearchPage.tsx:28
+#: assets/pages/search/DomainSearchPage.tsx:24
 msgid "Found !"
 msgstr "Gefunden !"
 
-#: assets/pages/search/DomainSearchPage.tsx:44
+#: assets/pages/search/DomainSearchPage.tsx:46
 msgid ""
 "Although the domain exists in my database, it has been deleted from the "
 "WHOIS by its registrar."
