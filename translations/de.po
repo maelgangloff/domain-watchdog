@@ -84,20 +84,26 @@ msgstr "Mit SSO anmelden"
 msgid "Register"
 msgstr "Registrieren"
 
-#: assets/components/search/DomainLifecycleSteps.tsx:15
+#: assets/components/search/DomainLifecycleSteps.tsx:21
 #: assets/utils/functions/rdapTranslation.ts:43
 msgid "Registration"
 msgstr "Registrierung"
 
-#: assets/components/search/DomainLifecycleSteps.tsx:19
+#: assets/components/search/DomainLifecycleSteps.tsx:25
 msgid "Active"
 msgstr "Aktiv"
 
-#: assets/components/search/DomainLifecycleSteps.tsx:24
-msgid "Redemption Period"
+#: assets/components/search/DomainLifecycleSteps.tsx:29
+msgid "Auto-Renew Grace Period"
+msgstr ""
+
+#: assets/components/search/DomainLifecycleSteps.tsx:34
+#, fuzzy
+#| msgid "Redemption Period"
+msgid "Redemption Grace Period"
 msgstr "Einlösezeitraum"
 
-#: assets/components/search/DomainLifecycleSteps.tsx:28
+#: assets/components/search/DomainLifecycleSteps.tsx:38
 msgid "Pending Delete"
 msgstr "Ausstehende Löschung"
 
@@ -131,11 +137,11 @@ msgstr "Registrarsperre"
 msgid "EPP Status Codes"
 msgstr "EPP-Statuscodes"
 
-#: assets/components/search/DomainResult.tsx:89
+#: assets/components/search/DomainResult.tsx:83
 msgid "Timeline"
 msgstr "Zeitleiste"
 
-#: assets/components/search/DomainResult.tsx:96
+#: assets/components/search/DomainResult.tsx:90
 msgid "Entities"
 msgstr "Entitäten"
 
