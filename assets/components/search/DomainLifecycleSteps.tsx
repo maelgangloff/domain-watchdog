@@ -1,7 +1,13 @@
 import {StepProps, Steps, Tooltip} from "antd";
 import React from "react";
 import {t} from "ttag";
-import {CheckOutlined, DeleteOutlined, ExclamationCircleOutlined, SignatureOutlined} from "@ant-design/icons";
+import {
+    CheckOutlined,
+    DeleteOutlined,
+    ExclamationCircleOutlined,
+    FieldTimeOutlined,
+    SignatureOutlined
+} from "@ant-design/icons";
 import {rdapEventDetailTranslation, rdapStatusCodeDetailTranslation} from "../../utils/functions/rdapTranslation";
 
 export function DomainLifecycleSteps({status}: { status: string[] }) {
@@ -20,22 +26,28 @@ export function DomainLifecycleSteps({status}: { status: string[] }) {
             icon: <CheckOutlined/>
         },
         {
+            title: <Tooltip title={rdapStatusCodeDetailTranslated["auto renew period"]}>{t`Auto-Renew Grace Period`}</Tooltip>,
+            icon: <FieldTimeOutlined style={{color: 'palevioletred'}}/>
+        },
+        {
             title: <Tooltip
-                title={rdapStatusCodeDetailTranslated["redemption period"]}>{t`Redemption Period`}</Tooltip>,
-            icon: <ExclamationCircleOutlined style={{color: 'orangered'}}/>
+                title={rdapStatusCodeDetailTranslated["redemption period"]}>{t`Redemption Grace Period`}</Tooltip>,
+            icon: <ExclamationCircleOutlined style={{color: 'magenta'}}/>
         },
         {
             title: <Tooltip title={rdapStatusCodeDetailTranslated["pending delete"]}>{t`Pending Delete`}</Tooltip>,
-            icon: <DeleteOutlined style={{color: 'palevioletred'}}/>
+            icon: <DeleteOutlined style={{color: 'orangered'}}/>
         }
     ]
 
     let currentStep = 1
 
-    if (status.includes('redemption period')) {
+    if (status.includes('auto renew period')) {
         currentStep = 2
-    } else if (status.includes('pending delete')) {
+    } else if (status.includes('redemption period')) {
         currentStep = 3
+    } else if (status.includes('pending delete')) {
+        currentStep = 4
     }
 
     return <Steps
