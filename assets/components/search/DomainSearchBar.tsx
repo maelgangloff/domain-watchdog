@@ -7,7 +7,7 @@ export type FieldType = {
     ldhName: string
 }
 
-export function DomainSearchBar({onFinish}: { onFinish: (values: FieldType) => void }) {
+export function DomainSearchBar({onFinish, initialValue}: { onFinish: (values: FieldType) => void, initialValue?: string }) {
     return <Form
         onFinish={onFinish}
         autoComplete="off"
@@ -15,6 +15,7 @@ export function DomainSearchBar({onFinish}: { onFinish: (values: FieldType) => v
     >
         <Form.Item<FieldType>
             name="ldhName"
+            initialValue={initialValue}
             rules={[{
                 required: true,
                 message: t`Required`

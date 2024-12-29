@@ -17,24 +17,26 @@ export default function DomainSearchPage() {
 
     const onFinish: FormProps<FieldType>['onFinish'] = (values) => {
         navigate('/search/domain/' + values.ldhName)
-    }
-
-    useEffect(() => {
-        if (query === undefined) return
 
         setDomain(null)
-        getDomain(query).then(d => {
+        getDomain(values.ldhName).then(d => {
             setDomain(d)
             messageApi.success(t`Found !`)
         }).catch((e: AxiosError) => {
             setDomain(undefined)
             showErrorAPI(e, messageApi)
         })
+    }
+
+    useEffect(() => {
+        if (query === undefined) return
+
+        onFinish({ldhName: query})
     }, [query])
 
     return <Flex gap="middle" align="center" justify="center" vertical>
         {contextHolder}
-        <DomainSearchBar onFinish={onFinish}/>
+        <DomainSearchBar initialValue={query} onFinish={onFinish}/>
 
         <Skeleton loading={domain === null} active>
             {
