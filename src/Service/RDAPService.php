@@ -509,7 +509,7 @@ readonly class RDAPService
 
         $entity->setHandle($rdapEntity['handle']);
 
-        if (array_key_exists('remarks', $rdapEntity) && is_array($rdapEntity['remarks']) && !is_int($rdapEntity['handle'])) {
+        if (array_key_exists('remarks', $rdapEntity) && is_array($rdapEntity['remarks']) && !is_numeric($rdapEntity['handle'])) {
             $entity->setRemarks($rdapEntity['remarks']);
         }
 
