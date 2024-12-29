@@ -101,15 +101,40 @@ msgstr "Einlösezeitraum"
 msgid "Pending Delete"
 msgstr "Ausstehende Löschung"
 
-#: assets/components/search/DomainResult.tsx:49
+#: assets/components/search/DomainResult.tsx:60
+msgid ""
+"Registry-level protection, ensuring the highest level of security by "
+"preventing unauthorized, unwanted, or accidental changes to the domain name "
+"at the registry level"
+msgstr ""
+
+#: assets/components/search/DomainResult.tsx:63
+#, fuzzy
+#| msgid "Registry"
+msgid "Registry Lock"
+msgstr "Registrierung"
+
+#: assets/components/search/DomainResult.tsx:66
+msgid ""
+"Registrar-level protection, safeguarding the domain from unauthorized, "
+"unwanted, or accidental changes through registrar controls"
+msgstr ""
+
+#: assets/components/search/DomainResult.tsx:69
+#, fuzzy
+#| msgid "Registrar"
+msgid "Registrar Lock"
+msgstr "Registrierungsstelle"
+
+#: assets/components/search/DomainResult.tsx:74
 msgid "EPP Status Codes"
 msgstr "EPP-Statuscodes"
 
-#: assets/components/search/DomainResult.tsx:65
+#: assets/components/search/DomainResult.tsx:89
 msgid "Timeline"
 msgstr "Zeitleiste"
 
-#: assets/components/search/DomainResult.tsx:72
+#: assets/components/search/DomainResult.tsx:96
 msgid "Entities"
 msgstr "Entitäten"
 
@@ -456,21 +481,11 @@ msgstr "Aktualisieren einer Watchlist"
 msgid "Cancel"
 msgstr "Abbrechen"
 
-#: assets/components/tracking/watchlist/WatchlistCard.tsx:29
-#: assets/components/tracking/watchlist/WatchlistForm.tsx:106
-msgid "Domain names"
-msgstr "Domänennamen"
-
-#: assets/components/tracking/watchlist/WatchlistCard.tsx:33
-#: assets/components/tracking/watchlist/WatchlistForm.tsx:148
-msgid "Tracked events"
-msgstr "Verfolgte Ereignisse"
-
-#: assets/components/tracking/watchlist/WatchlistCard.tsx:47
+#: assets/components/tracking/watchlist/WatchlistCard.tsx:35
 msgid "This Watchlist is not linked to a Connector."
 msgstr "Diese Beobachtungsliste ist nicht mit einem Connector verknüpft."
 
-#: assets/components/tracking/watchlist/WatchlistCard.tsx:52
+#: assets/components/tracking/watchlist/WatchlistCard.tsx:40
 msgid "Watchlist"
 msgstr "Watchlist"
 
@@ -492,6 +507,10 @@ msgstr ""
 msgid "At least one domain name"
 msgstr "Mindestens ein Domänenname"
 
+#: assets/components/tracking/watchlist/WatchlistForm.tsx:106
+msgid "Domain names"
+msgstr "Domänennamen"
+
 #: assets/components/tracking/watchlist/WatchlistForm.tsx:124
 msgid "Domain name"
 msgstr "Domänenname"
@@ -499,6 +518,10 @@ msgstr "Domänenname"
 #: assets/components/tracking/watchlist/WatchlistForm.tsx:141
 msgid "Add a Domain name"
 msgstr "Einen Domänennamen hinzufügen"
+
+#: assets/components/tracking/watchlist/WatchlistForm.tsx:148
+msgid "Tracked events"
+msgstr "Verfolgte Ereignisse"
 
 #: assets/components/tracking/watchlist/WatchlistForm.tsx:150
 msgid "At least one trigger"
@@ -548,11 +571,11 @@ msgstr "Ein Konto erstellen"
 msgid "Sorry, the page you visited does not exist."
 msgstr "Es tut uns leid, die von Ihnen besuchte Seite existiert nicht."
 
-#: assets/pages/search/DomainSearchPage.tsx:24
+#: assets/pages/search/DomainSearchPage.tsx:27
 msgid "Found !"
 msgstr "Gefunden !"
 
-#: assets/pages/search/DomainSearchPage.tsx:46
+#: assets/pages/search/DomainSearchPage.tsx:48
 msgid ""
 "Although the domain exists in my database, it has been deleted from the "
 "WHOIS by its registrar."
