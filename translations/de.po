@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2024-12-28 20:41+0000\n"
+"PO-Revision-Date: 2024-12-29 21:43+0000\n"
 "Last-Translator: Maël Gangloff <contact@maelgangloff.fr>\n"
 "Language-Team: German <https://weblate.vinceh121.me/projects/domain-watchdog/"
 "domain-watchdog-dashboard/de/>\n"
@@ -107,24 +107,25 @@ msgid ""
 "preventing unauthorized, unwanted, or accidental changes to the domain name "
 "at the registry level"
 msgstr ""
+"Gewährleistung höchster Sicherheit durch die Verhinderung unbefugter, "
+"unerwünschter oder versehentlicher Änderungen am Domainnamen auf der "
+"Registrierungsebene"
 
 #: assets/components/search/DomainResult.tsx:63
-#, fuzzy
-#| msgid "Registry"
 msgid "Registry Lock"
-msgstr "Registrierung"
+msgstr "Registrierungssperre"
 
 #: assets/components/search/DomainResult.tsx:66
 msgid ""
 "Registrar-level protection, safeguarding the domain from unauthorized, "
 "unwanted, or accidental changes through registrar controls"
 msgstr ""
+"Schutz der Domain vor unbefugten, unerwünschten oder versehentlichen "
+"Änderungen durch Kontrollen auf Registrar-Ebene"
 
 #: assets/components/search/DomainResult.tsx:69
-#, fuzzy
-#| msgid "Registrar"
 msgid "Registrar Lock"
-msgstr "Registrierungsstelle"
+msgstr "Registrarsperre"
 
 #: assets/components/search/DomainResult.tsx:74
 msgid "EPP Status Codes"
