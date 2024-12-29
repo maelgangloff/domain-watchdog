@@ -144,6 +144,8 @@ readonly class RDAPService
             $domain = $this->initNewDomain($idnDomain, $tld);
         }
 
+        $domain->setRdapServer($rdapServer);
+
         $this->updateDomainStatus($domain, $rdapData);
 
         if (in_array('free', $domain->getStatus())) {
@@ -488,7 +490,8 @@ readonly class RDAPService
          * If there is no number to identify the entity, one is generated from the domain name and the roles associated with this entity
          */
         if (!array_key_exists('handle', $rdapEntity) || '' === $rdapEntity['handle'] || in_array($rdapEntity['handle'], self::ENTITY_HANDLE_BLACKLIST)) {
-            $rdapEntity['handle'] = 'DW-FAKEHANDLE-'.$domain.'-'.join(',', $roles);
+            sort($roles);
+            $rdapEntity['handle'] = 'DW-FAKEHANDLE-'.$domain.'-'.implode(',', $roles);
 
             $this->logger->warning('The entity {handle} has no handle key.', [
                 'handle' => $rdapEntity['handle'],

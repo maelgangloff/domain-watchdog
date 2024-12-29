@@ -106,6 +106,9 @@ class Domain
     #[Groups(['domain:item', 'domain:list', 'watchlist:item', 'watchlist:list'])]
     private ?bool $deleted;
 
+    #[Groups(['domain:item'])]
+    private ?RdapServer $rdapServer;
+
     /**
      * @var Collection<int, DomainStatus>
      */
@@ -422,5 +425,15 @@ class Domain
         }
 
         return $this;
+    }
+
+    public function getRdapServer(): ?RdapServer
+    {
+        return $this->rdapServer;
+    }
+
+    public function setRdapServer(?RdapServer $rdapServer): void
+    {
+        $this->rdapServer = $rdapServer;
     }
 }
