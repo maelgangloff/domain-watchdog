@@ -275,7 +275,8 @@ readonly class RDAPService
                 if ($domain->getUpdatedAt() !== $domain->getCreatedAt()) {
                     $this->em->persist((new DomainStatus())
                         ->setDomain($domain)
-                        ->setDate(new \DateTimeImmutable('now'))
+                        ->setCreatedAt(new \DateTimeImmutable('now'))
+                        ->setDate($domain->getUpdatedAt())
                         ->setAddStatus($addedStatus)
                         ->setDeleteStatus($deletedStatus));
                 }

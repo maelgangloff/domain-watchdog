@@ -21,7 +21,11 @@ class DomainStatus
 
     #[ORM\Column]
     #[Groups(['domain:item'])]
-    private ?\DateTimeImmutable $date = null;
+    private \DateTimeImmutable $createdAt;
+
+    #[ORM\Column]
+    #[Groups(['domain:item'])]
+    private \DateTimeImmutable $date;
 
     #[ORM\Column(type: Types::SIMPLE_ARRAY, nullable: true)]
     #[Groups(['domain:item'])]
@@ -34,6 +38,7 @@ class DomainStatus
     public function __construct()
     {
         $this->date = new \DateTimeImmutable('now');
+        $this->createdAt = new \DateTimeImmutable('now');
     }
 
     public function getId(): ?int
@@ -53,14 +58,26 @@ class DomainStatus
         return $this;
     }
 
-    public function getDate(): ?\DateTimeImmutable
+    public function getDate(): \DateTimeImmutable
     {
         return $this->date;
     }
 
-    public function setDate(\DateTimeImmutable $date): static
+    public function setDate(\DateTimeImmutable $date): self
     {
         $this->date = $date;
+
+        return $this;
+    }
+
+    public function getCreatedAt(): \DateTimeImmutable
+    {
+        return $this->createdAt;
+    }
+
+    public function setCreatedAt(\DateTimeImmutable $createdAt): static
+    {
+        $this->createdAt = $createdAt;
 
         return $this;
     }
