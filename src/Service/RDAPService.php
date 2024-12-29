@@ -177,7 +177,7 @@ readonly class RDAPService
         $tld = strtolower(idn_to_ascii(substr($domain, $lastDotPosition + 1)));
         $tldEntity = $this->tldRepository->findOneBy(['tld' => $tld]);
         if (null === $tldEntity) {
-            throw new NotFoundHttpException("The requested TLD is not yet supported, please try again with another one");
+            throw new NotFoundHttpException('The requested TLD is not yet supported, please try again with another one');
         }
 
         return $tldEntity;

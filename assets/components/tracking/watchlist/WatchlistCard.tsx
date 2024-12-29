@@ -1,4 +1,4 @@
-import {Card, Divider, Space, Table, Tag, Tooltip} from "antd";
+import {Card, Col, Divider, Row, Space, Tag, Tooltip} from "antd";
 import {DisconnectOutlined, LinkOutlined} from "@ant-design/icons";
 import {t} from "ttag";
 import {ViewDiagramWatchlistButton} from "./diagram/ViewDiagramWatchlistButton";
@@ -72,24 +72,21 @@ export function WatchlistCard({watchlist, onUpdateWatchlist, connectors, onDelet
             }
         >
             <Card.Meta description={watchlist.token} style={{marginBottom: '1em'}}/>
-            <Table
-                size='small'
-                columns={columns}
-                pagination={false}
-                style={{width: '100%'}}
-                dataSource={[{
-                    domains: watchlist.domains.map(d => <DomainToTag domain={d}/>),
-                    events: watchlist.triggers?.filter(t => t.action === 'email')
+            <Row gutter={16}>
+                <Col span={16}>
+                    {watchlist.domains.map(d => <DomainToTag domain={d}/>)}
+                </Col>
+                <Col span={8}>
+                    {watchlist.triggers?.filter(t => t.action === 'email')
                         .map(t => <Tooltip
                                 title={t.event in rdapEventDetailTranslated ? rdapEventDetailTranslated[t.event as keyof typeof rdapEventDetailTranslated] : undefined}>
                                 <Tag color={actionToColor(t.event)}>
                                     {rdapEventNameTranslated[t.event as keyof typeof rdapEventNameTranslated]}
                                 </Tag>
                             </Tooltip>
-                        )
-                }]}
-                {...(sm ? {scroll: {y: 'max-content'}} : {scroll: {y: 240}})}
-            />
+                        )}
+                </Col>
+            </Row>
         </Card>
         <Divider/>
     </>
