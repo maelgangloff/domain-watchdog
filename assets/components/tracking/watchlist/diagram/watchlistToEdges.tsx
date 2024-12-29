@@ -19,7 +19,7 @@ export function domainEntitiesToEdges(d: Domain, withRegistrar = false) {
             target: e.roles.includes('registrant') || e.roles.includes('registrar') ? d.ldhName : e.entity.handle,
             style: {stroke: rolesToColor(e.roles), strokeWidth: 3},
             label: e.roles
-                .map(r => r in rdapRoleTranslated ? rdapRoleTranslated[r as keyof typeof rdapRoleTranslated] : r)
+                .map(r => rdapRoleTranslated[r as keyof typeof rdapRoleTranslated] || r)
                 .join(', '),
             animated: e.roles.includes('registrant'),
         }))

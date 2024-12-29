@@ -18,14 +18,14 @@ export function EventTimeline({events}: { events: Event[] }) {
             mode={sm ? "left" : "right"}
             items={events.map(e => {
                     const eventName = <Typography.Text style={{color: e.deleted ? 'grey' : 'default'}}>
-                        {e.action in rdapEventNameTranslated ? rdapEventNameTranslated[e.action as keyof typeof rdapEventNameTranslated] : e.action}
+                        {rdapEventNameTranslated[e.action as keyof typeof rdapEventNameTranslated] || e.action}
                     </Typography.Text>
 
                     const dateStr = <Typography.Text
                         style={{color: e.deleted ? 'grey' : 'default'}}>{new Date(e.date).toLocaleString(locale)}
                     </Typography.Text>
 
-                    const eventDetail = e.action in rdapEventDetailTranslated ? rdapEventDetailTranslated[e.action as keyof typeof rdapEventDetailTranslated] : undefined
+                    const eventDetail = rdapEventDetailTranslated[e.action as keyof typeof rdapEventDetailTranslated] || undefined
 
                     const text = sm ? {
                         children: <Tooltip placement='bottom' title={eventDetail}>

@@ -97,15 +97,36 @@ msgstr ""
 msgid "Pending Delete"
 msgstr ""
 
-#: assets/components/search/DomainResult.tsx:49
+#: assets/components/search/DomainResult.tsx:60
+msgid ""
+"Registry-level protection, ensuring the highest level of security by "
+"preventing unauthorized, unwanted, or accidental changes to the domain name "
+"at the registry level"
+msgstr ""
+
+#: assets/components/search/DomainResult.tsx:63
+msgid "Registry Lock"
+msgstr ""
+
+#: assets/components/search/DomainResult.tsx:66
+msgid ""
+"Registrar-level protection, safeguarding the domain from unauthorized, "
+"unwanted, or accidental changes through registrar controls"
+msgstr ""
+
+#: assets/components/search/DomainResult.tsx:69
+msgid "Registrar Lock"
+msgstr ""
+
+#: assets/components/search/DomainResult.tsx:74
 msgid "EPP Status Codes"
 msgstr ""
 
-#: assets/components/search/DomainResult.tsx:65
+#: assets/components/search/DomainResult.tsx:89
 msgid "Timeline"
 msgstr ""
 
-#: assets/components/search/DomainResult.tsx:72
+#: assets/components/search/DomainResult.tsx:96
 msgid "Entities"
 msgstr ""
 
@@ -429,21 +450,11 @@ msgstr ""
 msgid "Cancel"
 msgstr ""
 
-#: assets/components/tracking/watchlist/WatchlistCard.tsx:29
-#: assets/components/tracking/watchlist/WatchlistForm.tsx:106
-msgid "Domain names"
-msgstr ""
-
-#: assets/components/tracking/watchlist/WatchlistCard.tsx:33
-#: assets/components/tracking/watchlist/WatchlistForm.tsx:148
-msgid "Tracked events"
-msgstr ""
-
-#: assets/components/tracking/watchlist/WatchlistCard.tsx:47
+#: assets/components/tracking/watchlist/WatchlistCard.tsx:35
 msgid "This Watchlist is not linked to a Connector."
 msgstr ""
 
-#: assets/components/tracking/watchlist/WatchlistCard.tsx:52
+#: assets/components/tracking/watchlist/WatchlistCard.tsx:40
 msgid "Watchlist"
 msgstr ""
 
@@ -463,12 +474,20 @@ msgstr ""
 msgid "At least one domain name"
 msgstr ""
 
+#: assets/components/tracking/watchlist/WatchlistForm.tsx:106
+msgid "Domain names"
+msgstr ""
+
 #: assets/components/tracking/watchlist/WatchlistForm.tsx:124
 msgid "Domain name"
 msgstr ""
 
 #: assets/components/tracking/watchlist/WatchlistForm.tsx:141
 msgid "Add a Domain name"
+msgstr ""
+
+#: assets/components/tracking/watchlist/WatchlistForm.tsx:148
+msgid "Tracked events"
 msgstr ""
 
 #: assets/components/tracking/watchlist/WatchlistForm.tsx:150
@@ -514,11 +533,11 @@ msgstr ""
 msgid "Sorry, the page you visited does not exist."
 msgstr ""
 
-#: assets/pages/search/DomainSearchPage.tsx:24
+#: assets/pages/search/DomainSearchPage.tsx:27
 msgid "Found !"
 msgstr ""
 
-#: assets/pages/search/DomainSearchPage.tsx:46
+#: assets/pages/search/DomainSearchPage.tsx:48
 msgid ""
 "Although the domain exists in my database, it has been deleted from the "
 "WHOIS by its registrar."

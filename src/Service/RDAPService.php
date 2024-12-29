@@ -444,6 +444,9 @@ readonly class RDAPService
                 ->setEntity($entity)
                 ->setStatus(array_unique($rdapNameserver['status']))
                 ->setRoles($roles));
+
+            $this->em->persist($nameserverEntity);
+            $this->em->flush();
         }
     }
 

@@ -47,7 +47,7 @@ export function TrackedDomainTable() {
                     expirationDate: expirationDate ? new Date(expirationDate).toLocaleString() : '-',
                     status: d.status.map(s => <Tooltip
                             placement='bottomLeft'
-                            title={s in rdapStatusCodeDetailTranslated ? rdapStatusCodeDetailTranslated[s as keyof typeof rdapStatusCodeDetailTranslated] : undefined}>
+                            title={rdapStatusCodeDetailTranslated[s as keyof typeof rdapStatusCodeDetailTranslated] || undefined}>
                             <Tag color={eppStatusCodeToColor(s)}>{s}</Tag>
                         </Tooltip>
                     ),
@@ -96,7 +96,7 @@ export function TrackedDomainTable() {
             filters: [...new Set(dataTable.map((d: any) => d.domain.status).flat())].map(s => ({
                 text: <Tooltip
                     placement='bottomLeft'
-                    title={s in rdapStatusCodeDetailTranslated ? rdapStatusCodeDetailTranslated[s as keyof typeof rdapStatusCodeDetailTranslated] : undefined}>
+                    title={rdapStatusCodeDetailTranslated[s as keyof typeof rdapStatusCodeDetailTranslated] || undefined}>
                     <Tag color={eppStatusCodeToColor(s)}>{s}</Tag>
                 </Tooltip>,
                 value: s,

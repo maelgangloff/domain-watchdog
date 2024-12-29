@@ -9,15 +9,18 @@ import {showErrorAPI} from "../../utils/functions/showErrorAPI";
 import {useNavigate, useParams} from "react-router-dom";
 
 export default function DomainSearchPage() {
+    const {query} = useParams()
     const [domain, setDomain] = useState<Domain | null>()
+    const [loading, setLoading] = useState<boolean>(false)
+
     const [messageApi, contextHolder] = message.useMessage()
     const navigate = useNavigate()
-
-    const {query} = useParams()
 
     const onFinish: FormProps<FieldType>['onFinish'] = (values) => {
         navigate('/search/domain/' + values.ldhName)
 
+        if (loading) return
+        setLoading(true)
         setDomain(null)
         getDomain(values.ldhName).then(d => {
             setDomain(d)
@@ -25,14 +28,13 @@ export default function DomainSearchPage() {
         }).catch((e: AxiosError) => {
             setDomain(undefined)
             showErrorAPI(e, messageApi)
-        })
+        }).finally(() => setLoading(false))
     }
 
     useEffect(() => {
         if (query === undefined) return
-
         onFinish({ldhName: query})
-    }, [query])
+    }, [])
 
     return <Flex gap="middle" align="center" justify="center" vertical>
         {contextHolder}

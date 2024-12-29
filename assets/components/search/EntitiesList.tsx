@@ -12,9 +12,8 @@ export function EntitiesList({domain}: { domain: Domain }) {
     const rdapRoleDetailTranslated = rdapRoleDetailTranslation()
 
     const roleToTag = (r: string) => <Tooltip
-        title={r in rdapRoleDetailTranslated ? rdapRoleDetailTranslated[r as keyof typeof rdapRoleDetailTranslated] : undefined}>
-        <Tag color={rolesToColor([r])}>{
-            r in rdapRoleTranslated ? rdapRoleTranslated[r as keyof typeof rdapRoleTranslated] : r
+        title={rdapRoleDetailTranslated[r as keyof typeof rdapRoleDetailTranslated] || undefined}>
+        <Tag color={rolesToColor([r])}>{rdapRoleTranslated[r as keyof typeof rdapRoleTranslated] || r
         }</Tag>
     </Tooltip>
 

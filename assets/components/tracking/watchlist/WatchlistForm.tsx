@@ -43,7 +43,7 @@ export function WatchlistForm({form, connectors, onFinish, isCreation}: {
             event.stopPropagation()
         }
         return (<Tooltip
-                title={value in rdapEventDetailTranslated ? rdapEventDetailTranslated[value as keyof typeof rdapEventDetailTranslated] : undefined}>
+                title={rdapEventDetailTranslated[value as keyof typeof rdapEventDetailTranslated] || undefined}>
                 <Tag
                     icon={actionToIcon(value)}
                     color={actionToColor(value)}
@@ -164,7 +164,7 @@ export function WatchlistForm({form, connectors, onFinish, isCreation}: {
                 style={{width: '100%'}}
                 options={Object.keys(rdapEventNameTranslated).map(e => ({
                     value: e,
-                    title: e in rdapEventDetailTranslated ? rdapEventDetailTranslated[e as keyof typeof rdapEventDetailTranslated] : undefined,
+                    title: rdapEventDetailTranslated[e as keyof typeof rdapEventDetailTranslated] || undefined,
                     label: rdapEventNameTranslated[e as keyof typeof rdapEventNameTranslated]
                 }))}
             />

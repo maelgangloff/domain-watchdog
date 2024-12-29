@@ -20,20 +20,8 @@ export function WatchlistCard({watchlist, onUpdateWatchlist, connectors, onDelet
     connectors: (Connector & { id: string })[],
     onDelete: () => void
 }) {
-    const sm = useBreakpoint('sm')
     const rdapEventNameTranslated = rdapEventNameTranslation()
     const rdapEventDetailTranslated = rdapEventDetailTranslation()
-
-    const columns = [
-        {
-            title: t`Domain names`,
-            dataIndex: 'domains'
-        },
-        {
-            title: t`Tracked events`,
-            dataIndex: 'events'
-        }
-    ]
 
     return <>
         <Card
@@ -79,7 +67,7 @@ export function WatchlistCard({watchlist, onUpdateWatchlist, connectors, onDelet
                 <Col span={8}>
                     {watchlist.triggers?.filter(t => t.action === 'email')
                         .map(t => <Tooltip
-                                title={t.event in rdapEventDetailTranslated ? rdapEventDetailTranslated[t.event as keyof typeof rdapEventDetailTranslated] : undefined}>
+                                title={rdapEventDetailTranslated[t.event as keyof typeof rdapEventDetailTranslated] || undefined}>
                                 <Tag color={actionToColor(t.event)}>
                                     {rdapEventNameTranslated[t.event as keyof typeof rdapEventNameTranslated]}
                                 </Tag>
