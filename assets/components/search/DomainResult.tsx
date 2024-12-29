@@ -55,7 +55,7 @@ export function DomainResult({domain}: { domain: Domain }) {
                 }
                 <Row gutter={8}>
                     <Col span={24} xl={12} xxl={12}>
-                        <Flex justify='center' align='center' style={{margin: 10}}>
+                        <Flex justify='center' align='center' style={{margin: 10}} wrap gap="4px 0">
                             <Tooltip
                                 title={t`Registry-level protection, ensuring the highest level of security by preventing unauthorized, unwanted, or accidental changes to the domain name at the registry level`}>
                                 <Tag bordered={false} color={isLocked('server') ? 'green' : 'default'}
