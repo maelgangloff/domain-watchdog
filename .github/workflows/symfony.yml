@@ -10,7 +10,7 @@ permissions:
     contents: read
 
 jobs:
-    symfony-tests:
+    symfony:
         runs-on: ubuntu-latest
         steps:
             -   name: Checkout code
@@ -33,8 +33,22 @@ jobs:
             -   name: Install backend dependencies
                 run: composer install --prefer-dist --no-progress --no-suggest --optimize-autoloader
 
+            -   name: Cache Node modules
+                uses: actions/cache@v3
+                with:
+                    path: node_modules
+                    key: ${{ runner.os }}-node-${{ hashFiles('**/yarn.lock') }}
+                    restore-keys: |
+                        ${{ runner.os }}-node-
+
+            -   name: Install frontend dependencies
+                run: yarn install
+
             -   name: Run PHP-CS-Fixer
                 run: vendor/bin/php-cs-fixer fix --dry-run --diff
 
             -   name: Run PHPStan
                 run: vendor/bin/phpstan analyse
+
+            -   name: Run ESLint
+                run: yarn run eslint
