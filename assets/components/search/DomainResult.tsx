@@ -11,7 +11,7 @@ import {regionNames} from "../../i18n";
 import {getCountryCode} from "../../utils/functions/getCountryCode";
 import {eppStatusCodeToColor} from "../../utils/functions/eppStatusCodeToColor";
 import {DomainLifecycleSteps} from "./DomainLifecycleSteps";
-import {BankOutlined, SafetyCertificateOutlined} from '@ant-design/icons'
+import {BankOutlined, KeyOutlined, SafetyCertificateOutlined} from '@ant-design/icons'
 
 export function DomainResult({domain}: { domain: Domain }) {
 
@@ -67,6 +67,11 @@ export function DomainResult({domain}: { domain: Domain }) {
                                 <Tag bordered={false} color={isLocked('client') ? 'green' : 'default'}
                                      icon={<BankOutlined
                                          style={{fontSize: '16px'}}/>}>{t`Registrar Lock`}</Tag>
+                            </Tooltip>
+                            <Tooltip
+                                title={t`DNSSEC secures DNS by adding cryptographic signatures to DNS records, ensuring authenticity and integrity of responses`}>
+                                <Tag bordered={false} color={domain.delegationSigned ? 'green' : 'default'}
+                                     icon={<KeyOutlined style={{fontSize: '16px'}}/>}>{t`DNSSEC`}</Tag>
                             </Tooltip>
                         </Flex>
                         {domain.status.length > 0 &&

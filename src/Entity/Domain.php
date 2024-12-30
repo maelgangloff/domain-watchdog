@@ -117,6 +117,10 @@ class Domain
     #[SerializedName('oldStatus')]
     private Collection $domainStatuses;
 
+    #[ORM\Column(nullable: false)]
+    #[Groups(['domain:item'])]
+    private ?bool $delegationSigned = null;
+
     private const IMPORTANT_EVENTS = [EventAction::Deletion->value, EventAction::Expiration->value];
     private const IMPORTANT_STATUS = [
         'redemption period',
@@ -432,8 +436,22 @@ class Domain
         return $this->rdapServer;
     }
 
-    public function setRdapServer(?RdapServer $rdapServer): void
+    public function setRdapServer(?RdapServer $rdapServer): static
     {
         $this->rdapServer = $rdapServer;
+
+        return $this;
+    }
+
+    public function isDelegationSigned(): ?bool
+    {
+        return $this->delegationSigned;
+    }
+
+    public function setDelegationSigned(bool $delegationSigned): static
+    {
+        $this->delegationSigned = $delegationSigned;
+
+        return $this;
     }
 }

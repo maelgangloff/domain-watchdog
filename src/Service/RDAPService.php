@@ -142,13 +142,13 @@ readonly class RDAPService
             $domain = $this->initNewDomain($idnDomain, $tld);
         }
 
-        $domain->setRdapServer($rdapServer);
-
         $this->updateDomainStatus($domain, $rdapData);
 
         if (in_array('free', $domain->getStatus())) {
             throw new NotFoundHttpException('The domain name is not present in the WHOIS database.');
         }
+
+        $domain->setRdapServer($rdapServer)->setDelegationSigned(isset($rdapData['secureDNS']['delegationSigned']) && true === $rdapData['secureDNS']['delegationSigned']);
 
         $this->updateDomainHandle($domain, $rdapData);
 
@@ -266,7 +266,7 @@ readonly class RDAPService
 
     private function updateDomainStatus(Domain $domain, array $rdapData): void
     {
-        if (array_key_exists('status', $rdapData)) {
+        if (isset($rdapData['status'])) {
             $status = array_unique($rdapData['status']);
             $addedStatus = array_diff($status, $domain->getStatus());
             $deletedStatus = array_diff($domain->getStatus(), $status);
@@ -293,7 +293,7 @@ readonly class RDAPService
 
     private function updateDomainHandle(Domain $domain, array $rdapData): void
     {
-        if (array_key_exists('handle', $rdapData)) {
+        if (isset($rdapData['handle'])) {
             $domain->setHandle($rdapData['handle']);
         } else {
             $this->logger->warning('The domain name {idnDomain} has no handle key.', [
@@ -312,7 +312,7 @@ readonly class RDAPService
             $event->setDeleted(true);
         }
 
-        if (array_key_exists('events', $rdapData) && is_array($rdapData['events'])) {
+        if (isset($rdapData['events']) && is_array($rdapData['events'])) {
             foreach ($rdapData['events'] as $rdapEvent) {
                 if ($rdapEvent['eventAction'] === EventAction::LastUpdateOfRDAPDatabase->value) {
                     continue;
@@ -348,7 +348,7 @@ readonly class RDAPService
             $domainEntity->setDeleted(true);
         }
 
-        if (array_key_exists('entities', $rdapData) && is_array($rdapData['entities'])) {
+        if (isset($rdapData['entities']) && is_array($rdapData['entities'])) {
             foreach ($rdapData['entities'] as $rdapEntity) {
                 $roles = $this->extractEntityRoles($rdapData['entities'], $rdapEntity);
                 $entity = $this->registerEntity($rdapEntity, $roles, $domain->getLdhName());
@@ -422,7 +422,7 @@ readonly class RDAPService
      */
     private function updateNameserverEntities(Nameserver $nameserver, array $rdapNameserver): void
     {
-        if (!array_key_exists('entities', $rdapNameserver) || !is_array($rdapNameserver['entities'])) {
+        if (!isset($rdapNameserver['entities']) || !is_array($rdapNameserver['entities'])) {
             return;
         }
 
@@ -456,12 +456,12 @@ readonly class RDAPService
             fn ($e) => $e['roles'],
             array_filter(
                 $entities,
-                fn ($e) => array_key_exists('handle', $targetEntity) && array_key_exists('handle', $e)
+                fn ($e) => isset($targetEntity['handle']) && isset($e['handle'])
                     ? $targetEntity['handle'] === $e['handle']
                     : (
-                        array_key_exists('vcardArray', $targetEntity) && array_key_exists('vcardArray', $e)
-                            ? $targetEntity['vcardArray'] === $e['vcardArray']
-                            : $targetEntity === $e
+                        isset($targetEntity['vcardArray']) && isset($e['vcardArray'])
+                                ? $targetEntity['vcardArray'] === $e['vcardArray']
+                                : $targetEntity === $e
                     )
             )
         );
@@ -483,9 +483,9 @@ readonly class RDAPService
          * If the RDAP server transmits the entity's IANA number, it is used as a priority to identify the entity
          */
         $isIANAid = false;
-        if (array_key_exists('publicIds', $rdapEntity)) {
+        if (isset($rdapEntity['publicIds'])) {
             foreach ($rdapEntity['publicIds'] as $publicId) {
-                if ('IANA Registrar ID' === $publicId['type'] && array_key_exists('identifier', $publicId) && '' !== $publicId['identifier']) {
+                if ('IANA Registrar ID' === $publicId['type'] && isset($publicId['identifier']) && '' !== $publicId['identifier']) {
                     $rdapEntity['handle'] = $publicId['identifier'];
                     $isIANAid = true;
                     break;
@@ -496,7 +496,7 @@ readonly class RDAPService
         /*
          * If there is no number to identify the entity, one is generated from the domain name and the roles associated with this entity
          */
-        if (!array_key_exists('handle', $rdapEntity) || '' === $rdapEntity['handle'] || in_array($rdapEntity['handle'], self::ENTITY_HANDLE_BLACKLIST)) {
+        if (!isset($rdapEntity['handle']) || '' === $rdapEntity['handle'] || in_array($rdapEntity['handle'], self::ENTITY_HANDLE_BLACKLIST)) {
             sort($roles);
             $rdapEntity['handle'] = 'DW-FAKEHANDLE-'.$domain.'-'.implode(',', $roles);
 
@@ -519,11 +519,11 @@ readonly class RDAPService
 
         $entity->setHandle($rdapEntity['handle']);
 
-        if (array_key_exists('remarks', $rdapEntity) && is_array($rdapEntity['remarks']) && !is_numeric($rdapEntity['handle'])) {
+        if (isset($rdapEntity['remarks']) && is_array($rdapEntity['remarks']) && !is_numeric($rdapEntity['handle'])) {
             $entity->setRemarks($rdapEntity['remarks']);
         }
 
-        if (array_key_exists('vcardArray', $rdapEntity) && !in_array($rdapEntity['handle'], self::IANA_RESERVED_IDS)) {
+        if (isset($rdapEntity['vcardArray']) && !in_array($rdapEntity['handle'], self::IANA_RESERVED_IDS)) {
             if (empty($entity->getJCard())) {
                 $entity->setJCard($rdapEntity['vcardArray']);
             } else {
@@ -538,7 +538,7 @@ readonly class RDAPService
             }
         }
 
-        if ($isIANAid || !array_key_exists('events', $rdapEntity) || in_array($rdapEntity['handle'], self::IANA_RESERVED_IDS)) {
+        if ($isIANAid || !isset($rdapEntity['events']) || in_array($rdapEntity['handle'], self::IANA_RESERVED_IDS)) {
             return $entity;
         }
 
@@ -620,7 +620,7 @@ readonly class RDAPService
                     $server
                         ->setTld($tldReference)
                         ->setUrl($rdapServerUrl)
-                        ->setUpdatedAt(new \DateTimeImmutable(array_key_exists('publication', $dnsRoot) ? $dnsRoot['publication'] : 'now'));
+                        ->setUpdatedAt(new \DateTimeImmutable($dnsRoot['publication'] ?? 'now'));
 
                     $this->em->persist($server);
                 }

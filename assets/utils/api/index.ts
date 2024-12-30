@@ -60,6 +60,7 @@ export interface Domain {
     tld: Tld
     deleted: boolean
     updatedAt: string
+    delegationSigned: boolean
 }
 
 export interface User {
