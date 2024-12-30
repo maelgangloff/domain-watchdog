@@ -1,34 +1,19 @@
-import React, {useEffect, useState} from "react";
-import {Card, Divider, Flex, Form, message} from "antd";
-import {EventAction, getWatchlists, postWatchlist, putWatchlist} from "../../utils/api";
-import {AxiosError} from "axios";
+import React, {useEffect, useState} from 'react'
+import {Card, Divider, Flex, Form, message} from 'antd'
+import {getWatchlists, postWatchlist, putWatchlist, Watchlist} from '../../utils/api'
+import {AxiosError} from 'axios'
 import {t} from 'ttag'
-import {WatchlistForm} from "../../components/tracking/watchlist/WatchlistForm";
-import {WatchlistsList} from "../../components/tracking/watchlist/WatchlistsList";
-import {Connector, getConnectors} from "../../utils/api/connectors";
+import {WatchlistForm} from '../../components/tracking/watchlist/WatchlistForm'
+import {WatchlistsList} from '../../components/tracking/watchlist/WatchlistsList'
+import {Connector, getConnectors} from '../../utils/api/connectors'
 
-import {showErrorAPI} from "../../utils/functions/showErrorAPI";
+import {showErrorAPI} from '../../utils/functions/showErrorAPI'
 
-
-export type Watchlist = {
+interface FormValuesType {
     name?: string
-    token: string,
-    domains: { ldhName: string, deleted: boolean, status: string[] }[],
-    triggers?: { event: EventAction, action: string }[],
-    dsn?: string[]
-    connector?: {
-        id: string
-        provider: string
-        createdAt: string
-    }
-    createdAt: string
-}
-
-type FormValuesType = {
-    name?: string
-    domains: string[],
+    domains: string[]
     triggers: string[]
-    connector?: string,
+    connector?: string
     dsn?: string[]
 }
 
@@ -52,14 +37,13 @@ const getRequestDataFromForm = (values: FormValuesType) => {
 }
 
 export default function WatchlistPage() {
-
     const [form] = Form.useForm()
     const [messageApi, contextHolder] = message.useMessage()
     const [watchlists, setWatchlists] = useState<Watchlist[]>()
-    const [connectors, setConnectors] = useState<(Connector & { id: string })[]>()
+    const [connectors, setConnectors] = useState<Array<Connector & { id: string }>>()
 
     const onCreateWatchlist = (values: FormValuesType) => {
-        postWatchlist(getRequestDataFromForm(values)).then((w) => {
+        postWatchlist(getRequestDataFromForm(values)).then(() => {
             form.resetFields()
             refreshWatchlists()
             messageApi.success(t`Watchlist created !`)
@@ -68,18 +52,18 @@ export default function WatchlistPage() {
         })
     }
 
-    const onUpdateWatchlist = async (values: FormValuesType & { token: string }) => putWatchlist({
+    const onUpdateWatchlist = async (values: FormValuesType & { token: string }) => await putWatchlist({
             token: values.token,
             ...getRequestDataFromForm(values)
         }
-    ).then((w) => {
+    ).then(() => {
         refreshWatchlists()
         messageApi.success(t`Watchlist updated !`)
     }).catch((e: AxiosError) => {
         throw showErrorAPI(e, messageApi)
     })
 
-    const refreshWatchlists = () => getWatchlists().then(w => {
+    const refreshWatchlists = async () => await getWatchlists().then(w => {
         setWatchlists(w['hydra:member'])
     }).catch((e: AxiosError) => {
         setWatchlists(undefined)
@@ -95,18 +79,20 @@ export default function WatchlistPage() {
             })
     }, [])
 
-    return <Flex gap="middle" align="center" justify="center" vertical>
-        {contextHolder}
-        <Card loading={connectors === undefined} title={t`Create a Watchlist`} style={{width: '100%'}}>
-            {connectors &&
-                <WatchlistForm form={form} onFinish={onCreateWatchlist} connectors={connectors} isCreation={true}/>
-            }
-        </Card>
-        <Divider/>
-        {connectors && watchlists && watchlists.length > 0 &&
-            <WatchlistsList watchlists={watchlists} onDelete={refreshWatchlists}
-                            connectors={connectors}
-                            onUpdateWatchlist={onUpdateWatchlist}
-            />}
-    </Flex>
+    return (
+        <Flex gap='middle' align='center' justify='center' vertical>
+            {contextHolder}
+            <Card loading={connectors === undefined} title={t`Create a Watchlist`} style={{width: '100%'}}>
+                {(connectors != null) &&
+                    <WatchlistForm form={form} onFinish={onCreateWatchlist} connectors={connectors} isCreation/>}
+            </Card>
+            <Divider/>
+            {(connectors != null) && (watchlists != null) && watchlists.length > 0 &&
+                <WatchlistsList
+                    watchlists={watchlists} onDelete={refreshWatchlists}
+                    connectors={connectors}
+                    onUpdateWatchlist={onUpdateWatchlist}
+                />}
+        </Flex>
+    )
 }

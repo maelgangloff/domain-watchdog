@@ -1,7 +1,12 @@
-import {Domain, request, Watchlist, WatchlistRequest} from "./index";
+import {request, TrackedDomains, Watchlist, WatchlistRequest} from './index'
 
-export async function getWatchlists() {
-    const response = await request({
+interface WatchlistList {
+    'hydra:totalItems': number
+    'hydra:member': Watchlist[]
+}
+
+export async function getWatchlists(): Promise<WatchlistList> {
+    const response = await request<WatchlistList>({
         url: 'watchlists'
     })
     return response.data
@@ -20,7 +25,7 @@ export async function postWatchlist(watchlist: WatchlistRequest) {
         url: 'watchlists',
         data: watchlist,
         headers: {
-            "Content-Type": 'application/json'
+            'Content-Type': 'application/json'
         }
     })
     return response.data
@@ -37,17 +42,16 @@ export async function putWatchlist(watchlist: Partial<WatchlistRequest> & { toke
     const response = await request<WatchlistRequest>({
         method: 'PUT',
         url: 'watchlists/' + watchlist.token,
-        data: watchlist,
+        data: watchlist
     })
     return response.data
 }
 
-export async function getTrackedDomainList(params: { page: number, itemsPerPage: number }): Promise<any> {
-    const response = await request({
+export async function getTrackedDomainList(params: { page: number, itemsPerPage: number }): Promise<TrackedDomains> {
+    const response = await request<TrackedDomains>({
         method: 'GET',
         url: 'tracked',
         params
     })
     return response.data
 }
-

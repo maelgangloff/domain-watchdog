@@ -1,4 +1,5 @@
-import {request} from "./index";
+import {request} from './index'
+import {ConnectorElement} from '../../components/tracking/connector/ConnectorsList'
 
 export enum ConnectorProvider {
     OVH = 'ovh',
@@ -7,13 +8,18 @@ export enum ConnectorProvider {
     NAMECHEAP = 'namecheap'
 }
 
-export type Connector = {
+export interface Connector {
     provider: ConnectorProvider
     authData: object
 }
 
-export async function getConnectors() {
-    const response = await request({
+interface ConnectorResponse {
+    'hydra:totalItems': number
+    'hydra:member': ConnectorElement[]
+}
+
+export async function getConnectors(): Promise<ConnectorResponse> {
+    const response = await request<ConnectorResponse>({
         url: 'connectors'
     })
     return response.data
@@ -25,7 +31,7 @@ export async function postConnector(connector: Connector) {
         url: 'connectors',
         data: connector,
         headers: {
-            "Content-Type": 'application/json'
+            'Content-Type': 'application/json'
         }
     })
     return response.data

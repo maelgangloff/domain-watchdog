@@ -1,7 +1,9 @@
-import React from "react";
+import React from 'react'
 
 export default function EntitySearchPage() {
-    return <p>
-        Not implemented
-    </p>
+    return (
+        <p>
+            Not implemented
+        </p>
+    )
 }

@@ -1,9 +1,9 @@
-import vCard from "vcf";
-import {Entity} from "../api";
+import vCard from 'vcf'
+import {Entity} from '../api'
 
 export const extractDetailsFromJCard = (e: { entity: Entity }): {
     fn?: string
-    organization?: string;
+    organization?: string
 } => {
     if (e.entity.jCard.length === 0) return {fn: e.entity.handle}
     const jCard = vCard.fromJSON(e.entity.jCard)

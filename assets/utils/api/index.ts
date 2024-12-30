@@ -1,5 +1,4 @@
-import axios, {AxiosRequestConfig, AxiosResponse} from "axios";
-
+import axios, {AxiosRequestConfig, AxiosResponse} from 'axios'
 
 export type EventAction =
     'registration'
@@ -26,7 +25,12 @@ export interface Event {
 
 export interface Entity {
     handle: string
-    jCard: any
+    jCard: ['vcard', Array<[
+        string,
+        { [key: string]: string | string[] },
+        string,
+            string | string[],
+    ]>] | []
 }
 
 export interface Nameserver {
@@ -50,12 +54,12 @@ export interface Domain {
     handle: string
     status: string[]
     events: Event[]
-    entities: {
+    entities: Array<{
         entity: Entity
         events: Event[]
         roles: string[]
         deleted: boolean
-    }[]
+    }>
     nameservers: Nameserver[]
     tld: Tld
     deleted: boolean
@@ -70,20 +74,24 @@ export interface User {
 
 export interface WatchlistRequest {
     name?: string
-    domains: string[],
-    triggers: { event: EventAction, action: TriggerAction }[],
+    domains: string[]
+    triggers: Array<{ event: EventAction, action: TriggerAction }>
     connector?: string
     dsn?: string[]
 }
 
 export interface Watchlist {
-    token: string
     name?: string
-    domains: Domain[],
-    triggers: { event: EventAction, action: TriggerAction }[],
-    connector?: string
-    createdAt: string
+    token: string
+    domains: Domain[]
+    triggers?: Array<{ event: EventAction, action: string }>
     dsn?: string[]
+    connector?: {
+        id: string
+        provider: string
+        createdAt: string
+    }
+    createdAt: string
 }
 
 export interface InstanceConfig {
@@ -97,28 +105,30 @@ export interface Statistics {
     alertSent: number
     domainPurchased: number
     domainPurchaseFailed: number
-    domainCount: {tld: string, domain: number}[]
+    domainCount: Array<{ tld: string, domain: number }>
     domainCountTotal: number
     domainTracked: number
 }
 
-export async function request<T = any, R = AxiosResponse<T>, D = any>(config: AxiosRequestConfig): Promise<R> {
+export interface TrackedDomains {
+    'hydra:totalItems': number
+    'hydra:member': Domain[]
+}
+
+export async function request<T = object, R = AxiosResponse<T>, D = object>(config: AxiosRequestConfig): Promise<R> {
     const axiosConfig: AxiosRequestConfig = {
         ...config,
         baseURL: '/api',
         withCredentials: true,
         headers: {
             Accept: 'application/ld+json',
-            ...config.headers,
+            ...config.headers
         }
     }
     return await axios.request<T, R, D>(axiosConfig)
 }
 
-
 export * from './domain'
 export * from './tld'
 export * from './user'
 export * from './watchlist'
-
-

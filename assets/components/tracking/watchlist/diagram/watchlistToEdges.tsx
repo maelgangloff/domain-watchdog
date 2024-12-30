@@ -1,17 +1,18 @@
-import {Domain, Watchlist} from "../../../../utils/api";
-import {rdapRoleTranslation} from "../../../../utils/functions/rdapTranslation";
-import {t} from "ttag";
+import {Domain, Watchlist} from '../../../../utils/api'
+import {rdapRoleTranslation} from '../../../../utils/functions/rdapTranslation'
+import {t} from 'ttag'
 
-import {rolesToColor} from "../../../../utils/functions/rolesToColor";
+import {rolesToColor} from '../../../../utils/functions/rolesToColor'
+import {Edge} from '@xyflow/react'
 
-export function domainEntitiesToEdges(d: Domain, withRegistrar = false) {
+export function domainEntitiesToEdges(d: Domain, withRegistrar = false): Edge[] {
     const rdapRoleTranslated = rdapRoleTranslation()
     const sponsor = d.entities.find(e => !e.deleted && e.roles.includes('sponsor'))
     return d.entities
         .filter(e =>
             !e.deleted &&
             (withRegistrar || !e.roles.includes('registrar')) &&
-            (!sponsor || !e.roles.includes('registrar') || e.roles.includes('sponsor'))
+            ((sponsor == null) || !e.roles.includes('registrar') || e.roles.includes('sponsor'))
         )
         .map(e => ({
             id: `e-${d.ldhName}-${e.entity.handle}`,
@@ -21,11 +22,11 @@ export function domainEntitiesToEdges(d: Domain, withRegistrar = false) {
             label: e.roles
                 .map(r => rdapRoleTranslated[r as keyof typeof rdapRoleTranslated] || r)
                 .join(', '),
-            animated: e.roles.includes('registrant'),
+            animated: e.roles.includes('registrant')
         }))
 }
 
-export const domainNSToEdges = (d: Domain) => d.nameservers
+export const domainNSToEdges = (d: Domain): Edge[] => d.nameservers
     .map(ns => ({
         id: `ns-${d.ldhName}-${ns.ldhName}`,
         source: d.ldhName,
@@ -34,7 +35,7 @@ export const domainNSToEdges = (d: Domain) => d.nameservers
         label: 'DNS'
     }))
 
-export const tldToEdge = (d: Domain) => ({
+export const tldToEdge = (d: Domain): Edge => ({
     id: `tld-${d.ldhName}-${d.tld.tld}`,
     source: d.tld.tld,
     target: d.ldhName,
@@ -42,7 +43,7 @@ export const tldToEdge = (d: Domain) => ({
     label: t`Registry`
 })
 
-export function watchlistToEdges(watchlist: Watchlist, withRegistrar = false, withTld = false) {
+export function watchlistToEdges(watchlist: Watchlist, withRegistrar = false, withTld = false): Edge[] {
     const entitiesEdges = watchlist.domains.map(d => domainEntitiesToEdges(d, withRegistrar)).flat()
     const nameserversEdges = watchlist.domains.map(domainNSToEdges).flat()
     const tldEdge = watchlist.domains.map(tldToEdge)

@@ -1,4 +1,4 @@
-import {getCountryCode} from "./getCountryCode";
+import {getCountryCode} from './getCountryCode'
 
 export const tldToEmoji = (tld: string) => {
     if (tld.startsWith('xn--')) return '-'

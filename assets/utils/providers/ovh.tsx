@@ -1,5 +1,5 @@
-import {t} from "ttag";
-import {regionNames} from "../../i18n";
+import {t} from 'ttag'
+import {regionNames} from '../../i18n'
 
 export const ovhFields = () => ({
     appKey: t`Application key`,

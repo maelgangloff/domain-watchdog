@@ -1,13 +1,13 @@
-import {Breakpoint, theme} from 'antd';
-import {useMediaQuery} from 'react-responsive';
+import {Breakpoint, theme} from 'antd'
+import {useMediaQuery} from 'react-responsive'
 
-const {useToken} = theme;
+const {useToken} = theme
 
-type ScreenProperty = 'screenXXL' | 'screenXL' | 'screenLG' | 'screenMD' | 'screenSM' | 'screenXS';
+type ScreenProperty = 'screenXXL' | 'screenXL' | 'screenLG' | 'screenMD' | 'screenSM' | 'screenXS'
 
 const propertyName = (breakpoint: Breakpoint): ScreenProperty => {
     return 'screen' + breakpoint.toUpperCase() as ScreenProperty
-};
+}
 
 export default function useBreakpoint(
     breakpoint: Breakpoint

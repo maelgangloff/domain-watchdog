@@ -1,12 +1,12 @@
-import React, {useEffect, useState} from "react";
-import {Card, Flex, Form, message, Skeleton} from "antd";
-import {t} from "ttag";
-import {Connector, getConnectors, postConnector} from "../../utils/api/connectors";
-import {ConnectorForm} from "../../components/tracking/connector/ConnectorForm";
-import {AxiosError} from "axios";
-import {ConnectorElement, ConnectorsList} from "../../components/tracking/connector/ConnectorsList";
+import React, {useEffect, useState} from 'react'
+import {Card, Flex, Form, message, Skeleton} from 'antd'
+import {t} from 'ttag'
+import {Connector, getConnectors, postConnector} from '../../utils/api/connectors'
+import {ConnectorForm} from '../../components/tracking/connector/ConnectorForm'
+import {AxiosError} from 'axios'
+import {ConnectorElement, ConnectorsList} from '../../components/tracking/connector/ConnectorsList'
 
-import {showErrorAPI} from "../../utils/functions/showErrorAPI";
+import {showErrorAPI} from '../../utils/functions/showErrorAPI'
 
 export default function ConnectorPage() {
     const [form] = Form.useForm()
@@ -14,7 +14,7 @@ export default function ConnectorPage() {
     const [connectors, setConnectors] = useState<ConnectorElement[] | null>()
 
     const onCreateConnector = (values: Connector) => {
-        postConnector(values).then((w) => {
+        postConnector(values).then(() => {
             form.resetFields()
             refreshConnectors()
             messageApi.success(t`Connector created !`)
@@ -23,7 +23,7 @@ export default function ConnectorPage() {
         })
     }
 
-    const refreshConnectors = () => getConnectors().then(c => {
+    const refreshConnectors = async () => await getConnectors().then(c => {
         setConnectors(c['hydra:member'])
     }).catch((e: AxiosError) => {
         setConnectors(undefined)
@@ -34,18 +34,17 @@ export default function ConnectorPage() {
         refreshConnectors()
     }, [])
 
+    return (
+        <Flex gap='middle' align='center' justify='center' vertical>
+            <Card title={t`Create a Connector`} style={{width: '100%'}}>
+                {contextHolder}
+                <ConnectorForm form={form} onCreate={onCreateConnector}/>
+            </Card>
 
-    return <Flex gap="middle" align="center" justify="center" vertical>
-        <Card title={t`Create a Connector`} style={{width: '100%'}}>
-            {contextHolder}
-            <ConnectorForm form={form} onCreate={onCreateConnector}/>
-        </Card>
-
-
-        <Skeleton loading={connectors === undefined} active>
-            {connectors && connectors.length > 0 &&
-                <ConnectorsList connectors={connectors} onDelete={refreshConnectors}/>
-            }
-        </Skeleton>
-    </Flex>
+            <Skeleton loading={connectors === undefined} active>
+                {(connectors != null) && connectors.length > 0 &&
+                    <ConnectorsList connectors={connectors} onDelete={refreshConnectors}/>}
+            </Skeleton>
+        </Flex>
+    )
 }

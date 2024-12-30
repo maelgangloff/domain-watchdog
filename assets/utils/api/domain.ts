@@ -1,5 +1,4 @@
-import {Domain, request} from ".";
-
+import {Domain, request} from '.'
 
 export async function getDomain(ldhName: string): Promise<Domain> {
     const response = await request<Domain>({

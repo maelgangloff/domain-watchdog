@@ -1,4 +1,4 @@
-import {t} from "ttag";
+import {t} from 'ttag'
 
 /**
  * @see https://www.iana.org/assignments/rdap-json-values/rdap-json-values.xhtml
@@ -17,7 +17,6 @@ export const rdapRoleTranslation = () => ({
     noc: t`Noc`
 })
 
-
 /**
  * @see https://www.iana.org/assignments/rdap-json-values/rdap-json-values.xhtml
  */
@@ -34,7 +33,6 @@ export const rdapRoleDetailTranslation = () => ({
     notifications: t`An entity object instance designated to receive notifications about association object instances.`,
     noc: t`The entity object instance handles communications related to a network operations center (NOC).`
 })
-
 
 /**
  * @see https://www.iana.org/assignments/rdap-json-values/rdap-json-values.xhtml
@@ -75,20 +73,20 @@ export const rdapEventDetailTranslation = () => ({
  * @see https://www.icann.org/resources/pages/epp-status-codes-2014-06-16-en
  */
 export const rdapStatusCodeDetailTranslation = () => ({
-    'validated': t`Signifies that the data of the object instance has been found to be accurate.`,
+    validated: t`Signifies that the data of the object instance has been found to be accurate.`,
     'renew prohibited': t`Renewal or reregistration of the object instance is forbidden.`,
     'update prohibited': t`Updates to the object instance are forbidden.`,
     'transfer prohibited': t`Transfers of the registration from one registrar to another are forbidden.`,
     'delete prohibited': t`Deletion of the registration of the object instance is forbidden.`,
-    'proxy': t`The registration of the object instance has been performed by a third party.`,
-    'private': t`The information of the object instance is not designated for public consumption.`,
-    'removed': t`Some of the information of the object instance has not been made available and has been removed.`,
-    'obscured': t`Some of the information of the object instance has been altered for the purposes of not readily revealing the actual information of the object instance.`,
-    'associated': t`The object instance is associated with other object instances in the registry.`,
-    'locked': t`Changes to the object instance cannot be made, including the association of other object instances.`,
+    proxy: t`The registration of the object instance has been performed by a third party.`,
+    private: t`The information of the object instance is not designated for public consumption.`,
+    removed: t`Some of the information of the object instance has not been made available and has been removed.`,
+    obscured: t`Some of the information of the object instance has been altered for the purposes of not readily revealing the actual information of the object instance.`,
+    associated: t`The object instance is associated with other object instances in the registry.`,
+    locked: t`Changes to the object instance cannot be made, including the association of other object instances.`,
 
-    'active': t`This is the standard status for a domain, meaning it has no pending operations or prohibitions.`,
-    'inactive': t`This status code indicates that delegation information (name servers) has not been associated with your domain. Your domain is not activated in the DNS and will not resolve.`,
+    active: t`This is the standard status for a domain, meaning it has no pending operations or prohibitions.`,
+    inactive: t`This status code indicates that delegation information (name servers) has not been associated with your domain. Your domain is not activated in the DNS and will not resolve.`,
     'pending create': t`This status code indicates that a request to create your domain has been received and is being processed.`,
     'pending renew': t`This status code indicates that a request to renew your domain has been received and is being processed.`,
     'pending transfer': t`This status code indicates that a request to transfer your domain to a new registrar has been received and is being processed.`,
@@ -96,7 +94,7 @@ export const rdapStatusCodeDetailTranslation = () => ({
     'pending delete': t`This status code may be mixed with redemptionPeriod or pendingRestore. In such case, depending on the status (i.e. redemptionPeriod or pendingRestore) set in the domain name, the corresponding description presented above applies. If this status is not combined with the redemptionPeriod or pendingRestore status, the pendingDelete status code indicates that your domain has been in redemptionPeriod status for 30 days and you have not restored it within that 30-day period. Your domain will remain in this status for several days, after which time your domain will be purged and dropped from the registry database. Once deletion occurs, the domain is available for re-registration in accordance with the registry's policies.`,
     'add period': t`This grace period is provided after the initial registration of a domain name. If the registrar deletes the domain name during this period, the registry may provide credit to the registrar for the cost of the registration.`,
     'auto renew period': t`This grace period is provided after a domain name registration period expires and is extended (renewed) automatically by the registry. If the registrar deletes the domain name during this period, the registry provides a credit to the registrar for the cost of the renewal.`,
-    'ok': t`This is the standard status for a domain, meaning it has no pending operations or prohibitions.`,
+    ok: t`This is the standard status for a domain, meaning it has no pending operations or prohibitions.`,
     'client delete prohibited': t`This status code tells your domain's registry to reject requests to delete the domain.`,
     'client hold': t`This status code tells your domain's registry to not activate your domain in the DNS and as a consequence, it will not resolve. It is an uncommon status that is usually enacted during legal disputes, non-payment, or when your domain is subject to deletion.`,
     'client renew prohibited': t`This status code tells your domain's registry to reject requests to renew your domain. It is an uncommon status that is usually enacted during legal disputes or when your domain is subject to deletion.`,
@@ -112,6 +110,6 @@ export const rdapStatusCodeDetailTranslation = () => ({
     'server hold': t`This status code is set by your domain's Registry Operator. Your domain is not activated in the DNS.`,
     'transfer period': t`This grace period is provided after the successful transfer of a domain name from one registrar to another. If the new registrar deletes the domain name during this period, the registry provides a credit to the registrar for the cost of the transfer.`,
 
-    'administrative': t`The object instance has been allocated administratively (i.e., not for use by the recipient in their own right in operational networks).`,
-    'reserved': t`The object instance has been allocated to an IANA special-purpose address registry.`,
+    administrative: t`The object instance has been allocated administratively (i.e., not for use by the recipient in their own right in operational networks).`,
+    reserved: t`The object instance has been allocated to an IANA special-purpose address registry.`
 })

@@ -1,38 +1,39 @@
-import dagre from "dagre"
+import dagre from 'dagre'
+import {Edge, Node, Position} from '@xyflow/react'
 
-export const getLayoutedElements = (nodes: any, edges: any, direction = 'TB') => {
+export const getLayoutedElements = (nodes: Node[], edges: Edge[], direction = 'TB') => {
     const dagreGraph = new dagre.graphlib.Graph()
     dagreGraph.setDefaultEdgeLabel(() => ({}))
 
     const nodeWidth = 172
     const nodeHeight = 200
 
-    const isHorizontal = direction === 'LR';
-    dagreGraph.setGraph({rankdir: direction});
+    const isHorizontal = direction === 'LR'
+    dagreGraph.setGraph({rankdir: direction})
 
-    nodes.forEach((node: any) => {
-        dagreGraph.setNode(node.id, {width: nodeWidth, height: nodeHeight});
-    });
+    nodes.forEach(node => {
+        dagreGraph.setNode(node.id, {width: nodeWidth, height: nodeHeight})
+    })
 
-    edges.forEach((edge: any) => {
-        dagreGraph.setEdge(edge.source, edge.target);
-    });
+    edges.forEach(edge => {
+        dagreGraph.setEdge(edge.source, edge.target)
+    })
 
-    dagre.layout(dagreGraph);
+    dagre.layout(dagreGraph)
 
-    const newNodes = nodes.map((node: any) => {
+    const newNodes: Node[] = nodes.map(node => {
         const nodeWithPosition = dagreGraph.node(node.id)
 
         return {
             ...node,
-            targetPosition: isHorizontal ? 'left' : 'top',
-            sourcePosition: isHorizontal ? 'right' : 'bottom',
+            targetPosition: isHorizontal ? Position.Left : Position.Top,
+            sourcePosition: isHorizontal ? Position.Right : Position.Bottom,
             position: {
                 x: nodeWithPosition.x - nodeWidth / 2,
                 y: nodeWithPosition.y - nodeHeight / 2
-            },
-        };
-    });
+            }
+        }
+    })
 
-    return {nodes: newNodes, edges};
+    return {nodes: newNodes, edges}
 }

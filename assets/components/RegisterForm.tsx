@@ -1,20 +1,17 @@
-import {Button, Form, Input, message} from "antd";
-import {t} from "ttag";
-import React, {useState} from "react";
-import {register} from "../utils/api";
-import {useNavigate} from "react-router-dom";
+import {Button, Form, Input, message} from 'antd'
+import {t} from 'ttag'
+import React from 'react'
+import {register} from '../utils/api'
+import {useNavigate} from 'react-router-dom'
 
-import {showErrorAPI} from "../utils/functions/showErrorAPI";
+import {showErrorAPI} from '../utils/functions/showErrorAPI'
 
-
-type FieldType = {
-    username: string;
-    password: string;
+interface FieldType {
+    username: string
+    password: string
 }
 
 export function RegisterForm() {
-
-    const [error, setError] = useState<string>()
     const navigate = useNavigate()
     const [messageApi, contextHolder] = message.useMessage()
 
@@ -25,37 +22,39 @@ export function RegisterForm() {
             showErrorAPI(e, messageApi)
         })
     }
-    return <>
-        {contextHolder}
-        <Form
-            name="basic"
-            labelCol={{span: 8}}
-            wrapperCol={{span: 16}}
-            style={{maxWidth: 600}}
-            onFinish={onFinish}
-            autoComplete="off"
-        >
-            <Form.Item
-                label={t`Email address`}
-                name="username"
-                rules={[{required: true, message: t`Required`}]}
+    return (
+        <>
+            {contextHolder}
+            <Form
+                name='basic'
+                labelCol={{span: 8}}
+                wrapperCol={{span: 16}}
+                style={{maxWidth: 600}}
+                onFinish={onFinish}
+                autoComplete='off'
             >
-                <Input autoFocus/>
-            </Form.Item>
+                <Form.Item
+                    label={t`Email address`}
+                    name='username'
+                    rules={[{required: true, message: t`Required`}]}
+                >
+                    <Input autoFocus/>
+                </Form.Item>
 
-            <Form.Item<FieldType>
-                label={t`Password`}
-                name="password"
-                rules={[{required: true, message: t`Required`}]}
-            >
-                <Input.Password/>
-            </Form.Item>
+                <Form.Item<FieldType>
+                    label={t`Password`}
+                    name='password'
+                    rules={[{required: true, message: t`Required`}]}
+                >
+                    <Input.Password/>
+                </Form.Item>
 
-            <Form.Item wrapperCol={{offset: 8, span: 16}}>
-                <Button block type="primary" htmlType="submit">
-                    {t`Register`}
-                </Button>
-            </Form.Item>
-        </Form>
-    </>
+                <Form.Item wrapperCol={{offset: 8, span: 16}}>
+                    <Button block type='primary' htmlType='submit'>
+                        {t`Register`}
+                    </Button>
+                </Form.Item>
+            </Form>
+        </>
+    )
 }

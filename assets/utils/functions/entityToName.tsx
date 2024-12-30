@@ -1,5 +1,5 @@
-import {Entity} from "../api";
-import vCard from "vcf";
+import {Entity} from '../api'
+import vCard from 'vcf'
 
 export const entityToName = (e: { entity: Entity }): string => {
     if (e.entity.jCard.length === 0) return e.entity.handle

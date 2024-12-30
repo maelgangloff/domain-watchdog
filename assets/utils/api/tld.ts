@@ -1,15 +1,13 @@
-import {request} from "./index";
+import {request, Tld} from './index'
 
-interface Tld {
-    tld: string
-    contractTerminated: boolean
-    registryOperator: string
-    specification13: boolean
+interface TldList {
+    'hydra:totalItems': number
+    'hydra:member': Tld[]
 }
 
-export async function getTldList(params: object): Promise<any> {
-    return (await request<Tld[]>({
+export async function getTldList(params: object): Promise<TldList> {
+    return (await request<TldList>({
         url: 'tld',
-        params,
+        params
     })).data
 }

@@ -23,10 +23,15 @@ jobs:
                     extensions: mbstring, xml, intl, curl, iconv, pdo_pgsql, sodium, zip, http
 
             -   name: Install dependencies
-                run: composer install --prefer-dist --no-progress --no-suggest --optimize-autoloader
+                run: >
+                    composer install --prefer-dist --no-progress --no-suggest --optimize-autoloader
+                    yarn install
 
             -   name: Run PHP-CS-Fixer
                 run: vendor/bin/php-cs-fixer fix --dry-run --diff
 
             -   name: Run PHPStan
                 run: vendor/bin/phpstan analyse
+
+            -   name: Run ESLint
+                run: yarn run eslint

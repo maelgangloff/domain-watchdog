@@ -1,5 +1,5 @@
-import {ItemType} from "antd/lib/menu/interface";
-import {t} from "ttag";
+import {ItemType} from 'antd/lib/menu/interface'
+import {t} from 'ttag'
 import {
     AimOutlined,
     ApiOutlined,
@@ -13,10 +13,10 @@ import {
     SearchOutlined,
     TableOutlined,
     UserOutlined
-} from "@ant-design/icons";
-import {Menu} from "antd";
-import React from "react";
-import {useLocation, useNavigate} from "react-router-dom";
+} from '@ant-design/icons'
+import {Menu} from 'antd'
+import React from 'react'
+import {useLocation, useNavigate} from 'react-router-dom'
 
 export function Sider({isAuthenticated}: { isAuthenticated: boolean }) {
     const navigate = useNavigate()
@@ -49,25 +49,25 @@ export function Sider({isAuthenticated}: { isAuthenticated: boolean }) {
                     title: t`TLD list`,
                     disabled: !isAuthenticated,
                     onClick: () => navigate('/search/tld')
-                },
-                /*
-                {
-                    key: 'entity-finder',
-                    icon: <TeamOutlined/>,
-                    label: t`Entity`,
-                    title: t`Entity Finder`,
-                    disabled: true,
-                    onClick: () => navigate('/search/entity')
-                },
-                {
-                    key: 'ns-finder',
-                    icon: <CloudServerOutlined/>,
-                    label: t`Nameserver`,
-                    title: t`Nameserver Finder`,
-                    disabled: true,
-                    onClick: () => navigate('/search/nameserver')
                 }
-                */
+                /*
+                        {
+                            key: 'entity-finder',
+                            icon: <TeamOutlined/>,
+                            label: t`Entity`,
+                            title: t`Entity Finder`,
+                            disabled: true,
+                            onClick: () => navigate('/search/entity')
+                        },
+                        {
+                            key: 'ns-finder',
+                            icon: <CloudServerOutlined/>,
+                            label: t`Nameserver`,
+                            title: t`Nameserver Finder`,
+                            disabled: true,
+                            onClick: () => navigate('/search/nameserver')
+                        }
+                        */
             ]
         },
         {
@@ -118,7 +118,7 @@ export function Sider({isAuthenticated}: { isAuthenticated: boolean }) {
             icon: <LogoutOutlined/>,
             label: t`Log out`,
             danger: true,
-            onClick: () => window.location.replace("/logout")
+            onClick: () => window.location.replace('/logout')
         }])
     } else {
         menuItems.push({
@@ -129,12 +129,13 @@ export function Sider({isAuthenticated}: { isAuthenticated: boolean }) {
         })
     }
 
-    return <Menu
-        defaultOpenKeys={['search', 'info', 'tracking', 'doc']}
-        selectedKeys={[location.pathname.includes('/search/domain') ? '/search/domain' : location.pathname]}
-        mode="inline"
-        theme="dark"
-        items={menuItems}
-    />
-
+    return (
+        <Menu
+            defaultOpenKeys={['search', 'info', 'tracking', 'doc']}
+            selectedKeys={[location.pathname.includes('/search/domain') ? '/search/domain' : location.pathname]}
+            mode='inline'
+            theme='dark'
+            items={menuItems}
+        />
+    )
 }
