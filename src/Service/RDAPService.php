@@ -23,6 +23,7 @@ use App\Repository\NameserverEntityRepository;
 use App\Repository\NameserverRepository;
 use App\Repository\RdapServerRepository;
 use App\Repository\TldRepository;
+use Doctrine\DBAL\LockMode;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Exception\ORMException;
 use Psr\Log\LoggerInterface;
@@ -136,6 +137,9 @@ readonly class RDAPService
         $rdapServer = $this->fetchRdapServer($tld);
         $domain = $this->domainRepository->findOneBy(['ldhName' => $idnDomain]);
 
+        $this->em->beginTransaction();
+        $this->em->lock($domain, LockMode::PESSIMISTIC_WRITE);
+
         $rdapData = $this->fetchRdapResponse($rdapServer, $idnDomain, $domain);
 
         if (null === $domain) {
@@ -160,6 +164,7 @@ readonly class RDAPService
 
         $this->em->persist($domain);
         $this->em->flush();
+        $this->em->commit();
 
         return $domain;
     }
