@@ -131,15 +131,25 @@ msgstr ""
 msgid "Registrar Lock"
 msgstr "Registrarsperre"
 
+#: assets/components/search/DomainResult.tsx:72
+msgid ""
+"DNSSEC secures DNS by adding cryptographic signatures to DNS records, "
+"ensuring authenticity and integrity of responses"
+msgstr ""
+
 #: assets/components/search/DomainResult.tsx:74
+msgid "DNSSEC"
+msgstr ""
+
+#: assets/components/search/DomainResult.tsx:79
 msgid "EPP Status Codes"
 msgstr "EPP-Statuscodes"
 
-#: assets/components/search/DomainResult.tsx:83
+#: assets/components/search/DomainResult.tsx:88
 msgid "Timeline"
 msgstr "Zeitleiste"
 
-#: assets/components/search/DomainResult.tsx:90
+#: assets/components/search/DomainResult.tsx:95
 msgid "Entities"
 msgstr "Entitäten"
 
