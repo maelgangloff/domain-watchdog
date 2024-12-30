@@ -138,12 +138,13 @@ readonly class RDAPService
         $domain = $this->domainRepository->findOneBy(['ldhName' => $idnDomain]);
 
         $rdapData = $this->fetchRdapResponse($rdapServer, $idnDomain, $domain);
+        $this->em->beginTransaction();
 
         if (null === $domain) {
             $domain = $this->initNewDomain($idnDomain, $tld);
+            $this->em->persist($domain);
         }
 
-        $this->em->beginTransaction();
         $this->em->lock($domain, LockMode::PESSIMISTIC_WRITE);
 
         $this->updateDomainStatus($domain, $rdapData);
