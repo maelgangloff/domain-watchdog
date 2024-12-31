@@ -1,4 +1,4 @@
-import {List, Tag, Tooltip, Typography} from 'antd'
+import {Col, List, Tag, Tooltip, Typography} from 'antd'
 import React from 'react'
 import type {Domain} from '../../utils/api'
 import {rdapRoleDetailTranslation, rdapRoleTranslation} from '../../utils/functions/rdapTranslation'
@@ -12,9 +12,11 @@ export function EntitiesList({domain}: { domain: Domain }) {
     const rdapRoleDetailTranslated = rdapRoleDetailTranslation()
 
     const roleToTag = (r: string) => <Tooltip
+        key={r}
         title={rdapRoleDetailTranslated[r as keyof typeof rdapRoleDetailTranslated] || undefined}
     >
-        <Tag color={rolesToColor([r])}>{rdapRoleTranslated[r as keyof typeof rdapRoleTranslated] || r}
+        <Tag key={r} color={rolesToColor([r])}>
+            {rdapRoleTranslated[r as keyof typeof rdapRoleTranslated] || r}
         </Tag>
     </Tooltip>
 
@@ -26,8 +28,8 @@ export function EntitiesList({domain}: { domain: Domain }) {
             renderItem={(e) => {
                 const details = extractDetailsFromJCard(e)
 
-                return (
-                    <List.Item>
+                return <List.Item>
+                    <Col span={14}>
                         <List.Item.Meta
                             avatar={roleToAvatar(e)}
                             title={<Typography.Text code>{e.entity.handle}</Typography.Text>}
@@ -36,9 +38,11 @@ export function EntitiesList({domain}: { domain: Domain }) {
                                 {details.organization && <div>🏢 {details.organization}</div>}
                             </>}
                         />
+                    </Col>
+                    <Col span={10} flex='none'>
                         {e.roles.map(roleToTag)}
-                    </List.Item>
-                )
+                    </Col>
+                </List.Item>
             }}
         />
     )
