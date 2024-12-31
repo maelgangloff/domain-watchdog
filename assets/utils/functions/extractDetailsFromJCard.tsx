@@ -1,5 +1,5 @@
 import vCard from 'vcf'
-import {Entity} from '../api'
+import type {Entity} from '../api'
 
 export const extractDetailsFromJCard = (e: { entity: Entity }): {
     fn?: string

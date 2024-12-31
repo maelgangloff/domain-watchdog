@@ -1,5 +1,6 @@
 import dagre from 'dagre'
-import {Edge, Node, Position} from '@xyflow/react'
+import type {Edge, Node} from '@xyflow/react'
+import { Position} from '@xyflow/react'
 
 export const getLayoutedElements = (nodes: Node[], edges: Edge[], direction = 'TB') => {
     const dagreGraph = new dagre.graphlib.Graph()

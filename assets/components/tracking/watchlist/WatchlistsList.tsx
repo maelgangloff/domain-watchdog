@@ -1,7 +1,7 @@
 import React from 'react'
-import {Connector} from '../../../utils/api/connectors'
+import type {Connector} from '../../../utils/api/connectors'
 import {WatchlistCard} from './WatchlistCard'
-import {Watchlist} from '../../../utils/api'
+import type {Watchlist} from '../../../utils/api'
 
 export function WatchlistsList({watchlists, onDelete, onUpdateWatchlist, connectors}: {
     watchlists: Watchlist[]

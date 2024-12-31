@@ -1,4 +1,4 @@
-import {EventAction} from '../api'
+import type {EventAction} from '../api'
 
 export const actionToColor = (a: EventAction) => a === 'registration'
     ? 'green'

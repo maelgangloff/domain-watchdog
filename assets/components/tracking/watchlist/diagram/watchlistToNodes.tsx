@@ -1,9 +1,9 @@
-import {Domain, Nameserver, Tld, Watchlist} from '../../../../utils/api'
+import type {Domain, Nameserver, Tld, Watchlist} from '../../../../utils/api'
 import React from 'react'
 import {t} from 'ttag'
 
 import {entityToName} from '../../../../utils/functions/entityToName'
-import {Node} from '@xyflow/react'
+import type {Node} from '@xyflow/react'
 
 export const domainToNode = (d: Domain): Node => ({
     id: d.ldhName,

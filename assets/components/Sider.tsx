@@ -1,4 +1,4 @@
-import {ItemType} from 'antd/lib/menu/interface'
+import type {ItemType} from 'antd/lib/menu/interface'
 import {t} from 'ttag'
 import {
     AimOutlined,
@@ -21,6 +21,7 @@ import {useLocation, useNavigate} from 'react-router-dom'
 export function Sider({isAuthenticated}: { isAuthenticated: boolean }) {
     const navigate = useNavigate()
     const location = useLocation()
+
 
     const menuItems: ItemType[] = [
         {
@@ -129,13 +130,11 @@ export function Sider({isAuthenticated}: { isAuthenticated: boolean }) {
         })
     }
 
-    return (
-        <Menu
-            defaultOpenKeys={['search', 'info', 'tracking', 'doc']}
-            selectedKeys={[location.pathname.includes('/search/domain') ? '/search/domain' : location.pathname]}
-            mode='inline'
-            theme='dark'
-            items={menuItems}
-        />
-    )
+    return <Menu
+        defaultOpenKeys={['search', 'info', 'tracking', 'doc']}
+        selectedKeys={[location.pathname.includes('/search/domain') ? '/search/domain' : location.pathname]}
+        mode='inline'
+        theme='dark'
+        items={menuItems}
+    />
 }

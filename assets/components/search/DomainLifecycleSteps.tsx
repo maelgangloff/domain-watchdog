@@ -1,4 +1,5 @@
-import {StepProps, Steps, Tooltip} from 'antd'
+import type {StepProps} from 'antd'
+import { Steps, Tooltip} from 'antd'
 import React from 'react'
 import {t} from 'ttag'
 import {

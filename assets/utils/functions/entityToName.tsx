@@ -1,4 +1,4 @@
-import {Entity} from '../api'
+import type {Entity} from '../api'
 import vCard from 'vcf'
 
 export const entityToName = (e: { entity: Entity }): string => {

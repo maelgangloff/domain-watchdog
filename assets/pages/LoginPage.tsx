@@ -3,7 +3,8 @@ import {Button, Card} from 'antd'
 import {t} from 'ttag'
 import TextPage from './TextPage'
 import {LoginForm} from '../components/LoginForm'
-import {getConfiguration, InstanceConfig} from '../utils/api'
+import type { InstanceConfig} from '../utils/api'
+import {getConfiguration} from '../utils/api'
 import {RegisterForm} from '../components/RegisterForm'
 
 export const AuthenticatedContext = createContext<

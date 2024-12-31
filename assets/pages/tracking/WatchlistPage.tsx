@@ -1,11 +1,13 @@
 import React, {useEffect, useState} from 'react'
 import {Card, Divider, Flex, Form, message} from 'antd'
-import {getWatchlists, postWatchlist, putWatchlist, Watchlist} from '../../utils/api'
-import {AxiosError} from 'axios'
+import type { Watchlist} from '../../utils/api'
+import {getWatchlists, postWatchlist, putWatchlist} from '../../utils/api'
+import type {AxiosError} from 'axios'
 import {t} from 'ttag'
 import {WatchlistForm} from '../../components/tracking/watchlist/WatchlistForm'
 import {WatchlistsList} from '../../components/tracking/watchlist/WatchlistsList'
-import {Connector, getConnectors} from '../../utils/api/connectors'
+import type {Connector} from '../../utils/api/connectors'
+import { getConnectors} from '../../utils/api/connectors'
 
 import {showErrorAPI} from '../../utils/functions/showErrorAPI'
 

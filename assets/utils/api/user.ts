@@ -1,4 +1,5 @@
-import {InstanceConfig, request, Statistics, User} from './index'
+import type {InstanceConfig, Statistics, User} from './index'
+import { request} from './index'
 
 export async function login(email: string, password: string): Promise<boolean> {
     const response = await request({

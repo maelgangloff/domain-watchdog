@@ -1,12 +1,13 @@
-import {Button, Form, FormInstance, Input, Select, SelectProps, Space, Tag, Tooltip, Typography} from 'antd'
+import type { FormInstance, SelectProps} from 'antd'
+import {Button, Form, Input, Select, Space, Tag, Tooltip, Typography} from 'antd'
 import {t} from 'ttag'
 import {ApiOutlined, MinusCircleOutlined, PlusOutlined} from '@ant-design/icons'
 import React from 'react'
-import {Connector} from '../../../utils/api/connectors'
+import type {Connector} from '../../../utils/api/connectors'
 import {rdapEventDetailTranslation, rdapEventNameTranslation} from '../../../utils/functions/rdapTranslation'
 import {actionToColor} from '../../../utils/functions/actionToColor'
 import {actionToIcon} from '../../../utils/functions/actionToIcon'
-import {EventAction} from '../../../utils/api'
+import type {EventAction} from '../../../utils/api'
 
 type TagRender = SelectProps['tagRender']
 

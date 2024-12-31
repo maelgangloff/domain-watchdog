@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react'
-import {getStatistics, Statistics} from '../utils/api'
+import type { Statistics} from '../utils/api'
+import {getStatistics} from '../utils/api'
 import {Card, Col, Divider, Row, Statistic, Tooltip} from 'antd'
 import {t} from 'ttag'
 import {

@@ -1,6 +1,7 @@
 import {Popconfirm, theme, Typography} from 'antd'
 import {t} from 'ttag'
-import {deleteWatchlist, Watchlist} from '../../../utils/api'
+import type { Watchlist} from '../../../utils/api'
+import {deleteWatchlist} from '../../../utils/api'
 import {DeleteFilled} from '@ant-design/icons'
 import React from 'react'
 

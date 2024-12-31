@@ -1,4 +1,5 @@
-import {Breakpoint, theme} from 'antd'
+import type {Breakpoint} from 'antd'
+import { theme} from 'antd'
 import {useMediaQuery} from 'react-responsive'
 
 const {useToken} = theme

@@ -1,5 +1,5 @@
-import {AxiosError, AxiosResponse} from 'axios'
-import {MessageInstance, MessageType} from 'antd/lib/message/interface'
+import type {AxiosError, AxiosResponse} from 'axios'
+import type {MessageInstance, MessageType} from 'antd/lib/message/interface'
 import {t} from 'ttag'
 
 export function showErrorAPI(e: AxiosError, messageApi: MessageInstance): MessageType | undefined {

@@ -1,4 +1,5 @@
-import {request, TrackedDomains, Watchlist, WatchlistRequest} from './index'
+import type { TrackedDomains, Watchlist, WatchlistRequest} from './index'
+import {request} from './index'
 
 interface WatchlistList {
     'hydra:totalItems': number

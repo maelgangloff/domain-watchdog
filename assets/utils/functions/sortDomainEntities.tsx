@@ -1,4 +1,4 @@
-import {Domain} from '../api'
+import type {Domain} from '../api'
 
 export const sortDomainEntities = (domain: Domain) => domain.entities
     .filter(e => !e.deleted)

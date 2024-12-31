@@ -1,9 +1,9 @@
-import {Domain, Watchlist} from '../../../../utils/api'
+import type {Domain, Watchlist} from '../../../../utils/api'
 import {rdapRoleTranslation} from '../../../../utils/functions/rdapTranslation'
 import {t} from 'ttag'
 
 import {rolesToColor} from '../../../../utils/functions/rolesToColor'
-import {Edge} from '@xyflow/react'
+import type {Edge} from '@xyflow/react'
 
 export function domainEntitiesToEdges(d: Domain, withRegistrar = false): Edge[] {
     const rdapRoleTranslated = rdapRoleTranslation()

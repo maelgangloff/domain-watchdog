@@ -1,4 +1,5 @@
-import {request, Tld} from './index'
+import type { Tld} from './index'
+import {request} from './index'
 
 interface TldList {
     'hydra:totalItems': number

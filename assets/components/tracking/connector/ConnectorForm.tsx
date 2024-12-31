@@ -1,6 +1,8 @@
-import {Alert, Button, Checkbox, Form, FormInstance, Input, Popconfirm, Select, Space, Typography} from 'antd'
+import type { FormInstance} from 'antd'
+import {Alert, Button, Checkbox, Form, Input, Popconfirm, Select, Space, Typography} from 'antd'
 import React, {useState} from 'react'
-import {Connector, ConnectorProvider} from '../../../utils/api/connectors'
+import type {Connector} from '../../../utils/api/connectors'
+import { ConnectorProvider} from '../../../utils/api/connectors'
 import {t} from 'ttag'
 import {BankOutlined} from '@ant-design/icons'
 import {

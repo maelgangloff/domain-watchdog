@@ -1,5 +1,5 @@
 import {request} from './index'
-import {ConnectorElement} from '../../components/tracking/connector/ConnectorsList'
+import type {ConnectorElement} from '../../components/tracking/connector/ConnectorsList'
 
 export enum ConnectorProvider {
     OVH = 'ovh',

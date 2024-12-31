@@ -3,8 +3,8 @@ import {t} from 'ttag'
 import {WatchlistForm} from './WatchlistForm'
 import React, {useState} from 'react'
 import {EditOutlined} from '@ant-design/icons'
-import {Connector} from '../../../utils/api/connectors'
-import {Watchlist} from '../../../utils/api'
+import type {Connector} from '../../../utils/api/connectors'
+import type {Watchlist} from '../../../utils/api'
 
 export function UpdateWatchlistButton({watchlist, onUpdateWatchlist, connectors}: {
     watchlist: Watchlist

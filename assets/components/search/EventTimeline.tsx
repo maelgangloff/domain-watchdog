@@ -1,6 +1,6 @@
 import {Timeline, Tooltip, Typography} from 'antd'
 import React from 'react'
-import {Event} from '../../utils/api'
+import type {Event} from '../../utils/api'
 import useBreakpoint from '../../hooks/useBreakpoint'
 import {rdapEventDetailTranslation, rdapEventNameTranslation} from '../../utils/functions/rdapTranslation'
 import {actionToColor} from '../../utils/functions/actionToColor'

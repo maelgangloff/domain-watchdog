@@ -5,13 +5,13 @@ import {ViewDiagramWatchlistButton} from './diagram/ViewDiagramWatchlistButton'
 import {UpdateWatchlistButton} from './UpdateWatchlistButton'
 import {DeleteWatchlistButton} from './DeleteWatchlistButton'
 import React from 'react'
-import {Connector} from '../../../utils/api/connectors'
+import type {Connector} from '../../../utils/api/connectors'
 import {CalendarWatchlistButton} from './CalendarWatchlistButton'
 import {rdapEventDetailTranslation, rdapEventNameTranslation} from '../../../utils/functions/rdapTranslation'
 
 import {actionToColor} from '../../../utils/functions/actionToColor'
 import {DomainToTag} from '../DomainToTag'
-import {Watchlist} from '../../../utils/api'
+import type {Watchlist} from '../../../utils/api'
 
 export function WatchlistCard({watchlist, onUpdateWatchlist, connectors, onDelete}: {
     watchlist: Watchlist

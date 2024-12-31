@@ -4,7 +4,7 @@ import {EventTimeline} from './EventTimeline'
 import {EntitiesList} from './EntitiesList'
 import {DomainDiagram} from './DomainDiagram'
 import React from 'react'
-import {Domain} from '../../utils/api'
+import type {Domain} from '../../utils/api'
 import {regionNames} from '../../i18n'
 
 import {getCountryCode} from '../../utils/functions/getCountryCode'

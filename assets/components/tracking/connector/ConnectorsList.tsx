@@ -2,7 +2,8 @@ import {Card, Divider, message, Popconfirm, theme, Typography} from 'antd'
 import {t} from 'ttag'
 import {DeleteFilled} from '@ant-design/icons'
 import React from 'react'
-import {Connector, deleteConnector} from '../../../utils/api/connectors'
+import type {Connector} from '../../../utils/api/connectors'
+import { deleteConnector} from '../../../utils/api/connectors'
 
 const {useToken} = theme
 

@@ -2,7 +2,7 @@ import {CalendarFilled} from '@ant-design/icons'
 import {t} from 'ttag'
 import {Popover, QRCode, Typography} from 'antd'
 import React from 'react'
-import {Watchlist} from '../../../utils/api'
+import type {Watchlist} from '../../../utils/api'
 
 export function CalendarWatchlistButton({watchlist}: { watchlist: Watchlist }) {
     const icsResourceLink = `${window.location.origin}/api/watchlists/${watchlist.token}/calendar`

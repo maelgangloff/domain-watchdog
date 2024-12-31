@@ -1,6 +1,6 @@
 import {List, Tag, Tooltip, Typography} from 'antd'
 import React from 'react'
-import {Domain} from '../../utils/api'
+import type {Domain} from '../../utils/api'
 import {rdapRoleDetailTranslation, rdapRoleTranslation} from '../../utils/functions/rdapTranslation'
 import {roleToAvatar} from '../../utils/functions/roleToAvatar'
 import {rolesToColor} from '../../utils/functions/rolesToColor'
