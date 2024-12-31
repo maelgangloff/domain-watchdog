@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2024-12-29 23:11+0000\n"
+"PO-Revision-Date: 2024-12-31 14:07+0000\n"
 "Last-Translator: Maël Gangloff <contact@maelgangloff.fr>\n"
 "Language-Team: French <https://weblate.vinceh121.me/projects/domain-watchdog/"
 "domain-watchdog-dashboard/fr/>\n"
@@ -137,10 +137,13 @@ msgid ""
 "DNSSEC secures DNS by adding cryptographic signatures to DNS records, "
 "ensuring authenticity and integrity of responses"
 msgstr ""
+"DNSSEC sécurise le DNS en ajoutant des signatures cryptographiques aux "
+"enregistrements DNS, garantissant ainsi l'authenticité et l'intégrité des "
+"réponses"
 
 #: assets/components/search/DomainResult.tsx:74
 msgid "DNSSEC"
-msgstr ""
+msgstr "DNSSEC"
 
 #: assets/components/search/DomainResult.tsx:79
 msgid "EPP Status Codes"
