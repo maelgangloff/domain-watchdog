@@ -43,7 +43,7 @@ msgstr ""
 #: assets/components/LoginForm.tsx:58
 #: assets/components/RegisterForm.tsx:39
 #: assets/components/RegisterForm.tsx:47
-#: assets/components/search/DomainSearchBar.tsx:25
+#: assets/components/search/DomainSearchBar.tsx:28
 #: assets/components/tracking/connector/ConnectorForm.tsx:45
 #: assets/components/tracking/connector/ConnectorForm.tsx:72
 #: assets/components/tracking/connector/ConnectorForm.tsx:80
@@ -147,7 +147,7 @@ msgstr ""
 msgid "Entities"
 msgstr ""
 
-#: assets/components/search/DomainSearchBar.tsx:28
+#: assets/components/search/DomainSearchBar.tsx:31
 #: assets/components/tracking/watchlist/WatchlistForm.tsx:128
 msgid "This domain name does not appear to be valid"
 msgstr ""
@@ -161,7 +161,7 @@ msgid "Search"
 msgstr ""
 
 #: assets/components/Sider.tsx:41
-#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:117
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:125
 msgid "Domain"
 msgstr ""
 
@@ -425,37 +425,46 @@ msgid ""
 "for registration again"
 msgstr ""
 
-#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:123
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:101
+msgid "Estimated number of days until release"
+msgstr ""
+
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:104
+#, javascript-format
+msgid "J ${ d.expiresInDays }"
+msgstr ""
+
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:131
 msgid "Options"
 msgstr ""
 
-#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:128
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:136
 msgid "Expiration date"
 msgstr ""
 
-#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:141
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:149
 msgid "Updated at"
 msgstr ""
 
-#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:148
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:156
 msgid "Status"
 msgstr ""
 
-#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:168
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:176
 msgid "No tracked domain names were found, please create your first Watchlist"
 msgstr ""
 
-#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:177
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:185
 msgid ""
 "Please note that this table does not include domain names marked as expired "
 "or those with an unknown expiration date"
 msgstr ""
 
-#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:182
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:190
 msgid "At least one domain name you are tracking requires special attention"
 msgstr ""
 
-#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:188
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:196
 msgid "The domain names below are subject to special monitoring"
 msgstr ""
 
@@ -554,11 +563,11 @@ msgstr ""
 msgid "Sorry, the page you visited does not exist."
 msgstr ""
 
-#: assets/pages/search/DomainSearchPage.tsx:30
+#: assets/pages/search/DomainSearchPage.tsx:32
 msgid "Found !"
 msgstr ""
 
-#: assets/pages/search/DomainSearchPage.tsx:53
+#: assets/pages/search/DomainSearchPage.tsx:55
 msgid ""
 "Although the domain exists in my database, it has been deleted from the "
 "WHOIS by its registrar."

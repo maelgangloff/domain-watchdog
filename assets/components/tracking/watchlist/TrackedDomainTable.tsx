@@ -97,6 +97,14 @@ export function TrackedDomainTable() {
                                 icon={<KeyOutlined/>}
                             />
                         </Tooltip>
+                        {
+                            d.expiresInDays && <Tooltip title={t`Estimated number of days until release`}>
+                                <Tag bordered={false}
+                                     color={d.expiresInDays <= 5 ? 'red' : d.expiresInDays <= 35 ? 'orange' : 'default'}>
+                                    {t`J ${d.expiresInDays}`}
+                                </Tag>
+                            </Tooltip>
+                        }
                     </Flex>
                 }
             }))
@@ -116,13 +124,13 @@ export function TrackedDomainTable() {
         {
             title: t`Domain`,
             dataIndex: 'ldhName',
-            width: '30%',
+            width: '25%',
             align: 'left'
         },
         {
             title: t`Options`,
             dataIndex: 'options',
-            width: '10%',
+            width: '15%',
         },
         {
             title: t`Expiration date`,

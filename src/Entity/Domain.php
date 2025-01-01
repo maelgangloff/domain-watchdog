@@ -121,6 +121,9 @@ class Domain
     #[Groups(['domain:item', 'domain:list'])]
     private ?bool $delegationSigned = null;
 
+    #[Groups(['domain:item', 'domain:list'])]
+    private ?int $expiresInDays = null;
+
     private const IMPORTANT_EVENTS = [EventAction::Deletion->value, EventAction::Expiration->value];
     private const IMPORTANT_STATUS = [
         'redemption period',
@@ -134,6 +137,8 @@ class Domain
         'client hold',
         'server hold',
     ];
+
+    private const DAY = 24 * 60 * 60;
 
     public function __construct()
     {
@@ -453,5 +458,42 @@ class Domain
         $this->delegationSigned = $delegationSigned;
 
         return $this;
+    }
+
+    private static function daysBetween(\DateTimeImmutable $start, \DateTimeImmutable $end): int
+    {
+        $interval = $start->diff($end);
+        return $interval->invert ? -$interval->days : $interval->days;
+    }
+
+    public function getExpiresInDays(): ?int
+    {
+        $now = new \DateTimeImmutable();
+        $lastStatus = $this->getDomainStatuses()->last();
+
+        if ($lastStatus) {
+            if (in_array('pending delete', $lastStatus->getAddStatus())) {
+                return self::daysBetween($now, $lastStatus->getCreatedAt()->add(new \DateInterval('P5D')));
+            }
+            if (in_array('redemption period', $lastStatus->getAddStatus())) {
+                return self::daysBetween($now, $lastStatus->getCreatedAt()->add(new \DateInterval('P35D')));
+            }
+        }
+
+        $expiredAt = null;
+        $deletedAt = null;
+        foreach ($this->getEvents() as $event) {
+            $expiredAt = !$event->getDeleted() && 'expiration' === $event->getAction() ? $event->getDate() : $expiredAt;
+            $deletedAt = !$event->getDeleted() && 'deletion' === $event->getAction() ? $event->getDate() : $deletedAt;
+        }
+
+        if ($deletedAt) {
+            return self::daysBetween($now, $deletedAt->add(new \DateInterval('P30D')));
+        }
+        if ($expiredAt) {
+            return self::daysBetween($now, $expiredAt->add(new \DateInterval('P65D')));
+        }
+
+        return null;
     }
 }

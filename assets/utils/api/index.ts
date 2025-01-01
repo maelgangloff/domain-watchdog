@@ -66,6 +66,7 @@ export interface Domain {
     deleted: boolean
     updatedAt: string
     delegationSigned: boolean
+    expiresInDays?: number
 }
 
 export interface User {
