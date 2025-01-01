@@ -50,7 +50,7 @@ msgstr "Adresse e-mail"
 
 #: assets/components/LoginForm.tsx:50 assets/components/LoginForm.tsx:58
 #: assets/components/RegisterForm.tsx:39 assets/components/RegisterForm.tsx:47
-#: assets/components/search/DomainSearchBar.tsx:25
+#: assets/components/search/DomainSearchBar.tsx:28
 #: assets/components/tracking/connector/ConnectorForm.tsx:45
 #: assets/components/tracking/connector/ConnectorForm.tsx:72
 #: assets/components/tracking/connector/ConnectorForm.tsx:80
@@ -91,18 +91,22 @@ msgid "Registration"
 msgstr "Enregistrement"
 
 #: assets/components/search/DomainLifecycleSteps.tsx:24
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:132
 msgid "Active"
 msgstr "Actif"
 
 #: assets/components/search/DomainLifecycleSteps.tsx:29
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:110
 msgid "Auto-Renew Grace Period"
 msgstr "Période de grâce"
 
 #: assets/components/search/DomainLifecycleSteps.tsx:35
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:118
 msgid "Redemption Grace Period"
 msgstr "Période de rédemption"
 
 #: assets/components/search/DomainLifecycleSteps.tsx:40
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:126
 msgid "Pending Delete"
 msgstr "En attente de suppression"
 
@@ -117,7 +121,7 @@ msgstr ""
 "registre"
 
 #: assets/components/search/DomainResult.tsx:64
-#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:82
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:88
 msgid "Registry Lock"
 msgstr "Verrouillage du registre"
 
@@ -130,7 +134,7 @@ msgstr ""
 "ou accidentelles grâce aux contrôles du bureau d'enregistrement"
 
 #: assets/components/search/DomainResult.tsx:75
-#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:88
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:94
 msgid "Registrar Lock"
 msgstr "Verrouillage du bureau d'enregistrement"
 
@@ -144,11 +148,12 @@ msgstr ""
 "réponses"
 
 #: assets/components/search/DomainResult.tsx:84
-#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:94
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:100
 msgid "DNSSEC"
 msgstr "DNSSEC"
 
 #: assets/components/search/DomainResult.tsx:90
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:205
 msgid "EPP Status Codes"
 msgstr "Codes de statut EPP"
 
@@ -160,7 +165,7 @@ msgstr "Chronologie"
 msgid "Entities"
 msgstr "Entités"
 
-#: assets/components/search/DomainSearchBar.tsx:28
+#: assets/components/search/DomainSearchBar.tsx:31
 #: assets/components/tracking/watchlist/WatchlistForm.tsx:128
 msgid "This domain name does not appear to be valid"
 msgstr "Ce nom de domaine ne semble pas être valide"
@@ -174,7 +179,7 @@ msgid "Search"
 msgstr "Rechercher"
 
 #: assets/components/Sider.tsx:41
-#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:117
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:165
 msgid "Domain"
 msgstr "Domaine"
 
@@ -436,7 +441,7 @@ msgstr "Registre"
 msgid ".${ tld.tld } Registry"
 msgstr "Registre .${ tld.tld }"
 
-#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:24
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:28
 msgid ""
 "At least one domain name is in redemption period and will potentially be "
 "deleted soon"
@@ -444,7 +449,7 @@ msgstr ""
 "Au moins un nom de domaine est en période de rédemption et sera "
 "potentiellement supprimé prochainement"
 
-#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:32
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:36
 msgid ""
 "At least one domain name is pending deletion and will soon become available "
 "for registration again"
@@ -452,29 +457,38 @@ msgstr ""
 "Au moins un nom de domaine est en attente de suppression et sera bientôt à "
 "nouveau disponible pour l'enregistrement"
 
-#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:123
-msgid "Options"
-msgstr "Options"
-
-#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:128
-msgid "Expiration date"
-msgstr "Date d'expiration"
-
 #: assets/components/tracking/watchlist/TrackedDomainTable.tsx:141
-msgid "Updated at"
-msgstr "Mis à jour le"
+msgid "Estimated number of days until WHOIS removal"
+msgstr ""
 
-#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:148
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:144
+#, javascript-format
+msgid "J ${ expiresInDays }"
+msgstr ""
+
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:171
 msgid "Status"
 msgstr "Statuts"
 
-#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:168
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:177
+msgid "Options"
+msgstr "Options"
+
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:183
+msgid "Expiration date"
+msgstr "Date d'expiration"
+
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:197
+msgid "Updated at"
+msgstr "Mis à jour le"
+
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:225
 msgid "No tracked domain names were found, please create your first Watchlist"
 msgstr ""
 "Aucun nom de domaine suivi n'a été trouvé, veuillez créer votre première "
 "Watchlist"
 
-#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:177
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:234
 msgid ""
 "Please note that this table does not include domain names marked as expired "
 "or those with an unknown expiration date"
@@ -482,13 +496,13 @@ msgstr ""
 "Veuillez noter que ce tableau n'inclut pas les noms de domaine marqués comme "
 "expirés ou ceux dont la date d'expiration est inconnue"
 
-#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:182
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:239
 msgid "At least one domain name you are tracking requires special attention"
 msgstr ""
 "Au moins un nom de domaine que vous suivez nécessite une attention "
 "particulière"
 
-#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:188
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:245
 msgid "The domain names below are subject to special monitoring"
 msgstr ""
 "Les noms de domaine ci-dessous font l'objet d'une surveillance particulière"
@@ -595,11 +609,11 @@ msgstr "Créer un compte"
 msgid "Sorry, the page you visited does not exist."
 msgstr "Désolé, cette page n'existe pas."
 
-#: assets/pages/search/DomainSearchPage.tsx:30
+#: assets/pages/search/DomainSearchPage.tsx:32
 msgid "Found !"
 msgstr "Trouvé !"
 
-#: assets/pages/search/DomainSearchPage.tsx:53
+#: assets/pages/search/DomainSearchPage.tsx:55
 msgid ""
 "Although the domain exists in my database, it has been deleted from the "
 "WHOIS by its registrar."
