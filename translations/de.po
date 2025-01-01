@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2025-01-01 02:03+0000\n"
+"PO-Revision-Date: 2025-01-01 21:44+0000\n"
 "Last-Translator: Maël Gangloff <contact@maelgangloff.fr>\n"
 "Language-Team: German <https://weblate.vinceh121.me/projects/domain-watchdog/"
 "domain-watchdog-dashboard/de/>\n"
@@ -459,12 +459,12 @@ msgstr ""
 
 #: assets/components/tracking/watchlist/TrackedDomainTable.tsx:141
 msgid "Estimated number of days until WHOIS removal"
-msgstr ""
+msgstr "Geschätzte Anzahl von Tagen bis zur WHOIS-Entfernung"
 
 #: assets/components/tracking/watchlist/TrackedDomainTable.tsx:144
 #, javascript-format
 msgid "J ${ expiresInDays }"
-msgstr ""
+msgstr "J ${ expiresInDays }"
 
 #: assets/components/tracking/watchlist/TrackedDomainTable.tsx:171
 msgid "Status"
