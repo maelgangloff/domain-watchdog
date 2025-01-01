@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2025-01-01 21:44+0000\n"
+"PO-Revision-Date: 2025-01-01 21:56+0000\n"
 "Last-Translator: Maël Gangloff <contact@maelgangloff.fr>\n"
 "Language-Team: French <https://weblate.vinceh121.me/projects/domain-watchdog/"
 "domain-watchdog-dashboard/fr/>\n"
@@ -468,7 +468,7 @@ msgstr "J ${ expiresInDays }"
 
 #: assets/components/tracking/watchlist/TrackedDomainTable.tsx:171
 msgid "Status"
-msgstr "Statuts"
+msgstr "Statut"
 
 #: assets/components/tracking/watchlist/TrackedDomainTable.tsx:177
 msgid "Options"
