@@ -122,7 +122,7 @@ class Domain
     private ?bool $delegationSigned = null;
 
     #[Groups(['domain:item', 'domain:list'])]
-    private ?int $expiresInDays = null;
+    protected ?int $expiresInDays = null;
 
     private const IMPORTANT_EVENTS = [EventAction::Deletion->value, EventAction::Expiration->value];
     private const IMPORTANT_STATUS = [
@@ -137,8 +137,6 @@ class Domain
         'client hold',
         'server hold',
     ];
-
-    private const DAY = 24 * 60 * 60;
 
     public function __construct()
     {
@@ -463,6 +461,7 @@ class Domain
     private static function daysBetween(\DateTimeImmutable $start, \DateTimeImmutable $end): int
     {
         $interval = $start->diff($end);
+
         return $interval->invert ? -$interval->days : $interval->days;
     }
 

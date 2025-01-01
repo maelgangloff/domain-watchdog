@@ -10,7 +10,11 @@ import {eppStatusCodeToColor} from '../../../utils/functions/eppStatusCodeToColo
 import {Link} from 'react-router-dom'
 import {
     BankOutlined,
+    CheckOutlined,
+    DeleteOutlined,
     ExceptionOutlined,
+    ExclamationCircleOutlined,
+    FieldTimeOutlined,
     KeyOutlined,
     MonitorOutlined,
     SafetyCertificateOutlined
@@ -40,6 +44,7 @@ export function TrackedDomainTable() {
         ldhName: ReactElement
         expirationDate: string
         status: ReactElement[]
+        state: ReactElement
         updatedAt: string
         rawDomain: Domain
     }
@@ -57,6 +62,7 @@ export function TrackedDomainTable() {
             const notices: ReactElement[] = []
             setDataTable(data['hydra:member'].map((d: Domain) => {
                 const expirationDate = d.events.find(e => e.action === 'expiration' && !e.deleted)?.date
+                const expiresInDays = d.expiresInDays ? -d.expiresInDays : undefined
 
                 if (d.status.includes('redemption period')) {
                     if (!notices.includes(REDEMPTION_NOTICE)) notices.push(REDEMPTION_NOTICE)
@@ -97,11 +103,45 @@ export function TrackedDomainTable() {
                                 icon={<KeyOutlined/>}
                             />
                         </Tooltip>
+                    </Flex>,
+                    state: <Flex wrap justify='center' align='center' gap='4px 0'>
                         {
-                            d.expiresInDays && <Tooltip title={t`Estimated number of days until release`}>
+                            d.status.includes('auto renew period') ?
+                                <Tooltip title={t`Auto-Renew Grace Period`}>
+                                    <Tag
+                                        bordered={false}
+                                        color='palevioletred'
+                                        icon={<FieldTimeOutlined/>}
+                                    />
+                                </Tooltip> :
+                                d.status.includes('redemption period') ?
+                                    <Tooltip title={t`Redemption Grace Period`}>
+                                        <Tag
+                                            bordered={false}
+                                            color='magenta'
+                                            icon={<ExclamationCircleOutlined/>}
+                                        />
+                                    </Tooltip> :
+                                    !d.status.includes('redemption period') && d.status.includes('pending delete') ?
+                                        <Tooltip title={t`Pending Delete`}>
+                                            <Tag
+                                                bordered={false}
+                                                color='orangered'
+                                                icon={<DeleteOutlined/>}
+                                            />
+                                        </Tooltip> : <Tooltip title={t`Active`}>
+                                            <Tag
+                                                bordered={false}
+                                                color='green'
+                                                icon={<CheckOutlined/>}
+                                            />
+                                        </Tooltip>
+                        }
+                        {
+                            d.expiresInDays && <Tooltip title={t`Estimated number of days until WHOIS removal`}>
                                 <Tag bordered={false}
                                      color={d.expiresInDays <= 5 ? 'red' : d.expiresInDays <= 35 ? 'orange' : 'default'}>
-                                    {t`J ${d.expiresInDays}`}
+                                    {t`J ${expiresInDays}`}
                                 </Tag>
                             </Tooltip>
                         }
@@ -124,13 +164,20 @@ export function TrackedDomainTable() {
         {
             title: t`Domain`,
             dataIndex: 'ldhName',
-            width: '25%',
+            width: '20%',
             align: 'left'
+        },
+        {
+            title: t`Status`,
+            dataIndex: 'state',
+            width: '10%',
+            align: 'center'
         },
         {
             title: t`Options`,
             dataIndex: 'options',
-            width: '15%',
+            width: '10%',
+            align: 'center',
         },
         {
             title: t`Expiration date`,
@@ -142,7 +189,8 @@ export function TrackedDomainTable() {
                 if (expirationDate1 === undefined || expirationDate2 === undefined) return 0
                 return new Date(expirationDate1).getTime() - new Date(expirationDate2).getTime()
             },
-            width: '15%'
+            width: '15%',
+            align: 'center'
         },
 
         {
@@ -150,10 +198,11 @@ export function TrackedDomainTable() {
             dataIndex: 'updatedAt',
             responsive: ['md'],
             sorter: (a: RecordType, b: RecordType) => new Date(a.rawDomain.updatedAt).getTime() - new Date(b.rawDomain.updatedAt).getTime(),
-            width: '15%'
+            width: '15%',
+            align: 'center'
         },
         {
-            title: t`Status`,
+            title: t`EPP Status Codes`,
             dataIndex: 'status',
             responsive: ['md'],
             showSorterTooltip: {target: 'full-header'},
