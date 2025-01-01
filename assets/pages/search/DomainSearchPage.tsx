@@ -19,13 +19,15 @@ export default function DomainSearchPage() {
     const [messageApi, contextHolder] = message.useMessage()
     const navigate = useNavigate()
 
+
+
     const onFinish: FormProps<FieldType>['onFinish'] = (values) => {
         navigate('/search/domain/' + values.ldhName)
 
         if (loading) return
         setLoading(true)
         setDomain(null)
-        getDomain(values.ldhName).then(d => {
+        getDomain(values.ldhName, values.isRefreshForced).then(d => {
             setDomain(d)
             messageApi.success(t`Found !`)
         }).catch((e: AxiosError) => {
@@ -36,7 +38,7 @@ export default function DomainSearchPage() {
 
     useEffect(() => {
         if (query === undefined) return
-        onFinish({ldhName: query})
+        onFinish({ldhName: query, isRefreshForced: false})
     }, [])
 
     return (

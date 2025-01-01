@@ -1,19 +1,22 @@
 import {Form, Input} from 'antd'
 import {t} from 'ttag'
 import {SearchOutlined} from '@ant-design/icons'
-import React from 'react'
+import React, {useState} from 'react'
 
 export interface FieldType {
     ldhName: string
+    isRefreshForced: boolean
 }
 
 export function DomainSearchBar({onFinish, initialValue}: {
     onFinish: (values: FieldType) => void,
     initialValue?: string
 }) {
+    const [isRefreshForced, setRefreshForced] = useState(false)
+
     return (
         <Form
-            onFinish={onFinish}
+            onFinish={({ldhName}: FieldType) => onFinish({ldhName, isRefreshForced})}
             autoComplete='off'
             style={{width: '100%'}}
         >
@@ -33,6 +36,8 @@ export function DomainSearchBar({onFinish, initialValue}: {
                 <Input
                     style={{textAlign: 'center'}}
                     size='large'
+                    onKeyDown={e => setRefreshForced(e.shiftKey)}
+                    onKeyUp={e => setRefreshForced(e.shiftKey)}
                     prefix={<SearchOutlined/>}
                     placeholder='example.com'
                     autoComplete='off'

@@ -1,4 +1,4 @@
-import {Col, List, Tag, Tooltip, Typography} from 'antd'
+import {List, Tag, Tooltip, Typography} from 'antd'
 import React from 'react'
 import type {Domain} from '../../utils/api'
 import {rdapRoleDetailTranslation, rdapRoleTranslation} from '../../utils/functions/rdapTranslation'
@@ -29,19 +29,15 @@ export function EntitiesList({domain}: { domain: Domain }) {
                 const details = extractDetailsFromJCard(e)
 
                 return <List.Item>
-                    <Col span={14}>
-                        <List.Item.Meta
-                            avatar={roleToAvatar(e)}
-                            title={<Typography.Text code>{e.entity.handle}</Typography.Text>}
-                            description={<>
-                                {details.fn && <div>👤 {details.fn}</div>}
-                                {details.organization && <div>🏢 {details.organization}</div>}
-                            </>}
-                        />
-                    </Col>
-                    <Col span={10} flex='none'>
-                        {e.roles.map(roleToTag)}
-                    </Col>
+                    <List.Item.Meta
+                        avatar={roleToAvatar(e)}
+                        title={<Typography.Text code>{e.entity.handle}</Typography.Text>}
+                        description={<>
+                            {details.fn && <div>👤 {details.fn}</div>}
+                            {details.organization && <div>🏢 {details.organization}</div>}
+                        </>}
+                    />
+                    {e.roles.map(roleToTag)}
                 </List.Item>
             }}
         />

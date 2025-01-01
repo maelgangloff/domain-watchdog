@@ -10,6 +10,7 @@ use App\Service\RDAPService;
 use Psr\Log\LoggerInterface;
 use Random\Randomizer;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\TooManyRequestsHttpException;
 use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Component\Messenger\Exception\ExceptionInterface;
@@ -37,7 +38,7 @@ class DomainRefreshController extends AbstractController
      * @throws HttpExceptionInterface
      * @throws \Throwable
      */
-    public function __invoke(string $ldhName, KernelInterface $kernel): Domain
+    public function __invoke(string $ldhName, KernelInterface $kernel, Request $request): Domain
     {
         $idnDomain = strtolower(idn_to_ascii($ldhName));
         $userId = $this->getUser()->getUserIdentifier();
@@ -49,12 +50,12 @@ class DomainRefreshController extends AbstractController
 
         /** @var ?Domain $domain */
         $domain = $this->domainRepository->findOneBy(['ldhName' => $idnDomain]);
-
         // If the domain name exists in the database, recently updated and not important, we return the stored Domain
         if (null !== $domain
             && !$domain->getDeleted()
             && !$domain->isToBeUpdated()
             && !$this->kernel->isDebug()
+            && true !== filter_var($request->get('forced', false), FILTER_VALIDATE_BOOLEAN)
         ) {
             $this->logger->info('It is not necessary to update the information of the domain name {idnDomain} with the RDAP protocol.', [
                 'idnDomain' => $idnDomain,
