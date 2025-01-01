@@ -105,7 +105,7 @@ msgstr "Einlösezeitraum"
 msgid "Pending Delete"
 msgstr "Ausstehende Löschung"
 
-#: assets/components/search/DomainResult.tsx:60
+#: assets/components/search/DomainResult.tsx:57
 msgid ""
 "Registry-level protection, ensuring the highest level of security by "
 "preventing unauthorized, unwanted, or accidental changes to the domain name "
@@ -115,11 +115,12 @@ msgstr ""
 "unerwünschter oder versehentlicher Änderungen am Domainnamen auf der "
 "Registrierungsebene"
 
-#: assets/components/search/DomainResult.tsx:67
+#: assets/components/search/DomainResult.tsx:64
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:82
 msgid "Registry Lock"
 msgstr "Registrierungssperre"
 
-#: assets/components/search/DomainResult.tsx:71
+#: assets/components/search/DomainResult.tsx:68
 msgid ""
 "Registrar-level protection, safeguarding the domain from unauthorized, "
 "unwanted, or accidental changes through registrar controls"
@@ -127,11 +128,12 @@ msgstr ""
 "Schutz der Domain vor unbefugten, unerwünschten oder versehentlichen "
 "Änderungen durch Kontrollen auf Registrar-Ebene"
 
-#: assets/components/search/DomainResult.tsx:78
+#: assets/components/search/DomainResult.tsx:75
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:88
 msgid "Registrar Lock"
 msgstr "Registrarsperre"
 
-#: assets/components/search/DomainResult.tsx:82
+#: assets/components/search/DomainResult.tsx:79
 msgid ""
 "DNSSEC secures DNS by adding cryptographic signatures to DNS records, "
 "ensuring authenticity and integrity of responses"
@@ -139,19 +141,20 @@ msgstr ""
 "DNSSEC sichert DNS durch das Hinzufügen kryptografischer Signaturen zu DNS-"
 "Einträgen und stellt so die Authentizität und Integrität der Antworten sicher"
 
-#: assets/components/search/DomainResult.tsx:87
+#: assets/components/search/DomainResult.tsx:84
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:94
 msgid "DNSSEC"
 msgstr "DNSSEC"
 
-#: assets/components/search/DomainResult.tsx:93
+#: assets/components/search/DomainResult.tsx:90
 msgid "EPP Status Codes"
 msgstr "EPP-Statuscodes"
 
-#: assets/components/search/DomainResult.tsx:101
+#: assets/components/search/DomainResult.tsx:98
 msgid "Timeline"
 msgstr "Zeitleiste"
 
-#: assets/components/search/DomainResult.tsx:108
+#: assets/components/search/DomainResult.tsx:105
 msgid "Entities"
 msgstr "Entitäten"
 
@@ -169,7 +172,7 @@ msgid "Search"
 msgstr "Suchen"
 
 #: assets/components/Sider.tsx:41
-#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:90
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:117
 msgid "Domain"
 msgstr "Domain"
 
@@ -433,7 +436,7 @@ msgstr "Registrierung"
 msgid ".${ tld.tld } Registry"
 msgstr ".${ tld.tld } Registrierung"
 
-#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:17
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:24
 msgid ""
 "At least one domain name is in redemption period and will potentially be "
 "deleted soon"
@@ -441,7 +444,7 @@ msgstr ""
 "Mindestens ein Domainname befindet sich im Einlösezeitraum und könnte bald "
 "gelöscht werden"
 
-#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:25
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:32
 msgid ""
 "At least one domain name is pending deletion and will soon become available "
 "for registration again"
@@ -449,25 +452,29 @@ msgstr ""
 "Mindestens ein Domänenname steht zur Löschung an und wird bald wieder zur "
 "Registrierung verfügbar sein"
 
-#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:94
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:123
+msgid "Options"
+msgstr ""
+
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:128
 msgid "Expiration date"
 msgstr "Verfallsdatum"
 
-#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:106
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:141
 msgid "Updated at"
 msgstr "Aktualisiert am"
 
-#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:111
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:148
 msgid "Status"
 msgstr "Status"
 
-#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:132
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:168
 msgid "No tracked domain names were found, please create your first Watchlist"
 msgstr ""
 "Es wurden keine getrackten Domainnamen gefunden, bitte erstellen Sie Ihre "
 "erste Watchlist"
 
-#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:141
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:177
 msgid ""
 "Please note that this table does not include domain names marked as expired "
 "or those with an unknown expiration date"
@@ -475,13 +482,13 @@ msgstr ""
 "Bitte beachten Sie, dass diese Tabelle keine Domänennamen enthält, die als "
 "abgelaufen markiert sind oder deren Ablaufdatum unbekannt ist"
 
-#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:146
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:182
 msgid "At least one domain name you are tracking requires special attention"
 msgstr ""
 "Mindestens ein Domänenname, den Sie verfolgen, erfordert besondere "
 "Aufmerksamkeit"
 
-#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:152
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:188
 msgid "The domain names below are subject to special monitoring"
 msgstr ""
 "Die unten aufgeführten Domänennamen unterliegen einer besonderen Überwachung"
