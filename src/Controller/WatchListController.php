@@ -293,7 +293,13 @@ class WatchListController extends AbstractController
 
             /* @var DomainEntity $entity */
             foreach ($domain->getDomainEntities()->filter(fn (DomainEntity $domainEntity) => !$domainEntity->getDeleted())->getIterator() as $domainEntity) {
-                $vCardData = Reader::readJson($domainEntity->getEntity()->getJCard());
+                $jCard = $domainEntity->getEntity()->getJCard();
+
+                if (empty($jCard)) {
+                    continue;
+                }
+
+                $vCardData = Reader::readJson($jCard);
 
                 if (empty($vCardData->EMAIL) || empty($vCardData->FN)) {
                     continue;
