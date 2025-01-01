@@ -1,7 +1,7 @@
 import {Tag, Tooltip} from 'antd'
-import {eppStatusCodeToColor} from '../../utils/functions/eppStatusCodeToColor'
+import {eppStatusCodeToColor} from './eppStatusCodeToColor'
 import React from 'react'
-import {rdapStatusCodeDetailTranslation} from '../../utils/functions/rdapTranslation'
+import {rdapStatusCodeDetailTranslation} from './rdapTranslation'
 
 export function statusToTag(s: string) {
     const rdapStatusCodeDetailTranslated = rdapStatusCodeDetailTranslation()

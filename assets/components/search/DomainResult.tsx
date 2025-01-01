@@ -10,17 +10,14 @@ import {regionNames} from '../../i18n'
 import {getCountryCode} from '../../utils/functions/getCountryCode'
 import {DomainLifecycleSteps} from './DomainLifecycleSteps'
 import {BankOutlined, KeyOutlined, SafetyCertificateOutlined} from '@ant-design/icons'
-import {statusToTag} from '../tracking/StatusToTag'
+import {statusToTag} from '../../utils/functions/StatusToTag'
+import {isDomainLocked} from "../../utils/functions/isDomainLocked"
 
 export function DomainResult({domain}: { domain: Domain }) {
     const {tld, events} = domain
     const domainEvents = events.sort((e1, e2) => new Date(e2.date).getTime() - new Date(e1.date).getTime())
     const clientStatus = domain.status.filter(s => s.startsWith('client'))
     const serverStatus = domain.status.filter(s => !clientStatus.includes(s))
-
-    const isDomainLocked = (type: 'client' | 'server'): boolean =>
-        (domain.status.includes(type + ' update prohibited') && domain.status.includes(type + ' delete prohibited')) ||
-        domain.status.includes(type + ' transfer prohibited')
 
     return (
         <Space direction='vertical' size='middle' style={{width: '100%'}}>
@@ -60,7 +57,7 @@ export function DomainResult({domain}: { domain: Domain }) {
                                     title={t`Registry-level protection, ensuring the highest level of security by preventing unauthorized, unwanted, or accidental changes to the domain name at the registry level`}
                                 >
                                     <Tag
-                                        bordered={false} color={isDomainLocked('server') ? 'green' : 'default'}
+                                        bordered={false} color={isDomainLocked(domain.status, 'server') ? 'green' : 'default'}
                                         icon={<SafetyCertificateOutlined
                                             style={{fontSize: '16px'}}
                                         />}
@@ -71,7 +68,7 @@ export function DomainResult({domain}: { domain: Domain }) {
                                     title={t`Registrar-level protection, safeguarding the domain from unauthorized, unwanted, or accidental changes through registrar controls`}
                                 >
                                     <Tag
-                                        bordered={false} color={isDomainLocked('client') ? 'green' : 'default'}
+                                        bordered={false} color={isDomainLocked(domain.status, 'client') ? 'green' : 'default'}
                                         icon={<BankOutlined
                                             style={{fontSize: '16px'}}
                                         />}

@@ -10,7 +10,7 @@ import {CalendarWatchlistButton} from './CalendarWatchlistButton'
 import {rdapEventDetailTranslation, rdapEventNameTranslation} from '../../../utils/functions/rdapTranslation'
 
 import {actionToColor} from '../../../utils/functions/actionToColor'
-import {DomainToTag} from '../DomainToTag'
+import {DomainToTag} from '../../../utils/functions/DomainToTag'
 import type {Watchlist} from '../../../utils/api'
 
 export function WatchlistCard({watchlist, onUpdateWatchlist, connectors, onDelete}: {

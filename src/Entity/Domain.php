@@ -118,7 +118,7 @@ class Domain
     private Collection $domainStatuses;
 
     #[ORM\Column(nullable: false)]
-    #[Groups(['domain:item'])]
+    #[Groups(['domain:item', 'domain:list'])]
     private ?bool $delegationSigned = null;
 
     private const IMPORTANT_EVENTS = [EventAction::Deletion->value, EventAction::Expiration->value];
