@@ -84,7 +84,7 @@ export function TrackedDomainTable() {
                     ),
                     updatedAt: new Date(d.updatedAt).toLocaleString(),
                     rawDomain: d,
-                    options: <Flex gap='4px 0' wrap>
+                    options: <Flex wrap justify='space-evenly' align='center' gap='4px 0'>
                         <Tooltip title={t`Registry Lock`}>
                             <Tag
                                 bordered={false} color={isDomainLocked(d.status, 'server') ? 'green' : 'default'}
@@ -104,7 +104,7 @@ export function TrackedDomainTable() {
                             />
                         </Tooltip>
                     </Flex>,
-                    state: <Flex wrap justify='center' align='center' gap='4px 0'>
+                    state: <Flex wrap justify='space-evenly' align='center' gap='4px 0'>
                         {
                             d.status.includes('auto renew period') ?
                                 <Tooltip title={t`Auto-Renew Grace Period`}>
