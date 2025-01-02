@@ -48,11 +48,13 @@ class DomainOrderNotification extends DomainWatchdogNotification
 
     public function asEmailMessage(EmailRecipientInterface $recipient): EmailMessage
     {
+        $ldhName = $this->domain->getLdhName();
+
         return new EmailMessage((new TemplatedEmail())
             ->from($this->sender)
             ->to($recipient->getEmail())
             ->priority(Email::PRIORITY_HIGHEST)
-            ->subject('A domain name has been ordered')
+            ->subject("Domain name $ldhName has just been purchased")
             ->htmlTemplate('emails/success/domain_ordered.html.twig')
             ->locale('en')
             ->context([

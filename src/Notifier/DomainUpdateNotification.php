@@ -46,11 +46,13 @@ class DomainUpdateNotification extends DomainWatchdogNotification
 
     public function asEmailMessage(EmailRecipientInterface $recipient): EmailMessage
     {
+        $ldhName = $this->domainEvent->getDomain()->getLdhName();
+
         return new EmailMessage((new TemplatedEmail())
             ->from($this->sender)
             ->to($recipient->getEmail())
             ->priority(Email::PRIORITY_HIGHEST)
-            ->subject('A domain name has been changed')
+            ->subject("Domain name $ldhName information has been updated")
             ->htmlTemplate('emails/success/domain_updated.html.twig')
             ->locale('en')
             ->context([

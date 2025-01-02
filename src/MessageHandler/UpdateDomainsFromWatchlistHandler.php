@@ -7,8 +7,10 @@ use App\Entity\WatchList;
 use App\Message\OrderDomain;
 use App\Message\SendDomainEventNotif;
 use App\Message\UpdateDomainsFromWatchlist;
+use App\Notifier\DomainDeletedNotification;
 use App\Notifier\DomainUpdateErrorNotification;
 use App\Repository\WatchListRepository;
+use App\Service\ChatNotificationService;
 use App\Service\RDAPService;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -31,6 +33,7 @@ final readonly class UpdateDomainsFromWatchlistHandler
 
     public function __construct(
         private RDAPService $RDAPService,
+        private ChatNotificationService $chatNotificationService,
         private MailerInterface $mailer,
         string $mailerSenderEmail,
         string $mailerSenderName,
@@ -80,6 +83,10 @@ final readonly class UpdateDomainsFromWatchlistHandler
                 $this->RDAPService->registerDomain($domain->getLdhName());
                 $this->bus->dispatch(new SendDomainEventNotif($watchList->getToken(), $domain->getLdhName(), $updatedAt));
             } catch (NotFoundHttpException) {
+                $notification = (new DomainDeletedNotification($this->sender, $domain));
+                $this->mailer->send($notification->asEmailMessage(new Recipient($watchList->getUser()->getEmail()))->getMessage());
+                $this->chatNotificationService->sendChatNotification($watchList, $notification);
+
                 if (null !== $watchList->getConnector()) {
                     /*
                      * If the domain name no longer appears in the WHOIS AND a connector is associated with this Watchlist,

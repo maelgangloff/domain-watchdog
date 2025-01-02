@@ -12,7 +12,7 @@ use Symfony\Component\Notifier\Notification\Notification;
 use Symfony\Component\Notifier\Recipient\EmailRecipientInterface;
 use Symfony\Component\Notifier\Recipient\RecipientInterface;
 
-class DomainOrderErrorNotification extends DomainWatchdogNotification
+class DomainDeletedNotification extends DomainWatchdogNotification
 {
     public function __construct(
         private readonly Address $sender,
@@ -24,9 +24,9 @@ class DomainOrderErrorNotification extends DomainWatchdogNotification
     public function asChatMessage(?RecipientInterface $recipient = null, ?string $transport = null): ?ChatMessage
     {
         $ldhName = $this->domain->getLdhName();
-        $this->subject("Error: Domain Order $ldhName")
-            ->content("Domain name $ldhName tried to be purchased. The attempt failed.")
-            ->importance(Notification::IMPORTANCE_HIGH);
+        $this->subject("Error: Domain Deleted $ldhName")
+            ->content("Domain name $ldhName has been deleted from WHOIS.")
+            ->importance(Notification::IMPORTANCE_URGENT);
 
         return ChatMessage::fromNotification($this);
     }
@@ -34,9 +34,9 @@ class DomainOrderErrorNotification extends DomainWatchdogNotification
     public function asPushMessage(?RecipientInterface $recipient = null, ?string $transport = null): ?PushMessage
     {
         $ldhName = $this->domain->getLdhName();
-        $this->subject("Error: Domain Order $ldhName")
-            ->content("Domain name $ldhName tried to be purchased. The attempt failed.")
-            ->importance(Notification::IMPORTANCE_HIGH);
+        $this->subject("Error: Domain Deleted $ldhName")
+            ->content("Domain name $ldhName has been deleted from WHOIS.")
+            ->importance(Notification::IMPORTANCE_URGENT);
 
         return PushMessage::fromNotification($this);
     }
@@ -48,8 +48,8 @@ class DomainOrderErrorNotification extends DomainWatchdogNotification
         return new EmailMessage((new TemplatedEmail())
             ->from($this->sender)
             ->to($recipient->getEmail())
-            ->subject("Domain name $ldhName tried to be purchased")
-            ->htmlTemplate('emails/errors/domain_order.html.twig')
+            ->subject("Domain name $ldhName has been removed from WHOIS")
+            ->htmlTemplate('emails/errors/domain_deleted.html.twig')
             ->locale('en')
             ->context([
                 'domain' => $this->domain,

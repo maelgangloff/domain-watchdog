@@ -43,10 +43,12 @@ class DomainUpdateErrorNotification extends DomainWatchdogNotification
 
     public function asEmailMessage(EmailRecipientInterface $recipient): EmailMessage
     {
+        $ldhName = $this->domain->getLdhName();
+
         return new EmailMessage((new TemplatedEmail())
             ->from($this->sender)
             ->to($recipient->getEmail())
-            ->subject('An error occurred while updating a domain name')
+            ->subject("Domain name $ldhName tried to be updated")
             ->htmlTemplate('emails/errors/domain_update.html.twig')
             ->locale('en')
             ->context([
