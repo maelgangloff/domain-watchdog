@@ -462,35 +462,43 @@ class Domain
     {
         $interval = $start->diff($end);
 
-        return $interval->invert ? -$interval->days : $interval->days;
+        return $interval->invert ? -($interval->days + 1) : ($interval->days + 1);
     }
 
+    /**
+     * @throws \Exception
+     */
     public function getExpiresInDays(): ?int
     {
         $now = new \DateTimeImmutable();
         $lastStatus = $this->getDomainStatuses()->last();
+        $daysToExpiration = null;
 
         if ($lastStatus) {
             if (in_array('pending delete', $lastStatus->getAddStatus())) {
-                return self::daysBetween($now, $lastStatus->getCreatedAt()->add(new \DateInterval('P5D')));
+                $daysToExpiration = self::daysBetween($now, $lastStatus->getCreatedAt()->add(new \DateInterval('P5D')));
             }
             if (in_array('redemption period', $lastStatus->getAddStatus())) {
-                return self::daysBetween($now, $lastStatus->getCreatedAt()->add(new \DateInterval('P35D')));
+                $daysToExpiration = self::daysBetween($now, $lastStatus->getCreatedAt()->add(new \DateInterval('P35D')));
             }
         }
 
         $expiredAt = null;
         $deletedAt = null;
-        foreach ($this->getEvents() as $event) {
+        foreach ($this->getEvents()->getIterator() as $event) {
             $expiredAt = !$event->getDeleted() && 'expiration' === $event->getAction() ? $event->getDate() : $expiredAt;
             $deletedAt = !$event->getDeleted() && 'deletion' === $event->getAction() ? $event->getDate() : $deletedAt;
         }
 
         if ($deletedAt) {
-            return self::daysBetween($now, $deletedAt->add(new \DateInterval('P30D')));
+            $guess = self::daysBetween($now, $deletedAt->add(new \DateInterval('P30D')));
+
+            return min($guess, $daysToExpiration ?? $guess);
         }
         if ($expiredAt) {
-            return self::daysBetween($now, $expiredAt->add(new \DateInterval('P65D')));
+            $guess = self::daysBetween($now, $expiredAt->add(new \DateInterval('P65D')));
+
+            return min($guess, $daysToExpiration ?? $guess);
         }
 
         return null;
