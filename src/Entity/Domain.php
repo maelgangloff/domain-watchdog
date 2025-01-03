@@ -460,9 +460,9 @@ class Domain
 
     private static function daysBetween(\DateTimeImmutable $start, \DateTimeImmutable $end): int
     {
-        $interval = $start->diff($end);
+        $interval = $start->setTime(0, 0)->diff($end->setTime(0, 0));
 
-        return $interval->invert ? -($interval->days + 1) : ($interval->days + 1);
+        return $interval->invert ? -$interval->days : $interval->days;
     }
 
     /**
