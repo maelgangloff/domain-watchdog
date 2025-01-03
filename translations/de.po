@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2025-01-01 21:44+0000\n"
+"PO-Revision-Date: 2025-01-03 14:43+0000\n"
 "Last-Translator: Maël Gangloff <contact@maelgangloff.fr>\n"
 "Language-Team: German <https://weblate.vinceh121.me/projects/domain-watchdog/"
 "domain-watchdog-dashboard/de/>\n"
@@ -410,12 +410,12 @@ msgstr "Nein"
 #: assets/components/tracking/connector/ConnectorsList.tsx:45
 #, javascript-format
 msgid "Creation date: ${ createdAt }"
-msgstr ""
+msgstr "Erstellungsdatum: ${ createdAt }"
 
 #: assets/components/tracking/connector/ConnectorsList.tsx:46
 #, javascript-format
 msgid "Used in: ${ watchlistCount } Watchlist"
-msgstr ""
+msgstr "Verwendet in: ${ watchlistCount } Watchlist"
 
 #: assets/components/tracking/connector/ConnectorsList.tsx:47
 msgid ""
@@ -426,6 +426,14 @@ msgid ""
 "fulfilled the conditions of use of the supplier's API, waived the right of "
 "withdrawal and were of the minimum age to consent to these conditions."
 msgstr ""
+"Sie können die Verwendung eines Connectors jederzeit beenden. Um eine "
+"Verbindung zu löschen, müssen Sie sie aus jeder verknüpften "
+"Beobachtungsliste entfernen.\n"
+"Das Erstellungsdatum entspricht dem Datum, an dem Sie der Erstellung des "
+"Connectors zugestimmt haben und an dem Sie insbesondere erklärt haben, dass "
+"Sie die Bedingungen für die Nutzung der API des Anbieters erfüllen, auf das "
+"Widerrufsrecht verzichten und das Mindestalter für die Zustimmung zu diesen "
+"Bedingungen erreicht haben."
 
 #: assets/components/tracking/watchlist/CalendarWatchlistButton.tsx:15
 msgid "QR Code for iCalendar export"
