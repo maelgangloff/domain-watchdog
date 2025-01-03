@@ -67,6 +67,9 @@ class Connector
     #[ORM\Column]
     private ?\DateTimeImmutable $createdAt = null;
 
+    #[Groups(['connector:list'])]
+    protected int $watchlistCount;
+
     public function __construct()
     {
         $this->id = Uuid::v4();
@@ -154,5 +157,10 @@ class Connector
         $this->createdAt = $createdAt;
 
         return $this;
+    }
+
+    public function getWatchlistCount(): ?int
+    {
+        return $this->watchLists->count();
     }
 }

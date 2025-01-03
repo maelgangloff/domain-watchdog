@@ -1,13 +1,13 @@
-import {Card, Divider, message, Popconfirm, theme, Typography} from 'antd'
-import {t} from 'ttag'
+import {Card, Divider, message, Popconfirm, Space, theme, Typography} from 'antd'
+import {jt, t} from 'ttag'
 import {DeleteFilled} from '@ant-design/icons'
 import React from 'react'
 import type {Connector} from '../../../utils/api/connectors'
-import { deleteConnector} from '../../../utils/api/connectors'
+import {deleteConnector} from '../../../utils/api/connectors'
 
 const {useToken} = theme
 
-export type ConnectorElement = Connector & { id: string, createdAt: string }
+export type ConnectorElement = Connector & { id: string, createdAt: string, watchlistCount: number }
 
 export function ConnectorsList({connectors, onDelete}: { connectors: ConnectorElement[], onDelete: () => void }) {
     const {token} = useToken()
@@ -19,29 +19,37 @@ export function ConnectorsList({connectors, onDelete}: { connectors: ConnectorEl
 
     return (
         <>
-            {connectors.map(connector =>
-                <>
-                    {contextHolder}
-                    <Card
-                        hoverable title={<Typography.Text
-                        title={new Date(connector.createdAt).toLocaleString()}
-                    >{t`Connector ${connector.provider}`}
-                    </Typography.Text>}
-                        size='small'
-                        style={{width: '100%'}}
-                        extra={<Popconfirm
-                            title={t`Delete the Connector`}
-                            description={t`Are you sure to delete this Connector?`}
-                            onConfirm={async () => await onConnectorDelete(connector)}
-                            okText={t`Yes`}
-                            cancelText={t`No`}
-                        ><DeleteFilled style={{color: token.colorError}}/>
-                        </Popconfirm>}
-                    >
-                        <Card.Meta description={connector.id} style={{marginBottom: '1em'}}/>
-                    </Card>
-                    <Divider/>
-                </>
+            {connectors.map(connector => {
+                    const createdAt = <Typography.Text strong>
+                        {new Date(connector.createdAt).toLocaleString()}
+                    </Typography.Text>
+                    const {watchlistCount} = connector
+
+                    return <>
+                        {contextHolder}
+                        <Card
+                            hoverable title={<Space>
+                            {t`Connector ${connector.provider}`}<Typography.Text code>{connector.id}</Typography.Text>
+                        </Space>}
+                            size='small'
+                            style={{width: '100%'}}
+                            extra={<Popconfirm
+                                title={t`Delete the Connector`}
+                                description={t`Are you sure to delete this Connector?`}
+                                onConfirm={async () => await onConnectorDelete(connector)}
+                                okText={t`Yes`}
+                                cancelText={t`No`}
+                            ><DeleteFilled style={{color: token.colorError}}/>
+                            </Popconfirm>}
+                        >
+                            <Typography.Paragraph>{jt`Creation date: ${createdAt}`}</Typography.Paragraph>
+                            <Typography.Paragraph>{t`Used in: ${watchlistCount} Watchlist`}</Typography.Paragraph>
+                            <Card.Meta description={t`You can stop using a connector at any time. To delete a connector, you must remove it from each linked Watchlist.
+The creation date corresponds to the date on which you consented to the creation of the connector and on which you declared in particular that you fulfilled the conditions of use of the supplier's API, waived the right of withdrawal and were of the minimum age to consent to these conditions.`}/>
+                        </Card>
+                        <Divider/>
+                    </>
+                }
             )}
         </>
     )

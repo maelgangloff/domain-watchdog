@@ -361,27 +361,47 @@ msgid ""
 "any Watchlist"
 msgstr ""
 
-#: assets/components/tracking/connector/ConnectorsList.tsx:28
+#: assets/components/tracking/connector/ConnectorsList.tsx:32
 #, javascript-format
 msgid "Connector ${ connector.provider }"
 msgstr ""
 
-#: assets/components/tracking/connector/ConnectorsList.tsx:33
+#: assets/components/tracking/connector/ConnectorsList.tsx:37
 msgid "Delete the Connector"
 msgstr ""
 
-#: assets/components/tracking/connector/ConnectorsList.tsx:34
+#: assets/components/tracking/connector/ConnectorsList.tsx:38
 msgid "Are you sure to delete this Connector?"
 msgstr ""
 
-#: assets/components/tracking/connector/ConnectorsList.tsx:36
+#: assets/components/tracking/connector/ConnectorsList.tsx:40
 #: assets/components/tracking/watchlist/DeleteWatchlistButton.tsx:16
 msgid "Yes"
 msgstr ""
 
-#: assets/components/tracking/connector/ConnectorsList.tsx:37
+#: assets/components/tracking/connector/ConnectorsList.tsx:41
 #: assets/components/tracking/watchlist/DeleteWatchlistButton.tsx:17
 msgid "No"
+msgstr ""
+
+#: assets/components/tracking/connector/ConnectorsList.tsx:45
+#, javascript-format
+msgid "Creation date: ${ createdAt }"
+msgstr ""
+
+#: assets/components/tracking/connector/ConnectorsList.tsx:46
+#, javascript-format
+msgid "Used in: ${ watchlistCount } Watchlist"
+msgstr ""
+
+#: assets/components/tracking/connector/ConnectorsList.tsx:47
+msgid ""
+"You can stop using a connector at any time. To delete a connector, you must "
+"remove it from each linked Watchlist.\n"
+"The creation date corresponds to the date on which you consented to the "
+"creation of the connector and on which you declared in particular that you "
+"fulfilled the conditions of use of the supplier's API, waived the right of "
+"withdrawal and were of the minimum age to consent to these conditions."
 msgstr ""
 
 #: assets/components/tracking/watchlist/CalendarWatchlistButton.tsx:15
