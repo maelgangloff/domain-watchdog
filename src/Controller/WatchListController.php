@@ -368,21 +368,7 @@ class WatchListController extends AbstractController
             }
         }
 
-        usort($domains, function (Domain $d1, Domain $d2) {
-            $IMPORTANT_STATUS = ['pending delete', 'redemption period'];
-
-            /** @var \DateTimeImmutable $exp1 */
-            $exp1 = $d1->getEvents()->findFirst(fn (int $key, DomainEvent $e) => !$e->getDeleted() && 'expiration' === $e->getAction())->getDate();
-            /** @var \DateTimeImmutable $exp2 */
-            $exp2 = $d2->getEvents()->findFirst(fn (int $key, DomainEvent $e) => !$e->getDeleted() && 'expiration' === $e->getAction())->getDate();
-            $impStatus1 = count(array_intersect($IMPORTANT_STATUS, $d1->getStatus())) > 0;
-            $impStatus2 = count(array_intersect($IMPORTANT_STATUS, $d2->getStatus())) > 0;
-
-            return $impStatus1 && !$impStatus2 ? -1 : (
-                !$impStatus1 && $impStatus2 ? 2 :
-                    $exp1 <=> $exp2
-            );
-        });
+        usort($domains, fn (Domain $d1, Domain $d2) => $d1->getExpiresInDays() - $d2->getExpiresInDays());
 
         return $domains;
     }
