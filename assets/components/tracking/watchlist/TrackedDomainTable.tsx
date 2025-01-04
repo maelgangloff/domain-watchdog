@@ -14,6 +14,7 @@ import {
     DeleteOutlined,
     ExceptionOutlined,
     ExclamationCircleOutlined,
+    ExclamationOutlined,
     FieldTimeOutlined,
     KeyOutlined,
     MonitorOutlined,
@@ -62,7 +63,7 @@ export function TrackedDomainTable() {
             const notices: ReactElement[] = []
             setDataTable(data['hydra:member'].map((d: Domain) => {
                 const expirationDate = d.events.find(e => e.action === 'expiration' && !e.deleted)?.date
-                const expiresInDays = d.expiresInDays && d.expiresInDays > 0 ? -d.expiresInDays : undefined
+                const expiresInDays = d.expiresInDays !== undefined && d.expiresInDays > 0 ? -d.expiresInDays : undefined
 
                 if (d.status.includes('redemption period')) {
                     if (!notices.includes(REDEMPTION_NOTICE)) notices.push(REDEMPTION_NOTICE)
@@ -138,12 +139,21 @@ export function TrackedDomainTable() {
                                         </Tooltip>
                         }
                         {
-                            d.expiresInDays ? <Tooltip title={t`Estimated number of days until WHOIS removal`}>
-                                <Tag bordered={false}
-                                     color={d.expiresInDays <= 5 ? 'red' : d.expiresInDays <= 35 ? 'orange' : 'default'}>
-                                    {t`J ${expiresInDays}`}
-                                </Tag>
-                            </Tooltip> : undefined
+                            expiresInDays !== undefined ?
+                                <Tooltip title={t`Estimated number of days until WHOIS removal`}>
+                                    <Tag bordered={false}
+                                         color={expiresInDays >= -5 ? 'red' : expiresInDays >= -35 ? 'orange' : 'default'}>
+                                        {t`J ${expiresInDays}`}
+                                    </Tag>
+                                </Tooltip> : undefined
+                        }
+                        {
+                            d.expiresInDays !== undefined && d.expiresInDays <= 0 ?
+                                <Tooltip title={t`Deletion is imminent`}>
+                                    <Tag bordered={false} color='red'>
+                                        <ExclamationOutlined/>
+                                    </Tag>
+                                </Tooltip> : undefined
                         }
                     </Flex>
                 }

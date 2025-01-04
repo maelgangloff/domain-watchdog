@@ -83,9 +83,12 @@ final readonly class UpdateDomainsFromWatchlistHandler
                 $this->RDAPService->registerDomain($domain->getLdhName());
                 $this->bus->dispatch(new SendDomainEventNotif($watchList->getToken(), $domain->getLdhName(), $updatedAt));
             } catch (NotFoundHttpException) {
-                $notification = (new DomainDeletedNotification($this->sender, $domain));
-                $this->mailer->send($notification->asEmailMessage(new Recipient($watchList->getUser()->getEmail()))->getMessage());
-                $this->chatNotificationService->sendChatNotification($watchList, $notification);
+
+                if (!$domain->getDeleted()) {
+                    $notification = (new DomainDeletedNotification($this->sender, $domain));
+                    $this->mailer->send($notification->asEmailMessage(new Recipient($watchList->getUser()->getEmail()))->getMessage());
+                    $this->chatNotificationService->sendChatNotification($watchList, $notification);
+                }
 
                 if (null !== $watchList->getConnector()) {
                     /*
