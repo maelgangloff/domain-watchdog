@@ -121,9 +121,6 @@ class Domain
     #[Groups(['domain:item', 'domain:list'])]
     private ?bool $delegationSigned = null;
 
-    #[Groups(['domain:item', 'domain:list'])]
-    protected ?int $expiresInDays = null;
-
     private const IMPORTANT_EVENTS = [EventAction::Deletion->value, EventAction::Expiration->value];
     private const IMPORTANT_STATUS = [
         'redemption period',
@@ -468,6 +465,7 @@ class Domain
     /**
      * @throws \Exception
      */
+    #[Groups(['domain:item', 'domain:list'])]
     public function getExpiresInDays(): ?int
     {
         $now = new \DateTimeImmutable();

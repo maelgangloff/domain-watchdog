@@ -62,7 +62,7 @@ export function TrackedDomainTable() {
             const notices: ReactElement[] = []
             setDataTable(data['hydra:member'].map((d: Domain) => {
                 const expirationDate = d.events.find(e => e.action === 'expiration' && !e.deleted)?.date
-                const expiresInDays = d.expiresInDays ? -d.expiresInDays : undefined
+                const expiresInDays = d.expiresInDays && d.expiresInDays > 0 ? -d.expiresInDays : undefined
 
                 if (d.status.includes('redemption period')) {
                     if (!notices.includes(REDEMPTION_NOTICE)) notices.push(REDEMPTION_NOTICE)
