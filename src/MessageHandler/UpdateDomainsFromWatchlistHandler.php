@@ -66,7 +66,7 @@ final readonly class UpdateDomainsFromWatchlistHandler
         /*
          * A domain name is updated if one or more of these conditions are met:
          * - was updated more than 7 days ago
-         * - has statuses that suggest it will expire soon AND was updated more than an hour ago
+         * - has statuses that suggest it will expire soon AND was updated more than 15 minutes ago
          * - has specific statuses that suggest there is a dispute between the registrant and the registrar AND was updated more than a day ago
          */
 
@@ -83,7 +83,6 @@ final readonly class UpdateDomainsFromWatchlistHandler
                 $this->RDAPService->registerDomain($domain->getLdhName());
                 $this->bus->dispatch(new SendDomainEventNotif($watchList->getToken(), $domain->getLdhName(), $updatedAt));
             } catch (NotFoundHttpException) {
-
                 if (!$domain->getDeleted()) {
                     $notification = (new DomainDeletedNotification($this->sender, $domain));
                     $this->mailer->send($notification->asEmailMessage(new Recipient($watchList->getUser()->getEmail()))->getMessage());

@@ -376,7 +376,7 @@ class Domain
     /**
      * Returns true if one or more of these conditions are met:
      * - It has been more than 7 days since the domain name was last updated
-     * - It has been more than 1 hour and the domain name has statuses that suggest it is not stable
+     * - It has been more than 12 minutes and the domain name has statuses that suggest it is not stable
      * - It has been more than 1 day and the domain name is blocked in DNS
      *
      * @throws \Exception
@@ -389,7 +389,7 @@ class Domain
             : (
                 ($fromUser || ($this->getUpdatedAt()
                             ->diff(new \DateTimeImmutable())->h * 60 + $this->getUpdatedAt()
-                            ->diff(new \DateTimeImmutable())->i) >= 50
+                            ->diff(new \DateTimeImmutable())->i) >= 12
                 )
                 && $this->isToBeWatchClosely()
             )
