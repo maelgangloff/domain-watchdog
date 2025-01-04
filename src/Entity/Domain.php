@@ -468,6 +468,7 @@ class Domain
     #[Groups(['domain:item', 'domain:list'])]
     public function getExpiresInDays(): ?int
     {
+        return 0;
         $now = new \DateTimeImmutable();
         $lastStatus = $this->getDomainStatuses()->last();
         $daysToExpiration = null;
