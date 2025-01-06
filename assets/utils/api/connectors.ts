@@ -2,10 +2,11 @@ import {request} from './index'
 import type {ConnectorElement} from '../../components/tracking/connector/ConnectorsList'
 
 export enum ConnectorProvider {
-    OVH = 'ovh',
-    GANDI = 'gandi',
-    AUTODNS = 'autodns',
-    NAMECHEAP = 'namecheap'
+    OVHcloud = 'ovh',
+    Gandi = 'gandi',
+    AutoDNS = 'autodns',
+    Namecheap = 'namecheap',
+    'Name.com' = 'namecom'
 }
 
 export interface Connector {

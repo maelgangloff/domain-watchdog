@@ -5,6 +5,7 @@ namespace App\Config;
 use App\Service\Connector\AutodnsProvider;
 use App\Service\Connector\GandiProvider;
 use App\Service\Connector\NamecheapProvider;
+use App\Service\Connector\NameComProvider;
 use App\Service\Connector\OvhProvider;
 
 enum ConnectorProvider: string
@@ -13,6 +14,7 @@ enum ConnectorProvider: string
     case GANDI = 'gandi';
     case AUTODNS = 'autodns';
     case NAMECHEAP = 'namecheap';
+    case NAMECOM = 'namecom';
 
     public function getConnectorProvider(): string
     {
@@ -21,6 +23,7 @@ enum ConnectorProvider: string
             ConnectorProvider::GANDI => GandiProvider::class,
             ConnectorProvider::AUTODNS => AutodnsProvider::class,
             ConnectorProvider::NAMECHEAP => NamecheapProvider::class,
+            ConnectorProvider::NAMECOM => NameComProvider::class,
         };
     }
 }
