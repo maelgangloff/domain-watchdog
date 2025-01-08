@@ -131,8 +131,6 @@ class Domain
         'pending transfer',
         'pending update',
         'add period',
-        'client hold',
-        'server hold',
     ];
 
     public function __construct()
