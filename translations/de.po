@@ -51,18 +51,18 @@ msgstr "E-Mail-Adresse"
 #: assets/components/RegisterForm.tsx:39 assets/components/RegisterForm.tsx:47
 #: assets/components/search/DomainSearchBar.tsx:28
 #: assets/components/tracking/connector/ConnectorForm.tsx:45
-#: assets/components/tracking/connector/ConnectorForm.tsx:72
-#: assets/components/tracking/connector/ConnectorForm.tsx:80
-#: assets/components/tracking/connector/ConnectorForm.tsx:87
-#: assets/components/tracking/connector/ConnectorForm.tsx:95
-#: assets/components/tracking/connector/ConnectorForm.tsx:127
-#: assets/components/tracking/connector/ConnectorForm.tsx:158
-#: assets/components/tracking/connector/ConnectorForm.tsx:165
-#: assets/components/tracking/connector/ConnectorForm.tsx:180
-#: assets/components/tracking/connector/ConnectorForm.tsx:204
-#: assets/components/tracking/connector/ConnectorForm.tsx:237
-#: assets/components/tracking/connector/ConnectorForm.tsx:252
-#: assets/components/tracking/connector/ConnectorForm.tsx:263
+#: assets/components/tracking/connector/ConnectorForm.tsx:81
+#: assets/components/tracking/connector/ConnectorForm.tsx:89
+#: assets/components/tracking/connector/ConnectorForm.tsx:96
+#: assets/components/tracking/connector/ConnectorForm.tsx:104
+#: assets/components/tracking/connector/ConnectorForm.tsx:136
+#: assets/components/tracking/connector/ConnectorForm.tsx:163
+#: assets/components/tracking/connector/ConnectorForm.tsx:170
+#: assets/components/tracking/connector/ConnectorForm.tsx:185
+#: assets/components/tracking/connector/ConnectorForm.tsx:208
+#: assets/components/tracking/connector/ConnectorForm.tsx:254
+#: assets/components/tracking/connector/ConnectorForm.tsx:269
+#: assets/components/tracking/connector/ConnectorForm.tsx:280
 #: assets/components/tracking/watchlist/WatchlistForm.tsx:125
 #: assets/components/tracking/watchlist/WatchlistForm.tsx:228
 msgid "Required"
@@ -90,22 +90,22 @@ msgid "Registration"
 msgstr "Registrierung"
 
 #: assets/components/search/DomainLifecycleSteps.tsx:24
-#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:132
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:133
 msgid "Active"
 msgstr "Aktiv"
 
 #: assets/components/search/DomainLifecycleSteps.tsx:29
-#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:110
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:111
 msgid "Auto-Renew Grace Period"
 msgstr "Nachfrist für automatische Verlängerung"
 
 #: assets/components/search/DomainLifecycleSteps.tsx:35
-#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:118
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:119
 msgid "Redemption Grace Period"
 msgstr "Einlösezeitraum"
 
 #: assets/components/search/DomainLifecycleSteps.tsx:40
-#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:126
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:127
 msgid "Pending Delete"
 msgstr "Ausstehende Löschung"
 
@@ -120,7 +120,7 @@ msgstr ""
 "Registrierungsebene"
 
 #: assets/components/search/DomainResult.tsx:64
-#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:88
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:89
 msgid "Registry Lock"
 msgstr "Registrierungssperre"
 
@@ -133,7 +133,7 @@ msgstr ""
 "Änderungen durch Kontrollen auf Registrar-Ebene"
 
 #: assets/components/search/DomainResult.tsx:75
-#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:94
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:95
 msgid "Registrar Lock"
 msgstr "Registrarsperre"
 
@@ -146,12 +146,12 @@ msgstr ""
 "Einträgen und stellt so die Authentizität und Integrität der Antworten sicher"
 
 #: assets/components/search/DomainResult.tsx:84
-#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:100
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:101
 msgid "DNSSEC"
 msgstr "DNSSEC"
 
 #: assets/components/search/DomainResult.tsx:90
-#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:205
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:215
 msgid "EPP Status Codes"
 msgstr "EPP-Statuscodes"
 
@@ -177,7 +177,7 @@ msgid "Search"
 msgstr "Suchen"
 
 #: assets/components/Sider.tsx:41
-#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:165
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:175
 msgid "Domain"
 msgstr "Domain"
 
@@ -234,43 +234,7 @@ msgstr "Anbieter"
 msgid "Please select a Provider"
 msgstr "Bitte wählen Sie einen Anbieter"
 
-#: assets/components/tracking/connector/ConnectorForm.tsx:78
-msgid "OVH Endpoint"
-msgstr "OVH Endpunkt"
-
-#: assets/components/tracking/connector/ConnectorForm.tsx:85
-msgid "OVH subsidiary"
-msgstr "OVH-Tochtergesellschaft"
-
-#: assets/components/tracking/connector/ConnectorForm.tsx:93
-msgid "OVH pricing mode"
-msgstr "OVH Preismodell"
-
-#: assets/components/tracking/connector/ConnectorForm.tsx:98
-msgid "Confirm pricing mode"
-msgstr "Preismodus bestätigen"
-
-#: assets/components/tracking/connector/ConnectorForm.tsx:99
-msgid ""
-"Are you sure about this setting? This may result in additional charges from "
-"the API Provider"
-msgstr ""
-"Sind Sie sich bei dieser Einstellung sicher? Dies kann zu zusätzlichen "
-"Gebühren durch den API-Anbieter führen"
-
-#: assets/components/tracking/connector/ConnectorForm.tsx:125
-msgid "Personal Access Token (PAT)"
-msgstr "Persönlicher Zugriffstoken (PAT)"
-
-#: assets/components/tracking/connector/ConnectorForm.tsx:132
-msgid "Organization sharing ID"
-msgstr "Freigabe-ID der Organisation"
-
-#: assets/components/tracking/connector/ConnectorForm.tsx:136
-msgid "It indicates the organization that will pay for the ordered product"
-msgstr "Es gibt die Organisation an, die für das bestellte Produkt bezahlt"
-
-#: assets/components/tracking/connector/ConnectorForm.tsx:147
+#: assets/components/tracking/connector/ConnectorForm.tsx:69
 msgid ""
 "This provider does not provide a list of supported TLD. Please double check "
 "if the domain you want to register is supported."
@@ -279,11 +243,47 @@ msgstr ""
 "überprüfen Sie, ob die Domain, die Sie registrieren möchten, unterstützt "
 "wird."
 
-#: assets/components/tracking/connector/ConnectorForm.tsx:152
+#: assets/components/tracking/connector/ConnectorForm.tsx:87
+msgid "OVH Endpoint"
+msgstr "OVH Endpunkt"
+
+#: assets/components/tracking/connector/ConnectorForm.tsx:94
+msgid "OVH subsidiary"
+msgstr "OVH-Tochtergesellschaft"
+
+#: assets/components/tracking/connector/ConnectorForm.tsx:102
+msgid "OVH pricing mode"
+msgstr "OVH Preismodell"
+
+#: assets/components/tracking/connector/ConnectorForm.tsx:107
+msgid "Confirm pricing mode"
+msgstr "Preismodus bestätigen"
+
+#: assets/components/tracking/connector/ConnectorForm.tsx:108
+msgid ""
+"Are you sure about this setting? This may result in additional charges from "
+"the API Provider"
+msgstr ""
+"Sind Sie sich bei dieser Einstellung sicher? Dies kann zu zusätzlichen "
+"Gebühren durch den API-Anbieter führen"
+
+#: assets/components/tracking/connector/ConnectorForm.tsx:134
+msgid "Personal Access Token (PAT)"
+msgstr "Persönlicher Zugriffstoken (PAT)"
+
+#: assets/components/tracking/connector/ConnectorForm.tsx:141
+msgid "Organization sharing ID"
+msgstr "Freigabe-ID der Organisation"
+
+#: assets/components/tracking/connector/ConnectorForm.tsx:145
+msgid "It indicates the organization that will pay for the ordered product"
+msgstr "Es gibt die Organisation an, die für das bestellte Produkt bezahlt"
+
+#: assets/components/tracking/connector/ConnectorForm.tsx:157
 msgid "AutoDNS Username"
 msgstr "AutoDNS-Benutzername"
 
-#: assets/components/tracking/connector/ConnectorForm.tsx:156
+#: assets/components/tracking/connector/ConnectorForm.tsx:161
 msgid ""
 "Attention: AutoDNS do not support 2-Factor Authentication on API Users for "
 "automated systems"
@@ -291,52 +291,54 @@ msgstr ""
 "Achtung: AutoDNS unterstützt keine 2-Faktor-Authentifizierung für API-"
 "Benutzer für automatisierte Systeme"
 
-#: assets/components/tracking/connector/ConnectorForm.tsx:163
+#: assets/components/tracking/connector/ConnectorForm.tsx:168
 msgid "AutoDNS Password"
 msgstr "AutoDNS-Passwort"
 
-#: assets/components/tracking/connector/ConnectorForm.tsx:171
+#: assets/components/tracking/connector/ConnectorForm.tsx:176
 msgid "Owner nic-handle"
 msgstr "Inhaber nic-handle"
 
-#: assets/components/tracking/connector/ConnectorForm.tsx:175
+#: assets/components/tracking/connector/ConnectorForm.tsx:180
 msgid "The nic-handle of the domain name owner"
 msgstr "Der Nic-Handle des Domain-Namen-Inhabers"
 
-#: assets/components/tracking/connector/ConnectorForm.tsx:177
+#: assets/components/tracking/connector/ConnectorForm.tsx:182
 msgid "You can get it from this page"
 msgstr "Sie können es von dieser Seite erhalten"
 
-#: assets/components/tracking/connector/ConnectorForm.tsx:187
+#: assets/components/tracking/connector/ConnectorForm.tsx:192
 msgid "Context Value"
 msgstr "Kontextwert"
 
-#: assets/components/tracking/connector/ConnectorForm.tsx:191
+#: assets/components/tracking/connector/ConnectorForm.tsx:196
 msgid "If you not sure, use the default value 4"
 msgstr "Wenn Sie nicht sicher sind, verwenden Sie den Standardwert 4"
 
-#: assets/components/tracking/connector/ConnectorForm.tsx:201
+#: assets/components/tracking/connector/ConnectorForm.tsx:205
 msgid "Owner confirmation"
 msgstr "Bestätigung des Eigentümers"
 
-#: assets/components/tracking/connector/ConnectorForm.tsx:208
+#: assets/components/tracking/connector/ConnectorForm.tsx:212
 msgid "Owner confirms his consent of domain order jobs"
 msgstr "Inhaber bestätigt sein Einverständnis mit Domain-Bestellaufträgen"
 
-#: assets/components/tracking/connector/ConnectorForm.tsx:217
+#: assets/components/tracking/connector/ConnectorForm.tsx:221
+#: assets/components/tracking/connector/ConnectorForm.tsx:237
 #: assets/pages/UserPage.tsx:19
 msgid "Username"
 msgstr "Benutzername"
 
-#: assets/components/tracking/connector/ConnectorForm.tsx:223
+#: assets/components/tracking/connector/ConnectorForm.tsx:227
+#: assets/components/tracking/connector/ConnectorForm.tsx:243
 msgid "API key"
 msgstr "API-Schlüssel"
 
-#: assets/components/tracking/connector/ConnectorForm.tsx:235
+#: assets/components/tracking/connector/ConnectorForm.tsx:252
 msgid "API Terms of Service"
 msgstr "API-Nutzungsbedingungen"
 
-#: assets/components/tracking/connector/ConnectorForm.tsx:244
+#: assets/components/tracking/connector/ConnectorForm.tsx:261
 msgid ""
 "I have read and accepted the conditions of use of the Provider API, "
 "accessible from this hyperlink"
@@ -344,21 +346,21 @@ msgstr ""
 "Ich habe die Nutzungsbedingungen der Provider-API gelesen und akzeptiert, "
 "die über diesen Hyperlink zugänglich sind"
 
-#: assets/components/tracking/connector/ConnectorForm.tsx:250
+#: assets/components/tracking/connector/ConnectorForm.tsx:267
 msgid "Legal age"
 msgstr "Volljährigkeit"
 
-#: assets/components/tracking/connector/ConnectorForm.tsx:256
+#: assets/components/tracking/connector/ConnectorForm.tsx:273
 msgid "I am of the minimum age required to consent to these conditions"
 msgstr ""
 "Ich habe das erforderliche Mindestalter erreicht, um diesen Bedingungen "
 "zuzustimmen"
 
-#: assets/components/tracking/connector/ConnectorForm.tsx:261
+#: assets/components/tracking/connector/ConnectorForm.tsx:278
 msgid "Withdrawal period"
 msgstr "Rücktrittsfrist"
 
-#: assets/components/tracking/connector/ConnectorForm.tsx:267
+#: assets/components/tracking/connector/ConnectorForm.tsx:284
 msgid ""
 "I waive my right of withdrawal regarding the purchase of domain names via "
 "the Provider's API"
@@ -366,17 +368,17 @@ msgstr ""
 "Ich verzichte auf mein Widerrufsrecht beim Kauf von Domainnamen über die API "
 "des Anbieters"
 
-#: assets/components/tracking/connector/ConnectorForm.tsx:276
+#: assets/components/tracking/connector/ConnectorForm.tsx:293
 #: assets/components/tracking/watchlist/WatchlistForm.tsx:275
 msgid "Create"
 msgstr "Erstellen"
 
-#: assets/components/tracking/connector/ConnectorForm.tsx:279
+#: assets/components/tracking/connector/ConnectorForm.tsx:296
 #: assets/components/tracking/watchlist/WatchlistForm.tsx:278
 msgid "Reset"
 msgstr "Zurücksetzen"
 
-#: assets/components/tracking/connector/ConnectorsList.tsx:18
+#: assets/components/tracking/connector/ConnectorsList.tsx:19
 msgid ""
 "An error occurred while deleting the Connector. Make sure it is not used in "
 "any Watchlist"
@@ -384,40 +386,41 @@ msgstr ""
 "Beim Löschen des Connectors ist ein Fehler aufgetreten. Stellen Sie sicher, "
 "dass er in keiner Watchlist verwendet wird"
 
-#: assets/components/tracking/connector/ConnectorsList.tsx:32
-#, javascript-format
-msgid "Connector ${ connector.provider }"
+#: assets/components/tracking/connector/ConnectorsList.tsx:34
+#, fuzzy, javascript-format
+#| msgid "Connector ${ connector.provider }"
+msgid "Connector ${ connectorName }"
 msgstr "Konnektor ${ connector.provider }"
 
-#: assets/components/tracking/connector/ConnectorsList.tsx:37
+#: assets/components/tracking/connector/ConnectorsList.tsx:39
 msgid "Delete the Connector"
 msgstr "Löschen des Connectors"
 
-#: assets/components/tracking/connector/ConnectorsList.tsx:38
+#: assets/components/tracking/connector/ConnectorsList.tsx:40
 msgid "Are you sure to delete this Connector?"
 msgstr "Möchten Sie diesen Connector wirklich löschen?"
 
-#: assets/components/tracking/connector/ConnectorsList.tsx:40
+#: assets/components/tracking/connector/ConnectorsList.tsx:42
 #: assets/components/tracking/watchlist/DeleteWatchlistButton.tsx:16
 msgid "Yes"
 msgstr "Ja"
 
-#: assets/components/tracking/connector/ConnectorsList.tsx:41
+#: assets/components/tracking/connector/ConnectorsList.tsx:43
 #: assets/components/tracking/watchlist/DeleteWatchlistButton.tsx:17
 msgid "No"
 msgstr "Nein"
 
-#: assets/components/tracking/connector/ConnectorsList.tsx:45
+#: assets/components/tracking/connector/ConnectorsList.tsx:47
 #, javascript-format
 msgid "Creation date: ${ createdAt }"
 msgstr "Erstellungsdatum: ${ createdAt }"
 
-#: assets/components/tracking/connector/ConnectorsList.tsx:46
+#: assets/components/tracking/connector/ConnectorsList.tsx:48
 #, javascript-format
 msgid "Used in: ${ watchlistCount } Watchlist"
 msgstr "Verwendet in: ${ watchlistCount } Watchlist"
 
-#: assets/components/tracking/connector/ConnectorsList.tsx:47
+#: assets/components/tracking/connector/ConnectorsList.tsx:51
 msgid ""
 "You can stop using a connector at any time. To delete a connector, you must "
 "remove it from each linked Watchlist.\n"
@@ -434,6 +437,10 @@ msgstr ""
 "Sie die Bedingungen für die Nutzung der API des Anbieters erfüllen, auf das "
 "Widerrufsrecht verzichten und das Mindestalter für die Zustimmung zu diesen "
 "Bedingungen erreicht haben."
+
+#: assets/components/tracking/connector/ConnectorsList.tsx:55
+msgid "The Provider’s conditions are accessible by following this hyperlink."
+msgstr ""
 
 #: assets/components/tracking/watchlist/CalendarWatchlistButton.tsx:15
 msgid "QR Code for iCalendar export"
@@ -469,7 +476,7 @@ msgstr "Registrierung"
 msgid ".${ tld.tld } Registry"
 msgstr ".${ tld.tld } Registrierung"
 
-#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:28
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:29
 msgid ""
 "At least one domain name is in redemption period and will potentially be "
 "deleted soon"
@@ -477,7 +484,7 @@ msgstr ""
 "Mindestens ein Domainname befindet sich im Einlösezeitraum und könnte bald "
 "gelöscht werden"
 
-#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:36
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:37
 msgid ""
 "At least one domain name is pending deletion and will soon become available "
 "for registration again"
@@ -485,38 +492,42 @@ msgstr ""
 "Mindestens ein Domänenname steht zur Löschung an und wird bald wieder zur "
 "Registrierung verfügbar sein"
 
-#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:141
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:143
 msgid "Estimated number of days until WHOIS removal"
 msgstr "Geschätzte Anzahl von Tagen bis zur WHOIS-Entfernung"
 
-#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:144
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:146
 #, javascript-format
 msgid "J ${ expiresInDays }"
 msgstr "J ${ expiresInDays }"
 
-#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:171
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:152
+msgid "Deletion is imminent"
+msgstr ""
+
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:181
 msgid "Status"
 msgstr "Status"
 
-#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:177
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:187
 msgid "Options"
 msgstr "Optionen"
 
-#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:183
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:193
 msgid "Expiration date"
 msgstr "Verfallsdatum"
 
-#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:197
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:207
 msgid "Updated at"
 msgstr "Aktualisiert am"
 
-#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:225
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:235
 msgid "No tracked domain names were found, please create your first Watchlist"
 msgstr ""
 "Es wurden keine getrackten Domainnamen gefunden, bitte erstellen Sie Ihre "
 "erste Watchlist"
 
-#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:234
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:244
 msgid ""
 "Please note that this table does not include domain names marked as expired "
 "or those with an unknown expiration date"
@@ -524,13 +535,13 @@ msgstr ""
 "Bitte beachten Sie, dass diese Tabelle keine Domänennamen enthält, die als "
 "abgelaufen markiert sind oder deren Ablaufdatum unbekannt ist"
 
-#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:239
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:249
 msgid "At least one domain name you are tracking requires special attention"
 msgstr ""
 "Mindestens ein Domänenname, den Sie verfolgen, erfordert besondere "
 "Aufmerksamkeit"
 
-#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:245
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:255
 msgid "The domain names below are subject to special monitoring"
 msgstr ""
 "Die unten aufgeführten Domänennamen unterliegen einer besonderen Überwachung"
@@ -1394,7 +1405,7 @@ msgstr "Bitte versuchen Sie es nach ${ duration } Sekunden erneut"
 msgid "An error occurred"
 msgstr "Es ist ein Fehler aufgetreten"
 
-#: assets/utils/providers/index.tsx:14
+#: assets/utils/providers/index.tsx:14 assets/utils/providers/index.tsx:39
 msgid ""
 "Retrieve a set of tokens from your customer account on the Provider's website"
 msgstr ""
