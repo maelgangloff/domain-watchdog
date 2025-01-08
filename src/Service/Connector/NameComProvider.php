@@ -53,12 +53,9 @@ class NameComProvider extends AbstractProvider
                     'domain' => [
                         [
                             'domainName' => $domain->getLdhName(),
-                            // 'contacts' => [],
-                            // 'privacyEnabled' => false,
                             'locked' => false,
                             'autorenewEnabled' => false,
                         ],
-                        // 'purchasePrice' => 0,
                         'purchaseType' => 'registration',
                         'years' => 1,
                         // 'tldRequirements' => []
