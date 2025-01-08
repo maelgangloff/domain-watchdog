@@ -68,7 +68,7 @@ export function ConnectorForm({form, onCreate}: { form: FormInstance, onCreate: 
                         [ConnectorProvider.AutoDNS, ConnectorProvider['Name.com']].includes(provider) && <Alert
                             message={t`This provider does not provide a list of supported TLD. Please double check if the domain you want to register is supported.`}
                             type='warning'
-                            style={{marginBottom: '2vh'}}
+                            style={{marginBottom: '2em'}}
                         />
                     }
                     {
