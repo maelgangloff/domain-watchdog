@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2025-01-03 14:43+0000\n"
+"PO-Revision-Date: 2025-01-08 20:01+0000\n"
 "Last-Translator: Maël Gangloff <contact@maelgangloff.fr>\n"
 "Language-Team: German <https://weblate.vinceh121.me/projects/domain-watchdog/"
 "domain-watchdog-dashboard/de/>\n"
@@ -387,10 +387,9 @@ msgstr ""
 "dass er in keiner Watchlist verwendet wird"
 
 #: assets/components/tracking/connector/ConnectorsList.tsx:34
-#, fuzzy, javascript-format
-#| msgid "Connector ${ connector.provider }"
+#, javascript-format
 msgid "Connector ${ connectorName }"
-msgstr "Konnektor ${ connector.provider }"
+msgstr "Anschluss ${ connectorName }"
 
 #: assets/components/tracking/connector/ConnectorsList.tsx:39
 msgid "Delete the Connector"
@@ -440,7 +439,7 @@ msgstr ""
 
 #: assets/components/tracking/connector/ConnectorsList.tsx:55
 msgid "The Provider’s conditions are accessible by following this hyperlink."
-msgstr ""
+msgstr "Die Bedingungen des Providers sind über diesen Hyperlink zugänglich."
 
 #: assets/components/tracking/watchlist/CalendarWatchlistButton.tsx:15
 msgid "QR Code for iCalendar export"
@@ -503,7 +502,7 @@ msgstr "J ${ expiresInDays }"
 
 #: assets/components/tracking/watchlist/TrackedDomainTable.tsx:152
 msgid "Deletion is imminent"
-msgstr ""
+msgstr "Löschung steht unmittelbar bevor"
 
 #: assets/components/tracking/watchlist/TrackedDomainTable.tsx:181
 msgid "Status"
