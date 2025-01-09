@@ -471,7 +471,7 @@ class Domain
         $daysToExpiration = null;
 
         if ($lastStatus) {
-            if (in_array('pending delete', $lastStatus->getAddStatus()) && !in_array('redemption period', $lastStatus->getAddStatus())) {
+            if (in_array('pending delete', $lastStatus->getAddStatus()) && !in_array('redemption period', $this->getStatus())) {
                 $daysToExpiration = self::daysBetween($now, $lastStatus->getCreatedAt()->add(new \DateInterval('P5D')));
             }
             if (in_array('redemption period', $lastStatus->getAddStatus())) {
@@ -483,7 +483,7 @@ class Domain
         $deletedAt = null;
         foreach ($this->getEvents()->getIterator() as $event) {
             $expiredAt = !$event->getDeleted() && 'expiration' === $event->getAction() ? $event->getDate() : $expiredAt;
-            $deletedAt = !$event->getDeleted() && 'deletion' === $event->getAction() && in_array('redemption period', $lastStatus->getAddStatus()) ? $event->getDate() : $deletedAt;
+            $deletedAt = !$event->getDeleted() && 'deletion' === $event->getAction() && in_array('redemption period', $this->getStatus()) ? $event->getDate() : $deletedAt;
         }
 
         if ($deletedAt) {
