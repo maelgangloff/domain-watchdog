@@ -319,12 +319,29 @@ class WatchListController extends AbstractController
                 $calendar->addEvent((new Event())
                     ->setLastModified(new Timestamp($domain->getUpdatedAt()))
                     ->setStatus(EventStatus::CONFIRMED())
-                    ->setSummary($domain->getLdhName().' ('.$event->getAction().')')
+                    ->setSummary($domain->getLdhName().': '.$event->getAction())
                     ->addCategory(new Category($event->getAction()))
                     ->setAttendees($attendees)
                     ->setOccurrence(new SingleDay(new Date($event->getDate())))
                 );
             }
+
+            $expiresInDays = $domain->getExpiresInDays();
+
+            if (null === $expiresInDays) {
+                continue;
+            }
+
+            $calendar->addEvent((new Event())
+                ->setLastModified(new Timestamp($domain->getUpdatedAt()))
+                ->setStatus(EventStatus::CONFIRMED())
+                ->setSummary($domain->getLdhName().': estimated WHOIS release date')
+                ->addCategory(new Category('release'))
+                ->setAttendees($attendees)
+                ->setOccurrence(new SingleDay(new Date(
+                    (new \DateTimeImmutable())->setTime(0, 0)->add(new \DateInterval('P'.$expiresInDays.'D'))
+                )))
+            );
         }
 
         $calendarResponse = (new CalendarFactory())->createCalendar($calendar);
