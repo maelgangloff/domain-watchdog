@@ -381,22 +381,35 @@ class Domain
      */
     public function isToBeUpdated(bool $fromUser = true): bool
     {
-        return $this->getUpdatedAt()->diff(new \DateTimeImmutable())->days >= 7
-        || $this->getDeleted()
-            ? $fromUser
-            : (
-                ($fromUser || ($this->getUpdatedAt()
-                            ->diff(new \DateTimeImmutable())->h * 60 + $this->getUpdatedAt()
-                            ->diff(new \DateTimeImmutable())->i) >= 12
-                )
-                && $this->isToBeWatchClosely()
-            )
-            || (
-                false == $this->getDeleted() && (
-                    count(array_intersect($this->getStatus(), ['auto renew period', 'client hold', 'server hold'])) > 0
-                    && $this->getUpdatedAt()->diff(new \DateTimeImmutable())->days >= 1
-                )
-            );
+        $updatedAtDiff = $this->getUpdatedAt()->diff(new \DateTimeImmutable());
+
+        if ($updatedAtDiff->days >= 7) {
+            return true;
+        }
+
+        if ($this->getDeleted()) {
+            return $fromUser;
+        }
+
+        $expiresIn = $this->getExpiresInDays();
+
+        if (0 === $expiresIn) {
+            return true;
+        }
+
+        $minutesDiff = $updatedAtDiff->h * 60 + $updatedAtDiff->i;
+        if (($minutesDiff >= 12 || $fromUser) && $this->isToBeWatchClosely()) {
+            return true;
+        }
+
+        if (
+            count(array_intersect($this->getStatus(), ['auto renew period', 'client hold', 'server hold'])) > 0
+            && $updatedAtDiff->days >= 1
+        ) {
+            return true;
+        }
+
+        return false;
     }
 
     /**
@@ -471,7 +484,7 @@ class Domain
         $daysToExpiration = null;
 
         if ($lastStatus) {
-            if (in_array('pending delete', $lastStatus->getAddStatus()) && !in_array('redemption period', $this->getStatus())) {
+            if (in_array('pending delete', $lastStatus->getAddStatus()) && !$this->isRedemptionPeriod()) {
                 $daysToExpiration = self::daysBetween($now, $lastStatus->getCreatedAt()->add(new \DateInterval('P5D')));
             }
             if (in_array('redemption period', $lastStatus->getAddStatus())) {
@@ -483,7 +496,7 @@ class Domain
         $deletedAt = null;
         foreach ($this->getEvents()->getIterator() as $event) {
             $expiredAt = !$event->getDeleted() && 'expiration' === $event->getAction() ? $event->getDate() : $expiredAt;
-            $deletedAt = !$event->getDeleted() && 'deletion' === $event->getAction() && in_array('redemption period', $this->getStatus()) ? $event->getDate() : $deletedAt;
+            $deletedAt = !$event->getDeleted() && 'deletion' === $event->getAction() && $this->isRedemptionPeriod() ? $event->getDate() : $deletedAt;
         }
 
         if ($deletedAt) {
@@ -498,5 +511,10 @@ class Domain
         }
 
         return null;
+    }
+
+    public function isRedemptionPeriod(): bool
+    {
+        return in_array('redemption period', $this->getStatus());
     }
 }
