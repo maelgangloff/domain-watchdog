@@ -24,7 +24,7 @@ class ConnectorController extends AbstractController
         private readonly EntityManagerInterface $em,
         private readonly LoggerInterface $logger,
         #[Autowire(service: 'service_container')]
-        private ContainerInterface $locator,
+        private readonly ContainerInterface $locator,
     ) {
     }
 

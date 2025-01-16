@@ -1,4 +1,4 @@
-import {List, Tag, Tooltip, Typography} from 'antd'
+import {Flex, List, Tag, Tooltip, Typography} from 'antd'
 import React from 'react'
 import type {Domain} from '../../utils/api'
 import {rdapRoleDetailTranslation, rdapRoleTranslation} from '../../utils/functions/rdapTranslation'
@@ -37,7 +37,9 @@ export function EntitiesList({domain}: { domain: Domain }) {
                             {details.organization && <div>🏢 {details.organization}</div>}
                         </>}
                     />
-                    {e.roles.map(roleToTag)}
+                    <Flex gap='4px 0' wrap>
+                        {e.roles.map(roleToTag)}
+                    </Flex>
                 </List.Item>
             }}
         />
