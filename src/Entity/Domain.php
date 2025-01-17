@@ -466,11 +466,52 @@ class Domain
         return $this;
     }
 
+    public function isRedemptionPeriod(): bool
+    {
+        return in_array('redemption period', $this->getStatus());
+    }
+
+    private function calculateDaysFromStatus($lastStatus, \DateTimeImmutable $now): ?int
+    {
+        if (in_array('pending delete', $lastStatus->getAddStatus()) && !$this->isRedemptionPeriod()) {
+            return self::daysBetween($now, $lastStatus->getCreatedAt()->add(new \DateInterval('P5D')));
+        }
+        if (in_array('redemption period', $lastStatus->getAddStatus())) {
+            return self::daysBetween($now, $lastStatus->getCreatedAt()->add(new \DateInterval('P35D')));
+        }
+
+        return null;
+    }
+
     private static function daysBetween(\DateTimeImmutable $start, \DateTimeImmutable $end): int
     {
         $interval = $start->setTime(0, 0)->diff($end->setTime(0, 0));
 
         return $interval->invert ? -$interval->days : $interval->days;
+    }
+
+    private static function returnExpiresIn(int $guess1, int $guess2)
+    {
+        return $guess1 < 0 ? $guess2 : ($guess2 < 0 ? $guess1 : min($guess1, $guess2));
+    }
+
+    /**
+     * @throws \Exception
+     */
+    private function getRelevantDates(): array
+    {
+        $expiredAt = $deletedAt = null;
+        foreach ($this->getEvents()->getIterator() as $event) {
+            if (!$event->getDeleted()) {
+                if ('expiration' === $event->getAction()) {
+                    $expiredAt = $event->getDate();
+                } elseif ('deletion' === $event->getAction() && $this->isRedemptionPeriod()) {
+                    $deletedAt = $event->getDate();
+                }
+            }
+        }
+
+        return [$expiredAt, $deletedAt];
     }
 
     /**
@@ -481,40 +522,22 @@ class Domain
     {
         $now = new \DateTimeImmutable();
         $lastStatus = $this->getDomainStatuses()->last();
-        $daysToExpiration = null;
+        $daysToExpiration = $lastStatus ? $this->calculateDaysFromStatus($lastStatus, $now) : null;
 
-        if ($lastStatus) {
-            if (in_array('pending delete', $lastStatus->getAddStatus()) && !$this->isRedemptionPeriod()) {
-                $daysToExpiration = self::daysBetween($now, $lastStatus->getCreatedAt()->add(new \DateInterval('P5D')));
-            }
-            if (in_array('redemption period', $lastStatus->getAddStatus())) {
-                $daysToExpiration = self::daysBetween($now, $lastStatus->getCreatedAt()->add(new \DateInterval('P35D')));
-            }
-        }
-
-        $expiredAt = null;
-        $deletedAt = null;
-        foreach ($this->getEvents()->getIterator() as $event) {
-            $expiredAt = !$event->getDeleted() && 'expiration' === $event->getAction() ? $event->getDate() : $expiredAt;
-            $deletedAt = !$event->getDeleted() && 'deletion' === $event->getAction() && $this->isRedemptionPeriod() ? $event->getDate() : $deletedAt;
-        }
+        [$expiredAt, $deletedAt] = $this->getRelevantDates();
 
         if ($deletedAt) {
             $guess = self::daysBetween($now, $deletedAt->add(new \DateInterval('P30D')));
 
-            return min($guess, $daysToExpiration ?? $guess);
+            return self::returnExpiresIn($guess, $daysToExpiration ?? $guess);
         }
-        if ($expiredAt) {
-            $guess = self::daysBetween($now, $expiredAt->add(new \DateInterval('P65D')));
 
-            return min($guess, $daysToExpiration ?? $guess);
+        if ($expiredAt) {
+            $guess = self::daysBetween($now, $expiredAt->add(new \DateInterval('P'.(45 + 30 + 5).'D')));
+
+            return self::returnExpiresIn($guess, $daysToExpiration ?? $guess);
         }
 
         return null;
-    }
-
-    public function isRedemptionPeriod(): bool
-    {
-        return in_array('redemption period', $this->getStatus());
     }
 }
