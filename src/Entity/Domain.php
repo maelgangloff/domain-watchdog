@@ -505,7 +505,7 @@ class Domain
             if (!$event->getDeleted()) {
                 if ('expiration' === $event->getAction()) {
                     $expiredAt = $event->getDate();
-                } elseif ('deletion' === $event->getAction() && $this->isRedemptionPeriod()) {
+                } elseif ('deletion' === $event->getAction()) {
                     $deletedAt = $event->getDate();
                 }
             }
@@ -527,6 +527,10 @@ class Domain
         [$expiredAt, $deletedAt] = $this->getRelevantDates();
 
         if ($deletedAt) {
+            if (0 === self::daysBetween($now, $deletedAt) && in_array('pending delete', $this->getStatus())) {
+                return 0;
+            }
+
             $guess = self::daysBetween($now, $deletedAt->add(new \DateInterval('P30D')));
 
             return self::returnExpiresIn($guess, $daysToExpiration ?? $guess);
