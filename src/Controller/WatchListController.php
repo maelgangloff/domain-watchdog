@@ -13,6 +13,7 @@ use App\Repository\WatchListRepository;
 use App\Service\ChatNotificationService;
 use App\Service\Connector\AbstractProvider;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\LockMode;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Exception\ORMException;
 use Eluceo\iCal\Domain\Entity\Attendee;
@@ -257,11 +258,19 @@ class WatchListController extends AbstractController
             'token' => $watchList->getToken(),
         ]);
 
-        $this->em->remove($this->em->getReference(WatchList::class, $watchList->getToken()));
+        $this->em->beginTransaction();
+
+        /** @var WatchList $oldWatchlist */
+        $oldWatchlist = $this->em->getReference(WatchList::class, $watchList->getToken());
+        $this->em->lock($oldWatchlist, LockMode::PESSIMISTIC_WRITE);
+
+        $this->em->remove($oldWatchlist);
         $this->em->flush();
 
         $this->em->persist($watchList);
         $this->em->flush();
+
+        $this->em->commit();
 
         return $watchList;
     }

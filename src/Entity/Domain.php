@@ -471,6 +471,11 @@ class Domain
         return in_array('redemption period', $this->getStatus());
     }
 
+    public function isPendingDelete(): bool
+    {
+        return in_array('pending delete', $this->getStatus()) && !in_array('redemption period', $this->getStatus());
+    }
+
     private function calculateDaysFromStatus($lastStatus, \DateTimeImmutable $now): ?int
     {
         if (in_array('pending delete', $lastStatus->getAddStatus()) && !$this->isRedemptionPeriod()) {
