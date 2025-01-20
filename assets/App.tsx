@@ -70,7 +70,7 @@ export default function App(): React.ReactElement {
     return (
         <ConfigProvider
             theme={{
-                algorithm: darkMode ? theme.darkAlgorithm : theme.compactAlgorithm
+                algorithm: darkMode ? theme.darkAlgorithm : undefined
             }}
         >
             <AuthenticatedContext.Provider value={contextValue}>
