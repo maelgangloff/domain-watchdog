@@ -476,13 +476,16 @@ class Domain
         return in_array('pending delete', $this->getStatus()) && !in_array('redemption period', $this->getStatus());
     }
 
+    /**
+     * @throws \DateMalformedIntervalStringException
+     */
     private function calculateDaysFromStatus($lastStatus, \DateTimeImmutable $now): ?int
     {
         if (in_array('pending delete', $lastStatus->getAddStatus()) && !$this->isRedemptionPeriod()) {
-            return self::daysBetween($now, $lastStatus->getCreatedAt()->add(new \DateInterval('P5D')));
+            return self::daysBetween($now, $lastStatus->getCreatedAt()->add(new \DateInterval('P'. 6 .'D')));
         }
         if (in_array('redemption period', $lastStatus->getAddStatus())) {
-            return self::daysBetween($now, $lastStatus->getCreatedAt()->add(new \DateInterval('P35D')));
+            return self::daysBetween($now, $lastStatus->getCreatedAt()->add(new \DateInterval('P'.(30 + 6).'D')));
         }
 
         return null;
@@ -532,17 +535,18 @@ class Domain
         [$expiredAt, $deletedAt] = $this->getRelevantDates();
 
         if ($deletedAt) {
+            // It has been observed that AFNIC, on the last day, adds a "deleted" event and removes the redemption period status.
             if (0 === self::daysBetween($now, $deletedAt) && in_array('pending delete', $this->getStatus())) {
                 return 0;
             }
 
-            $guess = self::daysBetween($now, $deletedAt->add(new \DateInterval('P30D')));
+            $guess = self::daysBetween($now, $deletedAt->add(new \DateInterval('P'. 30 .'D')));
 
             return self::returnExpiresIn($guess, $daysToExpiration ?? $guess);
         }
 
         if ($expiredAt) {
-            $guess = self::daysBetween($now, $expiredAt->add(new \DateInterval('P'.(45 + 30 + 5).'D')));
+            $guess = self::daysBetween($now, $expiredAt->add(new \DateInterval('P'.(45 + 30 + 6).'D')));
 
             return self::returnExpiresIn($guess, $daysToExpiration ?? $guess);
         }
