@@ -563,6 +563,10 @@ class Domain
         $now = new \DateTimeImmutable();
         [$expiredAt, $deletedAt] = $this->getRelevantDates();
 
+        if ($expiredAt) {
+            $guess = self::daysBetween($now, $expiredAt->add(new \DateInterval('P'.(45 + 30 + 6).'D')));
+        }
+
         if ($deletedAt) {
             // It has been observed that AFNIC, on the last day, adds a "deleted" event and removes the redemption period status.
             if (0 === self::daysBetween($now, $deletedAt) && $this->isPendingDelete()) {
@@ -570,10 +574,6 @@ class Domain
             }
 
             $guess = self::daysBetween($now, $deletedAt->add(new \DateInterval('P'. 30 .'D')));
-        }
-
-        if ($expiredAt) {
-            $guess = self::daysBetween($now, $expiredAt->add(new \DateInterval('P'.(45 + 30 + 6).'D')));
         }
 
         return self::returnExpiresIn([
