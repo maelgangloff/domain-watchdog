@@ -30,7 +30,7 @@ class DomainOrderNotification extends DomainWatchdogNotification
         $this
             ->subject("Success: Domain Ordered $ldhName!")
             ->content("Domain name $ldhName has just been purchased. The API provider did not return an error.")
-            ->importance(Notification::IMPORTANCE_HIGH);
+            ->importance(Notification::IMPORTANCE_URGENT);
 
         return ChatMessage::fromNotification($this);
     }
@@ -41,7 +41,7 @@ class DomainOrderNotification extends DomainWatchdogNotification
         $this
             ->subject("Success: Domain Ordered $ldhName!")
             ->content("Domain name $ldhName has just been purchased. The API provider did not return an error.")
-            ->importance(Notification::IMPORTANCE_HIGH);
+            ->importance(Notification::IMPORTANCE_URGENT);
 
         return PushMessage::fromNotification($this);
     }

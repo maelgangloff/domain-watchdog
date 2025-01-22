@@ -51,7 +51,7 @@ class DomainUpdateNotification extends DomainWatchdogNotification
         return new EmailMessage((new TemplatedEmail())
             ->from($this->sender)
             ->to($recipient->getEmail())
-            ->priority(Email::PRIORITY_HIGHEST)
+            ->priority(Email::PRIORITY_HIGH)
             ->subject("Domain name $ldhName information has been updated")
             ->htmlTemplate('emails/success/domain_updated.html.twig')
             ->locale('en')

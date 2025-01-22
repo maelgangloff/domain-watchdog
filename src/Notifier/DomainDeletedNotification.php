@@ -5,6 +5,7 @@ namespace App\Notifier;
 use App\Entity\Domain;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\Mime\Address;
+use Symfony\Component\Mime\Email;
 use Symfony\Component\Notifier\Message\ChatMessage;
 use Symfony\Component\Notifier\Message\EmailMessage;
 use Symfony\Component\Notifier\Message\PushMessage;
@@ -48,6 +49,7 @@ class DomainDeletedNotification extends DomainWatchdogNotification
         return new EmailMessage((new TemplatedEmail())
             ->from($this->sender)
             ->to($recipient->getEmail())
+            ->priority(Email::PRIORITY_HIGHEST)
             ->subject("Domain name $ldhName has been removed from WHOIS")
             ->htmlTemplate('emails/errors/domain_deleted.html.twig')
             ->locale('en')

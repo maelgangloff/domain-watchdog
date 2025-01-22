@@ -5,6 +5,7 @@ namespace App\Notifier;
 use App\Entity\Domain;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\Mime\Address;
+use Symfony\Component\Mime\Email;
 use Symfony\Component\Notifier\Message\ChatMessage;
 use Symfony\Component\Notifier\Message\EmailMessage;
 use Symfony\Component\Notifier\Message\PushMessage;
@@ -48,6 +49,7 @@ class DomainUpdateErrorNotification extends DomainWatchdogNotification
         return new EmailMessage((new TemplatedEmail())
             ->from($this->sender)
             ->to($recipient->getEmail())
+            ->priority(Email::PRIORITY_NORMAL)
             ->subject("Domain name $ldhName tried to be updated")
             ->htmlTemplate('emails/errors/domain_update.html.twig')
             ->locale('en')
