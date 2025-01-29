@@ -560,6 +560,10 @@ class Domain
     #[Groups(['domain:item', 'domain:list'])]
     public function getExpiresInDays(): ?int
     {
+        if ($this->getDeleted()) {
+            return null;
+        }
+
         $now = new \DateTimeImmutable();
         [$expiredAt, $deletedAt] = $this->getRelevantDates();
 

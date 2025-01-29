@@ -161,7 +161,7 @@ readonly class RDAPService
         $this->updateDomainEntities($domain, $rdapData);
         $this->updateDomainNameservers($domain, $rdapData);
 
-        $domain->updateTimestamps();
+        $domain->setDeleted(false)->updateTimestamps();
 
         $this->em->persist($domain);
         $this->em->flush();
