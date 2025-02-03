@@ -487,10 +487,10 @@ class Domain
         }
 
         if (in_array('pending delete', $lastStatus->getAddStatus()) && !$this->isRedemptionPeriod()) {
-            return self::daysBetween($now, $lastStatus->getCreatedAt()->add(new \DateInterval('P'. 6 .'D')));
+            return self::daysBetween($now, $lastStatus->getCreatedAt()->add(new \DateInterval('P'. 5 .'D')));
         }
         if (in_array('redemption period', $lastStatus->getAddStatus())) {
-            return self::daysBetween($now, $lastStatus->getCreatedAt()->add(new \DateInterval('P'.(30 + 6).'D')));
+            return self::daysBetween($now, $lastStatus->getCreatedAt()->add(new \DateInterval('P'.(30 + 5).'D')));
         }
 
         return null;
@@ -505,10 +505,10 @@ class Domain
         }
 
         if ($this->isRedemptionPeriod()) {
-            return self::daysBetween($now, $lastChangedEvent->getDate()->add(new \DateInterval('P'.(30 + 6).'D')));
+            return self::daysBetween($now, $lastChangedEvent->getDate()->add(new \DateInterval('P'.(30 + 5).'D')));
         }
         if ($this->isPendingDelete()) {
-            return self::daysBetween($now, $lastChangedEvent->getDate()->add(new \DateInterval('P'. 6 .'D')));
+            return self::daysBetween($now, $lastChangedEvent->getDate()->add(new \DateInterval('P'. 5 .'D')));
         }
 
         return null;
@@ -568,7 +568,7 @@ class Domain
         [$expiredAt, $deletedAt] = $this->getRelevantDates();
 
         if ($expiredAt) {
-            $guess = self::daysBetween($now, $expiredAt->add(new \DateInterval('P'.(45 + 30 + 6).'D')));
+            $guess = self::daysBetween($now, $expiredAt->add(new \DateInterval('P'.(45 + 30 + 5).'D')));
         }
 
         if ($deletedAt) {
