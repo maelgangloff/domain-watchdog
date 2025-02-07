@@ -393,7 +393,7 @@ class Domain
 
         $expiresIn = $this->getExpiresInDays();
 
-        if (0 === $expiresIn) {
+        if (0 === $expiresIn || 1 === $expiresIn) {
             return true;
         }
 
