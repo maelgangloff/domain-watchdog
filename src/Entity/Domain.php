@@ -525,14 +525,14 @@ class Domain
     private static function returnExpiresIn(array $guesses): ?int
     {
         $filteredGuesses = array_filter($guesses, function ($value) {
-            return null !== $value && $value >= 0;
+            return null !== $value;
         });
 
         if (empty($filteredGuesses)) {
             return null;
         }
 
-        return min($filteredGuesses);
+        return max(min($filteredGuesses), 0);
     }
 
     /**
