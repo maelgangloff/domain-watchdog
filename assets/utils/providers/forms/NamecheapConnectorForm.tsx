@@ -19,6 +19,9 @@ export default function NamecheapConnectorForm({form, onCreate}: {
     onCreate: (values: Connector) => void
 }) {
 
+
+    form.setFieldValue('provider', ConnectorProvider.Namecheap)
+
     return (
         <Form
             {...formItemLayoutWithOutLabel}
@@ -28,10 +31,6 @@ export default function NamecheapConnectorForm({form, onCreate}: {
             wrapperCol={{span: 14}}
             onFinish={onCreate}
         >
-            <Form.Item name='provider' hidden>
-                <Input value={ConnectorProvider.Namecheap}/>
-            </Form.Item>
-
             <Form.Item
                 label={t`Username`}
                 name={['authData', 'ApiUser']}

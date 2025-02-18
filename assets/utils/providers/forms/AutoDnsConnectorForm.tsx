@@ -19,6 +19,8 @@ export default function AutoDnsConnectorForm({form, onCreate}: {
     onCreate: (values: Connector) => void
 }) {
 
+    form.setFieldValue('provider', ConnectorProvider.AutoDNS)
+
     return (
         <Form
             {...formItemLayoutWithOutLabel}
@@ -28,9 +30,6 @@ export default function AutoDnsConnectorForm({form, onCreate}: {
             wrapperCol={{span: 14}}
             onFinish={onCreate}
         >
-            <Form.Item name='provider' hidden>
-                <Input value={ConnectorProvider.AutoDNS}/>
-            </Form.Item>
             <Alert
                 message={t`This provider does not provide a list of supported TLD. Please double check if the domain you want to register is supported.`}
                 type='warning'

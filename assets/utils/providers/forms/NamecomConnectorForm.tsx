@@ -19,6 +19,8 @@ export default function NamecomConnectorForm({form, onCreate}: {
     onCreate: (values: Connector) => void
 }) {
 
+    form.setFieldValue('provider', ConnectorProvider["Name.com"])
+
     return (
         <Form
             {...formItemLayoutWithOutLabel}
@@ -28,9 +30,6 @@ export default function NamecomConnectorForm({form, onCreate}: {
             wrapperCol={{span: 14}}
             onFinish={onCreate}
         >
-            <Form.Item name='provider' hidden>
-                <Input value={ConnectorProvider["Name.com"]}/>
-            </Form.Item>
             <Alert
                 message={t`This provider does not provide a list of supported TLD. Please double check if the domain you want to register is supported.`}
                 type='warning'

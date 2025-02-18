@@ -1,9 +1,13 @@
-import {Button, Checkbox, Form, Typography} from "antd"
+import {Button, Checkbox, Form, Input, Typography} from "antd"
 import {t} from "ttag"
 import React from "react"
 
 export function DefaultConnectorFormItems({tosLink}: { tosLink: string }) {
     return <>
+        <Form.Item name="provider" noStyle>
+            <Input type="hidden" />
+        </Form.Item>
+
         <Form.Item
             valuePropName='checked'
             label={t`API Terms of Service`}

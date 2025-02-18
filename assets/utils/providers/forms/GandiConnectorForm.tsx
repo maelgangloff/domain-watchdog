@@ -19,6 +19,8 @@ export default function GandiConnectorForm({form, onCreate}: {
     onCreate: (values: Connector) => void
 }) {
 
+    form.setFieldValue('provider', ConnectorProvider.Gandi)
+
     return (
         <Form
             {...formItemLayoutWithOutLabel}
@@ -28,10 +30,6 @@ export default function GandiConnectorForm({form, onCreate}: {
             wrapperCol={{span: 14}}
             onFinish={onCreate}
         >
-            <Form.Item name='provider' hidden>
-                <Input value={ConnectorProvider.Gandi}/>
-            </Form.Item>
-
             <Form.Item
                 label={t`Personal Access Token (PAT)`}
                 name={['authData', 'token']}

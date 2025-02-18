@@ -46,18 +46,18 @@ msgstr ""
 #: assets/components/search/DomainSearchBar.tsx:28
 #: assets/components/tracking/watchlist/WatchlistForm.tsx:125
 #: assets/components/tracking/watchlist/WatchlistForm.tsx:228
-#: assets/utils/providers/forms/AutoDnsConnectorForm.tsx:48
-#: assets/utils/providers/forms/AutoDnsConnectorForm.tsx:55
-#: assets/utils/providers/forms/AutoDnsConnectorForm.tsx:70
-#: assets/utils/providers/forms/AutoDnsConnectorForm.tsx:93
-#: assets/utils/providers/forms/GandiConnectorForm.tsx:38
-#: assets/utils/providers/forms/OvhCloudConnectorForm.tsx:65
-#: assets/utils/providers/forms/OvhCloudConnectorForm.tsx:73
-#: assets/utils/providers/forms/OvhCloudConnectorForm.tsx:80
-#: assets/utils/providers/forms/OvhCloudConnectorForm.tsx:88
-#: assets/utils/providers/forms/index.tsx:11
-#: assets/utils/providers/forms/index.tsx:26
-#: assets/utils/providers/forms/index.tsx:37
+#: assets/utils/providers/forms/AutoDnsConnectorForm.tsx:47
+#: assets/utils/providers/forms/AutoDnsConnectorForm.tsx:54
+#: assets/utils/providers/forms/AutoDnsConnectorForm.tsx:69
+#: assets/utils/providers/forms/AutoDnsConnectorForm.tsx:92
+#: assets/utils/providers/forms/GandiConnectorForm.tsx:36
+#: assets/utils/providers/forms/OvhCloudConnectorForm.tsx:63
+#: assets/utils/providers/forms/OvhCloudConnectorForm.tsx:71
+#: assets/utils/providers/forms/OvhCloudConnectorForm.tsx:78
+#: assets/utils/providers/forms/OvhCloudConnectorForm.tsx:86
+#: assets/utils/providers/forms/index.tsx:15
+#: assets/utils/providers/forms/index.tsx:30
+#: assets/utils/providers/forms/index.tsx:41
 msgid "Required"
 msgstr ""
 
@@ -461,7 +461,7 @@ msgid "Add a Webhook"
 msgstr ""
 
 #: assets/components/tracking/watchlist/WatchlistForm.tsx:275
-#: assets/utils/providers/forms/index.tsx:48
+#: assets/utils/providers/forms/index.tsx:52
 msgid "Create"
 msgstr ""
 
@@ -616,8 +616,8 @@ msgid "Create a Watchlist"
 msgstr ""
 
 #: assets/pages/UserPage.tsx:19
-#: assets/utils/providers/forms/NamecheapConnectorForm.tsx:36
-#: assets/utils/providers/forms/NamecomConnectorForm.tsx:40
+#: assets/utils/providers/forms/NamecheapConnectorForm.tsx:35
+#: assets/utils/providers/forms/NamecomConnectorForm.tsx:39
 msgid "Username"
 msgstr ""
 
@@ -1075,147 +1075,147 @@ msgstr ""
 msgid "An error occurred"
 msgstr ""
 
-#: assets/utils/providers/forms/AutoDnsConnectorForm.tsx:35
-#: assets/utils/providers/forms/NamecomConnectorForm.tsx:35
+#: assets/utils/providers/forms/AutoDnsConnectorForm.tsx:34
+#: assets/utils/providers/forms/NamecomConnectorForm.tsx:34
 msgid ""
 "This provider does not provide a list of supported TLD. Please double check "
 "if the domain you want to register is supported."
 msgstr ""
 
-#: assets/utils/providers/forms/AutoDnsConnectorForm.tsx:42
+#: assets/utils/providers/forms/AutoDnsConnectorForm.tsx:41
 msgid "AutoDNS Username"
 msgstr ""
 
-#: assets/utils/providers/forms/AutoDnsConnectorForm.tsx:46
+#: assets/utils/providers/forms/AutoDnsConnectorForm.tsx:45
 msgid ""
 "Attention: AutoDNS do not support 2-Factor Authentication on API Users for "
 "automated systems"
 msgstr ""
 
-#: assets/utils/providers/forms/AutoDnsConnectorForm.tsx:53
+#: assets/utils/providers/forms/AutoDnsConnectorForm.tsx:52
 msgid "AutoDNS Password"
 msgstr ""
 
-#: assets/utils/providers/forms/AutoDnsConnectorForm.tsx:61
+#: assets/utils/providers/forms/AutoDnsConnectorForm.tsx:60
 msgid "Owner nic-handle"
 msgstr ""
 
-#: assets/utils/providers/forms/AutoDnsConnectorForm.tsx:65
+#: assets/utils/providers/forms/AutoDnsConnectorForm.tsx:64
 msgid "The nic-handle of the domain name owner"
 msgstr ""
 
-#: assets/utils/providers/forms/AutoDnsConnectorForm.tsx:67
+#: assets/utils/providers/forms/AutoDnsConnectorForm.tsx:66
 msgid "You can get it from this page"
 msgstr ""
 
-#: assets/utils/providers/forms/AutoDnsConnectorForm.tsx:77
+#: assets/utils/providers/forms/AutoDnsConnectorForm.tsx:76
 msgid "Context Value"
 msgstr ""
 
-#: assets/utils/providers/forms/AutoDnsConnectorForm.tsx:81
+#: assets/utils/providers/forms/AutoDnsConnectorForm.tsx:80
 msgid "If you not sure, use the default value 4"
 msgstr ""
 
-#: assets/utils/providers/forms/AutoDnsConnectorForm.tsx:90
+#: assets/utils/providers/forms/AutoDnsConnectorForm.tsx:89
 msgid "Owner confirmation"
 msgstr ""
 
-#: assets/utils/providers/forms/AutoDnsConnectorForm.tsx:97
+#: assets/utils/providers/forms/AutoDnsConnectorForm.tsx:96
 msgid "Owner confirms his consent of domain order jobs"
 msgstr ""
 
-#: assets/utils/providers/forms/GandiConnectorForm.tsx:36
+#: assets/utils/providers/forms/GandiConnectorForm.tsx:34
 msgid "Personal Access Token (PAT)"
 msgstr ""
 
-#: assets/utils/providers/forms/GandiConnectorForm.tsx:43
+#: assets/utils/providers/forms/GandiConnectorForm.tsx:41
 msgid "Organization sharing ID"
 msgstr ""
 
-#: assets/utils/providers/forms/GandiConnectorForm.tsx:47
+#: assets/utils/providers/forms/GandiConnectorForm.tsx:45
 msgid "It indicates the organization that will pay for the ordered product"
 msgstr ""
 
-#: assets/utils/providers/forms/index.tsx:9
+#: assets/utils/providers/forms/index.tsx:13
 msgid "API Terms of Service"
 msgstr ""
 
-#: assets/utils/providers/forms/index.tsx:18
+#: assets/utils/providers/forms/index.tsx:22
 msgid ""
 "I have read and accepted the conditions of use of the Provider API, "
 "accessible from this hyperlink"
 msgstr ""
 
-#: assets/utils/providers/forms/index.tsx:24
+#: assets/utils/providers/forms/index.tsx:28
 msgid "Legal age"
 msgstr ""
 
-#: assets/utils/providers/forms/index.tsx:30
+#: assets/utils/providers/forms/index.tsx:34
 msgid "I am of the minimum age required to consent to these conditions"
 msgstr ""
 
-#: assets/utils/providers/forms/index.tsx:35
+#: assets/utils/providers/forms/index.tsx:39
 msgid "Withdrawal period"
 msgstr ""
 
-#: assets/utils/providers/forms/index.tsx:41
+#: assets/utils/providers/forms/index.tsx:45
 msgid ""
 "I waive my right of withdrawal regarding the purchase of domain names via "
 "the Provider's API"
 msgstr ""
 
-#: assets/utils/providers/forms/NamecheapConnectorForm.tsx:42
-#: assets/utils/providers/forms/NamecomConnectorForm.tsx:46
+#: assets/utils/providers/forms/NamecheapConnectorForm.tsx:41
+#: assets/utils/providers/forms/NamecomConnectorForm.tsx:45
 msgid "API key"
 msgstr ""
 
-#: assets/utils/providers/forms/OvhCloudConnectorForm.tsx:26
+#: assets/utils/providers/forms/OvhCloudConnectorForm.tsx:28
 msgid "Application key"
 msgstr ""
 
-#: assets/utils/providers/forms/OvhCloudConnectorForm.tsx:27
+#: assets/utils/providers/forms/OvhCloudConnectorForm.tsx:29
 msgid "Application secret"
 msgstr ""
 
-#: assets/utils/providers/forms/OvhCloudConnectorForm.tsx:28
+#: assets/utils/providers/forms/OvhCloudConnectorForm.tsx:30
 msgid "Consumer key"
 msgstr ""
 
-#: assets/utils/providers/forms/OvhCloudConnectorForm.tsx:32
+#: assets/utils/providers/forms/OvhCloudConnectorForm.tsx:34
 msgid "European Region"
 msgstr ""
 
-#: assets/utils/providers/forms/OvhCloudConnectorForm.tsx:38
+#: assets/utils/providers/forms/OvhCloudConnectorForm.tsx:40
 msgid "Europe"
 msgstr ""
 
-#: assets/utils/providers/forms/OvhCloudConnectorForm.tsx:40
+#: assets/utils/providers/forms/OvhCloudConnectorForm.tsx:42
 msgid "The domain is free and at the standard price"
 msgstr ""
 
-#: assets/utils/providers/forms/OvhCloudConnectorForm.tsx:43
+#: assets/utils/providers/forms/OvhCloudConnectorForm.tsx:45
 msgid ""
 "The domain is free but can be premium. Its price varies from one domain to "
 "another"
 msgstr ""
 
-#: assets/utils/providers/forms/OvhCloudConnectorForm.tsx:71
+#: assets/utils/providers/forms/OvhCloudConnectorForm.tsx:69
 msgid "OVH Endpoint"
 msgstr ""
 
-#: assets/utils/providers/forms/OvhCloudConnectorForm.tsx:78
+#: assets/utils/providers/forms/OvhCloudConnectorForm.tsx:76
 msgid "OVH subsidiary"
 msgstr ""
 
-#: assets/utils/providers/forms/OvhCloudConnectorForm.tsx:86
+#: assets/utils/providers/forms/OvhCloudConnectorForm.tsx:84
 msgid "OVH pricing mode"
 msgstr ""
 
-#: assets/utils/providers/forms/OvhCloudConnectorForm.tsx:91
+#: assets/utils/providers/forms/OvhCloudConnectorForm.tsx:89
 msgid "Confirm pricing mode"
 msgstr ""
 
-#: assets/utils/providers/forms/OvhCloudConnectorForm.tsx:92
+#: assets/utils/providers/forms/OvhCloudConnectorForm.tsx:90
 msgid ""
 "Are you sure about this setting? This may result in additional charges from "
 "the API Provider"

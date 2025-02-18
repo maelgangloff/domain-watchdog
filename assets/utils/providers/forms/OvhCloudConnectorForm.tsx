@@ -22,6 +22,8 @@ export default function OvhCloudConnectorForm({form, onCreate}: {
     const [open, setOpen] = useState(false)
     const [ovhPricingModeValue, setOvhPricingModeValue] = useState<string | undefined>()
 
+    form.setFieldValue('provider', ConnectorProvider.OVHcloud)
+
     const ovhFields = {
         appKey: t`Application key`,
         appSecret: t`Application secret`,
@@ -53,10 +55,6 @@ export default function OvhCloudConnectorForm({form, onCreate}: {
             wrapperCol={{span: 14}}
             onFinish={onCreate}
         >
-            <Form.Item name='provider' hidden>
-                <Input value={ConnectorProvider.OVHcloud}/>
-            </Form.Item>
-
             {
                 Object.keys(ovhFields).map(fieldName => <Form.Item
                     key={ovhFields[fieldName as keyof typeof ovhFields]}
