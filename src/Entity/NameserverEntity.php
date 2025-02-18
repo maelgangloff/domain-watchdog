@@ -19,7 +19,7 @@ class NameserverEntity
 
     #[ORM\Id]
     #[ORM\ManyToOne(targetEntity: Entity::class, cascade: ['persist'], inversedBy: 'nameserverEntities')]
-    #[ORM\JoinColumn(referencedColumnName: 'handle', nullable: false)]
+    #[ORM\JoinColumn(name: 'entity_uid', referencedColumnName: 'id', nullable: false)]
     #[Groups(['nameserver-entity:entity'])]
     private ?Entity $entity = null;
 

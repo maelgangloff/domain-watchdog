@@ -12,6 +12,9 @@ use Symfony\Component\Serializer\Attribute\Groups;
 use Symfony\Component\Serializer\Attribute\SerializedName;
 
 #[ORM\Entity(repositoryClass: EntityRepository::class)]
+#[ORM\UniqueConstraint(
+    columns: ['tld_id', 'handle']
+)]
 #[ApiResource(
     operations: [
         /*
@@ -21,7 +24,7 @@ use Symfony\Component\Serializer\Attribute\SerializedName;
         ),
         */
         new Get(
-            uriTemplate: '/entities/{handle}',
+            uriTemplate: '/entities/{id}',
             normalizationContext: [
                 'groups' => [
                     'event:list',
@@ -38,6 +41,15 @@ use Symfony\Component\Serializer\Attribute\SerializedName;
 class Entity
 {
     #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column]
+    private ?int $id = null;
+
+    #[ORM\ManyToOne(targetEntity: Tld::class, inversedBy: 'entities')]
+    #[ORM\JoinColumn(referencedColumnName: 'tld', nullable: true)]
+    #[Groups(['entity:list', 'entity:item', 'domain:item'])]
+    private ?Tld $tld = null;
+
     #[ORM\Column(length: 255)]
     #[Groups(['entity:list', 'entity:item', 'domain:item'])]
     private ?string $handle = null;
@@ -202,6 +214,30 @@ class Entity
     public function setRemarks(?array $remarks): static
     {
         $this->remarks = $remarks;
+
+        return $this;
+    }
+
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
+
+    public function setId(int $id): static
+    {
+        $this->id = $id;
+
+        return $this;
+    }
+
+    public function getTld(): ?Tld
+    {
+        return $this->tld;
+    }
+
+    public function setTld(?Tld $tld): static
+    {
+        $this->tld = $tld;
 
         return $this;
     }
