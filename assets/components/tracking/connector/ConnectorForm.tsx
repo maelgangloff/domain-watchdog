@@ -1,5 +1,5 @@
-import type {FormInstance, StepProps} from 'antd'
-import {Card, Col, Row, Steps} from 'antd'
+import type { FormInstance, StepProps} from 'antd'
+import {Card, Col, Row, Steps, Typography} from 'antd'
 import type {Connector} from '../../../utils/api/connectors'
 import {ConnectorProvider} from '../../../utils/api/connectors'
 import React, {useState} from 'react'
@@ -48,7 +48,8 @@ export function ConnectorForm({form, onCreate}: { form: FormInstance, onCreate: 
                                             next()
                                         }}
                                     >
-                                        <div style={{fontSize: "3rem"}}><BankOutlined/></div>
+                                        <div style={{fontSize: "3rem"}}><BankOutlined style={{color: 'lightblue'}}/>
+                                        </div>
                                         <h3>{Object.keys(ConnectorProvider).find(p => ConnectorProvider[p as keyof typeof ConnectorProvider] === provider)}</h3>
                                     </Card>
                                 </Col>
@@ -59,6 +60,11 @@ export function ConnectorForm({form, onCreate}: { form: FormInstance, onCreate: 
 
                 {current === 1 && ProviderForm && <ProviderForm form={form} onCreate={onCreate}/>}
             </div>
+            <Typography.Text type='secondary'>
+                {t`This website is neither affiliated with nor sponsored by the registrars mentioned.
+                The names and logos of these companies are used for informational purposes only and remain registered trademarks of their respective owners.
+                The use of their services via this website is subject to the terms and conditions set by each registrar and is the sole responsibility of the user.`}
+            </Typography.Text>
         </>
     )
 }

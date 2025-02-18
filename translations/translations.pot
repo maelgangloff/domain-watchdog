@@ -231,6 +231,16 @@ msgstr ""
 msgid "Choose a registrar"
 msgstr ""
 
+#: assets/components/tracking/connector/ConnectorForm.tsx:64
+msgid ""
+"This website is neither affiliated with nor sponsored by the registrars "
+"mentioned.\n"
+"The names and logos of these companies are used for informational purposes "
+"only and remain registered trademarks of their respective owners.\n"
+"The use of their services via this website is subject to the terms and "
+"conditions set by each registrar and is the sole responsibility of the user."
+msgstr ""
+
 #: assets/components/tracking/connector/ConnectorsList.tsx:18
 msgid ""
 "An error occurred while deleting the Connector. Make sure it is not used in "
