@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2025-01-08 20:01+0000\n"
+"PO-Revision-Date: 2025-02-18 21:24+0000\n"
 "Last-Translator: Maël Gangloff <contact@maelgangloff.fr>\n"
 "Language-Team: French <https://weblate.vinceh121.me/projects/domain-watchdog/"
 "domain-watchdog-dashboard/fr/>\n"
@@ -9,7 +9,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 5.8.3\n"
+"X-Generator: Weblate 5.9.2\n"
 
 #: assets/App.tsx:119
 msgid "TOS"
@@ -237,14 +237,12 @@ msgid "Registrar"
 msgstr "Bureau d'enregistrement"
 
 #: assets/components/tracking/connector/ConnectorForm.tsx:23
-#, fuzzy
-#| msgid "Documentation"
 msgid "Authentication"
-msgstr "Documentation"
+msgstr "Authentification"
 
 #: assets/components/tracking/connector/ConnectorForm.tsx:38
 msgid "Choose a registrar"
-msgstr ""
+msgstr "Choisir un bureau d'enregistrement"
 
 #: assets/components/tracking/connector/ConnectorForm.tsx:63
 msgid ""
@@ -255,6 +253,14 @@ msgid ""
 "The use of their services via this website is subject to the terms and "
 "conditions set by each registrar and is the sole responsibility of the user."
 msgstr ""
+"Ce site Web n'est ni affilié ni sponsorisé par les bureaux d'enregistrement "
+"mentionnés.\n"
+"Les noms et logos de ces sociétés sont utilisés à titre informatif "
+"uniquement et restent des marques déposées de leurs propriétaires respectifs."
+"\n"
+"L'utilisation de leurs services via ce site Web est soumise aux conditions "
+"générales définies par chaque bureau d'enregistrement et relève de la seule "
+"responsabilité de l'utilisateur."
 
 #: assets/components/tracking/connector/ConnectorsList.tsx:18
 msgid ""
@@ -1402,13 +1408,11 @@ msgstr "Continent Européen"
 
 #: assets/utils/providers/forms/OvhCloudConnectorForm.tsx:22
 msgid "United States Region"
-msgstr ""
+msgstr "États-Unis"
 
 #: assets/utils/providers/forms/OvhCloudConnectorForm.tsx:23
-#, fuzzy
-#| msgid "European Region"
 msgid "Canada Region"
-msgstr "Continent Européen"
+msgstr "Canada"
 
 #: assets/utils/providers/forms/OvhCloudConnectorForm.tsx:28
 msgid "Europe"
