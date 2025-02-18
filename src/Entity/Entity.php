@@ -22,7 +22,7 @@ use Symfony\Component\Serializer\Attribute\SerializedName;
             uriTemplate: '/entities',
             normalizationContext: ['groups' => ['entity:list', 'event:list']]
         ),
-        */
+
         new Get(
             uriTemplate: '/entities/{id}',
             normalizationContext: [
@@ -36,6 +36,7 @@ use Symfony\Component\Serializer\Attribute\SerializedName;
                 ],
             ]
         ),
+        */
     ]
 )]
 class Entity
