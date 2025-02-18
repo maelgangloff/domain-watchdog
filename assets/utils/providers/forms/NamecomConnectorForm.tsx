@@ -1,5 +1,5 @@
 import type {FormInstance} from 'antd'
-import {Alert, Form, Input} from 'antd'
+import {Alert, Form, Input, Typography} from 'antd'
 import React from 'react'
 import type {Connector} from '../../api/connectors'
 import {ConnectorProvider} from '../../api/connectors'
@@ -31,6 +31,9 @@ export default function NamecomConnectorForm({form, onCreate}: {
             <Form.Item
                 label={t`Username`}
                 name={['authData', 'username']}
+                help={<Typography.Link target='_blank' href='https://www.name.com/account/settings/api'>
+                    {t`Retrieve a set of tokens from your customer account on the Provider's website`}
+                </Typography.Link>}
             >
                 <Input autoComplete='off'/>
             </Form.Item>

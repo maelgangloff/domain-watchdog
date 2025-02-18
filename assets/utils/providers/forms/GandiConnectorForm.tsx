@@ -26,6 +26,9 @@ export default function GandiConnectorForm({form, onCreate}: {
             <Form.Item
                 label={t`Personal Access Token (PAT)`}
                 name={['authData', 'token']}
+                help={<Typography.Link target='_blank' href='https://admin.gandi.net/organizations/account/pat'>
+                    {t`Retrieve a Personal Access Token from your customer account on the Provider's website`}
+                </Typography.Link>}
                 rules={[{required: true, message: t`Required`}]}
             >
                 <Input autoComplete='off'/>

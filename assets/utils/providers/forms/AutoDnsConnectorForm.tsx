@@ -29,14 +29,12 @@ export default function AutoDnsConnectorForm({form, onCreate}: {
                 style={{marginBottom: '2em'}}
             />
 
-            <br/>
             <Form.Item
                 label={t`AutoDNS Username`}
                 name={['authData', 'username']}
-                help={<Typography.Text
-                    type='secondary'
-                >{t`Attention: AutoDNS do not support 2-Factor Authentication on API Users for automated systems`}
-                </Typography.Text>}
+                help={<Typography.Link target='_blank' href='https://en.autodns.com/domain-robot-api/'>
+                    {t`Because of some limitations in API of AutoDNS, we suggest to create an dedicated user for API with limited rights`}
+                </Typography.Link>}
                 rules={[{required: true, message: t`Required`}]}
             >
                 <Input autoComplete='off' required/>
@@ -44,6 +42,10 @@ export default function AutoDnsConnectorForm({form, onCreate}: {
             <Form.Item
                 label={t`AutoDNS Password`}
                 name={['authData', 'password']}
+                help={<Typography.Text
+                    type='secondary'
+                >{t`Attention: AutoDNS do not support 2-Factor Authentication on API Users for automated systems`}
+                </Typography.Text>}
                 rules={[{required: true, message: t`Required`}]}
                 required
             >
@@ -54,7 +56,7 @@ export default function AutoDnsConnectorForm({form, onCreate}: {
                 name={['authData', 'contactid']}
                 help={<Typography.Text
                     type='secondary'
-                >{t`The nic-handle of the domain name owner`}<a
+                >{t`The nic-handle of the domain name owner`} <a
                     href='https://cloud.autodns.com/contacts/domain'
                 >{t`You can get it from this page`}
                 </a>

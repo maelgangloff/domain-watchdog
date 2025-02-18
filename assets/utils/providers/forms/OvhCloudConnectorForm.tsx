@@ -2,7 +2,7 @@ import {t} from 'ttag'
 import {regionNames} from "../../../i18n"
 import React, {useState} from 'react'
 import type {FormInstance} from "antd"
-import {Form, Input, Popconfirm, Select} from "antd"
+import {Form, Input, Popconfirm, Select, Typography} from "antd"
 import type {Connector} from "../../api/connectors"
 import {ConnectorProvider} from "../../api/connectors"
 import DefaultConnectorFormItems from "./DefaultConnectorFormItems"
@@ -48,6 +48,12 @@ export default function OvhCloudConnectorForm({form, onCreate}: {
                 label={t`Application key`}
                 name={['authData', 'appKey']}
                 rules={[{required: true, message: t`Required`}]}
+                help={<Typography.Link
+                    target='_blank'
+                    href='https://api.ovh.com/createToken/?GET=/order/cart&GET=/order/cart/*&POST=/order/cart&POST=/order/cart/*&DELETE=/order/cart/*&GET=/domain/extensions'
+                >
+                    {t`Retrieve a set of tokens from your customer account on the Provider's website`}
+                </Typography.Link>}
             >
                 <Input autoComplete='off'/>
             </Form.Item>
