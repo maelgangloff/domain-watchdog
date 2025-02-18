@@ -50,23 +50,23 @@ msgstr "E-Mail-Adresse"
 #: assets/components/LoginForm.tsx:50 assets/components/LoginForm.tsx:58
 #: assets/components/RegisterForm.tsx:39 assets/components/RegisterForm.tsx:47
 #: assets/components/search/DomainSearchBar.tsx:28
-#: assets/components/tracking/watchlist/WatchlistForm.tsx:125
-#: assets/components/tracking/watchlist/WatchlistForm.tsx:228
-#: assets/utils/providers/forms/AutoDnsConnectorForm.tsx:40
-#: assets/utils/providers/forms/AutoDnsConnectorForm.tsx:47
-#: assets/utils/providers/forms/AutoDnsConnectorForm.tsx:62
-#: assets/utils/providers/forms/AutoDnsConnectorForm.tsx:85
+#: assets/components/tracking/watchlist/WatchlistForm.tsx:119
+#: assets/components/tracking/watchlist/WatchlistForm.tsx:222
+#: assets/utils/providers/forms/AutoDnsConnectorForm.tsx:38
+#: assets/utils/providers/forms/AutoDnsConnectorForm.tsx:49
+#: assets/utils/providers/forms/AutoDnsConnectorForm.tsx:64
+#: assets/utils/providers/forms/AutoDnsConnectorForm.tsx:87
 #: assets/utils/providers/forms/DefaultConnectorFormItems.tsx:15
 #: assets/utils/providers/forms/DefaultConnectorFormItems.tsx:30
 #: assets/utils/providers/forms/DefaultConnectorFormItems.tsx:41
-#: assets/utils/providers/forms/GandiConnectorForm.tsx:36
+#: assets/utils/providers/forms/GandiConnectorForm.tsx:32
 #: assets/utils/providers/forms/OvhCloudConnectorForm.tsx:50
-#: assets/utils/providers/forms/OvhCloudConnectorForm.tsx:58
-#: assets/utils/providers/forms/OvhCloudConnectorForm.tsx:66
-#: assets/utils/providers/forms/OvhCloudConnectorForm.tsx:74
-#: assets/utils/providers/forms/OvhCloudConnectorForm.tsx:82
-#: assets/utils/providers/forms/OvhCloudConnectorForm.tsx:89
-#: assets/utils/providers/forms/OvhCloudConnectorForm.tsx:97
+#: assets/utils/providers/forms/OvhCloudConnectorForm.tsx:64
+#: assets/utils/providers/forms/OvhCloudConnectorForm.tsx:72
+#: assets/utils/providers/forms/OvhCloudConnectorForm.tsx:80
+#: assets/utils/providers/forms/OvhCloudConnectorForm.tsx:88
+#: assets/utils/providers/forms/OvhCloudConnectorForm.tsx:95
+#: assets/utils/providers/forms/OvhCloudConnectorForm.tsx:103
 msgid "Required"
 msgstr "Erforderlich"
 
@@ -166,7 +166,7 @@ msgid "Entities"
 msgstr "Entitäten"
 
 #: assets/components/search/DomainSearchBar.tsx:31
-#: assets/components/tracking/watchlist/WatchlistForm.tsx:128
+#: assets/components/tracking/watchlist/WatchlistForm.tsx:122
 msgid "This domain name does not appear to be valid"
 msgstr "Dieser Domainname scheint nicht gültig zu sein"
 
@@ -447,50 +447,50 @@ msgstr "Diese Beobachtungsliste ist nicht mit einem Connector verknüpft."
 msgid "Watchlist"
 msgstr "Watchlist"
 
-#: assets/components/tracking/watchlist/WatchlistForm.tsx:81
+#: assets/components/tracking/watchlist/WatchlistForm.tsx:75
 msgid "Name"
 msgstr "Name"
 
-#: assets/components/tracking/watchlist/WatchlistForm.tsx:93
+#: assets/components/tracking/watchlist/WatchlistForm.tsx:87
 msgid "Watchlist Name"
 msgstr "Name der Watchlist"
 
-#: assets/components/tracking/watchlist/WatchlistForm.tsx:94
+#: assets/components/tracking/watchlist/WatchlistForm.tsx:88
 msgid "Naming the Watchlist makes it easier to find in the list below."
 msgstr ""
 "Durch die Benennung der Watchlist ist sie in der Liste weiter unten leichter "
 "zu finden."
 
-#: assets/components/tracking/watchlist/WatchlistForm.tsx:105
+#: assets/components/tracking/watchlist/WatchlistForm.tsx:99
 msgid "At least one domain name"
 msgstr "Mindestens ein Domänenname"
 
-#: assets/components/tracking/watchlist/WatchlistForm.tsx:116
+#: assets/components/tracking/watchlist/WatchlistForm.tsx:110
 msgid "Domain names"
 msgstr "Domänennamen"
 
-#: assets/components/tracking/watchlist/WatchlistForm.tsx:134
+#: assets/components/tracking/watchlist/WatchlistForm.tsx:128
 msgid "Domain name"
 msgstr "Domänenname"
 
-#: assets/components/tracking/watchlist/WatchlistForm.tsx:153
+#: assets/components/tracking/watchlist/WatchlistForm.tsx:147
 msgid "Add a Domain name"
 msgstr "Einen Domänennamen hinzufügen"
 
-#: assets/components/tracking/watchlist/WatchlistForm.tsx:161
+#: assets/components/tracking/watchlist/WatchlistForm.tsx:155
 msgid "Tracked events"
 msgstr "Verfolgte Ereignisse"
 
-#: assets/components/tracking/watchlist/WatchlistForm.tsx:163
+#: assets/components/tracking/watchlist/WatchlistForm.tsx:157
 msgid "At least one trigger"
 msgstr "Mindestens ein Auslöser"
 
-#: assets/components/tracking/watchlist/WatchlistForm.tsx:187
-#: assets/components/tracking/watchlist/WatchlistForm.tsx:202
+#: assets/components/tracking/watchlist/WatchlistForm.tsx:181
+#: assets/components/tracking/watchlist/WatchlistForm.tsx:196
 msgid "Connector"
 msgstr "Konnektor"
 
-#: assets/components/tracking/watchlist/WatchlistForm.tsx:197
+#: assets/components/tracking/watchlist/WatchlistForm.tsx:191
 msgid ""
 "Please make sure the connector information is valid to purchase a domain "
 "that may be available soon."
@@ -498,35 +498,35 @@ msgstr ""
 "Bitte stellen Sie sicher, dass die Connector-Informationen gültig sind, um "
 "eine Domäne zu erwerben, die möglicherweise bald verfügbar ist."
 
-#: assets/components/tracking/watchlist/WatchlistForm.tsx:219
+#: assets/components/tracking/watchlist/WatchlistForm.tsx:213
 msgid "DSN"
 msgstr "DSN"
 
-#: assets/components/tracking/watchlist/WatchlistForm.tsx:231
+#: assets/components/tracking/watchlist/WatchlistForm.tsx:225
 msgid "This DSN does not appear to be valid"
 msgstr "Dieser DSN scheint nicht gültig zu sein"
 
-#: assets/components/tracking/watchlist/WatchlistForm.tsx:255
+#: assets/components/tracking/watchlist/WatchlistForm.tsx:249
 msgid ""
 "Check out this link to the Symfony documentation to help you build the DSN"
 msgstr ""
 "Sehen Sie sich diesen Link zur Symfony-Dokumentation an, der Ihnen beim "
 "Erstellen des DSN hilft"
 
-#: assets/components/tracking/watchlist/WatchlistForm.tsx:265
+#: assets/components/tracking/watchlist/WatchlistForm.tsx:259
 msgid "Add a Webhook"
 msgstr "Einen Webhook hinzufügen"
 
-#: assets/components/tracking/watchlist/WatchlistForm.tsx:275
+#: assets/components/tracking/watchlist/WatchlistForm.tsx:269
 #: assets/utils/providers/forms/DefaultConnectorFormItems.tsx:52
 msgid "Create"
 msgstr "Erstellen"
 
-#: assets/components/tracking/watchlist/WatchlistForm.tsx:275
+#: assets/components/tracking/watchlist/WatchlistForm.tsx:269
 msgid "Update"
 msgstr "Aktualisieren"
 
-#: assets/components/tracking/watchlist/WatchlistForm.tsx:278
+#: assets/components/tracking/watchlist/WatchlistForm.tsx:272
 msgid "Reset"
 msgstr "Zurücksetzen"
 
@@ -1307,11 +1307,23 @@ msgstr ""
 "überprüfen Sie, ob die Domain, die Sie registrieren möchten, unterstützt "
 "wird."
 
-#: assets/utils/providers/forms/AutoDnsConnectorForm.tsx:34
+#: assets/utils/providers/forms/AutoDnsConnectorForm.tsx:33
 msgid "AutoDNS Username"
 msgstr "AutoDNS-Benutzername"
 
-#: assets/utils/providers/forms/AutoDnsConnectorForm.tsx:38
+#: assets/utils/providers/forms/AutoDnsConnectorForm.tsx:36
+msgid ""
+"Because of some limitations in API of AutoDNS, we suggest to create an "
+"dedicated user for API with limited rights"
+msgstr ""
+"Aufgrund einiger Einschränkungen in der API von AutoDNS empfehlen wir, einen "
+"dedizierten Benutzer für die API mit eingeschränkten Rechten zu erstellen"
+
+#: assets/utils/providers/forms/AutoDnsConnectorForm.tsx:43
+msgid "AutoDNS Password"
+msgstr "AutoDNS-Passwort"
+
+#: assets/utils/providers/forms/AutoDnsConnectorForm.tsx:47
 msgid ""
 "Attention: AutoDNS do not support 2-Factor Authentication on API Users for "
 "automated systems"
@@ -1319,35 +1331,31 @@ msgstr ""
 "Achtung: AutoDNS unterstützt keine 2-Faktor-Authentifizierung für API-"
 "Benutzer für automatisierte Systeme"
 
-#: assets/utils/providers/forms/AutoDnsConnectorForm.tsx:45
-msgid "AutoDNS Password"
-msgstr "AutoDNS-Passwort"
-
-#: assets/utils/providers/forms/AutoDnsConnectorForm.tsx:53
+#: assets/utils/providers/forms/AutoDnsConnectorForm.tsx:55
 msgid "Owner nic-handle"
 msgstr "Inhaber nic-handle"
 
-#: assets/utils/providers/forms/AutoDnsConnectorForm.tsx:57
+#: assets/utils/providers/forms/AutoDnsConnectorForm.tsx:59
 msgid "The nic-handle of the domain name owner"
 msgstr "Der Nic-Handle des Domain-Namen-Inhabers"
 
-#: assets/utils/providers/forms/AutoDnsConnectorForm.tsx:59
+#: assets/utils/providers/forms/AutoDnsConnectorForm.tsx:61
 msgid "You can get it from this page"
 msgstr "Sie können es von dieser Seite erhalten"
 
-#: assets/utils/providers/forms/AutoDnsConnectorForm.tsx:69
+#: assets/utils/providers/forms/AutoDnsConnectorForm.tsx:71
 msgid "Context Value"
 msgstr "Kontextwert"
 
-#: assets/utils/providers/forms/AutoDnsConnectorForm.tsx:73
+#: assets/utils/providers/forms/AutoDnsConnectorForm.tsx:75
 msgid "If you not sure, use the default value 4"
 msgstr "Wenn Sie nicht sicher sind, verwenden Sie den Standardwert 4"
 
-#: assets/utils/providers/forms/AutoDnsConnectorForm.tsx:82
+#: assets/utils/providers/forms/AutoDnsConnectorForm.tsx:84
 msgid "Owner confirmation"
 msgstr "Bestätigung des Eigentümers"
 
-#: assets/utils/providers/forms/AutoDnsConnectorForm.tsx:89
+#: assets/utils/providers/forms/AutoDnsConnectorForm.tsx:91
 msgid "Owner confirms his consent of domain order jobs"
 msgstr "Inhaber bestätigt sein Einverständnis mit Domain-Bestellaufträgen"
 
@@ -1385,22 +1393,46 @@ msgstr ""
 "Ich verzichte auf mein Widerrufsrecht beim Kauf von Domainnamen über die API "
 "des Anbieters"
 
-#: assets/utils/providers/forms/GandiConnectorForm.tsx:34
+#: assets/utils/providers/forms/GandiConnectorForm.tsx:27
 msgid "Personal Access Token (PAT)"
 msgstr "Persönlicher Zugriffstoken (PAT)"
 
-#: assets/utils/providers/forms/GandiConnectorForm.tsx:41
+#: assets/utils/providers/forms/GandiConnectorForm.tsx:30
+msgid ""
+"Retrieve a Personal Access Token from your customer account on the "
+"Provider's website"
+msgstr ""
+"Abrufen eines persönlichen Zugriffstokens aus Ihrem Kundenkonto auf der "
+"Website des Anbieters"
+
+#: assets/utils/providers/forms/GandiConnectorForm.tsx:37
 msgid "Organization sharing ID"
 msgstr "Freigabe-ID der Organisation"
 
-#: assets/utils/providers/forms/GandiConnectorForm.tsx:45
+#: assets/utils/providers/forms/GandiConnectorForm.tsx:41
 msgid "It indicates the organization that will pay for the ordered product"
 msgstr "Es gibt die Organisation an, die für das bestellte Produkt bezahlt"
 
-#: assets/utils/providers/forms/NamecheapConnectorForm.tsx:34
-#: assets/utils/providers/forms/NamecomConnectorForm.tsx:38
+#: assets/utils/providers/forms/NamecheapConnectorForm.tsx:31
+msgid ""
+"Retreive an API key and whitelist this instance's IP address on Namecheap's "
+"website"
+msgstr ""
+"Rufen Sie einen API-Schlüssel ab und setzen Sie die IP-Adresse dieser "
+"Instanz auf die Whitelist der Website von Namecheap"
+
+#: assets/utils/providers/forms/NamecheapConnectorForm.tsx:37
+#: assets/utils/providers/forms/NamecomConnectorForm.tsx:41
 msgid "API key"
 msgstr "API-Schlüssel"
+
+#: assets/utils/providers/forms/NamecomConnectorForm.tsx:35
+#: assets/utils/providers/forms/OvhCloudConnectorForm.tsx:55
+msgid ""
+"Retrieve a set of tokens from your customer account on the Provider's website"
+msgstr ""
+"Abrufen eines Token-Satzes aus Ihrem Kundenkonto auf der Website des "
+"Anbieters"
 
 #: assets/utils/providers/forms/OvhCloudConnectorForm.tsx:21
 msgid "European Region"
@@ -1431,35 +1463,35 @@ msgstr ""
 "einer Domain zur anderen"
 
 #: assets/utils/providers/forms/OvhCloudConnectorForm.tsx:48
-#: assets/utils/providers/forms/OvhCloudConnectorForm.tsx:72
+#: assets/utils/providers/forms/OvhCloudConnectorForm.tsx:78
 msgid "Application key"
 msgstr "Anwendungsschlüssel"
 
-#: assets/utils/providers/forms/OvhCloudConnectorForm.tsx:56
+#: assets/utils/providers/forms/OvhCloudConnectorForm.tsx:62
 msgid "Application secret"
 msgstr "Geheimer Schlüssel der Anwendung"
 
-#: assets/utils/providers/forms/OvhCloudConnectorForm.tsx:64
+#: assets/utils/providers/forms/OvhCloudConnectorForm.tsx:70
 msgid "Consumer key"
 msgstr "Verbraucherschlüssel"
 
-#: assets/utils/providers/forms/OvhCloudConnectorForm.tsx:80
+#: assets/utils/providers/forms/OvhCloudConnectorForm.tsx:86
 msgid "OVH Endpoint"
 msgstr "OVH Endpunkt"
 
-#: assets/utils/providers/forms/OvhCloudConnectorForm.tsx:87
+#: assets/utils/providers/forms/OvhCloudConnectorForm.tsx:93
 msgid "OVH subsidiary"
 msgstr "OVH-Tochtergesellschaft"
 
-#: assets/utils/providers/forms/OvhCloudConnectorForm.tsx:95
+#: assets/utils/providers/forms/OvhCloudConnectorForm.tsx:101
 msgid "OVH pricing mode"
 msgstr "OVH Preismodell"
 
-#: assets/utils/providers/forms/OvhCloudConnectorForm.tsx:100
+#: assets/utils/providers/forms/OvhCloudConnectorForm.tsx:106
 msgid "Confirm pricing mode"
 msgstr "Preismodus bestätigen"
 
-#: assets/utils/providers/forms/OvhCloudConnectorForm.tsx:101
+#: assets/utils/providers/forms/OvhCloudConnectorForm.tsx:107
 msgid ""
 "Are you sure about this setting? This may result in additional charges from "
 "the API Provider"
@@ -1472,35 +1504,6 @@ msgstr ""
 
 #~ msgid "Please select a Provider"
 #~ msgstr "Bitte wählen Sie einen Anbieter"
-
-#~ msgid ""
-#~ "Retrieve a set of tokens from your customer account on the Provider's "
-#~ "website"
-#~ msgstr ""
-#~ "Abrufen eines Token-Satzes aus Ihrem Kundenkonto auf der Website des "
-#~ "Anbieters"
-
-#~ msgid ""
-#~ "Retrieve a Personal Access Token from your customer account on the "
-#~ "Provider's website"
-#~ msgstr ""
-#~ "Abrufen eines persönlichen Zugriffstokens aus Ihrem Kundenkonto auf der "
-#~ "Website des Anbieters"
-
-#~ msgid ""
-#~ "Retreive an API key and whitelist this instance's IP address on "
-#~ "Namecheap's website"
-#~ msgstr ""
-#~ "Rufen Sie einen API-Schlüssel ab und setzen Sie die IP-Adresse dieser "
-#~ "Instanz auf die Whitelist der Website von Namecheap"
-
-#~ msgid ""
-#~ "Because of some limitations in API of AutoDNS, we suggest to create an "
-#~ "dedicated user for API with limited rights"
-#~ msgstr ""
-#~ "Aufgrund einiger Einschränkungen in der API von AutoDNS empfehlen wir, "
-#~ "einen dedizierten Benutzer für die API mit eingeschränkten Rechten zu "
-#~ "erstellen"
 
 #~ msgid "Entity"
 #~ msgstr "Entität"
