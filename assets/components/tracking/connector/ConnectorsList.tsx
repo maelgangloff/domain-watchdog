@@ -4,8 +4,7 @@ import {DeleteFilled} from '@ant-design/icons'
 import React from 'react'
 import type {Connector} from '../../../utils/api/connectors'
 import { ConnectorProvider, deleteConnector} from '../../../utils/api/connectors'
-import {tosHyperlink} from "../../../utils/providers"
-
+import {providersConfig} from "../../../utils/providers"
 const {useToken} = theme
 
 export type ConnectorElement = Connector & { id: string, createdAt: string, watchlistCount: number }
@@ -51,7 +50,7 @@ export function ConnectorsList({connectors, onDelete}: { connectors: ConnectorEl
                                     {t`You can stop using a connector at any time. To delete a connector, you must remove it from each linked Watchlist.
 The creation date corresponds to the date on which you consented to the creation of the connector and on which you declared in particular that you fulfilled the conditions of use of the supplier's API, waived the right of withdrawal and were of the minimum age to consent to these conditions.`}
                                     &nbsp;
-                                    <Typography.Link href={tosHyperlink(connector.provider)}>
+                                    <Typography.Link href={providersConfig()[connector.provider].tosLink}>
                                         {t`The Provider’s conditions are accessible by following this hyperlink.`}
                                     </Typography.Link>
                                 </>
