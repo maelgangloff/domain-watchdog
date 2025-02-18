@@ -8,6 +8,7 @@ import {rdapEventDetailTranslation, rdapEventNameTranslation} from '../../../uti
 import {actionToColor} from '../../../utils/functions/actionToColor'
 import {actionToIcon} from '../../../utils/functions/actionToIcon'
 import type {EventAction} from '../../../utils/api'
+import {formItemLayoutWithOutLabel} from "../../../utils/providers"
 
 type TagRender = SelectProps['tagRender']
 
@@ -19,13 +20,6 @@ const formItemLayout = {
     wrapperCol: {
         xs: {span: 24},
         sm: {span: 20}
-    }
-}
-
-const formItemLayoutWithOutLabel = {
-    wrapperCol: {
-        xs: {span: 24, offset: 0},
-        sm: {span: 20, offset: 4}
     }
 }
 
@@ -269,7 +263,7 @@ export function WatchlistForm({form, connectors, onFinish, isCreation}: {
                     </>
                 )}
             </Form.List>
-            <Form.Item style={{marginTop: '5vh'}}>
+            <Form.Item style={{marginTop: '5em'}}>
                 <Space>
                     <Button type='primary' htmlType='submit'>
                         {isCreation ? t`Create` : t`Update`}
