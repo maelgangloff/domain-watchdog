@@ -117,7 +117,7 @@ class Domain
     #[SerializedName('oldStatus')]
     private Collection $domainStatuses;
 
-    #[ORM\Column(nullable: false)]
+    #[ORM\Column(nullable: false, options: ['default' => false])]
     #[Groups(['domain:item', 'domain:list'])]
     private ?bool $delegationSigned = null;
 

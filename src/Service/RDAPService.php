@@ -357,7 +357,7 @@ readonly class RDAPService
         if (isset($rdapData['entities']) && is_array($rdapData['entities'])) {
             foreach ($rdapData['entities'] as $rdapEntity) {
                 $roles = $this->extractEntityRoles($rdapData['entities'], $rdapEntity);
-                $entity = $this->registerEntity($rdapEntity, $roles, $domain->getLdhName());
+                $entity = $this->registerEntity($rdapEntity, $roles, $domain->getLdhName(), $domain->getTld());
 
                 $domainEntity = $this->domainEntityRepository->findOneBy([
                     'domain' => $domain,
@@ -391,7 +391,7 @@ readonly class RDAPService
 
             foreach ($rdapData['nameservers'] as $rdapNameserver) {
                 $nameserver = $this->fetchOrCreateNameserver($rdapNameserver, $domain);
-                $this->updateNameserverEntities($nameserver, $rdapNameserver);
+                $this->updateNameserverEntities($nameserver, $rdapNameserver, $domain->getTld());
 
                 if (!$domain->getNameservers()->contains($nameserver)) {
                     $domain->addNameserver($nameserver);
@@ -426,7 +426,7 @@ readonly class RDAPService
     /**
      * @throws \DateMalformedStringException
      */
-    private function updateNameserverEntities(Nameserver $nameserver, array $rdapNameserver): void
+    private function updateNameserverEntities(Nameserver $nameserver, array $rdapNameserver, Tld $tld): void
     {
         if (!isset($rdapNameserver['entities']) || !is_array($rdapNameserver['entities'])) {
             return;
@@ -434,7 +434,7 @@ readonly class RDAPService
 
         foreach ($rdapNameserver['entities'] as $rdapEntity) {
             $roles = $this->extractEntityRoles($rdapNameserver['entities'], $rdapEntity);
-            $entity = $this->registerEntity($rdapEntity, $roles, $nameserver->getLdhName());
+            $entity = $this->registerEntity($rdapEntity, $roles, $nameserver->getLdhName(), $tld);
 
             $nameserverEntity = $this->nameserverEntityRepository->findOneBy([
                 'nameserver' => $nameserver,
@@ -483,7 +483,7 @@ readonly class RDAPService
      * @throws \DateMalformedStringException
      * @throws \Exception
      */
-    private function registerEntity(array $rdapEntity, array $roles, string $domain): Entity
+    private function registerEntity(array $rdapEntity, array $roles, string $domain, Tld $tld): Entity
     {
         /*
          * If the RDAP server transmits the entity's IANA number, it is used as a priority to identify the entity
@@ -513,6 +513,7 @@ readonly class RDAPService
 
         $entity = $this->entityRepository->findOneBy([
             'handle' => $rdapEntity['handle'],
+            'tld' => is_numeric($rdapEntity['handle']) ? null : $tld,
         ]);
 
         if (null === $entity) {
@@ -523,7 +524,7 @@ readonly class RDAPService
             ]);
         }
 
-        $entity->setHandle($rdapEntity['handle']);
+        $entity->setHandle($rdapEntity['handle'])->setTld(is_numeric($rdapEntity['handle']) ? null : $tld);
 
         if (isset($rdapEntity['remarks']) && is_array($rdapEntity['remarks']) && !is_numeric($rdapEntity['handle'])) {
             $entity->setRemarks($rdapEntity['remarks']);

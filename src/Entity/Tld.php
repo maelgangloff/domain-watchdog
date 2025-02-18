@@ -70,9 +70,16 @@ class Tld
     #[Groups(['tld:item'])]
     private ?TldType $type = null;
 
+    /**
+     * @var Collection<int, Entity>
+     */
+    #[ORM\OneToMany(targetEntity: Entity::class, mappedBy: 'tld')]
+    private Collection $entities;
+
     public function __construct()
     {
         $this->rdapServers = new ArrayCollection();
+        $this->entities = new ArrayCollection();
     }
 
     /**
@@ -197,6 +204,36 @@ class Tld
     public function setType(?TldType $type): static
     {
         $this->type = $type;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Entity>
+     */
+    public function getEntities(): Collection
+    {
+        return $this->entities;
+    }
+
+    public function addEntity(Entity $entity): static
+    {
+        if (!$this->entities->contains($entity)) {
+            $this->entities->add($entity);
+            $entity->setTld($this);
+        }
+
+        return $this;
+    }
+
+    public function removeEntity(Entity $entity): static
+    {
+        if ($this->entities->removeElement($entity)) {
+            // set the owning side to null (unless already changed)
+            if ($entity->getTld() === $this) {
+                $entity->setTld(null);
+            }
+        }
 
         return $this;
     }
