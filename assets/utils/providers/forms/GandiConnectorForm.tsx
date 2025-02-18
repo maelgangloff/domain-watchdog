@@ -5,14 +5,7 @@ import type {Connector} from '../../api/connectors'
 import {ConnectorProvider} from '../../api/connectors'
 import {t} from 'ttag'
 import DefaultConnectorFormItems from "./DefaultConnectorFormItems"
-import {providersConfig} from "../index"
-
-const formItemLayoutWithOutLabel = {
-    wrapperCol: {
-        xs: {span: 24, offset: 0},
-        sm: {span: 20, offset: 4}
-    }
-}
+import {formItemLayoutWithOutLabel, providersConfig} from "../index"
 
 export default function GandiConnectorForm({form, onCreate}: {
     form: FormInstance,
