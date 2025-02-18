@@ -170,18 +170,27 @@ readonly class RDAPService
         return $domain;
     }
 
-    private function getTld($domain): ?object
+    private function getTld($domain): Tld
     {
         if (!str_contains($domain, '.')) {
-            return $this->tldRepository->findOneBy(['tld' => '']);
+            $tldEntity = $this->tldRepository->findOneBy(['tld' => '']);
+
+            if (null == $tldEntity) {
+                throw new NotFoundHttpException('The requested TLD is not yet supported, please try again with another one');
+            }
+
+            return $tldEntity;
         }
+
         $lastDotPosition = strrpos($domain, '.');
+
         if (false === $lastDotPosition) {
             throw new BadRequestException('Domain must contain at least one dot');
         }
 
         $tld = strtolower(idn_to_ascii(substr($domain, $lastDotPosition + 1)));
         $tldEntity = $this->tldRepository->findOneBy(['tld' => $tld]);
+
         if (null === $tldEntity) {
             throw new NotFoundHttpException('The requested TLD is not yet supported, please try again with another one');
         }
@@ -611,19 +620,20 @@ readonly class RDAPService
     {
         foreach ($dnsRoot['services'] as $service) {
             foreach ($service[0] as $tld) {
-                if ('' === $tld) {
-                    if (null === $this->tldRepository->findOneBy(['tld' => $tld])) {
-                        $this->em->persist((new Tld())->setTld('.')->setType(TldType::root));
-                        $this->em->flush();
-                    }
+                if ('' === $tld && null === $this->tldRepository->findOneBy(['tld' => $tld])) {
+                    $this->em->persist((new Tld())->setTld('')->setType(TldType::root));
+                    $this->em->flush();
                 }
+
                 $tldReference = $this->em->getReference(Tld::class, $tld);
 
                 foreach ($service[1] as $rdapServerUrl) {
                     $server = $this->rdapServerRepository->findOneBy(['tld' => $tldReference, 'url' => $rdapServerUrl]);
+
                     if (null === $server) {
                         $server = new RdapServer();
                     }
+
                     $server
                         ->setTld($tldReference)
                         ->setUrl($rdapServerUrl)

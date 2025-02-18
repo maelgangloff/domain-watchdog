@@ -175,6 +175,7 @@ msgid "Domain Finder"
 msgstr ""
 
 #: assets/components/Sider.tsx:49
+#: assets/pages/StatisticsPage.tsx:114
 #: assets/pages/search/TldPage.tsx:79
 msgid "TLD"
 msgstr ""
