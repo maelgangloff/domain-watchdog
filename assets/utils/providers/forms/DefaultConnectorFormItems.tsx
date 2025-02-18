@@ -47,7 +47,7 @@ export default function DefaultConnectorFormItems({tosLink}: { tosLink: string }
         </Form.Item>
 
 
-        <Form.Item style={{marginTop: '5em', textAlign: 'center'}}>
+        <Form.Item style={{marginTop: '2em', textAlign: 'center'}}>
             <Button type='primary' htmlType='submit'>
                 {t`Create`}
             </Button>
