@@ -4,15 +4,8 @@ import React from 'react'
 import type {Connector} from '../../api/connectors'
 import {ConnectorProvider} from '../../api/connectors'
 import {t} from 'ttag'
-import {DefaultConnectorFormItems} from "./index"
-import {providersConfig} from "../index"
-
-const formItemLayoutWithOutLabel = {
-    wrapperCol: {
-        xs: {span: 24, offset: 0},
-        sm: {span: 20, offset: 4}
-    }
-}
+import DefaultConnectorFormItems from "./DefaultConnectorFormItems"
+import {formItemLayoutWithOutLabel, providersConfig} from "../index"
 
 export default function NamecheapConnectorForm({form, onCreate}: {
     form: FormInstance,
@@ -43,7 +36,7 @@ export default function NamecheapConnectorForm({form, onCreate}: {
             >
                 <Input autoComplete='off'/>
             </Form.Item>
-            <DefaultConnectorFormItems tosLink={providersConfig()[ConnectorProvider.Namecheap].tosLink}/>
+            <DefaultConnectorFormItems tosLink={providersConfig[ConnectorProvider.Namecheap].tosLink}/>
         </Form>
     )
 }

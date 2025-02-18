@@ -4,7 +4,7 @@ import React from 'react'
 import type {Connector} from '../../api/connectors'
 import {ConnectorProvider} from '../../api/connectors'
 import {t} from 'ttag'
-import {DefaultConnectorFormItems} from "./index"
+import DefaultConnectorFormItems from "./DefaultConnectorFormItems"
 import {providersConfig} from "../index"
 
 const formItemLayoutWithOutLabel = {
@@ -48,7 +48,7 @@ export default function GandiConnectorForm({form, onCreate}: {
             >
                 <Input autoComplete='off' placeholder='xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx'/>
             </Form.Item>
-            <DefaultConnectorFormItems tosLink={providersConfig()[ConnectorProvider.Gandi].tosLink}/>
+            <DefaultConnectorFormItems tosLink={providersConfig[ConnectorProvider.Gandi].tosLink}/>
 
         </Form>
     )

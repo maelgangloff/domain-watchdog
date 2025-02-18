@@ -269,7 +269,7 @@ export function WatchlistForm({form, connectors, onFinish, isCreation}: {
                     </>
                 )}
             </Form.List>
-            <Form.Item style={{marginTop: '5vh'}}>
+            <Form.Item style={{marginTop: '5em'}}>
                 <Space>
                     <Button type='primary' htmlType='submit'>
                         {isCreation ? t`Create` : t`Update`}

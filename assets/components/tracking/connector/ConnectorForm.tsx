@@ -10,10 +10,9 @@ import {providersConfig} from "../../../utils/providers"
 
 export function ConnectorForm({form, onCreate}: { form: FormInstance, onCreate: (values: Connector) => void }) {
     const [provider, setProvider] = useState<ConnectorProvider>()
-    const providersConfigList = providersConfig()
     const [current, setCurrent] = useState(0)
 
-    const ProviderForm = provider !== undefined ? providersConfigList[provider].form : undefined
+    const ProviderForm = provider !== undefined ? providersConfig[provider].form : undefined
 
     const steps: StepProps[] = [
         {
@@ -38,7 +37,7 @@ export function ConnectorForm({form, onCreate}: { form: FormInstance, onCreate: 
                     <>
                         <h2>{t`Choose a registrar`}</h2>
                         <Row gutter={[16, 16]}>
-                            {Object.keys(providersConfigList).map((provider: string) => (
+                            {Object.keys(providersConfig).map((provider: string) => (
                                 <Col key={provider as ConnectorProvider} span={8}>
                                     <Card
                                         hoverable

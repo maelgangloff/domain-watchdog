@@ -5,15 +5,8 @@ import type {FormInstance} from "antd"
 import {Form, Input, Popconfirm, Select} from "antd"
 import type {Connector} from "../../api/connectors"
 import {ConnectorProvider} from "../../api/connectors"
-import {DefaultConnectorFormItems} from "./index"
-import {providersConfig} from "../index"
-
-const formItemLayoutWithOutLabel = {
-    wrapperCol: {
-        xs: {span: 24, offset: 0},
-        sm: {span: 20, offset: 4}
-    }
-}
+import DefaultConnectorFormItems from "./DefaultConnectorFormItems"
+import {formItemLayoutWithOutLabel, providersConfig} from "../index"
 
 export default function OvhCloudConnectorForm({form, onCreate}: {
     form: FormInstance,
@@ -24,20 +17,16 @@ export default function OvhCloudConnectorForm({form, onCreate}: {
 
     form.setFieldValue('provider', ConnectorProvider.OVHcloud)
 
-    const ovhFields = {
-        appKey: t`Application key`,
-        appSecret: t`Application secret`,
-        consumerKey: t`Consumer key`
-    }
     const ovhEndpointList = [
-        {
-            label: t`European Region`,
-            value: 'ovh-eu'
-        }
+        {label: t`European Region`, value: 'ovh-eu'},
+        {label: t`United States Region`, value: 'ovh-us'},
+        {label: t`Canada Region`, value: 'ovh-ca'}
     ]
+
     const ovhSubsidiaryList = [...[
         'CZ', 'DE', 'ES', 'FI', 'FR', 'GB', 'IE', 'IT', 'LT', 'MA', 'NL', 'PL', 'PT', 'SN', 'TN'
     ].map(c => ({value: c, label: regionNames.of(c) ?? c})), {value: 'EU', label: t`Europe`}]
+
     const ovhPricingMode = [
         {value: 'create-default', label: t`The domain is free and at the standard price`},
         {
@@ -55,16 +44,38 @@ export default function OvhCloudConnectorForm({form, onCreate}: {
             wrapperCol={{span: 14}}
             onFinish={onCreate}
         >
-            {
-                Object.keys(ovhFields).map(fieldName => <Form.Item
-                    key={ovhFields[fieldName as keyof typeof ovhFields]}
-                    label={ovhFields[fieldName as keyof typeof ovhFields]}
-                    name={['authData', fieldName]}
-                    rules={[{required: true, message: t`Required`}]}
-                >
-                    <Input autoComplete='off'/>
-                </Form.Item>)
-            }
+            <Form.Item
+                label={t`Application key`}
+                name={['authData', 'appKey']}
+                rules={[{required: true, message: t`Required`}]}
+            >
+                <Input autoComplete='off'/>
+            </Form.Item>
+
+            <Form.Item
+                label={t`Application secret`}
+                name={['authData', 'appSecret']}
+                rules={[{required: true, message: t`Required`}]}
+            >
+                <Input autoComplete='off'/>
+            </Form.Item>
+
+            <Form.Item
+                label={t`Consumer key`}
+                name={['authData', 'consumerKey']}
+                rules={[{required: true, message: t`Required`}]}
+            >
+                <Input autoComplete='off'/>
+            </Form.Item>
+
+            <Form.Item
+                label={t`Application key`}
+                name={['authData', 'appKey']}
+                rules={[{required: true, message: t`Required`}]}
+            >
+                <Input autoComplete='off'/>
+            </Form.Item>
+
             <Form.Item
                 label={t`OVH Endpoint`}
                 name={['authData', 'apiEndpoint']}
@@ -108,7 +119,7 @@ export default function OvhCloudConnectorForm({form, onCreate}: {
                     />
                 </Popconfirm>
             </Form.Item>
-            <DefaultConnectorFormItems tosLink={providersConfig()[ConnectorProvider.OVHcloud].tosLink}/>
+            <DefaultConnectorFormItems tosLink={providersConfig[ConnectorProvider.OVHcloud].tosLink}/>
         </Form>
     )
 }
