@@ -1,8 +1,8 @@
-import {Button, Checkbox, Form, Space, Typography} from "antd"
+import {Button, Checkbox, Form, Typography} from "antd"
 import {t} from "ttag"
 import React from "react"
 
-export function DefaultConnectorFormItems({tosLink}: {tosLink: string}) {
+export function DefaultConnectorFormItems({tosLink}: { tosLink: string }) {
     return <>
         <Form.Item
             valuePropName='checked'
@@ -43,15 +43,10 @@ export function DefaultConnectorFormItems({tosLink}: {tosLink: string}) {
         </Form.Item>
 
 
-        <Form.Item style={{marginTop: '5vh'}}>
-            <Space>
-                <Button type='primary' htmlType='submit'>
-                    {t`Create`}
-                </Button>
-                <Button type='default' htmlType='reset'>
-                    {t`Reset`}
-                </Button>
-            </Space>
+        <Form.Item style={{marginTop: '5vh', textAlign: 'center'}}>
+            <Button type='primary' htmlType='submit'>
+                {t`Create`}
+            </Button>
         </Form.Item>
     </>
 }

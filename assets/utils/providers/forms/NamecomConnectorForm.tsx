@@ -1,10 +1,10 @@
 import type {FormInstance} from 'antd'
 import {Alert, Form, Input} from 'antd'
 import React from 'react'
-import type {Connector} from '../../../utils/api/connectors'
-import {ConnectorProvider} from '../../../utils/api/connectors'
+import type {Connector} from '../../api/connectors'
+import {ConnectorProvider} from '../../api/connectors'
 import {t} from 'ttag'
-import {DefaultConnectorFormItems} from "../../../utils/providers/forms"
+import {DefaultConnectorFormItems} from "./index"
 import {providersConfig} from "../index"
 
 const formItemLayoutWithOutLabel = {
@@ -14,7 +14,10 @@ const formItemLayoutWithOutLabel = {
     }
 }
 
-export function NamecomConnectorForm({form, onCreate}: { form: FormInstance, onCreate: (values: Connector) => void }) {
+export default function NamecomConnectorForm({form, onCreate}: {
+    form: FormInstance,
+    onCreate: (values: Connector) => void
+}) {
 
     return (
         <Form

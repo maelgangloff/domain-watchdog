@@ -1,12 +1,12 @@
 import type {Connector} from '../api/connectors'
-import { ConnectorProvider} from '../api/connectors'
-import {OvhCloudConnectorForm} from "./forms/OvhCloudConnectorForm"
+import {ConnectorProvider} from '../api/connectors'
+import OvhCloudConnectorForm from "./forms/OvhCloudConnectorForm"
 import type {FormInstance} from "antd"
 import type React from "react"
-import {GandiConnectorForm} from "./forms/GandiConnectorForm"
-import {NamecheapConnectorForm} from "./forms/NamecheapConnectorForm"
-import {AutoDnsConnectorForm} from "./forms/AutoDnsConnectorForm"
-import {NamecomConnectorForm} from "./forms/NamecomConnectorForm"
+import GandiConnectorForm from "./forms/GandiConnectorForm"
+import NamecheapConnectorForm from "./forms/NamecheapConnectorForm"
+import AutoDnsConnectorForm from "./forms/AutoDnsConnectorForm"
+import NamecomConnectorForm from "./forms/NamecomConnectorForm"
 
 export type ProviderConfig = {
     tosLink: string

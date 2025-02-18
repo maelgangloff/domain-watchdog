@@ -14,7 +14,10 @@ const formItemLayoutWithOutLabel = {
     }
 }
 
-export function GandiConnectorForm({form, onCreate}: { form: FormInstance, onCreate: (values: Connector) => void }) {
+export default function GandiConnectorForm({form, onCreate}: {
+    form: FormInstance,
+    onCreate: (values: Connector) => void
+}) {
 
     return (
         <Form
@@ -47,7 +50,6 @@ export function GandiConnectorForm({form, onCreate}: { form: FormInstance, onCre
             >
                 <Input autoComplete='off' placeholder='xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx'/>
             </Form.Item>
-
             <DefaultConnectorFormItems tosLink={providersConfig()[ConnectorProvider.Gandi].tosLink}/>
 
         </Form>

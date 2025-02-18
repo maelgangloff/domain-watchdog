@@ -1,10 +1,10 @@
 import type {FormInstance} from 'antd'
 import {Form, Input} from 'antd'
 import React from 'react'
-import type {Connector} from '../../../utils/api/connectors'
-import {ConnectorProvider} from '../../../utils/api/connectors'
+import type {Connector} from '../../api/connectors'
+import {ConnectorProvider} from '../../api/connectors'
 import {t} from 'ttag'
-import {DefaultConnectorFormItems} from "../../../utils/providers/forms"
+import {DefaultConnectorFormItems} from "./index"
 import {providersConfig} from "../index"
 
 const formItemLayoutWithOutLabel = {
@@ -14,7 +14,7 @@ const formItemLayoutWithOutLabel = {
     }
 }
 
-export function NamecheapConnectorForm({form, onCreate}: {
+export default function NamecheapConnectorForm({form, onCreate}: {
     form: FormInstance,
     onCreate: (values: Connector) => void
 }) {
@@ -44,7 +44,6 @@ export function NamecheapConnectorForm({form, onCreate}: {
             >
                 <Input autoComplete='off'/>
             </Form.Item>
-
             <DefaultConnectorFormItems tosLink={providersConfig()[ConnectorProvider.Namecheap].tosLink}/>
         </Form>
     )
