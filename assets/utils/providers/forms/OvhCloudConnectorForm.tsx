@@ -3,14 +3,10 @@ import {regionNames} from "../../../i18n"
 import React, {useState} from 'react'
 import type {FormInstance} from "antd"
 import {Form, Input, Popconfirm, Select, Typography} from "antd"
-import type {Connector} from "../../api/connectors"
 import {ConnectorProvider} from "../../api/connectors"
-import DefaultConnectorFormItems from "./DefaultConnectorFormItems"
-import {formItemLayoutWithOutLabel, providersConfig} from "../index"
 
-export default function OvhCloudConnectorForm({form, onCreate}: {
-    form: FormInstance,
-    onCreate: (values: Connector) => void
+export default function OvhCloudConnectorForm({form}: {
+    form: FormInstance
 }) {
     const [open, setOpen] = useState(false)
     const [ovhPricingModeValue, setOvhPricingModeValue] = useState<string | undefined>()
@@ -36,14 +32,7 @@ export default function OvhCloudConnectorForm({form, onCreate}: {
     ]
 
     return (
-        <Form
-            {...formItemLayoutWithOutLabel}
-            form={form}
-            layout='horizontal'
-            labelCol={{span: 6}}
-            wrapperCol={{span: 14}}
-            onFinish={onCreate}
-        >
+        <>
             <Form.Item
                 label={t`Application key`}
                 name={['authData', 'appKey']}
@@ -125,7 +114,6 @@ export default function OvhCloudConnectorForm({form, onCreate}: {
                     />
                 </Popconfirm>
             </Form.Item>
-            <DefaultConnectorFormItems tosLink={providersConfig[ConnectorProvider.OVHcloud].tosLink}/>
-        </Form>
+        </>
     )
 }

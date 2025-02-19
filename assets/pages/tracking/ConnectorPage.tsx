@@ -38,7 +38,7 @@ export default function ConnectorPage() {
 
     return (
         <Flex gap='middle' align='center' justify='center' vertical>
-            <Card title={t`Create a Connector`} style={{width: '100%'}}>
+            <Card title={t`Create a Connector`} style={{width: '100%'}} size='small'>
                 {contextHolder}
                 <ConnectorForm form={form} onCreate={onCreateConnector}/>
             </Card>

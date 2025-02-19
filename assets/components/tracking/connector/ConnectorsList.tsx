@@ -3,8 +3,9 @@ import {jt, t} from 'ttag'
 import {DeleteFilled} from '@ant-design/icons'
 import React from 'react'
 import type {Connector} from '../../../utils/api/connectors'
-import { ConnectorProvider, deleteConnector} from '../../../utils/api/connectors'
+import {ConnectorProvider, deleteConnector} from '../../../utils/api/connectors'
 import {providersConfig} from "../../../utils/providers"
+
 const {useToken} = theme
 
 export type ConnectorElement = Connector & { id: string, createdAt: string, watchlistCount: number }
@@ -19,6 +20,7 @@ export function ConnectorsList({connectors, onDelete}: { connectors: ConnectorEl
 
     return (
         <>
+            <Divider/>
             {connectors.map(connector => {
                     const createdAt = <Typography.Text strong>
                         {new Date(connector.createdAt).toLocaleString()}
@@ -56,7 +58,6 @@ The creation date corresponds to the date on which you consented to the creation
                                 </>
                             }/>
                         </Card>
-                        <Divider/>
                     </>
                 }
             )}

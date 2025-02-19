@@ -96,7 +96,7 @@ export function WatchlistForm({form, connectors, onFinish, isCreation}: {
                     {
                         validator: async (_, domains) => {
                             if (!domains || domains.length < 1) {
-                                return await Promise.reject(new Error(t`At least one domain name`))
+                                throw new Error(t`At least one domain name`)
                             }
                         }
                     }
