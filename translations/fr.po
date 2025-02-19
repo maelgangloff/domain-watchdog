@@ -53,21 +53,21 @@ msgstr "Adresse e-mail"
 #: assets/components/search/DomainSearchBar.tsx:28
 #: assets/components/tracking/watchlist/WatchlistForm.tsx:119
 #: assets/components/tracking/watchlist/WatchlistForm.tsx:222
+#: assets/utils/providers/forms/AutoDnsConnectorForm.tsx:27
 #: assets/utils/providers/forms/AutoDnsConnectorForm.tsx:38
-#: assets/utils/providers/forms/AutoDnsConnectorForm.tsx:49
-#: assets/utils/providers/forms/AutoDnsConnectorForm.tsx:64
-#: assets/utils/providers/forms/AutoDnsConnectorForm.tsx:87
-#: assets/utils/providers/forms/DefaultConnectorFormItems.tsx:15
-#: assets/utils/providers/forms/DefaultConnectorFormItems.tsx:30
-#: assets/utils/providers/forms/DefaultConnectorFormItems.tsx:41
-#: assets/utils/providers/forms/GandiConnectorForm.tsx:32
-#: assets/utils/providers/forms/OvhCloudConnectorForm.tsx:50
-#: assets/utils/providers/forms/OvhCloudConnectorForm.tsx:64
-#: assets/utils/providers/forms/OvhCloudConnectorForm.tsx:72
-#: assets/utils/providers/forms/OvhCloudConnectorForm.tsx:80
-#: assets/utils/providers/forms/OvhCloudConnectorForm.tsx:88
-#: assets/utils/providers/forms/OvhCloudConnectorForm.tsx:95
-#: assets/utils/providers/forms/OvhCloudConnectorForm.tsx:103
+#: assets/utils/providers/forms/AutoDnsConnectorForm.tsx:53
+#: assets/utils/providers/forms/AutoDnsConnectorForm.tsx:76
+#: assets/utils/providers/forms/DefaultConnectorFormItems.tsx:11
+#: assets/utils/providers/forms/DefaultConnectorFormItems.tsx:26
+#: assets/utils/providers/forms/DefaultConnectorFormItems.tsx:37
+#: assets/utils/providers/forms/GandiConnectorForm.tsx:21
+#: assets/utils/providers/forms/OvhCloudConnectorForm.tsx:39
+#: assets/utils/providers/forms/OvhCloudConnectorForm.tsx:53
+#: assets/utils/providers/forms/OvhCloudConnectorForm.tsx:61
+#: assets/utils/providers/forms/OvhCloudConnectorForm.tsx:69
+#: assets/utils/providers/forms/OvhCloudConnectorForm.tsx:77
+#: assets/utils/providers/forms/OvhCloudConnectorForm.tsx:84
+#: assets/utils/providers/forms/OvhCloudConnectorForm.tsx:92
 msgid "Required"
 msgstr "Requis"
 
@@ -190,7 +190,7 @@ msgid "Domain Finder"
 msgstr "Rechercher un domaine"
 
 #: assets/components/Sider.tsx:49 assets/pages/StatisticsPage.tsx:114
-#: assets/pages/search/TldPage.tsx:79
+#: assets/pages/search/TldPage.tsx:78
 msgid "TLD"
 msgstr "TLD"
 
@@ -231,20 +231,37 @@ msgstr "Se déconnecter"
 msgid "Log in"
 msgstr "Se connecter"
 
-#: assets/components/tracking/connector/ConnectorForm.tsx:19
+#: assets/components/tracking/connector/ConnectorForm.tsx:34
 #: assets/utils/functions/rdapTranslation.ts:12
 msgid "Registrar"
 msgstr "Bureau d'enregistrement"
 
-#: assets/components/tracking/connector/ConnectorForm.tsx:23
+#: assets/components/tracking/connector/ConnectorForm.tsx:38
 msgid "Authentication"
 msgstr "Authentification"
 
-#: assets/components/tracking/connector/ConnectorForm.tsx:38
+#: assets/components/tracking/connector/ConnectorForm.tsx:43
+msgid "Consent"
+msgstr ""
+
+#: assets/components/tracking/connector/ConnectorForm.tsx:51
 msgid "Choose a registrar"
 msgstr "Choisir un bureau d'enregistrement"
 
-#: assets/components/tracking/connector/ConnectorForm.tsx:63
+#: assets/components/tracking/connector/ConnectorForm.tsx:83
+msgid "Previous"
+msgstr ""
+
+#: assets/components/tracking/connector/ConnectorForm.tsx:88
+msgid "Next"
+msgstr ""
+
+#: assets/components/tracking/connector/ConnectorForm.tsx:93
+#: assets/components/tracking/watchlist/WatchlistForm.tsx:269
+msgid "Create"
+msgstr "Créer"
+
+#: assets/components/tracking/connector/ConnectorForm.tsx:100
 msgid ""
 "This website is neither affiliated with nor sponsored by the registrars "
 "mentioned.\n"
@@ -262,7 +279,7 @@ msgstr ""
 "générales définies par chaque bureau d'enregistrement et relève de la seule "
 "responsabilité de l'utilisateur."
 
-#: assets/components/tracking/connector/ConnectorsList.tsx:18
+#: assets/components/tracking/connector/ConnectorsList.tsx:19
 msgid ""
 "An error occurred while deleting the Connector. Make sure it is not used in "
 "any Watchlist"
@@ -270,40 +287,40 @@ msgstr ""
 "Une erreur est survenue lors de la suppression du Connecteur. Assurez-vous "
 "qu'il n'est utilisé dans aucune une Watchlist"
 
-#: assets/components/tracking/connector/ConnectorsList.tsx:33
+#: assets/components/tracking/connector/ConnectorsList.tsx:35
 #, javascript-format
 msgid "Connector ${ connectorName }"
 msgstr "Connecteur ${ connectorName }"
 
-#: assets/components/tracking/connector/ConnectorsList.tsx:38
+#: assets/components/tracking/connector/ConnectorsList.tsx:40
 msgid "Delete the Connector"
 msgstr "Supprimer le Connecteur"
 
-#: assets/components/tracking/connector/ConnectorsList.tsx:39
+#: assets/components/tracking/connector/ConnectorsList.tsx:41
 msgid "Are you sure to delete this Connector?"
 msgstr "Êtes-vous sûr de vouloir supprimer ce Connecteur ?"
 
-#: assets/components/tracking/connector/ConnectorsList.tsx:41
+#: assets/components/tracking/connector/ConnectorsList.tsx:43
 #: assets/components/tracking/watchlist/DeleteWatchlistButton.tsx:16
 msgid "Yes"
 msgstr "Oui"
 
-#: assets/components/tracking/connector/ConnectorsList.tsx:42
+#: assets/components/tracking/connector/ConnectorsList.tsx:44
 #: assets/components/tracking/watchlist/DeleteWatchlistButton.tsx:17
 msgid "No"
 msgstr "Non"
 
-#: assets/components/tracking/connector/ConnectorsList.tsx:46
+#: assets/components/tracking/connector/ConnectorsList.tsx:48
 #, javascript-format
 msgid "Creation date: ${ createdAt }"
 msgstr "Date de création : ${ createdAt }"
 
-#: assets/components/tracking/connector/ConnectorsList.tsx:47
+#: assets/components/tracking/connector/ConnectorsList.tsx:49
 #, javascript-format
 msgid "Used in: ${ watchlistCount } Watchlist"
 msgstr "Utilisé dans : ${ watchlistCount } Watchlist"
 
-#: assets/components/tracking/connector/ConnectorsList.tsx:50
+#: assets/components/tracking/connector/ConnectorsList.tsx:52
 msgid ""
 "You can stop using a connector at any time. To delete a connector, you must "
 "remove it from each linked Watchlist.\n"
@@ -320,7 +337,7 @@ msgstr ""
 "droit de rétractation et que vous aviez l'âge minimum pour consentir à ces "
 "conditions."
 
-#: assets/components/tracking/connector/ConnectorsList.tsx:54
+#: assets/components/tracking/connector/ConnectorsList.tsx:56
 msgid "The Provider’s conditions are accessible by following this hyperlink."
 msgstr ""
 "Les conditions du fournisseur d'API sont accessibles en suivant ce lien "
@@ -521,11 +538,6 @@ msgid "Add a Webhook"
 msgstr "Ajouter un Webhook"
 
 #: assets/components/tracking/watchlist/WatchlistForm.tsx:269
-#: assets/utils/providers/forms/DefaultConnectorFormItems.tsx:52
-msgid "Create"
-msgstr "Créer"
-
-#: assets/components/tracking/watchlist/WatchlistForm.tsx:269
 msgid "Update"
 msgstr "Mettre à jour"
 
@@ -553,23 +565,59 @@ msgstr ""
 "Bien que le domaine existe dans ma base de données, il a été supprimé du "
 "WHOIS par son bureau d'enregistrement."
 
-#: assets/pages/search/TldPage.tsx:86
+#: assets/pages/search/TldPage.tsx:85
 msgid "Flag"
 msgstr "Drapeau"
 
-#: assets/pages/search/TldPage.tsx:89
+#: assets/pages/search/TldPage.tsx:88
 msgid "Country"
 msgstr "Pays"
 
-#: assets/pages/search/TldPage.tsx:96
+#: assets/pages/search/TldPage.tsx:95
 msgid "Registry Operator"
 msgstr "Opérateur de registre"
 
-#: assets/pages/search/TldPage.tsx:125
+#: assets/pages/search/TldPage.tsx:123
+msgid ""
+"Top-level domains sponsored by specific organizations that set rules for "
+"registration and use, often related to particular interest groups or "
+"industries."
+msgstr ""
+"Domaines de premier niveau sponsorisés par des organisations spécifiques qui "
+"établissent des règles d'enregistrement et d'utilisation, souvent liées à "
+"des groupes d'intérêt ou à des secteurs particuliers."
+
+#: assets/pages/search/TldPage.tsx:128
+msgid ""
+"Generic top-level domains open to everyone, not restricted by specific "
+"criteria, representing various themes or industries."
+msgstr ""
+"Domaines génériques de premier niveau ouverts à tous, non restreints par des "
+"critères spécifiques, représentant des thèmes ou des secteurs d'activité "
+"variés."
+
+#: assets/pages/search/TldPage.tsx:133
+msgid ""
+"Generic top-level domains associated with specific brands, allowing "
+"companies to use their own brand names as domains."
+msgstr ""
+"Domaines génériques de premier niveau associés à des marques spécifiques, "
+"permettant aux entreprises d'utiliser leurs propres noms de marque comme "
+"domaines."
+
+#: assets/pages/search/TldPage.tsx:138
+msgid ""
+"Top-level domains based on country codes, identifying websites according to "
+"their country of origin."
+msgstr ""
+"Domaines de premier niveau basés sur les codes de pays, identifiant les "
+"sites web en fonction de leur pays d'origine."
+
+#: assets/pages/search/TldPage.tsx:147
 msgid "This page presents all active TLDs in the root zone database."
 msgstr "Cette page présente tous les TLD actifs dans la zone racine."
 
-#: assets/pages/search/TldPage.tsx:128
+#: assets/pages/search/TldPage.tsx:150
 msgid ""
 "IANA provides the list of currently active TLDs, regardless of their type, "
 "and ICANN provides the list of gTLDs.\n"
@@ -589,57 +637,21 @@ msgstr ""
 "requêtes à l'IANA et une à l'ICANN).\n"
 "Parallèlement, la liste des serveurs RDAP racine est mise à jour."
 
-#: assets/pages/search/TldPage.tsx:140
-msgid "Sponsored Top-Level-Domains"
-msgstr "Domaines de premier niveau parrainés"
-
-#: assets/pages/search/TldPage.tsx:142
-msgid ""
-"Top-level domains sponsored by specific organizations that set rules for "
-"registration and use, often related to particular interest groups or "
-"industries."
-msgstr ""
-"Domaines de premier niveau sponsorisés par des organisations spécifiques qui "
-"établissent des règles d'enregistrement et d'utilisation, souvent liées à "
-"des groupes d'intérêt ou à des secteurs particuliers."
-
-#: assets/pages/search/TldPage.tsx:149
+#: assets/pages/search/TldPage.tsx:165
 msgid "Generic Top-Level-Domains"
 msgstr "Domaines de premier niveau générique"
 
-#: assets/pages/search/TldPage.tsx:151
-msgid ""
-"Generic top-level domains open to everyone, not restricted by specific "
-"criteria, representing various themes or industries."
-msgstr ""
-"Domaines génériques de premier niveau ouverts à tous, non restreints par des "
-"critères spécifiques, représentant des thèmes ou des secteurs d'activité "
-"variés."
-
-#: assets/pages/search/TldPage.tsx:158
-msgid "Brand Generic Top-Level-Domains"
-msgstr "Domaines de premier niveau générique de marque"
-
-#: assets/pages/search/TldPage.tsx:160
-msgid ""
-"Generic top-level domains associated with specific brands, allowing "
-"companies to use their own brand names as domains."
-msgstr ""
-"Domaines génériques de premier niveau associés à des marques spécifiques, "
-"permettant aux entreprises d'utiliser leurs propres noms de marque comme "
-"domaines."
-
-#: assets/pages/search/TldPage.tsx:167
+#: assets/pages/search/TldPage.tsx:170
 msgid "Country-Code Top-Level-Domains"
 msgstr "Domaines de premier niveau national"
 
-#: assets/pages/search/TldPage.tsx:169
-msgid ""
-"Top-level domains based on country codes, identifying websites according to "
-"their country of origin."
-msgstr ""
-"Domaines de premier niveau basés sur les codes de pays, identifiant les "
-"sites web en fonction de leur pays d'origine."
+#: assets/pages/search/TldPage.tsx:175
+msgid "Brand Generic Top-Level-Domains"
+msgstr "Domaines de premier niveau générique de marque"
+
+#: assets/pages/search/TldPage.tsx:180
+msgid "Sponsored Top-Level-Domains"
+msgstr "Domaines de premier niveau parrainés"
 
 #: assets/pages/StatisticsPage.tsx:35
 msgid "RDAP queries"
@@ -699,8 +711,8 @@ msgid "Create a Watchlist"
 msgstr "Créer une Watchlist"
 
 #: assets/pages/UserPage.tsx:19
-#: assets/utils/providers/forms/NamecheapConnectorForm.tsx:28
-#: assets/utils/providers/forms/NamecomConnectorForm.tsx:32
+#: assets/utils/providers/forms/NamecheapConnectorForm.tsx:17
+#: assets/utils/providers/forms/NamecomConnectorForm.tsx:21
 msgid "Username"
 msgstr "Nom d'utilisateur"
 
@@ -1299,8 +1311,8 @@ msgstr "Merci de réessayer dans ${ duration } secondes"
 msgid "An error occurred"
 msgstr "Une erreur s'est produite"
 
-#: assets/utils/providers/forms/AutoDnsConnectorForm.tsx:27
-#: assets/utils/providers/forms/NamecomConnectorForm.tsx:27
+#: assets/utils/providers/forms/AutoDnsConnectorForm.tsx:16
+#: assets/utils/providers/forms/NamecomConnectorForm.tsx:16
 msgid ""
 "This provider does not provide a list of supported TLD. Please double check "
 "if the domain you want to register is supported."
@@ -1308,11 +1320,11 @@ msgstr ""
 "Ce fournisseur ne fournit pas la liste des TLD pris en charge. Veuillez "
 "vérifier si le domaine que vous souhaitez enregistrer est compatible."
 
-#: assets/utils/providers/forms/AutoDnsConnectorForm.tsx:33
+#: assets/utils/providers/forms/AutoDnsConnectorForm.tsx:22
 msgid "AutoDNS Username"
 msgstr "Nom d'utilisateur AutoDNS"
 
-#: assets/utils/providers/forms/AutoDnsConnectorForm.tsx:36
+#: assets/utils/providers/forms/AutoDnsConnectorForm.tsx:25
 msgid ""
 "Because of some limitations in API of AutoDNS, we suggest to create an "
 "dedicated user for API with limited rights"
@@ -1320,11 +1332,11 @@ msgstr ""
 "En raison de certaines limitations de l'API d'AutoDNS, nous suggérons de "
 "créer un utilisateur dédié à l'API avec des droits limités"
 
-#: assets/utils/providers/forms/AutoDnsConnectorForm.tsx:43
+#: assets/utils/providers/forms/AutoDnsConnectorForm.tsx:32
 msgid "AutoDNS Password"
 msgstr "Mot de passe AutoDNS"
 
-#: assets/utils/providers/forms/AutoDnsConnectorForm.tsx:47
+#: assets/utils/providers/forms/AutoDnsConnectorForm.tsx:36
 msgid ""
 "Attention: AutoDNS do not support 2-Factor Authentication on API Users for "
 "automated systems"
@@ -1332,39 +1344,39 @@ msgstr ""
 "Attention : AutoDNS ne supporte pas l'authentification à 2 facteurs sur les "
 "utilisateurs API pour les systèmes automatisés"
 
-#: assets/utils/providers/forms/AutoDnsConnectorForm.tsx:55
+#: assets/utils/providers/forms/AutoDnsConnectorForm.tsx:44
 msgid "Owner nic-handle"
 msgstr "Nic-handle du propriétaire"
 
-#: assets/utils/providers/forms/AutoDnsConnectorForm.tsx:59
+#: assets/utils/providers/forms/AutoDnsConnectorForm.tsx:48
 msgid "The nic-handle of the domain name owner"
 msgstr "Le nic-handle du propriétaire du nom de domaine"
 
-#: assets/utils/providers/forms/AutoDnsConnectorForm.tsx:61
+#: assets/utils/providers/forms/AutoDnsConnectorForm.tsx:50
 msgid "You can get it from this page"
 msgstr "Vous pouvez l'obtenir à partir de cette page"
 
-#: assets/utils/providers/forms/AutoDnsConnectorForm.tsx:71
+#: assets/utils/providers/forms/AutoDnsConnectorForm.tsx:60
 msgid "Context Value"
 msgstr "Valeur du contexte"
 
-#: assets/utils/providers/forms/AutoDnsConnectorForm.tsx:75
+#: assets/utils/providers/forms/AutoDnsConnectorForm.tsx:64
 msgid "If you not sure, use the default value 4"
 msgstr "Si vous n'êtes pas sûr, utilisez la valeur par défaut 4"
 
-#: assets/utils/providers/forms/AutoDnsConnectorForm.tsx:84
+#: assets/utils/providers/forms/AutoDnsConnectorForm.tsx:73
 msgid "Owner confirmation"
 msgstr "Confirmation du propriétaire"
 
-#: assets/utils/providers/forms/AutoDnsConnectorForm.tsx:91
+#: assets/utils/providers/forms/AutoDnsConnectorForm.tsx:80
 msgid "Owner confirms his consent of domain order jobs"
 msgstr "Le propriétaire donne son consentement aux commandes de domaines"
 
-#: assets/utils/providers/forms/DefaultConnectorFormItems.tsx:13
+#: assets/utils/providers/forms/DefaultConnectorFormItems.tsx:9
 msgid "API Terms of Service"
 msgstr "Conditions d'utilisation de l'API"
 
-#: assets/utils/providers/forms/DefaultConnectorFormItems.tsx:22
+#: assets/utils/providers/forms/DefaultConnectorFormItems.tsx:18
 msgid ""
 "I have read and accepted the conditions of use of the Provider API, "
 "accessible from this hyperlink"
@@ -1372,20 +1384,20 @@ msgstr ""
 "J'ai lu et j'accepte les conditions d'utilisation de l'API du Fournisseur, "
 "accessibles à partir de ce lien hypertexte"
 
-#: assets/utils/providers/forms/DefaultConnectorFormItems.tsx:28
+#: assets/utils/providers/forms/DefaultConnectorFormItems.tsx:24
 msgid "Legal age"
 msgstr "Âge minimum légal"
 
-#: assets/utils/providers/forms/DefaultConnectorFormItems.tsx:34
+#: assets/utils/providers/forms/DefaultConnectorFormItems.tsx:30
 msgid "I am of the minimum age required to consent to these conditions"
 msgstr ""
 "Je certifie que j'ai l'âge minimum requis pour consentir à ces conditions"
 
-#: assets/utils/providers/forms/DefaultConnectorFormItems.tsx:39
+#: assets/utils/providers/forms/DefaultConnectorFormItems.tsx:35
 msgid "Withdrawal period"
 msgstr "Délai de rétractation"
 
-#: assets/utils/providers/forms/DefaultConnectorFormItems.tsx:45
+#: assets/utils/providers/forms/DefaultConnectorFormItems.tsx:41
 msgid ""
 "I waive my right of withdrawal regarding the purchase of domain names via "
 "the Provider's API"
@@ -1393,11 +1405,11 @@ msgstr ""
 "Je renonce expressément à mon droit de rétractation concernant l'achat de "
 "noms de domaine via l'API du Fournisseur"
 
-#: assets/utils/providers/forms/GandiConnectorForm.tsx:27
+#: assets/utils/providers/forms/GandiConnectorForm.tsx:16
 msgid "Personal Access Token (PAT)"
 msgstr "Jeton d'accès personnel (PAT)"
 
-#: assets/utils/providers/forms/GandiConnectorForm.tsx:30
+#: assets/utils/providers/forms/GandiConnectorForm.tsx:19
 msgid ""
 "Retrieve a Personal Access Token from your customer account on the "
 "Provider's website"
@@ -1405,15 +1417,15 @@ msgstr ""
 "Récupérer un jeton d'accès personnel (PAT) à partir de votre compte client "
 "sur le site web du Fournisseur"
 
-#: assets/utils/providers/forms/GandiConnectorForm.tsx:37
+#: assets/utils/providers/forms/GandiConnectorForm.tsx:26
 msgid "Organization sharing ID"
 msgstr "ID de partage d'organisation"
 
-#: assets/utils/providers/forms/GandiConnectorForm.tsx:41
+#: assets/utils/providers/forms/GandiConnectorForm.tsx:30
 msgid "It indicates the organization that will pay for the ordered product"
 msgstr "Il indique l'organisation qui paiera le produit commandé"
 
-#: assets/utils/providers/forms/NamecheapConnectorForm.tsx:31
+#: assets/utils/providers/forms/NamecheapConnectorForm.tsx:20
 msgid ""
 "Retreive an API key and whitelist this instance's IP address on Namecheap's "
 "website"
@@ -1421,40 +1433,40 @@ msgstr ""
 "Récupérez une clé API et ajoutez l'adresse IP de cette instance à la liste "
 "blanche sur le site Web de Namecheap"
 
-#: assets/utils/providers/forms/NamecheapConnectorForm.tsx:37
-#: assets/utils/providers/forms/NamecomConnectorForm.tsx:41
+#: assets/utils/providers/forms/NamecheapConnectorForm.tsx:26
+#: assets/utils/providers/forms/NamecomConnectorForm.tsx:30
 msgid "API key"
 msgstr "Clé API"
 
-#: assets/utils/providers/forms/NamecomConnectorForm.tsx:35
-#: assets/utils/providers/forms/OvhCloudConnectorForm.tsx:55
+#: assets/utils/providers/forms/NamecomConnectorForm.tsx:24
+#: assets/utils/providers/forms/OvhCloudConnectorForm.tsx:44
 msgid ""
 "Retrieve a set of tokens from your customer account on the Provider's website"
 msgstr ""
 "Récupérer un ensemble de jetons à partir de votre compte client sur le site "
 "web du Fournisseur"
 
-#: assets/utils/providers/forms/OvhCloudConnectorForm.tsx:21
+#: assets/utils/providers/forms/OvhCloudConnectorForm.tsx:17
 msgid "European Region"
 msgstr "Continent Européen"
 
-#: assets/utils/providers/forms/OvhCloudConnectorForm.tsx:22
+#: assets/utils/providers/forms/OvhCloudConnectorForm.tsx:18
 msgid "United States Region"
 msgstr "États-Unis"
 
-#: assets/utils/providers/forms/OvhCloudConnectorForm.tsx:23
+#: assets/utils/providers/forms/OvhCloudConnectorForm.tsx:19
 msgid "Canada Region"
 msgstr "Canada"
 
-#: assets/utils/providers/forms/OvhCloudConnectorForm.tsx:28
+#: assets/utils/providers/forms/OvhCloudConnectorForm.tsx:24
 msgid "Europe"
 msgstr "Europe"
 
-#: assets/utils/providers/forms/OvhCloudConnectorForm.tsx:31
+#: assets/utils/providers/forms/OvhCloudConnectorForm.tsx:27
 msgid "The domain is free and at the standard price"
 msgstr "Le domaine est libre et au prix standard"
 
-#: assets/utils/providers/forms/OvhCloudConnectorForm.tsx:34
+#: assets/utils/providers/forms/OvhCloudConnectorForm.tsx:30
 msgid ""
 "The domain is free but can be premium. Its price varies from one domain to "
 "another"
@@ -1462,36 +1474,36 @@ msgstr ""
 "Le domaine est libre mais il peut être premium. Son prix est variable d'un "
 "domaine à l'autre"
 
-#: assets/utils/providers/forms/OvhCloudConnectorForm.tsx:48
-#: assets/utils/providers/forms/OvhCloudConnectorForm.tsx:78
+#: assets/utils/providers/forms/OvhCloudConnectorForm.tsx:37
+#: assets/utils/providers/forms/OvhCloudConnectorForm.tsx:67
 msgid "Application key"
 msgstr "Clé d'application"
 
-#: assets/utils/providers/forms/OvhCloudConnectorForm.tsx:62
+#: assets/utils/providers/forms/OvhCloudConnectorForm.tsx:51
 msgid "Application secret"
 msgstr "Clé secrète d'application"
 
-#: assets/utils/providers/forms/OvhCloudConnectorForm.tsx:70
+#: assets/utils/providers/forms/OvhCloudConnectorForm.tsx:59
 msgid "Consumer key"
 msgstr "Clé d'utilisateur"
 
-#: assets/utils/providers/forms/OvhCloudConnectorForm.tsx:86
+#: assets/utils/providers/forms/OvhCloudConnectorForm.tsx:75
 msgid "OVH Endpoint"
 msgstr "Endpoint OVH"
 
-#: assets/utils/providers/forms/OvhCloudConnectorForm.tsx:93
+#: assets/utils/providers/forms/OvhCloudConnectorForm.tsx:82
 msgid "OVH subsidiary"
 msgstr "Filiale OVH"
 
-#: assets/utils/providers/forms/OvhCloudConnectorForm.tsx:101
+#: assets/utils/providers/forms/OvhCloudConnectorForm.tsx:90
 msgid "OVH pricing mode"
 msgstr "Mode de tarification OVH"
 
-#: assets/utils/providers/forms/OvhCloudConnectorForm.tsx:106
+#: assets/utils/providers/forms/OvhCloudConnectorForm.tsx:95
 msgid "Confirm pricing mode"
 msgstr "Confirmer le mode de tarification"
 
-#: assets/utils/providers/forms/OvhCloudConnectorForm.tsx:107
+#: assets/utils/providers/forms/OvhCloudConnectorForm.tsx:96
 msgid ""
 "Are you sure about this setting? This may result in additional charges from "
 "the API Provider"
