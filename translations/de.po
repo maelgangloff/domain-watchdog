@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2025-02-18 21:24+0000\n"
+"PO-Revision-Date: 2025-02-19 21:25+0000\n"
 "Last-Translator: Maël Gangloff <contact@maelgangloff.fr>\n"
 "Language-Team: German <https://weblate.vinceh121.me/projects/domain-watchdog/"
 "domain-watchdog-dashboard/de/>\n"
@@ -240,7 +240,7 @@ msgstr "Authentifizierung"
 
 #: assets/components/tracking/connector/ConnectorForm.tsx:43
 msgid "Consent"
-msgstr ""
+msgstr "Zustimmung"
 
 #: assets/components/tracking/connector/ConnectorForm.tsx:51
 msgid "Choose a registrar"
@@ -248,11 +248,11 @@ msgstr "Wählen Sie eine Registrierstelle"
 
 #: assets/components/tracking/connector/ConnectorForm.tsx:83
 msgid "Previous"
-msgstr ""
+msgstr "Zurück"
 
 #: assets/components/tracking/connector/ConnectorForm.tsx:88
 msgid "Next"
-msgstr ""
+msgstr "Weiter"
 
 #: assets/components/tracking/connector/ConnectorForm.tsx:93
 #: assets/components/tracking/watchlist/WatchlistForm.tsx:269
