@@ -1,15 +1,15 @@
 import type {ReactElement} from 'react'
-import React, { useEffect, useState} from 'react'
-import {Collapse, Divider, Table, Typography} from 'antd'
-import type { Tld} from '../../utils/api'
+import React, {useEffect, useState} from 'react'
+import {Card, Divider, Table, Typography} from 'antd'
+import type {Tld} from '../../utils/api'
 import {getTldList} from '../../utils/api'
 import {t} from 'ttag'
 import {regionNames} from '../../i18n'
-import useBreakpoint from '../../hooks/useBreakpoint'
 import type {ColumnType} from 'antd/es/table'
 import punycode from 'punycode/punycode'
 import {getCountryCode} from '../../utils/functions/getCountryCode'
 import {tldToEmoji} from '../../utils/functions/tldToEmoji'
+import {BankOutlined, FlagOutlined, GlobalOutlined, TrademarkOutlined} from "@ant-design/icons"
 
 const {Text, Paragraph} = Typography
 
@@ -29,7 +29,6 @@ function TldTable(filters: FiltersType) {
         Country?: string
     }
 
-    const sm = useBreakpoint('sm')
     const [dataTable, setDataTable] = useState<TableRow[]>([])
     const [total, setTotal] = useState(0)
 
@@ -111,13 +110,36 @@ function TldTable(filters: FiltersType) {
                 }
             }}
 
-            {...(sm ? {scroll: {y: 'max-content'}} : {scroll: {y: 240}})}
+            scroll={{y: '50vh'}}
         />
     )
 }
 
 export default function TldPage() {
-    const sm = useBreakpoint('sm')
+    const [activeTabKey, setActiveTabKey] = useState<string>('gTLD')
+
+    const contentList: Record<string, React.ReactNode> = {
+        sTLD: <>
+            <Text>{t`Top-level domains sponsored by specific organizations that set rules for registration and use, often related to particular interest groups or industries.`}</Text>
+            <Divider/>
+            <TldTable type='sTLD'/>
+        </>,
+        gTLD: <>
+            <Text>{t`Generic top-level domains open to everyone, not restricted by specific criteria, representing various themes or industries.`}</Text>
+            <Divider/>
+            <TldTable type='gTLD' contractTerminated={false} specification13={false}/>
+        </>,
+        ngTLD: <>
+            <Text>{t`Generic top-level domains associated with specific brands, allowing companies to use their own brand names as domains.`}</Text>
+            <Divider/>
+            <TldTable type='gTLD' contractTerminated={false} specification13/>
+        </>,
+        ccTLD: <>
+            <Text>{t`Top-level domains based on country codes, identifying websites according to their country of origin.`}</Text>
+            <Divider/>
+            <TldTable type='ccTLD'/>
+        </>
+    }
 
     return (
         <>
@@ -131,47 +153,41 @@ export default function TldPage() {
             At the same time, the list of root RDAP servers is updated.`}
             </Paragraph>
             <Divider/>
-            <Collapse
-                accordion
-                size={sm ? 'small' : 'large'}
-                items={[
-                    {
-                        key: 'sTLD',
-                        label: t`Sponsored Top-Level-Domains`,
-                        children: <>
-                            <Text>{t`Top-level domains sponsored by specific organizations that set rules for registration and use, often related to particular interest groups or industries.`}</Text>
-                            <Divider/>
-                            <TldTable type='sTLD'/>
-                        </>
-                    },
+
+            <Card
+                style={{width: '100%'}}
+                tabProps={{
+                    size: 'middle',
+                }}
+                tabList={[
                     {
                         key: 'gTLD',
                         label: t`Generic Top-Level-Domains`,
-                        children: <>
-                            <Text>{t`Generic top-level domains open to everyone, not restricted by specific criteria, representing various themes or industries.`}</Text>
-                            <Divider/>
-                            <TldTable type='gTLD' contractTerminated={false} specification13={false}/>
-                        </>
-                    },
-                    {
-                        key: 'ngTLD',
-                        label: t`Brand Generic Top-Level-Domains`,
-                        children: <>
-                            <Text>{t`Generic top-level domains associated with specific brands, allowing companies to use their own brand names as domains.`}</Text>
-                            <Divider/>
-                            <TldTable type='gTLD' contractTerminated={false} specification13/>
-                        </>
+                        icon: <GlobalOutlined/>
                     },
                     {
                         key: 'ccTLD',
                         label: t`Country-Code Top-Level-Domains`,
-                        children: <>
-                            <Text>{t`Top-level domains based on country codes, identifying websites according to their country of origin.`}</Text>
-                            <Divider/><TldTable type='ccTLD'/>
-                        </>
-                    }
+                        icon: <FlagOutlined/>
+                    },
+                    {
+                        key: 'ngTLD',
+                        label: t`Brand Generic Top-Level-Domains`,
+                        icon: <TrademarkOutlined/>
+                    },
+                    {
+                        key: 'sTLD',
+                        label: t`Sponsored Top-Level-Domains`,
+                        icon: <BankOutlined/>
+                    },
                 ]}
-            />
+                activeTabKey={activeTabKey}
+                key={activeTabKey}
+                onTabChange={(k: string) => setActiveTabKey(k)}
+            >
+                {contentList[activeTabKey]}
+
+            </Card>
         </>
     )
 }

@@ -178,7 +178,7 @@ msgstr ""
 
 #: assets/components/Sider.tsx:49
 #: assets/pages/StatisticsPage.tsx:114
-#: assets/pages/search/TldPage.tsx:79
+#: assets/pages/search/TldPage.tsx:78
 msgid "TLD"
 msgstr ""
 
@@ -504,23 +504,48 @@ msgid ""
 "WHOIS by its registrar."
 msgstr ""
 
-#: assets/pages/search/TldPage.tsx:86
+#: assets/pages/search/TldPage.tsx:85
 msgid "Flag"
 msgstr ""
 
-#: assets/pages/search/TldPage.tsx:89
+#: assets/pages/search/TldPage.tsx:88
 msgid "Country"
 msgstr ""
 
-#: assets/pages/search/TldPage.tsx:96
+#: assets/pages/search/TldPage.tsx:95
 msgid "Registry Operator"
 msgstr ""
 
-#: assets/pages/search/TldPage.tsx:125
-msgid "This page presents all active TLDs in the root zone database."
+#: assets/pages/search/TldPage.tsx:123
+msgid ""
+"Top-level domains sponsored by specific organizations that set rules for "
+"registration and use, often related to particular interest groups or "
+"industries."
 msgstr ""
 
 #: assets/pages/search/TldPage.tsx:128
+msgid ""
+"Generic top-level domains open to everyone, not restricted by specific "
+"criteria, representing various themes or industries."
+msgstr ""
+
+#: assets/pages/search/TldPage.tsx:133
+msgid ""
+"Generic top-level domains associated with specific brands, allowing "
+"companies to use their own brand names as domains."
+msgstr ""
+
+#: assets/pages/search/TldPage.tsx:138
+msgid ""
+"Top-level domains based on country codes, identifying websites according to "
+"their country of origin."
+msgstr ""
+
+#: assets/pages/search/TldPage.tsx:147
+msgid "This page presents all active TLDs in the root zone database."
+msgstr ""
+
+#: assets/pages/search/TldPage.tsx:150
 msgid ""
 "IANA provides the list of currently active TLDs, regardless of their type, "
 "and ICANN provides the list of gTLDs.\n"
@@ -532,45 +557,20 @@ msgid ""
 "At the same time, the list of root RDAP servers is updated."
 msgstr ""
 
-#: assets/pages/search/TldPage.tsx:140
-msgid "Sponsored Top-Level-Domains"
-msgstr ""
-
-#: assets/pages/search/TldPage.tsx:142
-msgid ""
-"Top-level domains sponsored by specific organizations that set rules for "
-"registration and use, often related to particular interest groups or "
-"industries."
-msgstr ""
-
-#: assets/pages/search/TldPage.tsx:149
+#: assets/pages/search/TldPage.tsx:165
 msgid "Generic Top-Level-Domains"
 msgstr ""
 
-#: assets/pages/search/TldPage.tsx:151
-msgid ""
-"Generic top-level domains open to everyone, not restricted by specific "
-"criteria, representing various themes or industries."
-msgstr ""
-
-#: assets/pages/search/TldPage.tsx:158
-msgid "Brand Generic Top-Level-Domains"
-msgstr ""
-
-#: assets/pages/search/TldPage.tsx:160
-msgid ""
-"Generic top-level domains associated with specific brands, allowing "
-"companies to use their own brand names as domains."
-msgstr ""
-
-#: assets/pages/search/TldPage.tsx:167
+#: assets/pages/search/TldPage.tsx:170
 msgid "Country-Code Top-Level-Domains"
 msgstr ""
 
-#: assets/pages/search/TldPage.tsx:169
-msgid ""
-"Top-level domains based on country codes, identifying websites according to "
-"their country of origin."
+#: assets/pages/search/TldPage.tsx:175
+msgid "Brand Generic Top-Level-Domains"
+msgstr ""
+
+#: assets/pages/search/TldPage.tsx:180
+msgid "Sponsored Top-Level-Domains"
 msgstr ""
 
 #: assets/pages/StatisticsPage.tsx:35
