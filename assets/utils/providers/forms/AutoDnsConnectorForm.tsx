@@ -1,15 +1,8 @@
-import type {FormInstance} from 'antd'
 import {Alert, Checkbox, Form, Input, Typography} from 'antd'
 import React from 'react'
-import {ConnectorProvider} from '../../api/connectors'
 import {t} from 'ttag'
 
-export default function AutoDnsConnectorForm({form}: {
-    form: FormInstance
-}) {
-
-    form.setFieldValue('provider', ConnectorProvider.AutoDNS)
-
+export default function AutoDnsConnectorForm() {
     return (
         <>
             <Alert

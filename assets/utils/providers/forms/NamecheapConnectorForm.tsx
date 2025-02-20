@@ -1,16 +1,8 @@
-import type {FormInstance} from 'antd'
 import {Form, Input, Typography} from 'antd'
 import React from 'react'
-import {ConnectorProvider} from '../../api/connectors'
 import {t} from 'ttag'
 
-export default function NamecheapConnectorForm({form}: {
-    form: FormInstance
-}) {
-
-
-    form.setFieldValue('provider', ConnectorProvider.Namecheap)
-
+export default function NamecheapConnectorForm() {
     return (
         <>
             <Form.Item

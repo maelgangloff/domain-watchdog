@@ -1,15 +1,8 @@
-import type {FormInstance} from 'antd'
 import {Form, Input, Typography} from 'antd'
 import React from 'react'
-import {ConnectorProvider} from '../../api/connectors'
 import {t} from 'ttag'
 
-export default function GandiConnectorForm({form}: {
-    form: FormInstance
-}) {
-
-    form.setFieldValue('provider', ConnectorProvider.Gandi)
-
+export default function GandiConnectorForm() {
     return (
         <>
             <Form.Item

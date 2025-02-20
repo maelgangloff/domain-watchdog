@@ -3,15 +3,12 @@ import {regionNames} from "../../../i18n"
 import React, {useState} from 'react'
 import type {FormInstance} from "antd"
 import {Form, Input, Popconfirm, Select, Typography} from "antd"
-import {ConnectorProvider} from "../../api/connectors"
 
 export default function OvhCloudConnectorForm({form}: {
     form: FormInstance
 }) {
     const [open, setOpen] = useState(false)
     const [ovhPricingModeValue, setOvhPricingModeValue] = useState<string | undefined>()
-
-    form.setFieldValue('provider', ConnectorProvider.OVHcloud)
 
     const ovhEndpointList = [
         {label: t`European Region`, value: 'ovh-eu'},

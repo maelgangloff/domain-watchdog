@@ -1,4 +1,3 @@
-import type {Connector} from '../api/connectors'
 import {ConnectorProvider} from '../api/connectors'
 import OvhCloudConnectorForm from "./forms/OvhCloudConnectorForm"
 import type {FormInstance} from "antd"
@@ -17,7 +16,7 @@ export const formItemLayoutWithOutLabel = {
 
 export type ProviderConfig = {
     tosLink: string
-    form: ({form, onCreate}: { form: FormInstance, onCreate: (values: Connector) => void }) => React.ReactElement
+    form: ({form}: { form: FormInstance }) => React.ReactElement
 }
 
 export const providersConfig: Record<ConnectorProvider, ProviderConfig> = {

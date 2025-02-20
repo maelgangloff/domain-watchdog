@@ -84,7 +84,7 @@ export default function WatchlistPage() {
     return (
         <Flex gap='middle' align='center' justify='center' vertical>
             {contextHolder}
-            <Card loading={connectors === undefined} title={t`Create a Watchlist`} style={{width: '100%'}}>
+            <Card size='small' loading={connectors === undefined} title={t`Create a Watchlist`} style={{width: '100%'}}>
                 {(connectors != null) &&
                     <WatchlistForm form={form} onFinish={onCreateWatchlist} connectors={connectors} isCreation/>}
             </Card>

@@ -1,4 +1,4 @@
-import type { FormInstance} from 'antd'
+import type {FormInstance} from 'antd'
 import {Button, Card, Col, Form, Input, Row, Steps, Typography} from 'antd'
 import type {Connector} from '../../../utils/api/connectors'
 import {ConnectorProvider} from '../../../utils/api/connectors'
@@ -14,6 +14,8 @@ export function ConnectorForm({form, onCreate}: { form: FormInstance, onCreate: 
     const ProviderForm = provider !== undefined ? providersConfig[provider].form : undefined
     const next = () => setCurrent(current + 1)
     const prev = () => setCurrent(current - 1)
+
+    form.setFieldValue('provider', provider)
 
     return (
         <Form
@@ -49,9 +51,9 @@ export function ConnectorForm({form, onCreate}: { form: FormInstance, onCreate: 
                 {current === 0 && (
                     <>
                         <h2>{t`Choose a registrar`}</h2>
-                        <Row gutter={[16, 16]}>
+                        <Row gutter={[16, 16]} justify='center'>
                             {Object.keys(providersConfig).map((provider: string) => (
-                                <Col key={provider as ConnectorProvider} span={8}>
+                                <Col key={provider as ConnectorProvider} xs={24} sm={12} md={8} lg={6} xl={4}>
                                     <Card
                                         hoverable
                                         style={{textAlign: "center"}}
@@ -60,7 +62,8 @@ export function ConnectorForm({form, onCreate}: { form: FormInstance, onCreate: 
                                             next()
                                         }}
                                     >
-                                        <div style={{fontSize: "3rem"}}><BankOutlined style={{color: 'lightblue'}}/>
+                                        <div style={{fontSize: "3rem"}}>
+                                            <BankOutlined style={{color: 'lightblue'}}/>
                                         </div>
                                         <h3>{Object.keys(ConnectorProvider).find(p => ConnectorProvider[p as keyof typeof ConnectorProvider] === provider)}</h3>
                                     </Card>
@@ -71,7 +74,7 @@ export function ConnectorForm({form, onCreate}: { form: FormInstance, onCreate: 
                 )}
 
                 <div hidden={current !== 1}>
-                    {ProviderForm && <ProviderForm form={form} onCreate={onCreate}/>}
+                    {ProviderForm && <ProviderForm form={form}/>}
                 </div>
                 <div hidden={current !== 2}>
                     {provider && <DefaultConnectorFormItems tosLink={providersConfig[provider].tosLink}/>}

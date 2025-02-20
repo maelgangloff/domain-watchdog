@@ -1,14 +1,8 @@
-import type {FormInstance} from 'antd'
 import {Alert, Form, Input, Typography} from 'antd'
 import React from 'react'
-import {ConnectorProvider} from '../../api/connectors'
 import {t} from 'ttag'
 
-export default function NamecomConnectorForm({form}: {
-    form: FormInstance
-}) {
-
-    form.setFieldValue('provider', ConnectorProvider["Name.com"])
+export default function NamecomConnectorForm() {
 
     return (
         <>
