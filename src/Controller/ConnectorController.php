@@ -2,30 +2,34 @@
 
 namespace App\Controller;
 
+use App\Config\ConnectorProvider;
 use App\Entity\Connector;
 use App\Entity\User;
 use App\Service\Connector\AbstractProvider;
+use DateTimeImmutable;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\EntityManagerInterface;
+use Exception;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Serializer\SerializerInterface;
-use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 class ConnectorController extends AbstractController
 {
     public function __construct(
-        private readonly SerializerInterface $serializer,
+        private readonly SerializerInterface    $serializer,
         private readonly EntityManagerInterface $em,
-        private readonly LoggerInterface $logger,
+        private readonly LoggerInterface        $logger,
         #[Autowire(service: 'service_container')]
-        private readonly ContainerInterface $locator,
-    ) {
+        private readonly ContainerInterface     $locator,
+    )
+    {
     }
 
     #[Route(
@@ -46,7 +50,7 @@ class ConnectorController extends AbstractController
     }
 
     /**
-     * @throws \Exception
+     * @throws Exception
      */
     #[Route(
         path: '/api/connectors',
@@ -57,8 +61,9 @@ class ConnectorController extends AbstractController
         ],
         methods: ['POST']
     )]
-    public function createConnector(Request $request, HttpClientInterface $client): Connector
+    public function createConnector(Request $request): Connector
     {
+        /** @var Connector $connector */
         $connector = $this->serializer->deserialize($request->getContent(), Connector::class, 'json', ['groups' => 'connector:create']);
         /** @var User $user */
         $user = $this->getUser();
@@ -73,6 +78,26 @@ class ConnectorController extends AbstractController
 
         if (null === $provider) {
             throw new BadRequestHttpException('Provider not found');
+        }
+
+        if ($provider === ConnectorProvider::EPP) {
+            $directory = sprintf('var/epp-certificates/%s/', $connector->getId());
+
+            $filesystem = new Filesystem();
+            $filesystem->mkdir($directory);
+            $authData = $connector->getAuthData();
+
+            if (!isset($authData['certificate_pem'], $authData['certificate_key'])) {
+                throw new BadRequestHttpException('EPP certificates are required');
+            }
+
+            $pemPath = $directory . 'certificate.pem';
+            $keyPath = $directory . 'certificate.key';
+
+            $filesystem->dumpFile($pemPath, $authData['certificate_pem']);
+            $filesystem->dumpFile($keyPath, $authData['certificate_key']);
+
+            $connector->setAuthData([...$authData, 'files' => ['pem' => $pemPath, 'key' => $keyPath]]);
         }
 
         /** @var AbstractProvider $providerClient */
@@ -90,7 +115,7 @@ class ConnectorController extends AbstractController
             'username' => $user->getUserIdentifier(),
         ]);
 
-        $connector->setCreatedAt(new \DateTimeImmutable('now'));
+        $connector->setCreatedAt(new DateTimeImmutable('now'));
         $this->em->persist($connector);
         $this->em->flush();
 

@@ -29,7 +29,8 @@ use Symfony\Component\Uid\Uuid;
         ),
         new Post(
             routeName: 'connector_create',
-            normalizationContext: ['groups' => ['connector:create', 'connector:list']], denormalizationContext: ['groups' => 'connector:create'],
+            normalizationContext: ['groups' => ['connector:create', 'connector:list']],
+            denormalizationContext: ['groups' => 'connector:create'],
             name: 'create'
         ),
         new Delete(
