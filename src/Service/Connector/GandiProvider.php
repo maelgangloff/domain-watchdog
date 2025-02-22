@@ -94,27 +94,6 @@ class GandiProvider extends AbstractProvider
         }
     }
 
-    public function verifySpecificAuthData(array $authData): array
-    {
-        $token = $authData['token'];
-
-        if (!is_string($token) || empty($token)
-            || (array_key_exists('sharingId', $authData) && !is_string($authData['sharingId']))
-        ) {
-            throw new BadRequestHttpException('Bad authData schema');
-        }
-
-        $authDataReturned = [
-            'token' => $token,
-        ];
-
-        if (array_key_exists('sharingId', $authData)) {
-            $authDataReturned['sharingId'] = $authData['sharingId'];
-        }
-
-        return $authDataReturned;
-    }
-
     /**
      * @throws TransportExceptionInterface
      */

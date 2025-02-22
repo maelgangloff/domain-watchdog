@@ -107,20 +107,6 @@ class NamecheapProvider extends AbstractProvider
         return $data->CommandResponse;
     }
 
-    public function verifySpecificAuthData(array $authData): array
-    {
-        foreach (['ApiUser', 'ApiKey'] as $key) {
-            if (empty($authData[$key]) || !is_string($authData[$key])) {
-                throw new BadRequestHttpException("Bad authData schema: missing or invalid '$key'");
-            }
-        }
-
-        return [
-            'ApiUser' => $authData['ApiUser'],
-            'ApiKey' => $authData['ApiKey'],
-        ];
-    }
-
     /**
      * @throws TransportExceptionInterface
      * @throws ServerExceptionInterface
