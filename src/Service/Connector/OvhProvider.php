@@ -2,6 +2,7 @@
 
 namespace App\Service\Connector;
 
+use App\Dto\Connector\OvhProviderDto;
 use App\Entity\Domain;
 use GuzzleHttp\Exception\ClientException;
 use Ovh\Api;
@@ -11,10 +12,15 @@ use Psr\Cache\CacheItemPoolInterface;
 use Psr\Cache\InvalidArgumentException;
 use Symfony\Component\DependencyInjection\Attribute\Autoconfigure;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
+use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
+use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 #[Autoconfigure(public: true)]
 class OvhProvider extends AbstractProvider
 {
+    protected string $dtoClass = OvhProviderDto::class;
+
     public const REQUIRED_ROUTES = [
         [
             'method' => 'GET',
@@ -42,9 +48,12 @@ class OvhProvider extends AbstractProvider
         ],
     ];
 
-    public function __construct(CacheItemPoolInterface $cacheItemPool)
-    {
-        parent::__construct($cacheItemPool);
+    public function __construct(
+        CacheItemPoolInterface $cacheItemPool,
+        DenormalizerInterface&NormalizerInterface $serializer,
+        ValidatorInterface $validator,
+    ) {
+        parent::__construct($cacheItemPool, $serializer, $validator);
     }
 
     /**
@@ -126,34 +135,6 @@ class OvhProvider extends AbstractProvider
             'autoPayWithPreferredPaymentMethod' => true,
             'waiveRetractationPeriod' => $waiveRetractationPeriod,
         ]);
-    }
-
-    /**
-     * @throws \Exception
-     */
-    public function verifySpecificAuthData(array $authData): array
-    {
-        foreach ([
-            'appKey',
-            'appSecret',
-            'apiEndpoint',
-            'consumerKey',
-            'ovhSubsidiary',
-            'pricingMode',
-        ] as $key) {
-            if (empty($authData[$key]) || !is_string($authData[$key])) {
-                throw new BadRequestHttpException("Bad authData schema: missing or invalid '$key'");
-            }
-        }
-
-        return [
-            'appKey' => $authData['appKey'],
-            'appSecret' => $authData['appSecret'],
-            'apiEndpoint' => $authData['apiEndpoint'],
-            'consumerKey' => $authData['consumerKey'],
-            'ovhSubsidiary' => $authData['ovhSubsidiary'],
-            'pricingMode' => $authData['pricingMode'],
-        ];
     }
 
     protected function assertAuthentication(): void

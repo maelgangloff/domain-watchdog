@@ -2,12 +2,19 @@
 
 namespace App\Service\Connector;
 
+use App\Dto\Connector\DefaultProviderDto;
 use App\Entity\Domain;
 use Exception;
 use Psr\Cache\CacheItemInterface;
 use Psr\Cache\CacheItemPoolInterface;
 use Symfony\Component\DependencyInjection\Attribute\Autoconfigure;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\HttpKernel\Exception\HttpException;
+use Symfony\Component\Serializer\Exception\ExceptionInterface;
+use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
+use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
+use Symfony\Component\Validator\ConstraintViolationInterface;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 /**
  * The typical flow of a provider will go as follows:
@@ -19,10 +26,17 @@ use Symfony\Component\HttpKernel\Exception\HttpException;
 #[Autoconfigure(public: true)]
 abstract class AbstractProvider
 {
+    /**
+     * @var class-string
+     */
+    protected string $dtoClass = DefaultProviderDto::class;
+
     protected array $authData;
 
     public function __construct(
         protected CacheItemPoolInterface $cacheItemPool,
+        private readonly DenormalizerInterface&NormalizerInterface $serializer,
+        private readonly ValidatorInterface $validator,
     ) {
     }
 
@@ -35,24 +49,26 @@ abstract class AbstractProvider
      *
      * @return array a cleaned up version of the authentication data
      *
-     * @throws HttpException when the user does not accept the necessary conditions
+     * @throws HttpException      when the user does not accept the necessary conditions
+     * @throws ExceptionInterface
      */
     public function verifyAuthData(array $authData): array
     {
+        /** @var DefaultProviderDto $data */
+        $data = $this->serializer->denormalize($this->verifyLegalAuthData($authData), $this->dtoClass);
+        $violations = $this->validator->validate($data);
+
+        if ($violations->count()) {
+            throw new BadRequestHttpException(implode('\n', array_map(fn (ConstraintViolationInterface $v) => $v->getPropertyPath().': '.$v->getMessage(), iterator_to_array($violations))));
+        }
+
         return [
-            ...$this->verifySpecificAuthData($this->verifyLegalAuthData($authData)),
+            ...$this->serializer->normalize($data),
             'acceptConditions' => $authData['acceptConditions'],
             'ownerLegalAge' => $authData['ownerLegalAge'],
             'waiveRetractationPeriod' => $authData['waiveRetractationPeriod'],
         ];
     }
-
-    /**
-     * @param array $authData raw authentication data as supplied by the user
-     *
-     * @return array specific authentication data
-     */
-    abstract protected function verifySpecificAuthData(array $authData): array;
 
     /**
      * @param array $authData raw authentication data as supplied by the user
@@ -117,6 +133,7 @@ abstract class AbstractProvider
     }
 
     /**
+     * @throws ExceptionInterface
      * @throws \Exception
      */
     public function authenticate(array $authData): void

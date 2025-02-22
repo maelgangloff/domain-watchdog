@@ -2,6 +2,7 @@
 
 namespace App\Service\Connector;
 
+use App\Dto\Connector\AutodnsProviderDto;
 use App\Entity\Domain;
 use Psr\Cache\CacheItemInterface;
 use Psr\Cache\CacheItemPoolInterface;
@@ -10,6 +11,9 @@ use Symfony\Component\DependencyInjection\Attribute\Autoconfigure;
 use Symfony\Component\HttpClient\HttpOptions;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
+use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
+use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\DecodingExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\RedirectionExceptionInterface;
@@ -20,9 +24,15 @@ use Symfony\Contracts\HttpClient\HttpClientInterface;
 #[Autoconfigure(public: true)]
 class AutodnsProvider extends AbstractProvider
 {
-    public function __construct(CacheItemPoolInterface $cacheItemPool, private readonly HttpClientInterface $client)
-    {
-        parent::__construct($cacheItemPool);
+    protected string $dtoClass = AutodnsProviderDto::class;
+
+    public function __construct(
+        CacheItemPoolInterface $cacheItemPool,
+        DenormalizerInterface&NormalizerInterface $serializer,
+        private readonly HttpClientInterface $client,
+        ValidatorInterface $validator,
+    ) {
+        parent::__construct($cacheItemPool, $serializer, $validator);
     }
 
     private const BASE_URL = 'https://api.autodns.com';
@@ -165,31 +175,6 @@ class AutodnsProvider extends AbstractProvider
                     ->toArray()
             )->toArray();
         }
-    }
-
-    public function verifySpecificAuthData(array $authData): array
-    {
-        $username = $authData['username'];
-        $password = $authData['password'];
-
-        if (empty($authData['context'])) {
-            $authData['context'] = 4;
-        }
-
-        if (
-            !is_string($username) || empty($username)
-            || !is_string($password) || empty($password)
-            || true !== $authData['ownerConfirm']
-        ) {
-            throw new BadRequestHttpException('Bad authData schema');
-        }
-
-        return [
-            'username' => $authData['username'],
-            'password' => $authData['password'],
-            'ownerConfirm' => $authData['ownerConfirm'],
-            'context' => $authData['context'],
-        ];
     }
 
     public function isSupported(Domain ...$domainList): bool
