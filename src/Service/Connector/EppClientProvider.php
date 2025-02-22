@@ -2,6 +2,7 @@
 
 namespace App\Service\Connector;
 
+use App\Dto\Connector\EppClientProviderDto;
 use App\Entity\Domain;
 use Metaregistrar\EPP\eppCheckDomainRequest;
 use Metaregistrar\EPP\eppCheckDomainResponse;
@@ -14,26 +15,23 @@ use Metaregistrar\EPP\eppHelloRequest;
 use Psr\Cache\CacheItemInterface;
 use Psr\Cache\CacheItemPoolInterface;
 use Psr\Cache\InvalidArgumentException;
+use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
+use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class EppClientProvider extends AbstractProvider implements CheckDomainProviderInterface
 {
     public const EPP_CERTIFICATES_PATH = '../var/epp-certificates/';
 
+    protected string $dtoClass = EppClientProviderDto::class;
     private eppConnection $eppClient;
 
     public function __construct(
         CacheItemPoolInterface $cacheItemPool,
+        DenormalizerInterface&NormalizerInterface $serializer,
+        ValidatorInterface $validator,
     ) {
-        parent::__construct($cacheItemPool);
-    }
-
-    protected function verifySpecificAuthData(array $authData): array
-    {
-        // TODO: Create DTO for each authData schema
-        unset($authData['certificate_pem']);
-        unset($authData['certificate_key']);
-
-        return $authData;
+        parent::__construct($cacheItemPool, $serializer, $validator);
     }
 
     protected function assertAuthentication(): void
