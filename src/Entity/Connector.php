@@ -34,7 +34,9 @@ use Symfony\Component\Uid\Uuid;
             name: 'create'
         ),
         new Delete(
-            security: 'object.user == user'
+            routeName: 'connector_delete',
+            security: 'object.user == user',
+            name: 'delete'
         ),
     ]
 )]

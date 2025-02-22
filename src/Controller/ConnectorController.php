@@ -6,6 +6,7 @@ use App\Config\ConnectorProvider;
 use App\Entity\Connector;
 use App\Entity\User;
 use App\Service\Connector\AbstractProvider;
+use App\Service\Connector\EppClientProvider;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
@@ -48,6 +49,7 @@ class ConnectorController extends AbstractController
 
     /**
      * @throws \Exception
+     * @throws \Throwable
      */
     #[Route(
         path: '/api/connectors',
@@ -81,27 +83,41 @@ class ConnectorController extends AbstractController
             $directory = sprintf('../var/epp-certificates/%s/', $connector->getId());
 
             $filesystem = new Filesystem();
-            $filesystem->mkdir($directory);
+            $filesystem->mkdir($directory, 0755);
             $authData = $connector->getAuthData();
 
             if (!isset($authData['certificate_pem'], $authData['certificate_key'])) {
                 throw new BadRequestHttpException('EPP certificates are required');
             }
 
-            $pemPath = $directory.'certificate.pem';
-            $keyPath = $directory.'certificate.key';
+            $pemPath = $directory.'client.pem';
+            $keyPath = $directory.'client.key';
 
             $filesystem->dumpFile($pemPath, urldecode($authData['certificate_pem']));
             $filesystem->dumpFile($keyPath, urldecode($authData['certificate_key']));
 
             $connector->setAuthData([...$authData, 'files' => ['pem' => $pemPath, 'key' => $keyPath]]);
-        }
 
-        /** @var AbstractProvider $providerClient */
-        $providerClient = $this->locator->get($provider->getConnectorProvider());
-        $authData = $providerClient->verifyAuthData($connector->getAuthData());
-        $connector->setAuthData($authData);
-        $providerClient->authenticate($authData);
+            /** @var AbstractProvider $providerClient */
+            $providerClient = $this->locator->get($provider->getConnectorProvider());
+            $authData = $providerClient->verifyAuthData($connector->getAuthData());
+
+            $connector->setAuthData($authData);
+
+            try {
+                $providerClient->authenticate($authData);
+            } catch (\Throwable $exception) {
+                $filesystem->remove($directory);
+                throw $exception;
+            }
+        } else {
+            /** @var AbstractProvider $providerClient */
+            $providerClient = $this->locator->get($provider->getConnectorProvider());
+            $authData = $providerClient->verifyAuthData($connector->getAuthData());
+            $connector->setAuthData($authData);
+
+            $providerClient->authenticate($authData);
+        }
 
         $this->logger->info('User {username} authentication data with the {provider} provider has been validated.', [
             'username' => $user->getUserIdentifier(),
@@ -117,5 +133,37 @@ class ConnectorController extends AbstractController
         $this->em->flush();
 
         return $connector;
+    }
+
+    /**
+     * @throws \Exception
+     */
+    #[Route(
+        path: '/api/connectors/{id}',
+        name: 'connector_delete',
+        defaults: [
+            '_api_resource_class' => Connector::class,
+            '_api_operation_name' => 'delete',
+        ],
+        methods: ['DELETE']
+    )]
+    public function deleteConnector(Connector $connector): void
+    {
+        foreach ($connector->getWatchLists()->getIterator() as $watchlist) {
+            $watchlist->setConnector(null);
+        }
+
+        $provider = $connector->getProvider();
+
+        if (null === $provider) {
+            throw new BadRequestHttpException('Provider not found');
+        }
+
+        if (ConnectorProvider::EPP === $provider) {
+            (new Filesystem())->remove(sprintf('%s/%s/', EppClientProvider::EPP_CERTIFICATES_PATH, $connector->getId()));
+        }
+
+        $this->em->remove($connector);
+        $this->em->flush();
     }
 }

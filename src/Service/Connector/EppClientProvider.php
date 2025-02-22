@@ -17,6 +17,8 @@ use Psr\Cache\InvalidArgumentException;
 
 class EppClientProvider extends AbstractProvider implements CheckDomainProviderInterface
 {
+    public const EPP_CERTIFICATES_PATH = '../var/epp-certificates/';
+
     private eppConnection $eppClient;
 
     public function __construct(
