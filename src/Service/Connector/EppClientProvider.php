@@ -15,7 +15,7 @@ use Psr\Cache\CacheItemInterface;
 use Psr\Cache\CacheItemPoolInterface;
 use Psr\Cache\InvalidArgumentException;
 
-class EppClientProvider extends AbstractProvider implements EppClientProviderInterface
+class EppClientProvider extends AbstractProvider implements CheckDomainProviderInterface
 {
     private eppConnection $eppClient;
 
@@ -62,7 +62,9 @@ class EppClientProvider extends AbstractProvider implements EppClientProviderInt
             $d->addContact(new eppContactHandle($contact, $type));
         }
 
-        $this->eppClient->request(new eppCreateDomainRequest($d));
+        if (!$dryRun) {
+            $this->eppClient->request(new eppCreateDomainRequest($d));
+        }
 
         $this->eppClient->logout();
         $this->eppClient->disconnect();

@@ -2,7 +2,7 @@
 
 namespace App\Service\Connector;
 
-interface EppClientProviderInterface
+interface CheckDomainProviderInterface
 {
     public function checkDomains(string ...$domains): array;
 }
