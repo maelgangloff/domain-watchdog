@@ -2,9 +2,7 @@
 
 namespace App\Service\Connector;
 
-use App\Entity\Domain;
-
 interface EppClientProviderInterface
 {
-    public function checkDomains(Domain ...$domains): array;
+    public function checkDomains(string ...$domains): array;
 }

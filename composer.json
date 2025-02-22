@@ -33,6 +33,7 @@
     "influxdata/influxdb-client-php": "^3.6",
     "knpuniversity/oauth2-client-bundle": "^2.18",
     "lexik/jwt-authentication-bundle": "^3.1",
+    "metaregistrar/php-epp-client": "^1.0",
     "nelmio/cors-bundle": "^2.5",
     "ovh/ovh": "^3.3",
     "phpdocumentor/reflection-docblock": "^5.4",

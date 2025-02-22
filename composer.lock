@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "29ad927d4b30a375b7f6b10bfe160d43",
+    "content-hash": "a4fba182d42fd845c37ea2a74b65566e",
     "packages": [
         {
             "name": "api-platform/core",
@@ -2470,6 +2470,58 @@
                 }
             ],
             "time": "2025-01-06T16:34:57+00:00"
+        },
+        {
+            "name": "metaregistrar/php-epp-client",
+            "version": "1.0.13",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/metaregistrar/php-epp-client.git",
+                "reference": "efba35794750fb7e04b3f5f7b904a435f79878ea"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/metaregistrar/php-epp-client/zipball/efba35794750fb7e04b3f5f7b904a435f79878ea",
+                "reference": "efba35794750fb7e04b3f5f7b904a435f79878ea",
+                "shasum": ""
+            },
+            "require": {
+                "ext-dom": "*",
+                "ext-libxml": "*",
+                "php": "^7|^8.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^7"
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "Protocols/",
+                    "Registries/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Ewout de Graaf",
+                    "email": "ewout@metaregistrar.com"
+                }
+            ],
+            "description": "Object-oriented PHP EPP Client",
+            "homepage": "https://github.com/metaregistrar/php-epp-client",
+            "keywords": [
+                "domains",
+                "epp",
+                "xml"
+            ],
+            "support": {
+                "issues": "https://github.com/metaregistrar/php-epp-client/issues",
+                "source": "https://github.com/metaregistrar/php-epp-client/tree/1.0.13"
+            },
+            "time": "2024-05-16T13:03:04+00:00"
         },
         {
             "name": "monolog/monolog",

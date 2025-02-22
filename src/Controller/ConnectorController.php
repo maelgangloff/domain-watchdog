@@ -6,10 +6,8 @@ use App\Config\ConnectorProvider;
 use App\Entity\Connector;
 use App\Entity\User;
 use App\Service\Connector\AbstractProvider;
-use DateTimeImmutable;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\EntityManagerInterface;
-use Exception;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
@@ -23,13 +21,12 @@ use Symfony\Component\Serializer\SerializerInterface;
 class ConnectorController extends AbstractController
 {
     public function __construct(
-        private readonly SerializerInterface    $serializer,
+        private readonly SerializerInterface $serializer,
         private readonly EntityManagerInterface $em,
-        private readonly LoggerInterface        $logger,
+        private readonly LoggerInterface $logger,
         #[Autowire(service: 'service_container')]
-        private readonly ContainerInterface     $locator,
-    )
-    {
+        private readonly ContainerInterface $locator,
+    ) {
     }
 
     #[Route(
@@ -50,7 +47,7 @@ class ConnectorController extends AbstractController
     }
 
     /**
-     * @throws Exception
+     * @throws \Exception
      */
     #[Route(
         path: '/api/connectors',
@@ -80,8 +77,8 @@ class ConnectorController extends AbstractController
             throw new BadRequestHttpException('Provider not found');
         }
 
-        if ($provider === ConnectorProvider::EPP) {
-            $directory = sprintf('var/epp-certificates/%s/', $connector->getId());
+        if (ConnectorProvider::EPP === $provider) {
+            $directory = sprintf('../var/epp-certificates/%s/', $connector->getId());
 
             $filesystem = new Filesystem();
             $filesystem->mkdir($directory);
@@ -91,11 +88,11 @@ class ConnectorController extends AbstractController
                 throw new BadRequestHttpException('EPP certificates are required');
             }
 
-            $pemPath = $directory . 'certificate.pem';
-            $keyPath = $directory . 'certificate.key';
+            $pemPath = $directory.'certificate.pem';
+            $keyPath = $directory.'certificate.key';
 
-            $filesystem->dumpFile($pemPath, $authData['certificate_pem']);
-            $filesystem->dumpFile($keyPath, $authData['certificate_key']);
+            $filesystem->dumpFile($pemPath, urldecode($authData['certificate_pem']));
+            $filesystem->dumpFile($keyPath, urldecode($authData['certificate_key']));
 
             $connector->setAuthData([...$authData, 'files' => ['pem' => $pemPath, 'key' => $keyPath]]);
         }
@@ -115,7 +112,7 @@ class ConnectorController extends AbstractController
             'username' => $user->getUserIdentifier(),
         ]);
 
-        $connector->setCreatedAt(new DateTimeImmutable('now'));
+        $connector->setCreatedAt(new \DateTimeImmutable('now'));
         $this->em->persist($connector);
         $this->em->flush();
 
