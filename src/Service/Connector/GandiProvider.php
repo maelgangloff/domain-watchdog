@@ -2,6 +2,7 @@
 
 namespace App\Service\Connector;
 
+use App\Dto\Connector\GandiProviderDto;
 use App\Entity\Domain;
 use Psr\Cache\CacheItemInterface;
 use Psr\Cache\CacheItemPoolInterface;
@@ -10,6 +11,9 @@ use Symfony\Component\HttpClient\HttpOptions;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\HttpKernel\Exception\HttpException;
+use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
+use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\DecodingExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\RedirectionExceptionInterface;
@@ -20,11 +24,17 @@ use Symfony\Contracts\HttpClient\HttpClientInterface;
 #[Autoconfigure(public: true)]
 class GandiProvider extends AbstractProvider
 {
+    protected string $dtoClass = GandiProviderDto::class;
+
     private const BASE_URL = 'https://api.gandi.net';
 
-    public function __construct(CacheItemPoolInterface $cacheItemPool, private readonly HttpClientInterface $client)
-    {
-        parent::__construct($cacheItemPool);
+    public function __construct(
+        CacheItemPoolInterface $cacheItemPool,
+        private readonly HttpClientInterface $client,
+        DenormalizerInterface&NormalizerInterface $serializer,
+        ValidatorInterface $validator,
+    ) {
+        parent::__construct($cacheItemPool, $serializer, $validator);
     }
 
     /**
@@ -82,27 +92,6 @@ class GandiProvider extends AbstractProvider
             || ($dryRun && Response::HTTP_OK !== $res->getStatusCode())) {
             throw new HttpException($res->toArray()['message']);
         }
-    }
-
-    public function verifySpecificAuthData(array $authData): array
-    {
-        $token = $authData['token'];
-
-        if (!is_string($token) || empty($token)
-            || (array_key_exists('sharingId', $authData) && !is_string($authData['sharingId']))
-        ) {
-            throw new BadRequestHttpException('Bad authData schema');
-        }
-
-        $authDataReturned = [
-            'token' => $token,
-        ];
-
-        if (array_key_exists('sharingId', $authData)) {
-            $authDataReturned['sharingId'] = $authData['sharingId'];
-        }
-
-        return $authDataReturned;
     }
 
     /**

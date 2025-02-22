@@ -11,6 +11,9 @@ use Symfony\Component\HttpClient\HttpOptions;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\HttpKernel\KernelInterface;
+use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
+use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Contracts\HttpClient\Exception\DecodingExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
@@ -18,11 +21,15 @@ use Symfony\Contracts\HttpClient\HttpClientInterface;
 #[Autoconfigure(public: true)]
 class NameComProvider extends AbstractProvider
 {
+    protected string $dtoClass = NameComProvider::class;
+
     public function __construct(CacheItemPoolInterface $cacheItemPool,
         private readonly HttpClientInterface $client,
-        private readonly KernelInterface $kernel)
-    {
-        parent::__construct($cacheItemPool);
+        private readonly KernelInterface $kernel,
+        DenormalizerInterface&NormalizerInterface $serializer,
+        ValidatorInterface $validator,
+    ) {
+        parent::__construct($cacheItemPool, $serializer, $validator);
     }
 
     private const BASE_URL = 'https://api.name.com';
@@ -63,24 +70,6 @@ class NameComProvider extends AbstractProvider
                 ])
                 ->toArray()
         )->toArray();
-    }
-
-    public function verifySpecificAuthData(array $authData): array
-    {
-        $username = $authData['username'];
-        $token = $authData['token'];
-
-        if (
-            !is_string($username) || empty($username)
-            || !is_string($token) || empty($token)
-        ) {
-            throw new BadRequestHttpException('Bad authData schema');
-        }
-
-        return [
-            'username' => $authData['username'],
-            'token' => $authData['token'],
-        ];
     }
 
     public function isSupported(Domain ...$domainList): bool
