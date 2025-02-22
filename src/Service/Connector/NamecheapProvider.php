@@ -2,12 +2,16 @@
 
 namespace App\Service\Connector;
 
+use App\Dto\Connector\NamecheapProviderDto;
 use App\Entity\Domain;
 use Psr\Cache\CacheItemInterface;
 use Psr\Cache\CacheItemPoolInterface;
 use Psr\Cache\InvalidArgumentException;
 use Symfony\Component\DependencyInjection\Attribute\Autoconfigure;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
+use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
+use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\RedirectionExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\ServerExceptionInterface;
@@ -17,16 +21,19 @@ use Symfony\Contracts\HttpClient\HttpClientInterface;
 #[Autoconfigure(public: true)]
 class NamecheapProvider extends AbstractProvider
 {
-    public const BASE_URL = 'https://api.namecheap.com/xml.response';
+    protected string $dtoClass = NamecheapProviderDto::class;
 
+    public const BASE_URL = 'https://api.namecheap.com/xml.response';
     public const SANDBOX_BASE_URL = 'https://api.sandbox.namecheap.com/xml.response';
 
     public function __construct(
         CacheItemPoolInterface $cacheItemPool,
         private readonly HttpClientInterface $client,
         private readonly string $outgoingIp,
+        DenormalizerInterface&NormalizerInterface $serializer,
+        ValidatorInterface $validator,
     ) {
-        parent::__construct($cacheItemPool);
+        parent::__construct($cacheItemPool, $serializer, $validator);
     }
 
     /**
