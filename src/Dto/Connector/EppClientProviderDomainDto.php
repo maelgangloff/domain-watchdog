@@ -19,5 +19,9 @@ final class EppClientProviderDomainDto
     public string $password;
 
     #[Assert\NotBlank]
+    #[Assert\All([
+        new Assert\NotBlank(),
+        new Assert\Type('string'),
+    ])]
     public array $contacts;
 }

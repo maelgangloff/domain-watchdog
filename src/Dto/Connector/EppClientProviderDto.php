@@ -10,9 +10,11 @@ final class EppClientProviderDto extends DefaultProviderDto
     public string $version;
 
     #[Assert\NotBlank]
+    #[Assert\Language]
     public string $language;
 
     #[Assert\NotBlank]
+    #[Assert\Url(protocols: ['ssl', 'tls', 'http', 'https'], requireTld: true)]
     public string $hostname;
 
     #[Assert\NotBlank]
@@ -24,10 +26,22 @@ final class EppClientProviderDto extends DefaultProviderDto
     #[Assert\NotBlank]
     public EppClientProviderDomainDto $domain;
 
+    #[Assert\All([
+        new Assert\NotBlank(),
+        new Assert\Type('string'),
+    ])]
     public array $xPathURI = [];
 
+    #[Assert\All([
+        new Assert\NotBlank(),
+        new Assert\Type('string'),
+    ])]
     public array $extURI = [];
 
+    #[Assert\All([
+        new Assert\NotBlank(),
+        new Assert\Type('string'),
+    ])]
     public array $objURI = [];
 
     #[Assert\NotBlank]
