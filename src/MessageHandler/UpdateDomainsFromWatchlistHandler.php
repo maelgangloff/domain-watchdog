@@ -8,34 +8,21 @@ use App\Message\OrderDomain;
 use App\Message\SendDomainEventNotif;
 use App\Message\UpdateDomainsFromWatchlist;
 use App\Notifier\DomainDeletedNotification;
-use App\Notifier\DomainOrderErrorNotification;
-use App\Notifier\DomainOrderNotification;
 use App\Notifier\DomainUpdateErrorNotification;
 use App\Repository\WatchListRepository;
 use App\Service\ChatNotificationService;
 use App\Service\Connector\AbstractProvider;
 use App\Service\Connector\CheckDomainProviderInterface;
-use App\Service\Connector\EppClientProvider;
-use App\Service\InfluxdbService;
 use App\Service\RDAPService;
-use App\Service\StatService;
-use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use Symfony\Component\HttpKernel\KernelInterface;
-use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
-use Symfony\Component\Messenger\Exception\ExceptionInterface;
 use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Mime\Address;
 use Symfony\Component\Notifier\Recipient\Recipient;
-use Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface;
-use Symfony\Contracts\HttpClient\Exception\DecodingExceptionInterface;
-use Symfony\Contracts\HttpClient\Exception\RedirectionExceptionInterface;
-use Symfony\Contracts\HttpClient\Exception\ServerExceptionInterface;
 
 #[AsMessageHandler]
 final readonly class UpdateDomainsFromWatchlistHandler
@@ -53,24 +40,11 @@ final readonly class UpdateDomainsFromWatchlistHandler
         private LoggerInterface $logger,
         #[Autowire(service: 'service_container')]
         private ContainerInterface $locator,
-        private EntityManagerInterface $em,
-        private KernelInterface $kernel,
-        private StatService $statService,
-        private InfluxdbService $influxdbService,
-        #[Autowire(param: 'influxdb_enabled')]
-        private bool $influxdbEnabled,
     ) {
         $this->sender = new Address($mailerSenderEmail, $mailerSenderName);
     }
 
     /**
-     * @throws ExceptionInterface
-     * @throws TransportExceptionInterface
-     * @throws ClientExceptionInterface
-     * @throws DecodingExceptionInterface
-     * @throws RedirectionExceptionInterface
-     * @throws ServerExceptionInterface
-     * @throws \Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface
      * @throws \Throwable
      */
     public function __invoke(UpdateDomainsFromWatchlist $message): void
@@ -82,20 +56,13 @@ final readonly class UpdateDomainsFromWatchlistHandler
             'token' => $message->watchListToken,
         ]);
 
-        $connector = $watchList->getConnector();
+        /** @var AbstractProvider $connectorProvider */
+        $connectorProvider = $this->getConnectorProvider($watchList);
 
-        if (null !== $connector && null !== $connector->getProvider()) {
-            $provider = $connector->getProvider();
-            $connectorProviderClass = $provider->getConnectorProvider();
-            /** @var AbstractProvider $connectorProvider */
-            /** @var EppClientProvider $connectorProvider */
-            $connectorProvider = $this->locator->get($connectorProviderClass);
-        }
-
-        if (isset($connectorProvider) && $connectorProvider instanceof CheckDomainProviderInterface) {
-            $this->logger->notice('Watchlist {watchlist} is linked to connector {connector}.', [
-                'watchlist' => $message->watchListToken,
-                'connector' => $connector->getId(),
+        if ($connectorProvider instanceof CheckDomainProviderInterface) {
+            $this->logger->notice('Watchlist {watchlist} linked to connector {connector}.', [
+                'watchlist' => $watchList->getToken(),
+                'connector' => $watchList->getConnector()->getId(),
             ]);
 
             try {
@@ -104,46 +71,14 @@ final readonly class UpdateDomainsFromWatchlistHandler
                 );
             } catch (\Throwable $exception) {
                 $this->logger->warning('Unable to check domain names availability with connector {connector}.', [
-                    'connector' => $connector->getId(),
+                    'connector' => $watchList->getConnector()->getId(),
                 ]);
 
                 throw $exception;
             }
 
             foreach ($checkedDomains as $domain) {
-                try {
-                    $connectorProvider->orderDomain($this->em->getReference(Domain::class, $domain), $this->kernel->isDebug());
-
-                    $this->logger->notice('Watchlist {watchlist} is linked to connector {connector}. A purchase was successfully made for domain {ldhName}.', [
-                        'watchlist' => $message->watchListToken,
-                        'connector' => $connector->getId(),
-                        'ldhName' => $domain,
-                    ]);
-
-                    // TODO : remove dupcode
-                    $this->statService->incrementStat('stats.domain.purchased');
-                    if ($this->influxdbEnabled) {
-                        $this->influxdbService->addDomainOrderPoint($connector, $domain, true);
-                    }
-                    $notification = (new DomainOrderNotification($this->sender, $domain, $connector));
-                    $this->mailer->send($notification->asEmailMessage(new Recipient($watchList->getUser()->getEmail()))->getMessage());
-                    $this->chatNotificationService->sendChatNotification($watchList, $notification);
-                } catch (\Throwable $exception) {
-                    // TODO : remove dupcode
-                    $this->logger->warning('Unable to complete purchase. An error message is sent to user {username}.', [
-                        'username' => $watchList->getUser()->getUserIdentifier(),
-                    ]);
-
-                    $this->statService->incrementStat('stats.domain.purchase.failed');
-                    if ($this->influxdbEnabled) {
-                        $this->influxdbService->addDomainOrderPoint($connector, $domain, false);
-                    }
-                    $notification = (new DomainOrderErrorNotification($this->sender, $domain));
-                    $this->mailer->send($notification->asEmailMessage(new Recipient($watchList->getUser()->getEmail()))->getMessage());
-                    $this->chatNotificationService->sendChatNotification($watchList, $notification);
-
-                    throw $exception;
-                }
+                $this->bus->dispatch(new OrderDomain($watchList->getToken(), $domain));
             }
 
             return;
@@ -170,17 +105,17 @@ final readonly class UpdateDomainsFromWatchlistHandler
                 $this->bus->dispatch(new SendDomainEventNotif($watchList->getToken(), $domain->getLdhName(), $updatedAt));
             } catch (NotFoundHttpException) {
                 if (!$domain->getDeleted()) {
-                    $notification = (new DomainDeletedNotification($this->sender, $domain));
+                    $notification = new DomainDeletedNotification($this->sender, $domain);
                     $this->mailer->send($notification->asEmailMessage(new Recipient($watchList->getUser()->getEmail()))->getMessage());
                     $this->chatNotificationService->sendChatNotification($watchList, $notification);
                 }
 
-                if (null !== $connector) {
+                if ($watchList->getConnector()) {
                     /*
                      * If the domain name no longer appears in the WHOIS AND a connector is associated with this Watchlist,
                      * this connector is used to purchase the domain name.
                      */
-                    $this->bus->dispatch(new OrderDomain($watchList->getToken(), $domain->getLdhName(), $updatedAt));
+                    $this->bus->dispatch(new OrderDomain($watchList->getToken(), $domain->getLdhName()));
                 }
             } catch (\Throwable $e) {
                 /*
@@ -198,5 +133,17 @@ final readonly class UpdateDomainsFromWatchlistHandler
                 throw $e;
             }
         }
+    }
+
+    private function getConnectorProvider(WatchList $watchList): ?object
+    {
+        $connector = $watchList->getConnector();
+        if (null === $connector || null === $connector->getProvider()) {
+            return null;
+        }
+
+        $providerClass = $connector->getProvider()->getConnectorProvider();
+
+        return $this->locator->get($providerClass);
     }
 }

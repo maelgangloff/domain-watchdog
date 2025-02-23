@@ -100,6 +100,8 @@ class EppClientProvider extends AbstractProvider implements CheckDomainProviderI
     }
 
     /**
+     * @return string[]
+     *
      * @throws eppException
      */
     public function checkDomains(string ...$domains): array
