@@ -2,7 +2,7 @@ import {Checkbox, Form, Typography} from "antd"
 import {t} from "ttag"
 import React from "react"
 
-export default function DefaultConnectorFormItems({tosLink}: { tosLink: string }) {
+export default function DefaultConnectorFormItems({tosLink}: { tosLink?: string }) {
     return <>
         <Form.Item
             valuePropName='checked'

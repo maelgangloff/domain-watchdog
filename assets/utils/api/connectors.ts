@@ -6,7 +6,8 @@ export enum ConnectorProvider {
     Gandi = 'gandi',
     AutoDNS = 'autodns',
     Namecheap = 'namecheap',
-    'Name.com' = 'namecom'
+    'Name.com' = 'namecom',
+    EPP = 'epp'
 }
 
 export interface Connector {

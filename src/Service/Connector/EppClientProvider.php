@@ -136,6 +136,10 @@ class EppClientProvider extends AbstractProvider implements CheckDomainProviderI
      */
     private function connect(): void
     {
+        if ($this->eppClient->isConnected()) {
+            return;
+        }
+
         $conn = new eppConnection(false, null);
         $conn->setHostname($this->authData['hostname']);
         $conn->setVersion($this->authData['version']);
