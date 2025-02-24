@@ -79,45 +79,12 @@ class ConnectorController extends AbstractController
             throw new BadRequestHttpException('Provider not found');
         }
 
-        if (ConnectorProvider::EPP === $provider) {
-            $directory = sprintf('../var/epp-certificates/%s/', $connector->getId());
+        /** @var AbstractProvider $providerClient */
+        $providerClient = $this->locator->get($provider->getConnectorProvider());
+        $authData = $providerClient->verifyAuthData($connector->getAuthData());
+        $connector->setAuthData($authData);
 
-            $filesystem = new Filesystem();
-            $filesystem->mkdir($directory, 0755);
-            $authData = $connector->getAuthData();
-
-            if (!isset($authData['certificate_pem'], $authData['certificate_key'])) {
-                throw new BadRequestHttpException('EPP certificates are required');
-            }
-
-            $pemPath = $directory.'client.pem';
-            $keyPath = $directory.'client.key';
-
-            $filesystem->dumpFile($pemPath, urldecode($authData['certificate_pem']));
-            $filesystem->dumpFile($keyPath, urldecode($authData['certificate_key']));
-
-            $connector->setAuthData([...$authData, 'files' => ['pem' => $pemPath, 'key' => $keyPath]]);
-
-            /** @var AbstractProvider $providerClient */
-            $providerClient = $this->locator->get($provider->getConnectorProvider());
-            $authData = $providerClient->verifyAuthData($connector->getAuthData());
-
-            $connector->setAuthData($authData);
-
-            try {
-                $providerClient->authenticate($authData);
-            } catch (\Throwable $exception) {
-                $filesystem->remove($directory);
-                throw $exception;
-            }
-        } else {
-            /** @var AbstractProvider $providerClient */
-            $providerClient = $this->locator->get($provider->getConnectorProvider());
-            $authData = $providerClient->verifyAuthData($connector->getAuthData());
-            $connector->setAuthData($authData);
-
-            $providerClient->authenticate($authData);
-        }
+        $providerClient->authenticate($authData);
 
         $this->logger->info('User {username} authentication data with the {provider} provider has been validated.', [
             'username' => $user->getUserIdentifier(),
