@@ -44,9 +44,7 @@ final class EppClientProviderDto extends DefaultProviderDto
     ])]
     public array $objURI = [];
 
-    public ?string $certificate_pem = null;
+    public ?string $file_certificate_pem = null;
 
-    public ?string $certificate_key = null;
-
-    public ?EppClientProviderFilesDto $files;
+    public ?string $file_certificate_key = null;
 }

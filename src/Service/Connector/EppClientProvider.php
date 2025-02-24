@@ -15,7 +15,6 @@ use Metaregistrar\EPP\eppHelloRequest;
 use Psr\Cache\CacheItemInterface;
 use Psr\Cache\CacheItemPoolInterface;
 use Psr\Cache\InvalidArgumentException;
-use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
@@ -25,10 +24,7 @@ class EppClientProvider extends AbstractProvider implements CheckDomainProviderI
     public const EPP_CERTIFICATES_PATH = '../var/epp-certificates/';
 
     protected string $dtoClass = EppClientProviderDto::class;
-    private eppConnection $eppClient;
-    private readonly Filesystem $filesystem;
-    private ?string $file_certificate_pem = null;
-    private ?string $file_certificate_key = null;
+    private ?eppConnection $eppClient = null;
 
     public function __construct(
         CacheItemPoolInterface $cacheItemPool,
@@ -36,7 +32,6 @@ class EppClientProvider extends AbstractProvider implements CheckDomainProviderI
         ValidatorInterface $validator,
     ) {
         parent::__construct($cacheItemPool, $serializer, $validator);
-        $this->filesystem = new Filesystem();
     }
 
     protected function assertAuthentication(): void
@@ -136,7 +131,7 @@ class EppClientProvider extends AbstractProvider implements CheckDomainProviderI
      */
     private function connect(): void
     {
-        if ($this->eppClient->isConnected()) {
+        if ($this->eppClient && $this->eppClient->isConnected()) {
             return;
         }
 
@@ -149,20 +144,14 @@ class EppClientProvider extends AbstractProvider implements CheckDomainProviderI
         $conn->setUsername($this->authData['auth']['username']);
         $conn->setPassword($this->authData['auth']['password']);
 
-        if (isset($this->authData['certificate_pem'], $this->authData['certificate_key'])) {
-            $this->file_certificate_pem = $this->filesystem->tempnam(sys_get_temp_dir(), 'epp_client_', '.pem');
-            $this->filesystem->dumpFile($this->file_certificate_pem, urldecode($this->authData['certificate_pem']));
-
-            $this->file_certificate_key = $this->filesystem->tempnam(sys_get_temp_dir(), 'epp_client_', '.key');
-            $this->filesystem->dumpFile($this->file_certificate_key, urldecode($this->authData['certificate_key']));
-
+        if (isset($this->authData['file_certificate_pem'], $this->authData['file_certificate_key'])) {
             $conn->setSslContext(stream_context_create(['ssl' => [
                 ...$this->authData['auth']['ssl'],
-                'local_cert' => $this->file_certificate_pem,
-                'local_pk' => $this->file_certificate_key,
+                'local_cert' => $this->authData['file_certificate_pem'],
+                'local_pk' => $this->authData['file_certificate_key'],
             ]]));
         } else {
-            unset($this->authData['auth']['ssl']['local_cert'], $this->authData['auth']['ssl']['local_pk']);
+            unset($this->authData['file_certificate_pem'], $this->authData['file_certificate_key']);
             $conn->setSslContext(stream_context_create(['ssl' => $this->authData['auth']['ssl']]));
         }
 
@@ -176,10 +165,6 @@ class EppClientProvider extends AbstractProvider implements CheckDomainProviderI
 
     private function disconnect(): void
     {
-        if (isset($this->authData['certificate_pem'], $this->authData['certificate_key'])) {
-            $this->filesystem->remove($this->file_certificate_pem);
-            $this->filesystem->remove($this->file_certificate_key);
-        }
         $this->eppClient->disconnect();
     }
 

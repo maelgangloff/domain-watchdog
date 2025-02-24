@@ -79,20 +79,45 @@ class ConnectorController extends AbstractController
             throw new BadRequestHttpException('Provider not found');
         }
 
-        /** @var AbstractProvider $providerClient */
-        $providerClient = $this->locator->get($provider->getConnectorProvider());
-        $authData = $providerClient->verifyAuthData($connector->getAuthData());
-        $connector->setAuthData($authData);
+        if (ConnectorProvider::EPP === $provider) {
+            $filesystem = new Filesystem();
+            $directory = sprintf('%s/%s/', EppClientProvider::EPP_CERTIFICATES_PATH, $connector->getId());
+            $authData = $connector->getAuthData();
 
-        $providerClient->authenticate($authData);
+            unset($authData['file_certificate_pem'], $authData['file_certificate_key']); // Prevent alteration from user
+
+            if (isset($authData['certificate_pem'], $authData['certificate_key'])) {
+                $pemPath = $directory.'client.pem';
+                $keyPath = $directory.'client.key';
+
+                $filesystem->mkdir($directory, 0755);
+                $filesystem->dumpFile($pemPath, $authData['certificate_pem']);
+                $filesystem->dumpFile($keyPath, $authData['certificate_key']);
+                $connector->setAuthData([...$authData, 'file_certificate_pem' => $pemPath, 'file_certificate_key' => $keyPath]);
+            }
+
+            /** @var AbstractProvider $providerClient */
+            $providerClient = $this->locator->get($provider->getConnectorProvider());
+            $authData = $providerClient->verifyAuthData($connector->getAuthData());
+            $connector->setAuthData($authData);
+
+            try {
+                $providerClient->authenticate($authData);
+            } catch (\Throwable $exception) {
+                $filesystem->remove($directory);
+                throw $exception;
+            }
+        } else {
+            /** @var AbstractProvider $providerClient */
+            $providerClient = $this->locator->get($provider->getConnectorProvider());
+            $authData = $providerClient->verifyAuthData($connector->getAuthData());
+            $connector->setAuthData($authData);
+            $providerClient->authenticate($authData);
+        }
 
         $this->logger->info('User {username} authentication data with the {provider} provider has been validated.', [
             'username' => $user->getUserIdentifier(),
             'provider' => $provider->value,
-        ]);
-
-        $this->logger->info('The new API connector requested by {username} has been successfully registered.', [
-            'username' => $user->getUserIdentifier(),
         ]);
 
         $connector->setCreatedAt(new \DateTimeImmutable('now'));

@@ -109,7 +109,7 @@ export default function EppConnectorForm() {
 ...
 -----END PRIVATE KEY-----`}/>
                         </Form.Item>
-                        <Form.Item name={['authData', 'ssl', 'passphrase']}>
+                        <Form.Item name={['authData', 'auth', 'ssl', 'passphrase']}>
                             <Input placeholder={t`Private key passphrase (optional)`} autoComplete='off'/>
                         </Form.Item>
                     </Col>
@@ -122,7 +122,7 @@ export default function EppConnectorForm() {
                         <Form.Item
                             initialValue={true}
                             help={t`Verify peer`}
-                            name={['authData', 'ssl', 'verify_peer']}
+                            name={['authData', 'auth', 'ssl', 'verify_peer']}
                         >
                             <Switch/>
                         </Form.Item>
@@ -131,7 +131,7 @@ export default function EppConnectorForm() {
                         <Form.Item
                             initialValue={true}
                             help={t`Verify peer name`}
-                            name={['authData', 'ssl', 'verify_peer_name']}
+                            name={['authData', 'auth', 'ssl', 'verify_peer_name']}
                         >
                             <Switch/>
                         </Form.Item>
@@ -140,7 +140,7 @@ export default function EppConnectorForm() {
                         <Form.Item
                             initialValue={false}
                             help={t`Allow self-signed certificates`}
-                            name={['authData', 'ssl', 'allow_self_signed']}
+                            name={['authData', 'auth', 'ssl', 'allow_self_signed']}
                         >
                             <Switch/>
                         </Form.Item>
