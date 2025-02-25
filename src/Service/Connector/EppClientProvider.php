@@ -51,8 +51,10 @@ class EppClientProvider extends AbstractProvider implements CheckDomainProviderI
 
         /** @var eppCheckContactResponse $resp */
         $resp = $this->eppClient->request(new eppCheckContactRequest($contacts));
-        if (in_array(true, $resp->getCheckedContacts())) {
-            throw new BadRequestHttpException('At least one of the contacts entered cannot be used because they are indicated as available.');
+        foreach ($resp->getCheckedContacts() as $contact => $available) {
+            if ($available) {
+                throw new BadRequestHttpException("At least one of the entered contacts cannot be used because it is indicated as available ($contact).");
+            }
         }
 
         $this->eppClient->logout();
