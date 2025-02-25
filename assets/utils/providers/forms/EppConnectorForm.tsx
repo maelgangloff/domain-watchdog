@@ -12,7 +12,9 @@ import {
     PlusOutlined,
     SignatureOutlined,
     ToolOutlined,
-    UserOutlined
+    UserOutlined,
+    ShopOutlined,
+    ShoppingOutlined
 } from "@ant-design/icons"
 
 const DynamicKeyValueList = ({name, label, initialValue, keyPlaceholder, valuePlaceholder}: {
@@ -225,7 +227,7 @@ export default function EppConnectorForm() {
 
             <Form.Item label={t`NIC Handle`}>
                 <Row gutter={16}>
-                    <Col span={6}>
+                    <Col span={4}>
                         <Form.Item
                             hasFeedback
                             required
@@ -234,19 +236,29 @@ export default function EppConnectorForm() {
                             <Input prefix={<SignatureOutlined/>} placeholder={t`Registrant`} required/>
                         </Form.Item>
                     </Col>
-                    <Col span={6}>
+                    <Col span={4}>
                         <Form.Item name={['authData', 'domain', 'contacts', 'admin']}>
                             <Input prefix={<IdcardOutlined/>} placeholder={t`Administrative`}/>
                         </Form.Item>
                     </Col>
-                    <Col span={6}>
+                    <Col span={4}>
                         <Form.Item name={['authData', 'domain', 'contacts', 'tech']}>
                             <Input prefix={<ToolOutlined/>} placeholder={t`Technical`}/>
                         </Form.Item>
                     </Col>
-                    <Col span={6}>
+                    <Col span={4}>
                         <Form.Item name={['authData', 'domain', 'contacts', 'billing']}>
                             <Input prefix={<DollarOutlined/>} placeholder={t`Billing`}/>
+                        </Form.Item>
+                    </Col>
+                    <Col span={4}>
+                        <Form.Item name={['authData', 'domain', 'contacts', 'onsite']}>
+                            <Input prefix={<ShopOutlined />} placeholder={t`Onsite`}/>
+                        </Form.Item>
+                    </Col>
+                    <Col span={4}>
+                        <Form.Item name={['authData', 'domain', 'contacts', 'reseller']}>
+                            <Input prefix={<ShoppingOutlined />} placeholder={t`Reseller`}/>
                         </Form.Item>
                     </Col>
                 </Row>

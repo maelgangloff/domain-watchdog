@@ -44,7 +44,7 @@ class EppClientProvider extends AbstractProvider implements CheckDomainProviderI
 
         $this->eppClient->request(new eppHelloRequest());
 
-        $contacts = [$this->authData['domain']['registrant']];
+        $contacts = [new eppContactHandle($this->authData['domain']['registrant'], eppContactHandle::CONTACT_TYPE_REGISTRANT)];
         foreach ($this->authData['domain']['contacts'] as $role => $roid) {
             $contacts[] = new eppContactHandle($roid, $role);
         }
