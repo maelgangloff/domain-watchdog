@@ -4,6 +4,8 @@ namespace App\Service\Connector;
 
 use App\Dto\Connector\EppClientProviderDto;
 use App\Entity\Domain;
+use Metaregistrar\EPP\eppCheckContactRequest;
+use Metaregistrar\EPP\eppCheckContactResponse;
 use Metaregistrar\EPP\eppCheckDomainRequest;
 use Metaregistrar\EPP\eppCheckDomainResponse;
 use Metaregistrar\EPP\eppConnection;
@@ -15,6 +17,7 @@ use Metaregistrar\EPP\eppHelloRequest;
 use Psr\Cache\CacheItemInterface;
 use Psr\Cache\CacheItemPoolInterface;
 use Psr\Cache\InvalidArgumentException;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
@@ -40,6 +43,17 @@ class EppClientProvider extends AbstractProvider implements CheckDomainProviderI
         $this->eppClient->login();
 
         $this->eppClient->request(new eppHelloRequest());
+
+        $contacts = [];
+        foreach ($this->authData['domain']['contacts'] as $role => $roid) {
+            $contacts[] = new eppContactHandle($roid, $role);
+        }
+
+        /** @var eppCheckContactResponse $resp */
+        $resp = $this->eppClient->request(new eppCheckContactRequest($contacts));
+        if (in_array(true, $resp->getCheckedContacts())) {
+            throw new BadRequestHttpException('At least one of the contacts entered cannot be used because they are indicated as available.');
+        }
 
         $this->eppClient->logout();
         $this->eppClient->disconnect();
