@@ -30,12 +30,6 @@ final class EppClientProviderDto extends DefaultProviderDto
         new Assert\NotBlank(),
         new Assert\Type('string'),
     ])]
-    public array $xPathURI = [];
-
-    #[Assert\All([
-        new Assert\NotBlank(),
-        new Assert\Type('string'),
-    ])]
     public array $extURI = [];
 
     #[Assert\All([

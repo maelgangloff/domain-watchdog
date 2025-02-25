@@ -155,7 +155,6 @@ class EppClientProvider extends AbstractProvider implements CheckDomainProviderI
             $conn->setSslContext(stream_context_create(['ssl' => $this->authData['auth']['ssl']]));
         }
 
-        $conn->setXpathExtensions($this->authData['xPathURI']);
         $conn->setExtensions($this->authData['extURI']);
         $conn->setServices($this->authData['objURI']);
 

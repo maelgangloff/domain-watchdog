@@ -1,12 +1,62 @@
 import React from "react"
 import {t} from "ttag"
-import {Alert, Card, Col, Form, Input, InputNumber, Row, Select, Switch} from "antd"
+import {Alert, Card, Col, Form, Input, InputNumber, Row, Select, Space, Switch} from "antd"
+import {
+    CloseOutlined,
+    DatabaseOutlined,
+    DollarOutlined,
+    FieldTimeOutlined,
+    IdcardOutlined,
+    KeyOutlined,
+    LockOutlined,
+    PlusOutlined,
+    SignatureOutlined,
+    ToolOutlined,
+    UserOutlined
+} from "@ant-design/icons"
+
+const DynamicKeyValueList = ({name, label, initialValue, keyPlaceholder, valuePlaceholder}: {
+    name: string[],
+    label: string,
+    initialValue: { [key: string]: string }[],
+    keyPlaceholder: string,
+    valuePlaceholder: string
+}) => <Form.Item label={label}>
+    <Form.List name={name} initialValue={initialValue}>
+        {(subFields, subOpt) => (
+            <>
+                {subFields.map((subField, index) => (
+                    <Row key={subField.key} gutter={[16, 16]}>
+                        <Col span={10}>
+                            <Form.Item name={[subField.name, 'key']}>
+                                <Input placeholder={keyPlaceholder}/>
+                            </Form.Item>
+                        </Col>
+                        <Col span={10}>
+                            <Form.Item name={[subField.name, 'value']}>
+                                <Input placeholder={valuePlaceholder}/>
+                            </Form.Item>
+                        </Col>
+                        <Col span={4}>
+                            <Space>
+                                <CloseOutlined
+                                    onClick={() => subOpt.remove(subField.name)}
+                                />
+                                {index === subFields.length - 1 && <PlusOutlined onClick={() => subOpt.add()}/>}
+                            </Space>
+                        </Col>
+                    </Row>
+                ))}
+            </>
+        )}
+    </Form.List>
+</Form.Item>
 
 export default function EppConnectorForm() {
 
     return <>
         <Alert
-            message={undefined}
+            message={t`The EPP connector is a special type of connector. Be careful.`}
             type='info'
             style={{marginBottom: '2em'}}
         />
@@ -45,7 +95,7 @@ export default function EppConnectorForm() {
                 name={['authData', 'hostname']}
                 hasFeedback
                 rules={[{required: true, message: t`Required`}]}>
-                <Input addonAfter={
+                <Input prefix={<DatabaseOutlined/>} addonAfter={
                     <Form.Item
                         name={['authData', 'port']}
                         hasFeedback
@@ -69,7 +119,7 @@ export default function EppConnectorForm() {
                             hasFeedback
                             rules={[{required: true, message: t`Required`}]}
                         >
-                            <Input placeholder={t`Username`} autoComplete='off' required/>
+                            <Input prefix={<UserOutlined/>} placeholder={t`Username`} autoComplete='off' required/>
                         </Form.Item>
                     </Col>
                     <Col span={12}>
@@ -78,7 +128,7 @@ export default function EppConnectorForm() {
                             hasFeedback
                             rules={[{required: true, message: t`Required`}]}
                         >
-                            <Input placeholder={t`Password`} autoComplete='off' required/>
+                            <Input prefix={<LockOutlined/>} placeholder={t`Password`} autoComplete='off' required/>
                         </Form.Item>
                     </Col>
                 </Row>
@@ -89,15 +139,7 @@ export default function EppConnectorForm() {
                     <Col span={12}>
                         <Form.Item
                             hasFeedback
-                            name={['authData', 'certificate_pem']}
-                            rules={[{
-                                required: false,
-                                validator: (_, value: string) =>
-                                    value.trim().startsWith('-----BEGIN CERTIFICATE-----') && value.trim().endsWith('-----END CERTIFICATE-----') ?
-                                        Promise.resolve() :
-                                        Promise.reject(new Error(t`The private key format is invalid`))
-                            }]}
-                        >
+                            name={['authData', 'certificate_pem']}>
                             <Input.TextArea rows={5} placeholder={`-----BEGIN CERTIFICATE-----
 ...
 -----END CERTIFICATE-----`}/>
@@ -105,12 +147,13 @@ export default function EppConnectorForm() {
                     </Col>
                     <Col span={12}>
                         <Form.Item name={['authData', 'certificate_key']}>
-                            <Input.TextArea rows={5} placeholder={`-----BEGIN PRIVATE KEY-----
+                            <Input.TextArea rows={5} placeholder={`-----BEGIN ENCRYPTED PRIVATE KEY-----
 ...
------END PRIVATE KEY-----`}/>
+-----END ENCRYPTED PRIVATE KEY-----`}/>
                         </Form.Item>
                         <Form.Item name={['authData', 'auth', 'ssl', 'passphrase']}>
-                            <Input placeholder={t`Private key passphrase (optional)`} autoComplete='off'/>
+                            <Input prefix={<KeyOutlined/>} placeholder={t`Private key passphrase (optional)`}
+                                   autoComplete='off'/>
                         </Form.Item>
                     </Col>
                 </Row>
@@ -161,7 +204,7 @@ export default function EppConnectorForm() {
                 }]}
                 name={['authData', 'domain', 'period']}
             >
-                <InputNumber addonAfter={
+                <InputNumber prefix={<FieldTimeOutlined/>} addonAfter={
                     <Form.Item name={['authData', 'domain', 'unit']} noStyle initialValue={'y'}>
                         <Select style={{width: 100}}>
                             <Select.Option value="y">{t`Year`}</Select.Option>
@@ -177,7 +220,7 @@ export default function EppConnectorForm() {
                 rules={[{required: true, message: t`Required`}]}
                 name={['authData', 'domain', 'password']}
             >
-                <Input required/>
+                <Input prefix={<LockOutlined/>} required/>
             </Form.Item>
 
             <Form.Item label={t`NIC Handle`}>
@@ -188,27 +231,39 @@ export default function EppConnectorForm() {
                             required
                             rules={[{required: true, message: t`Required`}]}
                             name={['authData', 'domain', 'registrant']}>
-                            <Input placeholder={t`Registrant`} required/>
+                            <Input prefix={<SignatureOutlined/>} placeholder={t`Registrant`} required/>
                         </Form.Item>
                     </Col>
                     <Col span={6}>
                         <Form.Item name={['authData', 'domain', 'contacts', 'admin']}>
-                            <Input placeholder={t`Administrative`}/>
+                            <Input prefix={<IdcardOutlined/>} placeholder={t`Administrative`}/>
                         </Form.Item>
                     </Col>
                     <Col span={6}>
                         <Form.Item name={['authData', 'domain', 'contacts', 'tech']}>
-                            <Input placeholder={t`Technical`}/>
+                            <Input prefix={<ToolOutlined/>} placeholder={t`Technical`}/>
                         </Form.Item>
                     </Col>
                     <Col span={6}>
                         <Form.Item name={['authData', 'domain', 'contacts', 'billing']}>
-                            <Input placeholder={t`Billing`}/>
+                            <Input prefix={<DollarOutlined/>} placeholder={t`Billing`}/>
                         </Form.Item>
                     </Col>
                 </Row>
             </Form.Item>
         </Card>
 
+        <Card size="small" title={t`Protocol configuration`} bordered={false}>
+            <DynamicKeyValueList name={['objURI']} label={t`Services`} initialValue={[
+                {key: 'urn:ietf:params:xml:ns:host-1.0', value: 'host'},
+                {key: 'urn:ietf:params:xml:ns:contact-1.0', value: 'contact'},
+                {key: 'urn:ietf:params:xml:ns:domain-1.0', value: 'domain'}
+            ]} keyPlaceholder='urn:ietf:params:xml:ns:host-1.0' valuePlaceholder='host'/>
+
+            <DynamicKeyValueList name={['extURI']} label={t`Extensions`} initialValue={[
+                {key: 'urn:ietf:params:xml:ns:rgp-1.0', value: 'rgp'}
+            ]} keyPlaceholder='urn:ietf:params:xml:ns:rgp-1.0' valuePlaceholder='rgp'/>
+
+        </Card>
     </>
 }
