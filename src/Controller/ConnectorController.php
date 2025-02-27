@@ -14,6 +14,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Serializer\Exception\ExceptionInterface;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
@@ -47,6 +48,7 @@ class ConnectorController extends AbstractController
 
     /**
      * @throws \Exception
+     * @throws ExceptionInterface
      */
     #[Route(
         path: '/api/connectors',
@@ -77,9 +79,7 @@ class ConnectorController extends AbstractController
 
         /** @var AbstractProvider $providerClient */
         $providerClient = $this->locator->get($provider->getConnectorProvider());
-        $authData = $providerClient->verifyAuthData($connector->getAuthData());
-        $connector->setAuthData($authData);
-        $providerClient->authenticate($authData);
+        $connector->setAuthData($providerClient->authenticate($connector->getAuthData()));
 
         $this->logger->info('User {username} authentication data with the {provider} provider has been validated.', [
             'username' => $user->getUserIdentifier(),

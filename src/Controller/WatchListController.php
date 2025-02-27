@@ -41,6 +41,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Serializer\Exception\ExceptionInterface;
 use Symfony\Component\Serializer\SerializerInterface;
 
 class WatchListController extends AbstractController
@@ -154,6 +155,7 @@ class WatchListController extends AbstractController
 
     /**
      * @throws \Exception
+     * @throws ExceptionInterface
      */
     private function verifyConnector(WatchList $watchList, ?Connector $connector): void
     {

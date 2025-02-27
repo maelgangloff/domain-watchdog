@@ -52,7 +52,7 @@ abstract class AbstractProvider
      * @throws HttpException      when the user does not accept the necessary conditions
      * @throws ExceptionInterface
      */
-    public function verifyAuthData(array $authData): array
+    private function verifyAuthData(array $authData): array
     {
         /** @var DefaultProviderDto $data */
         $data = $this->serializer->denormalize($this->verifyLegalAuthData($authData), $this->dtoClass);
@@ -136,10 +136,12 @@ abstract class AbstractProvider
      * @throws ExceptionInterface
      * @throws \Exception
      */
-    public function authenticate(array $authData): void
+    public function authenticate(array $authData): array
     {
         $this->authData = $this->verifyAuthData($authData);
         $this->assertAuthentication();
+
+        return $this->authData;
     }
 
     abstract protected function getCachedTldList(): CacheItemInterface;

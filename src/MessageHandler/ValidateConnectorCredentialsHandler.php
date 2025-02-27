@@ -13,6 +13,7 @@ use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 use Symfony\Component\Mime\Address;
 use Symfony\Component\Notifier\Recipient\Recipient;
+use Symfony\Component\Serializer\Exception\ExceptionInterface;
 
 #[AsMessageHandler]
 final readonly class ValidateConnectorCredentialsHandler
@@ -27,6 +28,7 @@ final readonly class ValidateConnectorCredentialsHandler
 
     /**
      * @throws TransportExceptionInterface
+     * @throws ExceptionInterface
      */
     public function __invoke(ValidateConnectorCredentials $message): void
     {
