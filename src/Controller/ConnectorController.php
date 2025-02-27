@@ -17,6 +17,7 @@ use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Serializer\Exception\ExceptionInterface;
 use Symfony\Component\Serializer\SerializerInterface;
 
 class ConnectorController extends AbstractController
@@ -48,7 +49,7 @@ class ConnectorController extends AbstractController
     }
 
     /**
-     * @throws \Exception
+     * @throws ExceptionInterface
      * @throws \Throwable
      */
     #[Route(
@@ -78,12 +79,11 @@ class ConnectorController extends AbstractController
         if (null === $provider) {
             throw new BadRequestHttpException('Provider not found');
         }
+        $authData = $connector->getAuthData();
 
         if (ConnectorProvider::EPP === $provider) {
             $filesystem = new Filesystem();
             $directory = sprintf('%s/%s/', EppClientProvider::EPP_CERTIFICATES_PATH, $connector->getId());
-            $authData = $connector->getAuthData();
-
             unset($authData['file_certificate_pem'], $authData['file_certificate_key']); // Prevent alteration from user
 
             if (isset($authData['certificate_pem'], $authData['certificate_key'])) {
@@ -98,11 +98,9 @@ class ConnectorController extends AbstractController
 
             /** @var AbstractProvider $providerClient */
             $providerClient = $this->locator->get($provider->getConnectorProvider());
-            $authData = $providerClient->verifyAuthData($connector->getAuthData());
-            $connector->setAuthData($authData);
 
             try {
-                $providerClient->authenticate($authData);
+                $connector->setAuthData($providerClient->authenticate($authData));
             } catch (\Throwable $exception) {
                 $filesystem->remove($directory);
                 throw $exception;
@@ -110,9 +108,7 @@ class ConnectorController extends AbstractController
         } else {
             /** @var AbstractProvider $providerClient */
             $providerClient = $this->locator->get($provider->getConnectorProvider());
-            $authData = $providerClient->verifyAuthData($connector->getAuthData());
-            $connector->setAuthData($authData);
-            $providerClient->authenticate($authData);
+            $connector->setAuthData($providerClient->authenticate($authData));
         }
 
         $this->logger->info('User {username} authentication data with the {provider} provider has been validated.', [
