@@ -26,7 +26,8 @@ class DomainRefreshController extends AbstractController
         private readonly RDAPService $RDAPService,
         private readonly RateLimiterFactory $rdapRequestsLimiter,
         private readonly MessageBusInterface $bus,
-        private readonly LoggerInterface $logger, private readonly KernelInterface $kernel,
+        private readonly LoggerInterface $logger,
+        private readonly KernelInterface $kernel,
     ) {
     }
 
@@ -38,7 +39,7 @@ class DomainRefreshController extends AbstractController
      * @throws HttpExceptionInterface
      * @throws \Throwable
      */
-    public function __invoke(string $ldhName, KernelInterface $kernel, Request $request): Domain
+    public function __invoke(string $ldhName, Request $request): Domain
     {
         $idnDomain = strtolower(idn_to_ascii($ldhName));
         $userId = $this->getUser()->getUserIdentifier();
@@ -64,7 +65,7 @@ class DomainRefreshController extends AbstractController
             return $domain;
         }
 
-        if (false === $kernel->isDebug() && true === $this->getParameter('limited_features')) {
+        if (false === $this->kernel->isDebug() && true === $this->getParameter('limited_features')) {
             $limiter = $this->rdapRequestsLimiter->create($userId);
             $limit = $limiter->consume();
 

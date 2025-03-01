@@ -150,7 +150,7 @@ readonly class RDAPService
         $this->updateDomainStatus($domain, $rdapData);
 
         if (in_array('free', $domain->getStatus())) {
-            throw new NotFoundHttpException('The domain name is not present in the WHOIS database.');
+            throw new NotFoundHttpException("The domain name $idnDomain is not present in the WHOIS database.");
         }
 
         $domain->setRdapServer($rdapServer)->setDelegationSigned(isset($rdapData['secureDNS']['delegationSigned']) && true === $rdapData['secureDNS']['delegationSigned']);
@@ -170,13 +170,13 @@ readonly class RDAPService
         return $domain;
     }
 
-    private function getTld($domain): Tld
+    private function getTld(string $domain): Tld
     {
         if (!str_contains($domain, '.')) {
             $tldEntity = $this->tldRepository->findOneBy(['tld' => '']);
 
             if (null == $tldEntity) {
-                throw new NotFoundHttpException('The requested TLD is not yet supported, please try again with another one');
+                throw new NotFoundHttpException("The requested TLD $domain is not yet supported, please try again with another one");
             }
 
             return $tldEntity;
@@ -192,7 +192,7 @@ readonly class RDAPService
         $tldEntity = $this->tldRepository->findOneBy(['tld' => $tld]);
 
         if (null === $tldEntity) {
-            throw new NotFoundHttpException('The requested TLD is not yet supported, please try again with another one');
+            throw new NotFoundHttpException("The requested TLD $tld is not yet supported, please try again with another one");
         }
 
         return $tldEntity;
@@ -205,10 +205,11 @@ readonly class RDAPService
 
     private function fetchRdapServer(Tld $tld): RdapServer
     {
-        $rdapServer = $this->rdapServerRepository->findOneBy(['tld' => $tld], ['updatedAt' => 'DESC']);
+        $tldString = $tld->getTld();
+        $rdapServer = $this->rdapServerRepository->findOneBy(['tld' => $tldString], ['updatedAt' => 'DESC']);
 
         if (null === $rdapServer) {
-            throw new NotFoundHttpException('Unable to determine which RDAP server to contact');
+            throw new NotFoundHttpException("TLD $tldString : Unable to determine which RDAP server to contact");
         }
 
         return $rdapServer;
@@ -262,7 +263,7 @@ readonly class RDAPService
                 $this->em->flush();
             }
 
-            throw new NotFoundHttpException('The domain name is not present in the WHOIS database.');
+            throw new NotFoundHttpException("The domain name $idnDomain is not present in the WHOIS database.");
         }
 
         return $e;
