@@ -58,9 +58,8 @@ msgstr ""
 #: assets/utils/providers/forms/OvhCloudConnectorForm.tsx:50
 #: assets/utils/providers/forms/OvhCloudConnectorForm.tsx:58
 #: assets/utils/providers/forms/OvhCloudConnectorForm.tsx:66
-#: assets/utils/providers/forms/OvhCloudConnectorForm.tsx:74
+#: assets/utils/providers/forms/OvhCloudConnectorForm.tsx:73
 #: assets/utils/providers/forms/OvhCloudConnectorForm.tsx:81
-#: assets/utils/providers/forms/OvhCloudConnectorForm.tsx:89
 msgid "Required"
 msgstr ""
 
@@ -1246,7 +1245,6 @@ msgid ""
 msgstr ""
 
 #: assets/utils/providers/forms/OvhCloudConnectorForm.tsx:34
-#: assets/utils/providers/forms/OvhCloudConnectorForm.tsx:64
 msgid "Application key"
 msgstr ""
 
@@ -1258,23 +1256,23 @@ msgstr ""
 msgid "Consumer key"
 msgstr ""
 
-#: assets/utils/providers/forms/OvhCloudConnectorForm.tsx:72
+#: assets/utils/providers/forms/OvhCloudConnectorForm.tsx:64
 msgid "OVH Endpoint"
 msgstr ""
 
-#: assets/utils/providers/forms/OvhCloudConnectorForm.tsx:79
+#: assets/utils/providers/forms/OvhCloudConnectorForm.tsx:71
 msgid "OVH subsidiary"
 msgstr ""
 
-#: assets/utils/providers/forms/OvhCloudConnectorForm.tsx:87
+#: assets/utils/providers/forms/OvhCloudConnectorForm.tsx:79
 msgid "OVH pricing mode"
 msgstr ""
 
-#: assets/utils/providers/forms/OvhCloudConnectorForm.tsx:92
+#: assets/utils/providers/forms/OvhCloudConnectorForm.tsx:84
 msgid "Confirm pricing mode"
 msgstr ""
 
-#: assets/utils/providers/forms/OvhCloudConnectorForm.tsx:93
+#: assets/utils/providers/forms/OvhCloudConnectorForm.tsx:85
 msgid ""
 "Are you sure about this setting? This may result in additional charges from "
 "the API Provider"
