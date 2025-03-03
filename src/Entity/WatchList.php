@@ -104,7 +104,7 @@ class WatchList
     #[ORM\JoinTable(name: 'watch_lists_domains',
         joinColumns: [new ORM\JoinColumn(name: 'watch_list_token', referencedColumnName: 'token', onDelete: 'CASCADE')],
         inverseJoinColumns: [new ORM\JoinColumn(name: 'domain_ldh_name', referencedColumnName: 'ldh_name', onDelete: 'CASCADE')])]
-    #[Groups(['watchlist:list', 'watchlist:item', 'watchlist:create'])]
+    #[Groups(['watchlist:list', 'watchlist:item'])]
     private Collection $domains;
 
     /**

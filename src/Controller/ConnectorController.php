@@ -14,16 +14,13 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Filesystem\Filesystem;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Serializer\Exception\ExceptionInterface;
-use Symfony\Component\Serializer\SerializerInterface;
 
 class ConnectorController extends AbstractController
 {
     public function __construct(
-        private readonly SerializerInterface $serializer,
         private readonly EntityManagerInterface $em,
         private readonly LoggerInterface $logger,
         #[Autowire(service: 'service_container')]
@@ -61,10 +58,8 @@ class ConnectorController extends AbstractController
         ],
         methods: ['POST']
     )]
-    public function createConnector(Request $request): Connector
+    public function createConnector(Connector $connector): Connector
     {
-        /** @var Connector $connector */
-        $connector = $this->serializer->deserialize($request->getContent(), Connector::class, 'json', ['groups' => 'connector:create']);
         /** @var User $user */
         $user = $this->getUser();
         $connector->setUser($user);

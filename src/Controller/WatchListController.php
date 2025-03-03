@@ -9,13 +9,16 @@ use App\Entity\DomainEvent;
 use App\Entity\User;
 use App\Entity\WatchList;
 use App\Notifier\TestChatNotification;
+use App\Repository\DomainRepository;
 use App\Repository\WatchListRepository;
 use App\Service\ChatNotificationService;
 use App\Service\Connector\AbstractProvider;
+use App\Service\RDAPService;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\LockMode;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Exception\ORMException;
+use Doctrine\ORM\OptimisticLockException;
 use Eluceo\iCal\Domain\Entity\Attendee;
 use Eluceo\iCal\Domain\Entity\Calendar;
 use Eluceo\iCal\Domain\Entity\Event;
@@ -40,24 +43,45 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
+use Symfony\Component\HttpKernel\Exception\TooManyRequestsHttpException;
+use Symfony\Component\HttpKernel\KernelInterface;
+use Symfony\Component\RateLimiter\RateLimiterFactory;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Serializer\Encoder\DecoderInterface;
 use Symfony\Component\Serializer\Exception\ExceptionInterface;
+use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
 use Symfony\Component\Serializer\SerializerInterface;
+use Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface;
+use Symfony\Contracts\HttpClient\Exception\DecodingExceptionInterface;
+use Symfony\Contracts\HttpClient\Exception\RedirectionExceptionInterface;
+use Symfony\Contracts\HttpClient\Exception\ServerExceptionInterface;
+use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 
 class WatchListController extends AbstractController
 {
     public function __construct(
-        private readonly SerializerInterface $serializer,
+        private readonly SerializerInterface&DecoderInterface&DenormalizerInterface $serializer,
         private readonly EntityManagerInterface $em,
         private readonly WatchListRepository $watchListRepository,
         private readonly LoggerInterface $logger,
         private readonly ChatNotificationService $chatNotificationService,
+        private readonly DomainRepository $domainRepository,
+        private readonly RDAPService $RDAPService,
+        private readonly RateLimiterFactory $rdapRequestsLimiter,
+        private readonly KernelInterface $kernel,
         #[Autowire(service: 'service_container')]
-        private ContainerInterface $locator,
+        private readonly ContainerInterface $locator,
     ) {
     }
 
     /**
+     * @throws TransportExceptionInterface
+     * @throws ServerExceptionInterface
+     * @throws RedirectionExceptionInterface
+     * @throws ExceptionInterface
+     * @throws DecodingExceptionInterface
+     * @throws ClientExceptionInterface
+     * @throws \JsonException
      * @throws \Exception
      */
     #[Route(
@@ -71,7 +95,7 @@ class WatchListController extends AbstractController
     )]
     public function createWatchList(Request $request): WatchList
     {
-        $watchList = $this->serializer->deserialize($request->getContent(), WatchList::class, 'json', ['groups' => 'watchlist:create']);
+        $watchList = $this->registerDomainsInWatchlist($request->getContent(), ['watchlist:create']);
 
         /** @var User $user */
         $user = $this->getUser();
@@ -199,6 +223,14 @@ class WatchListController extends AbstractController
 
     /**
      * @throws ORMException
+     * @throws RedirectionExceptionInterface
+     * @throws DecodingExceptionInterface
+     * @throws ClientExceptionInterface
+     * @throws \JsonException
+     * @throws OptimisticLockException
+     * @throws TransportExceptionInterface
+     * @throws ServerExceptionInterface
+     * @throws ExceptionInterface
      * @throws \Exception
      */
     #[Route(
@@ -210,8 +242,10 @@ class WatchListController extends AbstractController
         ],
         methods: ['PUT']
     )]
-    public function putWatchList(WatchList $watchList): WatchList
+    public function putWatchList(Request $request): WatchList
     {
+        $watchList = $this->registerDomainsInWatchlist($request->getContent(), ['watchlist:create', 'watchlist:token']);
+
         /** @var User $user */
         $user = $this->getUser();
         $watchList->setUser($user);
@@ -399,5 +433,49 @@ class WatchListController extends AbstractController
         usort($domains, fn (Domain $d1, Domain $d2) => $d1->getExpiresInDays() - $d2->getExpiresInDays());
 
         return $domains;
+    }
+
+    /**
+     * @throws TransportExceptionInterface
+     * @throws ServerExceptionInterface
+     * @throws RedirectionExceptionInterface
+     * @throws DecodingExceptionInterface
+     * @throws ClientExceptionInterface
+     * @throws \JsonException
+     */
+    private function registerDomainsInWatchlist(string $content, array $groups): WatchList
+    {
+        /** @var WatchList $watchList */
+        $watchList = $this->serializer->deserialize($content, WatchList::class, 'json', ['groups' => $groups]);
+
+        $data = json_decode($content, true, 512, JSON_THROW_ON_ERROR);
+
+        if (!is_array($data) || !isset($data['domains']) || !is_array($data['domains'])) {
+            throw new BadRequestHttpException('Invalid payload: missing or invalid "domains" field.');
+        }
+
+        $domains = array_map(fn (string $d) => str_replace('/api/domains/', '', $d), $data['domains']);
+
+        foreach ($domains as $ldhName) {
+            /** @var ?Domain $domain */
+            $domain = $this->domainRepository->findOneBy(['ldhName' => $ldhName]);
+
+            if (null === $domain) {
+                $domain = $this->RDAPService->registerDomain($ldhName);
+
+                if (false === $this->kernel->isDebug() && true === $this->getParameter('limited_features')) {
+                    $limiter = $this->rdapRequestsLimiter->create($this->getUser()->getUserIdentifier());
+                    $limit = $limiter->consume();
+
+                    if (!$limit->isAccepted()) {
+                        throw new TooManyRequestsHttpException($limit->getRetryAfter()->getTimestamp() - time());
+                    }
+                }
+            }
+
+            $watchList->addDomain($domain);
+        }
+
+        return $watchList;
     }
 }

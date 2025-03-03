@@ -61,14 +61,6 @@ export default function OvhCloudConnectorForm({form}: {
             </Form.Item>
 
             <Form.Item
-                label={t`Application key`}
-                name={['authData', 'appKey']}
-                rules={[{required: true, message: t`Required`}]}
-            >
-                <Input autoComplete='off'/>
-            </Form.Item>
-
-            <Form.Item
                 label={t`OVH Endpoint`}
                 name={['authData', 'apiEndpoint']}
                 rules={[{required: true, message: t`Required`}]}

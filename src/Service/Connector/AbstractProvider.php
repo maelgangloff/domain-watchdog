@@ -13,7 +13,6 @@ use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\Serializer\Exception\ExceptionInterface;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
-use Symfony\Component\Validator\ConstraintViolationInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 /**
@@ -58,8 +57,8 @@ abstract class AbstractProvider
         $data = $this->serializer->denormalize($this->verifyLegalAuthData($authData), $this->dtoClass);
         $violations = $this->validator->validate($data);
 
-        if ($violations->count()) {
-            throw new BadRequestHttpException(implode('\n', array_map(fn (ConstraintViolationInterface $v) => $v->getPropertyPath().': '.$v->getMessage(), iterator_to_array($violations))));
+        if ($violations->count() > 0) {
+            throw new BadRequestHttpException((string) $violations);
         }
 
         return [
