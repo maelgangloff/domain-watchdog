@@ -14,6 +14,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Serializer\Exception\ExceptionInterface;
+use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
 class ConnectorController extends AbstractController
 {
@@ -22,6 +23,7 @@ class ConnectorController extends AbstractController
         private readonly LoggerInterface $logger,
         #[Autowire(service: 'service_container')]
         private readonly ContainerInterface $locator,
+        private readonly NormalizerInterface $normalizer,
     ) {
     }
 
@@ -74,7 +76,11 @@ class ConnectorController extends AbstractController
 
         /** @var AbstractProvider $providerClient */
         $providerClient = $this->locator->get($provider->getConnectorProvider());
-        $connector->setAuthData($providerClient->authenticate($connector->getAuthData()));
+        $authData = $this->normalizer->normalize($providerClient->authenticate($connector->getAuthData()), 'json');
+        if (!is_array($authData)) {
+            throw new BadRequestHttpException('Authentication data cannot be normalized.');
+        }
+        $connector->setAuthData((array) $authData);
 
         $this->logger->info('User {username} authentication data with the {provider} provider has been validated.', [
             'username' => $user->getUserIdentifier(),

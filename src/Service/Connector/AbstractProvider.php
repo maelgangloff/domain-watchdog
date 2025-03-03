@@ -25,12 +25,9 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 #[Autoconfigure(public: true)]
 abstract class AbstractProvider
 {
-    /**
-     * @var class-string
-     */
+    /** @var class-string */
     protected string $dtoClass = DefaultProviderDto::class;
-
-    protected array $authData;
+    protected DefaultProviderDto $authData;
 
     public function __construct(
         protected CacheItemPoolInterface $cacheItemPool,
@@ -46,12 +43,12 @@ abstract class AbstractProvider
      *
      * @param array $authData raw authentication data as supplied by the user
      *
-     * @return array a cleaned up version of the authentication data
+     * @return DefaultProviderDto a cleaned up version of the authentication data
      *
      * @throws HttpException      when the user does not accept the necessary conditions
      * @throws ExceptionInterface
      */
-    private function verifyAuthData(array $authData): array
+    private function verifyAuthData(array $authData): DefaultProviderDto
     {
         /** @var DefaultProviderDto $data */
         $data = $this->serializer->denormalize($this->verifyLegalAuthData($authData), $this->dtoClass);
@@ -61,12 +58,7 @@ abstract class AbstractProvider
             throw new BadRequestHttpException((string) $violations);
         }
 
-        return [
-            ...$this->serializer->normalize($data),
-            'acceptConditions' => $authData['acceptConditions'],
-            'ownerLegalAge' => $authData['ownerLegalAge'],
-            'waiveRetractationPeriod' => $authData['waiveRetractationPeriod'],
-        ];
+        return $data;
     }
 
     /**
@@ -135,7 +127,7 @@ abstract class AbstractProvider
      * @throws ExceptionInterface
      * @throws \Exception
      */
-    public function authenticate(array $authData): array
+    public function authenticate(array $authData): DefaultProviderDto
     {
         $this->authData = $this->verifyAuthData($authData);
         $this->assertAuthentication();

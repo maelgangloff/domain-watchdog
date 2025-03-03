@@ -16,4 +16,7 @@ final class AutodnsProviderDto extends DefaultProviderDto
     public bool $ownerConfirm;
 
     public int $context = 4;
+
+    #[Assert\NotBlank]
+    public string $contactid;
 }
