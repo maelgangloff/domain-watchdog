@@ -35,6 +35,10 @@ security:
             login_throttling:
                 limiter: app.login_rate_limiter
 
+        api_public:
+            pattern: ^/api(?:/docs|/register|/config)?$
+            stateless: true
+
         api:
             pattern: ^/api
             stateless: true
