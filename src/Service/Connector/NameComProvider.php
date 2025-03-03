@@ -2,6 +2,7 @@
 
 namespace App\Service\Connector;
 
+use App\Dto\Connector\NameComProviderDto;
 use App\Entity\Domain;
 use Psr\Cache\CacheItemInterface;
 use Psr\Cache\CacheItemPoolInterface;
@@ -21,9 +22,10 @@ use Symfony\Contracts\HttpClient\HttpClientInterface;
 #[Autoconfigure(public: true)]
 class NameComProvider extends AbstractProvider
 {
-    protected string $dtoClass = NameComProvider::class;
+    protected string $dtoClass = NameComProviderDto::class;
 
-    public function __construct(CacheItemPoolInterface $cacheItemPool,
+    public function __construct(
+        CacheItemPoolInterface $cacheItemPool,
         private readonly HttpClientInterface $client,
         private readonly KernelInterface $kernel,
         DenormalizerInterface&NormalizerInterface $serializer,
