@@ -2,6 +2,7 @@
 
 namespace App\Service\Connector;
 
+use App\Dto\Connector\DefaultProviderDto;
 use App\Dto\Connector\EppClientProviderDto;
 use App\Entity\Domain;
 use Metaregistrar\EPP\eppCheckContactRequest;
@@ -18,6 +19,7 @@ use Psr\Cache\CacheItemInterface;
 use Psr\Cache\CacheItemPoolInterface;
 use Psr\Cache\InvalidArgumentException;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
+use Symfony\Component\Serializer\Exception\ExceptionInterface;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
@@ -25,6 +27,10 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 class EppClientProvider extends AbstractProvider implements CheckDomainProviderInterface
 {
     protected string $dtoClass = EppClientProviderDto::class;
+
+    /** @var EppClientProviderDto */
+    protected DefaultProviderDto $authData;
+
     private ?eppConnection $eppClient = null;
 
     public function __construct(
@@ -42,8 +48,8 @@ class EppClientProvider extends AbstractProvider implements CheckDomainProviderI
 
         $this->eppClient->request(new eppHelloRequest());
 
-        $contacts = [new eppContactHandle($this->authData['domain']['registrant'], eppContactHandle::CONTACT_TYPE_REGISTRANT)];
-        foreach ($this->authData['domain']['contacts'] as $role => $roid) {
+        $contacts = [new eppContactHandle($this->authData->domain->registrant, eppContactHandle::CONTACT_TYPE_REGISTRANT)];
+        foreach ($this->authData->domain->contacts as $role => $roid) {
             $contacts[] = new eppContactHandle($roid, $role);
         }
 
@@ -67,12 +73,12 @@ class EppClientProvider extends AbstractProvider implements CheckDomainProviderI
         $this->connect();
 
         $d = new eppDomain($domain->getLdhName());
-        $d->setRegistrant($this->authData['domain']['registrant']);
-        $d->setPeriodUnit($this->authData['domain']['unit']);
-        $d->setPeriod($this->authData['domain']['period']);
-        $d->setAuthorisationCode($this->authData['domain']['password']);
+        $d->setRegistrant($this->authData->domain->registrant);
+        $d->setPeriodUnit($this->authData->domain->unit);
+        $d->setPeriod($this->authData->domain->period);
+        $d->setAuthorisationCode($this->authData->domain->password);
 
-        foreach ($this->authData['domain']['contacts'] as $type => $contact) {
+        foreach ($this->authData->domain->contacts as $type => $contact) {
             $d->addContact(new eppContactHandle($contact, $type));
         }
 
@@ -142,6 +148,7 @@ class EppClientProvider extends AbstractProvider implements CheckDomainProviderI
 
     /**
      * @throws eppException
+     * @throws ExceptionInterface
      */
     private function connect(): void
     {
@@ -150,27 +157,29 @@ class EppClientProvider extends AbstractProvider implements CheckDomainProviderI
         }
 
         $conn = new eppConnection(false, null);
-        $conn->setHostname($this->authData['hostname']);
-        $conn->setVersion($this->authData['version']);
-        $conn->setLanguage($this->authData['language']);
-        $conn->setPort($this->authData['port']);
+        $conn->setHostname($this->authData->hostname);
+        $conn->setVersion($this->authData->version);
+        $conn->setLanguage($this->authData->language);
+        $conn->setPort($this->authData->port);
 
-        $conn->setUsername($this->authData['auth']['username']);
-        $conn->setPassword($this->authData['auth']['password']);
+        $conn->setUsername($this->authData->auth->username);
+        $conn->setPassword($this->authData->auth->password);
 
-        if (isset($this->authData['file_certificate_pem'], $this->authData['file_certificate_key'])) {
+        $ssl = (array) $this->serializer->normalize($this->authData->auth->ssl, 'json');
+
+        if (isset($this->authData->file_certificate_pem, $this->authData->file_certificate_key)) {
             $conn->setSslContext(stream_context_create(['ssl' => [
-                ...$this->authData['auth']['ssl'],
-                'local_cert' => $this->authData['file_certificate_pem'],
-                'local_pk' => $this->authData['file_certificate_key'],
+                ...$ssl,
+                'local_cert' => $this->authData->file_certificate_pem,
+                'local_pk' => $this->authData->file_certificate_key,
             ]]));
         } else {
-            unset($this->authData['file_certificate_pem'], $this->authData['file_certificate_key']);
-            $conn->setSslContext(stream_context_create(['ssl' => $this->authData['auth']['ssl']]));
+            unset($ssl['local_cert'], $ssl['local_pk']);
+            $conn->setSslContext(stream_context_create(['ssl' => $ssl]));
         }
 
-        $conn->setExtensions($this->authData['extURI']);
-        $conn->setServices($this->authData['objURI']);
+        $conn->setExtensions($this->authData->extURI);
+        $conn->setServices($this->authData->objURI);
 
         $conn->connect();
         $this->eppClient = $conn;
