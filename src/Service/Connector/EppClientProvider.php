@@ -24,8 +24,6 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class EppClientProvider extends AbstractProvider implements CheckDomainProviderInterface
 {
-    public const EPP_CERTIFICATES_PATH = '../var/epp-certificates/';
-
     protected string $dtoClass = EppClientProviderDto::class;
     private ?eppConnection $eppClient = null;
 
@@ -186,5 +184,10 @@ class EppClientProvider extends AbstractProvider implements CheckDomainProviderI
     public function __destruct()
     {
         $this->disconnect();
+    }
+
+    public static function buildEppCertificateFolder(string $projectDir, string $connectorId): string
+    {
+        return sprintf('%s/%s/%s/', $projectDir, 'var/epp-certificates', $connectorId);
     }
 }

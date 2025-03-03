@@ -15,6 +15,7 @@ use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
+use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Serializer\Exception\ExceptionInterface;
 
@@ -25,6 +26,7 @@ class ConnectorController extends AbstractController
         private readonly LoggerInterface $logger,
         #[Autowire(service: 'service_container')]
         private readonly ContainerInterface $locator,
+        private readonly KernelInterface $kernel,
     ) {
     }
 
@@ -78,7 +80,7 @@ class ConnectorController extends AbstractController
 
         if (ConnectorProvider::EPP === $provider) {
             $filesystem = new Filesystem();
-            $directory = sprintf('%s/%s/', EppClientProvider::EPP_CERTIFICATES_PATH, $connector->getId());
+            $directory = EppClientProvider::buildEppCertificateFolder($this->kernel->getProjectDir(), $connector->getId());
             unset($authData['file_certificate_pem'], $authData['file_certificate_key']); // Prevent alteration from user
 
             if (isset($authData['certificate_pem'], $authData['certificate_key'])) {
@@ -143,7 +145,7 @@ class ConnectorController extends AbstractController
         }
 
         if (ConnectorProvider::EPP === $provider) {
-            (new Filesystem())->remove(sprintf('%s/%s/', EppClientProvider::EPP_CERTIFICATES_PATH, $connector->getId()));
+            (new Filesystem())->remove(EppClientProvider::buildEppCertificateFolder($this->kernel->getProjectDir(), $connector->getId()));
         }
 
         $this->em->remove($connector);
