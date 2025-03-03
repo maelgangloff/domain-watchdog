@@ -2,6 +2,7 @@
 
 namespace App\Service\Connector;
 
+use App\Dto\Connector\DefaultProviderDto;
 use App\Dto\Connector\NamecheapProviderDto;
 use App\Entity\Domain;
 use Psr\Cache\CacheItemInterface;
@@ -22,6 +23,9 @@ use Symfony\Contracts\HttpClient\HttpClientInterface;
 class NamecheapProvider extends AbstractProvider
 {
     protected string $dtoClass = NamecheapProviderDto::class;
+
+    /** @var NamecheapProviderDto */
+    protected DefaultProviderDto $authData;
 
     public const BASE_URL = 'https://api.namecheap.com/xml.response';
     public const SANDBOX_BASE_URL = 'https://api.sandbox.namecheap.com/xml.response';
@@ -88,9 +92,9 @@ class NamecheapProvider extends AbstractProvider
     {
         $actualParams = array_merge([
             'Command' => $command,
-            'UserName' => $this->authData['ApiUser'],
-            'ApiUser' => $this->authData['ApiUser'],
-            'ApiKey' => $this->authData['ApiKey'],
+            'UserName' => $this->authData->ApiUser,
+            'ApiUser' => $this->authData->ApiUser,
+            'ApiKey' => $this->authData->ApiKey,
             'ClientIp' => $this->outgoingIp,
         ], $parameters);
 

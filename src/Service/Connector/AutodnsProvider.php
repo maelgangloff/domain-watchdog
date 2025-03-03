@@ -3,6 +3,7 @@
 namespace App\Service\Connector;
 
 use App\Dto\Connector\AutodnsProviderDto;
+use App\Dto\Connector\DefaultProviderDto;
 use App\Entity\Domain;
 use Psr\Cache\CacheItemInterface;
 use Psr\Cache\CacheItemPoolInterface;
@@ -25,6 +26,9 @@ use Symfony\Contracts\HttpClient\HttpClientInterface;
 class AutodnsProvider extends AbstractProvider
 {
     protected string $dtoClass = AutodnsProviderDto::class;
+
+    /** @var AutodnsProviderDto */
+    protected DefaultProviderDto $authData;
 
     public function __construct(
         CacheItemPoolInterface $cacheItemPool,
@@ -59,22 +63,22 @@ class AutodnsProvider extends AbstractProvider
             'POST',
             '/v1/domain',
             (new HttpOptions())
-                ->setAuthBasic($this->authData['username'], $this->authData['password'])
+                ->setAuthBasic($this->authData->username, $this->authData->password)
                 ->setHeader('Accept', 'application/json')
-                ->setHeader('X-Domainrobot-Context', $this->authData['context'])
+                ->setHeader('X-Domainrobot-Context', (string) $this->authData->context)
                 ->setBaseUri(self::BASE_URL)
                 ->setJson([
                     'name' => $ldhName,
                     'ownerc' => [
-                        'id' => $this->authData['contactid'],
+                        'id' => $this->authData->contactid,
                     ],
                     'adminc' => [
-                        'id' => $this->authData['contactid'],
+                        'id' => $this->authData->contactid,
                     ],
                     'techc' => [
-                        'id' => $this->authData['contactid'],
+                        'id' => $this->authData->contactid,
                     ],
-                    'confirmOrder' => $this->authData['ownerConfirm'],
+                    'confirmOrder' => $this->authData->ownerConfirm,
                     'nameServers' => [
                         [
                             'name' => 'a.ns14.net',
@@ -115,9 +119,9 @@ class AutodnsProvider extends AbstractProvider
             'POST',
             '/v1/zone/_search?keys=name',
             (new HttpOptions())
-                ->setAuthBasic($authData['username'], $authData['password'])
+                ->setAuthBasic($authData->username, $authData->password)
                 ->setHeader('Accept', 'application/json')
-                ->setHeader('X-Domainrobot-Context', $authData['context'])
+                ->setHeader('X-Domainrobot-Context', (string) $authData->context)
                 ->setBaseUri(self::BASE_URL)
                 ->setJson([
                     'filters' => [
@@ -140,14 +144,14 @@ class AutodnsProvider extends AbstractProvider
                 'POST',
                 '/v1/zone',
                 (new HttpOptions())
-                    ->setAuthBasic($authData['username'], $authData['password'])
+                    ->setAuthBasic($authData->username, $authData->password)
                     ->setHeader('Accept', 'application/json')
-                    ->setHeader('X-Domainrobot-Context', $authData['context'])
+                    ->setHeader('X-Domainrobot-Context', (string) $authData->context)
                     ->setBaseUri(self::BASE_URL)
                     ->setJson([
                         'origin' => $ldhName,
                         'main' => [
-                            'address' => $authData['dns_ip'],
+                            'address' => null, // $authData['dns_ip'],
                         ],
                         'soa' => [
                             'refresh' => 3600,
@@ -205,9 +209,9 @@ class AutodnsProvider extends AbstractProvider
                 'GET',
                 '/v1/hello',
                 (new HttpOptions())
-                    ->setAuthBasic($this->authData['username'], $this->authData['password'])
+                    ->setAuthBasic($this->authData->username, $this->authData->password)
                     ->setHeader('Accept', 'application/json')
-                    ->setHeader('X-Domainrobot-Context', $this->authData['context'])
+                    ->setHeader('X-Domainrobot-Context', (string) $this->authData->context)
                     ->setBaseUri(self::BASE_URL)
                     ->toArray()
             );

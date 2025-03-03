@@ -2,6 +2,7 @@
 
 namespace App\Service\Connector;
 
+use App\Dto\Connector\DefaultProviderDto;
 use App\Dto\Connector\NameComProviderDto;
 use App\Entity\Domain;
 use Psr\Cache\CacheItemInterface;
@@ -23,6 +24,9 @@ use Symfony\Contracts\HttpClient\HttpClientInterface;
 class NameComProvider extends AbstractProvider
 {
     protected string $dtoClass = NameComProviderDto::class;
+
+    /** @var NameComProviderDto */
+    protected DefaultProviderDto $authData;
 
     public function __construct(
         CacheItemPoolInterface $cacheItemPool,
@@ -56,7 +60,7 @@ class NameComProvider extends AbstractProvider
             '/v4/domains',
             (new HttpOptions())
                 ->setHeader('Accept', 'application/json')
-                ->setAuthBasic($this->authData['username'], $this->authData['token'])
+                ->setAuthBasic($this->authData->username, $this->authData->token)
                 ->setBaseUri($dryRun ? self::DEV_BASE_URL : self::BASE_URL)
                 ->setJson([
                     'domain' => [
@@ -103,7 +107,7 @@ class NameComProvider extends AbstractProvider
                 '/v4/hello',
                 (new HttpOptions())
                     ->setHeader('Accept', 'application/json')
-                    ->setAuthBasic($this->authData['username'], $this->authData['token'])
+                    ->setAuthBasic($this->authData->username, $this->authData->token)
                     ->setBaseUri($this->kernel->isDebug() ? self::DEV_BASE_URL : self::BASE_URL)
                     ->toArray()
             );

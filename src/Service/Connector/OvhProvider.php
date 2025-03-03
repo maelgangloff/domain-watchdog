@@ -2,6 +2,7 @@
 
 namespace App\Service\Connector;
 
+use App\Dto\Connector\DefaultProviderDto;
 use App\Dto\Connector\OvhProviderDto;
 use App\Entity\Domain;
 use GuzzleHttp\Exception\ClientException;
@@ -20,6 +21,9 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 class OvhProvider extends AbstractProvider
 {
     protected string $dtoClass = OvhProviderDto::class;
+
+    /** @var OvhProviderDto */
+    protected DefaultProviderDto $authData;
 
     public const REQUIRED_ROUTES = [
         [
@@ -68,19 +72,19 @@ class OvhProvider extends AbstractProvider
             throw new \InvalidArgumentException('Domain name cannot be null');
         }
 
-        $acceptConditions = $this->authData['acceptConditions'];
-        $ownerLegalAge = $this->authData['ownerLegalAge'];
-        $waiveRetractationPeriod = $this->authData['waiveRetractationPeriod'];
+        $acceptConditions = $this->authData->acceptConditions;
+        $ownerLegalAge = $this->authData->ownerLegalAge;
+        $waiveRetractationPeriod = $this->authData->waiveRetractationPeriod;
 
         $conn = new Api(
-            $this->authData['appKey'],
-            $this->authData['appSecret'],
-            $this->authData['apiEndpoint'],
-            $this->authData['consumerKey']
+            $this->authData->appKey,
+            $this->authData->appSecret,
+            $this->authData->apiEndpoint,
+            $this->authData->consumerKey,
         );
 
         $cart = $conn->post('/order/cart', [
-            'ovhSubsidiary' => $this->authData['ovhSubsidiary'],
+            'ovhSubsidiary' => $this->authData->ovhSubsidiary,
             'description' => 'Domain Watchdog',
         ]);
         $cartId = $cart['cartId'];
@@ -90,8 +94,8 @@ class OvhProvider extends AbstractProvider
         ]);
 
         $pricingModes = ['create-default'];
-        if ('create-default' !== $this->authData['pricingMode']) {
-            $pricingModes[] = $this->authData['pricingMode'];
+        if ('create-default' !== $this->authData->pricingMode) {
+            $pricingModes[] = $this->authData->pricingMode;
         }
 
         $offer = array_filter($offers, fn ($offer) => 'create' === $offer['action']
@@ -140,10 +144,10 @@ class OvhProvider extends AbstractProvider
     protected function assertAuthentication(): void
     {
         $conn = new Api(
-            $this->authData['appKey'],
-            $this->authData['appSecret'],
-            $this->authData['apiEndpoint'],
-            $this->authData['consumerKey'],
+            $this->authData->appKey,
+            $this->authData->appSecret,
+            $this->authData->apiEndpoint,
+            $this->authData->consumerKey,
         );
 
         try {
@@ -186,14 +190,14 @@ class OvhProvider extends AbstractProvider
     protected function getSupportedTldList(): array
     {
         $conn = new Api(
-            $this->authData['appKey'],
-            $this->authData['appSecret'],
-            $this->authData['apiEndpoint'],
-            $this->authData['consumerKey']
+            $this->authData->appKey,
+            $this->authData->appSecret,
+            $this->authData->apiEndpoint,
+            $this->authData->consumerKey,
         );
 
         return $conn->get('/domain/extensions', [
-            'ovhSubsidiary' => $this->authData['ovhSubsidiary'],
+            'ovhSubsidiary' => $this->authData->ovhSubsidiary,
         ]);
     }
 

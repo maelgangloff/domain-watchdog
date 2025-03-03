@@ -2,6 +2,7 @@
 
 namespace App\Service\Connector;
 
+use App\Dto\Connector\DefaultProviderDto;
 use App\Dto\Connector\GandiProviderDto;
 use App\Entity\Domain;
 use Psr\Cache\CacheItemInterface;
@@ -25,6 +26,9 @@ use Symfony\Contracts\HttpClient\HttpClientInterface;
 class GandiProvider extends AbstractProvider
 {
     protected string $dtoClass = GandiProviderDto::class;
+
+    /** @var GandiProviderDto */
+    protected DefaultProviderDto $authData;
 
     private const BASE_URL = 'https://api.gandi.net';
 
@@ -52,14 +56,14 @@ class GandiProvider extends AbstractProvider
         }
 
         $user = $this->client->request('GET', '/v5/organization/user-info', (new HttpOptions())
-            ->setAuthBearer($this->authData['token'])
+            ->setAuthBearer($this->authData->token)
             ->setHeader('Accept', 'application/json')
             ->setBaseUri(self::BASE_URL)
             ->toArray()
         )->toArray();
 
         $httpOptions = (new HttpOptions())
-            ->setAuthBearer($this->authData['token'])
+            ->setAuthBearer($this->authData->token)
             ->setHeader('Accept', 'application/json')
             ->setBaseUri(self::BASE_URL)
             ->setHeader('Dry-Run', $dryRun ? '1' : '0')
@@ -80,9 +84,9 @@ class GandiProvider extends AbstractProvider
                 'tld_period' => 'golive',
             ]);
 
-        if (array_key_exists('sharingId', $this->authData)) {
+        if ($this->authData->sharingId) {
             $httpOptions->setQuery([
-                'sharing_id' => $this->authData['sharingId'],
+                'sharing_id' => $this->authData->sharingId,
             ]);
         }
 
@@ -100,7 +104,7 @@ class GandiProvider extends AbstractProvider
     protected function assertAuthentication(): void
     {
         $response = $this->client->request('GET', '/v5/organization/user-info', (new HttpOptions())
-            ->setAuthBearer($this->authData['token'])
+            ->setAuthBearer($this->authData->token)
             ->setHeader('Accept', 'application/json')
             ->setBaseUri(self::BASE_URL)
             ->toArray()
@@ -121,7 +125,7 @@ class GandiProvider extends AbstractProvider
     protected function getSupportedTldList(): array
     {
         $response = $this->client->request('GET', '/v5/domain/tlds', (new HttpOptions())
-            ->setAuthBearer($this->authData['token'])
+            ->setAuthBearer($this->authData->token)
             ->setHeader('Accept', 'application/json')
             ->setBaseUri(self::BASE_URL)
             ->toArray())->toArray();
