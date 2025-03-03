@@ -4,7 +4,6 @@ namespace App\Service\Connector;
 
 use App\Dto\Connector\DefaultProviderDto;
 use App\Entity\Domain;
-use Exception;
 use Psr\Cache\CacheItemInterface;
 use Psr\Cache\CacheItemPoolInterface;
 use Symfony\Component\DependencyInjection\Attribute\Autoconfigure;
@@ -127,12 +126,12 @@ abstract class AbstractProvider
      * @throws ExceptionInterface
      * @throws \Exception
      */
-    public function authenticate(array $authData): DefaultProviderDto
+    public function authenticate(array $authData): array
     {
         $this->authData = $this->verifyAuthData($authData);
         $this->assertAuthentication();
 
-        return $this->authData;
+        return $authData;
     }
 
     abstract protected function getCachedTldList(): CacheItemInterface;
