@@ -1,6 +1,7 @@
 import {Form, Input, Typography} from 'antd'
 import React from 'react'
 import {t} from 'ttag'
+import {LockOutlined, UserOutlined} from "@ant-design/icons"
 
 export default function NamecheapConnectorForm() {
     return (
@@ -12,13 +13,13 @@ export default function NamecheapConnectorForm() {
                     {t`Retreive an API key and whitelist this instance's IP address on Namecheap's website`}
                 </Typography.Link>}
             >
-                <Input autoComplete='off'/>
+                <Input prefix={<UserOutlined/>} autoComplete='off'/>
             </Form.Item>
             <Form.Item
                 label={t`API key`}
                 name={['authData', 'ApiKey']}
             >
-                <Input autoComplete='off'/>
+                <Input prefix={<LockOutlined/>} autoComplete='off'/>
             </Form.Item>
         </>
     )

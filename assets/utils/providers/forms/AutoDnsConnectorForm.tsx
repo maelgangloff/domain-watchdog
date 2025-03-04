@@ -1,6 +1,7 @@
 import {Alert, Checkbox, Form, Input, Typography} from 'antd'
 import React from 'react'
 import {t} from 'ttag'
+import {LockOutlined, UserOutlined, CrownOutlined, FieldNumberOutlined} from "@ant-design/icons"
 
 export default function AutoDnsConnectorForm() {
     return (
@@ -19,7 +20,7 @@ export default function AutoDnsConnectorForm() {
                 </Typography.Link>}
                 rules={[{required: true, message: t`Required`}]}
             >
-                <Input autoComplete='off' required/>
+                <Input prefix={<UserOutlined/>} autoComplete='off' required/>
             </Form.Item>
             <Form.Item
                 label={t`AutoDNS Password`}
@@ -31,7 +32,7 @@ export default function AutoDnsConnectorForm() {
                 rules={[{required: true, message: t`Required`}]}
                 required
             >
-                <Input.Password autoComplete='off' required placeholder=''/>
+                <Input.Password prefix={<LockOutlined/>} autoComplete='off' required placeholder=''/>
             </Form.Item>
             <Form.Item
                 label={t`Owner nic-handle`}
@@ -46,7 +47,7 @@ export default function AutoDnsConnectorForm() {
                 rules={[{required: true, message: t`Required`}]}
                 required
             >
-                <Input autoComplete='off' required placeholder=''/>
+                <Input prefix={<CrownOutlined />} autoComplete='off' required/>
             </Form.Item>
 
             <Form.Item
@@ -56,10 +57,10 @@ export default function AutoDnsConnectorForm() {
                     type='secondary'
                 >{t`If you not sure, use the default value 4`}
                 </Typography.Text>}
-
                 required={false}
+                initialValue={4}
             >
-                <Input autoComplete='off' required={false} placeholder='4'/>
+                <Input prefix={<FieldNumberOutlined />} autoComplete='off' required={false}/>
             </Form.Item>
             <Form.Item
                 valuePropName='checked'

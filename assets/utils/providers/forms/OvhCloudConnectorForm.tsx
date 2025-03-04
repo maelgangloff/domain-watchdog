@@ -3,6 +3,7 @@ import {regionNames} from "../../../i18n"
 import React, {useState} from 'react'
 import type {FormInstance} from "antd"
 import {Form, Input, Popconfirm, Select, Typography} from "antd"
+import {AppstoreOutlined, LockOutlined, UserOutlined} from "@ant-design/icons"
 
 export default function OvhCloudConnectorForm({form}: {
     form: FormInstance
@@ -41,7 +42,7 @@ export default function OvhCloudConnectorForm({form}: {
                     {t`Retrieve a set of tokens from your customer account on the Provider's website`}
                 </Typography.Link>}
             >
-                <Input autoComplete='off'/>
+                <Input prefix={<LockOutlined/>} autoComplete='off'/>
             </Form.Item>
 
             <Form.Item
@@ -49,7 +50,7 @@ export default function OvhCloudConnectorForm({form}: {
                 name={['authData', 'appSecret']}
                 rules={[{required: true, message: t`Required`}]}
             >
-                <Input autoComplete='off'/>
+                <Input prefix={<AppstoreOutlined/>} autoComplete='off'/>
             </Form.Item>
 
             <Form.Item
@@ -57,7 +58,7 @@ export default function OvhCloudConnectorForm({form}: {
                 name={['authData', 'consumerKey']}
                 rules={[{required: true, message: t`Required`}]}
             >
-                <Input autoComplete='off'/>
+                <Input prefix={<UserOutlined/>} autoComplete='off'/>
             </Form.Item>
 
             <Form.Item

@@ -11,9 +11,7 @@ export default function DefaultConnectorFormItems({tosLink}: { tosLink: string }
             rules={[{required: true, message: t`Required`}]}
             style={{marginTop: '3em'}}
         >
-            <Checkbox
-                required
-            >
+            <Checkbox required>
                 <Typography.Link target='_blank' href={tosLink}>
                     {t`I have read and accepted the conditions of use of the Provider API, accessible from this hyperlink`}
                 </Typography.Link>
@@ -25,9 +23,8 @@ export default function DefaultConnectorFormItems({tosLink}: { tosLink: string }
             name={['authData', 'ownerLegalAge']}
             rules={[{required: true, message: t`Required`}]}
         >
-            <Checkbox
-                required
-            >{t`I am of the minimum age required to consent to these conditions`}
+            <Checkbox required>
+                {t`I am of the minimum age required to consent to these conditions`}
             </Checkbox>
         </Form.Item>
         <Form.Item
@@ -36,9 +33,8 @@ export default function DefaultConnectorFormItems({tosLink}: { tosLink: string }
             name={['authData', 'waiveRetractationPeriod']}
             rules={[{required: true, message: t`Required`}]}
         >
-            <Checkbox
-                required
-            >{t`I waive my right of withdrawal regarding the purchase of domain names via the Provider's API`}
+            <Checkbox required>
+                {t`I waive my right of withdrawal regarding the purchase of domain names via the Provider's API`}
             </Checkbox>
         </Form.Item>
     </>
