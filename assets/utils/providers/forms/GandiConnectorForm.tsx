@@ -1,6 +1,7 @@
 import {Form, Input, Typography} from 'antd'
 import React from 'react'
 import {t} from 'ttag'
+import {BankOutlined, LockOutlined} from "@ant-design/icons"
 
 export default function GandiConnectorForm() {
     return (
@@ -13,7 +14,7 @@ export default function GandiConnectorForm() {
                 </Typography.Link>}
                 rules={[{required: true, message: t`Required`}]}
             >
-                <Input autoComplete='off'/>
+                <Input prefix={<LockOutlined/>} autoComplete='off'/>
             </Form.Item>
             <Form.Item
                 label={t`Organization sharing ID`}
@@ -24,7 +25,7 @@ export default function GandiConnectorForm() {
                 </Typography.Text>}
                 required={false}
             >
-                <Input autoComplete='off' placeholder='xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx'/>
+                <Input prefix={<BankOutlined />} autoComplete='off' placeholder='xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx'/>
             </Form.Item>
         </>
     )

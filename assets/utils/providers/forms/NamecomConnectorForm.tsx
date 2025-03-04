@@ -1,6 +1,7 @@
 import {Alert, Form, Input, Typography} from 'antd'
 import React from 'react'
 import {t} from 'ttag'
+import {LockOutlined, UserOutlined} from "@ant-design/icons"
 
 export default function NamecomConnectorForm() {
 
@@ -18,13 +19,13 @@ export default function NamecomConnectorForm() {
                     {t`Retrieve a set of tokens from your customer account on the Provider's website`}
                 </Typography.Link>}
             >
-                <Input autoComplete='off'/>
+                <Input prefix={<UserOutlined/>} autoComplete='off'/>
             </Form.Item>
             <Form.Item
                 label={t`API key`}
                 name={['authData', 'token']}
             >
-                <Input autoComplete='off'/>
+                <Input prefix={<LockOutlined/>} autoComplete='off'/>
             </Form.Item>
         </>
     )
