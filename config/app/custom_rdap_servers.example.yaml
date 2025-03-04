@@ -20,7 +20,7 @@
     "publication": "1970-01-01T00:00:00Z",
 
     "services": [
-        [ [ "" ],             [ "https://rdap.iana.org/" ] ], # If you want to make RDAP queries to get TLD information from IANA
+        [ [ "." ],             [ "https://rdap.iana.org/" ] ], # If you want to make RDAP queries to get TLD information from IANA
         [ [ "ad" ],            [ "https://rdap.nic.ad/" ] ],
         [ [ "ae" ],            [ "https://rdap.nic.ae/" ] ],
         [ [ "ki" ],            [ "https://rdap.nic.ki/" ] ],

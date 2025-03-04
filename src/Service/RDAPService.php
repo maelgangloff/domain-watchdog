@@ -173,7 +173,7 @@ readonly class RDAPService
     private function getTld(string $domain): Tld
     {
         if (!str_contains($domain, '.')) {
-            $tldEntity = $this->tldRepository->findOneBy(['tld' => '']);
+            $tldEntity = $this->tldRepository->findOneBy(['tld' => '.']);
 
             if (null == $tldEntity) {
                 throw new NotFoundHttpException("The requested TLD $domain is not yet supported, please try again with another one");
