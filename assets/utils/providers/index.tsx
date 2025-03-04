@@ -6,6 +6,7 @@ import GandiConnectorForm from "./forms/GandiConnectorForm"
 import NamecheapConnectorForm from "./forms/NamecheapConnectorForm"
 import AutoDnsConnectorForm from "./forms/AutoDnsConnectorForm"
 import NamecomConnectorForm from "./forms/NamecomConnectorForm"
+import EppConnectorForm from "./forms/EppConnectorForm"
 
 export const formItemLayoutWithOutLabel = {
     wrapperCol: {
@@ -15,7 +16,7 @@ export const formItemLayoutWithOutLabel = {
 }
 
 export type ProviderConfig = {
-    tosLink: string
+    tosLink?: string
     form: ({form}: { form: FormInstance }) => React.ReactElement
 }
 
@@ -39,5 +40,8 @@ export const providersConfig: Record<ConnectorProvider, ProviderConfig> = {
     [ConnectorProvider["Name.com"]]: {
         tosLink: 'https://www.name.com/policies/',
         form: NamecomConnectorForm
+    },
+    [ConnectorProvider.EPP]: {
+        form: EppConnectorForm
     }
 }
