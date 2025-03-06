@@ -18,6 +18,7 @@ final class OvhProviderDto extends DefaultProviderDto
     #[Assert\NotBlank]
     public string $consumerKey;
 
+    #[Assert\NotBlank]
     #[Assert\Choice(['create-default', 'create-premium'])]
     public string $pricingMode;
 
