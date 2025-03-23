@@ -94,8 +94,6 @@ final readonly class OrderDomainHandler
              * If no errors occur, the purchase is attempted.
              */
 
-            $connectorProvider->authenticate($connector->getAuthData());
-
             $connectorProvider->orderDomain($domain, $this->kernel->isDebug());
 
             /*
