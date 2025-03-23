@@ -58,6 +58,11 @@ export default function EppConnectorForm() {
 
     return <>
         <Alert
+            message={t`This connector is experimental and its implementation has not been fully tested. Please submit an issue for any issues related to it.`}
+            type='warning'
+            style={{marginBottom: '1em'}}
+        />
+        <Alert
             message={t`The EPP connector is a special type of connector. Be careful.`}
             type='info'
             style={{marginBottom: '2em'}}
