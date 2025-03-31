@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2025-02-19 21:25+0000\n"
+"PO-Revision-Date: 2025-03-31 14:39+0000\n"
 "Last-Translator: Maël Gangloff <contact@maelgangloff.fr>\n"
 "Language-Team: German <https://weblate.vinceh121.me/projects/domain-watchdog/"
 "domain-watchdog-dashboard/de/>\n"
@@ -1426,110 +1426,101 @@ msgid ""
 "This connector is experimental and its implementation has not been fully "
 "tested. Please submit an issue for any issues related to it."
 msgstr ""
+"Dieser Connector ist experimentell und seine Implementierung wurde noch "
+"nicht vollständig getestet. Bitte melden Sie uns alle damit verbundenen "
+"Probleme."
 
 #: assets/utils/providers/forms/EppConnectorForm.tsx:66
 msgid "The EPP connector is a special type of connector. Be careful."
-msgstr ""
+msgstr "Der EPP-Stecker ist ein Sondersteckertyp. Seien Sie vorsichtig."
 
 #: assets/utils/providers/forms/EppConnectorForm.tsx:71
-#, fuzzy
-#| msgid "Owner confirmation"
 msgid "Server configuration"
-msgstr "Bestätigung des Eigentümers"
+msgstr "Server-Konfiguration"
 
 #: assets/utils/providers/forms/EppConnectorForm.tsx:72
 msgid "Protocol"
-msgstr ""
+msgstr "Protokoll"
 
 #: assets/utils/providers/forms/EppConnectorForm.tsx:76
 msgid "Version"
-msgstr ""
+msgstr "Version"
 
 #: assets/utils/providers/forms/EppConnectorForm.tsx:88
 msgid "Language"
-msgstr ""
+msgstr "Sprache"
 
 #: assets/utils/providers/forms/EppConnectorForm.tsx:101
-#, fuzzy
-#| msgid "Nameserver"
 msgid "Server"
-msgstr "Nameserver"
+msgstr "Server"
 
 #: assets/utils/providers/forms/EppConnectorForm.tsx:121
 msgid "Credentials"
-msgstr ""
+msgstr "Anmeldeinformationen"
 
 #: assets/utils/providers/forms/EppConnectorForm.tsx:144
 msgid "TLS client certificate"
-msgstr ""
+msgstr "TLS-Client-Zertifikat"
 
 #: assets/utils/providers/forms/EppConnectorForm.tsx:162
 msgid "Private key passphrase (optional)"
-msgstr ""
+msgstr "Passphrase für den privaten Schlüssel (optional)"
 
 #: assets/utils/providers/forms/EppConnectorForm.tsx:169
-#, fuzzy
-#| msgid "Owner confirmation"
 msgid "TLS configuration"
-msgstr "Bestätigung des Eigentümers"
+msgstr "TLS-Konfiguration"
 
 #: assets/utils/providers/forms/EppConnectorForm.tsx:174
 msgid "Verify peer"
-msgstr ""
+msgstr "Peer überprüfen"
 
 #: assets/utils/providers/forms/EppConnectorForm.tsx:183
 msgid "Verify peer name"
-msgstr ""
+msgstr "Peer-Name überprüfen"
 
 #: assets/utils/providers/forms/EppConnectorForm.tsx:192
 msgid "Allow self-signed certificates"
-msgstr ""
+msgstr "Selbstsignierte Zertifikate zulassen"
 
 #: assets/utils/providers/forms/EppConnectorForm.tsx:202
-#, fuzzy
-#| msgid "Owner confirmation"
 msgid "Domain configuration"
-msgstr "Bestätigung des Eigentümers"
+msgstr "Domänenkonfiguration"
 
 #: assets/utils/providers/forms/EppConnectorForm.tsx:204
-#, fuzzy
-#| msgid "Registration"
 msgid "Registration period"
-msgstr "Registrierung"
+msgstr "Zeitraum der Registrierung"
 
 #: assets/utils/providers/forms/EppConnectorForm.tsx:217
 msgid "Year"
-msgstr ""
+msgstr "Jahr"
 
 #: assets/utils/providers/forms/EppConnectorForm.tsx:218
 msgid "Month"
-msgstr ""
+msgstr "Monat"
 
 #: assets/utils/providers/forms/EppConnectorForm.tsx:225
 msgid "Auth-Info Code"
-msgstr ""
+msgstr "Auth-Info Code"
 
 #: assets/utils/providers/forms/EppConnectorForm.tsx:233
 msgid "NIC Handle"
-msgstr ""
+msgstr "NIC-Handle"
 
 #: assets/utils/providers/forms/EppConnectorForm.tsx:261
 msgid "Onsite"
-msgstr ""
+msgstr "Vor Ort"
 
 #: assets/utils/providers/forms/EppConnectorForm.tsx:273
-#, fuzzy
-#| msgid "Owner confirmation"
 msgid "Protocol configuration"
-msgstr "Bestätigung des Eigentümers"
+msgstr "Konfiguration des Protokolls"
 
 #: assets/utils/providers/forms/EppConnectorForm.tsx:274
 msgid "Services"
-msgstr ""
+msgstr "Leistungen"
 
 #: assets/utils/providers/forms/EppConnectorForm.tsx:280
 msgid "Extensions"
-msgstr ""
+msgstr "Erweiterungen"
 
 #: assets/utils/providers/forms/GandiConnectorForm.tsx:10
 msgid "Personal Access Token (PAT)"
