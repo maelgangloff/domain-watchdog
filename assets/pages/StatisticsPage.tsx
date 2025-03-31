@@ -111,7 +111,7 @@ export default function StatisticsPage() {
                         <Card bordered={false}>
                             <Statistic
                                 loading={stats === undefined}
-                                title={tld ? `.${tld}` : t`TLD`}
+                                title={tld ? tld : t`TLD`}
                                 value={domain}
                                 valueStyle={{color: 'darkorange'}}
                             />
