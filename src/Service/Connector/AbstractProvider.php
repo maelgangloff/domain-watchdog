@@ -30,7 +30,7 @@ abstract class AbstractProvider
 
     public function __construct(
         protected CacheItemPoolInterface $cacheItemPool,
-        private readonly DenormalizerInterface&NormalizerInterface $serializer,
+        protected readonly DenormalizerInterface&NormalizerInterface $serializer,
         private readonly ValidatorInterface $validator,
     ) {
     }

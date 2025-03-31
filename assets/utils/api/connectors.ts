@@ -6,12 +6,16 @@ export enum ConnectorProvider {
     Gandi = 'gandi',
     AutoDNS = 'autodns',
     Namecheap = 'namecheap',
-    'Name.com' = 'namecom'
+    'Name.com' = 'namecom',
+    EPP = 'epp'
 }
 
 export interface Connector {
     provider: ConnectorProvider
-    authData: object
+    authData: Record<string, Record<string, string>>,
+
+    objURI?: { key: string, value: string }[],
+    extURI?: { key: string, value: string }[]
 }
 
 interface ConnectorResponse {
@@ -27,6 +31,18 @@ export async function getConnectors(): Promise<ConnectorResponse> {
 }
 
 export async function postConnector(connector: Connector) {
+
+    for (const key of ['objURI', 'extURI'] as (keyof Connector)[]) {
+        if (key in connector) {
+            const obj = connector[key] as { key: string, value: string }[]
+            connector.authData[key] = obj.reduce((acc: { [key: string]: string }, x) => ({
+                ...acc,
+                [x.key]: x.value
+            }), {})
+            delete connector[key]
+        }
+    }
+
     const response = await request<Connector & { id: string }>({
         method: 'POST',
         url: 'connectors',

@@ -11,20 +11,18 @@ use App\Notifier\DomainDeletedNotification;
 use App\Notifier\DomainUpdateErrorNotification;
 use App\Repository\WatchListRepository;
 use App\Service\ChatNotificationService;
+use App\Service\Connector\AbstractProvider;
+use App\Service\Connector\CheckDomainProviderInterface;
 use App\Service\RDAPService;
 use Psr\Log\LoggerInterface;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
-use Symfony\Component\Messenger\Exception\ExceptionInterface;
 use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Mime\Address;
 use Symfony\Component\Notifier\Recipient\Recipient;
-use Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface;
-use Symfony\Contracts\HttpClient\Exception\DecodingExceptionInterface;
-use Symfony\Contracts\HttpClient\Exception\RedirectionExceptionInterface;
-use Symfony\Contracts\HttpClient\Exception\ServerExceptionInterface;
 
 #[AsMessageHandler]
 final readonly class UpdateDomainsFromWatchlistHandler
@@ -40,18 +38,13 @@ final readonly class UpdateDomainsFromWatchlistHandler
         private MessageBusInterface $bus,
         private WatchListRepository $watchListRepository,
         private LoggerInterface $logger,
+        #[Autowire(service: 'service_container')]
+        private ContainerInterface $locator,
     ) {
         $this->sender = new Address($mailerSenderEmail, $mailerSenderName);
     }
 
     /**
-     * @throws ExceptionInterface
-     * @throws TransportExceptionInterface
-     * @throws ClientExceptionInterface
-     * @throws DecodingExceptionInterface
-     * @throws RedirectionExceptionInterface
-     * @throws ServerExceptionInterface
-     * @throws \Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface
      * @throws \Throwable
      */
     public function __invoke(UpdateDomainsFromWatchlist $message): void
@@ -62,6 +55,34 @@ final readonly class UpdateDomainsFromWatchlistHandler
         $this->logger->info('Domain names from Watchlist {token} will be processed.', [
             'token' => $message->watchListToken,
         ]);
+
+        /** @var AbstractProvider $connectorProvider */
+        $connectorProvider = $this->getConnectorProvider($watchList);
+
+        if ($connectorProvider instanceof CheckDomainProviderInterface) {
+            $this->logger->notice('Watchlist {watchlist} linked to connector {connector}.', [
+                'watchlist' => $watchList->getToken(),
+                'connector' => $watchList->getConnector()->getId(),
+            ]);
+
+            try {
+                $checkedDomains = $connectorProvider->checkDomains(
+                    ...array_unique(array_map(fn (Domain $d) => $d->getLdhName(), $watchList->getDomains()->toArray()))
+                );
+            } catch (\Throwable $exception) {
+                $this->logger->warning('Unable to check domain names availability with connector {connector}.', [
+                    'connector' => $watchList->getConnector()->getId(),
+                ]);
+
+                throw $exception;
+            }
+
+            foreach ($checkedDomains as $domain) {
+                $this->bus->dispatch(new OrderDomain($watchList->getToken(), $domain));
+            }
+
+            return;
+        }
 
         /*
          * A domain name is updated if one or more of these conditions are met:
@@ -84,17 +105,17 @@ final readonly class UpdateDomainsFromWatchlistHandler
                 $this->bus->dispatch(new SendDomainEventNotif($watchList->getToken(), $domain->getLdhName(), $updatedAt));
             } catch (NotFoundHttpException) {
                 if (!$domain->getDeleted()) {
-                    $notification = (new DomainDeletedNotification($this->sender, $domain));
+                    $notification = new DomainDeletedNotification($this->sender, $domain);
                     $this->mailer->send($notification->asEmailMessage(new Recipient($watchList->getUser()->getEmail()))->getMessage());
                     $this->chatNotificationService->sendChatNotification($watchList, $notification);
                 }
 
-                if (null !== $watchList->getConnector()) {
+                if ($watchList->getConnector()) {
                     /*
                      * If the domain name no longer appears in the WHOIS AND a connector is associated with this Watchlist,
                      * this connector is used to purchase the domain name.
                      */
-                    $this->bus->dispatch(new OrderDomain($watchList->getToken(), $domain->getLdhName(), $updatedAt));
+                    $this->bus->dispatch(new OrderDomain($watchList->getToken(), $domain->getLdhName()));
                 }
             } catch (\Throwable $e) {
                 /*
@@ -112,5 +133,17 @@ final readonly class UpdateDomainsFromWatchlistHandler
                 throw $e;
             }
         }
+    }
+
+    private function getConnectorProvider(WatchList $watchList): ?object
+    {
+        $connector = $watchList->getConnector();
+        if (null === $connector || null === $connector->getProvider()) {
+            return null;
+        }
+
+        $providerClass = $connector->getProvider()->getConnectorProvider();
+
+        return $this->locator->get($providerClass);
     }
 }
