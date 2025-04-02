@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2025-03-31 14:39+0000\n"
+"PO-Revision-Date: 2025-04-02 16:40+0000\n"
 "Last-Translator: Maël Gangloff <contact@maelgangloff.fr>\n"
 "Language-Team: French <https://weblate.vinceh121.me/projects/domain-watchdog/"
 "domain-watchdog-dashboard/fr/>\n"
@@ -733,7 +733,7 @@ msgstr "Rôles"
 
 #: assets/utils/functions/DomainToTag.tsx:16
 msgid "The domain name was updated less than a week ago."
-msgstr ""
+msgstr "Le nom de domaine a été mis à jour il y a moins d'une semaine."
 
 #: assets/utils/functions/rdapTranslation.ts:7
 #: assets/utils/providers/forms/EppConnectorForm.tsx:241
