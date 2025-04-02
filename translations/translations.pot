@@ -661,6 +661,10 @@ msgstr ""
 msgid "Roles"
 msgstr ""
 
+#: assets/utils/functions/DomainToTag.tsx:16
+msgid "The domain name was updated less than a week ago."
+msgstr ""
+
 #: assets/utils/functions/rdapTranslation.ts:7
 #: assets/utils/providers/forms/EppConnectorForm.tsx:241
 msgid "Registrant"

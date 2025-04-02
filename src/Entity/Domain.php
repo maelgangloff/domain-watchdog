@@ -58,7 +58,7 @@ class Domain
      * @var Collection<int, DomainEvent>
      */
     #[ORM\OneToMany(targetEntity: DomainEvent::class, mappedBy: 'domain', cascade: ['persist'], orphanRemoval: true)]
-    #[Groups(['domain:item', 'domain:list'])]
+    #[Groups(['domain:item', 'domain:list', 'watchlist:list'])]
     private Collection $events;
 
     /**

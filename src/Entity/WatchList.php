@@ -23,7 +23,11 @@ use Symfony\Component\Uid\Uuid;
     operations: [
         new GetCollection(
             routeName: 'watchlist_get_all_mine',
-            normalizationContext: ['groups' => 'watchlist:list'],
+            normalizationContext: ['groups' => [
+                'watchlist:list',
+                'domain:list',
+                'event:list',
+            ]],
             name: 'get_all_mine',
         ),
         new GetCollection(
@@ -32,6 +36,8 @@ use Symfony\Component\Uid\Uuid;
             normalizationContext: ['groups' => [
                 'domain:list',
                 'tld:list',
+                'event:list',
+                'domain:list',
                 'event:list',
             ]],
             name: 'get_tracked_domains'
