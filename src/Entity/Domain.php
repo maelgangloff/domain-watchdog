@@ -486,10 +486,16 @@ class Domain
             return null;
         }
 
-        if (in_array('pending delete', $lastStatus->getAddStatus()) && !$this->isRedemptionPeriod()) {
+        if ($this->isPendingDelete() && (
+            in_array('pending delete', $lastStatus->getAddStatus())
+            || in_array('redemption period', $lastStatus->getDeleteStatus()))
+        ) {
             return self::daysBetween($now, $lastStatus->getCreatedAt()->add(new \DateInterval('P'. 5 .'D')));
         }
-        if (in_array('redemption period', $lastStatus->getAddStatus())) {
+
+        if ($this->isRedemptionPeriod()
+            && in_array('redemption period', $lastStatus->getAddStatus())
+        ) {
             return self::daysBetween($now, $lastStatus->getCreatedAt()->add(new \DateInterval('P'.(30 + 5).'D')));
         }
 
