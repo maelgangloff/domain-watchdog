@@ -6,15 +6,17 @@ import React from 'react'
 import type {Event} from "../api"
 import {t} from "ttag"
 
-export function DomainToTag({domain}: { domain: { ldhName: string, deleted: boolean, status: string[], events: Event[] } }) {
-    const lastChangedEvent = domain.events.find(e => e.action === 'last changed' && !e.deleted)
+export function DomainToTag({domain}: { domain: { ldhName: string, deleted: boolean, status: string[], events?: Event[] } }) {
+
+    const lastChangedEvent = domain.events?.find(e =>
+        e.action === 'last changed' &&
+        !e.deleted &&
+        ((new Date().getTime() - new Date(e.date).getTime()) < 7*24*60*60*1e3)
+    )
 
     return (
         <Link to={'/search/domain/' + domain.ldhName}>
-            <Badge dot={
-                lastChangedEvent !== undefined &&
-                (new Date().getTime() - new Date(lastChangedEvent.date).getTime()) < 7*24*60*60*1e3
-             } color='blue' title={t`The domain name was updated less than a week ago.`}>
+            <Badge dot={lastChangedEvent !== undefined} color='blue' title={t`The domain name was updated less than a week ago.`}>
                 <Tag
                     color={
                         domain.deleted

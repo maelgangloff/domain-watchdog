@@ -661,7 +661,7 @@ msgstr ""
 msgid "Roles"
 msgstr ""
 
-#: assets/utils/functions/DomainToTag.tsx:16
+#: assets/utils/functions/DomainToTag.tsx:19
 msgid "The domain name was updated less than a week ago."
 msgstr ""
 
