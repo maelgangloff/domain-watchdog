@@ -379,7 +379,7 @@ class Domain
      *
      * @throws \Exception
      */
-    public function isToBeUpdated(bool $fromUser = true): bool
+    public function isToBeUpdated(bool $fromUser = true, bool $intensifyLastDay = false): bool
     {
         $updatedAtDiff = $this->getUpdatedAt()->diff(new \DateTimeImmutable());
 
@@ -393,7 +393,7 @@ class Domain
 
         $expiresIn = $this->getExpiresInDays();
 
-        if (0 === $expiresIn || 1 === $expiresIn) {
+        if ($intensifyLastDay && (0 === $expiresIn || 1 === $expiresIn)) {
             return true;
         }
 

@@ -92,7 +92,7 @@ final readonly class UpdateDomainsFromWatchlistHandler
          */
 
         /** @var Domain $domain */
-        foreach ($watchList->getDomains()->filter(fn ($domain) => $domain->isToBeUpdated(false)) as $domain
+        foreach ($watchList->getDomains()->filter(fn ($domain) => $domain->isToBeUpdated(false, null !== $watchList->getConnector())) as $domain
         ) {
             $updatedAt = $domain->getUpdatedAt();
 

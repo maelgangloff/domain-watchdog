@@ -54,7 +54,7 @@ class DomainRefreshController extends AbstractController
         // If the domain name exists in the database, recently updated and not important, we return the stored Domain
         if (null !== $domain
             && !$domain->getDeleted()
-            && !$domain->isToBeUpdated()
+            && !$domain->isToBeUpdated(true, true)
             && !$this->kernel->isDebug()
             && true !== filter_var($request->get('forced', false), FILTER_VALIDATE_BOOLEAN)
         ) {

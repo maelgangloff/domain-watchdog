@@ -48,7 +48,7 @@ class RegisterDomainCommand extends Command
 
         try {
             if (null !== $domain && !$force) {
-                if (!$domain->isToBeUpdated()) {
+                if (!$domain->isToBeUpdated(true, true)) {
                     $io->warning('The domain name is already present in the database and does not need to be updated at this time.');
 
                     return Command::SUCCESS;
