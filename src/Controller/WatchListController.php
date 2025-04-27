@@ -511,7 +511,7 @@ class WatchListController extends AbstractController
         $entries = [];
         foreach ($domain->getEvents()->filter(fn (DomainEvent $e) => $e->getDate()->diff(new \DateTimeImmutable('now'))->y <= 10)->getIterator() as $event) {
             $entries[] = (new Entry())
-                ->setId($baseUrl . "/api/domains/" . $domain->getLdhName() . '/events/' . $event->getId())
+                ->setId($baseUrl . "/api/domains/" . $domain->getLdhName() . '#events-' . $event->getId())
                 ->setTitle($domain->getLdhName() . ': ' . $event->getAction(). '  - event update')
                 ->setDescription("Domain name event")
                 ->setLink($baseUrl . "/#/search/domain/" . $domain->getLdhName())
@@ -542,7 +542,7 @@ class WatchListController extends AbstractController
             }
 
             $entries[] = (new Entry())
-                ->setId($baseUrl . "/api/domains/" . $domain->getLdhName() . '/status/' . $domainStatus->getId())
+                ->setId($baseUrl . "/api/domains/" . $domain->getLdhName() . '#status-' . $domainStatus->getId())
                 ->setTitle($domain->getLdhName() . ' - EPP status update')
                 ->setDescription("There has been a change in the EPP status of the domain name.")
                 ->setLink($baseUrl . "/#/search/domain/" . $domain->getLdhName())
