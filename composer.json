@@ -32,6 +32,7 @@
     "eluceo/ical": "^2.14",
     "influxdata/influxdb-client-php": "^3.6",
     "knpuniversity/oauth2-client-bundle": "^2.18",
+    "laminas/laminas-feed": "^2.23",
     "lexik/jwt-authentication-bundle": "^3.1",
     "metaregistrar/php-epp-client": "^1.0",
     "nelmio/cors-bundle": "^2.5",

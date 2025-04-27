@@ -1,0 +1,23 @@
+<p>
+    The EPP status of this domain name has changed:
+</p>
+
+{% if domainStatus.addStatus is not empty %}
+    <p><strong>Added statuses:</strong></p>
+    <ul>
+        {% for status in domainStatus.addStatus %}
+            <li>{{ status }}</li>
+        {% endfor %}
+    </ul>
+{% endif %}
+
+{% if domainStatus.deleteStatus is not empty %}
+    <p><strong>Deleted statuses:</strong></p>
+    <ul>
+        {% for status in domainStatus.deleteStatus %}
+            <li>{{ status }}</li>
+        {% endfor %}
+    </ul>
+{% endif %}
+
+<p><strong>Change date:</strong> {{ domainStatus.date|date('Y-m-d H:i:s') }}</p>

@@ -92,6 +92,52 @@ use Symfony\Component\Uid\Uuid;
         new Delete(
             security: 'object.user == user'
         ),
+        new Get(
+            routeName: 'watchlist_rss_status',
+            defaults: ['_format' => 'xml'],
+            openapiContext: [
+                'responses' => [
+                    '200' => [
+                        'description' => 'Domain EPP status RSS feed',
+                        'content' => [
+                            'application/atom+xml' => [
+                                'schema' => [
+                                    'type' => 'string',
+                                    'format' => 'text',
+                                ],
+                            ],
+                        ],
+                    ],
+                ],
+            ],
+            read: false,
+            deserialize: false,
+            serialize: false,
+            name: 'rss_status'
+        ),
+        new Get(
+            routeName: 'watchlist_rss_events',
+            defaults: ['_format' => 'xml'],
+            openapiContext: [
+                'responses' => [
+                    '200' => [
+                        'description' => 'Domain events RSS feed',
+                        'content' => [
+                            'application/atom+xml' => [
+                                'schema' => [
+                                    'type' => 'string',
+                                    'format' => 'text',
+                                ],
+                            ],
+                        ],
+                    ],
+                ],
+            ],
+            read: false,
+            deserialize: false,
+            serialize: false,
+            name: 'rss_events'
+        ),
     ],
 )]
 class WatchList

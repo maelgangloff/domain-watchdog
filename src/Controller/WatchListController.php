@@ -4,8 +4,8 @@ namespace App\Controller;
 
 use App\Entity\Connector;
 use App\Entity\Domain;
-use App\Entity\DomainEntity;
 use App\Entity\DomainEvent;
+use App\Entity\DomainStatus;
 use App\Entity\User;
 use App\Entity\WatchList;
 use App\Notifier\TestChatNotification;
@@ -19,23 +19,19 @@ use Doctrine\DBAL\LockMode;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Exception\ORMException;
 use Doctrine\ORM\OptimisticLockException;
-use Eluceo\iCal\Domain\Entity\Attendee;
 use Eluceo\iCal\Domain\Entity\Calendar;
-use Eluceo\iCal\Domain\Entity\Event;
-use Eluceo\iCal\Domain\Enum\EventStatus;
-use Eluceo\iCal\Domain\ValueObject\Category;
-use Eluceo\iCal\Domain\ValueObject\Date;
-use Eluceo\iCal\Domain\ValueObject\EmailAddress;
-use Eluceo\iCal\Domain\ValueObject\SingleDay;
-use Eluceo\iCal\Domain\ValueObject\Timestamp;
 use Eluceo\iCal\Presentation\Component\Property;
 use Eluceo\iCal\Presentation\Component\Property\Value\TextValue;
 use Eluceo\iCal\Presentation\Factory\CalendarFactory;
+use Exception;
+use JsonException;
+use Laminas\Feed\Writer\Deleted;
+use Laminas\Feed\Writer\Entry;
+use Laminas\Feed\Writer\Feed;
 use Psr\Log\LoggerInterface;
 use Sabre\VObject\EofException;
 use Sabre\VObject\InvalidDataException;
 use Sabre\VObject\ParseException;
-use Sabre\VObject\Reader;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -61,17 +57,18 @@ class WatchListController extends AbstractController
 {
     public function __construct(
         private readonly SerializerInterface&DecoderInterface&DenormalizerInterface $serializer,
-        private readonly EntityManagerInterface $em,
-        private readonly WatchListRepository $watchListRepository,
-        private readonly LoggerInterface $logger,
-        private readonly ChatNotificationService $chatNotificationService,
-        private readonly DomainRepository $domainRepository,
-        private readonly RDAPService $RDAPService,
-        private readonly RateLimiterFactory $rdapRequestsLimiter,
-        private readonly KernelInterface $kernel,
+        private readonly EntityManagerInterface                                     $em,
+        private readonly WatchListRepository                                        $watchListRepository,
+        private readonly LoggerInterface                                            $logger,
+        private readonly ChatNotificationService                                    $chatNotificationService,
+        private readonly DomainRepository                                           $domainRepository,
+        private readonly RDAPService                                                $RDAPService,
+        private readonly RateLimiterFactory                                         $rdapRequestsLimiter,
+        private readonly KernelInterface                                            $kernel,
         #[Autowire(service: 'service_container')]
-        private readonly ContainerInterface $locator,
-    ) {
+        private readonly ContainerInterface                                         $locator,
+    )
+    {
     }
 
     /**
@@ -81,8 +78,8 @@ class WatchListController extends AbstractController
      * @throws ExceptionInterface
      * @throws DecodingExceptionInterface
      * @throws ClientExceptionInterface
-     * @throws \JsonException
-     * @throws \Exception
+     * @throws JsonException
+     * @throws Exception
      */
     #[Route(
         path: '/api/watchlists',
@@ -106,7 +103,7 @@ class WatchListController extends AbstractController
          * This policy guarantees the equal probability of obtaining a domain name if it is requested by several users.
          */
         if ($this->getParameter('limited_features')) {
-            if ($watchList->getDomains()->count() > (int) $this->getParameter('limit_max_watchlist_domains')) {
+            if ($watchList->getDomains()->count() > (int)$this->getParameter('limit_max_watchlist_domains')) {
                 $this->logger->notice('User {username} tried to create a Watchlist. The maximum number of domains has been reached.', [
                     'username' => $user->getUserIdentifier(),
                 ]);
@@ -114,7 +111,7 @@ class WatchListController extends AbstractController
             }
 
             $userWatchLists = $user->getWatchLists();
-            if ($userWatchLists->count() >= (int) $this->getParameter('limit_max_watchlist')) {
+            if ($userWatchLists->count() >= (int)$this->getParameter('limit_max_watchlist')) {
                 $this->logger->notice('User {username} tried to create a Watchlist. The maximum number of Watchlists has been reached', [
                     'username' => $user->getUserIdentifier(),
                 ]);
@@ -122,7 +119,7 @@ class WatchListController extends AbstractController
             }
 
             /** @var Domain[] $trackedDomains */
-            $trackedDomains = $userWatchLists->reduce(fn (array $acc, WatchList $watchList) => [...$acc, ...$watchList->getDomains()->toArray()], []);
+            $trackedDomains = $userWatchLists->reduce(fn(array $acc, WatchList $watchList) => [...$acc, ...$watchList->getDomains()->toArray()], []);
 
             /** @var Domain $domain */
             foreach ($watchList->getDomains()->getIterator() as $domain) {
@@ -138,7 +135,7 @@ class WatchListController extends AbstractController
                 }
             }
 
-            if (null !== $watchList->getWebhookDsn() && count($watchList->getWebhookDsn()) > (int) $this->getParameter('limit_max_watchlist_webhooks')) {
+            if (null !== $watchList->getWebhookDsn() && count($watchList->getWebhookDsn()) > (int)$this->getParameter('limit_max_watchlist_webhooks')) {
                 $this->logger->notice('User {username} tried to create a Watchlist. The maximum number of webhooks has been reached.', [
                     'username' => $user->getUserIdentifier(),
                 ]);
@@ -178,7 +175,7 @@ class WatchListController extends AbstractController
     }
 
     /**
-     * @throws \Exception
+     * @throws Exception
      * @throws ExceptionInterface
      */
     private function verifyConnector(WatchList $watchList, ?Connector $connector): void
@@ -226,12 +223,12 @@ class WatchListController extends AbstractController
      * @throws RedirectionExceptionInterface
      * @throws DecodingExceptionInterface
      * @throws ClientExceptionInterface
-     * @throws \JsonException
+     * @throws JsonException
      * @throws OptimisticLockException
      * @throws TransportExceptionInterface
      * @throws ServerExceptionInterface
      * @throws ExceptionInterface
-     * @throws \Exception
+     * @throws Exception
      */
     #[Route(
         path: '/api/watchlists/{token}',
@@ -251,7 +248,7 @@ class WatchListController extends AbstractController
         $watchList->setUser($user);
 
         if ($this->getParameter('limited_features')) {
-            if ($watchList->getDomains()->count() > (int) $this->getParameter('limit_max_watchlist_domains')) {
+            if ($watchList->getDomains()->count() > (int)$this->getParameter('limit_max_watchlist_domains')) {
                 $this->logger->notice('User {username} tried to update a Watchlist. The maximum number of domains has been reached for this Watchlist', [
                     'username' => $user->getUserIdentifier(),
                 ]);
@@ -262,8 +259,8 @@ class WatchListController extends AbstractController
 
             /** @var Domain[] $trackedDomains */
             $trackedDomains = $userWatchLists
-                ->filter(fn (WatchList $wl) => $wl->getToken() !== $watchList->getToken())
-                ->reduce(fn (array $acc, WatchList $wl) => [...$acc, ...$wl->getDomains()->toArray()], []);
+                ->filter(fn(WatchList $wl) => $wl->getToken() !== $watchList->getToken())
+                ->reduce(fn(array $acc, WatchList $wl) => [...$acc, ...$wl->getDomains()->toArray()], []);
 
             /** @var Domain $domain */
             foreach ($watchList->getDomains()->getIterator() as $domain) {
@@ -278,7 +275,7 @@ class WatchListController extends AbstractController
                 }
             }
 
-            if (null !== $watchList->getWebhookDsn() && count($watchList->getWebhookDsn()) > (int) $this->getParameter('limit_max_watchlist_webhooks')) {
+            if (null !== $watchList->getWebhookDsn() && count($watchList->getWebhookDsn()) > (int)$this->getParameter('limit_max_watchlist_webhooks')) {
                 $this->logger->notice('User {username} tried to update a Watchlist. The maximum number of webhooks has been reached.', [
                     'username' => $user->getUserIdentifier(),
                 ]);
@@ -315,7 +312,7 @@ class WatchListController extends AbstractController
      * @throws ParseException
      * @throws EofException
      * @throws InvalidDataException
-     * @throws \Exception
+     * @throws Exception
      */
     #[Route(
         path: '/api/watchlists/{token}/calendar',
@@ -334,59 +331,9 @@ class WatchListController extends AbstractController
 
         /** @var Domain $domain */
         foreach ($watchList->getDomains()->getIterator() as $domain) {
-            $attendees = [];
-
-            /* @var DomainEntity $entity */
-            foreach ($domain->getDomainEntities()->filter(fn (DomainEntity $domainEntity) => !$domainEntity->getDeleted())->getIterator() as $domainEntity) {
-                $jCard = $domainEntity->getEntity()->getJCard();
-
-                if (empty($jCard)) {
-                    continue;
-                }
-
-                $vCardData = Reader::readJson($jCard);
-
-                if (empty($vCardData->EMAIL) || empty($vCardData->FN)) {
-                    continue;
-                }
-
-                $email = (string) $vCardData->EMAIL;
-
-                if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-                    continue;
-                }
-
-                $attendees[] = (new Attendee(new EmailAddress($email)))->setDisplayName((string) $vCardData->FN);
+            foreach ($domain->getEvents() as $event) {
+                $domain->addEvent($event);
             }
-
-            /** @var DomainEvent $event */
-            foreach ($domain->getEvents()->filter(fn (DomainEvent $e) => $e->getDate()->diff(new \DateTimeImmutable('now'))->y <= 10)->getIterator() as $event) {
-                $calendar->addEvent((new Event())
-                    ->setLastModified(new Timestamp($domain->getUpdatedAt()))
-                    ->setStatus(EventStatus::CONFIRMED())
-                    ->setSummary($domain->getLdhName().': '.$event->getAction())
-                    ->addCategory(new Category($event->getAction()))
-                    ->setAttendees($attendees)
-                    ->setOccurrence(new SingleDay(new Date($event->getDate())))
-                );
-            }
-
-            $expiresInDays = $domain->getExpiresInDays();
-
-            if (null === $expiresInDays) {
-                continue;
-            }
-
-            $calendar->addEvent((new Event())
-                ->setLastModified(new Timestamp($domain->getUpdatedAt()))
-                ->setStatus(EventStatus::CONFIRMED())
-                ->setSummary($domain->getLdhName().': estimated WHOIS release date')
-                ->addCategory(new Category('release'))
-                ->setAttendees($attendees)
-                ->setOccurrence(new SingleDay(new Date(
-                    (new \DateTimeImmutable())->setTime(0, 0)->add(new \DateInterval('P'.$expiresInDays.'D'))
-                )))
-            );
         }
 
         $calendarResponse = (new CalendarFactory())->createCalendar($calendar);
@@ -401,7 +348,7 @@ class WatchListController extends AbstractController
     }
 
     /**
-     * @throws \Exception
+     * @throws Exception
      */
     #[Route(
         path: '/api/tracked',
@@ -422,7 +369,7 @@ class WatchListController extends AbstractController
             /** @var Domain $domain */
             foreach ($watchList->getDomains()->getIterator() as $domain) {
                 /** @var DomainEvent|null $exp */
-                $exp = $domain->getEvents()->findFirst(fn (int $key, DomainEvent $e) => !$e->getDeleted() && 'expiration' === $e->getAction());
+                $exp = $domain->getEvents()->findFirst(fn(int $key, DomainEvent $e) => !$e->getDeleted() && 'expiration' === $e->getAction());
 
                 if (!$domain->getDeleted() && null !== $exp && !in_array($domain, $domains)) {
                     $domains[] = $domain;
@@ -430,7 +377,7 @@ class WatchListController extends AbstractController
             }
         }
 
-        usort($domains, fn (Domain $d1, Domain $d2) => $d1->getExpiresInDays() - $d2->getExpiresInDays());
+        usort($domains, fn(Domain $d1, Domain $d2) => $d1->getExpiresInDays() - $d2->getExpiresInDays());
 
         return $domains;
     }
@@ -441,7 +388,7 @@ class WatchListController extends AbstractController
      * @throws RedirectionExceptionInterface
      * @throws DecodingExceptionInterface
      * @throws ClientExceptionInterface
-     * @throws \JsonException
+     * @throws JsonException
      */
     private function registerDomainsInWatchlist(string $content, array $groups): WatchList
     {
@@ -454,7 +401,7 @@ class WatchListController extends AbstractController
             throw new BadRequestHttpException('Invalid payload: missing or invalid "domains" field.');
         }
 
-        $domains = array_map(fn (string $d) => str_replace('/api/domains/', '', $d), $data['domains']);
+        $domains = array_map(fn(string $d) => str_replace('/api/domains/', '', $d), $data['domains']);
 
         foreach ($domains as $ldhName) {
             /** @var ?Domain $domain */
@@ -478,4 +425,140 @@ class WatchListController extends AbstractController
 
         return $watchList;
     }
+
+    /**
+     * @throws Exception
+     */
+    #[Route(
+        path: '/api/watchlists/{token}/rss/events',
+        name: 'watchlist_rss_events',
+        defaults: [
+            '_api_resource_class' => WatchList::class,
+            '_api_operation_name' => 'rss_events',
+        ]
+    )]
+    public function getWatchlistRssEventsFeed(string $token, Request $request): Response
+    {
+        /** @var WatchList $watchlist */
+        $watchlist = $this->watchListRepository->findOneBy(['token' => $token]);
+
+        $feed = (new Feed())
+            ->setLanguage('en')
+            ->setCopyright('Domain Watchdog makes this information available "as is," and does not guarantee its accuracy.')
+            ->setTitle('Domain events (' . $watchlist->getName().')')
+            ->setGenerator("Domain Watchdog - RSS Feed", null, "https://github.com/maelgangloff/domain-watchdog")
+            ->setDescription('The latest events for domain names in your Watchlist')
+            ->setLink($request->getSchemeAndHttpHost() . "/#/tracking/watchlist")
+            ->setFeedLink($request->getSchemeAndHttpHost() . "/api/watchlists/" . $token . '/rss/events', 'atom')
+            ->setDateCreated($watchlist->getCreatedAt());
+
+        /** @var Domain $domain */
+        foreach ($watchlist->getDomains()->getIterator() as $domain) {
+            foreach ($this->getRssEventEntries($request->getSchemeAndHttpHost(), $domain) as $entry) {
+                $feed->addEntry($entry);
+            }
+        }
+
+        return new Response($feed->export("atom"), Response::HTTP_OK, [
+            'Content-Type' => 'application/atom+xml; charset=utf-8',
+        ]);
+    }
+
+    /**
+     * @throws Exception
+     */
+    #[Route(
+        path: '/api/watchlists/{token}/rss/status',
+        name: 'watchlist_rss_status',
+        defaults: [
+            '_api_resource_class' => WatchList::class,
+            '_api_operation_name' => 'rss_status',
+        ]
+    )]
+    public function getWatchlistRssStatusFeed(string $token, Request $request): Response
+    {
+        /** @var WatchList $watchlist */
+        $watchlist = $this->watchListRepository->findOneBy(['token' => $token]);
+
+        $feed = (new Feed())
+            ->setLanguage('en')
+            ->setCopyright('Domain Watchdog makes this information available "as is," and does not guarantee its accuracy.')
+            ->setTitle('Domain EPP status (' . $watchlist->getName().')')
+            ->setGenerator("Domain Watchdog - RSS Feed", null, "https://github.com/maelgangloff/domain-watchdog")
+            ->setDescription('The latest changes to the EPP status of the domain names in your Watchlist')
+            ->setLink($request->getSchemeAndHttpHost() . "/#/tracking/watchlist")
+            ->setFeedLink($request->getSchemeAndHttpHost() . "/api/watchlists/" . $token . '/rss/status', 'atom')
+            ->setDateCreated($watchlist->getCreatedAt());
+
+        /** @var Domain $domain */
+        foreach ($watchlist->getDomains()->getIterator() as $domain) {
+            foreach ($this->getRssStatusEntries($request->getSchemeAndHttpHost(), $domain) as $entry) {
+                $feed->addEntry($entry);
+            }
+        }
+
+        return new Response($feed->export("atom"), Response::HTTP_OK, [
+            'Content-Type' => 'application/atom+xml; charset=utf-8',
+        ]);
+    }
+
+
+    /**
+     * @throws Exception
+     */
+    private function getRssEventEntries(string $baseUrl, Domain $domain): array
+    {
+        $entries = [];
+        foreach ($domain->getEvents()->filter(fn (DomainEvent $e) => $e->getDate()->diff(new \DateTimeImmutable('now'))->y <= 10)->getIterator() as $event) {
+            $entries[] = (new Entry())
+                ->setId('event-'.$event->getId())
+                ->setTitle($domain->getLdhName() . ': ' . $event->getAction(). '  - event update')
+                ->setDescription("Domain name event")
+                ->setLink($baseUrl . "/#/search/domain/" . $domain->getLdhName())
+                ->setContent($this->render('rss/event_entry.html.twig', [
+                    'event' => $event
+                ])->getContent())
+                ->setDateCreated($event->getDate())
+                ->setDateModified($event->getDate())
+                ->addAuthor(["name" => strtoupper($domain->getTld()->getTld()) . " Registry"]);
+        }
+
+        return $entries;
+    }
+
+    /**
+     * @throws Exception
+     */
+    private function getRssStatusEntries(string $baseUrl, Domain $domain): array
+    {
+        $entries = [];
+        foreach ($domain->getDomainStatuses()->filter(fn (DomainStatus $e) => $e->getDate()->diff(new \DateTimeImmutable('now'))->y <= 10)->getIterator() as $domainStatus) {
+            $authors = [["name" => strtoupper($domain->getTld()->getTld()) . " Registry"]];
+            /** @var string $status */
+            foreach ([...$domainStatus->getAddStatus(), ...$domainStatus->getDeleteStatus()] as $status) {
+                if(str_starts_with($status, 'client')) {
+                    $authors[] = ["name" => "Registrar"];
+                    break;
+                }
+            }
+
+            $entries[] = (new Entry())
+                ->setId('status-' . $domainStatus->getId())
+                ->setTitle($domain->getLdhName() . ' - EPP status update')
+                ->setDescription("There has been a change in the EPP status of the domain name.")
+                ->setLink($baseUrl . "/#/search/domain/" . $domain->getLdhName())
+                ->setContent($this->render('rss/status_entry.html.twig', [
+                    'domainStatus' => $domainStatus
+                ])->getContent())
+                ->setDateCreated($domainStatus->getCreatedAt())
+                ->setDateModified($domainStatus->getDate())
+                ->addCategory(["term" => $domain->getLdhName()])
+                ->addCategory(["term" => strtoupper($domain->getTld()->getTld())])
+                ->addAuthors($authors)
+            ;
+        }
+
+        return $entries;
+    }
+
 }
