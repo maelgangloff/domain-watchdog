@@ -46,7 +46,7 @@ class DomainUpdateErrorNotification extends DomainWatchdogNotification
     {
         $ldhName = $this->domain->getLdhName();
 
-        return new EmailMessage((new TemplatedEmail())
+        $email = (new TemplatedEmail())
             ->from($this->sender)
             ->to($recipient->getEmail())
             ->priority(Email::PRIORITY_NORMAL)
@@ -55,6 +55,12 @@ class DomainUpdateErrorNotification extends DomainWatchdogNotification
             ->locale('en')
             ->context([
                 'domain' => $this->domain,
-            ]));
+            ]);
+
+        $email->getHeaders()
+            ->addTextHeader('In-Reply-To', "<$ldhName+update-error@domain-watchdog>")
+            ->addTextHeader('References', "<$ldhName+update-error@domain-watchdog>");
+
+        return new EmailMessage($email);
     }
 }
