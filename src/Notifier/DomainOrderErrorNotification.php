@@ -46,7 +46,7 @@ class DomainOrderErrorNotification extends DomainWatchdogNotification
     {
         $ldhName = $this->domain->getLdhName();
 
-        return new EmailMessage((new TemplatedEmail())
+        $email = (new TemplatedEmail())
             ->from($this->sender)
             ->to($recipient->getEmail())
             ->priority(Email::PRIORITY_HIGH)
@@ -55,6 +55,12 @@ class DomainOrderErrorNotification extends DomainWatchdogNotification
             ->locale('en')
             ->context([
                 'domain' => $this->domain,
-            ]));
+            ]);
+
+        $email->getHeaders()
+            ->addTextHeader('In-Reply-To', "<$ldhName+order-error@domain-watchdog>")
+            ->addTextHeader('References', "<$ldhName+order-error@domain-watchdog>");
+
+        return new EmailMessage($email);
     }
 }

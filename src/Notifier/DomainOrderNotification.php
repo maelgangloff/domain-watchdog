@@ -50,7 +50,7 @@ class DomainOrderNotification extends DomainWatchdogNotification
     {
         $ldhName = $this->domain->getLdhName();
 
-        return new EmailMessage((new TemplatedEmail())
+        $email = (new TemplatedEmail())
             ->from($this->sender)
             ->to($recipient->getEmail())
             ->priority(Email::PRIORITY_HIGHEST)
@@ -60,6 +60,12 @@ class DomainOrderNotification extends DomainWatchdogNotification
             ->context([
                 'domain' => $this->domain,
                 'provider' => $this->connector->getProvider()->value,
-            ]));
+            ]);
+
+        $email->getHeaders()
+            ->addTextHeader('In-Reply-To', "<$ldhName+ordered@domain-watchdog>")
+            ->addTextHeader('References', "<$ldhName+ordered@domain-watchdog>");
+
+        return new EmailMessage($email);
     }
 }

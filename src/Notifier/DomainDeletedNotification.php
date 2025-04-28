@@ -46,7 +46,7 @@ class DomainDeletedNotification extends DomainWatchdogNotification
     {
         $ldhName = $this->domain->getLdhName();
 
-        return new EmailMessage((new TemplatedEmail())
+        $email = (new TemplatedEmail())
             ->from($this->sender)
             ->to($recipient->getEmail())
             ->priority(Email::PRIORITY_HIGHEST)
@@ -55,6 +55,12 @@ class DomainDeletedNotification extends DomainWatchdogNotification
             ->locale('en')
             ->context([
                 'domain' => $this->domain,
-            ]));
+            ]);
+
+        $email->getHeaders()
+            ->addHeader('In-Reply-To', "<$ldhName+updated@domain-watchdog>")
+            ->addHeader('References', "<$ldhName+updated@domain-watchdog>");
+
+        return new EmailMessage($email);
     }
 }
