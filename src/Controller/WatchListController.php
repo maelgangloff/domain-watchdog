@@ -447,6 +447,7 @@ class WatchListController extends AbstractController
     {
         /** @var WatchList $watchList */
         $watchList = $this->serializer->deserialize($content, WatchList::class, 'json', ['groups' => $groups]);
+        return $watchList;
 
         $data = json_decode($content, true, 512, JSON_THROW_ON_ERROR);
 

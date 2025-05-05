@@ -9,6 +9,7 @@ use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Metadata\Post;
 use ApiPlatform\Metadata\Put;
 use App\Repository\WatchListRepository;
+use App\State\WatchListUpdateProcessor;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
@@ -78,16 +79,19 @@ use Symfony\Component\Uid\Uuid;
             name: 'calendar'
         ),
         new Post(
-            routeName: 'watchlist_create', normalizationContext: ['groups' => 'watchlist:list'],
+            routeName: 'watchlist_create',
+            normalizationContext: ['groups' => 'watchlist:list'],
             denormalizationContext: ['groups' => 'watchlist:create'],
-            name: 'create'
+            name: 'create',
+            processor: WatchListUpdateProcessor::class,
         ),
         new Put(
             routeName: 'watchlist_update',
             normalizationContext: ['groups' => 'watchlist:item'],
             denormalizationContext: ['groups' => ['watchlist:create', 'watchlist:token']],
             security: 'object.user == user',
-            name: 'update'
+            name: 'update',
+            processor: WatchListUpdateProcessor::class,
         ),
         new Delete(
             security: 'object.user == user'
@@ -110,7 +114,7 @@ class WatchList
     #[ORM\JoinTable(name: 'watch_lists_domains',
         joinColumns: [new ORM\JoinColumn(name: 'watch_list_token', referencedColumnName: 'token', onDelete: 'CASCADE')],
         inverseJoinColumns: [new ORM\JoinColumn(name: 'domain_ldh_name', referencedColumnName: 'ldh_name', onDelete: 'CASCADE')])]
-    #[Groups(['watchlist:list', 'watchlist:item'])]
+    #[Groups(['watchlist:create', 'watchlist:list', 'watchlist:item'])]
     private Collection $domains;
 
     /**
