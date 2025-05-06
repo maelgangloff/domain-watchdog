@@ -2,12 +2,22 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\Link;
 use App\Config\TriggerAction;
 use App\Repository\EventTriggerRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Attribute\Groups;
 
 #[ORM\Entity(repositoryClass: EventTriggerRepository::class)]
+#[ApiResource(
+    uriTemplate: '/watchlists/{watchListId}/triggers/{action}/{event}',
+    uriVariables: [
+        'watchListId' => new Link(fromProperty: 'token', toProperty: 'watchList', fromClass: WatchList::class),
+        'action' => 'action',
+        'event' => 'event',
+    ],
+)]
 class WatchListTrigger
 {
     #[ORM\Id]

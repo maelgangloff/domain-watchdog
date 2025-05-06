@@ -79,14 +79,12 @@ use Symfony\Component\Uid\Uuid;
             name: 'calendar'
         ),
         new Post(
-            routeName: 'watchlist_create',
             normalizationContext: ['groups' => 'watchlist:list'],
             denormalizationContext: ['groups' => 'watchlist:create'],
             name: 'create',
             processor: WatchListUpdateProcessor::class,
         ),
         new Put(
-            routeName: 'watchlist_update',
             normalizationContext: ['groups' => 'watchlist:item'],
             denormalizationContext: ['groups' => ['watchlist:create', 'watchlist:token']],
             security: 'object.user == user',
