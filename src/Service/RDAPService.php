@@ -170,7 +170,7 @@ readonly class RDAPService
         return $domain;
     }
 
-    private function getTld(string $domain): Tld
+    public function getTld(string $domain): Tld
     {
         if (!str_contains($domain, '.')) {
             $tldEntity = $this->tldRepository->findOneBy(['tld' => '.']);
