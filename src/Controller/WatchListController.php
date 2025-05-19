@@ -43,6 +43,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpKernel\Exception\TooManyRequestsHttpException;
 use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Component\RateLimiter\RateLimiterFactory;
@@ -461,7 +462,18 @@ class WatchListController extends AbstractController
             $domain = $this->domainRepository->findOneBy(['ldhName' => $ldhName]);
 
             if (null === $domain) {
-                $domain = $this->RDAPService->registerDomain($ldhName);
+                try {
+                    $domain = $this->RDAPService->registerDomain($ldhName);
+                } catch (NotFoundHttpException) {
+                    $domain = (new Domain())
+                        ->setLdhName($ldhName)
+                        ->setTld($this->RDAPService->getTld($ldhName))
+                        ->setDelegationSigned(false)
+                        ->setDeleted(true);
+
+                    $this->em->persist($domain);
+                    $this->em->flush();
+                }
 
                 if (false === $this->kernel->isDebug() && true === $this->getParameter('limited_features')) {
                     $limiter = $this->rdapRequestsLimiter->create($this->getUser()->getUserIdentifier());
