@@ -459,7 +459,7 @@ class WatchListController extends AbstractController
 
         foreach ($domains as $ldhName) {
             /** @var ?Domain $domain */
-            $domain = $this->domainRepository->findOneBy(['ldhName' => $ldhName]);
+            $domain = $this->domainRepository->findOneBy(['ldhName' => RDAPService::convertToIdn($ldhName)]);
 
             if (null === $domain) {
                 try {

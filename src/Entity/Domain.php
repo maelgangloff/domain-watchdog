@@ -7,6 +7,7 @@ use ApiPlatform\Metadata\Get;
 use App\Config\EventAction;
 use App\Controller\DomainRefreshController;
 use App\Repository\DomainRepository;
+use App\Service\RDAPService;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
@@ -152,7 +153,7 @@ class Domain
 
     public function setLdhName(string $ldhName): static
     {
-        $this->ldhName = strtolower($ldhName);
+        $this->ldhName = RDAPService::convertToIdn($ldhName);
 
         return $this;
     }
