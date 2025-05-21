@@ -7,9 +7,7 @@ use ApiPlatform\Metadata\Get;
 use App\Config\EventAction;
 use App\Controller\DomainRefreshController;
 use App\Repository\DomainRepository;
-use DateInterval;
-use DateMalformedIntervalStringException;
-use DateTimeImmutable;
+use App\Service\RDAPService;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
@@ -22,9 +20,6 @@ use Eluceo\iCal\Domain\ValueObject\Date;
 use Eluceo\iCal\Domain\ValueObject\EmailAddress;
 use Eluceo\iCal\Domain\ValueObject\SingleDay;
 use Eluceo\iCal\Domain\ValueObject\Timestamp;
-use Exception;
-use Laminas\Feed\Writer\Entry;
-use Laminas\Feed\Writer\Source;
 use Sabre\VObject\EofException;
 use Sabre\VObject\InvalidDataException;
 use Sabre\VObject\ParseException;
@@ -109,11 +104,11 @@ class Domain
     private Collection $nameservers;
 
     #[ORM\Column(type: Types::DATE_IMMUTABLE)]
-    private ?DateTimeImmutable $createdAt;
+    private ?\DateTimeImmutable $createdAt;
 
     #[ORM\Column(type: Types::DATETIME_IMMUTABLE)]
     #[Groups(['domain:item', 'domain:list'])]
-    private ?DateTimeImmutable $updatedAt;
+    private ?\DateTimeImmutable $updatedAt;
 
     #[ORM\ManyToOne]
     #[ORM\JoinColumn(referencedColumnName: 'tld', nullable: false)]
@@ -157,7 +152,7 @@ class Domain
         $this->domainEntities = new ArrayCollection();
         $this->watchLists = new ArrayCollection();
         $this->nameservers = new ArrayCollection();
-        $this->updatedAt = new DateTimeImmutable('now');
+        $this->updatedAt = new \DateTimeImmutable('now');
         $this->createdAt = $this->updatedAt;
         $this->deleted = false;
         $this->domainStatuses = new ArrayCollection();
@@ -170,7 +165,7 @@ class Domain
 
     public function setLdhName(string $ldhName): static
     {
-        $this->ldhName = strtolower($ldhName);
+        $this->ldhName = RDAPService::convertToIdn($ldhName);
 
         return $this;
     }
@@ -310,7 +305,7 @@ class Domain
         return $this;
     }
 
-    public function getUpdatedAt(): ?DateTimeImmutable
+    public function getUpdatedAt(): ?\DateTimeImmutable
     {
         return $this->updatedAt;
     }
@@ -319,7 +314,7 @@ class Domain
     #[ORM\PreUpdate]
     public function updateTimestamps(): static
     {
-        $this->setUpdatedAt(new DateTimeImmutable('now'));
+        $this->setUpdatedAt(new \DateTimeImmutable('now'));
         if (null === $this->getCreatedAt()) {
             $this->setCreatedAt($this->getUpdatedAt());
         }
@@ -327,17 +322,17 @@ class Domain
         return $this;
     }
 
-    private function setUpdatedAt(?DateTimeImmutable $updatedAt): void
+    private function setUpdatedAt(?\DateTimeImmutable $updatedAt): void
     {
         $this->updatedAt = $updatedAt;
     }
 
-    public function getCreatedAt(): ?DateTimeImmutable
+    public function getCreatedAt(): ?\DateTimeImmutable
     {
         return $this->createdAt;
     }
 
-    private function setCreatedAt(?DateTimeImmutable $createdAt): void
+    private function setCreatedAt(?\DateTimeImmutable $createdAt): void
     {
         $this->createdAt = $createdAt;
     }
@@ -370,7 +365,7 @@ class Domain
      * Determines if a domain name needs special attention.
      * These domain names are those whose last event was expiration or deletion.
      *
-     * @throws Exception
+     * @throws \Exception
      */
     private function isToBeWatchClosely(): bool
     {
@@ -381,10 +376,10 @@ class Domain
 
         /** @var DomainEvent[] $events */
         $events = $this->getEvents()
-            ->filter(fn(DomainEvent $e) => !$e->getDeleted() && $e->getDate() <= new DateTimeImmutable('now'))
+            ->filter(fn (DomainEvent $e) => !$e->getDeleted() && $e->getDate() <= new \DateTimeImmutable('now'))
             ->toArray();
 
-        usort($events, fn(DomainEvent $e1, DomainEvent $e2) => $e2->getDate() <=> $e1->getDate());
+        usort($events, fn (DomainEvent $e1, DomainEvent $e2) => $e2->getDate() <=> $e1->getDate());
 
         return !empty($events) && in_array($events[0]->getAction(), self::IMPORTANT_EVENTS);
     }
@@ -395,11 +390,11 @@ class Domain
      * - It has been more than 12 minutes and the domain name has statuses that suggest it is not stable
      * - It has been more than 1 day and the domain name is blocked in DNS
      *
-     * @throws Exception
+     * @throws \Exception
      */
     public function isToBeUpdated(bool $fromUser = true, bool $intensifyLastDay = false): bool
     {
-        $updatedAtDiff = $this->getUpdatedAt()->diff(new DateTimeImmutable());
+        $updatedAtDiff = $this->getUpdatedAt()->diff(new \DateTimeImmutable());
 
         if ($updatedAtDiff->days >= 7) {
             return true;
@@ -495,9 +490,9 @@ class Domain
     }
 
     /**
-     * @throws DateMalformedIntervalStringException
+     * @throws \DateMalformedIntervalStringException
      */
-    private function calculateDaysFromStatus(DateTimeImmutable $now): ?int
+    private function calculateDaysFromStatus(\DateTimeImmutable $now): ?int
     {
         $lastStatus = $this->getDomainStatuses()->last();
         if (false === $lastStatus) {
@@ -505,16 +500,16 @@ class Domain
         }
 
         if ($this->isPendingDelete() && (
-                in_array('pending delete', $lastStatus->getAddStatus())
-                || in_array('redemption period', $lastStatus->getDeleteStatus()))
+            in_array('pending delete', $lastStatus->getAddStatus())
+            || in_array('redemption period', $lastStatus->getDeleteStatus()))
         ) {
-            return self::daysBetween($now, $lastStatus->getCreatedAt()->add(new DateInterval('P' . 5 . 'D')));
+            return self::daysBetween($now, $lastStatus->getCreatedAt()->add(new \DateInterval('P'. 5 .'D')));
         }
 
         if ($this->isRedemptionPeriod()
             && in_array('redemption period', $lastStatus->getAddStatus())
         ) {
-            return self::daysBetween($now, $lastStatus->getCreatedAt()->add(new DateInterval('P' . (30 + 5) . 'D')));
+            return self::daysBetween($now, $lastStatus->getCreatedAt()->add(new \DateInterval('P'.(30 + 5).'D')));
         }
 
         return null;
@@ -539,7 +534,7 @@ class Domain
     }
     */
 
-    private static function daysBetween(DateTimeImmutable $start, DateTimeImmutable $end): int
+    private static function daysBetween(\DateTimeImmutable $start, \DateTimeImmutable $end): int
     {
         $interval = $start->setTime(0, 0)->diff($end->setTime(0, 0));
 
@@ -560,7 +555,7 @@ class Domain
     }
 
     /**
-     * @throws Exception
+     * @throws \Exception
      */
     private function getRelevantDates(): array
     {
@@ -579,7 +574,7 @@ class Domain
     }
 
     /**
-     * @throws Exception
+     * @throws \Exception
      */
     #[Groups(['domain:item', 'domain:list'])]
     public function getExpiresInDays(): ?int
@@ -588,11 +583,11 @@ class Domain
             return null;
         }
 
-        $now = new DateTimeImmutable();
+        $now = new \DateTimeImmutable();
         [$expiredAt, $deletedAt] = $this->getRelevantDates();
 
         if ($expiredAt) {
-            $guess = self::daysBetween($now, $expiredAt->add(new DateInterval('P' . (45 + 30 + 5) . 'D')));
+            $guess = self::daysBetween($now, $expiredAt->add(new \DateInterval('P'.(45 + 30 + 5).'D')));
         }
 
         if ($deletedAt) {
@@ -601,7 +596,7 @@ class Domain
                 return 0;
             }
 
-            $guess = self::daysBetween($now, $deletedAt->add(new DateInterval('P' . 30 . 'D')));
+            $guess = self::daysBetween($now, $deletedAt->add(new \DateInterval('P'. 30 .'D')));
         }
 
         return self::returnExpiresIn([
@@ -614,7 +609,7 @@ class Domain
      * @throws ParseException
      * @throws EofException
      * @throws InvalidDataException
-     * @throws Exception
+     * @throws \Exception
      */
     public function getDomainCalendarEvents(): array
     {
@@ -653,24 +648,24 @@ class Domain
                 ->addCategory(new Category($event->getAction()))
                 ->setAttendees($attendees)
                 ->setOccurrence(new SingleDay(new Date($event->getDate()))
-            );
+                );
         }
 
         $expiresInDays = $this->getExpiresInDays();
 
         if (null !== $expiresInDays) {
-
             $events[] = (new Event())
                 ->setLastModified(new Timestamp($this->getUpdatedAt()))
                 ->setStatus(EventStatus::CONFIRMED())
-                ->setSummary($this->getLdhName() . ': estimated WHOIS release date')
+                ->setSummary($this->getLdhName().': estimated WHOIS release date')
                 ->addCategory(new Category('release'))
                 ->setAttendees($attendees)
                 ->setOccurrence(new SingleDay(new Date(
-                        (new \DateTimeImmutable())->setTime(0, 0)->add(new \DateInterval('P' . $expiresInDays . 'D'))
-                    ))
+                    (new \DateTimeImmutable())->setTime(0, 0)->add(new \DateInterval('P'.$expiresInDays.'D'))
+                ))
                 );
         }
+
         return $events;
     }
 }

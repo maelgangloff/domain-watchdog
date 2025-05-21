@@ -127,7 +127,7 @@ readonly class RDAPService
      */
     public function registerDomain(string $fqdn): Domain
     {
-        $idnDomain = $this->convertToIdn($fqdn);
+        $idnDomain = RDAPService::convertToIdn($fqdn);
         $tld = $this->getTld($idnDomain);
 
         $this->logger->info('An update request for domain name {idnDomain} is requested.', [
@@ -198,7 +198,7 @@ readonly class RDAPService
         return $tldEntity;
     }
 
-    private function convertToIdn(string $fqdn): string
+    public static function convertToIdn(string $fqdn): string
     {
         return strtolower(idn_to_ascii($fqdn));
     }

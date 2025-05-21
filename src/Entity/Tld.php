@@ -9,6 +9,7 @@ use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\GetCollection;
 use App\Config\TldType;
 use App\Repository\TldRepository;
+use App\Service\RDAPService;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
@@ -119,7 +120,7 @@ class Tld
 
     public function setTld(string $tld): static
     {
-        $this->tld = strtolower($tld);
+        $this->tld = RDAPService::convertToIdn($tld);
 
         return $this;
     }
