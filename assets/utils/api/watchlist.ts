@@ -1,4 +1,4 @@
-import type { TrackedDomains, Watchlist, WatchlistRequest} from './index'
+import type {TrackedDomains, Watchlist, WatchlistRequest, WatchlistTrigger} from './index'
 import {request} from './index'
 
 interface WatchlistList {
@@ -55,4 +55,13 @@ export async function getTrackedDomainList(params: { page: number, itemsPerPage:
         params
     })
     return response.data
+}
+
+export async function putWatchlistTrigger(watchListToken: string, watchListTrigger: WatchlistTrigger): Promise<WatchlistTrigger> {
+    const response = await request<WatchlistTrigger>({
+        method: 'PUT',
+        url: `watchlists/${watchListToken}/triggers`,
+        data: watchListTrigger,
+    });
+    return response.data;
 }

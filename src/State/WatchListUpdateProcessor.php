@@ -7,11 +7,13 @@ use ApiPlatform\Metadata\Post;
 use ApiPlatform\State\ProcessorInterface;
 use App\Entity\Domain;
 use App\Entity\WatchList;
+use App\Entity\WatchListTrigger;
 use App\Notifier\TestChatNotification;
 use App\Repository\DomainRepository;
 use App\Service\ChatNotificationService;
 use App\Service\Connector\AbstractProvider;
 use App\Service\RDAPService;
+use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
@@ -27,17 +29,18 @@ class WatchListUpdateProcessor implements ProcessorInterface
 {
     public function __construct(
         private readonly DomainRepository      $domainRepository,
-        private readonly RDAPService           $RDAPService,
-        private readonly KernelInterface       $kernel,
-        private readonly Security              $security,
-        private readonly RateLimiterFactory    $rdapRequestsLimiter,
-        private readonly ParameterBagInterface $parameterBag,
+        private readonly RDAPService             $RDAPService,
+        private readonly KernelInterface         $kernel,
+        private readonly Security                $security,
+        private readonly RateLimiterFactory      $rdapRequestsLimiter,
+        private readonly ParameterBagInterface   $parameterBag,
         #[Autowire(service: 'api_platform.doctrine.orm.state.persist_processor')]
-        private readonly ProcessorInterface    $persistProcessor,
-        private readonly LoggerInterface       $logger,
+        private readonly ProcessorInterface      $persistProcessor,
+        private readonly LoggerInterface         $logger,
         private readonly ChatNotificationService $chatNotificationService,
         #[Autowire(service: 'service_container')]
-        private readonly ContainerInterface $locator,
+        private readonly ContainerInterface      $locator,
+        private readonly EntityManagerInterface $entityManager,
     )
     {}
 
@@ -50,14 +53,15 @@ class WatchListUpdateProcessor implements ProcessorInterface
      */
     public function process(mixed $data, Operation $operation, array $uriVariables = [], array $context = []): mixed
     {
-        dd($data);
         $user = $this->security->getUser();
+        $data->setUser($user);
 
         if ($this->parameterBag->get('limited_features')) {
             if ($data->getDomains()->count() > (int) $this->parameterBag->get('limit_max_watchlist_domains')) {
                 $this->logger->notice('User {username} tried to update a Watchlist. The maximum number of domains has been reached for this Watchlist', [
                     'username' => $user->getUserIdentifier(),
                 ]);
+
                 throw new AccessDeniedHttpException('You have exceeded the maximum number of domain names allowed in this Watchlist');
             }
 
@@ -85,6 +89,7 @@ class WatchListUpdateProcessor implements ProcessorInterface
                 $this->logger->notice('User {username} tried to update a Watchlist. The maximum number of webhooks has been reached.', [
                     'username' => $user->getUserIdentifier(),
                 ]);
+
                 throw new AccessDeniedHttpException('You have exceeded the maximum number of webhooks allowed in this Watchlist');
             }
         }
@@ -97,6 +102,7 @@ class WatchListUpdateProcessor implements ProcessorInterface
                     'username' => $user->getUserIdentifier(),
                     'connector' => $connector->getId(),
                 ]);
+
                 throw new AccessDeniedHttpException('You cannot create a Watchlist with a connector that does not belong to you');
             }
 
@@ -104,6 +110,7 @@ class WatchListUpdateProcessor implements ProcessorInterface
             foreach ($data->getDomains()->getIterator() as $domain) {
                 if ($domain->getDeleted()) {
                     $ldhName = $domain->getLdhName();
+
                     throw new BadRequestHttpException("To add a connector, no domain in this Watchlist must have already expired ($ldhName)");
                 }
             }
@@ -120,6 +127,7 @@ class WatchListUpdateProcessor implements ProcessorInterface
                     'username' => $user->getUserIdentifier(),
                     'connector' => $connector->getId(),
                 ]);
+
                 throw new BadRequestHttpException('This connector does not support all TLDs in this Watchlist');
             }
         }

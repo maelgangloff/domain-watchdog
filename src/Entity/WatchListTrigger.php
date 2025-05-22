@@ -3,7 +3,11 @@
 namespace App\Entity;
 
 use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\Delete;
+use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Metadata\Link;
+use ApiPlatform\Metadata\Put;
 use App\Config\TriggerAction;
 use App\Repository\EventTriggerRepository;
 use Doctrine\ORM\Mapping as ORM;
@@ -12,28 +16,45 @@ use Symfony\Component\Serializer\Attribute\Groups;
 #[ORM\Entity(repositoryClass: EventTriggerRepository::class)]
 #[ApiResource(
     uriTemplate: '/watchlists/{watchListId}/triggers/{action}/{event}',
+    operations: [
+        new Get(),
+        new GetCollection(
+            uriTemplate: '/watchlists/{watchListId}/triggers',
+            uriVariables: [
+                'watchListId' => new Link(fromProperty: 'token', toProperty: 'watchList', fromClass: WatchList::class),
+            ],
+        ),
+        new Put(
+            uriTemplate: '/watchlists/{watchListId}/triggers',
+            uriVariables: [
+                'watchListId' => new Link(fromProperty: 'token', toProperty: 'watchList', fromClass: WatchList::class),
+            ],
+        ),
+        new Delete(),
+    ],
     uriVariables: [
         'watchListId' => new Link(fromProperty: 'token', toProperty: 'watchList', fromClass: WatchList::class),
         'action' => 'action',
         'event' => 'event',
     ],
+    security: 'object.getWatchList().user == user',
 )]
 class WatchListTrigger
 {
     #[ORM\Id]
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, nullable: false)]
     #[Groups(['watchlist:list', 'watchlist:item', 'watchlist:create'])]
-    private ?string $event = null;
+    private ?string $event;
 
     #[ORM\Id]
-    #[ORM\ManyToOne(targetEntity: WatchList::class, cascade: ['persist'], inversedBy: 'watchListTriggers')]
+    #[ORM\ManyToOne(targetEntity: WatchList::class, inversedBy: 'watchListTriggers')]
     #[ORM\JoinColumn(referencedColumnName: 'token', nullable: false, onDelete: 'CASCADE')]
-    private ?WatchList $watchList = null;
+    private ?WatchList $watchList;
 
     #[ORM\Id]
-    #[ORM\Column(enumType: TriggerAction::class)]
+    #[ORM\Column(nullable: false, enumType: TriggerAction::class)]
     #[Groups(['watchlist:list', 'watchlist:item', 'watchlist:create'])]
-    private ?TriggerAction $action = null;
+    private ?TriggerAction $action;
 
     public function getEvent(): ?string
     {
