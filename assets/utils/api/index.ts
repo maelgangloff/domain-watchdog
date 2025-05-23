@@ -16,7 +16,7 @@ export type EventAction =
     | 'enum validation expiration'
     | string
 
-export type TriggerAction = 'email' | string
+export type TriggerAction = 'email' | 'chat'
 
 export interface Event {
     action: EventAction
@@ -74,19 +74,26 @@ export interface User {
     roles: string[]
 }
 
+export interface WatchlistTrigger {
+    event: EventAction
+    action: TriggerAction
+    watchList?: string
+}
+
 export interface WatchlistRequest {
     name?: string
     domains: string[]
-    triggers: Array<{ event: EventAction, action: TriggerAction }>
+    triggers?: Array<WatchlistTrigger>
     connector?: string
     dsn?: string[]
 }
 
 export interface Watchlist {
+    '@id': string
     name?: string
     token: string
     domains: Domain[]
-    triggers?: Array<{ event: EventAction, action: string }>
+    triggers?: Array<WatchlistTrigger>
     dsn?: string[]
     connector?: {
         id: string

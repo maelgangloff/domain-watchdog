@@ -21,18 +21,10 @@ interface FormValuesType {
 
 const getRequestDataFromForm = (values: FormValuesType) => {
     const domainsURI = values.domains.map(d => '/api/domains/' + d.toLowerCase())
-    let triggers = values.triggers.map(t => ({event: t, action: 'email'}))
 
-    if (values.dsn !== undefined) {
-        triggers = [...triggers, ...values.triggers.map(t => ({
-            event: t,
-            action: 'chat'
-        }))]
-    }
     return {
         name: values.name,
         domains: domainsURI,
-        triggers,
         connector: values.connector !== undefined ? ('/api/connectors/' + values.connector) : undefined,
         dsn: values.dsn
     }
@@ -91,7 +83,8 @@ export default function WatchlistPage() {
             <Divider/>
             {(connectors != null) && (watchlists != null) && watchlists.length > 0 &&
                 <WatchlistsList
-                    watchlists={watchlists} onDelete={refreshWatchlists}
+                    watchlists={watchlists}
+                    onDelete={refreshWatchlists}
                     connectors={connectors}
                     onUpdateWatchlist={onUpdateWatchlist}
                 />}
