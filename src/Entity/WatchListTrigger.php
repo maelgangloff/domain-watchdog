@@ -7,6 +7,7 @@ use ApiPlatform\Metadata\Delete;
 use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Metadata\Link;
+use ApiPlatform\Metadata\Post;
 use ApiPlatform\Metadata\Put;
 use App\Config\TriggerAction;
 use App\Repository\EventTriggerRepository;
@@ -24,11 +25,8 @@ use Symfony\Component\Serializer\Attribute\Groups;
                 'watchListId' => new Link(fromProperty: 'token', toProperty: 'watchList', fromClass: WatchList::class),
             ],
         ),
-        new Put(
-            uriTemplate: '/watchlists/{watchListId}/triggers',
-            uriVariables: [
-                'watchListId' => new Link(fromProperty: 'token', toProperty: 'watchList', fromClass: WatchList::class),
-            ],
+        new Post(
+            security: 'true', // FIXME check the submitted object
         ),
         new Delete(),
     ],

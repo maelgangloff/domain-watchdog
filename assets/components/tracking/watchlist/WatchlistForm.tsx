@@ -7,7 +7,7 @@ import type {Connector} from '../../../utils/api/connectors'
 import {rdapEventDetailTranslation, rdapEventNameTranslation} from '../../../utils/functions/rdapTranslation'
 import {actionToColor} from '../../../utils/functions/actionToColor'
 import {actionToIcon} from '../../../utils/functions/actionToIcon'
-import {EventAction, putWatchlistTrigger, Watchlist} from '../../../utils/api'
+import {EventAction, createWatchlistTrigger, Watchlist, deleteWatchlistTrigger} from '../../../utils/api'
 import {formItemLayoutWithOutLabel} from "../../../utils/providers"
 
 type TagRender = SelectProps['tagRender']
@@ -66,12 +66,12 @@ export function WatchlistForm({form, connectors, onFinish, isCreation, watchList
         if (isCreation) return
 
         setTriggersLoading(true);
-        await putWatchlistTrigger(watchList!.token, { // FIXME this 500s
+        await createWatchlistTrigger(watchList!.token, { // FIXME this 500s
             watchList: watchList!['@id'],
             event,
             action: 'email',
         });
-        await putWatchlistTrigger(watchList!.token, {
+        await createWatchlistTrigger(watchList!.token, {
             watchList: watchList!['@id'],
             event,
             action: 'chat',
@@ -83,7 +83,17 @@ export function WatchlistForm({form, connectors, onFinish, isCreation, watchList
         if (isCreation) return
 
         setTriggersLoading(true);
-        // TODO
+        await deleteWatchlistTrigger(watchList!.token, {
+            watchList: watchList!['@id'],
+            event,
+            action: 'email',
+        });
+        await deleteWatchlistTrigger(watchList!.token, {
+            watchList: watchList!['@id'],
+            event,
+            action: 'chat',
+        });
+        setTriggersLoading(false);
     };
 
     return (

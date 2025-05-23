@@ -57,11 +57,19 @@ export async function getTrackedDomainList(params: { page: number, itemsPerPage:
     return response.data
 }
 
-export async function putWatchlistTrigger(watchListToken: string, watchListTrigger: WatchlistTrigger): Promise<WatchlistTrigger> {
+export async function createWatchlistTrigger(watchListToken: string, watchListTrigger: WatchlistTrigger): Promise<WatchlistTrigger> {
     const response = await request<WatchlistTrigger>({
-        method: 'PUT',
-        url: `watchlists/${watchListToken}/triggers`,
+        method: 'POST',
+        url: `watchlists/${watchListToken}/triggers/${watchListTrigger.action}/${watchListTrigger.event}`,
         data: watchListTrigger,
     });
     return response.data;
+}
+
+export async function deleteWatchlistTrigger(watchListToken: string, watchListTrigger: WatchlistTrigger): Promise<void> {
+    await request<void>({
+        method: 'DELETE',
+        url: `watchlists/${watchListToken}/triggers/${watchListTrigger.action}/${watchListTrigger.event}`,
+        data: watchListTrigger
+    });
 }
