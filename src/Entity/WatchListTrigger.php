@@ -26,7 +26,9 @@ use Symfony\Component\Serializer\Attribute\Groups;
             ],
         ),
         new Post(
-            security: 'true', // FIXME check the submitted object
+            uriTemplate: '/watchlist-triggers',
+            uriVariables: [],
+            security: 'true'
         ),
         new Delete(),
     ],

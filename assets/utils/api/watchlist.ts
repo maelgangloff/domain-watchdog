@@ -60,7 +60,7 @@ export async function getTrackedDomainList(params: { page: number, itemsPerPage:
 export async function createWatchlistTrigger(watchListToken: string, watchListTrigger: WatchlistTrigger): Promise<WatchlistTrigger> {
     const response = await request<WatchlistTrigger>({
         method: 'POST',
-        url: `watchlists/${watchListToken}/triggers/${watchListTrigger.action}/${watchListTrigger.event}`,
+        url: `watchlist-triggers`,
         data: watchListTrigger,
     });
     return response.data;
