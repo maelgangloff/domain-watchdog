@@ -62,8 +62,8 @@ export async function createWatchlistTrigger(watchListToken: string, watchListTr
         method: 'POST',
         url: `watchlist-triggers`,
         data: watchListTrigger,
-    });
-    return response.data;
+    })
+    return response.data
 }
 
 export async function deleteWatchlistTrigger(watchListToken: string, watchListTrigger: WatchlistTrigger): Promise<void> {
@@ -71,5 +71,5 @@ export async function deleteWatchlistTrigger(watchListToken: string, watchListTr
         method: 'DELETE',
         url: `watchlists/${watchListToken}/triggers/${watchListTrigger.action}/${watchListTrigger.event}`,
         data: watchListTrigger
-    });
+    })
 }

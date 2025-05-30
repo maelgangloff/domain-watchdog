@@ -8,7 +8,6 @@ use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Metadata\Link;
 use ApiPlatform\Metadata\Post;
-use ApiPlatform\Metadata\Put;
 use App\Config\TriggerAction;
 use App\Repository\EventTriggerRepository;
 use Doctrine\ORM\Mapping as ORM;

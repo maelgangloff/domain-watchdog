@@ -3,11 +3,10 @@
 namespace App\State;
 
 use ApiPlatform\Metadata\Operation;
-use ApiPlatform\Metadata\Post;
 use ApiPlatform\State\ProcessorInterface;
 use App\Entity\Domain;
+use App\Entity\User;
 use App\Entity\WatchList;
-use App\Entity\WatchListTrigger;
 use App\Notifier\TestChatNotification;
 use App\Repository\DomainRepository;
 use App\Service\ChatNotificationService;
@@ -21,38 +20,31 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
-use Symfony\Component\HttpKernel\Exception\TooManyRequestsHttpException;
 use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Component\RateLimiter\RateLimiterFactory;
 
 class WatchListUpdateProcessor implements ProcessorInterface
 {
     public function __construct(
-        private readonly DomainRepository      $domainRepository,
-        private readonly RDAPService             $RDAPService,
-        private readonly KernelInterface         $kernel,
-        private readonly Security                $security,
-        private readonly RateLimiterFactory      $rdapRequestsLimiter,
-        private readonly ParameterBagInterface   $parameterBag,
+        private readonly Security $security,
+        private readonly ParameterBagInterface $parameterBag,
         #[Autowire(service: 'api_platform.doctrine.orm.state.persist_processor')]
-        private readonly ProcessorInterface      $persistProcessor,
-        private readonly LoggerInterface         $logger,
+        private readonly ProcessorInterface $persistProcessor,
+        private readonly LoggerInterface $logger,
         private readonly ChatNotificationService $chatNotificationService,
         #[Autowire(service: 'service_container')]
-        private readonly ContainerInterface      $locator,
-        private readonly EntityManagerInterface $entityManager,
-    )
-    {}
+        private readonly ContainerInterface $locator,
+    ) {
+    }
 
     /**
      * @param WatchList $data
-     * @param Operation $operation
-     * @param array $uriVariables
-     * @param array $context
+     *
      * @return WatchList
      */
     public function process(mixed $data, Operation $operation, array $uriVariables = [], array $context = []): mixed
     {
+        /** @var User $user */
         $user = $this->security->getUser();
         $data->setUser($user);
 

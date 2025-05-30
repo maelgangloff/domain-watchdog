@@ -7,7 +7,8 @@ import type {Connector} from '../../../utils/api/connectors'
 import {rdapEventDetailTranslation, rdapEventNameTranslation} from '../../../utils/functions/rdapTranslation'
 import {actionToColor} from '../../../utils/functions/actionToColor'
 import {actionToIcon} from '../../../utils/functions/actionToIcon'
-import {EventAction, createWatchlistTrigger, Watchlist, deleteWatchlistTrigger} from '../../../utils/api'
+import type {EventAction, Watchlist} from '../../../utils/api'
+import { createWatchlistTrigger, deleteWatchlistTrigger} from '../../../utils/api'
 import {formItemLayoutWithOutLabel} from "../../../utils/providers"
 
 type TagRender = SelectProps['tagRender']
@@ -60,41 +61,41 @@ export function WatchlistForm({form, connectors, onFinish, isCreation, watchList
         )
     }
 
-    const [triggersLoading, setTriggersLoading] = useState(false);
+    const [triggersLoading, setTriggersLoading] = useState(false)
 
     const createTrigger = async (event: string) => {
         if (isCreation) return
 
-        setTriggersLoading(true);
+        setTriggersLoading(true)
         await createWatchlistTrigger(watchList!.token, { // FIXME this 500s
             watchList: watchList!['@id'],
             event,
             action: 'email',
-        });
+        })
         await createWatchlistTrigger(watchList!.token, {
             watchList: watchList!['@id'],
             event,
             action: 'chat',
-        });
-        setTriggersLoading(false);
-    };
+        })
+        setTriggersLoading(false)
+    }
 
     const removeTrigger = async (event: string) => {
         if (isCreation) return
 
-        setTriggersLoading(true);
+        setTriggersLoading(true)
         await deleteWatchlistTrigger(watchList!.token, {
             watchList: watchList!['@id'],
             event,
             action: 'email',
-        });
+        })
         await deleteWatchlistTrigger(watchList!.token, {
             watchList: watchList!['@id'],
             event,
             action: 'chat',
-        });
-        setTriggersLoading(false);
-    };
+        })
+        setTriggersLoading(false)
+    }
 
     return (
         <Form
