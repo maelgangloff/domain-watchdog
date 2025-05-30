@@ -8,11 +8,8 @@ use App\Entity\Domain;
 use App\Entity\User;
 use App\Entity\WatchList;
 use App\Notifier\TestChatNotification;
-use App\Repository\DomainRepository;
 use App\Service\ChatNotificationService;
 use App\Service\Connector\AbstractProvider;
-use App\Service\RDAPService;
-use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
@@ -20,8 +17,6 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
-use Symfony\Component\HttpKernel\KernelInterface;
-use Symfony\Component\RateLimiter\RateLimiterFactory;
 
 class WatchListUpdateProcessor implements ProcessorInterface
 {
