@@ -2,12 +2,13 @@ import type { FormInstance, SelectProps} from 'antd'
 import {Button, Form, Input, Select, Space, Tag, Tooltip, Typography} from 'antd'
 import {t} from 'ttag'
 import {ApiOutlined, MinusCircleOutlined, PlusOutlined} from '@ant-design/icons'
-import React from 'react'
+import React, {useState} from 'react'
 import type {Connector} from '../../../utils/api/connectors'
 import {rdapEventDetailTranslation, rdapEventNameTranslation} from '../../../utils/functions/rdapTranslation'
 import {actionToColor} from '../../../utils/functions/actionToColor'
 import {actionToIcon} from '../../../utils/functions/actionToIcon'
-import type {EventAction} from '../../../utils/api'
+import type {EventAction, Watchlist} from '../../../utils/api'
+import { createWatchlistTrigger, deleteWatchlistTrigger} from '../../../utils/api'
 import {formItemLayoutWithOutLabel} from "../../../utils/providers"
 
 type TagRender = SelectProps['tagRender']
@@ -23,11 +24,12 @@ const formItemLayout = {
     }
 }
 
-export function WatchlistForm({form, connectors, onFinish, isCreation}: {
+export function WatchlistForm({form, connectors, onFinish, isCreation, watchList}: {
     form: FormInstance
     connectors: Array<Connector & { id: string }>
     onFinish: (values: { domains: string[], triggers: string[], token: string }) => void
-    isCreation: boolean
+    isCreation: boolean,
+    watchList?: Watchlist,
 }) {
     const rdapEventNameTranslated = rdapEventNameTranslation()
     const rdapEventDetailTranslated = rdapEventDetailTranslation()
@@ -57,6 +59,42 @@ export function WatchlistForm({form, connectors, onFinish, isCreation}: {
                 </Tag>
             </Tooltip>
         )
+    }
+
+    const [triggersLoading, setTriggersLoading] = useState(false)
+
+    const createTrigger = async (event: string) => {
+        if (isCreation) return
+
+        setTriggersLoading(true)
+        await createWatchlistTrigger(watchList!.token, {
+            watchList: watchList!['@id'],
+            event,
+            action: 'email',
+        })
+        await createWatchlistTrigger(watchList!.token, {
+            watchList: watchList!['@id'],
+            event,
+            action: 'chat',
+        })
+        setTriggersLoading(false)
+    }
+
+    const removeTrigger = async (event: string) => {
+        if (isCreation) return
+
+        setTriggersLoading(true)
+        await deleteWatchlistTrigger(watchList!.token, {
+            watchList: watchList!['@id'],
+            event,
+            action: 'email',
+        })
+        await deleteWatchlistTrigger(watchList!.token, {
+            watchList: watchList!['@id'],
+            event,
+            action: 'chat',
+        })
+        setTriggersLoading(false)
     }
 
     return (
@@ -169,6 +207,9 @@ export function WatchlistForm({form, connectors, onFinish, isCreation}: {
                     mode='multiple'
                     tagRender={triggerTagRenderer}
                     style={{width: '100%'}}
+                    onSelect={createTrigger}
+                    onDeselect={removeTrigger}
+                    loading={triggersLoading}
                     options={Object.keys(rdapEventNameTranslated).map(e => ({
                         value: e,
                         title: rdapEventDetailTranslated[e as keyof typeof rdapEventDetailTranslated] || undefined,

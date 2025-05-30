@@ -9,6 +9,7 @@ use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Metadata\Post;
 use ApiPlatform\Metadata\Put;
 use App\Repository\WatchListRepository;
+use App\State\WatchListUpdateProcessor;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
@@ -23,35 +24,40 @@ use Symfony\Component\Uid\Uuid;
     operations: [
         new GetCollection(
             routeName: 'watchlist_get_all_mine',
-            normalizationContext: ['groups' => [
-                'watchlist:list',
-                'domain:list',
-                'event:list',
-            ]],
+            normalizationContext: [
+                'groups' => [
+                    'watchlist:list',
+                    'domain:list',
+                    'event:list',
+                ],
+            ],
             name: 'get_all_mine',
         ),
         new GetCollection(
             uriTemplate: '/tracked',
             routeName: 'watchlist_get_tracked_domains',
-            normalizationContext: ['groups' => [
-                'domain:list',
-                'tld:list',
-                'event:list',
-                'domain:list',
-                'event:list',
-            ]],
+            normalizationContext: [
+                'groups' => [
+                    'domain:list',
+                    'tld:list',
+                    'event:list',
+                    'domain:list',
+                    'event:list',
+                ],
+            ],
             name: 'get_tracked_domains'
         ),
         new Get(
-            normalizationContext: ['groups' => [
-                'watchlist:item',
-                'domain:item',
-                'event:list',
-                'domain-entity:entity',
-                'nameserver-entity:nameserver',
-                'nameserver-entity:entity',
-                'tld:item',
-            ],
+            normalizationContext: [
+                'groups' => [
+                    'watchlist:item',
+                    'domain:item',
+                    'event:list',
+                    'domain-entity:entity',
+                    'nameserver-entity:nameserver',
+                    'nameserver-entity:entity',
+                    'tld:item',
+                ],
             ],
             security: 'object.user == user'
         ),
@@ -78,16 +84,18 @@ use Symfony\Component\Uid\Uuid;
             name: 'calendar'
         ),
         new Post(
-            routeName: 'watchlist_create', normalizationContext: ['groups' => 'watchlist:list'],
+            normalizationContext: ['groups' => 'watchlist:list'],
             denormalizationContext: ['groups' => 'watchlist:create'],
-            name: 'create'
+            name: 'create',
+            processor: WatchListUpdateProcessor::class,
         ),
         new Put(
-            routeName: 'watchlist_update',
             normalizationContext: ['groups' => 'watchlist:item'],
             denormalizationContext: ['groups' => ['watchlist:create', 'watchlist:token']],
             security: 'object.user == user',
-            name: 'update'
+            name: 'update',
+            processor: WatchListUpdateProcessor::class,
+            extraProperties: ['standard_put' => false],
         ),
         new Delete(
             security: 'object.user == user'
@@ -99,10 +107,12 @@ class WatchList
     #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'watchLists')]
     #[ORM\JoinColumn(nullable: false, onDelete: 'CASCADE')]
     public ?User $user = null;
+
     #[ORM\Id]
     #[ORM\Column(type: 'uuid')]
     #[Groups(['watchlist:item', 'watchlist:list', 'watchlist:token'])]
     private string $token;
+
     /**
      * @var Collection<int, Domain>
      */
@@ -110,7 +120,7 @@ class WatchList
     #[ORM\JoinTable(name: 'watch_lists_domains',
         joinColumns: [new ORM\JoinColumn(name: 'watch_list_token', referencedColumnName: 'token', onDelete: 'CASCADE')],
         inverseJoinColumns: [new ORM\JoinColumn(name: 'domain_ldh_name', referencedColumnName: 'ldh_name', onDelete: 'CASCADE')])]
-    #[Groups(['watchlist:list', 'watchlist:item'])]
+    #[Groups(['watchlist:create', 'watchlist:list', 'watchlist:item'])]
     private Collection $domains;
 
     /**
