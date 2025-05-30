@@ -26,35 +26,40 @@ use Symfony\Component\Uid\Uuid;
     operations: [
         new GetCollection(
             routeName: 'watchlist_get_all_mine',
-            normalizationContext: ['groups' => [
-                'watchlist:list',
-                'domain:list',
-                'event:list',
-            ]],
+            normalizationContext: [
+                'groups' => [
+                    'watchlist:list',
+                    'domain:list',
+                    'event:list',
+                ]
+            ],
             name: 'get_all_mine',
         ),
         new GetCollection(
             uriTemplate: '/tracked',
             routeName: 'watchlist_get_tracked_domains',
-            normalizationContext: ['groups' => [
-                'domain:list',
-                'tld:list',
-                'event:list',
-                'domain:list',
-                'event:list',
-            ]],
+            normalizationContext: [
+                'groups' => [
+                    'domain:list',
+                    'tld:list',
+                    'event:list',
+                    'domain:list',
+                    'event:list',
+                ]
+            ],
             name: 'get_tracked_domains'
         ),
         new Get(
-            normalizationContext: ['groups' => [
-                'watchlist:item',
-                'domain:item',
-                'event:list',
-                'domain-entity:entity',
-                'nameserver-entity:nameserver',
-                'nameserver-entity:entity',
-                'tld:item',
-            ],
+            normalizationContext: [
+                'groups' => [
+                    'watchlist:item',
+                    'domain:item',
+                    'event:list',
+                    'domain-entity:entity',
+                    'nameserver-entity:nameserver',
+                    'nameserver-entity:entity',
+                    'tld:item',
+                ],
             ],
             security: 'object.user == user'
         ),

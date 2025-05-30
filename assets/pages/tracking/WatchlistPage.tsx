@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react'
 import {Card, Divider, Flex, Form, message} from 'antd'
-import type { Watchlist} from '../../utils/api'
+import type {Watchlist, WatchlistTrigger} from '../../utils/api'
 import {getWatchlists, postWatchlist, putWatchlist} from '../../utils/api'
 import type {AxiosError} from 'axios'
 import {t} from 'ttag'
@@ -19,7 +19,27 @@ interface FormValuesType {
     dsn?: string[]
 }
 
-const getRequestDataFromForm = (values: FormValuesType) => {
+const getRequestDataFromFormCreation = (values: FormValuesType) => {
+    const domainsURI = values.domains.map(d => '/api/domains/' + d.toLowerCase())
+    let triggers: WatchlistTrigger[] = values.triggers.map(t => ({event: t, action: 'email'}))
+
+    if (values.dsn !== undefined) {
+        triggers = [...triggers, ...values.triggers.map((t): WatchlistTrigger => ({
+            event: t,
+            action: 'chat'
+        }))]
+    }
+
+    return {
+        name: values.name,
+        domains: domainsURI,
+        triggers,
+        connector: values.connector !== undefined ? ('/api/connectors/' + values.connector) : undefined,
+        dsn: values.dsn
+    }
+}
+
+const getRequestDataFromFormUpdate = (values: FormValuesType) => {
     const domainsURI = values.domains.map(d => '/api/domains/' + d.toLowerCase())
 
     return {
@@ -37,7 +57,7 @@ export default function WatchlistPage() {
     const [connectors, setConnectors] = useState<Array<Connector & { id: string }>>()
 
     const onCreateWatchlist = (values: FormValuesType) => {
-        postWatchlist(getRequestDataFromForm(values)).then(() => {
+        postWatchlist(getRequestDataFromFormCreation(values)).then(() => {
             form.resetFields()
             refreshWatchlists()
             messageApi.success(t`Watchlist created !`)
@@ -48,7 +68,7 @@ export default function WatchlistPage() {
 
     const onUpdateWatchlist = async (values: FormValuesType & { token: string }) => await putWatchlist({
             token: values.token,
-            ...getRequestDataFromForm(values)
+            ...getRequestDataFromFormUpdate(values)
         }
     ).then(() => {
         refreshWatchlists()
