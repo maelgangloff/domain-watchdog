@@ -67,7 +67,7 @@ export function WatchlistForm({form, connectors, onFinish, isCreation, watchList
         if (isCreation) return
 
         setTriggersLoading(true)
-        await createWatchlistTrigger(watchList!.token, { // FIXME this 500s
+        await createWatchlistTrigger(watchList!.token, {
             watchList: watchList!['@id'],
             event,
             action: 'email',
