@@ -22,7 +22,8 @@ readonly class ChatNotificationService
     public function sendChatNotification(WatchList $watchList, DomainWatchdogNotification $notification): void
     {
         $webhookDsn = $watchList->getWebhookDsn();
-        if (null === $webhookDsn || 0 === count($webhookDsn)) {
+
+        if (empty($webhookDsn)) {
             return;
         }
 

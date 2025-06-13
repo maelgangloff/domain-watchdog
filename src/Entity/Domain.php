@@ -8,6 +8,7 @@ use App\Config\EventAction;
 use App\Controller\DomainRefreshController;
 use App\Repository\DomainRepository;
 use App\Service\RDAPService;
+use App\State\AutoRegisterDomainProvider;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
@@ -42,7 +43,8 @@ use Symfony\Component\Serializer\Attribute\SerializedName;
             ],
             read: false
         ),
-    ]
+    ],
+    provider: AutoRegisterDomainProvider::class
 )]
 class Domain
 {

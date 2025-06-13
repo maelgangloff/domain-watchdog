@@ -62,6 +62,7 @@ export function UpdateWatchlistButton({watchlist, onUpdateWatchlist, connectors}
                     }}
                     connectors={connectors}
                     isCreation={false}
+                    watchList={watchlist}
                 />
             </Drawer>
         </>
