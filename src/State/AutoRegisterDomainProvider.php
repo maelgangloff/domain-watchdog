@@ -15,16 +15,16 @@ use Symfony\Component\HttpKernel\Exception\TooManyRequestsHttpException;
 use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Component\RateLimiter\RateLimiterFactory;
 
-class AutoRegisterDomainProvider implements ProviderInterface
+readonly class AutoRegisterDomainProvider implements ProviderInterface
 {
     public function __construct(
         #[Autowire(service: 'api_platform.doctrine.orm.state.item_provider')]
         private ProviderInterface $itemProvider,
-        private readonly RDAPService $RDAPService,
-        private readonly EntityManagerInterface $entityManager,
-        private readonly KernelInterface $kernel,
-        private readonly ParameterBagInterface $parameterBag,
-        private readonly RateLimiterFactory $rdapRequestsLimiter, private readonly Security $security,
+        private RDAPService $RDAPService,
+        private EntityManagerInterface $entityManager,
+        private KernelInterface $kernel,
+        private ParameterBagInterface $parameterBag,
+        private RateLimiterFactory $rdapRequestsLimiter, private Security $security,
     ) {
     }
 

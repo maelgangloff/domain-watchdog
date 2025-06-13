@@ -95,7 +95,6 @@ use Symfony\Component\Uid\Uuid;
             security: 'object.user == user',
             name: 'update',
             processor: WatchListUpdateProcessor::class,
-            extraProperties: ['standard_put' => false],
         ),
         new Delete(
             security: 'object.user == user'

@@ -17,18 +17,19 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
+use Symfony\Component\Serializer\Exception\ExceptionInterface;
 
-class WatchListUpdateProcessor implements ProcessorInterface
+readonly class WatchListUpdateProcessor implements ProcessorInterface
 {
     public function __construct(
-        private readonly Security $security,
-        private readonly ParameterBagInterface $parameterBag,
+        private Security $security,
+        private ParameterBagInterface $parameterBag,
         #[Autowire(service: 'api_platform.doctrine.orm.state.persist_processor')]
-        private readonly ProcessorInterface $persistProcessor,
-        private readonly LoggerInterface $logger,
-        private readonly ChatNotificationService $chatNotificationService,
+        private ProcessorInterface $persistProcessor,
+        private LoggerInterface $logger,
+        private ChatNotificationService $chatNotificationService,
         #[Autowire(service: 'service_container')]
-        private readonly ContainerInterface $locator,
+        private ContainerInterface $locator,
     ) {
     }
 
@@ -36,6 +37,9 @@ class WatchListUpdateProcessor implements ProcessorInterface
      * @param WatchList $data
      *
      * @return WatchList
+     *
+     * @throws ExceptionInterface
+     * @throws \Exception
      */
     public function process(mixed $data, Operation $operation, array $uriVariables = [], array $context = []): mixed
     {
