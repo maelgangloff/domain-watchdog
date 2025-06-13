@@ -9,6 +9,8 @@ use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Metadata\Post;
 use App\Config\ConnectorProvider;
 use App\Repository\ConnectorRepository;
+use App\State\ConnectorCreateProcessor;
+use App\State\ConnectorDeleteProcessor;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -28,15 +30,15 @@ use Symfony\Component\Uid\Uuid;
             security: 'object.user == user'
         ),
         new Post(
-            routeName: 'connector_create',
             normalizationContext: ['groups' => ['connector:create', 'connector:list']],
             denormalizationContext: ['groups' => 'connector:create'],
-            name: 'create'
+            name: 'create',
+            processor: ConnectorCreateProcessor::class
         ),
         new Delete(
-            routeName: 'connector_delete',
             security: 'object.user == user',
-            name: 'delete'
+            name: 'delete',
+            processor: ConnectorDeleteProcessor::class
         ),
     ]
 )]
