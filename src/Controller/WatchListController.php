@@ -70,8 +70,8 @@ class WatchListController extends AbstractController
 
         /** @var Domain $domain */
         foreach ($watchList->getDomains()->getIterator() as $domain) {
-            foreach ($domain->getEvents() as $event) {
-                $domain->addEvent($event);
+            foreach ($domain->getDomainCalendarEvents() as $event) {
+                $calendar->addEvent($event);
             }
         }
 

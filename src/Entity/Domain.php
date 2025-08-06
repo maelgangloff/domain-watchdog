@@ -608,6 +608,8 @@ class Domain
     }
 
     /**
+     * @return Event[]
+     *
      * @throws ParseException
      * @throws EofException
      * @throws InvalidDataException
