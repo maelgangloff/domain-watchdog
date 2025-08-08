@@ -153,7 +153,9 @@ readonly class RDAPService
             throw new NotFoundHttpException("The domain name $idnDomain is not present in the WHOIS database.");
         }
 
-        $domain->setRdapServer($rdapServer)->setDelegationSigned(isset($rdapData['secureDNS']['delegationSigned']) && true === $rdapData['secureDNS']['delegationSigned']);
+        $domain
+            ->setRdapServer($rdapServer)
+            ->setDelegationSigned(isset($rdapData['secureDNS']['delegationSigned']) && $rdapData['secureDNS']['delegationSigned']);
 
         $this->updateDomainHandle($domain, $rdapData);
 
@@ -163,7 +165,6 @@ readonly class RDAPService
 
         $domain->setDeleted(false)->updateTimestamps();
 
-        $this->em->persist($domain);
         $this->em->flush();
         $this->em->commit();
 
@@ -364,29 +365,31 @@ readonly class RDAPService
             $domainEntity->setDeleted(true);
         }
 
-        if (isset($rdapData['entities']) && is_array($rdapData['entities'])) {
-            foreach ($rdapData['entities'] as $rdapEntity) {
-                $roles = $this->extractEntityRoles($rdapData['entities'], $rdapEntity);
-                $entity = $this->registerEntity($rdapEntity, $roles, $domain->getLdhName(), $domain->getTld());
+        if (!isset($rdapData['entities']) || !is_array($rdapData['entities'])) {
+            return;
+        }
 
-                $domainEntity = $this->domainEntityRepository->findOneBy([
-                    'domain' => $domain,
-                    'entity' => $entity,
-                ]);
+        foreach ($rdapData['entities'] as $rdapEntity) {
+            $roles = $this->extractEntityRoles($rdapData['entities'], $rdapEntity);
+            $entity = $this->registerEntity($rdapEntity, $roles, $domain->getLdhName(), $domain->getTld());
 
-                if (null === $domainEntity) {
-                    $domainEntity = new DomainEntity();
-                }
+            $domainEntity = $this->domainEntityRepository->findOneBy([
+                'domain' => $domain,
+                'entity' => $entity,
+            ]);
 
-                $domain->addDomainEntity($domainEntity
-                    ->setDomain($domain)
-                    ->setEntity($entity)
-                    ->setRoles($roles)
-                    ->setDeleted(false));
-
-                $this->em->persist($domainEntity);
-                $this->em->flush();
+            if (null === $domainEntity) {
+                $domainEntity = new DomainEntity();
             }
+
+            $domain->addDomainEntity($domainEntity
+                ->setDomain($domain)
+                ->setEntity($entity)
+                ->setRoles($roles)
+                ->setDeleted(false));
+
+            $this->em->persist($domainEntity);
+            $this->em->flush();
         }
     }
 
