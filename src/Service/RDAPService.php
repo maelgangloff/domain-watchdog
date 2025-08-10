@@ -545,11 +545,30 @@ readonly class RDAPService
 
         if (isset($rdapEntity['vcardArray']) && !in_array($rdapEntity['handle'], self::IANA_RESERVED_IDS)) {
             if (empty($entity->getJCard())) {
-                $entity->setJCard($rdapEntity['vcardArray']);
+                if (!array_key_exists('elements', $rdapEntity['vcardArray'])) {
+                    $entity->setJCard($rdapEntity['vcardArray']);
+                } else {
+                    /*
+                     * UZ registry
+                     */
+                    $entity->setJCard([
+                        'vcard',
+                        $rdapEntity['vcardArray']['elements'],
+                    ]);
+                }
             } else {
                 $properties = [];
-                foreach ($rdapEntity['vcardArray'][1] as $prop) {
-                    $properties[$prop[0]] = $prop;
+                if (!array_key_exists('elements', $rdapEntity['vcardArray'])) {
+                    foreach ($rdapEntity['vcardArray'][1] as $prop) {
+                        $properties[$prop[0]] = $prop;
+                    }
+                } else {
+                    /*
+                     * UZ registry
+                     */
+                    foreach ($rdapEntity['vcardArray']['elements'] as $prop) {
+                        $properties[$prop[0]] = $prop;
+                    }
                 }
                 foreach ($entity->getJCard()[1] as $prop) {
                     $properties[$prop[0]] = $prop;
