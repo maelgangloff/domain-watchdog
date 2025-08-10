@@ -79,6 +79,11 @@ readonly class RDAPService
         'REDACTED_FOR_PRIVACY',
         'ANO00-FRNIC',
         'not applicable',
+        'REDACTED FOR PRIVACY-REGISTRANT',
+        'REDACTED FOR PRIVACY',
+        'REGISTRANT',
+        'REGISTRAR',
+        'None',
     ];
 
     /* @see https://www.iana.org/assignments/registrar-ids/registrar-ids.xhtml */
