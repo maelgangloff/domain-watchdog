@@ -80,10 +80,14 @@ readonly class RDAPService
         'ANO00-FRNIC',
         'not applicable',
         'REDACTED FOR PRIVACY-REGISTRANT',
+        'REDACTED FOR PRIVACY-TECH',
         'REDACTED FOR PRIVACY',
+        'REDACTED-SIDN',
         'REGISTRANT',
         'REGISTRAR',
+        'ABUSE-CONTACT',
         'None',
+        'Private',
     ];
 
     /* @see https://www.iana.org/assignments/registrar-ids/registrar-ids.xhtml */
