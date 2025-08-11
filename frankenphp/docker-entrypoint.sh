@@ -56,8 +56,18 @@ if [ "$1" = 'frankenphp' ] || [ "$1" = 'php' ] || [ "$1" = 'bin/console' ]; then
 	php bin/console lexik:jwt:generate-keypair || true
 	php bin/console app:update-rdap-servers
 
-	setfacl -R -m u:www-data:rwX -m u:"$(whoami)":rwX var
-	setfacl -dR -m u:www-data:rwX -m u:"$(whoami)":rwX var
+	SETFACL_STATUS=0
+	SETFACL_ERROR=$(setfacl -m u:www-data:rwX -m u:"$(whoami)":rwX var 2>&1 1>/dev/null) || SETFACL_STATUS=$?
+	if [ $SETFACL_STATUS -eq 0 ]; then
+		setfacl -R -m u:www-data:rwX -m u:"$(whoami)":rwX var
+		setfacl -dR -m u:www-data:rwX -m u:"$(whoami)":rwX var
+	elif echo "$SETFACL_ERROR" | grep -q "Operation not supported"; then
+ 		# https://github.com/maelgangloff/domain-watchdog/issues/74
+		chown -R "$(whoami)":www-data var
+		chmod -R u+rwx,g+rwx var
+	else
+		echo "$SETFACL_ERROR" >&2
+	fi
 fi
 
 exec docker-php-entrypoint "$@"
