@@ -51,6 +51,7 @@ use Symfony\Component\Serializer\Attribute\SerializedName;
                     'nameserver-entity:nameserver',
                     'nameserver-entity:entity',
                     'tld:item',
+                    'ds:list',
                 ],
             ],
             read: false
@@ -136,6 +137,13 @@ class Domain
     #[Groups(['domain:item', 'domain:list'])]
     private ?bool $delegationSigned = null;
 
+    /**
+     * @var Collection<int, DnsKey>
+     */
+    #[ORM\OneToMany(targetEntity: DnsKey::class, mappedBy: 'domain', orphanRemoval: true)]
+    #[Groups(['domain:item'])]
+    private Collection $dnsKey;
+
     private const IMPORTANT_EVENTS = [EventAction::Deletion->value, EventAction::Expiration->value];
     private const IMPORTANT_STATUS = [
         'redemption period',
@@ -158,6 +166,7 @@ class Domain
         $this->createdAt = $this->updatedAt;
         $this->deleted = false;
         $this->domainStatuses = new ArrayCollection();
+        $this->dnsKey = new ArrayCollection();
     }
 
     public function getLdhName(): ?string
@@ -605,6 +614,36 @@ class Domain
             $guess ?? null,
             $this->calculateDaysFromStatus($now),
         ]);
+    }
+
+    /**
+     * @return Collection<int, DnsKey>
+     */
+    public function getDnsKey(): Collection
+    {
+        return $this->dnsKey;
+    }
+
+    public function addDnsKey(DnsKey $dnsKey): static
+    {
+        if (!$this->dnsKey->contains($dnsKey)) {
+            $this->dnsKey->add($dnsKey);
+            $dnsKey->setDomain($this);
+        }
+
+        return $this;
+    }
+
+    public function removeDnsKey(DnsKey $dnsKey): static
+    {
+        if ($this->dnsKey->removeElement($dnsKey)) {
+            // set the owning side to null (unless already changed)
+            if ($dnsKey->getDomain() === $this) {
+                $dnsKey->setDomain(null);
+            }
+        }
+
+        return $this;
     }
 
     /**
