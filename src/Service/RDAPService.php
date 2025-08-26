@@ -268,7 +268,18 @@ readonly class RDAPService
                     'idnDomain' => $idnDomain,
                 ]);
 
-                $domain->setDeleted(true)->updateTimestamps();
+                $domain->updateTimestamps();
+
+                if (!$domain->getDeleted() && $domain->getUpdatedAt() !== $domain->getCreatedAt()) {
+                    $this->em->persist((new DomainStatus())
+                        ->setDomain($domain)
+                        ->setCreatedAt($domain->getUpdatedAt())
+                        ->setDate($domain->getUpdatedAt())
+                        ->setAddStatus([])
+                        ->setDeleteStatus($domain->getStatus()));
+                }
+
+                $domain->setDeleted(true);
                 $this->em->persist($domain);
                 $this->em->flush();
             }
