@@ -2,8 +2,11 @@
 
 namespace App\Service;
 
+use App\Config\DnsKey\Algorithm;
+use App\Config\DnsKey\DigestType;
 use App\Config\EventAction;
 use App\Config\TldType;
+use App\Entity\DnsKey;
 use App\Entity\Domain;
 use App\Entity\DomainEntity;
 use App\Entity\DomainEvent;
@@ -31,6 +34,7 @@ use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\HttpClient\Exception\ClientException;
 use Symfony\Component\HttpFoundation\Exception\BadRequestException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\HttpKernel\Exception\ServiceUnavailableHttpException;
 use Symfony\Component\Yaml\Yaml;
 use Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\DecodingExceptionInterface;
@@ -171,6 +175,7 @@ readonly class RDAPService
         $this->updateDomainEvents($domain, $rdapData);
         $this->updateDomainEntities($domain, $rdapData);
         $this->updateDomainNameservers($domain, $rdapData);
+        $this->updateDomainDsData($domain, $rdapData);
 
         $domain->setDeleted(false)->updateTimestamps();
 
@@ -623,6 +628,42 @@ readonly class RDAPService
         $this->em->flush();
 
         return $entity;
+    }
+
+    private function updateDomainDsData(Domain $domain, array $rdapData): void
+    {
+        $domain->getDnsKey()->clear();
+        $this->em->persist($domain);
+        $this->em->flush();
+
+        if (array_key_exists('secureDNS', $rdapData) && array_key_exists('dsData', $rdapData['secureDNS']) && is_array($rdapData['secureDNS']['dsData'])) {
+            foreach ($rdapData['secureDNS']['dsData'] as $rdapDsData) {
+                $dsData = new DnsKey();
+                if (array_key_exists('keyTag', $rdapDsData)) {
+                    $dsData->setKeyTag(pack('n', $rdapDsData['keyTag']));
+                }
+                if (array_key_exists('algorithm', $rdapDsData)) {
+                    $dsData->setAlgorithm(Algorithm::from($rdapDsData['algorithm']));
+                }
+                if (array_key_exists('digest', $rdapDsData)) {
+                    $blob = hex2bin($rdapDsData['digest']);
+                    if (false === $blob) {
+                        throw new ServiceUnavailableHttpException('DNSSEC digest is not a valid hexadecimal value.');
+                    }
+                    $dsData->setDigest($blob);
+                }
+                if (array_key_exists('digestType', $rdapDsData)) {
+                    $dsData->setDigestType(DigestType::from($rdapDsData['digestType']));
+                }
+
+                $domain->addDnsKey($dsData);
+                $this->em->persist($dsData);
+            }
+        } else {
+            $this->logger->warning('The domain name {idnDomain} has no DS record.', [
+                'idnDomain' => $domain->getLdhName(),
+            ]);
+        }
     }
 
     /**
