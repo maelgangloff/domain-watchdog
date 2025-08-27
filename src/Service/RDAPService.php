@@ -794,7 +794,7 @@ readonly class RDAPService
 
     private function getTldType(string $tld): ?TldType
     {
-        if (in_array($tld, self::ISO_TLD_EXCEPTION)) {
+        if (in_array(strtolower($tld), self::ISO_TLD_EXCEPTION)) {
             return TldType::ccTLD;
         }
         if (in_array(strtolower($tld), self::INFRA_TLD)) {
@@ -844,8 +844,8 @@ readonly class RDAPService
             $gtTldEntity
                 ->setContractTerminated($gTld['contractTerminated'])
                 ->setRegistryOperator($gTld['registryOperator'])
-                ->setSpecification13($gTld['specification13'])
-                ->setType(TldType::gTLD);
+                ->setSpecification13($gTld['specification13']);
+            // NOTICE: sTLDs are listed in ICANN's gTLD list
 
             if (null !== $gTld['removalDate']) {
                 $gtTldEntity->setRemovalDate(new \DateTimeImmutable($gTld['removalDate']));
