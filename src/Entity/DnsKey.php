@@ -62,9 +62,15 @@ class DnsKey
         return $this;
     }
 
-    public function getKeyTag()
+    public function getKeyTag(): string
     {
-        return unpack('n', $this->keyTag)[1];
+        $value = $this->keyTag;
+
+        if (is_resource($value)) {
+            $value = stream_get_contents($value);
+        }
+
+        return unpack('n', $value)[1];
     }
 
     public function setKeyTag($keyTag): static
@@ -86,9 +92,15 @@ class DnsKey
         return $this;
     }
 
-    public function getDigest()
+    public function getDigest(): string
     {
-        return strtoupper(bin2hex($this->digest));
+        $value = $this->digest;
+
+        if (is_resource($value)) {
+            $value = stream_get_contents($value);
+        }
+
+        return strtoupper(bin2hex($value));
     }
 
     public function setDigest($digest): static
