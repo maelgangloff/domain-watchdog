@@ -29,7 +29,6 @@ class DnsKey
 
     #[ORM\ManyToOne(inversedBy: 'dnsKey')]
     #[ORM\JoinColumn(referencedColumnName: 'ldh_name', nullable: false)]
-    #[Groups(['ds:list', 'ds:item'])]
     #[ORM\Id]
     private ?Domain $domain = null;
 
