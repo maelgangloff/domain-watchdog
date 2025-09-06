@@ -86,14 +86,12 @@ use Symfony\Component\Uid\Uuid;
         new Post(
             normalizationContext: ['groups' => 'watchlist:list'],
             denormalizationContext: ['groups' => 'watchlist:create'],
-            name: 'create',
             processor: WatchListUpdateProcessor::class,
         ),
         new Put(
             normalizationContext: ['groups' => 'watchlist:item'],
             denormalizationContext: ['groups' => ['watchlist:create', 'watchlist:token']],
             security: 'object.user == user',
-            name: 'update',
             processor: WatchListUpdateProcessor::class,
         ),
         new Delete(

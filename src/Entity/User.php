@@ -34,7 +34,6 @@ use Symfony\Component\Serializer\Attribute\Groups;
             controller: RegistrationController::class,
             denormalizationContext: ['groups' => ['user:register']],
             read: false,
-            name: 'register'
         ),
     ]
 )]
