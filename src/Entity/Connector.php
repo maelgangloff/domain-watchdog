@@ -32,12 +32,10 @@ use Symfony\Component\Uid\Uuid;
         new Post(
             normalizationContext: ['groups' => ['connector:create', 'connector:list']],
             denormalizationContext: ['groups' => 'connector:create'],
-            name: 'create',
             processor: ConnectorCreateProcessor::class
         ),
         new Delete(
             security: 'object.user == user',
-            name: 'delete',
             processor: ConnectorDeleteProcessor::class
         ),
     ]
