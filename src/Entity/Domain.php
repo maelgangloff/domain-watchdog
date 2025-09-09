@@ -366,7 +366,7 @@ class Domain
      *
      * @throws \Exception
      */
-    private function isToBeWatchClosely(): bool
+    protected function isToBeWatchClosely(): bool
     {
         $status = $this->getStatus();
         if ((!empty($status) && count(array_intersect($status, self::IMPORTANT_STATUS))) || $this->getDeleted()) {
