@@ -41,7 +41,7 @@ class RegisterDomainCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = new SymfonyStyle($input, $output);
-        $ldhName =  RDAPService::convertToIdn($input->getArgument('domain'));
+        $ldhName = RDAPService::convertToIdn($input->getArgument('domain'));
         $force = (bool) $input->getOption('force');
         $notif = (bool) $input->getOption('notif');
         $domain = $this->domainRepository->findOneBy(['ldhName' => $ldhName]);

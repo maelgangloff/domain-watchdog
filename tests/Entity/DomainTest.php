@@ -7,9 +7,6 @@ namespace App\Tests\Entity;
 use App\Entity\Domain;
 use App\Entity\DomainEvent;
 use App\Entity\DomainStatus;
-use DateInterval;
-use DateTimeImmutable;
-use Exception;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
@@ -52,7 +49,7 @@ final class DomainTest extends TestCase
     }
 
     /**
-     * @throws Exception
+     * @throws \Exception
      */
     public function testGetExpiresInDays(): void
     {
@@ -68,7 +65,7 @@ final class DomainTest extends TestCase
             (new Domain())
                 ->addEvent(
                     (new DomainEvent())
-                        ->setDate((new DateTimeImmutable())->add(new DateInterval('P10D')))
+                        ->setDate((new \DateTimeImmutable())->add(new \DateInterval('P10D')))
                         ->setAction('expiration')
                         ->setDeleted(false)
                 )->getExpiresInDays(),
@@ -83,8 +80,8 @@ final class DomainTest extends TestCase
                     (new DomainStatus())
                         ->setAddStatus(['pending delete'])
                         ->setDeleteStatus(['active'])
-                        ->setCreatedAt(new DateTimeImmutable())
-                        ->setDate(new DateTimeImmutable())
+                        ->setCreatedAt(new \DateTimeImmutable())
+                        ->setDate(new \DateTimeImmutable())
                 )->getExpiresInDays(),
             'Guess based on domain EPP status'
         );
@@ -97,8 +94,8 @@ final class DomainTest extends TestCase
                     (new DomainStatus())
                         ->setAddStatus(['redemption period'])
                         ->setDeleteStatus(['active'])
-                        ->setCreatedAt(new DateTimeImmutable())
-                        ->setDate(new DateTimeImmutable())
+                        ->setCreatedAt(new \DateTimeImmutable())
+                        ->setDate(new \DateTimeImmutable())
                 )->getExpiresInDays(),
             'Domain name entered in the redemption period'
         );
@@ -109,7 +106,7 @@ final class DomainTest extends TestCase
                 ->setStatus(['pending delete'])
                 ->addEvent(
                     (new DomainEvent())
-                        ->setDate((new DateTimeImmutable())->sub(new DateInterval('P10D')))
+                        ->setDate((new \DateTimeImmutable())->sub(new \DateInterval('P10D')))
                         ->setAction('expiration')
                         ->setDeleted(false)
                 )
@@ -117,8 +114,8 @@ final class DomainTest extends TestCase
                     (new DomainStatus())
                         ->setAddStatus(['pending delete'])
                         ->setDeleteStatus(['active'])
-                        ->setCreatedAt(new DateTimeImmutable())
-                        ->setDate(new DateTimeImmutable())
+                        ->setCreatedAt(new \DateTimeImmutable())
+                        ->setDate(new \DateTimeImmutable())
                 )->getExpiresInDays(),
             'Domain name entered in the pending delete period'
         );
@@ -129,7 +126,7 @@ final class DomainTest extends TestCase
                 ->setStatus(['pending delete'])
                 ->addEvent(
                     (new DomainEvent())
-                        ->setDate((new DateTimeImmutable())->sub(new DateInterval('P' . (45 + 30 + 4) . 'D')))
+                        ->setDate((new \DateTimeImmutable())->sub(new \DateInterval('P'.(45 + 30 + 4).'D')))
                         ->setAction('expiration')
                         ->setDeleted(false)
                 )
@@ -137,8 +134,8 @@ final class DomainTest extends TestCase
                     (new DomainStatus())
                         ->setAddStatus(['pending delete'])
                         ->setDeleteStatus(['active'])
-                        ->setCreatedAt(new DateTimeImmutable())
-                        ->setDate(new DateTimeImmutable())
+                        ->setCreatedAt(new \DateTimeImmutable())
+                        ->setDate(new \DateTimeImmutable())
                 )->getExpiresInDays(),
             'Guess based on domain status in priority'
         );
@@ -154,7 +151,7 @@ final class DomainTest extends TestCase
                 ->setStatus(['pending delete'])
                 ->addEvent(
                     (new DomainEvent())
-                        ->setDate(new DateTimeImmutable())
+                        ->setDate(new \DateTimeImmutable())
                         ->setAction('deletion')
                         ->setDeleted(false)
                 )->getExpiresInDays(),
@@ -164,7 +161,7 @@ final class DomainTest extends TestCase
 
     public function testSetLdhName(): void
     {
-        /**
+        /*
          * @see https://en.wikipedia.org/wiki/IDN_Test_TLDs
          */
         $this->assertEquals('xn--zckzah',
@@ -185,7 +182,7 @@ final class DomainTest extends TestCase
 
     public static function isToBeUpdatedProvider(): array
     {
-        $now = new DateTimeImmutable();
+        $now = new \DateTimeImmutable();
 
         return [
             // 1. updatedAt >= 7 days -> true
@@ -218,20 +215,19 @@ final class DomainTest extends TestCase
     }
 
     /**
-     * @throws Exception
+     * @throws \Exception
      */
     #[DataProvider('isToBeUpdatedProvider')]
     public function testIsToBeUpdated(
-        DateTimeImmutable $updatedAt,
-        bool              $deleted,
-        bool              $fromUser,
-        bool              $intensifyLastDay,
-        int               $expiresIn,
-        bool              $watchClosely,
-        array             $status,
-        bool              $expected,
-    ): void
-    {
+        \DateTimeImmutable $updatedAt,
+        bool $deleted,
+        bool $fromUser,
+        bool $intensifyLastDay,
+        int $expiresIn,
+        bool $watchClosely,
+        array $status,
+        bool $expected,
+    ): void {
         $mock = $this->getMockBuilder(Domain::class)
             ->onlyMethods(['getUpdatedAt', 'getDeleted', 'getExpiresInDays', 'isToBeWatchClosely', 'getStatus'])
             ->getMock();
