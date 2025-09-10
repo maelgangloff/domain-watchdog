@@ -4,9 +4,11 @@ namespace App\Entity;
 
 use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\Get;
+use App\Config\RegistrarStatus;
 use App\Repository\EntityRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Attribute\Groups;
 use Symfony\Component\Serializer\Attribute\SerializedName;
@@ -85,6 +87,25 @@ class Entity
     #[ORM\Column(nullable: true)]
     #[Groups(['entity:item', 'domain:item'])]
     private ?array $remarks = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(['entity:item', 'domain:item'])]
+    private ?string $registrarNameIANA = null;
+
+
+    #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(['entity:item', 'domain:item'])]
+    private ?string $rdapBaseUrlIANA = null;
+
+    #[ORM\Column(nullable: true, enumType: RegistrarStatus::class)]
+    #[Groups(['entity:item', 'domain:item'])]
+    private ?RegistrarStatus $statusIANA = null;
+
+    #[ORM\Column(type: Types::DATE_IMMUTABLE, nullable: true)]
+    private ?\DateTimeImmutable $updatedIANA = null;
+
+    #[ORM\Column(type: Types::DATE_IMMUTABLE, nullable: true)]
+    private ?\DateTimeImmutable $dateIANA = null;
 
     public function __construct()
     {
@@ -239,6 +260,66 @@ class Entity
     public function setTld(?Tld $tld): static
     {
         $this->tld = $tld;
+
+        return $this;
+    }
+
+    public function getRegistrarNameIANA(): ?string
+    {
+        return $this->registrarNameIANA;
+    }
+
+    public function setRegistrarNameIANA(?string $registrarNameIANA): static
+    {
+        $this->registrarNameIANA = $registrarNameIANA;
+
+        return $this;
+    }
+
+    public function getRdapBaseUrlIANA(): ?string
+    {
+        return $this->rdapBaseUrlIANA;
+    }
+
+    public function setRdapBaseUrlIANA(?string $rdapBaseUrlIANA): static
+    {
+        $this->rdapBaseUrlIANA = $rdapBaseUrlIANA;
+
+        return $this;
+    }
+
+    public function getStatusIANA(): ?RegistrarStatus
+    {
+        return $this->statusIANA;
+    }
+
+    public function setStatusIANA(?RegistrarStatus $statusIANA): static
+    {
+        $this->statusIANA = $statusIANA;
+
+        return $this;
+    }
+
+    public function getUpdatedIANA(): ?\DateTimeImmutable
+    {
+        return $this->updatedIANA;
+    }
+
+    public function setUpdatedIANA(?\DateTimeImmutable $updatedIANA): static
+    {
+        $this->updatedIANA = $updatedIANA;
+
+        return $this;
+    }
+
+    public function getDateIANA(): ?\DateTimeImmutable
+    {
+        return $this->dateIANA;
+    }
+
+    public function setDateIANA(?\DateTimeImmutable $dateIANA): static
+    {
+        $this->dateIANA = $dateIANA;
 
         return $this;
     }

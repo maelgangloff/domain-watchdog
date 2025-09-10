@@ -115,12 +115,13 @@ class Tld
 
     public function getTld(): ?string
     {
-        return '' === $this->tld ? '.' : $this->tld;
+        return $this->tld;
     }
 
     public function setTld(string $tld): static
     {
         $this->tld = RDAPService::convertToIdn($tld);
+        if($this->tld === '') $this->tld = '.';
 
         return $this;
     }
