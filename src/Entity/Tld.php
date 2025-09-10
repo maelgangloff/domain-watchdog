@@ -121,7 +121,9 @@ class Tld
     public function setTld(string $tld): static
     {
         $this->tld = RDAPService::convertToIdn($tld);
-        if($this->tld === '') $this->tld = '.';
+        if ('' === $this->tld) {
+            $this->tld = '.';
+        }
 
         return $this;
     }

@@ -550,7 +550,7 @@ readonly class RDAPService
             'tld' => $tld,
         ]);
 
-        if(null === $entity) {
+        if (null === $entity) {
             $entity = $this->entityRepository->findOneBy([
                 'handle' => $rdapEntity['handle'],
                 'tld' => null,
@@ -567,11 +567,11 @@ readonly class RDAPService
 
         $entity->setHandle($rdapEntity['handle']);
 
-        if (isset($rdapEntity['remarks']) && is_array($rdapEntity['remarks']) && $entity->getStatusIANA() === null) {
+        if (isset($rdapEntity['remarks']) && is_array($rdapEntity['remarks']) && null === $entity->getStatusIANA()) {
             $entity->setRemarks($rdapEntity['remarks']);
         }
 
-        if (isset($rdapEntity['vcardArray']) && $entity->getStatusIANA() === null) {
+        if (isset($rdapEntity['vcardArray']) && null === $entity->getStatusIANA()) {
             if (empty($entity->getJCard())) {
                 if (!array_key_exists('elements', $rdapEntity['vcardArray'])) {
                     $entity->setJCard($rdapEntity['vcardArray']);
@@ -605,7 +605,7 @@ readonly class RDAPService
             }
         }
 
-        if ($isIANAid || !isset($rdapEntity['events']) || $entity->getStatusIANA() !== null) {
+        if ($isIANAid || !isset($rdapEntity['events']) || null !== $entity->getStatusIANA()) {
             return $entity;
         }
 
@@ -713,7 +713,7 @@ readonly class RDAPService
                 }
 
                 $tldEntity = $this->tldRepository->findOneBy(['tld' => $tld]);
-                if($tldEntity === null) {
+                if (null === $tldEntity) {
                     $tldEntity = (new Tld())->setTld($tld)->setType(TldType::gTLD);
                     $this->em->persist($tldEntity);
                 }
@@ -816,17 +816,19 @@ readonly class RDAPService
 
         $data = new \SimpleXMLElement($registrarList->getContent());
 
-        foreach($data->registry->record as $registrar) {
+        foreach ($data->registry->record as $registrar) {
             $entity = $this->entityRepository->findOneBy(['handle' => $registrar->value, 'tld' => null]);
-            if($entity === null) $entity = new Entity();
+            if (null === $entity) {
+                $entity = new Entity();
+            }
             $entity
                 ->setHandle(strval($registrar->value))->setTld(null)
                 ->setRegistrarNameIANA(strval($registrar->name))
                 ->setStatusIANA(RegistrarStatus::from(strval($registrar->status)))
                 ->setRdapBaseUrlIANA($registrar->rdapurl->count() ? strval($registrar->rdapurl->server) : null)
-                ->setUpdatedIANA($registrar->attributes()->updated !== null  ? new \DateTimeImmutable(strval($registrar->attributes()->updated)) : null)
-                ->setDateIANA($registrar->attributes()->date !== null ? new \DateTimeImmutable(strval($registrar->attributes()->date)) : null)
-                ->setJCard(["vcard", [["version", [], "text", "4.0"], ["fn", [], "text", $entity->getRegistrarNameIANA()]]])
+                ->setUpdatedIANA(null !== $registrar->attributes()->updated ? new \DateTimeImmutable(strval($registrar->attributes()->updated)) : null)
+                ->setDateIANA(null !== $registrar->attributes()->date ? new \DateTimeImmutable(strval($registrar->attributes()->date)) : null)
+                ->setJCard(['vcard', [['version', [], 'text', '4.0'], ['fn', [], 'text', $entity->getRegistrarNameIANA()]]])
                 ->setRemarks(null);
 
             $this->em->persist($entity);

@@ -65,7 +65,6 @@ final readonly class UpdateRdapServersHandler
             $throws[] = $throwable;
         }
 
-
         try {
             $this->RDAPService->updateRegistrarListIANA();
         } catch (\Throwable $throwable) {

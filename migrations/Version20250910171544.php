@@ -32,8 +32,6 @@ final class Version20250910171544 extends AbstractMigration
         $this->addSql("DELETE FROM entity_event ev USING entity e WHERE ev.entity_uid = e.id AND e.handle ~ '^[0-9]+$'");
         $this->addSql("DELETE FROM nameserver_entity ne USING entity e WHERE ne.entity_uid = e.id AND e.handle ~ '^[0-9]+$'");
         $this->addSql("DELETE FROM entity WHERE handle ~ '^[0-9]+$'");
-
-
     }
 
     public function down(Schema $schema): void

@@ -92,7 +92,6 @@ class Entity
     #[Groups(['entity:item', 'domain:item'])]
     private ?string $registrarNameIANA = null;
 
-
     #[ORM\Column(length: 255, nullable: true)]
     #[Groups(['entity:item', 'domain:item'])]
     private ?string $rdapBaseUrlIANA = null;
