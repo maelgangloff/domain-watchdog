@@ -3,11 +3,11 @@
 namespace App\Entity;
 
 use ApiPlatform\Metadata\ApiResource;
-use ApiPlatform\Metadata\Get;
 use App\Repository\EntityRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\Embedded;
 use Symfony\Component\Serializer\Attribute\Groups;
 use Symfony\Component\Serializer\Attribute\SerializedName;
 
@@ -86,11 +86,16 @@ class Entity
     #[Groups(['entity:item', 'domain:item'])]
     private ?array $remarks = null;
 
+    #[Embedded(class: IanaAccreditation::class, columnPrefix: 'iana_')]
+    #[Groups(['entity:item', 'domain:item'])]
+    private IanaAccreditation $ianaAccreditation;
+
     public function __construct()
     {
         $this->domainEntities = new ArrayCollection();
         $this->nameserverEntities = new ArrayCollection();
         $this->events = new ArrayCollection();
+        $this->ianaAccreditation = new IanaAccreditation();
     }
 
     public function getHandle(): ?string
@@ -241,5 +246,15 @@ class Entity
         $this->tld = $tld;
 
         return $this;
+    }
+
+    public function getIanaAccreditation(): IanaAccreditation
+    {
+        return $this->ianaAccreditation;
+    }
+
+    public function setIanaAccreditation(IanaAccreditation $ianaAccreditation): void
+    {
+        $this->ianaAccreditation = $ianaAccreditation;
     }
 }

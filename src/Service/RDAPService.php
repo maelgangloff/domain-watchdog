@@ -5,6 +5,7 @@ namespace App\Service;
 use App\Config\DnsKey\Algorithm;
 use App\Config\DnsKey\DigestType;
 use App\Config\EventAction;
+use App\Config\RegistrarStatus;
 use App\Config\TldType;
 use App\Entity\DnsKey;
 use App\Entity\Domain;
@@ -92,11 +93,6 @@ readonly class RDAPService
         'ABUSE-CONTACT',
         'None',
         'Private',
-    ];
-
-    /* @see https://www.iana.org/assignments/registrar-ids/registrar-ids.xhtml */
-    public const IANA_RESERVED_IDS = [
-        1, 3, 8, 119, 365, 376, 9994, 9995, 9996, 9997, 9998, 9999, 10009, 4000001, 8888888,
     ];
 
     public function __construct(private HttpClientInterface $client,
@@ -551,24 +547,31 @@ readonly class RDAPService
 
         $entity = $this->entityRepository->findOneBy([
             'handle' => $rdapEntity['handle'],
-            'tld' => is_numeric($rdapEntity['handle']) ? null : $tld,
+            'tld' => $tld,
         ]);
 
         if (null === $entity) {
-            $entity = new Entity();
+            $entity = $this->entityRepository->findOneBy([
+                'handle' => $rdapEntity['handle'],
+                'tld' => null,
+            ]);
+        }
+
+        if (null === $entity) {
+            $entity = (new Entity())->setTld($tld);
 
             $this->logger->info('The entity {handle} was not known to this Domain Watchdog instance.', [
                 'handle' => $rdapEntity['handle'],
             ]);
         }
 
-        $entity->setHandle($rdapEntity['handle'])->setTld(is_numeric($rdapEntity['handle']) ? null : $tld);
+        $entity->setHandle($rdapEntity['handle']);
 
-        if (isset($rdapEntity['remarks']) && is_array($rdapEntity['remarks']) && !is_numeric($rdapEntity['handle'])) {
+        if (isset($rdapEntity['remarks']) && is_array($rdapEntity['remarks']) && null === $entity->getIanaAccreditation()->getStatus()) {
             $entity->setRemarks($rdapEntity['remarks']);
         }
 
-        if (isset($rdapEntity['vcardArray']) && !in_array($rdapEntity['handle'], self::IANA_RESERVED_IDS)) {
+        if (isset($rdapEntity['vcardArray']) && null === $entity->getIanaAccreditation()->getStatus()) {
             if (empty($entity->getJCard())) {
                 if (!array_key_exists('elements', $rdapEntity['vcardArray'])) {
                     $entity->setJCard($rdapEntity['vcardArray']);
@@ -602,7 +605,7 @@ readonly class RDAPService
             }
         }
 
-        if ($isIANAid || !isset($rdapEntity['events']) || in_array($rdapEntity['handle'], self::IANA_RESERVED_IDS)) {
+        if ($isIANAid || !isset($rdapEntity['events']) || null !== $entity->getIanaAccreditation()->getStatus()) {
             return $entity;
         }
 
@@ -704,22 +707,26 @@ readonly class RDAPService
     {
         foreach ($dnsRoot['services'] as $service) {
             foreach ($service[0] as $tld) {
-                if ('' === $tld && null === $this->tldRepository->findOneBy(['tld' => $tld])) {
-                    $this->em->persist((new Tld())->setTld('')->setType(TldType::root));
+                if ('.' === $tld && null === $this->tldRepository->findOneBy(['tld' => $tld])) {
+                    $this->em->persist((new Tld())->setTld('.')->setType(TldType::root));
                     $this->em->flush();
                 }
 
-                $tldReference = $this->em->getReference(Tld::class, $tld);
+                $tldEntity = $this->tldRepository->findOneBy(['tld' => $tld]);
+                if (null === $tldEntity) {
+                    $tldEntity = (new Tld())->setTld($tld)->setType(TldType::gTLD);
+                    $this->em->persist($tldEntity);
+                }
 
                 foreach ($service[1] as $rdapServerUrl) {
-                    $server = $this->rdapServerRepository->findOneBy(['tld' => $tldReference, 'url' => $rdapServerUrl]);
+                    $server = $this->rdapServerRepository->findOneBy(['tld' => $tldEntity->getTld(), 'url' => $rdapServerUrl]);
 
                     if (null === $server) {
                         $server = new RdapServer();
                     }
 
                     $server
-                        ->setTld($tldReference)
+                        ->setTld($tldEntity)
                         ->setUrl($rdapServerUrl)
                         ->setUpdatedAt(new \DateTimeImmutable($dnsRoot['publication'] ?? 'now'));
 
@@ -792,6 +799,45 @@ readonly class RDAPService
         $this->em->flush();
     }
 
+    /**
+     * @throws TransportExceptionInterface
+     * @throws ServerExceptionInterface
+     * @throws RedirectionExceptionInterface
+     * @throws DecodingExceptionInterface
+     * @throws ClientExceptionInterface
+     * @throws \Exception
+     */
+    public function updateRegistrarListIANA(): void
+    {
+        $this->logger->info('Start of retrieval of the list of Registrar IDs according to IANA.');
+        $registrarList = $this->client->request(
+            'GET', 'https://www.iana.org/assignments/registrar-ids/registrar-ids.xml'
+        );
+
+        $data = new \SimpleXMLElement($registrarList->getContent());
+
+        foreach ($data->registry->record as $registrar) {
+            $entity = $this->entityRepository->findOneBy(['handle' => $registrar->value, 'tld' => null]);
+            if (null === $entity) {
+                $entity = new Entity();
+            }
+            $entity
+                ->setHandle($registrar->value)
+                ->setTld(null)
+                ->setJCard(['vcard', [['version', [], 'text', '4.0'], ['fn', [], 'text', $registrar->name]]])
+                ->setRemarks(null)
+                ->getIanaAccreditation()
+                    ->setRegistrarName($registrar->name)
+                    ->setStatus(RegistrarStatus::from($registrar->status))
+                    ->setRdapBaseUrl($registrar->rdapurl->count() ? ($registrar->rdapurl->server) : null)
+                    ->setUpdated(null !== $registrar->attributes()->updated ? new \DateTimeImmutable($registrar->attributes()->updated) : null)
+                    ->setDate(null !== $registrar->attributes()->date ? new \DateTimeImmutable($registrar->attributes()->date) : null);
+
+            $this->em->persist($entity);
+        }
+        $this->em->flush();
+    }
+
     private function getTldType(string $tld): ?TldType
     {
         if (in_array(strtolower($tld), self::ISO_TLD_EXCEPTION)) {
@@ -835,7 +881,7 @@ readonly class RDAPService
 
             if (null === $gtTldEntity) {
                 $gtTldEntity = new Tld();
-                $gtTldEntity->setTld($gTld['gTLD']);
+                $gtTldEntity->setTld($gTld['gTLD'])->setType(TldType::gTLD);
                 $this->logger->notice('New gTLD detected according to ICANN ({tld}).', [
                     'tld' => $gTld['gTLD'],
                 ]);
