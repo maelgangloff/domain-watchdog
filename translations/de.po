@@ -29,8 +29,8 @@ msgstr "Dokumentation"
 #: assets/App.tsx:133
 #, javascript-format
 msgid ""
-"${ ProjectLink } is an open source project distributed under the "
-"${ LicenseLink } license."
+"${ ProjectLink } is an open source project distributed under the $"
+"{ LicenseLink } license."
 msgstr ""
 "${ ProjectLink } ist ein Open-Source-Projekt, das unter der ${ LicenseLink }-"
 "Lizenz vertrieben wird."
@@ -729,7 +729,7 @@ msgstr "Benutzername"
 msgid "Roles"
 msgstr "Rollen"
 
-#: assets/utils/functions/DomainToTag.tsx:16
+#: assets/utils/functions/DomainToTag.tsx:19
 msgid "The domain name was updated less than a week ago."
 msgstr ""
 
