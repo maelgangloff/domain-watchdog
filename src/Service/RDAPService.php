@@ -14,7 +14,6 @@ use App\Entity\DomainEvent;
 use App\Entity\DomainStatus;
 use App\Entity\Entity;
 use App\Entity\EntityEvent;
-use App\Entity\IanaAccreditation;
 use App\Entity\Nameserver;
 use App\Entity\NameserverEntity;
 use App\Entity\RdapServer;
@@ -568,11 +567,11 @@ readonly class RDAPService
 
         $entity->setHandle($rdapEntity['handle']);
 
-        if (isset($rdapEntity['remarks']) && is_array($rdapEntity['remarks']) && null === $entity->getIanaAccreditation()) {
+        if (isset($rdapEntity['remarks']) && is_array($rdapEntity['remarks']) && null === $entity->getIanaAccreditation()->getStatus()) {
             $entity->setRemarks($rdapEntity['remarks']);
         }
 
-        if (isset($rdapEntity['vcardArray']) && null === $entity->getIanaAccreditation()) {
+        if (isset($rdapEntity['vcardArray']) && null === $entity->getIanaAccreditation()->getStatus()) {
             if (empty($entity->getJCard())) {
                 if (!array_key_exists('elements', $rdapEntity['vcardArray'])) {
                     $entity->setJCard($rdapEntity['vcardArray']);
@@ -606,7 +605,7 @@ readonly class RDAPService
             }
         }
 
-        if ($isIANAid || !isset($rdapEntity['events']) || null !== $entity->getIanaAccreditation()) {
+        if ($isIANAid || !isset($rdapEntity['events']) || null !== $entity->getIanaAccreditation()->getStatus()) {
             return $entity;
         }
 
@@ -826,17 +825,13 @@ readonly class RDAPService
                 ->setHandle($registrar->value)
                 ->setTld(null)
                 ->setJCard(['vcard', [['version', [], 'text', '4.0'], ['fn', [], 'text', $registrar->name]]])
-                ->setRemarks(null);
-
-            if (null === $entity->getIanaAccreditation()) {
-                $entity->setIanaAccreditation(new IanaAccreditation());
-            }
-            $entity->getIanaAccreditation()
-                ->setRegistrarName($registrar->name)
-                ->setStatus(RegistrarStatus::from($registrar->status))
-                ->setRdapBaseUrl($registrar->rdapurl->count() ? ($registrar->rdapurl->server) : null)
-                ->setUpdated(null !== $registrar->attributes()->updated ? new \DateTimeImmutable($registrar->attributes()->updated) : null)
-                ->setDate(null !== $registrar->attributes()->date ? new \DateTimeImmutable($registrar->attributes()->date) : null);
+                ->setRemarks(null)
+                ->getIanaAccreditation()
+                    ->setRegistrarName($registrar->name)
+                    ->setStatus(RegistrarStatus::from($registrar->status))
+                    ->setRdapBaseUrl($registrar->rdapurl->count() ? ($registrar->rdapurl->server) : null)
+                    ->setUpdated(null !== $registrar->attributes()->updated ? new \DateTimeImmutable($registrar->attributes()->updated) : null)
+                    ->setDate(null !== $registrar->attributes()->date ? new \DateTimeImmutable($registrar->attributes()->date) : null);
 
             $this->em->persist($entity);
         }

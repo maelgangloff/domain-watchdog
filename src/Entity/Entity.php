@@ -87,13 +87,15 @@ class Entity
     private ?array $remarks = null;
 
     #[Embedded(class: IanaAccreditation::class, columnPrefix: 'iana_')]
-    private ?IanaAccreditation $ianaAccreditation;
+    #[Groups(['entity:item', 'domain:item'])]
+    private IanaAccreditation $ianaAccreditation;
 
     public function __construct()
     {
         $this->domainEntities = new ArrayCollection();
         $this->nameserverEntities = new ArrayCollection();
         $this->events = new ArrayCollection();
+        $this->ianaAccreditation = new IanaAccreditation();
     }
 
     public function getHandle(): ?string
@@ -246,12 +248,12 @@ class Entity
         return $this;
     }
 
-    public function getIanaAccreditation(): ?IanaAccreditation
+    public function getIanaAccreditation(): IanaAccreditation
     {
         return $this->ianaAccreditation;
     }
 
-    public function setIanaAccreditation(?IanaAccreditation $ianaAccreditation): void
+    public function setIanaAccreditation(IanaAccreditation $ianaAccreditation): void
     {
         $this->ianaAccreditation = $ianaAccreditation;
     }
