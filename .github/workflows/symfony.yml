@@ -59,7 +59,7 @@ jobs:
                         ${{ runner.os }}-node-
 
             -   name: Install frontend dependencies
-                run: npm install --global yarn && yarn install
+                run: yarn install
 
             -   name: Run ESLint
                 run: yarn run eslint
