@@ -3,29 +3,23 @@
 namespace App\Controller;
 
 use App\Entity\Domain;
-use App\Entity\DomainEntity;
 use App\Entity\DomainEvent;
+use App\Entity\DomainStatus;
 use App\Entity\User;
 use App\Entity\WatchList;
 use App\Repository\WatchListRepository;
 use Doctrine\Common\Collections\Collection;
-use Eluceo\iCal\Domain\Entity\Attendee;
 use Eluceo\iCal\Domain\Entity\Calendar;
-use Eluceo\iCal\Domain\Entity\Event;
-use Eluceo\iCal\Domain\Enum\EventStatus;
-use Eluceo\iCal\Domain\ValueObject\Category;
-use Eluceo\iCal\Domain\ValueObject\Date;
-use Eluceo\iCal\Domain\ValueObject\EmailAddress;
-use Eluceo\iCal\Domain\ValueObject\SingleDay;
-use Eluceo\iCal\Domain\ValueObject\Timestamp;
 use Eluceo\iCal\Presentation\Component\Property;
 use Eluceo\iCal\Presentation\Component\Property\Value\TextValue;
 use Eluceo\iCal\Presentation\Factory\CalendarFactory;
+use Laminas\Feed\Writer\Entry;
+use Laminas\Feed\Writer\Feed;
 use Sabre\VObject\EofException;
 use Sabre\VObject\InvalidDataException;
 use Sabre\VObject\ParseException;
-use Sabre\VObject\Reader;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
@@ -76,59 +70,9 @@ class WatchListController extends AbstractController
 
         /** @var Domain $domain */
         foreach ($watchList->getDomains()->getIterator() as $domain) {
-            $attendees = [];
-
-            /* @var DomainEntity $entity */
-            foreach ($domain->getDomainEntities()->filter(fn (DomainEntity $domainEntity) => !$domainEntity->getDeleted())->getIterator() as $domainEntity) {
-                $jCard = $domainEntity->getEntity()->getJCard();
-
-                if (empty($jCard)) {
-                    continue;
-                }
-
-                $vCardData = Reader::readJson($jCard);
-
-                if (empty($vCardData->EMAIL) || empty($vCardData->FN)) {
-                    continue;
-                }
-
-                $email = (string) $vCardData->EMAIL;
-
-                if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-                    continue;
-                }
-
-                $attendees[] = (new Attendee(new EmailAddress($email)))->setDisplayName((string) $vCardData->FN);
+            foreach ($domain->getDomainCalendarEvents() as $event) {
+                $calendar->addEvent($event);
             }
-
-            /** @var DomainEvent $event */
-            foreach ($domain->getEvents()->filter(fn (DomainEvent $e) => $e->getDate()->diff(new \DateTimeImmutable('now'))->y <= 10)->getIterator() as $event) {
-                $calendar->addEvent((new Event())
-                    ->setLastModified(new Timestamp($domain->getUpdatedAt()))
-                    ->setStatus(EventStatus::CONFIRMED())
-                    ->setSummary($domain->getLdhName().': '.$event->getAction())
-                    ->addCategory(new Category($event->getAction()))
-                    ->setAttendees($attendees)
-                    ->setOccurrence(new SingleDay(new Date($event->getDate())))
-                );
-            }
-
-            $expiresInDays = $domain->getExpiresInDays();
-
-            if (null === $expiresInDays) {
-                continue;
-            }
-
-            $calendar->addEvent((new Event())
-                ->setLastModified(new Timestamp($domain->getUpdatedAt()))
-                ->setStatus(EventStatus::CONFIRMED())
-                ->setSummary($domain->getLdhName().': estimated WHOIS release date')
-                ->addCategory(new Category('release'))
-                ->setAttendees($attendees)
-                ->setOccurrence(new SingleDay(new Date(
-                    (new \DateTimeImmutable())->setTime(0, 0)->add(new \DateInterval('P'.$expiresInDays.'D'))
-                )))
-            );
         }
 
         $calendarResponse = (new CalendarFactory())->createCalendar($calendar);
@@ -175,5 +119,138 @@ class WatchListController extends AbstractController
         usort($domains, fn (Domain $d1, Domain $d2) => $d1->getExpiresInDays() - $d2->getExpiresInDays());
 
         return $domains;
+    }
+
+    /**
+     * @throws \Exception
+     */
+    #[Route(
+        path: '/api/watchlists/{token}/rss/events',
+        name: 'watchlist_rss_events',
+        defaults: [
+            '_api_resource_class' => WatchList::class,
+            '_api_operation_name' => 'rss_events',
+        ]
+    )]
+    public function getWatchlistRssEventsFeed(string $token, Request $request): Response
+    {
+        /** @var WatchList $watchlist */
+        $watchlist = $this->watchListRepository->findOneBy(['token' => $token]);
+
+        $feed = (new Feed())
+            ->setLanguage('en')
+            ->setCopyright('Domain Watchdog makes this information available "as is," and does not guarantee its accuracy.')
+            ->setTitle('Domain events ('.$watchlist->getName().')')
+            ->setGenerator('Domain Watchdog - RSS Feed', null, 'https://github.com/maelgangloff/domain-watchdog')
+            ->setDescription('The latest events for domain names in your Watchlist')
+            ->setLink($request->getSchemeAndHttpHost().'/#/tracking/watchlist')
+            ->setFeedLink($request->getSchemeAndHttpHost().'/api/watchlists/'.$token.'/rss/events', 'atom')
+            ->setDateCreated($watchlist->getCreatedAt());
+
+        /** @var Domain $domain */
+        foreach ($watchlist->getDomains()->getIterator() as $domain) {
+            foreach ($this->getRssEventEntries($request->getSchemeAndHttpHost(), $domain) as $entry) {
+                $feed->addEntry($entry);
+            }
+        }
+
+        return new Response($feed->export('atom'), Response::HTTP_OK, [
+            'Content-Type' => 'application/atom+xml; charset=utf-8',
+        ]);
+    }
+
+    /**
+     * @throws \Exception
+     */
+    #[Route(
+        path: '/api/watchlists/{token}/rss/status',
+        name: 'watchlist_rss_status',
+        defaults: [
+            '_api_resource_class' => WatchList::class,
+            '_api_operation_name' => 'rss_status',
+        ]
+    )]
+    public function getWatchlistRssStatusFeed(string $token, Request $request): Response
+    {
+        /** @var WatchList $watchlist */
+        $watchlist = $this->watchListRepository->findOneBy(['token' => $token]);
+
+        $feed = (new Feed())
+            ->setLanguage('en')
+            ->setCopyright('Domain Watchdog makes this information available "as is," and does not guarantee its accuracy.')
+            ->setTitle('Domain EPP status ('.$watchlist->getName().')')
+            ->setGenerator('Domain Watchdog - RSS Feed', null, 'https://github.com/maelgangloff/domain-watchdog')
+            ->setDescription('The latest changes to the EPP status of the domain names in your Watchlist')
+            ->setLink($request->getSchemeAndHttpHost().'/#/tracking/watchlist')
+            ->setFeedLink($request->getSchemeAndHttpHost().'/api/watchlists/'.$token.'/rss/status', 'atom')
+            ->setDateCreated($watchlist->getCreatedAt());
+
+        /** @var Domain $domain */
+        foreach ($watchlist->getDomains()->getIterator() as $domain) {
+            foreach ($this->getRssStatusEntries($request->getSchemeAndHttpHost(), $domain) as $entry) {
+                $feed->addEntry($entry);
+            }
+        }
+
+        return new Response($feed->export('atom'), Response::HTTP_OK, [
+            'Content-Type' => 'application/atom+xml; charset=utf-8',
+        ]);
+    }
+
+    /**
+     * @throws \Exception
+     */
+    private function getRssEventEntries(string $baseUrl, Domain $domain): array
+    {
+        $entries = [];
+        foreach ($domain->getEvents()->filter(fn (DomainEvent $e) => $e->getDate()->diff(new \DateTimeImmutable('now'))->y <= 10)->getIterator() as $event) {
+            $entries[] = (new Entry())
+                ->setId($baseUrl.'/api/domains/'.$domain->getLdhName().'#events-'.$event->getId())
+                ->setTitle($domain->getLdhName().': '.$event->getAction().'  - event update')
+                ->setDescription('Domain name event')
+                ->setLink($baseUrl.'/#/search/domain/'.$domain->getLdhName())
+                ->setContent($this->render('rss/event_entry.html.twig', [
+                    'event' => $event,
+                ])->getContent())
+                ->setDateModified($event->getDate())
+                ->addAuthor(['name' => strtoupper($domain->getTld()->getTld()).' Registry']);
+        }
+
+        return $entries;
+    }
+
+    /**
+     * @throws \Exception
+     */
+    private function getRssStatusEntries(string $baseUrl, Domain $domain): array
+    {
+        $entries = [];
+        foreach ($domain->getDomainStatuses()->filter(fn (DomainStatus $e) => $e->getDate()->diff(new \DateTimeImmutable('now'))->y <= 10)->getIterator() as $domainStatus) {
+            $authors = [['name' => strtoupper($domain->getTld()->getTld()).' Registry']];
+            /** @var string $status */
+            foreach ([...$domainStatus->getAddStatus(), ...$domainStatus->getDeleteStatus()] as $status) {
+                if (str_starts_with($status, 'client')) {
+                    $authors[] = ['name' => 'Registrar'];
+                    break;
+                }
+            }
+
+            $entries[] = (new Entry())
+                ->setId($baseUrl.'/api/domains/'.$domain->getLdhName().'#status-'.$domainStatus->getId())
+                ->setTitle($domain->getLdhName().' - EPP status update')
+                ->setDescription('There has been a change in the EPP status of the domain name.')
+                ->setLink($baseUrl.'/#/search/domain/'.$domain->getLdhName())
+                ->setContent($this->render('rss/status_entry.html.twig', [
+                    'domainStatus' => $domainStatus,
+                ])->getContent())
+                ->setDateCreated($domainStatus->getCreatedAt())
+                ->setDateModified($domainStatus->getDate())
+                ->addCategory(['term' => $domain->getLdhName()])
+                ->addCategory(['term' => strtoupper($domain->getTld()->getTld())])
+                ->addAuthors($authors)
+            ;
+        }
+
+        return $entries;
     }
 }

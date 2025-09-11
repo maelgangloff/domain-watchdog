@@ -13,6 +13,18 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Eluceo\iCal\Domain\Entity\Attendee;
+use Eluceo\iCal\Domain\Entity\Event;
+use Eluceo\iCal\Domain\Enum\EventStatus;
+use Eluceo\iCal\Domain\ValueObject\Category;
+use Eluceo\iCal\Domain\ValueObject\Date;
+use Eluceo\iCal\Domain\ValueObject\EmailAddress;
+use Eluceo\iCal\Domain\ValueObject\SingleDay;
+use Eluceo\iCal\Domain\ValueObject\Timestamp;
+use Sabre\VObject\EofException;
+use Sabre\VObject\InvalidDataException;
+use Sabre\VObject\ParseException;
+use Sabre\VObject\Reader;
 use Symfony\Component\Serializer\Attribute\Groups;
 use Symfony\Component\Serializer\Attribute\SerializedName;
 
@@ -632,5 +644,71 @@ class Domain
         }
 
         return $this;
+    }
+
+    /**
+     * @return Event[]
+     *
+     * @throws ParseException
+     * @throws EofException
+     * @throws InvalidDataException
+     * @throws \Exception
+     */
+    public function getDomainCalendarEvents(): array
+    {
+        $events = [];
+        $attendees = [];
+
+        /* @var DomainEntity $entity */
+        foreach ($this->getDomainEntities()->filter(fn (DomainEntity $domainEntity) => !$domainEntity->getDeleted())->getIterator() as $domainEntity) {
+            $jCard = $domainEntity->getEntity()->getJCard();
+
+            if (empty($jCard)) {
+                continue;
+            }
+
+            $vCardData = Reader::readJson($jCard);
+
+            if (empty($vCardData->EMAIL) || empty($vCardData->FN)) {
+                continue;
+            }
+
+            $email = (string) $vCardData->EMAIL;
+
+            if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                continue;
+            }
+
+            $attendees[] = (new Attendee(new EmailAddress($email)))->setDisplayName((string) $vCardData->FN);
+        }
+
+        /** @var DomainEvent $event */
+        foreach ($this->getEvents()->filter(fn (DomainEvent $e) => $e->getDate()->diff(new \DateTimeImmutable('now'))->y <= 10)->getIterator() as $event) {
+            $events[] = (new Event())
+                ->setLastModified(new Timestamp($this->getUpdatedAt()))
+                ->setStatus(EventStatus::CONFIRMED())
+                ->setSummary($this->getLdhName().': '.$event->getAction())
+                ->addCategory(new Category($event->getAction()))
+                ->setAttendees($attendees)
+                ->setOccurrence(new SingleDay(new Date($event->getDate()))
+                );
+        }
+
+        $expiresInDays = $this->getExpiresInDays();
+
+        if (null !== $expiresInDays) {
+            $events[] = (new Event())
+                ->setLastModified(new Timestamp($this->getUpdatedAt()))
+                ->setStatus(EventStatus::CONFIRMED())
+                ->setSummary($this->getLdhName().': estimated WHOIS release date')
+                ->addCategory(new Category('release'))
+                ->setAttendees($attendees)
+                ->setOccurrence(new SingleDay(new Date(
+                    (new \DateTimeImmutable())->setTime(0, 0)->add(new \DateInterval('P'.$expiresInDays.'D'))
+                ))
+                );
+        }
+
+        return $events;
     }
 }
