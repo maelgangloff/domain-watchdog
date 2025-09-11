@@ -1,4 +1,4 @@
-name: Symfony
+name: Symfony CI
 
 on:
     push:
@@ -11,6 +11,7 @@ permissions:
 
 jobs:
     symfony:
+        name: Symfony Check
         runs-on: ubuntu-latest
         steps:
             -   name: Checkout code
@@ -33,6 +34,22 @@ jobs:
             -   name: Install backend dependencies
                 run: composer install --prefer-dist --no-progress --no-suggest --optimize-autoloader
 
+            -   name: Run PHP-CS-Fixer
+                run: vendor/bin/php-cs-fixer fix --dry-run --diff
+
+            -   name: Run PHPStan
+                run: vendor/bin/phpstan analyse
+
+            -   name: Run PHPUnit
+                run: vendor/bin/phpunit --coverage-text
+
+    frontend:
+        name: Frontend Check
+        runs-on: ubuntu-latest
+        steps:
+            -   name: Checkout code
+                uses: actions/checkout@v3
+
             -   name: Cache Node modules
                 uses: actions/cache@v3
                 with:
@@ -43,15 +60,6 @@ jobs:
 
             -   name: Install frontend dependencies
                 run: npm install --global yarn && yarn install
-
-            -   name: Run PHP-CS-Fixer
-                run: vendor/bin/php-cs-fixer fix --dry-run --diff
-
-            -   name: Run PHPStan
-                run: vendor/bin/phpstan analyse
-
-            -   name: Run PHPUnit
-                run: vendor/bin/phpunit
 
             -   name: Run ESLint
                 run: yarn run eslint
