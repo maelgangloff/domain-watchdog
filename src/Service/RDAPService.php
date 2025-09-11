@@ -661,14 +661,36 @@ class RDAPService
                     $dsData->setAlgorithm(Algorithm::from($rdapDsData['algorithm']));
                 }
                 if (array_key_exists('digest', $rdapDsData)) {
-                    $blob = hex2bin($rdapDsData['digest']);
+                    try {
+                        $blob = hex2bin($rdapDsData['digest']);
+                    } catch (\Exception) {
+                        $this->logger->warning('DNSSEC digest is not a valid hexadecimal value.');
+                        continue;
+                    }
+
                     if (false === $blob) {
-                        throw new ServiceUnavailableHttpException('DNSSEC digest is not a valid hexadecimal value.');
+                        $this->logger->warning('DNSSEC digest is not a valid hexadecimal value.');
+                        continue;
                     }
                     $dsData->setDigest($blob);
                 }
                 if (array_key_exists('digestType', $rdapDsData)) {
                     $dsData->setDigestType(DigestType::from($rdapDsData['digestType']));
+                }
+
+                $digestLengthByte = [
+                    DigestType::SHA1->value => 20,
+                    DigestType::SHA256->value => 32,
+                    DigestType::GOST_R_34_11_94->value => 32,
+                    DigestType::SHA384->value => 48,
+                    DigestType::GOST_R_34_11_2012->value => 64,
+                    DigestType::SM3->value => 32,
+                ];
+
+                if (array_key_exists($dsData->getDigestType()->value, $digestLengthByte)
+                    && strlen($dsData->getDigest()) / 2 !== $digestLengthByte[$dsData->getDigestType()->value]) {
+                    $this->logger->warning('DNSSEC digest does not have a valid length according to the digest type.');
+                    continue;
                 }
 
                 $domain->addDnsKey($dsData);
