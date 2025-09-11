@@ -519,8 +519,10 @@ readonly class RDAPService
      */
     private function registerEntity(array $rdapEntity, array $roles, string $domain, Tld $tld): Entity
     {
-        /*
-         * If the RDAP server transmits the entity's IANA number, it is used as a priority to identify the entity
+        /**
+         * If the RDAP server transmits the entity's IANA number, it is used as a priority to identify the entity.
+         *
+         * @see https://datatracker.ietf.org/doc/html/rfc7483#section-4.8
          */
         $isIANAid = false;
         if (isset($rdapEntity['publicIds'])) {
@@ -547,14 +549,15 @@ readonly class RDAPService
 
         $entity = $this->entityRepository->findOneBy([
             'handle' => $rdapEntity['handle'],
-            'tld' => $tld,
+            'tld' => $isIANAid ? null : $tld,
         ]);
 
-        if (null === $entity) {
-            $entity = $this->entityRepository->findOneBy([
-                'handle' => $rdapEntity['handle'],
-                'tld' => null,
-            ]);
+        if ($isIANAid && null !== $entity) {
+            return $entity;
+        }
+
+        if ($isIANAid && null === $entity) {
+            throw new ServiceUnavailableHttpException('The server does not know the IANA identifier of this registrar ('.$rdapEntity['handle'].')');
         }
 
         if (null === $entity) {
@@ -567,11 +570,11 @@ readonly class RDAPService
 
         $entity->setHandle($rdapEntity['handle']);
 
-        if (isset($rdapEntity['remarks']) && is_array($rdapEntity['remarks']) && null === $entity->getIanaAccreditation()->getStatus()) {
+        if (isset($rdapEntity['remarks']) && is_array($rdapEntity['remarks'])) {
             $entity->setRemarks($rdapEntity['remarks']);
         }
 
-        if (isset($rdapEntity['vcardArray']) && null === $entity->getIanaAccreditation()->getStatus()) {
+        if (isset($rdapEntity['vcardArray'])) {
             if (empty($entity->getJCard())) {
                 if (!array_key_exists('elements', $rdapEntity['vcardArray'])) {
                     $entity->setJCard($rdapEntity['vcardArray']);
@@ -605,37 +608,35 @@ readonly class RDAPService
             }
         }
 
-        if ($isIANAid || !isset($rdapEntity['events']) || null !== $entity->getIanaAccreditation()->getStatus()) {
-            return $entity;
-        }
-
-        /** @var EntityEvent $event */
-        foreach ($entity->getEvents()->getIterator() as $event) {
-            $event->setDeleted(true);
-        }
-
-        $this->em->persist($entity);
-
-        foreach ($rdapEntity['events'] as $rdapEntityEvent) {
-            $eventAction = $rdapEntityEvent['eventAction'];
-            if ($eventAction === EventAction::LastChanged->value || $eventAction === EventAction::LastUpdateOfRDAPDatabase->value) {
-                continue;
+        if (isset($rdapEntity['events'])) {
+            /** @var EntityEvent $event */
+            foreach ($entity->getEvents()->getIterator() as $event) {
+                $event->setDeleted(true);
             }
-            $event = $this->entityEventRepository->findOneBy([
-                'action' => $rdapEntityEvent['eventAction'],
-                'date' => new \DateTimeImmutable($rdapEntityEvent['eventDate']),
-            ]);
 
-            if (null !== $event) {
-                $event->setDeleted(false);
-                continue;
+            $this->em->persist($entity);
+
+            foreach ($rdapEntity['events'] as $rdapEntityEvent) {
+                $eventAction = $rdapEntityEvent['eventAction'];
+                if ($eventAction === EventAction::LastChanged->value || $eventAction === EventAction::LastUpdateOfRDAPDatabase->value) {
+                    continue;
+                }
+                $event = $this->entityEventRepository->findOneBy([
+                    'action' => $rdapEntityEvent['eventAction'],
+                    'date' => new \DateTimeImmutable($rdapEntityEvent['eventDate']),
+                ]);
+
+                if (null !== $event) {
+                    $event->setDeleted(false);
+                    continue;
+                }
+                $entity->addEvent(
+                    (new EntityEvent())
+                        ->setEntity($entity)
+                        ->setAction($rdapEntityEvent['eventAction'])
+                        ->setDate(new \DateTimeImmutable($rdapEntityEvent['eventDate']))
+                        ->setDeleted(false));
             }
-            $entity->addEvent(
-                (new EntityEvent())
-                    ->setEntity($entity)
-                    ->setAction($rdapEntityEvent['eventAction'])
-                    ->setDate(new \DateTimeImmutable($rdapEntityEvent['eventDate']))
-                    ->setDeleted(false));
         }
 
         $this->em->persist($entity);
