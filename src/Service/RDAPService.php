@@ -847,7 +847,7 @@ class RDAPService
             $entity
                 ->setHandle($registrar->value)
                 ->setTld(null)
-                ->setJCard(['vcard', [['version', [], 'text', '4.0'], ['fn', [], 'text', $registrar->name]]])
+                ->setJCard(['vcard', [['version', [], 'text', '4.0'], ['fn', [], 'text', (string) $registrar->name]]])
                 ->setRemarks(null)
                 ->getIanaAccreditation()
                     ->setRegistrarName($registrar->name)
