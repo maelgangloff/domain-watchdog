@@ -42,13 +42,16 @@ jobs:
                         ${{ runner.os }}-node-
 
             -   name: Install frontend dependencies
-                run: yarn install
+                run: npm install --global yarn && yarn install
 
             -   name: Run PHP-CS-Fixer
                 run: vendor/bin/php-cs-fixer fix --dry-run --diff
 
             -   name: Run PHPStan
                 run: vendor/bin/phpstan analyse
+
+            -   name: Run PHPUnit
+                run: vendor/bin/phpunit
 
             -   name: Run ESLint
                 run: yarn run eslint

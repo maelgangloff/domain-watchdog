@@ -41,7 +41,7 @@ class DomainRefreshController extends AbstractController
      */
     public function __invoke(string $ldhName, Request $request): Domain
     {
-        $idnDomain = strtolower(idn_to_ascii($ldhName));
+        $idnDomain = RDAPService::convertToIdn($ldhName);
         $userId = $this->getUser()->getUserIdentifier();
 
         $this->logger->info('User {username} wants to update the domain name {idnDomain}.', [

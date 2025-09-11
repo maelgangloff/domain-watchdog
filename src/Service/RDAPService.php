@@ -45,7 +45,7 @@ use Symfony\Contracts\HttpClient\Exception\ServerExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
-readonly class RDAPService
+class RDAPService
 {
     /* @see https://www.iana.org/domains/root/db */
     public const ISO_TLD_EXCEPTION = ['ac', 'eu', 'uk', 'su', 'tp'];
@@ -199,7 +199,7 @@ readonly class RDAPService
             throw new BadRequestException('Domain must contain at least one dot');
         }
 
-        $tld = strtolower(idn_to_ascii(substr($domain, $lastDotPosition + 1)));
+        $tld = self::convertToIdn(substr($domain, $lastDotPosition + 1));
         $tldEntity = $this->tldRepository->findOneBy(['tld' => $tld]);
 
         if (null === $tldEntity) {
