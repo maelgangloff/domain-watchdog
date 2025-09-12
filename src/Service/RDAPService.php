@@ -849,7 +849,7 @@ class RDAPService
                 ->setTld(null)
                 ->setJCard(['vcard', [['version', [], 'text', '4.0'], ['fn', [], 'text', (string) $registrar->name]]])
                 ->setRemarks(null)
-                ->getIanaAccreditation()
+                ->getIcannAccreditation()
                     ->setRegistrarName($registrar->name)
                     ->setStatus(RegistrarStatus::from($registrar->status))
                     ->setRdapBaseUrl($registrar->rdapurl->count() ? ($registrar->rdapurl->server) : null)

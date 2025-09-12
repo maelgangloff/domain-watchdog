@@ -9,7 +9,7 @@ use Doctrine\ORM\Mapping\Embeddable;
 use Symfony\Component\Serializer\Attribute\Groups;
 
 #[Embeddable]
-class IanaAccreditation
+class IcannAccreditation
 {
     #[ORM\Column(length: 255, nullable: true)]
     #[Groups(['entity:item', 'entity:list', 'domain:item'])]

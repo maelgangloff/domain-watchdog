@@ -21,11 +21,11 @@ use Symfony\Component\Serializer\Attribute\SerializedName;
 #[ApiResource(
     operations: [
         new GetCollection(
-            uriTemplate: '/entities/iana-accreditations',
+            uriTemplate: '/entities/icann-accreditations',
             openapiContext: [
                 'parameters' => [
                     [
-                        'name' => 'ianaAccreditation.status',
+                        'name' => 'icannAccreditation.status',
                         'in' => 'query',
                         'required' => true,
                         'schema' => [
@@ -37,13 +37,13 @@ use Symfony\Component\Serializer\Attribute\SerializedName;
                         ],
                         'style' => 'form',
                         'explode' => true,
-                        'description' => 'Filter by IANA accreditation status',
+                        'description' => 'Filter by ICANN accreditation status',
                     ],
                 ],
             ],
-            description: 'IANA Registrar IDs list',
+            description: 'ICANN Registrar IDs list',
             normalizationContext: ['groups' => ['entity:list']],
-            name: 'iana_accreditations_collection'
+            name: 'icann_accreditations_collection'
         ),
         /*
         new GetCollection(
@@ -70,7 +70,7 @@ use Symfony\Component\Serializer\Attribute\SerializedName;
 #[ApiFilter(
     SearchFilter::class,
     properties: [
-        'ianaAccreditation.status' => 'exact',
+        'icannAccreditation.status' => 'exact',
     ]
 )]
 class Entity
@@ -120,16 +120,16 @@ class Entity
     #[Groups(['entity:item', 'domain:item'])]
     private ?array $remarks = null;
 
-    #[Embedded(class: IanaAccreditation::class, columnPrefix: 'iana_')]
+    #[Embedded(class: IcannAccreditation::class, columnPrefix: 'icann_')]
     #[Groups(['entity:list', 'entity:item', 'domain:item'])]
-    private ?IanaAccreditation $ianaAccreditation = null;
+    private ?IcannAccreditation $icannAccreditation = null;
 
     public function __construct()
     {
         $this->domainEntities = new ArrayCollection();
         $this->nameserverEntities = new ArrayCollection();
         $this->events = new ArrayCollection();
-        $this->ianaAccreditation = new IanaAccreditation();
+        $this->icannAccreditation = new IcannAccreditation();
     }
 
     public function getHandle(): ?string
@@ -282,13 +282,13 @@ class Entity
         return $this;
     }
 
-    public function getIanaAccreditation(): ?IanaAccreditation
+    public function getIcannAccreditation(): ?IcannAccreditation
     {
-        return null === $this->ianaAccreditation->getStatus() ? null : $this->ianaAccreditation;
+        return null === $this->icannAccreditation->getStatus() ? null : $this->icannAccreditation;
     }
 
-    public function setIanaAccreditation(?IanaAccreditation $ianaAccreditation): void
+    public function setIcannAccreditation(?IcannAccreditation $icannAccreditation): void
     {
-        $this->ianaAccreditation = $ianaAccreditation;
+        $this->icannAccreditation = $icannAccreditation;
     }
 }

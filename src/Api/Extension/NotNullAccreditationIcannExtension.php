@@ -8,7 +8,7 @@ use ApiPlatform\Metadata\Operation;
 use App\Entity\Entity;
 use Doctrine\ORM\QueryBuilder;
 
-class NotNullAccreditationIanaExtension implements QueryCollectionExtensionInterface
+class NotNullAccreditationIcannExtension implements QueryCollectionExtensionInterface
 {
     public function applyToCollection(
         QueryBuilder $queryBuilder,
@@ -20,9 +20,9 @@ class NotNullAccreditationIanaExtension implements QueryCollectionExtensionInter
         if (Entity::class !== $resourceClass) {
             return;
         }
-        if ($operation && 'iana_accreditations_collection' === $operation->getName()) {
+        if ($operation && 'icann_accreditations_collection' === $operation->getName()) {
             $rootAlias = $queryBuilder->getRootAliases()[0];
-            $queryBuilder->andWhere(sprintf('%s.ianaAccreditation.status IS NOT NULL', $rootAlias));
+            $queryBuilder->andWhere(sprintf('%s.icannAccreditation.status IS NOT NULL', $rootAlias));
         }
     }
 }
