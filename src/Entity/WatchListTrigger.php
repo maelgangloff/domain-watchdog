@@ -16,6 +16,7 @@ use Symfony\Component\Serializer\Attribute\Groups;
 #[ORM\Entity(repositoryClass: EventTriggerRepository::class)]
 #[ApiResource(
     uriTemplate: '/watchlists/{watchListId}/triggers/{action}/{event}',
+    shortName: 'Watchlist Trigger',
     operations: [
         new Get(),
         new GetCollection(

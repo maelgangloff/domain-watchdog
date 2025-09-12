@@ -2,7 +2,10 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Doctrine\Orm\Filter\SearchFilter;
+use ApiPlatform\Metadata\ApiFilter;
 use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\GetCollection;
 use App\Repository\EntityRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -17,6 +20,31 @@ use Symfony\Component\Serializer\Attribute\SerializedName;
 )]
 #[ApiResource(
     operations: [
+        new GetCollection(
+            uriTemplate: '/entities/iana-accreditations',
+            openapiContext: [
+                'parameters' => [
+                    [
+                        'name' => 'ianaAccreditation.status',
+                        'in' => 'query',
+                        'required' => true,
+                        'schema' => [
+                            'type' => 'array',
+                            'items' => [
+                                'type' => 'string',
+                                'enum' => ['Accredited', 'Terminated', 'Reserved'],
+                            ],
+                        ],
+                        'style' => 'form',
+                        'explode' => true,
+                        'description' => 'Filter by IANA accreditation status',
+                    ],
+                ],
+            ],
+            description: 'IANA Registrar IDs list',
+            normalizationContext: ['groups' => ['entity:list']],
+            name: 'iana_accreditations_collection'
+        ),
         /*
         new GetCollection(
             uriTemplate: '/entities',
@@ -37,6 +65,12 @@ use Symfony\Component\Serializer\Attribute\SerializedName;
             ]
         ),
         */
+    ]
+)]
+#[ApiFilter(
+    SearchFilter::class,
+    properties: [
+        'ianaAccreditation.status' => 'exact',
     ]
 )]
 class Entity
@@ -75,7 +109,7 @@ class Entity
      * @var Collection<int, EntityEvent>
      */
     #[ORM\OneToMany(targetEntity: EntityEvent::class, mappedBy: 'entity', cascade: ['persist'], orphanRemoval: true)]
-    #[Groups(['entity:list', 'entity:item', 'entity:list', 'domain:item'])]
+    #[Groups(['entity:item', 'domain:item'])]
     private Collection $events;
 
     #[ORM\Column]
@@ -87,8 +121,8 @@ class Entity
     private ?array $remarks = null;
 
     #[Embedded(class: IanaAccreditation::class, columnPrefix: 'iana_')]
-    #[Groups(['entity:item', 'domain:item'])]
-    private IanaAccreditation $ianaAccreditation;
+    #[Groups(['entity:list', 'entity:item', 'domain:item'])]
+    private ?IanaAccreditation $ianaAccreditation = null;
 
     public function __construct()
     {
@@ -248,12 +282,12 @@ class Entity
         return $this;
     }
 
-    public function getIanaAccreditation(): IanaAccreditation
+    public function getIanaAccreditation(): ?IanaAccreditation
     {
-        return $this->ianaAccreditation;
+        return null === $this->ianaAccreditation->getStatus() ? null : $this->ianaAccreditation;
     }
 
-    public function setIanaAccreditation(IanaAccreditation $ianaAccreditation): void
+    public function setIanaAccreditation(?IanaAccreditation $ianaAccreditation): void
     {
         $this->ianaAccreditation = $ianaAccreditation;
     }

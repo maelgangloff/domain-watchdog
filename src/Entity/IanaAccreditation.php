@@ -12,7 +12,7 @@ use Symfony\Component\Serializer\Attribute\Groups;
 class IanaAccreditation
 {
     #[ORM\Column(length: 255, nullable: true)]
-    #[Groups(['entity:item', 'domain:item'])]
+    #[Groups(['entity:item', 'entity:list', 'domain:item'])]
     private ?string $registrarName = null;
 
     #[ORM\Column(length: 255, nullable: true)]
@@ -20,7 +20,7 @@ class IanaAccreditation
     private ?string $rdapBaseUrl = null;
 
     #[ORM\Column(nullable: true, enumType: RegistrarStatus::class)]
-    #[Groups(['entity:item', 'domain:item'])]
+    #[Groups(['entity:item', 'entity:list', 'domain:item'])]
     private ?RegistrarStatus $status = null;
 
     #[ORM\Column(type: Types::DATE_IMMUTABLE, nullable: true)]
