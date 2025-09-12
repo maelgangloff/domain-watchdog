@@ -35,7 +35,6 @@ use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\HttpClient\Exception\ClientException;
 use Symfony\Component\HttpFoundation\Exception\BadRequestException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use Symfony\Component\HttpKernel\Exception\ServiceUnavailableHttpException;
 use Symfony\Component\Yaml\Yaml;
 use Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\DecodingExceptionInterface;
@@ -519,6 +518,8 @@ class RDAPService
      */
     private function registerEntity(array $rdapEntity, array $roles, string $domain, Tld $tld): Entity
     {
+        $entity = null;
+
         /**
          * If the RDAP server transmits the entity's IANA number, it is used as a priority to identify the entity.
          *
@@ -528,9 +529,16 @@ class RDAPService
         if (isset($rdapEntity['publicIds'])) {
             foreach ($rdapEntity['publicIds'] as $publicId) {
                 if ('IANA Registrar ID' === $publicId['type'] && isset($publicId['identifier']) && '' !== $publicId['identifier']) {
-                    $rdapEntity['handle'] = $publicId['identifier'];
-                    $isIANAid = true;
-                    break;
+                    $entity = $this->entityRepository->findOneBy([
+                        'handle' => $rdapEntity['handle'],
+                        'tld' => null,
+                    ]);
+
+                    if (null !== $entity) {
+                        $rdapEntity['handle'] = $publicId['identifier'];
+                        $isIANAid = true;
+                        break;
+                    }
                 }
             }
         }
@@ -547,17 +555,15 @@ class RDAPService
             ]);
         }
 
-        $entity = $this->entityRepository->findOneBy([
-            'handle' => $rdapEntity['handle'],
-            'tld' => $isIANAid ? null : $tld,
-        ]);
+        if (null === $entity) {
+            $entity = $this->entityRepository->findOneBy([
+                'handle' => $rdapEntity['handle'],
+                'tld' => $tld,
+            ]);
+        }
 
         if ($isIANAid && null !== $entity) {
             return $entity;
-        }
-
-        if ($isIANAid && null === $entity) {
-            throw new ServiceUnavailableHttpException('The server does not know the IANA identifier of this registrar ('.$rdapEntity['handle'].')');
         }
 
         if (null === $entity) {
