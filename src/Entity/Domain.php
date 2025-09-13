@@ -4,8 +4,10 @@ namespace App\Entity;
 
 use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\Post;
 use App\Config\EventAction;
 use App\Controller\DomainRefreshController;
+use App\Controller\ProposeDomainController;
 use App\Repository\DomainRepository;
 use App\Service\RDAPService;
 use App\State\AutoRegisterDomainProvider;
@@ -55,6 +57,14 @@ use Symfony\Component\Serializer\Attribute\SerializedName;
                 ],
             ],
             read: false
+        ),
+        new Post(
+            uriTemplate: '/propose-domain/{ldhName}',
+            controller: ProposeDomainController::class,
+            shortName: 'Propose Domain',
+            input: false,
+            read: false,
+            write: false,
         ),
     ],
     provider: AutoRegisterDomainProvider::class

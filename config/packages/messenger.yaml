@@ -28,6 +28,7 @@ framework:
             App\Message\UpdateDomainsFromWatchlist: async
             App\Message\UpdateRdapServers: async
             App\Message\ValidateConnectorCredentials: async
+            App\Message\ProposeDomainMessage: async
 
             # Route your messages to the transports
             # 'App\Message\YourMessage': async

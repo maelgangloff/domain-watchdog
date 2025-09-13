@@ -18,6 +18,8 @@ use App\Entity\Nameserver;
 use App\Entity\NameserverEntity;
 use App\Entity\RdapServer;
 use App\Entity\Tld;
+use App\Entity\WatchList;
+use App\Message\SendDomainEventNotif;
 use App\Repository\DomainEntityRepository;
 use App\Repository\DomainEventRepository;
 use App\Repository\DomainRepository;
@@ -31,10 +33,14 @@ use Doctrine\DBAL\LockMode;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Exception\ORMException;
 use Psr\Log\LoggerInterface;
+use Random\Randomizer;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\HttpClient\Exception\ClientException;
 use Symfony\Component\HttpFoundation\Exception\BadRequestException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\HttpKernel\KernelInterface;
+use Symfony\Component\Messenger\Exception\ExceptionInterface;
+use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Yaml\Yaml;
 use Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\DecodingExceptionInterface;
@@ -110,6 +116,8 @@ class RDAPService
         private InfluxdbService $influxService,
         #[Autowire(param: 'influxdb_enabled')]
         private bool $influxdbEnabled,
+        private readonly KernelInterface $kernel,
+        private readonly MessageBusInterface $bus,
     ) {
     }
 
@@ -935,5 +943,46 @@ class RDAPService
         }
 
         $this->em->flush();
+    }
+
+    /**
+     * @throws TransportExceptionInterface
+     * @throws ServerExceptionInterface
+     * @throws RedirectionExceptionInterface
+     * @throws DecodingExceptionInterface
+     * @throws ClientExceptionInterface
+     * @throws ExceptionInterface
+     * @throws \Exception
+     */
+    public function updateDomain(string $idnDomain, bool $forced = false): ?Domain
+    {
+        /** @var ?Domain $domain */
+        $domain = $this->domainRepository->findOneBy(['ldhName' => $idnDomain]);
+        // If the domain name exists in the database, recently updated and not important, we return the stored Domain
+        if (null !== $domain
+            && !$domain->getDeleted()
+            && !$domain->isToBeUpdated(true, true)
+            && !$this->kernel->isDebug()
+            && true !== filter_var($forced, FILTER_VALIDATE_BOOLEAN)
+        ) {
+            $this->logger->info('It is not necessary to update the information of the domain name {idnDomain} with the RDAP protocol.', [
+                'idnDomain' => $idnDomain,
+            ]);
+
+            return $domain;
+        }
+
+        $updatedAt = null === $domain ? new \DateTimeImmutable('now') : $domain->getUpdatedAt();
+        $domain = $this->registerDomain($idnDomain);
+
+        $randomizer = new Randomizer();
+        $watchLists = $randomizer->shuffleArray($domain->getWatchLists()->toArray());
+
+        /** @var WatchList $watchList */
+        foreach ($watchLists as $watchList) {
+            $this->bus->dispatch(new SendDomainEventNotif($watchList->getToken(), $domain->getLdhName(), $updatedAt));
+        }
+
+        return $domain;
     }
 }
