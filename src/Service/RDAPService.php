@@ -265,7 +265,7 @@ class RDAPService
     {
         if (
             ($e instanceof ClientException && 404 === $e->getResponse()->getStatusCode())
-            || ($e instanceof TransportExceptionInterface && null !== $response && !in_array('content-length', $response->getHeaders(false)))
+            || ($e instanceof TransportExceptionInterface && null !== $response && !in_array('content-length', $response->getHeaders(false)) && 404 === $response->getStatusCode())
         ) {
             if (null !== $domain) {
                 $this->logger->notice('The domain name {idnDomain} has been deleted from the WHOIS database.', [
