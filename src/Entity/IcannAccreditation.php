@@ -24,11 +24,11 @@ class IcannAccreditation
     private ?RegistrarStatus $status = null;
 
     #[ORM\Column(type: Types::DATE_IMMUTABLE, nullable: true)]
-    #[Groups(['entity:item', 'domain:item'])]
+    #[Groups(['entity:item', 'entity:list', 'domain:item'])]
     private ?\DateTimeImmutable $updated = null;
 
     #[ORM\Column(type: Types::DATE_IMMUTABLE, nullable: true)]
-    #[Groups(['entity:item', 'domain:item'])]
+    #[Groups(['entity:item', 'entity:list', 'domain:item'])]
     private ?\DateTimeImmutable $date = null;
 
     public function getRegistrarName(): ?string

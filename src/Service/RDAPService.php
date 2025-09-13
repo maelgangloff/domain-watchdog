@@ -43,6 +43,7 @@ use Symfony\Contracts\HttpClient\Exception\RedirectionExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\ServerExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
+use Symfony\Contracts\HttpClient\ResponseInterface;
 
 class RDAPService
 {
@@ -248,7 +249,7 @@ class RDAPService
 
             return $req->toArray();
         } catch (\Exception $e) {
-            throw $this->handleRdapException($e, $idnDomain, $domain);
+            throw $this->handleRdapException($e, $idnDomain, $domain, $req ?? null);
         } finally {
             if ($this->influxdbEnabled && isset($req)) {
                 $this->influxService->addRdapQueryPoint($rdapServer, $idnDomain, $req->getInfo());
@@ -260,9 +261,12 @@ class RDAPService
      * @throws TransportExceptionInterface
      * @throws \Exception
      */
-    private function handleRdapException(\Exception $e, string $idnDomain, ?Domain $domain): \Exception
+    private function handleRdapException(\Exception $e, string $idnDomain, ?Domain $domain, ?ResponseInterface $response): \Exception
     {
-        if ($e instanceof ClientException && 404 === $e->getResponse()->getStatusCode()) {
+        if (
+            ($e instanceof ClientException && 404 === $e->getResponse()->getStatusCode())
+            || ($e instanceof TransportExceptionInterface && null !== $response && !in_array('content-length', $response->getHeaders(false)))
+        ) {
             if (null !== $domain) {
                 $this->logger->notice('The domain name {idnDomain} has been deleted from the WHOIS database.', [
                     'idnDomain' => $idnDomain,
