@@ -70,7 +70,7 @@ use Symfony\Component\Serializer\Attribute\SerializedName;
 #[ApiFilter(
     SearchFilter::class,
     properties: [
-        'icannAccreditation.status' => 'exact',
+        'icannAccreditation.status[]' => 'exact',
     ]
 )]
 class Entity
