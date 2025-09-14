@@ -1,4 +1,4 @@
-import type {IcannAccreditation, Tld} from './index'
+import type {IcannAccreditation} from './index'
 import {request} from './index'
 
 interface IcannAccreditationList {

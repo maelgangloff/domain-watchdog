@@ -4,7 +4,7 @@ import type {IcannAccreditation} from '../../utils/api'
 import {t} from 'ttag'
 import type {ColumnType} from 'antd/es/table'
 import {CheckCircleOutlined, SettingOutlined, CloseCircleOutlined} from "@ant-design/icons"
-import {getIcannAccreditations} from "../../utils/api/icann-accreditations";
+import {getIcannAccreditations} from "../../utils/api/icann-accreditations"
 
 const {Text, Paragraph} = Typography
 
@@ -38,7 +38,7 @@ function RegistrarListTable(filters: FiltersType) {
         fetchData({...filters, page: 1, itemsPerPage: 30})
     }, [])
 
-    let columns: Array<ColumnType<TableRow>> = [
+    const columns: Array<ColumnType<TableRow>> = [
         {
             title: t`ID`,
             dataIndex: 'handle',

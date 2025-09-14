@@ -3,7 +3,6 @@ import {Link, Navigate, Route, Routes, useLocation, useNavigate} from 'react-rou
 import TextPage from './pages/TextPage'
 import DomainSearchPage from './pages/search/DomainSearchPage'
 import EntitySearchPage from './pages/search/EntitySearchPage'
-import NameserverSearchPage from './pages/search/NameserverSearchPage'
 import TldPage from './pages/infrastructure/TldPage'
 import StatisticsPage from './pages/StatisticsPage'
 import WatchlistPage from './pages/tracking/WatchlistPage'
@@ -18,7 +17,7 @@ import {Sider} from './components/Sider'
 import {jt, t} from 'ttag'
 import {BugOutlined, InfoCircleOutlined, MergeOutlined} from '@ant-design/icons'
 import TrackedDomainPage from './pages/tracking/TrackedDomainPage'
-import IcannRegistrarPage from "./pages/infrastructure/IcannRegistrarPage";
+import IcannRegistrarPage from "./pages/infrastructure/IcannRegistrarPage"
 
 const PROJECT_LINK = 'https://github.com/maelgangloff/domain-watchdog'
 const LICENSE_LINK = 'https://www.gnu.org/licenses/agpl-3.0.txt'

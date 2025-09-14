@@ -10,7 +10,7 @@ import punycode from 'punycode/punycode'
 import {getCountryCode} from '../../utils/functions/getCountryCode'
 import {tldToEmoji} from '../../utils/functions/tldToEmoji'
 import {BankOutlined, FlagOutlined, GlobalOutlined, TrademarkOutlined} from "@ant-design/icons"
-import {Link} from "react-router-dom";
+import {Link} from "react-router-dom"
 
 const {Text, Paragraph} = Typography
 
