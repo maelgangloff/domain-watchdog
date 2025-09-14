@@ -124,6 +124,16 @@ export interface TrackedDomains {
     'hydra:member': Domain[]
 }
 
+export interface IcannAccreditation {
+    handle: string
+    icannAccreditation: {
+        registrarName: string
+        status: string
+        date?: string
+        updated?: string
+    }
+}
+
 export async function request<T = object, R = AxiosResponse<T>, D = object>(config: AxiosRequestConfig): Promise<R> {
     const axiosConfig: AxiosRequestConfig = {
         ...config,

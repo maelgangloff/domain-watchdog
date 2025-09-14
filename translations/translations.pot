@@ -3,34 +3,34 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Plural-Forms: nplurals=2; plural=(n!=1);\n"
 
-#: assets/App.tsx:119
+#: assets/App.tsx:121
 msgid "TOS"
 msgstr ""
 
-#: assets/App.tsx:120
+#: assets/App.tsx:122
 msgid "Privacy Policy"
 msgstr ""
 
-#: assets/App.tsx:121
+#: assets/App.tsx:123
 msgid "FAQ"
 msgstr ""
 
-#: assets/App.tsx:128
+#: assets/App.tsx:130
 msgid "Documentation"
 msgstr ""
 
-#: assets/App.tsx:133
+#: assets/App.tsx:135
 #, javascript-format
 msgid ""
 "${ ProjectLink } is an open source project distributed under the ${ "
 "LicenseLink } license."
 msgstr ""
 
-#: assets/App.tsx:146
+#: assets/App.tsx:148
 msgid "Official git repository"
 msgstr ""
 
-#: assets/App.tsx:149
+#: assets/App.tsx:151
 msgid "Submit an issue"
 msgstr ""
 
@@ -44,8 +44,8 @@ msgstr ""
 #: assets/components/RegisterForm.tsx:39
 #: assets/components/RegisterForm.tsx:47
 #: assets/components/search/DomainSearchBar.tsx:28
-#: assets/components/tracking/watchlist/WatchlistForm.tsx:119
-#: assets/components/tracking/watchlist/WatchlistForm.tsx:222
+#: assets/components/tracking/watchlist/WatchlistForm.tsx:157
+#: assets/components/tracking/watchlist/WatchlistForm.tsx:263
 #: assets/utils/providers/forms/AutoDnsConnectorForm.tsx:21
 #: assets/utils/providers/forms/AutoDnsConnectorForm.tsx:32
 #: assets/utils/providers/forms/AutoDnsConnectorForm.tsx:47
@@ -164,73 +164,107 @@ msgid "Entities"
 msgstr ""
 
 #: assets/components/search/DomainSearchBar.tsx:31
-#: assets/components/tracking/watchlist/WatchlistForm.tsx:122
+#: assets/components/tracking/watchlist/WatchlistForm.tsx:160
 msgid "This domain name does not appear to be valid"
 msgstr ""
 
-#: assets/components/Sider.tsx:29
+#: assets/components/Sider.tsx:32
 msgid "Home"
 msgstr ""
 
-#: assets/components/Sider.tsx:35
+#: assets/components/Sider.tsx:38
 msgid "Search"
 msgstr ""
 
-#: assets/components/Sider.tsx:41
+#: assets/components/Sider.tsx:44
 #: assets/components/tracking/watchlist/TrackedDomainTable.tsx:175
 msgid "Domain"
 msgstr ""
 
-#: assets/components/Sider.tsx:42
+#: assets/components/Sider.tsx:45
 msgid "Domain Finder"
 msgstr ""
 
-#: assets/components/Sider.tsx:49
+#: assets/components/Sider.tsx:52
+msgid "Entity"
+msgstr ""
+
+#: assets/components/Sider.tsx:53
+msgid "Entity Finder"
+msgstr ""
+
+#: assets/components/Sider.tsx:72
+#: assets/components/Sider.tsx:73
+msgid "Infrastructure"
+msgstr ""
+
+#: assets/components/Sider.tsx:79
 #: assets/pages/StatisticsPage.tsx:114
-#: assets/pages/search/TldPage.tsx:78
+#: assets/pages/infrastructure/TldPage.tsx:79
 msgid "TLD"
 msgstr ""
 
-#: assets/components/Sider.tsx:50
+#: assets/components/Sider.tsx:80
 msgid "TLD list"
 msgstr ""
 
-#: assets/components/Sider.tsx:76
-msgid "Tracking"
-msgstr ""
-
-#: assets/components/Sider.tsx:82
-msgid "My Watchlists"
-msgstr ""
-
-#: assets/components/Sider.tsx:89
-msgid "Tracking table"
+#: assets/components/Sider.tsx:87
+#: assets/components/Sider.tsx:88
+msgid "ICANN list"
 msgstr ""
 
 #: assets/components/Sider.tsx:96
+msgid "Tracking"
+msgstr ""
+
+#: assets/components/Sider.tsx:102
+msgid "My Watchlists"
+msgstr ""
+
+#: assets/components/Sider.tsx:109
+msgid "Tracking table"
+msgstr ""
+
+#: assets/components/Sider.tsx:116
 msgid "My Connectors"
 msgstr ""
 
-#: assets/components/Sider.tsx:105
+#: assets/components/Sider.tsx:140
+#. 
+#.         {
+#.             key: 'tools',
+#.             label: t`Tools`,
+#.             icon: <ToolOutlined/>,
+#.             children: [
+#.                 {
+#.                     key: '/tools/idn',
+#.                     icon: <FieldStringOutlined/>,
+#.                     label: t`IDN Conversion`,
+#.                     onClick: () => navigate('/')
+#.                 }
+#.             ]
+#.         },
+#.          
 msgid "Statistics"
 msgstr ""
 
-#: assets/components/Sider.tsx:115
+#: assets/components/Sider.tsx:150
 #: assets/pages/UserPage.tsx:17
 msgid "My Account"
 msgstr ""
 
-#: assets/components/Sider.tsx:120
+#: assets/components/Sider.tsx:155
 msgid "Log out"
 msgstr ""
 
-#: assets/components/Sider.tsx:128
+#: assets/components/Sider.tsx:163
 #: assets/pages/LoginPage.tsx:35
 #: assets/pages/LoginPage.tsx:45
 msgid "Log in"
 msgstr ""
 
 #: assets/components/tracking/connector/ConnectorForm.tsx:36
+#: assets/pages/infrastructure/IcannRegistrarPage.tsx:49
 #: assets/utils/functions/rdapTranslation.ts:12
 msgid "Registrar"
 msgstr ""
@@ -257,7 +291,7 @@ msgid "Next"
 msgstr ""
 
 #: assets/components/tracking/connector/ConnectorForm.tsx:96
-#: assets/components/tracking/watchlist/WatchlistForm.tsx:269
+#: assets/components/tracking/watchlist/WatchlistForm.tsx:310
 msgid "Create"
 msgstr ""
 
@@ -437,75 +471,188 @@ msgstr ""
 msgid "Watchlist"
 msgstr ""
 
-#: assets/components/tracking/watchlist/WatchlistForm.tsx:75
+#: assets/components/tracking/watchlist/WatchlistForm.tsx:113
 msgid "Name"
 msgstr ""
 
-#: assets/components/tracking/watchlist/WatchlistForm.tsx:87
+#: assets/components/tracking/watchlist/WatchlistForm.tsx:125
 msgid "Watchlist Name"
 msgstr ""
 
-#: assets/components/tracking/watchlist/WatchlistForm.tsx:88
+#: assets/components/tracking/watchlist/WatchlistForm.tsx:126
 msgid "Naming the Watchlist makes it easier to find in the list below."
 msgstr ""
 
-#: assets/components/tracking/watchlist/WatchlistForm.tsx:99
+#: assets/components/tracking/watchlist/WatchlistForm.tsx:137
 msgid "At least one domain name"
 msgstr ""
 
-#: assets/components/tracking/watchlist/WatchlistForm.tsx:110
+#: assets/components/tracking/watchlist/WatchlistForm.tsx:148
 msgid "Domain names"
 msgstr ""
 
-#: assets/components/tracking/watchlist/WatchlistForm.tsx:128
+#: assets/components/tracking/watchlist/WatchlistForm.tsx:166
 msgid "Domain name"
 msgstr ""
 
-#: assets/components/tracking/watchlist/WatchlistForm.tsx:147
+#: assets/components/tracking/watchlist/WatchlistForm.tsx:185
 msgid "Add a Domain name"
 msgstr ""
 
-#: assets/components/tracking/watchlist/WatchlistForm.tsx:155
+#: assets/components/tracking/watchlist/WatchlistForm.tsx:193
 msgid "Tracked events"
 msgstr ""
 
-#: assets/components/tracking/watchlist/WatchlistForm.tsx:157
+#: assets/components/tracking/watchlist/WatchlistForm.tsx:195
 msgid "At least one trigger"
 msgstr ""
 
-#: assets/components/tracking/watchlist/WatchlistForm.tsx:181
-#: assets/components/tracking/watchlist/WatchlistForm.tsx:196
+#: assets/components/tracking/watchlist/WatchlistForm.tsx:222
+#: assets/components/tracking/watchlist/WatchlistForm.tsx:237
 msgid "Connector"
 msgstr ""
 
-#: assets/components/tracking/watchlist/WatchlistForm.tsx:191
+#: assets/components/tracking/watchlist/WatchlistForm.tsx:232
 msgid ""
 "Please make sure the connector information is valid to purchase a domain "
 "that may be available soon."
 msgstr ""
 
-#: assets/components/tracking/watchlist/WatchlistForm.tsx:213
+#: assets/components/tracking/watchlist/WatchlistForm.tsx:254
 msgid "DSN"
 msgstr ""
 
-#: assets/components/tracking/watchlist/WatchlistForm.tsx:225
+#: assets/components/tracking/watchlist/WatchlistForm.tsx:266
 msgid "This DSN does not appear to be valid"
 msgstr ""
 
-#: assets/components/tracking/watchlist/WatchlistForm.tsx:249
+#: assets/components/tracking/watchlist/WatchlistForm.tsx:290
 msgid "Check out this link to the Symfony documentation to help you build the DSN"
 msgstr ""
 
-#: assets/components/tracking/watchlist/WatchlistForm.tsx:259
+#: assets/components/tracking/watchlist/WatchlistForm.tsx:300
 msgid "Add a Webhook"
 msgstr ""
 
-#: assets/components/tracking/watchlist/WatchlistForm.tsx:269
+#: assets/components/tracking/watchlist/WatchlistForm.tsx:310
 msgid "Update"
 msgstr ""
 
-#: assets/components/tracking/watchlist/WatchlistForm.tsx:272
+#: assets/components/tracking/watchlist/WatchlistForm.tsx:313
 msgid "Reset"
+msgstr ""
+
+#: assets/pages/infrastructure/IcannRegistrarPage.tsx:43
+msgid "ID"
+msgstr ""
+
+#: assets/pages/infrastructure/IcannRegistrarPage.tsx:77
+msgid ""
+"An accredited number means that ICANN's contract with the registrar is "
+"ongoing."
+msgstr ""
+
+#: assets/pages/infrastructure/IcannRegistrarPage.tsx:82
+msgid "A reserved number can be used by TLD registries for specific operations."
+msgstr ""
+
+#: assets/pages/infrastructure/IcannRegistrarPage.tsx:87
+msgid ""
+"A terminated number means that ICANN's contract with the registrar has been "
+"terminated."
+msgstr ""
+
+#: assets/pages/infrastructure/IcannRegistrarPage.tsx:96
+msgid "This page lists ICANN-accredited registrars."
+msgstr ""
+
+#: assets/pages/infrastructure/IcannRegistrarPage.tsx:99
+msgid ""
+"The list is officially published and maintained by the Internet Assigned "
+"Numbers Authority (IANA), the organization responsible for managing the "
+"Internet's unique identifiers (including numbers, IP addresses, and domain "
+"name extensions)."
+msgstr ""
+
+#: assets/pages/infrastructure/IcannRegistrarPage.tsx:111
+msgid "Accredited"
+msgstr ""
+
+#: assets/pages/infrastructure/IcannRegistrarPage.tsx:116
+msgid "Reserved"
+msgstr ""
+
+#: assets/pages/infrastructure/IcannRegistrarPage.tsx:121
+msgid "Terminated"
+msgstr ""
+
+#: assets/pages/infrastructure/TldPage.tsx:86
+msgid "Flag"
+msgstr ""
+
+#: assets/pages/infrastructure/TldPage.tsx:89
+msgid "Country"
+msgstr ""
+
+#: assets/pages/infrastructure/TldPage.tsx:96
+msgid "Registry Operator"
+msgstr ""
+
+#: assets/pages/infrastructure/TldPage.tsx:124
+msgid ""
+"Top-level domains sponsored by specific organizations that set rules for "
+"registration and use, often related to particular interest groups or "
+"industries."
+msgstr ""
+
+#: assets/pages/infrastructure/TldPage.tsx:129
+msgid ""
+"Generic top-level domains open to everyone, not restricted by specific "
+"criteria, representing various themes or industries."
+msgstr ""
+
+#: assets/pages/infrastructure/TldPage.tsx:134
+msgid ""
+"Generic top-level domains associated with specific brands, allowing "
+"companies to use their own brand names as domains."
+msgstr ""
+
+#: assets/pages/infrastructure/TldPage.tsx:139
+msgid ""
+"Top-level domains based on country codes, identifying websites according to "
+"their country of origin."
+msgstr ""
+
+#: assets/pages/infrastructure/TldPage.tsx:148
+msgid "This page presents all active TLDs in the root zone database."
+msgstr ""
+
+#: assets/pages/infrastructure/TldPage.tsx:151
+msgid ""
+"IANA provides the list of currently active TLDs, regardless of their type, "
+"and ICANN provides the list of gTLDs.\n"
+"In most cases, the two-letter ccTLD assigned to a country is made in "
+"accordance with the ISO 3166-1 standard.\n"
+"This data is updated every month. Three HTTP requests are needed for the "
+"complete update of TLDs in Domain Watchdog (two requests to IANA and one to "
+"ICANN).\n"
+"At the same time, the list of root RDAP servers is updated."
+msgstr ""
+
+#: assets/pages/infrastructure/TldPage.tsx:166
+msgid "Generic Top-Level-Domains"
+msgstr ""
+
+#: assets/pages/infrastructure/TldPage.tsx:171
+msgid "Country-Code Top-Level-Domains"
+msgstr ""
+
+#: assets/pages/infrastructure/TldPage.tsx:176
+msgid "Brand Generic Top-Level-Domains"
+msgstr ""
+
+#: assets/pages/infrastructure/TldPage.tsx:181
+msgid "Sponsored Top-Level-Domains"
 msgstr ""
 
 #: assets/pages/LoginPage.tsx:45
@@ -524,75 +671,6 @@ msgstr ""
 msgid ""
 "Although the domain exists in my database, it has been deleted from the "
 "WHOIS by its registrar."
-msgstr ""
-
-#: assets/pages/search/TldPage.tsx:85
-msgid "Flag"
-msgstr ""
-
-#: assets/pages/search/TldPage.tsx:88
-msgid "Country"
-msgstr ""
-
-#: assets/pages/search/TldPage.tsx:95
-msgid "Registry Operator"
-msgstr ""
-
-#: assets/pages/search/TldPage.tsx:123
-msgid ""
-"Top-level domains sponsored by specific organizations that set rules for "
-"registration and use, often related to particular interest groups or "
-"industries."
-msgstr ""
-
-#: assets/pages/search/TldPage.tsx:128
-msgid ""
-"Generic top-level domains open to everyone, not restricted by specific "
-"criteria, representing various themes or industries."
-msgstr ""
-
-#: assets/pages/search/TldPage.tsx:133
-msgid ""
-"Generic top-level domains associated with specific brands, allowing "
-"companies to use their own brand names as domains."
-msgstr ""
-
-#: assets/pages/search/TldPage.tsx:138
-msgid ""
-"Top-level domains based on country codes, identifying websites according to "
-"their country of origin."
-msgstr ""
-
-#: assets/pages/search/TldPage.tsx:147
-msgid "This page presents all active TLDs in the root zone database."
-msgstr ""
-
-#: assets/pages/search/TldPage.tsx:150
-msgid ""
-"IANA provides the list of currently active TLDs, regardless of their type, "
-"and ICANN provides the list of gTLDs.\n"
-"In most cases, the two-letter ccTLD assigned to a country is made in "
-"accordance with the ISO 3166-1 standard.\n"
-"This data is updated every month. Three HTTP requests are needed for the "
-"complete update of TLDs in Domain Watchdog (two requests to IANA and one to "
-"ICANN).\n"
-"At the same time, the list of root RDAP servers is updated."
-msgstr ""
-
-#: assets/pages/search/TldPage.tsx:165
-msgid "Generic Top-Level-Domains"
-msgstr ""
-
-#: assets/pages/search/TldPage.tsx:170
-msgid "Country-Code Top-Level-Domains"
-msgstr ""
-
-#: assets/pages/search/TldPage.tsx:175
-msgid "Brand Generic Top-Level-Domains"
-msgstr ""
-
-#: assets/pages/search/TldPage.tsx:180
-msgid "Sponsored Top-Level-Domains"
 msgstr ""
 
 #: assets/pages/StatisticsPage.tsx:35
@@ -638,15 +716,15 @@ msgstr ""
 msgid "Create a Connector"
 msgstr ""
 
-#: assets/pages/tracking/WatchlistPage.tsx:51
+#: assets/pages/tracking/WatchlistPage.tsx:63
 msgid "Watchlist created !"
 msgstr ""
 
-#: assets/pages/tracking/WatchlistPage.tsx:63
+#: assets/pages/tracking/WatchlistPage.tsx:75
 msgid "Watchlist updated !"
 msgstr ""
 
-#: assets/pages/tracking/WatchlistPage.tsx:87
+#: assets/pages/tracking/WatchlistPage.tsx:99
 msgid "Create a Watchlist"
 msgstr ""
 
@@ -661,7 +739,7 @@ msgstr ""
 msgid "Roles"
 msgstr ""
 
-#: assets/utils/functions/DomainToTag.tsx:19
+#: assets/utils/functions/DomainToTag.tsx:16
 msgid "The domain name was updated less than a week ago."
 msgstr ""
 

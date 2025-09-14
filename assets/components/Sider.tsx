@@ -4,14 +4,17 @@ import {
     AimOutlined,
     ApiOutlined,
     BankOutlined,
+    ClusterOutlined,
     CompassOutlined,
     FileSearchOutlined,
     HomeOutlined,
     LineChartOutlined,
     LoginOutlined,
     LogoutOutlined,
+    SafetyOutlined,
     SearchOutlined,
     TableOutlined,
+    TeamOutlined,
     UserOutlined
 } from '@ant-design/icons'
 import {Menu} from 'antd'
@@ -44,22 +47,14 @@ export function Sider({isAuthenticated}: { isAuthenticated: boolean }) {
                     onClick: () => navigate('/search/domain')
                 },
                 {
-                    key: '/search/tld',
-                    icon: <BankOutlined/>,
-                    label: t`TLD`,
-                    title: t`TLD list`,
+                    key: '/search/entity',
+                    icon: <TeamOutlined/>,
+                    label: t`Entity`,
+                    title: t`Entity Finder`,
                     disabled: !isAuthenticated,
-                    onClick: () => navigate('/search/tld')
-                }
+                    onClick: () => navigate('/search/entity')
+                },
                 /*
-                        {
-                            key: 'entity-finder',
-                            icon: <TeamOutlined/>,
-                            label: t`Entity`,
-                            title: t`Entity Finder`,
-                            disabled: true,
-                            onClick: () => navigate('/search/entity')
-                        },
                         {
                             key: 'ns-finder',
                             icon: <CloudServerOutlined/>,
@@ -69,6 +64,31 @@ export function Sider({isAuthenticated}: { isAuthenticated: boolean }) {
                             onClick: () => navigate('/search/nameserver')
                         }
                         */
+            ]
+        },
+        {
+            key: 'infrastructure',
+            icon: <ClusterOutlined/>,
+            label: t`Infrastructure`,
+            title: t`Infrastructure`,
+            disabled: !isAuthenticated,
+            children: [
+                {
+                    key: '/infrastructure/tld',
+                    icon: <BankOutlined/>,
+                    label: t`TLD`,
+                    title: t`TLD list`,
+                    disabled: !isAuthenticated,
+                    onClick: () => navigate('/infrastructure/tld')
+                },
+                {
+                    key: '/infrastructure/icann',
+                    icon: <SafetyOutlined/>,
+                    label: t`ICANN list`,
+                    title: t`ICANN list`,
+                    disabled: !isAuthenticated,
+                    onClick: () => navigate('/infrastructure/icann')
+                }
             ]
         },
         {
@@ -99,6 +119,21 @@ export function Sider({isAuthenticated}: { isAuthenticated: boolean }) {
                 }
             ]
         },
+        /*
+        {
+            key: 'tools',
+            label: t`Tools`,
+            icon: <ToolOutlined/>,
+            children: [
+                {
+                    key: '/tools/idn',
+                    icon: <FieldStringOutlined/>,
+                    label: t`IDN Conversion`,
+                    onClick: () => navigate('/')
+                }
+            ]
+        },
+         */
         {
             key: '/stats',
             icon: <LineChartOutlined/>,
@@ -131,7 +166,7 @@ export function Sider({isAuthenticated}: { isAuthenticated: boolean }) {
     }
 
     return <Menu
-        defaultOpenKeys={['search', 'info', 'tracking', 'doc']}
+        defaultOpenKeys={['search', 'info', 'tracking', 'doc', 'infrastructure']}
         selectedKeys={[location.pathname.includes('/search/domain') ? '/search/domain' : location.pathname]}
         mode='inline'
         theme='dark'

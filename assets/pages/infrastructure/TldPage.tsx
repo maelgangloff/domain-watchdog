@@ -10,6 +10,7 @@ import punycode from 'punycode/punycode'
 import {getCountryCode} from '../../utils/functions/getCountryCode'
 import {tldToEmoji} from '../../utils/functions/tldToEmoji'
 import {BankOutlined, FlagOutlined, GlobalOutlined, TrademarkOutlined} from "@ant-design/icons"
+import {Link} from "react-router-dom";
 
 const {Text, Paragraph} = Typography
 
@@ -38,7 +39,7 @@ function TldTable(filters: FiltersType) {
             setDataTable(data['hydra:member'].map((tld: Tld) => {
                 const rowData = {
                     key: tld.tld,
-                    TLD: <Typography.Text code>{punycode.toUnicode(tld.tld)}</Typography.Text>
+                    TLD: <Link to={'/search/domain/' + tld.tld}><Typography.Text code>{punycode.toUnicode(tld.tld)}</Typography.Text></Link>
                 }
                 const type = filters.type
                 let countryName
