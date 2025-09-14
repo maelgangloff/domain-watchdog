@@ -534,7 +534,7 @@ class RDAPService
             foreach ($rdapEntity['publicIds'] as $publicId) {
                 if ('IANA Registrar ID' === $publicId['type'] && isset($publicId['identifier']) && '' !== $publicId['identifier']) {
                     $entity = $this->entityRepository->findOneBy([
-                        'handle' => $rdapEntity['handle'],
+                        'handle' => $publicId['identifier'],
                         'tld' => null,
                     ]);
 
