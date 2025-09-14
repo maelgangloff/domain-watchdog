@@ -138,6 +138,6 @@ class GandiProvider extends AbstractProvider
      */
     protected function getCachedTldList(): CacheItemInterface
     {
-        return $this->cacheItemPool->getItem('app.provider.ovh.supported-tld');
+        return $this->cacheItemPool->getItem('app.provider.gandi.supported-tld');
     }
 }
