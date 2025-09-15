@@ -2,15 +2,11 @@
 
 namespace App\Entity;
 
-use ApiPlatform\Doctrine\Orm\Filter\SearchFilter;
-use ApiPlatform\Metadata\ApiFilter;
 use ApiPlatform\Metadata\ApiResource;
-use ApiPlatform\Metadata\GetCollection;
 use App\Repository\EntityRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\ORM\Mapping\Embedded;
 use Symfony\Component\Serializer\Attribute\Groups;
 use Symfony\Component\Serializer\Attribute\SerializedName;
 
@@ -20,31 +16,6 @@ use Symfony\Component\Serializer\Attribute\SerializedName;
 )]
 #[ApiResource(
     operations: [
-        new GetCollection(
-            uriTemplate: '/entities/icann-accreditations',
-            openapiContext: [
-                'parameters' => [
-                    [
-                        'name' => 'icannAccreditation.status',
-                        'in' => 'query',
-                        'required' => true,
-                        'schema' => [
-                            'type' => 'array',
-                            'items' => [
-                                'type' => 'string',
-                                'enum' => ['Accredited', 'Terminated', 'Reserved'],
-                            ],
-                        ],
-                        'style' => 'form',
-                        'explode' => true,
-                        'description' => 'Filter by ICANN accreditation status',
-                    ],
-                ],
-            ],
-            description: 'ICANN Registrar IDs list',
-            normalizationContext: ['groups' => ['entity:list']],
-            name: 'icann_accreditations_collection'
-        ),
         /*
         new GetCollection(
             uriTemplate: '/entities',
@@ -67,12 +38,6 @@ use Symfony\Component\Serializer\Attribute\SerializedName;
         */
     ]
 )]
-#[ApiFilter(
-    SearchFilter::class,
-    properties: [
-        'icannAccreditation.status' => 'exact',
-    ]
-)]
 class Entity
 {
     #[ORM\Id]
@@ -81,7 +46,7 @@ class Entity
     private ?int $id = null;
 
     #[ORM\ManyToOne(targetEntity: Tld::class, inversedBy: 'entities')]
-    #[ORM\JoinColumn(referencedColumnName: 'tld', nullable: true)]
+    #[ORM\JoinColumn(referencedColumnName: 'tld', nullable: false)]
     #[Groups(['entity:list', 'entity:item', 'domain:item'])]
     private ?Tld $tld = null;
 
@@ -120,7 +85,7 @@ class Entity
     #[Groups(['entity:item', 'domain:item'])]
     private ?array $remarks = null;
 
-    #[Embedded(class: IcannAccreditation::class, columnPrefix: 'icann_')]
+    #[ORM\ManyToOne(inversedBy: 'entities')]
     #[Groups(['entity:list', 'entity:item', 'domain:item'])]
     private ?IcannAccreditation $icannAccreditation = null;
 
@@ -129,7 +94,6 @@ class Entity
         $this->domainEntities = new ArrayCollection();
         $this->nameserverEntities = new ArrayCollection();
         $this->events = new ArrayCollection();
-        $this->icannAccreditation = new IcannAccreditation();
     }
 
     public function getHandle(): ?string
@@ -284,11 +248,13 @@ class Entity
 
     public function getIcannAccreditation(): ?IcannAccreditation
     {
-        return null === $this->icannAccreditation->getStatus() ? null : $this->icannAccreditation;
+        return $this->icannAccreditation;
     }
 
-    public function setIcannAccreditation(?IcannAccreditation $icannAccreditation): void
+    public function setIcannAccreditation(?IcannAccreditation $icannAccreditation): static
     {
         $this->icannAccreditation = $icannAccreditation;
+
+        return $this;
     }
 }

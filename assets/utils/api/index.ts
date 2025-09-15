@@ -32,6 +32,11 @@ export interface Entity {
         string,
             string | string[],
     ]>] | []
+    remarks?: {
+      type: string
+      description: string
+    }[]
+    icannAccreditation?: IcannAccreditation
 }
 
 export interface Nameserver {
@@ -125,13 +130,11 @@ export interface TrackedDomains {
 }
 
 export interface IcannAccreditation {
-    handle: string
-    icannAccreditation: {
-        registrarName: string
-        status: string
-        date?: string
-        updated?: string
-    }
+    id: number
+    registrarName: string
+    status: string
+    date?: string
+    updated?: string
 }
 
 export async function request<T = object, R = AxiosResponse<T>, D = object>(config: AxiosRequestConfig): Promise<R> {

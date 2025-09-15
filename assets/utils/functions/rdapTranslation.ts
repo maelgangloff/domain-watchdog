@@ -113,3 +113,10 @@ export const rdapStatusCodeDetailTranslation = () => ({
     administrative: t`The object instance has been allocated administratively (i.e., not for use by the recipient in their own right in operational networks).`,
     reserved: t`The object instance has been allocated to an IANA special-purpose address registry.`
 })
+
+
+export const icannAccreditationTranslation = () => ({
+    Terminated: t`Terminated`,
+    Accredited: t`Accredited`,
+    Reserved: t`Reserved`
+})

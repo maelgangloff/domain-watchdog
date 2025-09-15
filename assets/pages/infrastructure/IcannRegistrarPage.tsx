@@ -9,12 +9,12 @@ import {getIcannAccreditations} from "../../utils/api/icann-accreditations"
 const {Text, Paragraph} = Typography
 
 interface FiltersType {
-    'icannAccreditation.status': 'Accredited' | 'Reserved' | 'Terminated',
+    status: 'Accredited' | 'Reserved' | 'Terminated',
 }
 
 function RegistrarListTable(filters: FiltersType) {
     interface TableRow {
-        key: string
+        key: number
         handle: number
         name: string
     }
@@ -26,9 +26,9 @@ function RegistrarListTable(filters: FiltersType) {
         getIcannAccreditations(params).then((data) => {
             setTotal(data['hydra:totalItems'])
             setDataTable(data['hydra:member'].map((accreditation: IcannAccreditation) => ({
-                    key: accreditation.handle,
-                    handle: parseInt(accreditation.handle),
-                    name: accreditation.icannAccreditation.registrarName
+                    key: accreditation.id,
+                    handle: accreditation.id,
+                    name: accreditation.registrarName
                 })
             ).sort((a, b) => a.handle - b.handle))
         })
@@ -76,17 +76,17 @@ export default function IcannRegistrarPage() {
         Accredited: <>
             <Text>{t`An accredited number means that ICANN's contract with the registrar is ongoing.`}</Text>
             <Divider/>
-            <RegistrarListTable {...{'icannAccreditation.status': 'Accredited'}} />
+            <RegistrarListTable status='Accredited' />
         </>,
         Reserved: <>
             <Text>{t`A reserved number can be used by TLD registries for specific operations.`}</Text>
             <Divider/>
-            <RegistrarListTable {...{'icannAccreditation.status': 'Reserved'}} />
+            <RegistrarListTable status='Reserved' />
         </>,
         Terminated: <>
             <Text>{t`A terminated number means that ICANN's contract with the registrar has been terminated.`}</Text>
             <Divider/>
-            <RegistrarListTable {...{'icannAccreditation.status': 'Terminated'}} />
+            <RegistrarListTable status='Terminated' />
         </>
     }
 

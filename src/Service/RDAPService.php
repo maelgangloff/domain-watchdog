@@ -14,6 +14,7 @@ use App\Entity\DomainEvent;
 use App\Entity\DomainStatus;
 use App\Entity\Entity;
 use App\Entity\EntityEvent;
+use App\Entity\IcannAccreditation;
 use App\Entity\Nameserver;
 use App\Entity\NameserverEntity;
 use App\Entity\RdapServer;
@@ -23,6 +24,7 @@ use App\Repository\DomainEventRepository;
 use App\Repository\DomainRepository;
 use App\Repository\EntityEventRepository;
 use App\Repository\EntityRepository;
+use App\Repository\IcannAccreditationRepository;
 use App\Repository\NameserverEntityRepository;
 use App\Repository\NameserverRepository;
 use App\Repository\RdapServerRepository;
@@ -105,6 +107,7 @@ class RDAPService
         private DomainEntityRepository $domainEntityRepository,
         private RdapServerRepository $rdapServerRepository,
         private TldRepository $tldRepository,
+        private IcannAccreditationRepository $icannAccreditationRepository,
         private EntityManagerInterface $em,
         private LoggerInterface $logger,
         private StatService $statService,
@@ -344,7 +347,6 @@ class RDAPService
     }
 
     /**
-     * @throws \DateMalformedStringException
      * @throws \Exception
      */
     private function updateDomainEvents(Domain $domain, array $rdapData): void
@@ -380,7 +382,6 @@ class RDAPService
     }
 
     /**
-     * @throws \DateMalformedStringException
      * @throws \Exception
      */
     private function updateDomainEntities(Domain $domain, array $rdapData): void
@@ -418,7 +419,7 @@ class RDAPService
     }
 
     /**
-     * @throws \DateMalformedStringException
+     * @throws \Exception
      */
     private function updateDomainNameservers(Domain $domain, array $rdapData): void
     {
@@ -461,7 +462,7 @@ class RDAPService
     }
 
     /**
-     * @throws \DateMalformedStringException
+     * @throws \Exception
      */
     private function updateNameserverEntities(Nameserver $nameserver, array $rdapNameserver, Tld $tld): void
     {
@@ -517,36 +518,10 @@ class RDAPService
     }
 
     /**
-     * @throws \DateMalformedStringException
      * @throws \Exception
      */
     private function registerEntity(array $rdapEntity, array $roles, string $domain, Tld $tld): Entity
     {
-        $entity = null;
-
-        /**
-         * If the RDAP server transmits the entity's IANA number, it is used as a priority to identify the entity.
-         *
-         * @see https://datatracker.ietf.org/doc/html/rfc7483#section-4.8
-         */
-        $isIANAid = false;
-        if (isset($rdapEntity['publicIds'])) {
-            foreach ($rdapEntity['publicIds'] as $publicId) {
-                if ('IANA Registrar ID' === $publicId['type'] && isset($publicId['identifier']) && '' !== $publicId['identifier']) {
-                    $entity = $this->entityRepository->findOneBy([
-                        'handle' => $publicId['identifier'],
-                        'tld' => null,
-                    ]);
-
-                    if (null !== $entity) {
-                        $rdapEntity['handle'] = $publicId['identifier'];
-                        $isIANAid = true;
-                        break;
-                    }
-                }
-            }
-        }
-
         /*
          * If there is no number to identify the entity, one is generated from the domain name and the roles associated with this entity
          */
@@ -559,16 +534,10 @@ class RDAPService
             ]);
         }
 
-        if (null === $entity) {
-            $entity = $this->entityRepository->findOneBy([
-                'handle' => $rdapEntity['handle'],
-                'tld' => $tld,
-            ]);
-        }
-
-        if ($isIANAid && null !== $entity) {
-            return $entity;
-        }
+        $entity = $this->entityRepository->findOneBy([
+            'handle' => $rdapEntity['handle'],
+            'tld' => $tld,
+        ]);
 
         if (null === $entity) {
             $entity = (new Entity())->setTld($tld);
@@ -578,7 +547,23 @@ class RDAPService
             ]);
         }
 
-        $entity->setHandle($rdapEntity['handle']);
+        /**
+         * If the RDAP server transmits the entity's IANA number, it is used as a priority to identify the entity.
+         *
+         * @see https://datatracker.ietf.org/doc/html/rfc7483#section-4.8
+         */
+        $icannAccreditation = null;
+        if (isset($rdapEntity['publicIds'])) {
+            foreach ($rdapEntity['publicIds'] as $publicId) {
+                if ('IANA Registrar ID' === $publicId['type'] && isset($publicId['identifier']) && '' !== $publicId['identifier']) {
+                    $icannAccreditation = $this->icannAccreditationRepository->findOneBy([
+                        'id' => (int) $publicId['identifier'],
+                    ]);
+                }
+            }
+        }
+
+        $entity->setHandle($rdapEntity['handle'])->setIcannAccreditation($icannAccreditation);
 
         if (isset($rdapEntity['remarks']) && is_array($rdapEntity['remarks'])) {
             $entity->setRemarks($rdapEntity['remarks']);
@@ -719,7 +704,7 @@ class RDAPService
      * @throws RedirectionExceptionInterface
      * @throws DecodingExceptionInterface
      * @throws ClientExceptionInterface
-     * @throws ORMException
+     * @throws \Exception
      */
     public function updateRDAPServersFromIANA(): void
     {
@@ -733,7 +718,6 @@ class RDAPService
     }
 
     /**
-     * @throws ORMException
      * @throws \Exception
      */
     private function updateRDAPServers(array $dnsRoot): void
@@ -772,6 +756,7 @@ class RDAPService
 
     /**
      * @throws ORMException
+     * @throws \Exception
      */
     public function updateRDAPServersFromFile(string $fileName): void
     {
@@ -836,7 +821,6 @@ class RDAPService
      * @throws TransportExceptionInterface
      * @throws ServerExceptionInterface
      * @throws RedirectionExceptionInterface
-     * @throws DecodingExceptionInterface
      * @throws ClientExceptionInterface
      * @throws \Exception
      */
@@ -850,23 +834,20 @@ class RDAPService
         $data = new \SimpleXMLElement($registrarList->getContent());
 
         foreach ($data->registry->record as $registrar) {
-            $entity = $this->entityRepository->findOneBy(['handle' => $registrar->value, 'tld' => null]);
-            if (null === $entity) {
-                $entity = new Entity();
+            $icannAcreditation = $this->icannAccreditationRepository->findOneBy(['id' => (int) $registrar->value]);
+            if (null === $icannAcreditation) {
+                $icannAcreditation = new IcannAccreditation();
             }
-            $entity
-                ->setHandle($registrar->value)
-                ->setTld(null)
-                ->setJCard(['vcard', [['version', [], 'text', '4.0'], ['fn', [], 'text', (string) $registrar->name]]])
-                ->setRemarks(null)
-                ->getIcannAccreditation()
-                    ->setRegistrarName($registrar->name)
-                    ->setStatus(RegistrarStatus::from($registrar->status))
-                    ->setRdapBaseUrl($registrar->rdapurl->count() ? ($registrar->rdapurl->server) : null)
-                    ->setUpdated(null !== $registrar->attributes()->updated ? new \DateTimeImmutable($registrar->attributes()->updated) : null)
-                    ->setDate(null !== $registrar->attributes()->date ? new \DateTimeImmutable($registrar->attributes()->date) : null);
 
-            $this->em->persist($entity);
+            $icannAcreditation
+                ->setId((int) $registrar->value)
+                ->setRegistrarName($registrar->name)
+                ->setStatus(RegistrarStatus::from($registrar->status))
+                ->setRdapBaseUrl($registrar->rdapurl->count() ? ($registrar->rdapurl->server) : null)
+                ->setUpdated(null !== $registrar->attributes()->updated ? new \DateTimeImmutable($registrar->attributes()->updated) : null)
+                ->setDate(null !== $registrar->attributes()->date ? new \DateTimeImmutable($registrar->attributes()->date) : null);
+
+            $this->em->persist($icannAcreditation);
         }
         $this->em->flush();
     }
