@@ -36,6 +36,7 @@ use Psr\Log\LoggerInterface;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\HttpClient\Exception\ClientException;
 use Symfony\Component\HttpFoundation\Exception\BadRequestException;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Yaml\Yaml;
 use Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface;
@@ -267,7 +268,7 @@ class RDAPService
     private function handleRdapException(\Exception $e, string $idnDomain, ?Domain $domain, ?ResponseInterface $response): \Exception
     {
         if (
-            ($e instanceof ClientException && 404 === $e->getResponse()->getStatusCode())
+            ($e instanceof ClientException && Response::HTTP_NOT_FOUND === $e->getResponse()->getStatusCode())
             || ($e instanceof TransportExceptionInterface && null !== $response && !in_array('content-length', $response->getHeaders(false)) && 404 === $response->getStatusCode())
         ) {
             if (null !== $domain) {
@@ -386,8 +387,9 @@ class RDAPService
      */
     private function updateDomainEntities(Domain $domain, array $rdapData): void
     {
+        $now = new \DateTimeImmutable();
         foreach ($domain->getDomainEntities()->getIterator() as $domainEntity) {
-            $domainEntity->setDeleted(true);
+            $domainEntity->setDeletedAt($now);
         }
 
         if (!isset($rdapData['entities']) || !is_array($rdapData['entities'])) {
@@ -411,7 +413,7 @@ class RDAPService
                 ->setDomain($domain)
                 ->setEntity($entity)
                 ->setRoles($roles)
-                ->setDeleted(false));
+                ->setDeletedAt(null));
 
             $this->em->persist($domainEntity);
             $this->em->flush();

@@ -660,7 +660,7 @@ class Domain
         $attendees = [];
 
         /* @var DomainEntity $entity */
-        foreach ($this->getDomainEntities()->filter(fn (DomainEntity $domainEntity) => !$domainEntity->getDeleted())->getIterator() as $domainEntity) {
+        foreach ($this->getDomainEntities()->filter(fn (DomainEntity $domainEntity) => !$domainEntity->getDeletedAt())->getIterator() as $domainEntity) {
             $jCard = $domainEntity->getEntity()->getJCard();
 
             if (empty($jCard)) {

@@ -27,14 +27,9 @@ class DomainEntity
     #[Groups(['domain-entity:entity', 'domain-entity:domain'])]
     private array $roles = [];
 
-    #[ORM\Column]
+    #[ORM\Column(nullable: true)]
     #[Groups(['domain-entity:entity', 'domain-entity:domain'])]
-    private ?bool $deleted;
-
-    public function __construct()
-    {
-        $this->deleted = false;
-    }
+    private ?\DateTimeImmutable $deletedAt = null;
 
     public function getDomain(): ?Domain
     {
@@ -75,14 +70,14 @@ class DomainEntity
         return $this;
     }
 
-    public function getDeleted(): ?bool
+    public function getDeletedAt(): ?\DateTimeImmutable
     {
-        return $this->deleted;
+        return $this->deletedAt;
     }
 
-    public function setDeleted(?bool $deleted): static
+    public function setDeletedAt(?\DateTimeImmutable $deletedAt): static
     {
-        $this->deleted = $deleted;
+        $this->deletedAt = $deletedAt;
 
         return $this;
     }
