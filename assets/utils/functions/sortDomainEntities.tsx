@@ -1,7 +1,7 @@
 import type {Domain} from '../api'
 
 export const sortDomainEntities = (domain: Domain) => domain.entities
-    .filter(e => !e.deleted)
+    .filter(e => e.deletedAt !== undefined)
     .sort((e1, e2) => {
         const p = (r: string[]) => r.includes('registrant')
             ? 5

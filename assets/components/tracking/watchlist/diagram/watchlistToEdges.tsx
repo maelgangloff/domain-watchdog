@@ -7,10 +7,10 @@ import type {Edge} from '@xyflow/react'
 
 export function domainEntitiesToEdges(d: Domain, withRegistrar = false): Edge[] {
     const rdapRoleTranslated = rdapRoleTranslation()
-    const sponsor = d.entities.find(e => !e.deleted && e.roles.includes('sponsor'))
+    const sponsor = d.entities.find(e => e.deletedAt !== undefined && e.roles.includes('sponsor'))
     return d.entities
         .filter(e =>
-            !e.deleted &&
+            e.deletedAt !== undefined &&
             (withRegistrar || !e.roles.includes('registrar')) &&
             ((sponsor == null) || !e.roles.includes('registrar') || e.roles.includes('sponsor'))
         )

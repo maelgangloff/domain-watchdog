@@ -64,7 +64,7 @@ export interface Domain {
         entity: Entity
         events: Event[]
         roles: string[]
-        deleted: boolean
+        deletedAt?: string
     }>
     nameservers: Nameserver[]
     tld: Tld
