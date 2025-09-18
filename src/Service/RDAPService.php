@@ -389,7 +389,9 @@ class RDAPService
     {
         $now = new \DateTimeImmutable();
         foreach ($domain->getDomainEntities()->getIterator() as $domainEntity) {
-            $domainEntity->setDeletedAt($now);
+            if (null !== $domainEntity->getDeletedAt()) {
+                $domainEntity->setDeletedAt($now);
+            }
         }
 
         if (!isset($rdapData['entities']) || !is_array($rdapData['entities'])) {
