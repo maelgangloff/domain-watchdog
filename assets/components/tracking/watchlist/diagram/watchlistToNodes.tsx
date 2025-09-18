@@ -15,10 +15,10 @@ export const domainToNode = (d: Domain): Node => ({
 })
 
 export const domainEntitiesToNode = (d: Domain, withRegistrar = false): Node[] => {
-    const sponsor = d.entities.find(e => e.deletedAt !== undefined && e.roles.includes('sponsor'))
+    const sponsor = d.entities.find(e => e.deletedAt === undefined && e.roles.includes('sponsor'))
     return d.entities
         .filter(e =>
-            e.deletedAt !== undefined &&
+            e.deletedAt === undefined &&
             (withRegistrar || !e.roles.includes('registrar')) &&
             ((sponsor == null) || !e.roles.includes('registrar') || e.roles.includes('sponsor'))
         )
