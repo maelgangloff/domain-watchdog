@@ -44,7 +44,7 @@ class RegistrationController extends AbstractController
         name: 'user_register',
         defaults: [
             '_api_resource_class' => User::class,
-            '_api_operation_name' => 'register',
+            '_api_operation_name' => 'user_register',
         ],
         methods: ['POST']
     )]
@@ -75,9 +75,6 @@ class RegistrationController extends AbstractController
             )
         );
 
-        $this->em->persist($user);
-        $this->em->flush();
-
         if (false === (bool) $this->getParameter('registration_verify_email')) {
             $user->setVerified(true);
         } else {
@@ -96,6 +93,9 @@ class RegistrationController extends AbstractController
                 'signedUrl' => $signedUrl,
             ]);
         }
+
+        $this->em->persist($user);
+        $this->em->flush();
 
         $this->logger->info('A new user has registered ({username}).', [
             'username' => $user->getUserIdentifier(),
