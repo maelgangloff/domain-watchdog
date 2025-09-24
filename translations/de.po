@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2025-03-31 14:39+0000\n"
+"PO-Revision-Date: 2025-09-24 21:40+0000\n"
 "Last-Translator: Maël Gangloff <contact@maelgangloff.fr>\n"
 "Language-Team: German <https://weblate.vinceh121.me/projects/domain-watchdog/"
 "domain-watchdog-dashboard/de/>\n"
@@ -8,7 +8,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.9.2\n"
+"X-Generator: Weblate 5.13.2\n"
 
 #: assets/App.tsx:120
 msgid "TOS"
@@ -206,7 +206,7 @@ msgstr "Entitätsfinder"
 
 #: assets/components/Sider.tsx:72 assets/components/Sider.tsx:73
 msgid "Infrastructure"
-msgstr ""
+msgstr "Infrastruktur"
 
 #: assets/components/Sider.tsx:79 assets/pages/StatisticsPage.tsx:114
 #: assets/pages/infrastructure/TldPage.tsx:79
@@ -219,7 +219,7 @@ msgstr "TLD-Liste"
 
 #: assets/components/Sider.tsx:87 assets/components/Sider.tsx:88
 msgid "ICANN list"
-msgstr ""
+msgstr "ICANN-Liste"
 
 #: assets/components/Sider.tsx:96
 msgid "Tracking"
@@ -586,28 +586,35 @@ msgstr "Zurücksetzen"
 
 #: assets/pages/infrastructure/IcannRegistrarPage.tsx:43
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #: assets/pages/infrastructure/IcannRegistrarPage.tsx:77
 msgid ""
 "An accredited number means that ICANN's contract with the registrar is "
 "ongoing."
 msgstr ""
+"Eine akkreditierte Nummer bedeutet, dass der Vertrag zwischen ICANN und dem "
+"Registrar weiterhin besteht."
 
 #: assets/pages/infrastructure/IcannRegistrarPage.tsx:82
 msgid ""
 "A reserved number can be used by TLD registries for specific operations."
 msgstr ""
+"Eine reservierte Nummer kann von TLD-Registrierungen für bestimmte Vorgänge "
+"verwendet werden."
 
 #: assets/pages/infrastructure/IcannRegistrarPage.tsx:87
 msgid ""
 "A terminated number means that ICANN's contract with the registrar has been "
 "terminated."
 msgstr ""
+"Eine gekündigte Nummer bedeutet, dass der Vertrag zwischen ICANN und dem "
+"Registrar gekündigt wurde."
 
 #: assets/pages/infrastructure/IcannRegistrarPage.tsx:96
 msgid "This page lists ICANN-accredited registrars."
 msgstr ""
+"Auf dieser Seite sind die von der ICANN akkreditierten Registrare aufgeführt."
 
 #: assets/pages/infrastructure/IcannRegistrarPage.tsx:99
 msgid ""
@@ -616,23 +623,25 @@ msgid ""
 "Internet's unique identifiers (including numbers, IP addresses, and domain "
 "name extensions)."
 msgstr ""
+"Die Liste wird offiziell von der Internet Assigned Numbers Authority (IANA) "
+"veröffentlicht und gepflegt, der Organisation, die für die Verwaltung der "
+"eindeutigen Kennungen des Internets (einschließlich Nummern, IP-Adressen und "
+"Domänennamenerweiterungen) verantwortlich ist."
 
 #: assets/pages/infrastructure/IcannRegistrarPage.tsx:111
 #: assets/utils/functions/rdapTranslation.ts:120
 msgid "Accredited"
-msgstr ""
+msgstr "Akkreditiert"
 
 #: assets/pages/infrastructure/IcannRegistrarPage.tsx:116
 #: assets/utils/functions/rdapTranslation.ts:121
-#, fuzzy
-#| msgid "Reseller"
 msgid "Reserved"
-msgstr "Wiederverkäufer"
+msgstr "Reserviert"
 
 #: assets/pages/infrastructure/IcannRegistrarPage.tsx:121
 #: assets/utils/functions/rdapTranslation.ts:119
 msgid "Terminated"
-msgstr ""
+msgstr "Beendet"
 
 #: assets/pages/infrastructure/TldPage.tsx:86
 msgid "Flag"
@@ -813,7 +822,7 @@ msgstr "Rollen"
 
 #: assets/utils/functions/DomainToTag.tsx:16
 msgid "The domain name was updated less than a week ago."
-msgstr ""
+msgstr "Der Domänenname wurde vor weniger als einer Woche aktualisiert."
 
 #: assets/utils/functions/rdapTranslation.ts:7
 #: assets/utils/providers/forms/EppConnectorForm.tsx:241
