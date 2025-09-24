@@ -3,34 +3,34 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Plural-Forms: nplurals=2; plural=(n!=1);\n"
 
-#: assets/App.tsx:121
+#: assets/App.tsx:120
 msgid "TOS"
 msgstr ""
 
-#: assets/App.tsx:122
+#: assets/App.tsx:121
 msgid "Privacy Policy"
 msgstr ""
 
-#: assets/App.tsx:123
+#: assets/App.tsx:122
 msgid "FAQ"
 msgstr ""
 
-#: assets/App.tsx:130
+#: assets/App.tsx:129
 msgid "Documentation"
 msgstr ""
 
-#: assets/App.tsx:135
+#: assets/App.tsx:134
 #, javascript-format
 msgid ""
 "${ ProjectLink } is an open source project distributed under the ${ "
 "LicenseLink } license."
 msgstr ""
 
-#: assets/App.tsx:148
+#: assets/App.tsx:147
 msgid "Official git repository"
 msgstr ""
 
-#: assets/App.tsx:151
+#: assets/App.tsx:150
 msgid "Submit an issue"
 msgstr ""
 
@@ -575,14 +575,17 @@ msgid ""
 msgstr ""
 
 #: assets/pages/infrastructure/IcannRegistrarPage.tsx:111
+#: assets/utils/functions/rdapTranslation.ts:120
 msgid "Accredited"
 msgstr ""
 
 #: assets/pages/infrastructure/IcannRegistrarPage.tsx:116
+#: assets/utils/functions/rdapTranslation.ts:121
 msgid "Reserved"
 msgstr ""
 
 #: assets/pages/infrastructure/IcannRegistrarPage.tsx:121
+#: assets/utils/functions/rdapTranslation.ts:119
 msgid "Terminated"
 msgstr ""
 
