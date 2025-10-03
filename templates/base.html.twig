@@ -33,5 +33,29 @@
 <body>
 <div id="root"></div>
 {{ encore_entry_script_tags('app') }}
+
+<!-- Matomo -->
+<script>
+    var _paq = window._paq = window._paq || [];
+    _paq.push(['trackPageView']);
+    _paq.push(['enableLinkTracking']);
+    _paq.push(["trackAllContentImpressions"]);
+    _paq.push(['trackVisibleContentImpressions']);
+    _paq.push(['enableHeartBeatTimer']);
+
+    (function () {
+        var u = "//sonar.domainwatchdog.eu/";
+        _paq.push(['setTrackerUrl', u + 'sonar']);
+        _paq.push(['setSiteId', '1']);
+        var d = document, g = d.createElement('script'), s = d.getElementsByTagName('script')[0];
+        g.async = true;
+        g.src = u + 'sonar.js';
+        s.parentNode.insertBefore(g, s);
+    })();
+</script>
+<noscript><p><img referrerpolicy="no-referrer-when-downgrade" src="//sonar.domainwatchdog.eu/sonar?idsite=1&amp;rec=1"
+                  style="border:0;" alt=""/></p></noscript>
+<!-- End Matomo Code -->
+
 </body>
 </html>
