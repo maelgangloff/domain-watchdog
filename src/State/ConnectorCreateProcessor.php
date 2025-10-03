@@ -47,7 +47,7 @@ readonly class ConnectorCreateProcessor implements ProcessorInterface
 
         $provider = $data->getProvider();
 
-        $this->logger->info('User {username} wants to register a connector from provider {provider}.', [
+        $this->logger->info('User wants to register a connector', [
             'username' => $user->getUserIdentifier(),
             'provider' => $provider->value,
         ]);
@@ -87,7 +87,7 @@ readonly class ConnectorCreateProcessor implements ProcessorInterface
             $data->setAuthData($providerClient->authenticate($authData));
         }
 
-        $this->logger->info('User {username} authentication data with the {provider} provider has been validated.', [
+        $this->logger->info('User authentication data with this provider has been validated', [
             'username' => $user->getUserIdentifier(),
             'provider' => $provider->value,
         ]);

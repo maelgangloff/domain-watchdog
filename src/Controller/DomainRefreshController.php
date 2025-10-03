@@ -44,9 +44,9 @@ class DomainRefreshController extends AbstractController
         $idnDomain = RDAPService::convertToIdn($ldhName);
         $userId = $this->getUser()->getUserIdentifier();
 
-        $this->logger->info('User {username} wants to update the domain name {idnDomain}.', [
+        $this->logger->info('User wants to update a domain name', [
             'username' => $userId,
-            'idnDomain' => $idnDomain,
+            'ldhName' => $idnDomain,
         ]);
 
         /** @var ?Domain $domain */
@@ -58,8 +58,8 @@ class DomainRefreshController extends AbstractController
             && !$this->kernel->isDebug()
             && true !== filter_var($request->get('forced', false), FILTER_VALIDATE_BOOLEAN)
         ) {
-            $this->logger->info('It is not necessary to update the information of the domain name {idnDomain} with the RDAP protocol.', [
-                'idnDomain' => $idnDomain,
+            $this->logger->info('It is not necessary to update the domain name', [
+                'ldhName' => $idnDomain,
             ]);
 
             return $domain;

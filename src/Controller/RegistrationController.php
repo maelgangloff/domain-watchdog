@@ -88,7 +88,7 @@ class RegistrationController extends AbstractController
             );
 
             $signedUrl = (string) $email->getContext()['signedUrl'];
-            $this->logger->notice('The validation link for user {username} is {signedUrl}', [
+            $this->logger->notice('The validation link for this user is generated', [
                 'username' => $user->getUserIdentifier(),
                 'signedUrl' => $signedUrl,
             ]);
@@ -97,7 +97,7 @@ class RegistrationController extends AbstractController
         $this->em->persist($user);
         $this->em->flush();
 
-        $this->logger->info('A new user has registered ({username}).', [
+        $this->logger->info('New user has registered', [
             'username' => $user->getUserIdentifier(),
         ]);
 
@@ -121,7 +121,7 @@ class RegistrationController extends AbstractController
 
         $this->emailVerifier->handleEmailConfirmation($request, $user);
 
-        $this->logger->info('User {username} has validated his email address.', [
+        $this->logger->info('User has validated his email address', [
             'username' => $user->getUserIdentifier(),
         ]);
 

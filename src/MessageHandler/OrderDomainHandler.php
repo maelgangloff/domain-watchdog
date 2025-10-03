@@ -71,7 +71,7 @@ final readonly class OrderDomainHandler
             return;
         }
 
-        $this->logger->notice('Watchlist {watchlist} is linked to connector {connector}. A purchase attempt will be made for domain name {ldhName} with provider {provider}.', [
+        $this->logger->notice('Watchlist is linked to a connector : a purchase attempt will be made for this domain name', [
             'watchlist' => $message->watchListToken,
             'connector' => $connector->getId(),
             'ldhName' => $message->ldhName,
@@ -99,7 +99,7 @@ final readonly class OrderDomainHandler
             /*
              * If the purchase was successful, the statistics are updated and a success message is sent to the user.
              */
-            $this->logger->notice('Watchlist {watchlist} is linked to connector {connector}. A purchase was successfully made for domain {ldhName} with provider {provider}.', [
+            $this->logger->notice('Watchlist is linked to connector : a purchase was successfully made for this domain name', [
                 'watchlist' => $message->watchListToken,
                 'connector' => $connector->getId(),
                 'ldhName' => $message->ldhName,
@@ -118,8 +118,11 @@ final readonly class OrderDomainHandler
              * The purchase was not successful (for several possible reasons that we have not determined).
              * The user is informed and the exception is raised, which may allow you to try again.
              */
-            $this->logger->warning('Unable to complete purchase. An error message is sent to user {username}.', [
-                'username' => $watchList->getUser()->getUserIdentifier(),
+            $this->logger->warning('Unable to complete purchase : an error message is sent to user', [
+                'watchlist' => $message->watchListToken,
+                'connector' => $connector->getId(),
+                'ldhName' => $message->ldhName,
+                'provider' => $connector->getProvider()->value,
             ]);
 
             $this->statService->incrementStat('stats.domain.purchase.failed');

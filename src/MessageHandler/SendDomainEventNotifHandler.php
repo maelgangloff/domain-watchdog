@@ -73,7 +73,7 @@ final readonly class SendDomainEventNotifHandler
 
             /** @var WatchListTrigger $watchListTrigger */
             foreach ($watchListTriggers->getIterator() as $watchListTrigger) {
-                $this->logger->info('Action {event} has been detected on the domain name {ldhName}. A notification is sent to user {username}.', [
+                $this->logger->info('New action has been detected on this domain name : a notification is sent to user', [
                     'event' => $event->getAction(),
                     'ldhName' => $message->ldhName,
                     'username' => $watchList->getUser()->getUserIdentifier(),

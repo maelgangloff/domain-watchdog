@@ -49,8 +49,9 @@ readonly class WatchListUpdateProcessor implements ProcessorInterface
 
         if ($this->parameterBag->get('limited_features')) {
             if ($data->getDomains()->count() > (int) $this->parameterBag->get('limit_max_watchlist_domains')) {
-                $this->logger->notice('User {username} tried to update a Watchlist. The maximum number of domains has been reached for this Watchlist', [
+                $this->logger->notice('User tried to update a Watchlist : the maximum number of domains has been reached for this Watchlist', [
                     'username' => $user->getUserIdentifier(),
+                    'watchlist' => $data->getToken(),
                 ]);
 
                 throw new AccessDeniedHttpException('You have exceeded the maximum number of domain names allowed in this Watchlist');
@@ -67,8 +68,9 @@ readonly class WatchListUpdateProcessor implements ProcessorInterface
             foreach ($data->getDomains()->getIterator() as $domain) {
                 if (in_array($domain, $trackedDomains)) {
                     $ldhName = $domain->getLdhName();
-                    $this->logger->notice('User {username} tried to update a watchlist with domain name {ldhName}. It is forbidden to register the same domain name twice with limited mode', [
+                    $this->logger->notice('User tried to update a watchlist : it is forbidden to register the same domain name twice with limited mode', [
                         'username' => $user->getUserIdentifier(),
+                        'watchlist' => $data->getToken(),
                         'ldhName' => $ldhName,
                     ]);
 
@@ -77,8 +79,9 @@ readonly class WatchListUpdateProcessor implements ProcessorInterface
             }
 
             if (null !== $data->getWebhookDsn() && count($data->getWebhookDsn()) > (int) $this->parameterBag->get('limit_max_watchlist_webhooks')) {
-                $this->logger->notice('User {username} tried to update a Watchlist. The maximum number of webhooks has been reached.', [
+                $this->logger->notice('User tried to update a Watchlist : the maximum number of webhooks has been reached', [
                     'username' => $user->getUserIdentifier(),
+                    'watchlist' => $data->getToken(),
                 ]);
 
                 throw new AccessDeniedHttpException('You have exceeded the maximum number of webhooks allowed in this Watchlist');
@@ -89,7 +92,7 @@ readonly class WatchListUpdateProcessor implements ProcessorInterface
 
         if ($connector = $data->getConnector()) {
             if (!$user->getConnectors()->contains($connector)) {
-                $this->logger->notice('The Connector ({connector}) does not belong to the user.', [
+                $this->logger->notice('Connector does not belong to the user', [
                     'username' => $user->getUserIdentifier(),
                     'connector' => $connector->getId(),
                 ]);
@@ -114,9 +117,10 @@ readonly class WatchListUpdateProcessor implements ProcessorInterface
             $supported = $connectorProvider->isSupported(...$data->getDomains()->toArray());
 
             if (!$supported) {
-                $this->logger->notice('The Connector ({connector}) does not support all TLDs in this Watchlist', [
+                $this->logger->notice('Connector does not support all TLDs in this Watchlist', [
                     'username' => $user->getUserIdentifier(),
                     'connector' => $connector->getId(),
+                    'provider' => $connector->getProvider()->value,
                 ]);
 
                 throw new BadRequestHttpException('This connector does not support all TLDs in this Watchlist');

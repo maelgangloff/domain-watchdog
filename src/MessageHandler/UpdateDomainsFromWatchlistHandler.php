@@ -52,15 +52,15 @@ final readonly class UpdateDomainsFromWatchlistHandler
         /** @var WatchList $watchList */
         $watchList = $this->watchListRepository->findOneBy(['token' => $message->watchListToken]);
 
-        $this->logger->info('Domain names from Watchlist {token} will be processed.', [
-            'token' => $message->watchListToken,
+        $this->logger->info('Domain names listed in the Watchlist will be updated', [
+            'watchlist' => $message->watchListToken,
         ]);
 
         /** @var AbstractProvider $connectorProvider */
         $connectorProvider = $this->getConnectorProvider($watchList);
 
         if ($connectorProvider instanceof CheckDomainProviderInterface) {
-            $this->logger->notice('Watchlist {watchlist} linked to connector {connector}.', [
+            $this->logger->notice('Watchlist is linked to a connector', [
                 'watchlist' => $watchList->getToken(),
                 'connector' => $watchList->getConnector()->getId(),
             ]);
@@ -70,7 +70,7 @@ final readonly class UpdateDomainsFromWatchlistHandler
                     ...array_unique(array_map(fn (Domain $d) => $d->getLdhName(), $watchList->getDomains()->toArray()))
                 );
             } catch (\Throwable $exception) {
-                $this->logger->warning('Unable to check domain names availability with connector {connector}.', [
+                $this->logger->warning('Unable to check domain names availability with this connector', [
                     'connector' => $watchList->getConnector()->getId(),
                 ]);
 
@@ -122,7 +122,7 @@ final readonly class UpdateDomainsFromWatchlistHandler
                  * In case of another unknown error,
                  * the owner of the Watchlist is informed that an error occurred in updating the domain name.
                  */
-                $this->logger->error('An update error email is sent to user {username}.', [
+                $this->logger->error('Update error email is sent to user', [
                     'username' => $watchList->getUser()->getUserIdentifier(),
                     'error' => $e,
                 ]);

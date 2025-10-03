@@ -59,17 +59,17 @@ readonly class ChatNotificationService
                     throw new BadRequestHttpException('Unsupported message type');
                 }
 
-                $this->logger->info('Chat message sent with {schema} for Watchlist {token}',
-                    [
-                        'scheme' => $webhookScheme->name,
-                        'token' => $watchList->getToken(),
-                    ]);
+                $this->logger->info('Chat message sent', [
+                    'username' => $watchList->getUser()->getUserIdentifier(),
+                    'scheme' => $webhookScheme->name,
+                    'watchlist' => $watchList->getToken(),
+                ]);
             } catch (\Throwable $exception) {
-                $this->logger->error('Unable to send a chat message to {scheme} for Watchlist {token}',
-                    [
-                        'scheme' => $webhookScheme->name,
-                        'token' => $watchList->getToken(),
-                    ]);
+                $this->logger->error('Unable to send a chat message', [
+                    'username' => $watchList->getUser()->getUserIdentifier(),
+                    'scheme' => $webhookScheme->name,
+                    'watchlist' => $watchList->getToken(),
+                ]);
                 throw new BadRequestHttpException($exception->getMessage());
             }
         }

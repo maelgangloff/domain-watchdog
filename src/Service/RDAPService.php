@@ -143,8 +143,8 @@ class RDAPService
         $idnDomain = RDAPService::convertToIdn($fqdn);
         $tld = $this->getTld($idnDomain);
 
-        $this->logger->info('An update request for domain name {idnDomain} is requested.', [
-            'idnDomain' => $idnDomain,
+        $this->logger->info('Update request for a domain name is requested', [
+            'ldhName' => $idnDomain,
         ]);
 
         $rdapServer = $this->fetchRdapServer($tld);
@@ -241,8 +241,8 @@ class RDAPService
     private function fetchRdapResponse(RdapServer $rdapServer, string $idnDomain, ?Domain $domain): array
     {
         $rdapServerUrl = $rdapServer->getUrl();
-        $this->logger->notice('An RDAP query to update the domain name {idnDomain} will be made to {server}.', [
-            'idnDomain' => $idnDomain,
+        $this->logger->notice('An RDAP query to update this domain name will be made', [
+            'ldhName' => $idnDomain,
             'server' => $rdapServerUrl,
         ]);
 
@@ -272,8 +272,8 @@ class RDAPService
             || ($e instanceof TransportExceptionInterface && null !== $response && !in_array('content-length', $response->getHeaders(false)) && 404 === $response->getStatusCode())
         ) {
             if (null !== $domain) {
-                $this->logger->notice('The domain name {idnDomain} has been deleted from the WHOIS database.', [
-                    'idnDomain' => $idnDomain,
+                $this->logger->notice('Domain name has been deleted from the WHOIS database', [
+                    'ldhName' => $idnDomain,
                 ]);
 
                 $domain->updateTimestamps();
@@ -302,8 +302,8 @@ class RDAPService
     {
         $domain = new Domain();
 
-        $this->logger->info('The domain name {idnDomain} was not known to this Domain Watchdog instance.', [
-            'idnDomain' => $idnDomain,
+        $this->logger->info('Domain name was not known to this instance', [
+            'ldhName' => $idnDomain,
         ]);
 
         return $domain->setTld($tld)->setLdhName($idnDomain)->setDeleted(false);
@@ -330,8 +330,8 @@ class RDAPService
                 }
             }
         } else {
-            $this->logger->warning('The domain name {idnDomain} has no WHOIS status.', [
-                'idnDomain' => $domain->getLdhName(),
+            $this->logger->warning('Domain name has no WHOIS status', [
+                'ldhName' => $domain->getLdhName(),
             ]);
         }
     }
@@ -341,8 +341,8 @@ class RDAPService
         if (isset($rdapData['handle'])) {
             $domain->setHandle($rdapData['handle']);
         } else {
-            $this->logger->warning('The domain name {idnDomain} has no handle key.', [
-                'idnDomain' => $domain->getLdhName(),
+            $this->logger->warning('Domain name has no handle key', [
+                'ldhName' => $domain->getLdhName(),
             ]);
         }
     }
@@ -440,8 +440,8 @@ class RDAPService
                 }
             }
         } else {
-            $this->logger->warning('The domain name {idnDomain} has no nameservers.', [
-                'idnDomain' => $domain->getLdhName(),
+            $this->logger->warning('Domain name has no nameservers', [
+                'ldhName' => $domain->getLdhName(),
             ]);
         }
     }
@@ -533,8 +533,9 @@ class RDAPService
             sort($roles);
             $rdapEntity['handle'] = 'DW-FAKEHANDLE-'.$domain.'-'.implode(',', $roles);
 
-            $this->logger->warning('The entity {handle} has no handle key.', [
+            $this->logger->warning('Entity has no handle key', [
                 'handle' => $rdapEntity['handle'],
+                'ldhName' => $domain,
             ]);
         }
 
@@ -546,8 +547,9 @@ class RDAPService
         if (null === $entity) {
             $entity = (new Entity())->setTld($tld);
 
-            $this->logger->info('The entity {handle} was not known to this Domain Watchdog instance.', [
+            $this->logger->info('Entity was not known to this instance', [
                 'handle' => $rdapEntity['handle'],
+                'ldhName' => $domain,
             ]);
         }
 
@@ -663,12 +665,18 @@ class RDAPService
                     try {
                         $blob = hex2bin($rdapDsData['digest']);
                     } catch (\Exception) {
-                        $this->logger->warning('DNSSEC digest is not a valid hexadecimal value.');
+                        $this->logger->warning('DNSSEC digest is not a valid hexadecimal value', [
+                            'ldhName' => $domain,
+                            'value' => $rdapDsData['digest'],
+                        ]);
                         continue;
                     }
 
                     if (false === $blob) {
-                        $this->logger->warning('DNSSEC digest is not a valid hexadecimal value.');
+                        $this->logger->warning('DNSSEC digest is not a valid hexadecimal value', [
+                            'ldhName' => $domain,
+                            'value' => $rdapDsData['digest'],
+                        ]);
                         continue;
                     }
                     $dsData->setDigest($blob);
@@ -688,7 +696,11 @@ class RDAPService
 
                 if (array_key_exists($dsData->getDigestType()->value, $digestLengthByte)
                     && strlen($dsData->getDigest()) / 2 !== $digestLengthByte[$dsData->getDigestType()->value]) {
-                    $this->logger->warning('DNSSEC digest does not have a valid length according to the digest type.');
+                    $this->logger->warning('DNSSEC digest does not have a valid length according to the digest type', [
+                        'ldhName' => $domain,
+                        'value' => $dsData->getDigest(),
+                        'type' => $dsData->getDigestType()->name,
+                    ]);
                     continue;
                 }
 
@@ -696,8 +708,8 @@ class RDAPService
                 $this->em->persist($dsData);
             }
         } else {
-            $this->logger->warning('The domain name {idnDomain} has no DS record.', [
-                'idnDomain' => $domain->getLdhName(),
+            $this->logger->warning('Domain name has no DS record', [
+                'ldhName' => $domain->getLdhName(),
             ]);
         }
     }
@@ -712,7 +724,7 @@ class RDAPService
      */
     public function updateRDAPServersFromIANA(): void
     {
-        $this->logger->info('Start of update the RDAP server list from IANA.');
+        $this->logger->info('Start of update the RDAP server list from IANA');
 
         $dnsRoot = $this->client->request(
             'GET', 'https://data.iana.org/rdap/dns.json'
@@ -768,7 +780,7 @@ class RDAPService
             return;
         }
 
-        $this->logger->info('Start of update the RDAP server list from custom config file.');
+        $this->logger->info('Start of update the RDAP server list from custom config file');
         $this->updateRDAPServers(Yaml::parseFile($fileName));
     }
 
@@ -780,7 +792,7 @@ class RDAPService
      */
     public function updateTldListIANA(): void
     {
-        $this->logger->info('Start of retrieval of the list of TLDs according to IANA.');
+        $this->logger->info('Start of retrieval of the list of TLDs according to IANA');
         $tldList = array_map(
             fn ($tld) => strtolower($tld),
             explode(PHP_EOL,
@@ -801,7 +813,7 @@ class RDAPService
                 $tldEntity = new Tld();
                 $tldEntity->setTld($tld);
 
-                $this->logger->notice('New TLD detected according to IANA ({tld}).', [
+                $this->logger->notice('New TLD detected according to IANA', [
                     'tld' => $tld,
                 ]);
             }
@@ -830,7 +842,7 @@ class RDAPService
      */
     public function updateRegistrarListIANA(): void
     {
-        $this->logger->info('Start of retrieval of the list of Registrar IDs according to IANA.');
+        $this->logger->info('Start of retrieval of the list of Registrar IDs according to IANA');
         $registrarList = $this->client->request(
             'GET', 'https://www.iana.org/assignments/registrar-ids/registrar-ids.xml'
         );
@@ -884,7 +896,7 @@ class RDAPService
      */
     public function updateGTldListICANN(): void
     {
-        $this->logger->info('Start of retrieval of the list of gTLDs according to ICANN.');
+        $this->logger->info('Start of retrieval of the list of gTLDs according to ICANN');
 
         $gTldList = $this->client->request(
             'GET', 'https://www.icann.org/resources/registries/gtlds/v2/gtlds.json'
@@ -900,7 +912,7 @@ class RDAPService
             if (null === $gtTldEntity) {
                 $gtTldEntity = new Tld();
                 $gtTldEntity->setTld($gTld['gTLD'])->setType(TldType::gTLD);
-                $this->logger->notice('New gTLD detected according to ICANN ({tld}).', [
+                $this->logger->notice('New gTLD detected according to ICANN', [
                     'tld' => $gTld['gTLD'],
                 ]);
             }
