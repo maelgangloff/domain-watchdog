@@ -21,7 +21,7 @@ final readonly class ProcessWatchlistSchedule implements ScheduleProviderInterfa
     {
         return (new Schedule())
             ->add(
-                RecurringMessage::every('5 minutes', new ProcessAllWatchlist()),
+                RecurringMessage::every('5 seconds', new ProcessAllWatchlist()),
             )
             ->stateful($this->cache);
     }
