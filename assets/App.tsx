@@ -30,6 +30,44 @@ const ProjectLink = <Typography.Link key="projectLink" target='_blank' href={PRO
 const LicenseLink = <Typography.Link key="licenceLink" target='_blank' rel='license'
                                      href={LICENSE_LINK}>AGPL-3.0-or-later</Typography.Link>
 
+const DemoMessages = [
+    {
+        text: 'Love Domain Watchdog? Support us with a ⭐ on GitHub!',
+        link: 'https://github.com/maelgangloff/domain-watchdog',
+        button: 'Star on GitHub',
+    },
+    {
+        text: 'Help your team stay secure—spread the word about this tool! 🚀',
+        link: 'https://github.com/maelgangloff/domain-watchdog',
+        button: 'Share the project',
+    },
+    {
+        text: 'Got ideas or found a bug? Help us improve Domain Watchdog! 🐛',
+        link: 'https://github.com/maelgangloff/domain-watchdog/issues',
+        button: 'Open an issue',
+    },
+    {
+        text: 'Want to dive deeper? Check out our full documentation 📖',
+        link: 'https://domainwatchdog.eu',
+        button: 'Read the docs',
+    },
+    {
+        text: 'Enjoying this demo? Help us keep it live and free for everyone! 😇',
+        link: 'https://github.com/sponsors/maelgangloff',
+        button: 'Support the project',
+    },
+    {
+        text: 'Fuel the development! Buy the maintainer a coffee ☕',
+        link: 'https://github.com/sponsors/maelgangloff',
+        button: 'Buy a coffee',
+    },
+    {
+        text: 'Ready for production? Deploy your own private instance today 🔐',
+        link: 'https://domainwatchdog.eu/en/install-config/install/docker-compose/',
+        button: 'Self-host now',
+    },
+]
+
 function SiderWrapper(props: PropsWithChildren<{
     sidebarCollapsed: boolean,
     setSidebarCollapsed: (collapsed: boolean) => void
@@ -78,6 +116,7 @@ export default function App(): React.ReactElement {
     const [darkMode, setDarkMode] = useState(false)
     const [dismissLoginAlert, setDismissLoginAlert] = useState(() => localStorage.getItem('dismiss-login-alert') === 'true')
 
+
     const windowQuery = window.matchMedia('(prefers-color-scheme:dark)')
     const [messageApi, contextHolder] = message.useMessage()
 
@@ -94,6 +133,10 @@ export default function App(): React.ReactElement {
     const darkModeChange = useCallback((event: MediaQueryListEvent) => {
         setDarkMode(event.matches)
     }, [])
+
+    const randomMessage = useMemo(() => {
+        return DemoMessages[Math.floor(Math.random() * DemoMessages.length)]
+    }, [location.pathname])
 
     useEffect(() => {
         windowQuery.addEventListener('change', darkModeChange)
@@ -129,6 +172,18 @@ export default function App(): React.ReactElement {
         >
             <ConfigurationContext.Provider value={configContextValue}>
                 <AuthenticatedContext.Provider value={authContextValue}>
+                    <Alert
+                        type="info"
+                        showIcon={false}
+                        style={{background: 'linear-gradient(90deg, #0f172a 0%, #1e293b 100%)'}}
+                        message={randomMessage.text}
+                        action={
+                            <Button target='_blank'
+                                    rel='nofollow'
+                                    href={randomMessage.link}>{randomMessage.button}</Button>
+                        }
+                        banner
+                    />
                     {!dismissLoginAlert && (configuration?.registerEnabled || configuration?.ssoLogin) && isAuthenticated === false && !['/login'].includes(location.pathname) &&
                         <Alert
                             type="warning"

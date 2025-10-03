@@ -5,33 +5,57 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <meta name="title" content="Domain Watchdog">
+    <meta name="title" content="Domain Watchdog | Demo instance">
     <meta name="description"
           content="A standalone app that collects open access information about domain names, helping users track the history and changes associated with domain names">
     <meta name="keywords" content="api, tracking, whois, domain, rdap, watchdog">
 
     <meta property="og:type" content="website"/>
-    <meta property="og:title" content="Domain Watchdog"/>
-    <meta property="og:image" content="/images/banner.png">
+    <meta property="og:title" content="Domain Watchdog | Demo instance"/>
+    <meta property="og:image" content="https://domainwatchdog.eu/logo.png">
     <meta property="og:description"
           content="A standalone app that collects open access information about domain names, helping users track the history and changes associated with domain names"/>
     <meta property="og:site_name" content="Domain Watchdog"/>
 
     <meta property="twitter:card" content="summary"/>
-    <meta property="twitter:title" content="Domain Watchdog"/>
+    <meta property="twitter:title" content="Domain Watchdog | Demo instance"/>
     <meta property="twitter:description"
           content="A standalone app that collects open access information about domain names, helping users track the history and changes associated with domain names"/>
-    <meta property="twitter:image" content="/images/banner.png"/>
+    <meta property="twitter:image" content="https://domainwatchdog.eu/logo.png"/>
 
 
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>Domain Watchdog</title>
+    <title>Domain Watchdog | Demo instance</title>
     <link rel="manifest" href="/manifest.json"/>
-    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="icon" type="image/png" href="https://domainwatchdog.eu/logo.png">
     {{ encore_entry_link_tags('app') }}
 </head>
 <body>
 <div id="root"></div>
 {{ encore_entry_script_tags('app') }}
+
+<!-- Matomo -->
+<script>
+    var _paq = window._paq = window._paq || [];
+    _paq.push(['trackPageView']);
+    _paq.push(['enableLinkTracking']);
+    _paq.push(["trackAllContentImpressions"]);
+    _paq.push(['trackVisibleContentImpressions']);
+    _paq.push(['enableHeartBeatTimer']);
+
+    (function () {
+        var u = "//sonar.domainwatchdog.eu/";
+        _paq.push(['setTrackerUrl', u + 'sonar']);
+        _paq.push(['setSiteId', '1']);
+        var d = document, g = d.createElement('script'), s = d.getElementsByTagName('script')[0];
+        g.async = true;
+        g.src = u + 'sonar.js';
+        s.parentNode.insertBefore(g, s);
+    })();
+</script>
+<noscript><p><img referrerpolicy="no-referrer-when-downgrade" src="//sonar.domainwatchdog.eu/sonar?idsite=1&amp;rec=1"
+                  style="border:0;" alt=""/></p></noscript>
+<!-- End Matomo Code -->
+
 </body>
 </html>
