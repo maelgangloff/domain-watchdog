@@ -1,2 +1,5 @@
-User-agent: *
-Disallow: /
+User-agent: Twitterbot
+Allow: /images
+
+User-agent: facebookexternalhit
+Allow: /images

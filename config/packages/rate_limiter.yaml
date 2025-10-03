@@ -22,5 +22,5 @@ framework:
 
         user_rdap_requests:
             policy: sliding_window
-            limit: 10
+            limit: 25
             interval: '1 hour'
