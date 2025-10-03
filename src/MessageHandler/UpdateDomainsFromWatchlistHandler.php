@@ -122,15 +122,18 @@ final readonly class UpdateDomainsFromWatchlistHandler
                  * In case of another unknown error,
                  * the owner of the Watchlist is informed that an error occurred in updating the domain name.
                  */
-                $this->logger->error('Update error email is sent to user', [
-                    'username' => $watchList->getUser()->getUserIdentifier(),
-                    'error' => $e,
-                ]);
-                $email = (new DomainUpdateErrorNotification($this->sender, $domain))
-                    ->asEmailMessage(new Recipient($watchList->getUser()->getEmail()));
-                $this->mailer->send($email->getMessage());
 
-                throw $e;
+                /*
+                                $this->logger->error('Update error email is sent to user', [
+                                    'username' => $watchList->getUser()->getUserIdentifier(),
+                                    'error' => $e,
+                                ]);
+                                $email = (new DomainUpdateErrorNotification($this->sender, $domain))
+                                    ->asEmailMessage(new Recipient($watchList->getUser()->getEmail()));
+                                $this->mailer->send($email->getMessage());
+
+                                throw $e;
+                */
             }
         }
     }
