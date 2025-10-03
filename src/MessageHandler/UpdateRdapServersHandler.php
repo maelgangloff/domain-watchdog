@@ -5,6 +5,7 @@ namespace App\MessageHandler;
 use App\Message\UpdateRdapServers;
 use App\Repository\DomainRepository;
 use App\Service\OfficialDataService;
+use Sentry\CheckInStatus;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 use Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface;
@@ -12,6 +13,8 @@ use Symfony\Contracts\HttpClient\Exception\DecodingExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\RedirectionExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\ServerExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
+
+use function Sentry\captureCheckIn;
 
 #[AsMessageHandler]
 final readonly class UpdateRdapServersHandler
@@ -31,6 +34,11 @@ final readonly class UpdateRdapServersHandler
      */
     public function __invoke(UpdateRdapServers $message): void
     {
+        $checkInId = captureCheckIn(
+            slug: 'update-rdap-servers',
+            status: CheckInStatus::inProgress()
+        );
+
         /** @var \Throwable[] $throws */
         $throws = [];
 
@@ -74,7 +82,18 @@ final readonly class UpdateRdapServersHandler
         }
 
         if (!empty($throws)) {
+            captureCheckIn(
+                slug: 'update-rdap-servers',
+                status: CheckInStatus::error(),
+                checkInId: $checkInId,
+            );
+
             throw $throws[0];
         }
+        captureCheckIn(
+            slug: 'update-rdap-servers',
+            status: CheckInStatus::ok(),
+            checkInId: $checkInId,
+        );
     }
 }
