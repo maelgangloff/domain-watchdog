@@ -1,0 +1,30 @@
+name: Deploy Demo
+
+on:
+    push:
+        branches: [demo-instance]
+
+concurrency: production_environment
+
+jobs:
+    deploy:
+        runs-on: ubuntu-latest
+        environment:
+            name: Domain Watchdog Demo
+            url: https://demo.domainwatchdog.eu
+        steps:
+            - uses: actions/checkout@v3
+
+            - name: Setup PHP
+              uses: shivammathur/setup-php@v2
+              with:
+                  php-version: "8.4"
+
+            - name: Install dependencies
+              run: composer install
+
+            - name: Deploy
+              uses: deployphp/action@v1
+              with:
+                  private-key: ${{ secrets.DEPLOYER_PRIVATE_KEY }}
+                  dep: deploy

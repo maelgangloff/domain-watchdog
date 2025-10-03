@@ -60,3 +60,10 @@ when@prod:
                 channels: [ deprecation ]
                 path: php://stderr
                 formatter: monolog.formatter.json
+
+            file_log:
+                type: rotating_file
+                path: "%kernel.logs_dir%/%kernel.environment%.log"
+                level: info
+                max_files: 2
+                channels: [ "!cache", "!deprecation", "!messenger", "!security" ]

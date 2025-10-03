@@ -44,6 +44,7 @@
     "psr/http-client": "^1.0",
     "runtime/frankenphp-symfony": "^0.2.0",
     "scienta/doctrine-json-functions": "^6.3",
+    "sentry/sentry-symfony": "^5.6",
     "symfony/asset": "7.3.*",
     "symfony/asset-mapper": "7.3.*",
     "symfony/cache": "7.3.*",
@@ -148,6 +149,7 @@
   },
   "require-dev": {
     "doctrine/doctrine-fixtures-bundle": "^4.2",
+    "deployer/deployer": "^7.5",
     "friendsofphp/php-cs-fixer": "^3.61",
     "justinrainbow/json-schema": "^6.6",
     "phpstan/phpstan": "^1.11",
