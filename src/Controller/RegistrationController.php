@@ -73,10 +73,10 @@ class RegistrationController extends AbstractController
                 $user,
                 $user->getPassword()
             )
-        );
+        )->setCreatedAt(new \DateTimeImmutable());
 
         if (false === (bool) $this->getParameter('registration_verify_email')) {
-            $user->setVerified(true);
+            $user->setVerifiedAt($user->getCreatedAt());
         } else {
             $email = $this->emailVerifier->sendEmailConfirmation('app_verify_email', $user,
                 (new TemplatedEmail())

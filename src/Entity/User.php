@@ -75,7 +75,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private Collection $connectors;
 
     #[ORM\Column]
-    private bool $isVerified = false;
+    private ?\DateTimeImmutable $createdAt = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?\DateTimeImmutable $verifiedAt = null;
 
     public function __construct()
     {
@@ -215,14 +218,26 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function isVerified(): bool
+    public function getCreatedAt(): ?\DateTimeImmutable
     {
-        return $this->isVerified;
+        return $this->createdAt;
     }
 
-    public function setVerified(bool $isVerified): static
+    public function setCreatedAt(\DateTimeImmutable $createdAt): static
     {
-        $this->isVerified = $isVerified;
+        $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    public function getVerifiedAt(): ?\DateTimeImmutable
+    {
+        return $this->verifiedAt;
+    }
+
+    public function setVerifiedAt(\DateTimeImmutable $verifiedAt): static
+    {
+        $this->verifiedAt = $verifiedAt;
 
         return $this;
     }

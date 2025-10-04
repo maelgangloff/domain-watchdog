@@ -47,7 +47,7 @@ readonly class EmailVerifier
     {
         $this->verifyEmailHelper->validateEmailConfirmationFromRequest($request, (string) $user->getId(), $user->getEmail());
 
-        $user->setVerified(true);
+        $user->setVerifiedAt(new \DateTimeImmutable());
 
         $this->entityManager->persist($user);
         $this->entityManager->flush();
