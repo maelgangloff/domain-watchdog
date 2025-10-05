@@ -26,14 +26,8 @@ task('front:build', function () {
     run("cd {{release_or_current_path}} && yarn install --no-dev && yarn run build && yarn run ttag:po2json && rm -rf node_modules");
 });
 
-desc('Generate JWT keys');
-task('jwt:generate', function () {
-    run("cd {{release_or_current_path}} && {{bin/console}} lexik:jwt:generate-keypair");
-});
-
 // Hooks
 
 after('deploy:failed', 'deploy:unlock');
 after('deploy:vendors', 'database:migrate');
-after('deploy:vendors', 'jwt:generate');
 after('deploy:vendors', 'front:build');
