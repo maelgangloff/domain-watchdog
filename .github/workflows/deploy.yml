@@ -1,0 +1,28 @@
+name: Deploy Demo
+
+on:
+    push:
+        branches: [demo-instance]
+
+concurrency: production_environment
+
+jobs:
+    deploy:
+        runs-on: ubuntu-latest
+
+        steps:
+            - uses: actions/checkout@v3
+
+            - name: Setup PHP
+              uses: shivammathur/setup-php@v2
+              with:
+                  php-version: "8.1"
+
+            - name: Install dependencies
+              run: composer install --no-dev
+
+            - name: Deploy
+              uses: deployphp/action@v1
+              with:
+                  private-key: ${{ secrets.DEPLOYER_PRIVATE_KEY }}
+                  dep: deploy

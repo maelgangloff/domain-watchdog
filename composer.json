@@ -147,6 +147,7 @@
   },
   "require-dev": {
     "doctrine/doctrine-fixtures-bundle": "^4.2",
+    "deployer/deployer": "^7.5",
     "friendsofphp/php-cs-fixer": "^3.61",
     "justinrainbow/json-schema": "^6.6",
     "phpstan/phpstan": "^1.11",
