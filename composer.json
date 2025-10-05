@@ -146,6 +146,7 @@
     }
   },
   "require-dev": {
+    "deployer/deployer": "^7.5",
     "friendsofphp/php-cs-fixer": "^3.61",
     "phpstan/phpstan": "^1.11",
     "phpunit/phpunit": "^10",
