@@ -90,4 +90,9 @@ readonly class InfluxdbService
             // TODO: Add a retry mechanism if writing fails
         }
     }
+
+    protected function __destruct()
+    {
+        $this->client->close();
+    }
 }
