@@ -322,6 +322,10 @@ class RDAPService
             throw DomainNotFoundException::fromDomain($idnDomain);
         }
 
+        $this->logger->error('Unable to perform an RDAP query for this domain name', [
+            'ldhName' => $idnDomain,
+        ]);
+
         return $e;
     }
 
