@@ -41,7 +41,8 @@ final readonly class UpdateDomainsFromWatchlistHandler
         private WatchListRepository $watchListRepository,
         private LoggerInterface $logger,
         #[Autowire(service: 'service_container')]
-        private ContainerInterface $locator, private DomainRepository $domainRepository,
+        private ContainerInterface $locator,
+        private DomainRepository $domainRepository,
     ) {
         $this->sender = new Address($mailerSenderEmail, $mailerSenderName);
     }

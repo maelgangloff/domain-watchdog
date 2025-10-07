@@ -224,6 +224,9 @@ class RDAPService
         $tldEntity = $this->tldRepository->findOneBy(['tld' => $tld]);
 
         if (null === $tldEntity) {
+            $this->logger->warning('Domain name cannot be updated because the TLD is not supported', [
+                'ldhName' => $domain,
+            ]);
             throw TldNotSupportedException::fromTld($domain);
         }
 
@@ -244,6 +247,10 @@ class RDAPService
         $rdapServer = $this->rdapServerRepository->findOneBy(['tld' => $tldString], ['updatedAt' => 'DESC']);
 
         if (null === $rdapServer) {
+            $this->logger->warning('Unable to determine which RDAP server to contact', [
+                'tld' => $tldString,
+            ]);
+
             throw UnknownRdapServerException::fromTld($tldString);
         }
 

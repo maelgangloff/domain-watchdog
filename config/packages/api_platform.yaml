@@ -38,6 +38,6 @@ api_platform:
         ApiPlatform\Validator\Exception\ValidationException: !php/const Symfony\Component\HttpFoundation\Response::HTTP_UNPROCESSABLE_ENTITY
 
         App\Exception\DomainNotFoundException: 404
-        App\Exception\MalformedDomainException: 403
-        App\Exception\TldNotSupportedException: 403
-        App\Exception\UnknownRdapServerException: 403
+        App\Exception\MalformedDomainException: 400
+        App\Exception\TldNotSupportedException: 400
+        App\Exception\UnknownRdapServerException: 400
