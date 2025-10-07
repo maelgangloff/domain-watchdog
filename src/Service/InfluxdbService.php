@@ -53,6 +53,7 @@ readonly class InfluxdbService
         ], (int) floor($info['start_time'] * 1e3),
             WritePrecision::MS)
         );
+        $this->client->close();
     }
 
     public function addDomainOrderPoint(Connector $connector, Domain $domain, bool $success): void
@@ -64,6 +65,7 @@ readonly class InfluxdbService
         ], [
             'success' => $success,
         ]));
+        $this->client->close();
     }
 
     public function addDomainNotificationPoint(Domain $domain, TriggerAction $triggerAction, bool $success): void
@@ -75,6 +77,7 @@ readonly class InfluxdbService
         ], [
             'success' => $success,
         ]));
+        $this->client->close();
     }
 
     private function writePoints(Point ...$points): void
@@ -89,10 +92,6 @@ readonly class InfluxdbService
         } catch (\Throwable) {
             // TODO: Add a retry mechanism if writing fails
         }
-    }
-
-    protected function __destruct()
-    {
         $this->client->close();
     }
 }
