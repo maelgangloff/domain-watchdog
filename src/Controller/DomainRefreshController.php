@@ -60,6 +60,7 @@ class DomainRefreshController extends AbstractController
         ) {
             $this->logger->info('It is not necessary to update the domain name', [
                 'ldhName' => $idnDomain,
+                'updatedAt' => $domain->getUpdatedAt()->format(\DateTimeInterface::ATOM),
             ]);
 
             return $domain;

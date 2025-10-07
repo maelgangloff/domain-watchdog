@@ -5,12 +5,12 @@ namespace App\State;
 use ApiPlatform\Metadata\Operation;
 use ApiPlatform\State\ProviderInterface;
 use App\Entity\Domain;
+use App\Exception\DomainNotFoundException;
 use App\Service\RDAPService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpKernel\Exception\TooManyRequestsHttpException;
 use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Component\RateLimiter\RateLimiterFactory;
@@ -49,7 +49,7 @@ readonly class AutoRegisterDomainProvider implements ProviderInterface
 
         try {
             $domain = $this->RDAPService->registerDomain($ldhName);
-        } catch (NotFoundHttpException) {
+        } catch (DomainNotFoundException) {
             $domain = (new Domain())
                 ->setLdhName($ldhName)
                 ->setTld($this->RDAPService->getTld($ldhName))

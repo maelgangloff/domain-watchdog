@@ -19,6 +19,10 @@ use App\Entity\Nameserver;
 use App\Entity\NameserverEntity;
 use App\Entity\RdapServer;
 use App\Entity\Tld;
+use App\Exception\DomainNotFoundException;
+use App\Exception\MalformedDomainException;
+use App\Exception\TldNotSupportedException;
+use App\Exception\UnknownRdapServerException;
 use App\Repository\DomainEntityRepository;
 use App\Repository\DomainEventRepository;
 use App\Repository\DomainRepository;
@@ -31,17 +35,14 @@ use App\Repository\RdapServerRepository;
 use App\Repository\TldRepository;
 use Doctrine\DBAL\LockMode;
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\ORM\Exception\ORMException;
+use Doctrine\ORM\OptimisticLockException;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\HttpClient\Exception\ClientException;
-use Symfony\Component\HttpFoundation\Exception\BadRequestException;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Yaml\Yaml;
 use Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\DecodingExceptionInterface;
-use Symfony\Contracts\HttpClient\Exception\HttpExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\RedirectionExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\ServerExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
@@ -119,9 +120,16 @@ class RDAPService
     }
 
     /**
-     * @throws HttpExceptionInterface
-     * @throws TransportExceptionInterface
+     * @throws RedirectionExceptionInterface
+     * @throws DomainNotFoundException
      * @throws DecodingExceptionInterface
+     * @throws TldNotSupportedException
+     * @throws ClientExceptionInterface
+     * @throws OptimisticLockException
+     * @throws TransportExceptionInterface
+     * @throws ServerExceptionInterface
+     * @throws MalformedDomainException
+     * @throws UnknownRdapServerException
      */
     public function registerDomains(array $domains): void
     {
@@ -131,11 +139,16 @@ class RDAPService
     }
 
     /**
-     * @throws TransportExceptionInterface
-     * @throws ServerExceptionInterface
+     * @throws DomainNotFoundException
      * @throws RedirectionExceptionInterface
      * @throws DecodingExceptionInterface
+     * @throws TldNotSupportedException
      * @throws ClientExceptionInterface
+     * @throws OptimisticLockException
+     * @throws TransportExceptionInterface
+     * @throws MalformedDomainException
+     * @throws ServerExceptionInterface
+     * @throws UnknownRdapServerException
      * @throws \Exception
      */
     public function registerDomain(string $fqdn): Domain
@@ -163,7 +176,7 @@ class RDAPService
         $this->updateDomainStatus($domain, $rdapData);
 
         if (in_array('free', $domain->getStatus())) {
-            throw new NotFoundHttpException("The domain name $idnDomain is not present in the WHOIS database.");
+            throw DomainNotFoundException::fromDomain($idnDomain);
         }
 
         $domain
@@ -185,13 +198,17 @@ class RDAPService
         return $domain;
     }
 
+    /**
+     * @throws TldNotSupportedException
+     * @throws MalformedDomainException
+     */
     public function getTld(string $domain): Tld
     {
         if (!str_contains($domain, '.')) {
             $tldEntity = $this->tldRepository->findOneBy(['tld' => '.']);
 
             if (null == $tldEntity) {
-                throw new NotFoundHttpException("The requested TLD $domain is not yet supported, please try again with another one");
+                throw TldNotSupportedException::fromTld($domain);
             }
 
             return $tldEntity;
@@ -200,14 +217,14 @@ class RDAPService
         $lastDotPosition = strrpos($domain, '.');
 
         if (false === $lastDotPosition) {
-            throw new BadRequestException('Domain must contain at least one dot');
+            throw MalformedDomainException::fromDomain($domain);
         }
 
         $tld = self::convertToIdn(substr($domain, $lastDotPosition + 1));
         $tldEntity = $this->tldRepository->findOneBy(['tld' => $tld]);
 
         if (null === $tldEntity) {
-            throw new NotFoundHttpException("The requested TLD $tld is not yet supported, please try again with another one");
+            throw TldNotSupportedException::fromTld($domain);
         }
 
         return $tldEntity;
@@ -218,13 +235,16 @@ class RDAPService
         return strtolower(idn_to_ascii($fqdn));
     }
 
+    /**
+     * @throws UnknownRdapServerException
+     */
     private function fetchRdapServer(Tld $tld): RdapServer
     {
         $tldString = $tld->getTld();
         $rdapServer = $this->rdapServerRepository->findOneBy(['tld' => $tldString], ['updatedAt' => 'DESC']);
 
         if (null === $rdapServer) {
-            throw new NotFoundHttpException("TLD $tldString : Unable to determine which RDAP server to contact");
+            throw UnknownRdapServerException::fromTld($tldString);
         }
 
         return $rdapServer;
@@ -292,7 +312,7 @@ class RDAPService
                 $this->em->flush();
             }
 
-            throw new NotFoundHttpException("The domain name $idnDomain is not present in the WHOIS database.");
+            throw DomainNotFoundException::fromDomain($idnDomain);
         }
 
         return $e;
@@ -771,7 +791,6 @@ class RDAPService
     }
 
     /**
-     * @throws ORMException
      * @throws \Exception
      */
     public function updateRDAPServersFromFile(string $fileName): void
@@ -890,8 +909,8 @@ class RDAPService
      * @throws TransportExceptionInterface
      * @throws ServerExceptionInterface
      * @throws RedirectionExceptionInterface
-     * @throws ClientExceptionInterface
      * @throws DecodingExceptionInterface
+     * @throws ClientExceptionInterface
      * @throws \Exception
      */
     public function updateGTldListICANN(): void
