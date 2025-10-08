@@ -856,7 +856,8 @@ class RDAPService
                 ->update()
                 ->set('t.deletedAt', 'COALESCE(t.removalDate, CURRENT_TIMESTAMP())')
                 ->where('t.tld != :tld')
-                ->setParameter('tld', self::DOMAIN_DOT);
+                ->setParameter('tld', self::DOMAIN_DOT)
+                ->getQuery()->execute();
 
             $tldEntity = $this->tldRepository->findOneBy(['tld' => $tld]);
 
@@ -996,6 +997,7 @@ class RDAPService
             ->update()
             ->set('d.deleted', ':deleted')
             ->where('d.tld IN (SELECT t FROM '.Tld::class.' t WHERE t.deletedAt IS NOT NULL)')
-            ->setParameter('deleted', true)->getQuery()->execute();
+            ->setParameter('deleted', true)
+            ->getQuery()->execute();
     }
 }
