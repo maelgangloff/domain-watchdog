@@ -16,6 +16,17 @@ class DomainRepository extends ServiceEntityRepository
         parent::__construct($registry, Domain::class);
     }
 
+    public function findByTld(string $tld): array
+    {
+        return $this->createQueryBuilder('d')
+                ->addSelect('events')
+                ->leftJoin('d.events', 'events')
+                ->where('d.tld = :tld')
+                ->setParameter('tld', $tld)
+                ->getQuery()
+                ->getResult();
+    }
+
     //    /**
     //     * @return Domain[] Returns an array of Domain objects
     //     */

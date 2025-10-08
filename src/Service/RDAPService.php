@@ -52,9 +52,9 @@ use Symfony\Contracts\HttpClient\ResponseInterface;
 class RDAPService
 {
     /* @see https://www.iana.org/domains/root/db */
-    public const ISO_TLD_EXCEPTION = ['ac', 'eu', 'uk', 'su', 'tp'];
-    public const INFRA_TLD = ['arpa'];
-    public const SPONSORED_TLD = [
+    private const ISO_TLD_EXCEPTION = ['ac', 'eu', 'uk', 'su', 'tp'];
+    private const INFRA_TLD = ['arpa'];
+    private const SPONSORED_TLD = [
         'aero',
         'asia',
         'cat',
@@ -70,7 +70,7 @@ class RDAPService
         'travel',
         'xxx',
     ];
-    public const TEST_TLD = [
+    private const TEST_TLD = [
         'xn--kgbechtv',
         'xn--hgbk6aj7f53bba',
         'xn--0zwm56d',
@@ -84,7 +84,7 @@ class RDAPService
         'xn--hlcj6aya9esc7a',
     ];
 
-    public const ENTITY_HANDLE_BLACKLIST = [
+    private const ENTITY_HANDLE_BLACKLIST = [
         'REDACTED_FOR_PRIVACY',
         'ANO00-FRNIC',
         'not applicable',
@@ -98,6 +98,12 @@ class RDAPService
         'None',
         'Private',
     ];
+
+    private const DOMAIN_DOT = '.';
+    private const IANA_REGISTRAR_IDS_URL = 'https://www.iana.org/assignments/registrar-ids/registrar-ids.xml';
+    private const IANA_RDAP_SERVER_LIST_URL = 'https://data.iana.org/rdap/dns.json';
+    private const IANA_TLD_LIST_URL = 'https://data.iana.org/TLD/tlds-alpha-by-domain.txt';
+    private const ICANN_GTLD_LIST_URL = 'https://www.icann.org/resources/registries/gtlds/v2/gtlds.json';
 
     public function __construct(private HttpClientInterface $client,
         private EntityRepository $entityRepository,
@@ -204,30 +210,30 @@ class RDAPService
      */
     public function getTld(string $domain): Tld
     {
-        if (!str_contains($domain, '.')) {
-            $tldEntity = $this->tldRepository->findOneBy(['tld' => '.']);
+        if (!str_contains($domain, self::DOMAIN_DOT)) {
+            $tldEntity = $this->tldRepository->findOneBy(['tld' => self::DOMAIN_DOT]);
 
             if (null == $tldEntity) {
-                throw TldNotSupportedException::fromTld($domain);
+                throw TldNotSupportedException::fromTld(self::DOMAIN_DOT);
             }
 
             return $tldEntity;
         }
 
-        $lastDotPosition = strrpos($domain, '.');
+        $lastDotPosition = strrpos($domain, self::DOMAIN_DOT);
 
         if (false === $lastDotPosition) {
             throw MalformedDomainException::fromDomain($domain);
         }
 
         $tld = self::convertToIdn(substr($domain, $lastDotPosition + 1));
-        $tldEntity = $this->tldRepository->findOneBy(['tld' => $tld]);
+        $tldEntity = $this->tldRepository->findOneBy(['tld' => $tld, 'deletedAt' => null]);
 
         if (null === $tldEntity) {
             $this->logger->warning('Domain name cannot be updated because the TLD is not supported', [
                 'ldhName' => $domain,
             ]);
-            throw TldNotSupportedException::fromTld($domain);
+            throw TldNotSupportedException::fromTld($tld);
         }
 
         return $tldEntity;
@@ -383,9 +389,14 @@ class RDAPService
      */
     private function updateDomainEvents(Domain $domain, array $rdapData): void
     {
-        foreach ($domain->getEvents()->getIterator() as $event) {
-            $event->setDeleted(true);
-        }
+        $this->domainEventRepository->createQueryBuilder('de')
+            ->update()
+            ->set('de.deleted', ':deleted')
+            ->where('de.domain = :domain')
+            ->setParameter('deleted', true)
+            ->setParameter('domain', $domain)
+            ->getQuery()
+            ->execute();
 
         if (isset($rdapData['events']) && is_array($rdapData['events'])) {
             foreach ($rdapData['events'] as $rdapEvent) {
@@ -419,11 +430,15 @@ class RDAPService
     private function updateDomainEntities(Domain $domain, array $rdapData): void
     {
         $now = new \DateTimeImmutable();
-        foreach ($domain->getDomainEntities()->getIterator() as $domainEntity) {
-            if (null !== $domainEntity->getDeletedAt()) {
-                $domainEntity->setDeletedAt($now);
-            }
-        }
+
+        $this->domainEntityRepository->createQueryBuilder('de')
+            ->update()
+            ->set('de.deletedAt', ':now')
+            ->where('de.domain = :domain')
+            ->andWhere('de.deletedAt IS NOT NULL')
+            ->setParameter('now', $now)
+            ->setParameter('domain', $domain)
+            ->getQuery()->execute();
 
         if (!isset($rdapData['entities']) || !is_array($rdapData['entities'])) {
             return;
@@ -758,7 +773,7 @@ class RDAPService
         $this->logger->info('Start of update the RDAP server list from IANA');
 
         $dnsRoot = $this->client->request(
-            'GET', 'https://data.iana.org/rdap/dns.json'
+            'GET', self::IANA_RDAP_SERVER_LIST_URL
         )->toArray();
 
         $this->updateRDAPServers($dnsRoot);
@@ -771,8 +786,8 @@ class RDAPService
     {
         foreach ($dnsRoot['services'] as $service) {
             foreach ($service[0] as $tld) {
-                if ('.' === $tld && null === $this->tldRepository->findOneBy(['tld' => $tld])) {
-                    $this->em->persist((new Tld())->setTld('.')->setType(TldType::root));
+                if (self::DOMAIN_DOT === $tld && null === $this->tldRepository->findOneBy(['tld' => $tld])) {
+                    $this->em->persist((new Tld())->setTld(self::DOMAIN_DOT)->setType(TldType::root));
                     $this->em->flush();
                 }
 
@@ -827,7 +842,7 @@ class RDAPService
             fn ($tld) => strtolower($tld),
             explode(PHP_EOL,
                 $this->client->request(
-                    'GET', 'https://data.iana.org/TLD/tlds-alpha-by-domain.txt'
+                    'GET', self::IANA_TLD_LIST_URL
                 )->getContent()
             ));
         array_shift($tldList);
@@ -836,6 +851,12 @@ class RDAPService
             if ('' === $tld) {
                 continue;
             }
+
+            $this->tldRepository->createQueryBuilder('t')
+                ->update()
+                ->set('t.deletedAt', 'COALESCE(t.removalDate, CURRENT_TIMESTAMP())')
+                ->where('t.tld != :tld')
+                ->setParameter('tld', self::DOMAIN_DOT);
 
             $tldEntity = $this->tldRepository->findOneBy(['tld' => $tld]);
 
@@ -858,6 +879,7 @@ class RDAPService
                 $tldEntity->setType(TldType::gTLD);
             }
 
+            $tldEntity->setDeletedAt(null);
             $this->em->persist($tldEntity);
         }
         $this->em->flush();
@@ -874,7 +896,7 @@ class RDAPService
     {
         $this->logger->info('Start of retrieval of the list of Registrar IDs according to IANA');
         $registrarList = $this->client->request(
-            'GET', 'https://www.iana.org/assignments/registrar-ids/registrar-ids.xml'
+            'GET', self::IANA_REGISTRAR_IDS_URL
         );
 
         $data = new \SimpleXMLElement($registrarList->getContent());
@@ -929,7 +951,7 @@ class RDAPService
         $this->logger->info('Start of retrieval of the list of gTLDs according to ICANN');
 
         $gTldList = $this->client->request(
-            'GET', 'https://www.icann.org/resources/registries/gtlds/v2/gtlds.json'
+            'GET', self::ICANN_GTLD_LIST_URL
         )->toArray()['gTLDs'];
 
         foreach ($gTldList as $gTld) {
@@ -966,5 +988,14 @@ class RDAPService
         }
 
         $this->em->flush();
+    }
+
+    public function updateDomainsWhenTldIsDeleted(): void
+    {
+        $this->domainRepository->createQueryBuilder('d')
+            ->update()
+            ->set('d.deleted', ':deleted')
+            ->where('d.tld IN (SELECT t FROM '.Tld::class.' t WHERE t.deletedAt IS NOT NULL)')
+            ->setParameter('deleted', true)->getQuery()->execute();
     }
 }

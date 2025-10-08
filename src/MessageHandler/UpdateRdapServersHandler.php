@@ -41,6 +41,7 @@ final readonly class UpdateRdapServersHandler
         try {
             $this->RDAPService->updateTldListIANA();
             $this->RDAPService->updateGTldListICANN();
+            $this->RDAPService->updateDomainsWhenTldIsDeleted();
         } catch (\Throwable $throwable) {
             $throws[] = $throwable;
         }
