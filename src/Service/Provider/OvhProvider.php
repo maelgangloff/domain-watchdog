@@ -1,10 +1,15 @@
 <?php
 
-namespace App\Service\Connector;
+namespace App\Service\Provider;
 
 use App\Dto\Connector\DefaultProviderDto;
 use App\Dto\Connector\OvhProviderDto;
 use App\Entity\Domain;
+use App\Exception\Provider\DomainOrderFailedExeption;
+use App\Exception\Provider\ExpiredLoginException;
+use App\Exception\Provider\InvalidLoginStatusException;
+use App\Exception\Provider\PermissionErrorException;
+use App\Exception\Provider\ProviderGenericErrorException;
 use GuzzleHttp\Exception\ClientException;
 use Ovh\Api;
 use Ovh\Exceptions\InvalidParameterException;
@@ -12,7 +17,6 @@ use Psr\Cache\CacheItemInterface;
 use Psr\Cache\CacheItemPoolInterface;
 use Psr\Cache\InvalidArgumentException;
 use Symfony\Component\DependencyInjection\Attribute\Autoconfigure;
-use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
@@ -104,7 +108,7 @@ class OvhProvider extends AbstractProvider
         );
         if (empty($offer)) {
             $conn->delete("/order/cart/{$cartId}");
-            throw new \InvalidArgumentException('Cannot buy this domain name');
+            throw new DomainOrderFailedExeption();
         }
 
         $item = $conn->post("/order/cart/{$cartId}/domain", [
@@ -153,15 +157,15 @@ class OvhProvider extends AbstractProvider
         try {
             $res = $conn->get('/auth/currentCredential');
             if (null !== $res['expiration'] && new \DateTimeImmutable($res['expiration']) < new \DateTimeImmutable()) {
-                throw new BadRequestHttpException('These credentials have expired');
+                throw ExpiredLoginException::fromIdentifier($this->authData->appKey);
             }
 
             $status = $res['status'];
             if ('validated' !== $status) {
-                throw new BadRequestHttpException("The status of these credentials is not valid ($status)");
+                throw InvalidLoginStatusException::fromStatus($status);
             }
         } catch (ClientException $exception) {
-            throw new BadRequestHttpException($exception->getMessage());
+            throw new ProviderGenericErrorException($exception->getMessage());
         }
 
         foreach (self::REQUIRED_ROUTES as $requiredRoute) {
@@ -177,7 +181,7 @@ class OvhProvider extends AbstractProvider
             }
 
             if (!$ok) {
-                throw new BadRequestHttpException('This Connector does not have enough permissions on the Provider API. Please recreate this Connector.');
+                throw PermissionErrorException::fromIdentifier($this->authData->appKey);
             }
         }
     }

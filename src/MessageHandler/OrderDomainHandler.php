@@ -10,8 +10,8 @@ use App\Notifier\DomainOrderNotification;
 use App\Repository\DomainRepository;
 use App\Repository\WatchListRepository;
 use App\Service\ChatNotificationService;
-use App\Service\Connector\AbstractProvider;
 use App\Service\InfluxdbService;
+use App\Service\Provider\AbstractProvider;
 use App\Service\StatService;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
@@ -118,7 +118,7 @@ final readonly class OrderDomainHandler
              * The purchase was not successful (for several possible reasons that we have not determined).
              * The user is informed and the exception is raised, which may allow you to try again.
              */
-            $this->logger->warning('Unable to complete purchase : an error message is sent to user', [
+            $this->logger->warning('Unable to complete purchase : an error message is sent to the user', [
                 'watchlist' => $message->watchListToken,
                 'connector' => $connector->getId(),
                 'ldhName' => $message->ldhName,

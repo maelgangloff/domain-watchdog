@@ -41,3 +41,8 @@ api_platform:
         App\Exception\MalformedDomainException: 400
         App\Exception\TldNotSupportedException: 400
         App\Exception\UnknownRdapServerException: 400
+        App\Exception\UnsupportedDsnScheme: 400
+
+        # Provider exception
+        App\Exception\Provider\UserNoExplicitConsentException: 451
+        App\Exception\Provider\AbstractProviderException: 400

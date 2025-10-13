@@ -119,7 +119,7 @@ class RDAPService
         $idnDomain = RDAPService::convertToIdn($fqdn);
         $tld = $this->getTld($idnDomain);
 
-        $this->logger->info('Update request for a domain name is requested', [
+        $this->logger->debug('Update request for a domain name is requested', [
             'ldhName' => $idnDomain,
         ]);
 
@@ -187,7 +187,7 @@ class RDAPService
         $tldEntity = $this->tldRepository->findOneBy(['tld' => $tld, 'deletedAt' => null]);
 
         if (null === $tldEntity) {
-            $this->logger->warning('Domain name cannot be updated because the TLD is not supported', [
+            $this->logger->debug('Domain name cannot be updated because the TLD is not supported', [
                 'ldhName' => $domain,
             ]);
             throw TldNotSupportedException::fromTld($tld);
@@ -210,7 +210,7 @@ class RDAPService
         $rdapServer = $this->rdapServerRepository->findOneBy(['tld' => $tldString], ['updatedAt' => 'DESC']);
 
         if (null === $rdapServer) {
-            $this->logger->warning('Unable to determine which RDAP server to contact', [
+            $this->logger->debug('Unable to determine which RDAP server to contact', [
                 'tld' => $tldString,
             ]);
 
@@ -231,7 +231,7 @@ class RDAPService
     private function fetchRdapResponse(RdapServer $rdapServer, string $idnDomain, ?Domain $domain): array
     {
         $rdapServerUrl = $rdapServer->getUrl();
-        $this->logger->notice('An RDAP query to update this domain name will be made', [
+        $this->logger->info('An RDAP query to update this domain name will be made', [
             'ldhName' => $idnDomain,
             'server' => $rdapServerUrl,
         ]);
@@ -261,7 +261,7 @@ class RDAPService
             || ($e instanceof TransportExceptionInterface && null !== $response && !in_array('content-length', $response->getHeaders(false)) && 404 === $response->getStatusCode())
         ) {
             if (null !== $domain) {
-                $this->logger->notice('Domain name has been deleted from the WHOIS database', [
+                $this->logger->info('Domain name has been deleted from the WHOIS database', [
                     'ldhName' => $idnDomain,
                 ]);
 
@@ -295,7 +295,7 @@ class RDAPService
     {
         $domain = new Domain();
 
-        $this->logger->info('Domain name was not known to this instance', [
+        $this->logger->debug('Domain name was not known to this instance', [
             'ldhName' => $idnDomain,
         ]);
 
@@ -304,7 +304,7 @@ class RDAPService
 
     private function updateDomainStatus(Domain $domain, array $rdapData): void
     {
-        if (isset($rdapData['status'])) {
+        if (isset($rdapData['status']) && is_array($rdapData['status'])) {
             $status = array_unique($rdapData['status']);
             $addedStatus = array_diff($status, $domain->getStatus());
             $deletedStatus = array_diff($domain->getStatus(), $status);
@@ -429,7 +429,7 @@ class RDAPService
      */
     private function updateDomainNameservers(Domain $domain, array $rdapData): void
     {
-        if (array_key_exists('nameservers', $rdapData) && is_array($rdapData['nameservers'])) {
+        if (isset($rdapData['nameservers']) && is_array($rdapData['nameservers'])) {
             $domain->getNameservers()->clear();
             $this->em->persist($domain);
 
@@ -549,7 +549,7 @@ class RDAPService
         if (null === $entity) {
             $entity = (new Entity())->setTld($tld);
 
-            $this->logger->info('Entity was not known to this instance', [
+            $this->logger->debug('Entity was not known to this instance', [
                 'handle' => $rdapEntity['handle'],
                 'ldhName' => $domain,
             ]);

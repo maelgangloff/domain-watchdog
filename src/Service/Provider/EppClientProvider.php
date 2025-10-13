@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Service\Connector;
+namespace App\Service\Provider;
 
 use App\Dto\Connector\DefaultProviderDto;
 use App\Dto\Connector\EppClientProviderDto;
 use App\Entity\Domain;
+use App\Exception\Provider\EppContactIsAvailableException;
 use Metaregistrar\EPP\eppCheckContactRequest;
 use Metaregistrar\EPP\eppCheckContactResponse;
 use Metaregistrar\EPP\eppCheckDomainRequest;
@@ -18,7 +19,6 @@ use Metaregistrar\EPP\eppHelloRequest;
 use Psr\Cache\CacheItemInterface;
 use Psr\Cache\CacheItemPoolInterface;
 use Psr\Cache\InvalidArgumentException;
-use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\Serializer\Exception\ExceptionInterface;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
@@ -57,7 +57,7 @@ class EppClientProvider extends AbstractProvider implements CheckDomainProviderI
         $resp = $this->eppClient->request(new eppCheckContactRequest($contacts));
         foreach ($resp->getCheckedContacts() as $contact => $available) {
             if ($available) {
-                throw new BadRequestHttpException("At least one of the entered contacts cannot be used because it is indicated as available ($contact).");
+                throw EppContactIsAvailableException::fromContact($contact);
             }
         }
 

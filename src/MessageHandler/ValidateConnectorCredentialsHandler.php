@@ -5,7 +5,7 @@ namespace App\MessageHandler;
 use App\Message\ValidateConnectorCredentials;
 use App\Notifier\ValidateConnectorCredentialsErrorNotification;
 use App\Repository\ConnectorRepository;
-use App\Service\Connector\AbstractProvider;
+use App\Service\Provider\AbstractProvider;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Mailer\Exception\TransportExceptionInterface;

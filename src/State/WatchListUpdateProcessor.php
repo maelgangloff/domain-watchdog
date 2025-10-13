@@ -9,7 +9,7 @@ use App\Entity\User;
 use App\Entity\WatchList;
 use App\Notifier\TestChatNotification;
 use App\Service\ChatNotificationService;
-use App\Service\Connector\AbstractProvider;
+use App\Service\Provider\AbstractProvider;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
@@ -68,7 +68,7 @@ readonly class WatchListUpdateProcessor implements ProcessorInterface
             foreach ($data->getDomains()->getIterator() as $domain) {
                 if (in_array($domain, $trackedDomains)) {
                     $ldhName = $domain->getLdhName();
-                    $this->logger->notice('User tried to update a watchlist : it is forbidden to register the same domain name twice with limited mode', [
+                    $this->logger->notice('User tried to update a Watchlist : it is forbidden to register the same domain name twice with limited mode', [
                         'username' => $user->getUserIdentifier(),
                         'watchlist' => $data->getToken(),
                         'ldhName' => $ldhName,
@@ -117,7 +117,7 @@ readonly class WatchListUpdateProcessor implements ProcessorInterface
             $supported = $connectorProvider->isSupported(...$data->getDomains()->toArray());
 
             if (!$supported) {
-                $this->logger->notice('Connector does not support all TLDs in this Watchlist', [
+                $this->logger->debug('Connector does not support all TLDs in this Watchlist', [
                     'username' => $user->getUserIdentifier(),
                     'connector' => $connector->getId(),
                     'provider' => $connector->getProvider()->value,

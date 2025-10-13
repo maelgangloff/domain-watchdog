@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Service\Connector;
+namespace App\Service\Provider;
 
 interface CheckDomainProviderInterface
 {

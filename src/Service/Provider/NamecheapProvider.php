@@ -1,15 +1,16 @@
 <?php
 
-namespace App\Service\Connector;
+namespace App\Service\Provider;
 
 use App\Dto\Connector\DefaultProviderDto;
 use App\Dto\Connector\NamecheapProviderDto;
 use App\Entity\Domain;
+use App\Exception\Provider\NamecheapRequiresAddressException;
+use App\Exception\Provider\ProviderGenericErrorException;
 use Psr\Cache\CacheItemInterface;
 use Psr\Cache\CacheItemPoolInterface;
 use Psr\Cache\InvalidArgumentException;
 use Symfony\Component\DependencyInjection\Attribute\Autoconfigure;
-use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
@@ -49,7 +50,7 @@ class NamecheapProvider extends AbstractProvider
         $addresses = $this->call('namecheap.users.address.getList', [], $dryRun)->AddressGetListResult->List;
 
         if (count($addresses) < 1) {
-            throw new BadRequestHttpException('Namecheap account requires at least one address to purchase a domain');
+            throw new NamecheapRequiresAddressException();
         }
 
         $addressId = (string) $addresses->attributes()['AddressId'];
@@ -105,7 +106,7 @@ class NamecheapProvider extends AbstractProvider
         $data = new \SimpleXMLElement($response->getContent());
 
         if ($data->Errors->Error) {
-            throw new BadRequestHttpException($data->Errors->Error);
+            throw new ProviderGenericErrorException($data->Errors->Error);
         }
 
         return $data->CommandResponse;
@@ -116,13 +117,14 @@ class NamecheapProvider extends AbstractProvider
      * @throws ServerExceptionInterface
      * @throws RedirectionExceptionInterface
      * @throws ClientExceptionInterface
+     * @throws NamecheapRequiresAddressException
      */
     protected function assertAuthentication(): void
     {
         $addresses = $this->call('namecheap.users.address.getList', [], false)->AddressGetListResult->List;
 
         if (count($addresses) < 1) {
-            throw new BadRequestHttpException('Namecheap account requires at least one address to purchase a domain');
+            throw new NamecheapRequiresAddressException();
         }
     }
 

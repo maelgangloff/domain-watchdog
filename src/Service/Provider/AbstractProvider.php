@@ -1,9 +1,10 @@
 <?php
 
-namespace App\Service\Connector;
+namespace App\Service\Provider;
 
 use App\Dto\Connector\DefaultProviderDto;
 use App\Entity\Domain;
+use App\Exception\Provider\UserNoExplicitConsentException;
 use Psr\Cache\CacheItemInterface;
 use Psr\Cache\CacheItemPoolInterface;
 use Symfony\Component\DependencyInjection\Attribute\Autoconfigure;
@@ -65,7 +66,7 @@ abstract class AbstractProvider
      *
      * @return array raw authentication data as supplied by the user
      *
-     * @throws HttpException when the user does not accept the necessary conditions
+     * @throws UserNoExplicitConsentException when the user does not accept the necessary conditions
      */
     private function verifyLegalAuthData(array $authData): array
     {
@@ -76,7 +77,7 @@ abstract class AbstractProvider
         if (true !== $acceptConditions
             || true !== $ownerLegalAge
             || true !== $waiveRetractationPeriod) {
-            throw new HttpException(451, 'The user has not given explicit consent');
+            throw new UserNoExplicitConsentException();
         }
 
         return $authData;

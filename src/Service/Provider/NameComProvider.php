@@ -1,17 +1,17 @@
 <?php
 
-namespace App\Service\Connector;
+namespace App\Service\Provider;
 
 use App\Dto\Connector\DefaultProviderDto;
 use App\Dto\Connector\NameComProviderDto;
 use App\Entity\Domain;
+use App\Exception\Provider\InvalidLoginException;
 use Psr\Cache\CacheItemInterface;
 use Psr\Cache\CacheItemPoolInterface;
 use Psr\Cache\InvalidArgumentException;
 use Symfony\Component\DependencyInjection\Attribute\Autoconfigure;
 use Symfony\Component\HttpClient\HttpOptions;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
@@ -98,25 +98,22 @@ class NameComProvider extends AbstractProvider
 
     /**
      * @throws TransportExceptionInterface
+     * @throws InvalidLoginException
      */
     protected function assertAuthentication(): void
     {
-        try {
-            $response = $this->client->request(
-                'GET',
-                '/v4/hello',
-                (new HttpOptions())
-                    ->setHeader('Accept', 'application/json')
-                    ->setAuthBasic($this->authData->username, $this->authData->token)
-                    ->setBaseUri($this->kernel->isDebug() ? self::DEV_BASE_URL : self::BASE_URL)
-                    ->toArray()
-            );
-        } catch (\Exception) {
-            throw new BadRequestHttpException('Invalid Login');
-        }
+        $response = $this->client->request(
+            'GET',
+            '/v4/hello',
+            (new HttpOptions())
+                ->setHeader('Accept', 'application/json')
+                ->setAuthBasic($this->authData->username, $this->authData->token)
+                ->setBaseUri($this->kernel->isDebug() ? self::DEV_BASE_URL : self::BASE_URL)
+                ->toArray()
+        );
 
         if (Response::HTTP_OK !== $response->getStatusCode()) {
-            throw new BadRequestHttpException('The status of these credentials is not valid');
+            throw InvalidLoginException::fromIdentifier($this->authData->username);
         }
     }
 }

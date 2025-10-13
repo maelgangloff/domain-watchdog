@@ -58,7 +58,7 @@ class DomainRefreshController extends AbstractController
             && !$this->kernel->isDebug()
             && true !== filter_var($request->get('forced', false), FILTER_VALIDATE_BOOLEAN)
         ) {
-            $this->logger->info('It is not necessary to update the domain name', [
+            $this->logger->debug('It is not necessary to update the domain name', [
                 'ldhName' => $idnDomain,
                 'updatedAt' => $domain->getUpdatedAt()->format(\DateTimeInterface::ATOM),
             ]);

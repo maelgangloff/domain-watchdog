@@ -14,8 +14,8 @@ use App\Notifier\DomainDeletedNotification;
 use App\Repository\DomainRepository;
 use App\Repository\WatchListRepository;
 use App\Service\ChatNotificationService;
-use App\Service\Connector\AbstractProvider;
-use App\Service\Connector\CheckDomainProviderInterface;
+use App\Service\Provider\AbstractProvider;
+use App\Service\Provider\CheckDomainProviderInterface;
 use App\Service\RDAPService;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
@@ -55,7 +55,7 @@ final readonly class UpdateDomainsFromWatchlistHandler
         /** @var WatchList $watchList */
         $watchList = $this->watchListRepository->findOneBy(['token' => $message->watchListToken]);
 
-        $this->logger->info('Domain names listed in the Watchlist will be updated', [
+        $this->logger->debug('Domain names listed in the Watchlist will be updated', [
             'watchlist' => $message->watchListToken,
         ]);
 
@@ -63,18 +63,19 @@ final readonly class UpdateDomainsFromWatchlistHandler
         $connectorProvider = $this->getConnectorProvider($watchList);
 
         if ($connectorProvider instanceof CheckDomainProviderInterface) {
-            $this->logger->notice('Watchlist is linked to a connector', [
+            $this->logger->debug('Watchlist is linked to a connector', [
                 'watchlist' => $watchList->getToken(),
                 'connector' => $watchList->getConnector()->getId(),
             ]);
 
+            $domainList = array_unique(array_map(fn (Domain $d) => $d->getLdhName(), $watchList->getDomains()->toArray()));
+
             try {
-                $checkedDomains = $connectorProvider->checkDomains(
-                    ...array_unique(array_map(fn (Domain $d) => $d->getLdhName(), $watchList->getDomains()->toArray()))
-                );
+                $checkedDomains = $connectorProvider->checkDomains(...$domainList);
             } catch (\Throwable $exception) {
                 $this->logger->warning('Unable to check domain names availability with this connector', [
                     'connector' => $watchList->getConnector()->getId(),
+                    'ldhName' => $domainList,
                 ]);
 
                 throw $exception;

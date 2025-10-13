@@ -4,10 +4,9 @@ namespace App\Service;
 
 use App\Config\WebhookScheme;
 use App\Entity\WatchList;
+use App\Exception\UnsupportedDsnSchemeException;
 use App\Notifier\DomainWatchdogNotification;
-use Psr\Log\LoggerInterface;
-use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
-use Symfony\Component\Notifier\Exception\InvalidArgumentException;
+use Symfony\Component\Notifier\Exception\TransportExceptionInterface;
 use Symfony\Component\Notifier\Recipient\NoRecipient;
 use Symfony\Component\Notifier\Transport\AbstractTransportFactory;
 use Symfony\Component\Notifier\Transport\Dsn;
@@ -15,10 +14,13 @@ use Symfony\Component\Notifier\Transport\Dsn;
 readonly class ChatNotificationService
 {
     public function __construct(
-        private LoggerInterface $logger,
     ) {
     }
 
+    /**
+     * @throws UnsupportedDsnSchemeException
+     * @throws TransportExceptionInterface
+     */
     public function sendChatNotification(WatchList $watchList, DomainWatchdogNotification $notification): void
     {
         $webhookDsn = $watchList->getWebhookDsn();
@@ -28,17 +30,13 @@ readonly class ChatNotificationService
         }
 
         foreach ($webhookDsn as $dsnString) {
-            try {
-                $dsn = new Dsn($dsnString);
-            } catch (InvalidArgumentException $exception) {
-                throw new BadRequestHttpException($exception->getMessage());
-            }
+            $dsn = new Dsn($dsnString);
 
             $scheme = $dsn->getScheme();
             $webhookScheme = WebhookScheme::tryFrom($scheme);
 
             if (null === $webhookScheme) {
-                throw new BadRequestHttpException("The DSN scheme ($scheme) is not supported");
+                throw new UnsupportedDsnSchemeException($scheme);
             }
 
             $transportFactoryClass = $webhookScheme->getChatTransportFactory();
@@ -48,29 +46,14 @@ readonly class ChatNotificationService
             $push = $notification->asPushMessage(new NoRecipient());
             $chat = $notification->asChatMessage(new NoRecipient(), $webhookScheme->value);
 
-            try {
-                $factory = $transportFactory->create($dsn);
+            $factory = $transportFactory->create($dsn);
 
-                if ($factory->supports($push)) {
-                    $factory->send($push);
-                } elseif ($factory->supports($chat)) {
-                    $factory->send($chat);
-                } else {
-                    throw new BadRequestHttpException('Unsupported message type');
-                }
-
-                $this->logger->info('Chat message sent', [
-                    'username' => $watchList->getUser()->getUserIdentifier(),
-                    'scheme' => $webhookScheme->name,
-                    'watchlist' => $watchList->getToken(),
-                ]);
-            } catch (\Throwable $exception) {
-                $this->logger->error('Unable to send a chat message', [
-                    'username' => $watchList->getUser()->getUserIdentifier(),
-                    'scheme' => $webhookScheme->name,
-                    'watchlist' => $watchList->getToken(),
-                ]);
-                throw new BadRequestHttpException($exception->getMessage());
+            if ($factory->supports($push)) {
+                $factory->send($push);
+            } elseif ($factory->supports($chat)) {
+                $factory->send($chat);
+            } else {
+                throw new \InvalidArgumentException('Unsupported message type');
             }
         }
     }

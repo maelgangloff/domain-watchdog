@@ -73,22 +73,29 @@ final readonly class SendDomainEventNotifHandler
 
             /** @var WatchListTrigger $watchListTrigger */
             foreach ($watchListTriggers->getIterator() as $watchListTrigger) {
-                $this->logger->info('New action has been detected on this domain name : a notification is sent to user', [
-                    'event' => $event->getAction(),
-                    'ldhName' => $message->ldhName,
-                    'username' => $watchList->getUser()->getUserIdentifier(),
-                ]);
-
                 $recipient = new Recipient($watchList->getUser()->getEmail());
                 $notification = new DomainUpdateNotification($this->sender, $event);
 
                 if (TriggerAction::SendEmail == $watchListTrigger->getAction()) {
+                    $this->logger->info('New action has been detected on this domain name : an email is sent to user', [
+                        'event' => $event->getAction(),
+                        'ldhName' => $message->ldhName,
+                        'username' => $watchList->getUser()->getUserIdentifier(),
+                    ]);
+
                     $this->mailer->send($notification->asEmailMessage($recipient)->getMessage());
                 } elseif (TriggerAction::SendChat == $watchListTrigger->getAction()) {
                     $webhookDsn = $watchList->getWebhookDsn();
                     if (null === $webhookDsn || 0 === count($webhookDsn)) {
                         continue;
                     }
+
+                    $this->logger->info('New action has been detected on this domain name : a notification is sent to user', [
+                        'event' => $event->getAction(),
+                        'ldhName' => $message->ldhName,
+                        'username' => $watchList->getUser()->getUserIdentifier(),
+                    ]);
+
                     $this->chatNotificationService->sendChatNotification($watchList, $notification);
                 }
 
