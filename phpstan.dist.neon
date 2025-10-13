@@ -6,3 +6,4 @@ parameters:
         - public/
         - src/
         - tests/
+        - migrations/
