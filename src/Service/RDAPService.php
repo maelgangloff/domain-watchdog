@@ -47,7 +47,7 @@ use Symfony\Contracts\HttpClient\ResponseInterface;
 
 class RDAPService
 {
-    private const ENTITY_HANDLE_BLACKLIST = [
+    public const ENTITY_HANDLE_BLACKLIST = [
         'REDACTED_FOR_PRIVACY',
         'ANO00-FRNIC',
         'not applicable',
