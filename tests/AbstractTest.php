@@ -6,7 +6,7 @@ use ApiPlatform\Symfony\Bundle\Test\ApiTestCase;
 use ApiPlatform\Symfony\Bundle\Test\Client;
 use App\Entity\User;
 
-abstract class AbstractTest extends ApiTestCase
+class AbstractTest extends ApiTestCase
 {
     private ?string $token = null;
 

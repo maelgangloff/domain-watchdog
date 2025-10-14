@@ -3,6 +3,7 @@
 namespace App\Tests\Service;
 
 use App\Entity\RdapServer;
+use App\Entity\Tld;
 use App\Exception\DomainNotFoundException;
 use App\Exception\TldNotSupportedException;
 use App\Exception\UnknownRdapServerException;
@@ -34,24 +35,24 @@ class RDAPServiceTest extends KernelTestCase
         $updateRdapServersHandler = self::$container->get(UpdateRdapServersHandler::class);
         $message = new UpdateRdapServers();
         $updateRdapServersHandler($message);
-        self::$entityManager->flush();
 
         $rdapServerRepository = self::$entityManager->getRepository(RdapServer::class);
         $this->assertNotEmpty($rdapServerRepository->findAll());
     }
 
     #[Depends('testUpdateRdapServers')]
-    public function testRegisterDomain(): void
+    public function testRegisterDomainByTld(): void
     {
-        $rdapServerRepository = self::$entityManager->getRepository(RdapServer::class);
+        self::$RDAPService->registerDomains(['arpa']);
 
-        $testedTldList = ['com', 'net', 'org', 'fr', 'de', 'ch', 'ca', 'leclerc', 'uz'];
+        $rdapServerRepository = static::$entityManager->getRepository(RdapServer::class);
+        $rdapServerList = $rdapServerRepository->findBy(['tld' => array_map(
+            fn (string $tld) => static::$entityManager->getReference(Tld::class, $tld),
+            ['com', 'net', 'fr', 'de', 'ch', 'ca', 'uz', 'google', 'ovh']
+        ),
+        ]);
 
-        /** @var RdapServer $rdapServer */
-        foreach ($rdapServerRepository->findAll() as $rdapServer) {
-            if (!in_array($rdapServer->getTld()->getTld(), $testedTldList)) {
-                continue;
-            }
+        foreach ($rdapServerList as $rdapServer) {
             try {
                 self::$RDAPService->registerDomain('nic.'.$rdapServer->getTld()->getTld());
             } catch (DomainNotFoundException|ClientException|TransportException) {
@@ -72,5 +73,12 @@ class RDAPServiceTest extends KernelTestCase
     {
         $this->expectException(TldNotSupportedException::class);
         self::$RDAPService->registerDomain('nic.noexist');
+    }
+
+    #[Depends('testUpdateRdapServers')]
+    public function testDomainNotFound()
+    {
+        $this->expectException(DomainNotFoundException::class);
+        self::$RDAPService->registerDomain('dd5c3e77-c824-4792-95fc-ddde03a08881.com');
     }
 }
