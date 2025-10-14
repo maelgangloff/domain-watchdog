@@ -55,6 +55,9 @@ jobs:
             -   name: Prepare database
                 run: bin/console --env=test doctrine:database:create && bin/console --env=test doctrine:migrations:migrate
 
+            -   name: Create JWT keys
+                run: bin/console lexik:jwt:generate-keypair
+
             -   name: Run PHPUnit
                 run: vendor/bin/phpunit --coverage-text
 
