@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Metadata\ApiProperty;
 use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\Get;
 use App\Config\EventAction;
@@ -75,6 +76,11 @@ class Domain
      */
     #[ORM\OneToMany(targetEntity: DomainEvent::class, mappedBy: 'domain', cascade: ['persist'], orphanRemoval: true)]
     #[Groups(['domain:item', 'domain:list', 'watchlist:list'])]
+    #[ApiProperty(
+        openapiContext: [
+            'type' => 'array',
+        ]
+    )]
     private Collection $events;
 
     /**

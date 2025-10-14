@@ -36,7 +36,7 @@ final class UserFactory extends PersistentObjectFactory
     protected function defaults(): array|callable
     {
         $createdAt = \DateTimeImmutable::createFromMutable(self::faker()->dateTime());
-        $plainPassword = self::faker()->password(8, 20);
+        $plainPassword = self::faker()->password(16, 20);
 
         return [
             'createdAt' => $createdAt,

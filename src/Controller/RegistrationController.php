@@ -21,6 +21,7 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\RateLimiter\RateLimiterFactory;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Serializer\SerializerInterface;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class RegistrationController extends AbstractController
 {
@@ -33,6 +34,7 @@ class RegistrationController extends AbstractController
         private readonly SerializerInterface $serializer,
         private readonly LoggerInterface $logger,
         private readonly KernelInterface $kernel,
+        private readonly ValidatorInterface $validator,
     ) {
     }
 
@@ -64,14 +66,16 @@ class RegistrationController extends AbstractController
         }
 
         $user = $this->serializer->deserialize($request->getContent(), User::class, 'json', ['groups' => 'user:register']);
-        if (null === $user->getEmail() || null === $user->getPassword()) {
-            throw new BadRequestHttpException('Bad request');
+        $violations = $this->validator->validate($user);
+
+        if ($violations->count() > 0) {
+            throw new BadRequestHttpException($violations->get(0));
         }
 
         $user->setPassword(
             $userPasswordHasher->hashPassword(
                 $user,
-                $user->getPassword()
+                $user->getPlainPassword()
             )
         )->setCreatedAt(new \DateTimeImmutable());
 

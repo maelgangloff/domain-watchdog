@@ -15,6 +15,8 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Serializer\Attribute\Groups;
+use Symfony\Component\Serializer\Attribute\SerializedName;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\UniqueConstraint(name: 'UNIQ_IDENTIFIER_EMAIL', fields: ['email'])]
@@ -46,6 +48,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(length: 180)]
     #[Groups(['user:list', 'user:register'])]
+    #[Assert\Email]
+    #[Assert\NotBlank]
     private ?string $email = null;
 
     /**
@@ -59,7 +63,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @var string|null The hashed password
      */
     #[ORM\Column(nullable: true)]
-    #[Groups(['user:register'])]
     private ?string $password = null;
 
     /**
@@ -80,6 +83,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(nullable: true)]
     private ?\DateTimeImmutable $verifiedAt = null;
 
+    #[Assert\PasswordStrength]
+    #[Assert\NotBlank]
+    #[SerializedName('password')]
+    #[Groups(['user:register'])]
     private ?string $plainPassword = null;
 
     public function __construct()

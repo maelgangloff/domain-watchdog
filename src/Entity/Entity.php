@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Metadata\ApiProperty;
 use ApiPlatform\Metadata\ApiResource;
 use App\Repository\EntityRepository;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -77,7 +78,13 @@ class Entity
     #[Groups(['entity:item', 'domain:item'])]
     private Collection $events;
 
-    #[ORM\Column]
+    #[ORM\Column(type: 'json')]
+    #[ApiProperty(
+        openapiContext: [
+            'type' => 'array',
+            'items' => ['type' => 'array'],
+        ]
+    )]
     #[Groups(['entity:item', 'domain:item'])]
     private array $jCard = [];
 

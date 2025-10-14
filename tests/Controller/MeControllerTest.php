@@ -1,14 +1,15 @@
 <?php
 
-namespace App\Tests;
+namespace App\Tests\Controller;
 
 use App\Entity\User;
 use App\Factory\UserFactory;
+use App\Tests\AbstractTest;
 use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 use Zenstruck\Foundry\Test\Factories;
 use Zenstruck\Foundry\Test\ResetDatabase;
 
-final class UserTest extends AbstractTest
+final class MeControllerTest extends AbstractTest
 {
     use ResetDatabase;
     use Factories;
@@ -19,9 +20,8 @@ final class UserTest extends AbstractTest
     public function testGetMyProfile(): void
     {
         $testUser = UserFactory::createOne();
-        $client = UserTest::createClientWithCredentials(UserTest::getToken($testUser));
+        $client = MeControllerTest::createClientWithCredentials(MeControllerTest::getToken($testUser));
 
-        $client->loginUser($testUser);
         $client->request('GET', '/api/me');
 
         $this->assertResponseIsSuccessful();
