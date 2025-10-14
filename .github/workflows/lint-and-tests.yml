@@ -58,6 +58,10 @@ jobs:
                     name: php-vendor
                     path: vendor
 
+            -   name: Set executable permissions
+                run: chmod +x vendor/bin/*
+
+
             -   name: Set up PHP
                 uses: shivammathur/setup-php@v2
                 with:
@@ -80,6 +84,10 @@ jobs:
                 with:
                     name: php-vendor
                     path: vendor
+
+            -   name: Set executable permissions
+                run: chmod +x vendor/bin/*
+
 
             -   name: Set up PHP
                 uses: shivammathur/setup-php@v2
@@ -116,6 +124,9 @@ jobs:
                     name: php-vendor
                     path: vendor
 
+            -   name: Set executable permissions
+                run: chmod +x vendor/bin/*
+
             -   name: Set up PHP
                 uses: shivammathur/setup-php@v2
                 with:
@@ -147,6 +158,10 @@ jobs:
                 with:
                     name: php-vendor
                     path: vendor
+
+            -   name: Set executable permissions
+                run: chmod +x vendor/bin/*
+
 
             -   name: Cache Node modules
                 uses: actions/cache@v3
