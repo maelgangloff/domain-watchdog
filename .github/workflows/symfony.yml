@@ -10,9 +10,10 @@ permissions:
     contents: read
 
 jobs:
-    symfony:
-        name: CI
+    container-job:
         runs-on: ubuntu-latest
+        container: node:20-bookworm-slim
+
         services:
             postgres:
                 image: postgres
@@ -23,6 +24,9 @@ jobs:
                     --health-interval 10s
                     --health-timeout 5s
                     --health-retries 5
+    symfony:
+        name: CI
+        runs-on: ubuntu-latest
         steps:
             -   name: Checkout code
                 uses: actions/checkout@v3
