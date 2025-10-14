@@ -2,9 +2,9 @@ name: Symfony CI
 
 on:
     push:
-        branches: [ "master" ]
+        branches: [ "master", "develop" ]
     pull_request:
-        branches: [ "master" ]
+        branches: [ "master", "develop" ]
 
 permissions:
     contents: read
@@ -13,6 +13,16 @@ jobs:
     symfony:
         name: CI
         runs-on: ubuntu-latest
+        services:
+            postgres:
+                image: postgres
+                env:
+                    POSTGRES_PASSWORD: postgres
+                options: >-
+                    --health-cmd pg_isready
+                    --health-interval 10s
+                    --health-timeout 5s
+                    --health-retries 5
         steps:
             -   name: Checkout code
                 uses: actions/checkout@v3
@@ -39,6 +49,9 @@ jobs:
 
             -   name: Run PHPStan
                 run: vendor/bin/phpstan analyse
+
+            -   name: Prepare database
+                run: bin/console --env=test doctrine:database:create && bin/console --env=test doctrine:migrations:migrate
 
             -   name: Run PHPUnit
                 run: vendor/bin/phpunit --coverage-text
