@@ -58,6 +58,9 @@ jobs:
             -   name: Create JWT keys
                 run: bin/console lexik:jwt:generate-keypair
 
+            -   name: Add extra RDAP servers
+                run: ln -s config/app/custom_rdap_servers.example.yaml config/app/custom_rdap_servers.yaml
+
             -   name: Run PHPUnit
                 run: vendor/bin/phpunit --coverage-text
 
