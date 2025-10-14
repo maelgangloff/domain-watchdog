@@ -5,39 +5,62 @@ namespace App\State;
 use ApiPlatform\Metadata\Operation;
 use ApiPlatform\State\ProviderInterface;
 use App\Entity\Domain;
-use App\Exception\DomainNotFoundException;
+use App\Entity\WatchList;
+use App\Message\SendDomainEventNotif;
+use App\Repository\DomainRepository;
 use App\Service\RDAPService;
-use Doctrine\ORM\EntityManagerInterface;
+use Psr\Log\LoggerInterface;
+use Random\Randomizer;
 use Symfony\Bundle\SecurityBundle\Security;
-use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpKernel\Exception\TooManyRequestsHttpException;
 use Symfony\Component\HttpKernel\KernelInterface;
+use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\RateLimiter\RateLimiterFactory;
 
 readonly class AutoRegisterDomainProvider implements ProviderInterface
 {
     public function __construct(
-        #[Autowire(service: 'api_platform.doctrine.orm.state.item_provider')]
-        private ProviderInterface $itemProvider,
         private RDAPService $RDAPService,
-        private EntityManagerInterface $entityManager,
         private KernelInterface $kernel,
         private ParameterBagInterface $parameterBag,
-        private RateLimiterFactory $rdapRequestsLimiter, private Security $security,
+        private RateLimiterFactory $rdapRequestsLimiter,
+        private Security $security,
+        private LoggerInterface $logger,
+        private DomainRepository $domainRepository,
+        private MessageBusInterface $bus,
     ) {
     }
 
     public function provide(Operation $operation, array $uriVariables = [], array $context = []): object|array|null
     {
-        $domain = $this->itemProvider->provide($operation, $uriVariables, $context);
+        $userId = $this->security->getUser()->getUserIdentifier();
+        $idnDomain = RDAPService::convertToIdn($uriVariables['ldhName']);
 
-        if (!is_null($domain)) {
+        $this->logger->info('User wants to update a domain name', [
+            'username' => $userId,
+            'ldhName' => $idnDomain,
+        ]);
+
+        /** @var ?Domain $domain */
+        $domain = $this->domainRepository->findOneBy(['ldhName' => $idnDomain]);
+        // If the domain name exists in the database, recently updated and not important, we return the stored Domain
+        if (null !== $domain
+            && !$domain->getDeleted()
+            && !$domain->isToBeUpdated(true, true)
+            && !$this->kernel->isDebug()
+            && true !== filter_var($context['request']->get('forced', false), FILTER_VALIDATE_BOOLEAN)
+        ) {
+            $this->logger->debug('It is not necessary to update the domain name', [
+                'ldhName' => $idnDomain,
+                'updatedAt' => $domain->getUpdatedAt()->format(\DateTimeInterface::ATOM),
+            ]);
+
             return $domain;
         }
 
         if (false === $this->kernel->isDebug() && true === $this->parameterBag->get('limited_features')) {
-            $limiter = $this->rdapRequestsLimiter->create($this->security->getUser()->getUserIdentifier());
+            $limiter = $this->rdapRequestsLimiter->create($userId);
             $limit = $limiter->consume();
 
             if (!$limit->isAccepted()) {
@@ -45,19 +68,15 @@ readonly class AutoRegisterDomainProvider implements ProviderInterface
             }
         }
 
-        $ldhName = RDAPService::convertToIdn($uriVariables['ldhName']);
+        $updatedAt = null === $domain ? new \DateTimeImmutable('now') : $domain->getUpdatedAt();
+        $domain = $this->RDAPService->registerDomain($idnDomain);
 
-        try {
-            $domain = $this->RDAPService->registerDomain($ldhName);
-        } catch (DomainNotFoundException) {
-            $domain = (new Domain())
-                ->setLdhName($ldhName)
-                ->setTld($this->RDAPService->getTld($ldhName))
-                ->setDelegationSigned(false)
-                ->setDeleted(true);
+        $randomizer = new Randomizer();
+        $watchLists = $randomizer->shuffleArray($domain->getWatchLists()->toArray());
 
-            $this->entityManager->persist($domain);
-            $this->entityManager->flush();
+        /** @var WatchList $watchList */
+        foreach ($watchLists as $watchList) {
+            $this->bus->dispatch(new SendDomainEventNotif($watchList->getToken(), $domain->getLdhName(), $updatedAt));
         }
 
         return $domain;

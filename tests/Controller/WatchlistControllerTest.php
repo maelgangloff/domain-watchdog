@@ -16,6 +16,7 @@ final class WatchlistControllerTest extends ApiTestCase
     use Factories;
     use AuthenticatedUserTrait;
 
+    #[DependsExternal(RDAPServiceTest::class, 'testUpdateRdapServers')]
     public function testGetWatchlistCollection(): void
     {
         $client = $this->createUserAndWatchlist();
@@ -77,7 +78,7 @@ final class WatchlistControllerTest extends ApiTestCase
     {
         $client = self::createClientWithCredentials(self::getToken(UserFactory::createOne()));
         $client->request('POST', '/api/watchlists', ['json' => [
-            'domains' => ['/api/domains/example.com'],
+            'domains' => ['/api/domains/iana.org'],
             'name' => 'My Watchlist',
             'triggers' => [
                 ['action' => 'email', 'event' => 'last changed'],

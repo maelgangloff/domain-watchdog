@@ -62,7 +62,8 @@ class RDAPService
         'Private',
     ];
 
-    public function __construct(private HttpClientInterface $client,
+    public function __construct(
+        private readonly HttpClientInterface $client,
         private readonly EntityRepository $entityRepository,
         private readonly DomainRepository $domainRepository,
         private readonly DomainEventRepository $domainEventRepository,

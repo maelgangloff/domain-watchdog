@@ -16,6 +16,9 @@ use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpClient\Exception\ClientException;
 use Symfony\Component\HttpClient\Exception\TransportException;
+use Symfony\Component\HttpClient\MockHttpClient;
+use Symfony\Component\HttpClient\Response\MockResponse;
+use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 class RDAPServiceTest extends KernelTestCase
 {
@@ -76,9 +79,46 @@ class RDAPServiceTest extends KernelTestCase
     }
 
     #[Depends('testUpdateRdapServers')]
-    public function testDomainNotFound()
+    public function testDomainDeleted()
     {
+        self::$RDAPService->registerDomain('example.com');
+
+        self::ensureKernelShutdown();
+        self::bootKernel();
+
+        static::getContainer()->set(HttpClientInterface::class, new MockHttpClient(
+            new MockResponse('', ['http_code' => 404])
+        ));
+
+        $rdapService = static::getContainer()->get(RDAPService::class);
+
         $this->expectException(DomainNotFoundException::class);
-        self::$RDAPService->registerDomain('dd5c3e77-c824-4792-95fc-ddde03a08881.com');
+        $rdapService->registerDomain('example.com');
+    }
+
+    #[Depends('testDomainDeleted')]
+    public function testDomainUpdateStatus(): void
+    {
+        $domain = self::$RDAPService->registerDomain('example.com');
+        $domain->setStatus(['pending delete']);
+        self::$entityManager->flush();
+        self::$RDAPService->registerDomain('example.com');
+
+        $this->expectNotToPerformAssertions();
+    }
+
+    #[Depends('testUpdateRdapServers')]
+    public function testHttpClientException()
+    {
+        self::ensureKernelShutdown();
+        self::bootKernel();
+        static::getContainer()->set(HttpClientInterface::class, new MockHttpClient(
+            fn () => throw new TransportException()
+        ));
+
+        $rdapService = static::getContainer()->get(RDAPService::class);
+
+        $this->expectException(TransportException::class);
+        $rdapService->registerDomain('example.com');
     }
 }

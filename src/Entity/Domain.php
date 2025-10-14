@@ -6,7 +6,6 @@ use ApiPlatform\Metadata\ApiProperty;
 use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\Get;
 use App\Config\EventAction;
-use App\Controller\DomainRefreshController;
 use App\Repository\DomainRepository;
 use App\Service\RDAPService;
 use App\State\AutoRegisterDomainProvider;
@@ -43,7 +42,6 @@ use Symfony\Component\Serializer\Attribute\SerializedName;
         */
         new Get(
             uriTemplate: '/domains/{ldhName}', // Do not delete this line, otherwise Symfony interprets the TLD of the domain name as a return type
-            controller: DomainRefreshController::class,
             normalizationContext: [
                 'groups' => [
                     'domain:item',
@@ -55,7 +53,6 @@ use Symfony\Component\Serializer\Attribute\SerializedName;
                     'ds:list',
                 ],
             ],
-            read: false
         ),
     ],
     provider: AutoRegisterDomainProvider::class
