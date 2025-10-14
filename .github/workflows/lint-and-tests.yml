@@ -141,6 +141,13 @@ jobs:
         steps:
             -   name: Checkout code
                 uses: actions/checkout@v3
+
+            -   name: Download PHP vendor
+                uses: actions/download-artifact@v4
+                with:
+                    name: php-vendor
+                    path: vendor
+
             -   name: Cache Node modules
                 uses: actions/cache@v3
                 with:
