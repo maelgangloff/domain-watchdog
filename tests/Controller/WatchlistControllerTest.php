@@ -2,17 +2,19 @@
 
 namespace App\Tests\Controller;
 
+use ApiPlatform\Symfony\Bundle\Test\ApiTestCase;
 use ApiPlatform\Symfony\Bundle\Test\Client;
 use App\Entity\WatchList;
 use App\Factory\UserFactory;
-use App\Tests\AbstractTest;
+use App\Tests\AuthenticatedUserTrait;
 use App\Tests\Service\RDAPServiceTest;
 use PHPUnit\Framework\Attributes\DependsExternal;
 use Zenstruck\Foundry\Test\Factories;
 
-final class WatchlistControllerTest extends AbstractTest
+final class WatchlistControllerTest extends ApiTestCase
 {
     use Factories;
+    use AuthenticatedUserTrait;
 
     public function testGetWatchlistCollection(): void
     {

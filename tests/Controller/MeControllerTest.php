@@ -2,17 +2,19 @@
 
 namespace App\Tests\Controller;
 
+use ApiPlatform\Symfony\Bundle\Test\ApiTestCase;
 use App\Entity\User;
 use App\Factory\UserFactory;
-use App\Tests\AbstractTest;
+use App\Tests\AuthenticatedUserTrait;
 use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 use Zenstruck\Foundry\Test\Factories;
 use Zenstruck\Foundry\Test\ResetDatabase;
 
-final class MeControllerTest extends AbstractTest
+final class MeControllerTest extends ApiTestCase
 {
     use ResetDatabase;
     use Factories;
+    use AuthenticatedUserTrait;
 
     /**
      * @throws TransportExceptionInterface
