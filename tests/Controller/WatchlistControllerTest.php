@@ -34,9 +34,8 @@ final class WatchlistControllerTest extends ApiTestCase
     public function testGetTrackedDomains()
     {
         $client = WatchListUpdateProcessorTest::createUserAndWatchlist();
-
-        $client->getContainer()->get('doctrine')->getManager()->clear();
         $response = $client->request('GET', '/api/tracked');
+
         $this->assertResponseIsSuccessful();
 
         $data = $response->toArray();

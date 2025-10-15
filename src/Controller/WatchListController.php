@@ -7,6 +7,7 @@ use App\Entity\DomainEvent;
 use App\Entity\DomainStatus;
 use App\Entity\User;
 use App\Entity\WatchList;
+use App\Repository\DomainEventRepository;
 use App\Repository\WatchListRepository;
 use Doctrine\Common\Collections\Collection;
 use Eluceo\iCal\Domain\Entity\Calendar;
@@ -27,6 +28,7 @@ class WatchListController extends AbstractController
 {
     public function __construct(
         private readonly WatchListRepository $watchListRepository,
+        private readonly DomainEventRepository $domainEventRepository,
     ) {
     }
 
@@ -108,7 +110,16 @@ class WatchListController extends AbstractController
             /** @var Domain $domain */
             foreach ($watchList->getDomains()->getIterator() as $domain) {
                 /** @var DomainEvent|null $exp */
-                $exp = $domain->getEvents()->findFirst(fn (int $key, DomainEvent $e) => !$e->getDeleted() && 'expiration' === $e->getAction());
+                $exp = $this->domainEventRepository->createQueryBuilder('de')
+                    ->select()
+                    ->where('de.domain = :domain')
+                    ->andWhere('de.action = \'expiration\'')
+                    ->andWhere('de.deleted = FALSE')
+                    ->setParameter('domain', $domain)
+                    ->orderBy('de.date', 'DESC')
+                    ->setMaxResults(1)
+                    ->getQuery()
+                    ->getOneOrNullResult();
 
                 if (!$domain->getDeleted() && null !== $exp && !in_array($domain, $domains)) {
                     $domains[] = $domain;
