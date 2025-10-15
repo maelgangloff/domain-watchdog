@@ -90,7 +90,7 @@ use Symfony\Component\Uid\Uuid;
         ),
         new Put(
             normalizationContext: ['groups' => 'watchlist:item'],
-            denormalizationContext: ['groups' => ['watchlist:create', 'watchlist:token']],
+            denormalizationContext: ['groups' => ['watchlist:update']],
             security: 'object.user == user',
             processor: WatchListUpdateProcessor::class,
         ),
@@ -163,7 +163,7 @@ class WatchList
     #[ORM\JoinTable(name: 'watch_lists_domains',
         joinColumns: [new ORM\JoinColumn(name: 'watch_list_token', referencedColumnName: 'token', onDelete: 'CASCADE')],
         inverseJoinColumns: [new ORM\JoinColumn(name: 'domain_ldh_name', referencedColumnName: 'ldh_name', onDelete: 'CASCADE')])]
-    #[Groups(['watchlist:create', 'watchlist:list', 'watchlist:item'])]
+    #[Groups(['watchlist:create', 'watchlist:list', 'watchlist:item', 'watchlist:update'])]
     private Collection $domains;
 
     /**
@@ -175,11 +175,11 @@ class WatchList
     private Collection $watchListTriggers;
 
     #[ORM\ManyToOne(inversedBy: 'watchLists')]
-    #[Groups(['watchlist:list', 'watchlist:item', 'watchlist:create'])]
+    #[Groups(['watchlist:list', 'watchlist:item', 'watchlist:create', 'watchlist:update'])]
     private ?Connector $connector = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    #[Groups(['watchlist:list', 'watchlist:item', 'watchlist:create'])]
+    #[Groups(['watchlist:list', 'watchlist:item', 'watchlist:create', 'watchlist:update'])]
     private ?string $name = null;
 
     #[ORM\Column]
@@ -188,7 +188,7 @@ class WatchList
 
     #[SerializedName('dsn')]
     #[ORM\Column(type: Types::SIMPLE_ARRAY, nullable: true)]
-    #[Groups(['watchlist:list', 'watchlist:item', 'watchlist:create'])]
+    #[Groups(['watchlist:list', 'watchlist:item', 'watchlist:create', 'watchlist:update'])]
     private ?array $webhookDsn = null;
 
     public function __construct()

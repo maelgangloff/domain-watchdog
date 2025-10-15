@@ -3,11 +3,10 @@
 namespace App\Tests\Controller;
 
 use ApiPlatform\Symfony\Bundle\Test\ApiTestCase;
-use ApiPlatform\Symfony\Bundle\Test\Client;
 use App\Entity\WatchList;
-use App\Factory\UserFactory;
 use App\Tests\AuthenticatedUserTrait;
 use App\Tests\Service\RDAPServiceTest;
+use App\Tests\State\WatchListUpdateProcessorTest;
 use PHPUnit\Framework\Attributes\DependsExternal;
 use Zenstruck\Foundry\Test\Factories;
 
@@ -19,7 +18,7 @@ final class WatchlistControllerTest extends ApiTestCase
     #[DependsExternal(RDAPServiceTest::class, 'testUpdateRdapServers')]
     public function testGetWatchlistCollection(): void
     {
-        $client = $this->createUserAndWatchlist();
+        $client = WatchListUpdateProcessorTest::createUserAndWatchlist();
 
         $response = $client->request('GET', '/api/watchlists');
 
@@ -32,19 +31,12 @@ final class WatchlistControllerTest extends ApiTestCase
     }
 
     #[DependsExternal(RDAPServiceTest::class, 'testUpdateRdapServers')]
-    public function testCreateWatchlist(): void
-    {
-        $this->createUserAndWatchlist();
-        $this->assertResponseIsSuccessful();
-        $this->assertResponseStatusCodeSame(201);
-        $this->assertMatchesResourceItemJsonSchema(WatchList::class);
-    }
-
-    #[DependsExternal(RDAPServiceTest::class, 'testUpdateRdapServers')]
     public function testGetTrackedDomains()
     {
-        $client = $this->createUserAndWatchlist();
+        $client = WatchListUpdateProcessorTest::createUserAndWatchlist();
 
+        $client->getContainer()->get('doctrine')->getManager()->clear();
+        sleep(2);
         $response = $client->request('GET', '/api/tracked');
         $this->assertResponseIsSuccessful();
 
@@ -56,7 +48,7 @@ final class WatchlistControllerTest extends ApiTestCase
     #[DependsExternal(RDAPServiceTest::class, 'testUpdateRdapServers')]
     public function testGetWatchlistFeeds()
     {
-        $client = $this->createUserAndWatchlist();
+        $client = WatchListUpdateProcessorTest::createUserAndWatchlist();
 
         $response = $client->request('GET', '/api/watchlists');
         $token = $response->toArray()['hydra:member'][0]['token'];
@@ -72,22 +64,5 @@ final class WatchlistControllerTest extends ApiTestCase
         $client->request('GET', '/api/watchlists/'.$token.'/rss/status');
         $this->assertResponseIsSuccessful();
         $this->assertResponseHeaderSame('content-type', 'application/atom+xml; charset=utf-8');
-    }
-
-    private function createUserAndWatchlist(): Client
-    {
-        $client = self::createClientWithCredentials(self::getToken(UserFactory::createOne()));
-        $client->request('POST', '/api/watchlists', ['json' => [
-            'domains' => ['/api/domains/iana.org'],
-            'name' => 'My Watchlist',
-            'triggers' => [
-                ['action' => 'email', 'event' => 'last changed'],
-                ['action' => 'email', 'event' => 'transfer'],
-                ['action' => 'email', 'event' => 'expiration'],
-                ['action' => 'email', 'event' => 'deletion'],
-            ],
-        ]]);
-
-        return $client;
     }
 }

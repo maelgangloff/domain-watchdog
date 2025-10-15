@@ -45,7 +45,7 @@ readonly class WatchListUpdateProcessor implements ProcessorInterface
     {
         /** @var User $user */
         $user = $this->security->getUser();
-        $data->setUser($user);
+        $data->setUser($user)->setToken($uriVariables['token'] ?? $data->getToken());
 
         if ($this->parameterBag->get('limited_features')) {
             if ($data->getDomains()->count() > (int) $this->parameterBag->get('limit_max_watchlist_domains')) {
