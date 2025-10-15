@@ -17,6 +17,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Attribute\Groups;
 use Symfony\Component\Serializer\Attribute\SerializedName;
 use Symfony\Component\Uid\Uuid;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: WatchListRepository::class)]
 #[ApiResource(
@@ -166,14 +167,6 @@ class WatchList
     #[Groups(['watchlist:create', 'watchlist:list', 'watchlist:item', 'watchlist:update'])]
     private Collection $domains;
 
-    /**
-     * @var Collection<int, WatchListTrigger>
-     */
-    #[ORM\OneToMany(targetEntity: WatchListTrigger::class, mappedBy: 'watchList', cascade: ['persist'], orphanRemoval: true)]
-    #[Groups(['watchlist:list', 'watchlist:item', 'watchlist:create'])]
-    #[SerializedName('triggers')]
-    private Collection $watchListTriggers;
-
     #[ORM\ManyToOne(inversedBy: 'watchLists')]
     #[Groups(['watchlist:list', 'watchlist:item', 'watchlist:create', 'watchlist:update'])]
     private ?Connector $connector = null;
@@ -189,13 +182,27 @@ class WatchList
     #[SerializedName('dsn')]
     #[ORM\Column(type: Types::SIMPLE_ARRAY, nullable: true)]
     #[Groups(['watchlist:list', 'watchlist:item', 'watchlist:create', 'watchlist:update'])]
+    #[Assert\Unique]
+    #[Assert\All([
+        new Assert\Type('string'),
+        new Assert\NotBlank(),
+    ])]
     private ?array $webhookDsn = null;
+
+    #[ORM\Column(type: Types::JSON)]
+    #[Groups(['watchlist:list', 'watchlist:item', 'watchlist:create', 'watchlist:update'])]
+    #[Assert\Unique]
+    #[Assert\NotBlank]
+    #[Assert\All([
+        new Assert\Type('string'),
+        new Assert\NotBlank(),
+    ])]
+    private array $trackedEvents = [];
 
     public function __construct()
     {
         $this->token = Uuid::v4();
         $this->domains = new ArrayCollection();
-        $this->watchListTriggers = new ArrayCollection();
         $this->createdAt = new \DateTimeImmutable('now');
     }
 
@@ -245,36 +252,6 @@ class WatchList
         return $this;
     }
 
-    /**
-     * @return Collection<int, WatchListTrigger>
-     */
-    public function getWatchListTriggers(): Collection
-    {
-        return $this->watchListTriggers;
-    }
-
-    public function addWatchListTrigger(WatchListTrigger $watchListTrigger): static
-    {
-        if (!$this->watchListTriggers->contains($watchListTrigger)) {
-            $this->watchListTriggers->add($watchListTrigger);
-            $watchListTrigger->setWatchList($this);
-        }
-
-        return $this;
-    }
-
-    public function removeWatchListTrigger(WatchListTrigger $watchListTrigger): static
-    {
-        if ($this->watchListTriggers->removeElement($watchListTrigger)) {
-            // set the owning side to null (unless already changed)
-            if ($watchListTrigger->getWatchList() === $this) {
-                $watchListTrigger->setWatchList(null);
-            }
-        }
-
-        return $this;
-    }
-
     public function getConnector(): ?Connector
     {
         return $this->connector;
@@ -319,6 +296,18 @@ class WatchList
     public function setWebhookDsn(?array $webhookDsn): static
     {
         $this->webhookDsn = $webhookDsn;
+
+        return $this;
+    }
+
+    public function getTrackedEvents(): array
+    {
+        return $this->trackedEvents;
+    }
+
+    public function setTrackedEvents(array $trackedEvents): static
+    {
+        $this->trackedEvents = $trackedEvents;
 
         return $this;
     }

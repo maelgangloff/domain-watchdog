@@ -44,15 +44,13 @@ final class WatchListUpdateProcessorTest extends ApiTestCase
         $response = $client->request('PUT', '/api/watchlists/'.$token, ['json' => [
             'domains' => ['/api/domains/iana.org', '/api/domains/example.com'],
             'name' => 'My modified Watchlist',
-            'triggers' => [
-                ['action' => 'email', 'event' => 'last changed'],
-            ],
+            'trackedEvents' => ['last changed'],
         ]]);
         $this->assertResponseIsSuccessful();
         $this->assertMatchesResourceItemJsonSchema(WatchList::class);
         $data = $response->toArray();
         $this->assertCount(2, $data['domains']);
-        $this->assertCount(1, $data['triggers']);
+        $this->assertCount(1, $data['trackedEvents']);
     }
 
     public static function createUserAndWatchlist(?Client $client = null): Client
@@ -61,12 +59,7 @@ final class WatchListUpdateProcessorTest extends ApiTestCase
         $client->request('POST', '/api/watchlists', ['json' => [
             'domains' => ['/api/domains/example.com'],
             'name' => 'My Watchlist',
-            'triggers' => [
-                ['action' => 'email', 'event' => 'last changed'],
-                ['action' => 'email', 'event' => 'transfer'],
-                ['action' => 'email', 'event' => 'expiration'],
-                ['action' => 'email', 'event' => 'deletion'],
-            ],
+            'trackedEvents' => ['last changed', 'transfer', 'expiration', 'deletion'],
         ]]);
 
         return $client;

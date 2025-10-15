@@ -15,7 +15,7 @@ import type {Watchlist} from '../../../utils/api'
 
 export function WatchlistCard({watchlist, onUpdateWatchlist, connectors, onDelete}: {
     watchlist: Watchlist
-    onUpdateWatchlist: (values: { domains: string[], triggers: string[], token: string }) => Promise<void>
+    onUpdateWatchlist: (values: { domains: string[], trackedEvents: string[], token: string }) => Promise<void>
     connectors: Array<Connector & { id: string }>
     onDelete: () => void
 }) {
@@ -64,13 +64,12 @@ export function WatchlistCard({watchlist, onUpdateWatchlist, connectors, onDelet
                         {watchlist.domains.map(d => <DomainToTag key={d.ldhName} domain={d}/>)}
                     </Col>
                     <Col span={8}>
-                        {watchlist.triggers?.filter(t => t.action === 'email')
-                            .map(t => <Tooltip
-                                    key={t.event}
-                                    title={rdapEventDetailTranslated[t.event as keyof typeof rdapEventDetailTranslated] || undefined}
+                        {watchlist.trackedEvents?.map(t => <Tooltip
+                                    key={t}
+                                    title={rdapEventDetailTranslated[t as keyof typeof rdapEventDetailTranslated] || undefined}
                                 >
-                                    <Tag color={actionToColor(t.event)}>
-                                        {rdapEventNameTranslated[t.event as keyof typeof rdapEventNameTranslated]}
+                                    <Tag color={actionToColor(t)}>
+                                        {rdapEventNameTranslated[t as keyof typeof rdapEventNameTranslated]}
                                     </Tag>
                                 </Tooltip>
                             )}

@@ -2,13 +2,12 @@ import type { FormInstance, SelectProps} from 'antd'
 import {Button, Form, Input, Select, Space, Tag, Tooltip, Typography} from 'antd'
 import {t} from 'ttag'
 import {ApiOutlined, MinusCircleOutlined, PlusOutlined} from '@ant-design/icons'
-import React, {useState} from 'react'
+import React from 'react'
 import type {Connector} from '../../../utils/api/connectors'
 import {rdapEventDetailTranslation, rdapEventNameTranslation} from '../../../utils/functions/rdapTranslation'
 import {actionToColor} from '../../../utils/functions/actionToColor'
 import {actionToIcon} from '../../../utils/functions/actionToIcon'
 import type {EventAction, Watchlist} from '../../../utils/api'
-import { createWatchlistTrigger, deleteWatchlistTrigger} from '../../../utils/api'
 import {formItemLayoutWithOutLabel} from "../../../utils/providers"
 
 type TagRender = SelectProps['tagRender']
@@ -24,10 +23,10 @@ const formItemLayout = {
     }
 }
 
-export function WatchlistForm({form, connectors, onFinish, isCreation, watchList}: {
+export function WatchlistForm({form, connectors, onFinish, isCreation}: {
     form: FormInstance
     connectors: Array<Connector & { id: string }>
-    onFinish: (values: { domains: string[], triggers: string[], token: string }) => void
+    onFinish: (values: { domains: string[], trackedEvents: string[], token: string }) => void
     isCreation: boolean,
     watchList?: Watchlist,
 }) {
@@ -61,48 +60,12 @@ export function WatchlistForm({form, connectors, onFinish, isCreation, watchList
         )
     }
 
-    const [triggersLoading, setTriggersLoading] = useState(false)
-
-    const createTrigger = async (event: string) => {
-        if (isCreation) return
-
-        setTriggersLoading(true)
-        await createWatchlistTrigger(watchList!.token, {
-            watchList: watchList!['@id'],
-            event,
-            action: 'email',
-        })
-        await createWatchlistTrigger(watchList!.token, {
-            watchList: watchList!['@id'],
-            event,
-            action: 'chat',
-        })
-        setTriggersLoading(false)
-    }
-
-    const removeTrigger = async (event: string) => {
-        if (isCreation) return
-
-        setTriggersLoading(true)
-        await deleteWatchlistTrigger(watchList!.token, {
-            watchList: watchList!['@id'],
-            event,
-            action: 'email',
-        })
-        await deleteWatchlistTrigger(watchList!.token, {
-            watchList: watchList!['@id'],
-            event,
-            action: 'chat',
-        })
-        setTriggersLoading(false)
-    }
-
     return (
         <Form
             {...formItemLayoutWithOutLabel}
             form={form}
             onFinish={onFinish}
-            initialValues={{triggers: ['last changed', 'transfer', 'expiration', 'deletion']}}
+            initialValues={{trackedEvents: ['last changed', 'transfer', 'expiration', 'deletion']}}
         >
 
             <Form.Item name='token' hidden>
@@ -191,7 +154,7 @@ export function WatchlistForm({form, connectors, onFinish, isCreation, watchList
             </Form.List>
             <Form.Item
                 label={t`Tracked events`}
-                name='triggers'
+                name='trackedEvents'
                 rules={[{required: true, message: t`At least one trigger`, type: 'array'}]}
                 labelCol={{
                     xs: {span: 24},
@@ -207,9 +170,6 @@ export function WatchlistForm({form, connectors, onFinish, isCreation, watchList
                     mode='multiple'
                     tagRender={triggerTagRenderer}
                     style={{width: '100%'}}
-                    onSelect={createTrigger}
-                    onDeselect={removeTrigger}
-                    loading={triggersLoading}
                     options={Object.keys(rdapEventNameTranslated).map(e => ({
                         value: e,
                         title: rdapEventDetailTranslated[e as keyof typeof rdapEventDetailTranslated] || undefined,

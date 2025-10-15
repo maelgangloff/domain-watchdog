@@ -2,11 +2,9 @@
 
 namespace App\MessageHandler;
 
-use App\Config\TriggerAction;
 use App\Entity\Domain;
 use App\Entity\DomainEvent;
 use App\Entity\WatchList;
-use App\Entity\WatchListTrigger;
 use App\Message\SendDomainEventNotif;
 use App\Notifier\DomainUpdateNotification;
 use App\Repository\DomainRepository;
@@ -19,7 +17,6 @@ use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
-use Symfony\Component\Messenger\Exception\ExceptionInterface;
 use Symfony\Component\Mime\Address;
 use Symfony\Component\Notifier\Recipient\Recipient;
 
@@ -47,7 +44,6 @@ final readonly class SendDomainEventNotifHandler
     /**
      * @throws TransportExceptionInterface
      * @throws \Exception
-     * @throws ExceptionInterface
      */
     public function __invoke(SendDomainEventNotif $message): void
     {
@@ -64,46 +60,36 @@ final readonly class SendDomainEventNotifHandler
         foreach ($domain->getEvents()->filter(
             fn ($event) => $message->updatedAt < $event->getDate() && $event->getDate() < new \DateTimeImmutable()) as $event
         ) {
-            $watchListTriggers = $watchList->getWatchListTriggers()
-                ->filter(fn ($trigger) => $trigger->getEvent() === $event->getAction());
-
-            /*
-             * For each trigger, we perform the appropriate action: send email or send push notification (for now)
-             */
-
-            /** @var WatchListTrigger $watchListTrigger */
-            foreach ($watchListTriggers->getIterator() as $watchListTrigger) {
-                $recipient = new Recipient($watchList->getUser()->getEmail());
-                $notification = new DomainUpdateNotification($this->sender, $event);
-
-                if (TriggerAction::SendEmail == $watchListTrigger->getAction()) {
-                    $this->logger->info('New action has been detected on this domain name : an email is sent to user', [
-                        'event' => $event->getAction(),
-                        'ldhName' => $message->ldhName,
-                        'username' => $watchList->getUser()->getUserIdentifier(),
-                    ]);
-
-                    $this->mailer->send($notification->asEmailMessage($recipient)->getMessage());
-                } elseif (TriggerAction::SendChat == $watchListTrigger->getAction()) {
-                    $webhookDsn = $watchList->getWebhookDsn();
-                    if (null === $webhookDsn || 0 === count($webhookDsn)) {
-                        continue;
-                    }
-
-                    $this->logger->info('New action has been detected on this domain name : a notification is sent to user', [
-                        'event' => $event->getAction(),
-                        'ldhName' => $message->ldhName,
-                        'username' => $watchList->getUser()->getUserIdentifier(),
-                    ]);
-
-                    $this->chatNotificationService->sendChatNotification($watchList, $notification);
-                }
-
-                if ($this->influxdbEnabled) {
-                    $this->influxdbService->addDomainNotificationPoint($domain, TriggerAction::SendChat, true);
-                }
-                $this->statService->incrementStat('stats.alert.sent');
+            if (!in_array($event->getAction(), $watchList->getTrackedEvents())) {
+                continue;
             }
+
+            $recipient = new Recipient($watchList->getUser()->getEmail());
+            $notification = new DomainUpdateNotification($this->sender, $event);
+
+            $this->logger->info('New action has been detected on this domain name : an email is sent to user', [
+                'event' => $event->getAction(),
+                'ldhName' => $message->ldhName,
+                'username' => $watchList->getUser()->getUserIdentifier(),
+            ]);
+
+            $this->mailer->send($notification->asEmailMessage($recipient)->getMessage());
+
+            $webhookDsn = $watchList->getWebhookDsn();
+            if (null !== $webhookDsn && 0 !== count($webhookDsn)) {
+                $this->logger->info('New action has been detected on this domain name : a notification is sent to user', [
+                    'event' => $event->getAction(),
+                    'ldhName' => $message->ldhName,
+                    'username' => $watchList->getUser()->getUserIdentifier(),
+                ]);
+
+                $this->chatNotificationService->sendChatNotification($watchList, $notification);
+            }
+
+            if ($this->influxdbEnabled) {
+                $this->influxdbService->addDomainNotificationPoint($domain, 'chat', true);
+            }
+            $this->statService->incrementStat('stats.alert.sent');
         }
     }
 }

@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react'
 import {Card, Divider, Flex, Form, message} from 'antd'
-import type {Watchlist, WatchlistTrigger} from '../../utils/api'
+import type {Watchlist} from '../../utils/api'
 import {getWatchlists, postWatchlist, putWatchlist} from '../../utils/api'
 import type {AxiosError} from 'axios'
 import {t} from 'ttag'
@@ -14,37 +14,17 @@ import {showErrorAPI} from '../../utils/functions/showErrorAPI'
 interface FormValuesType {
     name?: string
     domains: string[]
-    triggers: string[]
+    trackedEvents: string[]
     connector?: string
     dsn?: string[]
 }
 
 const getRequestDataFromFormCreation = (values: FormValuesType) => {
     const domainsURI = values.domains.map(d => '/api/domains/' + d.toLowerCase())
-    let triggers: WatchlistTrigger[] = values.triggers.map(t => ({event: t, action: 'email'}))
-
-    if (values.dsn !== undefined) {
-        triggers = [...triggers, ...values.triggers.map((t): WatchlistTrigger => ({
-            event: t,
-            action: 'chat'
-        }))]
-    }
-
     return {
         name: values.name,
         domains: domainsURI,
-        triggers,
-        connector: values.connector !== undefined ? ('/api/connectors/' + values.connector) : undefined,
-        dsn: values.dsn
-    }
-}
-
-const getRequestDataFromFormUpdate = (values: FormValuesType) => {
-    const domainsURI = values.domains.map(d => '/api/domains/' + d.toLowerCase())
-
-    return {
-        name: values.name,
-        domains: domainsURI,
+        trackedEvents: values.trackedEvents,
         connector: values.connector !== undefined ? ('/api/connectors/' + values.connector) : undefined,
         dsn: values.dsn
     }
@@ -68,7 +48,7 @@ export default function WatchlistPage() {
 
     const onUpdateWatchlist = async (values: FormValuesType & { token: string }) => await putWatchlist({
             token: values.token,
-            ...getRequestDataFromFormUpdate(values)
+            ...getRequestDataFromFormCreation(values)
         }
     ).then(() => {
         refreshWatchlists()

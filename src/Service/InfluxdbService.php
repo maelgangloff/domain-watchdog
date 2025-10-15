@@ -2,7 +2,6 @@
 
 namespace App\Service;
 
-use App\Config\TriggerAction;
 use App\Entity\Connector;
 use App\Entity\Domain;
 use App\Entity\RdapServer;
@@ -68,12 +67,12 @@ readonly class InfluxdbService
         $this->client->close();
     }
 
-    public function addDomainNotificationPoint(Domain $domain, TriggerAction $triggerAction, bool $success): void
+    public function addDomainNotificationPoint(Domain $domain, string $triggerAction, bool $success): void
     {
         $this->writePoints(new Point('domain_notification', [
             'domain' => $domain->getLdhName(),
             'tld' => $domain->getTld()->getTld(),
-            'medium' => $triggerAction->value,
+            'medium' => $triggerAction,
         ], [
             'success' => $success,
         ]));

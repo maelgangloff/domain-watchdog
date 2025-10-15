@@ -36,7 +36,6 @@ final class WatchlistControllerTest extends ApiTestCase
         $client = WatchListUpdateProcessorTest::createUserAndWatchlist();
 
         $client->getContainer()->get('doctrine')->getManager()->clear();
-        sleep(2);
         $response = $client->request('GET', '/api/tracked');
         $this->assertResponseIsSuccessful();
 
