@@ -60,7 +60,7 @@ use Symfony\Component\Validator\Constraints as Assert;
                     'tld:item',
                 ],
             ],
-            security: 'object.user == user'
+            security: 'object.getUser() == user'
         ),
         new Get(
             routeName: 'watchlist_calendar',
@@ -92,11 +92,11 @@ use Symfony\Component\Validator\Constraints as Assert;
         new Put(
             normalizationContext: ['groups' => 'watchlist:list'],
             denormalizationContext: ['groups' => ['watchlist:update']],
-            security: 'object.user == user',
+            security: 'object.getUser() == user',
             processor: WatchListUpdateProcessor::class,
         ),
         new Delete(
-            security: 'object.user == user'
+            security: 'object.getUser() == user'
         ),
         new Get(
             routeName: 'watchlist_rss_status',

@@ -27,7 +27,7 @@ use Symfony\Component\Uid\Uuid;
         ),
         new Get(
             normalizationContext: ['groups' => 'connector:list'],
-            security: 'object.user == user'
+            security: 'object.getUser() == user'
         ),
         new Post(
             normalizationContext: ['groups' => ['connector:create', 'connector:list']],
@@ -35,7 +35,7 @@ use Symfony\Component\Uid\Uuid;
             processor: ConnectorCreateProcessor::class
         ),
         new Delete(
-            security: 'object.user == user',
+            security: 'object.getUser() == user',
             processor: ConnectorDeleteProcessor::class
         ),
     ]
