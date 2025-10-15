@@ -53,11 +53,11 @@ final class WatchListUpdateProcessorTest extends ApiTestCase
         $this->assertCount(1, $data['trackedEvents']);
     }
 
-    public static function createUserAndWatchlist(?Client $client = null): Client
+    public static function createUserAndWatchlist(?Client $client = null, array $domains = ['/api/domains/example.com']): Client
     {
         $client = $client ?? self::createClientWithCredentials(self::getToken(UserFactory::createOne()));
         $client->request('POST', '/api/watchlists', ['json' => [
-            'domains' => ['/api/domains/example.com'],
+            'domains' => $domains,
             'name' => 'My Watchlist',
             'trackedEvents' => ['last changed', 'transfer', 'expiration', 'deletion'],
         ]]);

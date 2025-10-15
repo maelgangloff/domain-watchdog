@@ -33,7 +33,7 @@ final class WatchlistControllerTest extends ApiTestCase
     #[DependsExternal(RDAPServiceTest::class, 'testUpdateRdapServers')]
     public function testGetTrackedDomains()
     {
-        $client = WatchListUpdateProcessorTest::createUserAndWatchlist();
+        $client = WatchListUpdateProcessorTest::createUserAndWatchlist(null, ['/api/domains/example.org']);
         $response = $client->request('GET', '/api/tracked');
 
         $this->assertResponseIsSuccessful();

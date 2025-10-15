@@ -84,7 +84,7 @@ class Domain
      * @var Collection<int, DomainEntity>
      */
     #[ORM\OneToMany(targetEntity: DomainEntity::class, mappedBy: 'domain', cascade: ['persist'], orphanRemoval: true)]
-    #[Groups(['domain:item'])]
+    #[Groups(['domain:item', 'watchlist:item'])]
     #[SerializedName('entities')]
     private Collection $domainEntities;
 
@@ -106,7 +106,7 @@ class Domain
         joinColumns: [new ORM\JoinColumn(name: 'domain_ldh_name', referencedColumnName: 'ldh_name')],
         inverseJoinColumns: [new ORM\JoinColumn(name: 'nameserver_ldh_name', referencedColumnName: 'ldh_name')]
     )]
-    #[Groups(['domain:item'])]
+    #[Groups(['domain:item', 'watchlist:item'])]
     private Collection $nameservers;
 
     #[ORM\Column(type: Types::DATE_IMMUTABLE)]

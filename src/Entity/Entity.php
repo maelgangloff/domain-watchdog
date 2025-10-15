@@ -48,11 +48,11 @@ class Entity
 
     #[ORM\ManyToOne(targetEntity: Tld::class, inversedBy: 'entities')]
     #[ORM\JoinColumn(referencedColumnName: 'tld', nullable: false)]
-    #[Groups(['entity:list', 'entity:item', 'domain:item'])]
+    #[Groups(['entity:list', 'entity:item', 'domain:item', 'watchlist:item'])]
     private ?Tld $tld = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['entity:list', 'entity:item', 'domain:item'])]
+    #[Groups(['entity:list', 'entity:item', 'domain:item', 'watchlist:item'])]
     private ?string $handle = null;
 
     /**
@@ -85,11 +85,11 @@ class Entity
             'items' => ['type' => 'array'],
         ]
     )]
-    #[Groups(['entity:item', 'domain:item'])]
+    #[Groups(['entity:item', 'domain:item', 'watchlist:item'])]
     private array $jCard = [];
 
     #[ORM\Column(nullable: true)]
-    #[Groups(['entity:item', 'domain:item'])]
+    #[Groups(['entity:item', 'domain:item', 'watchlist:item'])]
     private ?array $remarks = null;
 
     #[ORM\ManyToOne(inversedBy: 'entities')]

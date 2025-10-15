@@ -52,7 +52,7 @@ use Symfony\Component\Validator\Constraints as Assert;
             normalizationContext: [
                 'groups' => [
                     'watchlist:item',
-                    'domain:item',
+                    'domain:list',
                     'event:list',
                     'domain-entity:entity',
                     'nameserver-entity:nameserver',
@@ -90,7 +90,7 @@ use Symfony\Component\Validator\Constraints as Assert;
             processor: WatchListUpdateProcessor::class,
         ),
         new Put(
-            normalizationContext: ['groups' => 'watchlist:item'],
+            normalizationContext: ['groups' => 'watchlist:list'],
             denormalizationContext: ['groups' => ['watchlist:update']],
             security: 'object.user == user',
             processor: WatchListUpdateProcessor::class,
