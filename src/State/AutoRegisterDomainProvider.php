@@ -13,6 +13,7 @@ use Psr\Log\LoggerInterface;
 use Random\Randomizer;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpKernel\Exception\TooManyRequestsHttpException;
 use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Component\Messenger\MessageBusInterface;
@@ -29,6 +30,7 @@ readonly class AutoRegisterDomainProvider implements ProviderInterface
         private LoggerInterface $logger,
         private DomainRepository $domainRepository,
         private MessageBusInterface $bus,
+        private RequestStack $requestStack,
     ) {
     }
 
@@ -42,6 +44,8 @@ readonly class AutoRegisterDomainProvider implements ProviderInterface
             'ldhName' => $idnDomain,
         ]);
 
+        $request = $this->requestStack->getCurrentRequest();
+
         /** @var ?Domain $domain */
         $domain = $this->domainRepository->findOneBy(['ldhName' => $idnDomain]);
         // If the domain name exists in the database, recently updated and not important, we return the stored Domain
@@ -49,7 +53,7 @@ readonly class AutoRegisterDomainProvider implements ProviderInterface
             && !$domain->getDeleted()
             && !$domain->isToBeUpdated(true, true)
             && !$this->kernel->isDebug()
-            && true !== filter_var($context['request']->get('forced', false), FILTER_VALIDATE_BOOLEAN)
+            && ($request && !filter_var($request->get('forced', false), FILTER_VALIDATE_BOOLEAN))
         ) {
             $this->logger->debug('It is not necessary to update the domain name', [
                 'ldhName' => $idnDomain,

@@ -1,42 +1,47 @@
 # Please see https://github.com/maelgangloff/domain-watchdog
+
 services:
     domainwatchdog:
         image: maelgangloff/domain-watchdog:latest
+        container_name: domainwatchdog_app
         restart: unless-stopped
+        env_file:
+            - .env.local
         environment:
+            APP_ENV: prod
             SERVER_NAME: ${SERVER_NAME:-:80}
-            DATABASE_URL: postgresql://${POSTGRES_USER:-app}:${POSTGRES_PASSWORD:-!ChangeMe!}@${POSTGRES_HOST:-database}:${POSTGRES_PORT:-5432}/${POSTGRES_DB:-app}?serverVersion=${POSTGRES_VERSION:-15}&charset=${POSTGRES_CHARSET:-utf8}
-            APP_SECRET: ${APP_SECRET:-ChangeMe}
-            REGISTRATION_ENABLED: ${REGISTRATION_ENABLED:-true}
-            REGISTRATION_VERIFY_EMAIL: ${REGISTRATION_VERIFY_EMAIL:-false}
-            LIMITED_FEATURES: ${LIMITED_FEATURES:-false}
-            LIMIT_MAX_WATCHLIST: ${LIMIT_MAX_WATCHLIST:-0}
-            LIMIT_MAX_WATCHLIST_DOMAINS: ${LIMIT_MAX_WATCHLIST_DOMAINS:-0}
-            LIMIT_MAX_WATCHLIST_WEBHOOKS: ${LIMIT_MAX_WATCHLIST_WEBHOOKS:-0}
-            MAILER_DSN: ${MAILER_DSN:-null://null}
+            DATABASE_URL: postgresql://${POSTGRES_USER:-app}:${POSTGRES_PASSWORD:-!ChangeMe!}@database:${POSTGRES_PORT:-5432}/${POSTGRES_DB:-app}?serverVersion=${POSTGRES_VERSION:-15}&charset=${POSTGRES_CHARSET:-utf8}
+            MESSENGER_TRANSPORT_DSN: redis://valkey:6379/messages
         volumes:
             - caddy_data:/data
             - caddy_config:/config
             - ./public/content:/app/public/content
         ports:
             - "127.0.0.1:8080:80"
+        depends_on:
+            - database
 
     php-worker:
         image: maelgangloff/domain-watchdog:latest
+        container_name: domainwatchdog_worker
         restart: always
         command: php /app/bin/console messenger:consume --all --time-limit=3600 -vvv
+        env_file:
+            - .env.local
         environment:
-            DATABASE_URL: postgresql://${POSTGRES_USER:-app}:${POSTGRES_PASSWORD:-!ChangeMe!}@${POSTGRES_HOST:-database}:${POSTGRES_PORT:-5432}/${POSTGRES_DB:-app}?serverVersion=${POSTGRES_VERSION:-15}&charset=${POSTGRES_CHARSET:-utf8}
-            APP_SECRET: ${APP_SECRET:-ChangeMe}
-            MAILER_DSN: ${MAILER_DSN:-null://null}
+            APP_ENV: prod
+            DATABASE_URL: postgresql://${POSTGRES_USER:-app}:${POSTGRES_PASSWORD:-!ChangeMe!}@database:${POSTGRES_PORT:-5432}/${POSTGRES_DB:-app}?serverVersion=${POSTGRES_VERSION:-15}&charset=${POSTGRES_CHARSET:-utf8}
+            MESSENGER_TRANSPORT_DSN: redis://valkey:6379/messages
+        depends_on:
+            - database
         healthcheck:
-            disable: true
             test: [ ]
-    #        volumes:
-    #            - ./custom_rdap_servers.yaml:/app/config/app/custom_rdap_servers.yaml # Please see #41 issue
+            disable: true
 
     database:
         image: postgres:${POSTGRES_VERSION:-16}-alpine
+        container_name: domainwatchdog_db
+        restart: unless-stopped
         environment:
             POSTGRES_DB: ${POSTGRES_DB:-app}
             POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-!ChangeMe!}
@@ -49,25 +54,23 @@ services:
         volumes:
             - database_data:/var/lib/postgresql/data:rw
 
-#    keydb:
-#        image: eqalpha/keydb:latest
-#        container_name: keydb
-#        restart: always
-#        ports:
-#            - "127.0.0.1:6379:6379"
+    valkey:
+        image: valkey/valkey
+        container_name: valkey
+        restart: always
 
-#    influxdb2:
-#        image: influxdb:2
-#        ports:
-#            - "127.0.0.1:8086:8086"
-#        environment:
-#            DOCKER_INFLUXDB_INIT_MODE: setup
-#            DOCKER_INFLUXDB_INIT_USERNAME: USERNAME # Please modify
-#            DOCKER_INFLUXDB_INIT_PASSWORD: PASSWORD # Please modify
-#            DOCKER_INFLUXDB_INIT_ADMIN_TOKEN: my-super-secret-auth-token # Please modify
-#            DOCKER_INFLUXDB_INIT_RETENTION: 0
-#            DOCKER_INFLUXDB_INIT_ORG: domainwatchdog
-#            DOCKER_INFLUXDB_INIT_BUCKET: domainwatchdog
+#  influxdb2:
+#    image: influxdb:2
+#    ports:
+#      - "127.0.0.1:8086:8086"
+#    environment:
+#      DOCKER_INFLUXDB_INIT_MODE: setup
+#      DOCKER_INFLUXDB_INIT_USERNAME: USERNAME # Please modify
+#      DOCKER_INFLUXDB_INIT_PASSWORD: PASSWORD # Please modify
+#      DOCKER_INFLUXDB_INIT_ADMIN_TOKEN: my-super-secret-auth-token # Please modify
+#      DOCKER_INFLUXDB_INIT_RETENTION: 0
+#      DOCKER_INFLUXDB_INIT_ORG: domainwatchdog
+#      DOCKER_INFLUXDB_INIT_BUCKET: domainwatchdog
 
 volumes:
     caddy_data:
