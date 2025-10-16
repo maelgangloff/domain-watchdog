@@ -23,7 +23,7 @@ class DomainEntity
     #[Groups(['domain-entity:entity'])]
     private ?Entity $entity = null;
 
-    #[ORM\Column(type: Types::SIMPLE_ARRAY)]
+    #[ORM\Column(type: Types::JSON)]
     #[Groups(['domain-entity:entity', 'domain-entity:domain'])]
     private array $roles = [];
 

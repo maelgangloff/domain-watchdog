@@ -23,11 +23,11 @@ class NameserverEntity
     #[Groups(['nameserver-entity:entity'])]
     private ?Entity $entity = null;
 
-    #[ORM\Column(type: Types::SIMPLE_ARRAY)]
+    #[ORM\Column(type: Types::JSON)]
     #[Groups(['nameserver-entity:entity', 'nameserver-entity:nameserver'])]
     private array $roles = [];
 
-    #[ORM\Column(type: Types::SIMPLE_ARRAY)]
+    #[ORM\Column(type: Types::JSON)]
     #[Groups(['nameserver-entity:entity', 'nameserver-entity:nameserver'])]
     private array $status = [];
 

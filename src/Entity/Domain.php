@@ -89,7 +89,7 @@ class Domain
     #[SerializedName('entities')]
     private Collection $domainEntities;
 
-    #[ORM\Column(type: Types::SIMPLE_ARRAY, nullable: true)]
+    #[ORM\Column(type: Types::JSON, nullable: true)]
     #[Groups(['domain:item', 'domain:list', 'watchlist:item', 'watchlist:list'])]
     private array $status = [];
 

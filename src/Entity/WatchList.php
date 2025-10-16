@@ -180,7 +180,7 @@ class WatchList
     private ?\DateTimeImmutable $createdAt = null;
 
     #[SerializedName('dsn')]
-    #[ORM\Column(type: Types::SIMPLE_ARRAY, nullable: true)]
+    #[ORM\Column(type: Types::JSON, nullable: true)]
     #[Groups(['watchlist:list', 'watchlist:item', 'watchlist:create', 'watchlist:update'])]
     #[Assert\Unique]
     #[Assert\All([

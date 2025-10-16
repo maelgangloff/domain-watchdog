@@ -27,11 +27,11 @@ class DomainStatus
     #[Groups(['domain:item'])]
     private \DateTimeImmutable $date;
 
-    #[ORM\Column(type: Types::SIMPLE_ARRAY, nullable: true)]
+    #[ORM\Column(type: Types::JSON, nullable: true)]
     #[Groups(['domain:item'])]
     private array $addStatus = [];
 
-    #[ORM\Column(type: Types::SIMPLE_ARRAY, nullable: true)]
+    #[ORM\Column(type: Types::JSON, nullable: true)]
     #[Groups(['domain:item'])]
     private array $deleteStatus = [];
 
