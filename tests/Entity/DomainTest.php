@@ -7,6 +7,7 @@ namespace App\Tests\Entity;
 use App\Entity\Domain;
 use App\Entity\DomainEvent;
 use App\Entity\DomainStatus;
+use App\Exception\MalformedDomainException;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
@@ -159,7 +160,7 @@ final class DomainTest extends TestCase
         );
     }
 
-    public function testSetLdhName(): void
+    public function testIdnDomainName(): void
     {
         /*
          * @see https://en.wikipedia.org/wiki/IDN_Test_TLDs
@@ -178,6 +179,12 @@ final class DomainTest extends TestCase
             (new Domain())->setLdhName('test.例え.テスト')->getLdhName(),
             'IDN FQDN'
         );
+    }
+
+    public function testInvalidDomainName()
+    {
+        $this->expectException(MalformedDomainException::class);
+        (new Domain())->setLdhName('*');
     }
 
     public static function isToBeUpdatedProvider(): array

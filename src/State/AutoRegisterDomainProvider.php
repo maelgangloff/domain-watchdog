@@ -52,7 +52,6 @@ readonly class AutoRegisterDomainProvider implements ProviderInterface
         if (null !== $domain
             && !$domain->getDeleted()
             && !$domain->isToBeUpdated(true, true)
-            && !$this->kernel->isDebug()
             && ($request && !filter_var($request->get('forced', false), FILTER_VALIDATE_BOOLEAN))
         ) {
             $this->logger->debug('It is not necessary to update the domain name', [

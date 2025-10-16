@@ -197,9 +197,18 @@ class RDAPService
         return $tldEntity;
     }
 
+    /**
+     * @throws MalformedDomainException
+     */
     public static function convertToIdn(string $fqdn): string
     {
-        return strtolower(idn_to_ascii($fqdn));
+        $ascii = strtolower(idn_to_ascii($fqdn));
+
+        if (OfficialDataService::DOMAIN_DOT !== $fqdn && !preg_match('/^(xn--)?[a-z0-9-]+(\.[a-z0-9-]+)*$/', $ascii)) {
+            throw MalformedDomainException::fromDomain($fqdn);
+        }
+
+        return $ascii;
     }
 
     /**

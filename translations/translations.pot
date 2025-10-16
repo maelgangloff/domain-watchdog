@@ -44,8 +44,8 @@ msgstr ""
 #: assets/components/RegisterForm.tsx:39
 #: assets/components/RegisterForm.tsx:47
 #: assets/components/search/DomainSearchBar.tsx:28
-#: assets/components/tracking/watchlist/WatchlistForm.tsx:157
-#: assets/components/tracking/watchlist/WatchlistForm.tsx:263
+#: assets/components/tracking/watchlist/WatchlistForm.tsx:120
+#: assets/components/tracking/watchlist/WatchlistForm.tsx:223
 #: assets/utils/providers/forms/AutoDnsConnectorForm.tsx:21
 #: assets/utils/providers/forms/AutoDnsConnectorForm.tsx:32
 #: assets/utils/providers/forms/AutoDnsConnectorForm.tsx:47
@@ -164,7 +164,7 @@ msgid "Entities"
 msgstr ""
 
 #: assets/components/search/DomainSearchBar.tsx:31
-#: assets/components/tracking/watchlist/WatchlistForm.tsx:160
+#: assets/components/tracking/watchlist/WatchlistForm.tsx:123
 msgid "This domain name does not appear to be valid"
 msgstr ""
 
@@ -291,7 +291,7 @@ msgid "Next"
 msgstr ""
 
 #: assets/components/tracking/connector/ConnectorForm.tsx:96
-#: assets/components/tracking/watchlist/WatchlistForm.tsx:310
+#: assets/components/tracking/watchlist/WatchlistForm.tsx:270
 msgid "Create"
 msgstr ""
 
@@ -437,6 +437,10 @@ msgstr ""
 msgid "No tracked domain names were found, please create your first Watchlist"
 msgstr ""
 
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:238
+msgid "Create now"
+msgstr ""
+
 #: assets/components/tracking/watchlist/TrackedDomainTable.tsx:244
 msgid ""
 "Please note that this table does not include domain names marked as expired "
@@ -471,74 +475,74 @@ msgstr ""
 msgid "Watchlist"
 msgstr ""
 
-#: assets/components/tracking/watchlist/WatchlistForm.tsx:113
+#: assets/components/tracking/watchlist/WatchlistForm.tsx:76
 msgid "Name"
 msgstr ""
 
-#: assets/components/tracking/watchlist/WatchlistForm.tsx:125
+#: assets/components/tracking/watchlist/WatchlistForm.tsx:88
 msgid "Watchlist Name"
 msgstr ""
 
-#: assets/components/tracking/watchlist/WatchlistForm.tsx:126
+#: assets/components/tracking/watchlist/WatchlistForm.tsx:89
 msgid "Naming the Watchlist makes it easier to find in the list below."
 msgstr ""
 
-#: assets/components/tracking/watchlist/WatchlistForm.tsx:137
+#: assets/components/tracking/watchlist/WatchlistForm.tsx:100
 msgid "At least one domain name"
 msgstr ""
 
-#: assets/components/tracking/watchlist/WatchlistForm.tsx:148
+#: assets/components/tracking/watchlist/WatchlistForm.tsx:111
 msgid "Domain names"
 msgstr ""
 
-#: assets/components/tracking/watchlist/WatchlistForm.tsx:166
+#: assets/components/tracking/watchlist/WatchlistForm.tsx:129
 msgid "Domain name"
 msgstr ""
 
-#: assets/components/tracking/watchlist/WatchlistForm.tsx:185
+#: assets/components/tracking/watchlist/WatchlistForm.tsx:148
 msgid "Add a Domain name"
 msgstr ""
 
-#: assets/components/tracking/watchlist/WatchlistForm.tsx:193
+#: assets/components/tracking/watchlist/WatchlistForm.tsx:156
 msgid "Tracked events"
 msgstr ""
 
-#: assets/components/tracking/watchlist/WatchlistForm.tsx:195
+#: assets/components/tracking/watchlist/WatchlistForm.tsx:158
 msgid "At least one trigger"
 msgstr ""
 
-#: assets/components/tracking/watchlist/WatchlistForm.tsx:222
-#: assets/components/tracking/watchlist/WatchlistForm.tsx:237
+#: assets/components/tracking/watchlist/WatchlistForm.tsx:182
+#: assets/components/tracking/watchlist/WatchlistForm.tsx:197
 msgid "Connector"
 msgstr ""
 
-#: assets/components/tracking/watchlist/WatchlistForm.tsx:232
+#: assets/components/tracking/watchlist/WatchlistForm.tsx:192
 msgid ""
 "Please make sure the connector information is valid to purchase a domain "
 "that may be available soon."
 msgstr ""
 
-#: assets/components/tracking/watchlist/WatchlistForm.tsx:254
+#: assets/components/tracking/watchlist/WatchlistForm.tsx:214
 msgid "DSN"
 msgstr ""
 
-#: assets/components/tracking/watchlist/WatchlistForm.tsx:266
+#: assets/components/tracking/watchlist/WatchlistForm.tsx:226
 msgid "This DSN does not appear to be valid"
 msgstr ""
 
-#: assets/components/tracking/watchlist/WatchlistForm.tsx:290
+#: assets/components/tracking/watchlist/WatchlistForm.tsx:250
 msgid "Check out this link to the Symfony documentation to help you build the DSN"
 msgstr ""
 
-#: assets/components/tracking/watchlist/WatchlistForm.tsx:300
+#: assets/components/tracking/watchlist/WatchlistForm.tsx:260
 msgid "Add a Webhook"
 msgstr ""
 
-#: assets/components/tracking/watchlist/WatchlistForm.tsx:310
+#: assets/components/tracking/watchlist/WatchlistForm.tsx:270
 msgid "Update"
 msgstr ""
 
-#: assets/components/tracking/watchlist/WatchlistForm.tsx:313
+#: assets/components/tracking/watchlist/WatchlistForm.tsx:273
 msgid "Reset"
 msgstr ""
 
@@ -719,15 +723,15 @@ msgstr ""
 msgid "Create a Connector"
 msgstr ""
 
-#: assets/pages/tracking/WatchlistPage.tsx:63
+#: assets/pages/tracking/WatchlistPage.tsx:43
 msgid "Watchlist created !"
 msgstr ""
 
-#: assets/pages/tracking/WatchlistPage.tsx:75
+#: assets/pages/tracking/WatchlistPage.tsx:55
 msgid "Watchlist updated !"
 msgstr ""
 
-#: assets/pages/tracking/WatchlistPage.tsx:99
+#: assets/pages/tracking/WatchlistPage.tsx:79
 msgid "Create a Watchlist"
 msgstr ""
 

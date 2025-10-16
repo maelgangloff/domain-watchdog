@@ -6,6 +6,7 @@ use ApiPlatform\Metadata\ApiProperty;
 use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\Get;
 use App\Config\EventAction;
+use App\Exception\MalformedDomainException;
 use App\Repository\DomainRepository;
 use App\Service\RDAPService;
 use App\State\AutoRegisterDomainProvider;
@@ -177,6 +178,9 @@ class Domain
         return $this->ldhName;
     }
 
+    /**
+     * @throws MalformedDomainException
+     */
     public function setLdhName(string $ldhName): static
     {
         $this->ldhName = RDAPService::convertToIdn($ldhName);

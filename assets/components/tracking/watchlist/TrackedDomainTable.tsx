@@ -235,7 +235,7 @@ export function TrackedDomainTable() {
             description={t`No tracked domain names were found, please create your first Watchlist`}
         >
             <Link to='/tracking/watchlist'>
-                <Button type='primary'>Create Now</Button>
+                <Button type='primary'>{t`Create now`}</Button>
             </Link>
         </Empty>
         : <Skeleton loading={total === undefined}>
