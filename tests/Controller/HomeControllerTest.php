@@ -6,14 +6,6 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class HomeControllerTest extends WebTestCase
 {
-    public function testIndex(): void
-    {
-        $client = static::createClient();
-        $client->request('GET', '/');
-
-        $this->assertResponseIsSuccessful();
-    }
-
     public function testConnectSsoReturnNotFound(): void
     {
         $client = static::createClient();

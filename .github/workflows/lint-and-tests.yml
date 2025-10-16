@@ -101,7 +101,7 @@ jobs:
     tests:
         name: Tests
         runs-on: ubuntu-latest
-        needs: [ php-setup, cs-fixer, phpstan, eslint ]
+        needs: [ php-setup, cs-fixer, phpstan ]
         services:
             postgres:
                 image: postgres
