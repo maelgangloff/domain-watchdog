@@ -57,20 +57,17 @@ class NameComProvider extends AbstractProvider
 
         $this->client->request(
             'POST',
-            '/v4/domains',
+            '/core/v1/domains',
             (new HttpOptions())
                 ->setHeader('Accept', 'application/json')
                 ->setAuthBasic($this->authData->username, $this->authData->token)
                 ->setBaseUri($dryRun ? self::DEV_BASE_URL : self::BASE_URL)
                 ->setJson([
                     'domain' => [
-                        [
-                            'domainName' => $domain->getLdhName(),
-                            'locked' => false,
-                            'autorenewEnabled' => false,
-                        ],
+                        'domainName' => $domain->getLdhName(),
+                        'locked' => false,
+                        'autorenewEnabled' => false,
                         'purchaseType' => 'registration',
-                        'years' => 1,
                         // 'tldRequirements' => []
                     ],
                 ])
@@ -104,7 +101,7 @@ class NameComProvider extends AbstractProvider
     {
         $response = $this->client->request(
             'GET',
-            '/v4/hello',
+            '/core/v1/hello',
             (new HttpOptions())
                 ->setHeader('Accept', 'application/json')
                 ->setAuthBasic($this->authData->username, $this->authData->token)

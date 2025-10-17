@@ -106,6 +106,8 @@ jobs:
         needs: [ php-setup, cs-fixer, phpstan ]
         env:
             GANDI_PAT_TOKEN: ${{ secrets.GANDI_PAT_TOKEN }}
+            NAMECOM_USERNAME: ${{ secrets.NAMECOM_USERNAME }}
+            NAMECOM_PASSWORD: ${{ secrets.NAMECOM_PASSWORD }}
         services:
             postgres:
                 image: postgres

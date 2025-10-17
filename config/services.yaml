@@ -50,3 +50,5 @@ services:
 when@test:
     parameters:
         gandi_pat_token: '%env(string:GANDI_PAT_TOKEN)%'
+        namecom_username: '%env(string:NAMECOM_USERNAME)%'
+        namecom_password: '%env(string:NAMECOM_PASSWORD)%'
