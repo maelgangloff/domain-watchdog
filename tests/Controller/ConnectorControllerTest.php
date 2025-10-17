@@ -5,7 +5,10 @@ namespace App\Tests\Controller;
 use ApiPlatform\Symfony\Bundle\Test\ApiTestCase;
 use App\Entity\Connector;
 use App\Factory\UserFactory;
+use App\Message\ValidateConnectorCredentials;
+use App\MessageHandler\ValidateConnectorCredentialsHandler;
 use App\Tests\AuthenticatedUserTrait;
+use PHPUnit\Framework\Attributes\Depends;
 use Zenstruck\Foundry\Test\Factories;
 
 final class ConnectorControllerTest extends ApiTestCase
@@ -87,5 +90,15 @@ final class ConnectorControllerTest extends ApiTestCase
             'provider' => 'gandi',
         ]]);
         $this->assertResponseStatusCodeSame(201);
+    }
+
+    #[Depends('testCreateConnectorValidAuthData')]
+    public function testValidateConnectorCredentials()
+    {
+        $validateConnectorCredentialsHandler = self::getContainer()->get(ValidateConnectorCredentialsHandler::class);
+        $message = new ValidateConnectorCredentials();
+        $validateConnectorCredentialsHandler($message);
+
+        $this->expectNotToPerformAssertions();
     }
 }
