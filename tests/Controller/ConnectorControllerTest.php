@@ -32,7 +32,7 @@ final class ConnectorControllerTest extends ApiTestCase
                 'waiveRetractationPeriod' => true,
                 'acceptConditions' => true,
                 'ownerLegalAge' => true,
-                'token' => '',
+                'token' => 'test',
             ],
             'provider' => 'gandi',
         ]]);
@@ -68,5 +68,24 @@ final class ConnectorControllerTest extends ApiTestCase
             'provider' => 'gandi',
         ]]);
         $this->assertResponseStatusCodeSame(400);
+    }
+
+    public function testCreateConnectorValidAuthData(): void
+    {
+        $gandiToken = static::getContainer()->getParameter('gandi_pat_token');
+        if (!$gandiToken) {
+            $this->markTestSkipped('Missing Gandi PAT token');
+        }
+        $client = ConnectorControllerTest::createClientWithCredentials(ConnectorControllerTest::getToken(UserFactory::createOne()));
+        $client->request('POST', '/api/connectors', ['json' => [
+            'authData' => [
+                'waiveRetractationPeriod' => true,
+                'acceptConditions' => true,
+                'ownerLegalAge' => true,
+                'token' => $gandiToken,
+            ],
+            'provider' => 'gandi',
+        ]]);
+        $this->assertResponseStatusCodeSame(201);
     }
 }

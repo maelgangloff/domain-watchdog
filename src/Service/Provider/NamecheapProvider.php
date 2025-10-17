@@ -28,8 +28,8 @@ class NamecheapProvider extends AbstractProvider
     /** @var NamecheapProviderDto */
     protected DefaultProviderDto $authData;
 
-    public const BASE_URL = 'https://api.namecheap.com/xml.response';
-    public const SANDBOX_BASE_URL = 'https://api.sandbox.namecheap.com/xml.response';
+    private const BASE_URL = 'https://api.namecheap.com/xml.response';
+    private const SANDBOX_BASE_URL = 'https://api.sandbox.namecheap.com/xml.response';
 
     public function __construct(
         CacheItemPoolInterface $cacheItemPool,

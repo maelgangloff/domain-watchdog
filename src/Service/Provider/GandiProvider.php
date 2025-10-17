@@ -12,6 +12,7 @@ use Psr\Cache\CacheItemPoolInterface;
 use Symfony\Component\DependencyInjection\Attribute\Autoconfigure;
 use Symfony\Component\HttpClient\HttpOptions;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
@@ -31,12 +32,14 @@ class GandiProvider extends AbstractProvider
     protected DefaultProviderDto $authData;
 
     private const BASE_URL = 'https://api.gandi.net';
+    private const SANDBOX_BASE_URL = 'https://api.sandbox.gandi.net';
 
     public function __construct(
         CacheItemPoolInterface $cacheItemPool,
         private readonly HttpClientInterface $client,
         DenormalizerInterface&NormalizerInterface $serializer,
         ValidatorInterface $validator,
+        private readonly KernelInterface $kernel,
     ) {
         parent::__construct($cacheItemPool, $serializer, $validator);
     }
@@ -58,14 +61,14 @@ class GandiProvider extends AbstractProvider
         $user = $this->client->request('GET', '/v5/organization/user-info', (new HttpOptions())
             ->setAuthBearer($this->authData->token)
             ->setHeader('Accept', 'application/json')
-            ->setBaseUri(self::BASE_URL)
+            ->setBaseUri($this->kernel->isDebug() ? self::SANDBOX_BASE_URL : self::BASE_URL)
             ->toArray()
         )->toArray();
 
         $httpOptions = (new HttpOptions())
             ->setAuthBearer($this->authData->token)
             ->setHeader('Accept', 'application/json')
-            ->setBaseUri(self::BASE_URL)
+            ->setBaseUri($this->kernel->isDebug() ? self::SANDBOX_BASE_URL : self::BASE_URL)
             ->setHeader('Dry-Run', $dryRun ? '1' : '0')
             ->setJson([
                 'fqdn' => $ldhName,
@@ -90,7 +93,7 @@ class GandiProvider extends AbstractProvider
             ]);
         }
 
-        $res = $this->client->request('POST', '/domain/domains', $httpOptions->toArray());
+        $res = $this->client->request('POST', '/v5/domain/domains', $httpOptions->toArray());
 
         if ((!$dryRun && Response::HTTP_ACCEPTED !== $res->getStatusCode())
             || ($dryRun && Response::HTTP_OK !== $res->getStatusCode())) {
@@ -107,7 +110,7 @@ class GandiProvider extends AbstractProvider
         $response = $this->client->request('GET', '/v5/organization/user-info', (new HttpOptions())
             ->setAuthBearer($this->authData->token)
             ->setHeader('Accept', 'application/json')
-            ->setBaseUri(self::BASE_URL)
+            ->setBaseUri($this->kernel->isDebug() ? self::SANDBOX_BASE_URL : self::BASE_URL)
             ->toArray()
         );
 
@@ -128,7 +131,7 @@ class GandiProvider extends AbstractProvider
         $response = $this->client->request('GET', '/v5/domain/tlds', (new HttpOptions())
             ->setAuthBearer($this->authData->token)
             ->setHeader('Accept', 'application/json')
-            ->setBaseUri(self::BASE_URL)
+            ->setBaseUri($this->kernel->isDebug() ? self::SANDBOX_BASE_URL : self::BASE_URL)
             ->toArray())->toArray();
 
         return array_map(fn ($tld) => $tld['name'], $response);

@@ -93,6 +93,7 @@ final readonly class OrderDomainHandler
              * The user is authenticated to ensure that the credentials are still valid.
              * If no errors occur, the purchase is attempted.
              */
+            $connectorProvider->authenticate($connector->getAuthData());
 
             $connectorProvider->orderDomain($domain, $this->kernel->isDebug());
 

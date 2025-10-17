@@ -102,6 +102,8 @@ jobs:
         name: Tests
         runs-on: ubuntu-latest
         needs: [ php-setup, cs-fixer, phpstan ]
+        env:
+            GANDI_PAT_TOKEN: ${{ secrets.GANDI_PAT_TOKEN }}
         services:
             postgres:
                 image: postgres
