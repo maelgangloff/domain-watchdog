@@ -101,4 +101,27 @@ final class ConnectorControllerTest extends ApiTestCase
 
         $this->expectNotToPerformAssertions();
     }
+
+    public function testCreateAndDeleteConnector()
+    {
+        $gandiToken = static::getContainer()->getParameter('gandi_pat_token');
+        if (!$gandiToken) {
+            $this->markTestSkipped('Missing Gandi PAT token');
+        }
+        $client = ConnectorControllerTest::createClientWithCredentials(ConnectorControllerTest::getToken(UserFactory::createOne()));
+        $response = $client->request('POST', '/api/connectors', ['json' => [
+            'authData' => [
+                'waiveRetractationPeriod' => true,
+                'acceptConditions' => true,
+                'ownerLegalAge' => true,
+                'token' => $gandiToken,
+            ],
+            'provider' => 'gandi',
+        ]]);
+        $this->assertResponseStatusCodeSame(201);
+
+        $client->request('DELETE', '/api/connectors/'.$response->toArray()['id']);
+
+        $this->assertResponseStatusCodeSame(204);
+    }
 }
