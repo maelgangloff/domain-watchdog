@@ -8,6 +8,8 @@ on:
 
 permissions:
     contents: read
+    checks: write
+    pull-requests: write
 
 jobs:
     php-setup:
@@ -145,7 +147,14 @@ jobs:
                 run: ln -s custom_rdap_servers.example.yaml config/app/custom_rdap_servers.yaml
 
             -   name: Run PHPUnit
-                run: vendor/bin/phpunit --coverage-text
+                run: vendor/bin/phpunit --coverage-text --log-junit test-results.xml
+
+            -   name: Publish Test Results
+                uses: EnricoMi/publish-unit-test-result-action@v2
+                if: (!cancelled())
+                with:
+                    files: |
+                        test-results.xml
 
     eslint:
         name: ESLint
