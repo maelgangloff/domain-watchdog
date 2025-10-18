@@ -67,6 +67,7 @@ win the domain name. The choice is left to chance.
 ### Monitoring
 
 ![Watchlist Diagram](https://github.com/user-attachments/assets/c3454572-3ac5-4b39-bc5e-6b7cf72fab92)
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fmaelgangloff%2Fdomain-watchdog.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2Fmaelgangloff%2Fdomain-watchdog?ref=badge_shield)
 
 
 A watchlist is a list of domain names, triggers and possibly an API connector.
@@ -113,3 +114,6 @@ Contributions are welcome as long as they do not contravene the Code of Conduct.
 [^1]: RFC 3912 : WHOIS Protocol Specification. (2004). IETF Datatracker. https://datatracker.ietf.org/doc/html/rfc3912
 [^2]: 2023 Global Amendments to the Base gTLD Registry Agreement (RA), Specification 13, and 2013 Registrar
 Accreditation Agreement (RAA) - ICANN. (2023). https://www.icann.org/resources/pages/global-amendment-2023-en
+
+
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fmaelgangloff%2Fdomain-watchdog.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2Fmaelgangloff%2Fdomain-watchdog?ref=badge_large)
