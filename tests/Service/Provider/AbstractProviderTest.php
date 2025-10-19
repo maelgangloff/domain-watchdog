@@ -54,6 +54,25 @@ class AbstractProviderTest extends ApiTestCase
         ]);
     }
 
+    #[DependsExternal(RDAPServiceTest::class, 'testUpdateRdapServers')]
+    public function testNamecheap()
+    {
+        $namecheapUsername = static::getContainer()->getParameter('namecheap_username');
+        $namecheapToken = static::getContainer()->getParameter('namecheap_token');
+
+        if (!$namecheapUsername || !$namecheapToken) {
+            $this->markTestSkipped('Missing Namecheap username or token');
+        }
+
+        $this->testGenericProvider(ConnectorProvider::NAMECHEAP, [
+            'waiveRetractationPeriod' => true,
+            'acceptConditions' => true,
+            'ownerLegalAge' => true,
+            'ApiUser' => $namecheapUsername,
+            'ApiKey' => $namecheapToken,
+        ]);
+    }
+
     private function testGenericProvider(ConnectorProvider $connectorProvider, array $authData): void
     {
         // Create a Connector

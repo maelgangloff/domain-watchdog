@@ -11,6 +11,7 @@ use Psr\Cache\CacheItemInterface;
 use Psr\Cache\CacheItemPoolInterface;
 use Psr\Cache\InvalidArgumentException;
 use Symfony\Component\DependencyInjection\Attribute\Autoconfigure;
+use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
@@ -37,6 +38,7 @@ class NamecheapProvider extends AbstractProvider
         private readonly string $outgoingIp,
         DenormalizerInterface&NormalizerInterface $serializer,
         ValidatorInterface $validator,
+        private readonly KernelInterface $kernel,
     ) {
         parent::__construct($cacheItemPool, $serializer, $validator);
     }
@@ -99,7 +101,7 @@ class NamecheapProvider extends AbstractProvider
             'ClientIp' => $this->outgoingIp,
         ], $parameters);
 
-        $response = $this->client->request('POST', $dryRun ? self::SANDBOX_BASE_URL : self::BASE_URL, [
+        $response = $this->client->request('POST', ($this->kernel->isDebug() || $dryRun) ? self::SANDBOX_BASE_URL : self::BASE_URL, [
             'query' => $actualParams,
         ]);
 
