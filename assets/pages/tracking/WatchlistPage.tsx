@@ -15,6 +15,7 @@ interface FormValuesType {
     name?: string
     domains: string[]
     trackedEvents: string[]
+    trackedEppStatus: string[]
     connector?: string
     dsn?: string[]
 }
@@ -25,6 +26,7 @@ const getRequestDataFromFormCreation = (values: FormValuesType) => {
         name: values.name,
         domains: domainsURI,
         trackedEvents: values.trackedEvents,
+        trackedEppStatus: values.trackedEppStatus,
         connector: values.connector !== undefined ? ('/api/connectors/' + values.connector) : undefined,
         dsn: values.dsn
     }

@@ -8,7 +8,7 @@ import type {Watchlist} from '../../../utils/api'
 
 export function UpdateWatchlistButton({watchlist, onUpdateWatchlist, connectors}: {
     watchlist: Watchlist
-    onUpdateWatchlist: (values: { domains: string[], trackedEvents: string[], token: string }) => Promise<void>
+    onUpdateWatchlist: (values: { domains: string[], trackedEvents: string[], trackedEppStatus: string[], token: string }) => Promise<void>
     connectors: Array<Connector & { id: string }>
 }) {
     const [form] = Form.useForm()
@@ -36,6 +36,7 @@ export function UpdateWatchlistButton({watchlist, onUpdateWatchlist, connectors}
                         {name: 'connector', value: watchlist.connector?.id},
                         {name: 'domains', value: watchlist.domains.map(d => d.ldhName)},
                         {name: 'trackedEvents', value: watchlist.trackedEvents},
+                        {name: 'trackedEppStatus', value: watchlist.trackedEppStatus},
                         {name: 'dsn', value: watchlist.dsn}
                     ])
                 }}

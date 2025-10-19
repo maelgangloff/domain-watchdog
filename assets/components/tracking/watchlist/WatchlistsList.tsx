@@ -6,7 +6,7 @@ import type {Watchlist} from '../../../utils/api'
 export function WatchlistsList({watchlists, onDelete, onUpdateWatchlist, connectors}: {
     watchlists: Watchlist[]
     onDelete: () => void
-    onUpdateWatchlist: (values: { domains: string[], trackedEvents: string[], token: string }) => Promise<void>
+    onUpdateWatchlist: (values: { domains: string[], trackedEvents: string[], trackedEppStatus: string[], token: string }) => Promise<void>
     connectors: Array<Connector & { id: string }>
 }) {
     return (

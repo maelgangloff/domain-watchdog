@@ -68,23 +68,7 @@ export const rdapEventDetailTranslation = () => ({
     'enum validation expiration': t`Association of phone number represented by this ENUM domain to registrant has expired or will expire at a predetermined date and time.`
 })
 
-/**
- * @see https://www.iana.org/assignments/rdap-json-values/rdap-json-values.xhtml
- * @see https://www.icann.org/resources/pages/epp-status-codes-2014-06-16-en
- */
-export const rdapStatusCodeDetailTranslation = () => ({
-    validated: t`Signifies that the data of the object instance has been found to be accurate.`,
-    'renew prohibited': t`Renewal or reregistration of the object instance is forbidden.`,
-    'update prohibited': t`Updates to the object instance are forbidden.`,
-    'transfer prohibited': t`Transfers of the registration from one registrar to another are forbidden.`,
-    'delete prohibited': t`Deletion of the registration of the object instance is forbidden.`,
-    proxy: t`The registration of the object instance has been performed by a third party.`,
-    private: t`The information of the object instance is not designated for public consumption.`,
-    removed: t`Some of the information of the object instance has not been made available and has been removed.`,
-    obscured: t`Some of the information of the object instance has been altered for the purposes of not readily revealing the actual information of the object instance.`,
-    associated: t`The object instance is associated with other object instances in the registry.`,
-    locked: t`Changes to the object instance cannot be made, including the association of other object instances.`,
-
+export const rdapDomainStatusCodeDetailTranslation = () => ({
     active: t`This is the standard status for a domain, meaning it has no pending operations or prohibitions.`,
     inactive: t`This status code indicates that delegation information (name servers) has not been associated with your domain. Your domain is not activated in the DNS and will not resolve.`,
     'pending create': t`This status code indicates that a request to create your domain has been received and is being processed.`,
@@ -109,6 +93,27 @@ export const rdapStatusCodeDetailTranslation = () => ({
     'server update prohibited': t`This status code locks your domain preventing it from being updated. It is an uncommon status that is usually enacted during legal disputes, at your request, or when a redemptionPeriod status is in place.`,
     'server hold': t`This status code is set by your domain's Registry Operator. Your domain is not activated in the DNS.`,
     'transfer period': t`This grace period is provided after the successful transfer of a domain name from one registrar to another. If the new registrar deletes the domain name during this period, the registry provides a credit to the registrar for the cost of the transfer.`,
+
+})
+
+/**
+ * @see https://www.iana.org/assignments/rdap-json-values/rdap-json-values.xhtml
+ * @see https://www.icann.org/resources/pages/epp-status-codes-2014-06-16-en
+ */
+export const rdapStatusCodeDetailTranslation = () => ({
+    validated: t`Signifies that the data of the object instance has been found to be accurate.`,
+    'renew prohibited': t`Renewal or reregistration of the object instance is forbidden.`,
+    'update prohibited': t`Updates to the object instance are forbidden.`,
+    'transfer prohibited': t`Transfers of the registration from one registrar to another are forbidden.`,
+    'delete prohibited': t`Deletion of the registration of the object instance is forbidden.`,
+    proxy: t`The registration of the object instance has been performed by a third party.`,
+    private: t`The information of the object instance is not designated for public consumption.`,
+    removed: t`Some of the information of the object instance has not been made available and has been removed.`,
+    obscured: t`Some of the information of the object instance has been altered for the purposes of not readily revealing the actual information of the object instance.`,
+    associated: t`The object instance is associated with other object instances in the registry.`,
+    locked: t`Changes to the object instance cannot be made, including the association of other object instances.`,
+
+    ...rdapDomainStatusCodeDetailTranslation(),
 
     administrative: t`The object instance has been allocated administratively (i.e., not for use by the recipient in their own right in operational networks).`,
     reserved: t`The object instance has been allocated to an IANA special-purpose address registry.`

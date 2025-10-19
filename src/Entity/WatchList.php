@@ -199,6 +199,15 @@ class WatchList
     ])]
     private array $trackedEvents = [];
 
+    #[ORM\Column(type: Types::JSON)]
+    #[Groups(['watchlist:list', 'watchlist:item', 'watchlist:create', 'watchlist:update'])]
+    #[Assert\Unique]
+    #[Assert\All([
+        new Assert\Type('string'),
+        new Assert\NotBlank(),
+    ])]
+    private array $trackedEppStatus = [];
+
     public function __construct()
     {
         $this->token = Uuid::v4();
@@ -308,6 +317,18 @@ class WatchList
     public function setTrackedEvents(array $trackedEvents): static
     {
         $this->trackedEvents = $trackedEvents;
+
+        return $this;
+    }
+
+    public function getTrackedEppStatus(): array
+    {
+        return $this->trackedEppStatus;
+    }
+
+    public function setTrackedEppStatus(array $trackedEppStatus): static
+    {
+        $this->trackedEppStatus = $trackedEppStatus;
 
         return $this;
     }

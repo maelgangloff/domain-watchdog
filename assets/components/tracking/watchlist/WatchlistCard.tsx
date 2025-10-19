@@ -7,20 +7,31 @@ import {DeleteWatchlistButton} from './DeleteWatchlistButton'
 import React from 'react'
 import type {Connector} from '../../../utils/api/connectors'
 import {CalendarWatchlistButton} from './CalendarWatchlistButton'
-import {rdapEventDetailTranslation, rdapEventNameTranslation} from '../../../utils/functions/rdapTranslation'
+import {
+    rdapDomainStatusCodeDetailTranslation,
+    rdapEventDetailTranslation,
+    rdapEventNameTranslation
+} from '../../../utils/functions/rdapTranslation'
 
 import {actionToColor} from '../../../utils/functions/actionToColor'
 import {DomainToTag} from '../../../utils/functions/DomainToTag'
 import type {Watchlist} from '../../../utils/api'
+import {eppStatusCodeToColor} from "../../../utils/functions/eppStatusCodeToColor"
 
 export function WatchlistCard({watchlist, onUpdateWatchlist, connectors, onDelete}: {
     watchlist: Watchlist
-    onUpdateWatchlist: (values: { domains: string[], trackedEvents: string[], token: string }) => Promise<void>
+    onUpdateWatchlist: (values: {
+        domains: string[],
+        trackedEvents: string[],
+        trackedEppStatus: string[],
+        token: string
+    }) => Promise<void>
     connectors: Array<Connector & { id: string }>
     onDelete: () => void
 }) {
     const rdapEventNameTranslated = rdapEventNameTranslation()
     const rdapEventDetailTranslated = rdapEventDetailTranslation()
+    const rdapDomainStatusCodeDetailTranslated = rdapDomainStatusCodeDetailTranslation()
 
     return (
         <>
@@ -61,18 +72,56 @@ export function WatchlistCard({watchlist, onUpdateWatchlist, connectors, onDelet
                 <Card.Meta description={watchlist.token} style={{marginBottom: '1em'}}/>
                 <Row gutter={16}>
                     <Col span={16}>
-                        {watchlist.domains.map(d => <DomainToTag key={d.ldhName} domain={d}/>)}
+                        {watchlist.domains.map(d => (
+                            <DomainToTag key={d.ldhName} domain={d}/>
+                        ))}
                     </Col>
+
                     <Col span={8}>
-                        {watchlist.trackedEvents?.map(t => <Tooltip
-                                    key={t}
-                                    title={rdapEventDetailTranslated[t as keyof typeof rdapEventDetailTranslated] || undefined}
-                                >
-                                    <Tag color={actionToColor(t)}>
-                                        {rdapEventNameTranslated[t as keyof typeof rdapEventNameTranslated]}
-                                    </Tag>
-                                </Tooltip>
-                            )}
+                        <>
+                            <div style={{
+                                fontWeight: 500,
+                                marginBottom: '0.5em',
+                                color: '#555',
+                                fontSize: '0.9em'
+                            }}>
+                                {t`Tracked events`}
+                            </div>
+                            <div style={{marginBottom: '1em'}}>
+                                {watchlist.trackedEvents?.map(t => (
+                                    <Tooltip
+                                        key={t}
+                                        title={rdapEventDetailTranslated[t as keyof typeof rdapEventDetailTranslated]}
+                                    >
+                                        <Tag color={actionToColor(t)} style={{marginBottom: 4}}>
+                                            {rdapEventNameTranslated[t as keyof typeof rdapEventNameTranslated]}
+                                        </Tag>
+                                    </Tooltip>
+                                ))}
+                            </div>
+                        </>
+                        <>
+                            <div style={{
+                                fontWeight: 500,
+                                marginBottom: '0.5em',
+                                color: '#555',
+                                fontSize: '0.9em'
+                            }}>
+                                {t`Tracked EPP status`}
+                            </div>
+                            <div>
+                                {watchlist.trackedEppStatus?.map(t => (
+                                    <Tooltip
+                                        key={t}
+                                        title={rdapDomainStatusCodeDetailTranslated[t as keyof typeof rdapDomainStatusCodeDetailTranslated]}
+                                    >
+                                        <Tag color={eppStatusCodeToColor(t)} style={{marginBottom: 4}}>
+                                            {t}
+                                        </Tag>
+                                    </Tooltip>
+                                ))}
+                            </div>
+                        </>
                     </Col>
                 </Row>
             </Card>

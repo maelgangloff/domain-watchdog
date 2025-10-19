@@ -45,6 +45,7 @@ final class WatchListUpdateProcessorTest extends ApiTestCase
             'domains' => ['/api/domains/iana.org', '/api/domains/example.com'],
             'name' => 'My modified Watchlist',
             'trackedEvents' => ['last changed'],
+            'trackedEppStatus' => [],
         ]]);
         $this->assertResponseIsSuccessful();
         $this->assertMatchesResourceItemJsonSchema(WatchList::class);
@@ -61,6 +62,7 @@ final class WatchListUpdateProcessorTest extends ApiTestCase
             'domains' => $domains,
             'name' => 'My Watchlist',
             'trackedEvents' => ['last changed', 'transfer', 'expiration', 'deletion'],
+            'trackedEppStatus' => ['redemption period', 'pending delete', 'client hold', 'server hold'],
             'connector' => $connectorId,
         ]]);
 

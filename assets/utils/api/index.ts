@@ -81,6 +81,7 @@ export interface WatchlistRequest {
     name?: string
     domains: string[]
     trackedEvents?: string[]
+    trackedEppStatus?: string[]
     connector?: string
     dsn?: string[]
 }
@@ -91,6 +92,7 @@ export interface Watchlist {
     token: string
     domains: Domain[]
     trackedEvents?: string[]
+    trackedEppStatus?: string[]
     dsn?: string[]
     connector?: {
         id: string

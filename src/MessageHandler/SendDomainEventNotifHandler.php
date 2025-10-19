@@ -4,10 +4,14 @@ namespace App\MessageHandler;
 
 use App\Entity\Domain;
 use App\Entity\DomainEvent;
+use App\Entity\DomainStatus;
 use App\Entity\WatchList;
 use App\Message\SendDomainEventNotif;
+use App\Notifier\DomainStatusUpdateNotification;
 use App\Notifier\DomainUpdateNotification;
+use App\Repository\DomainEventRepository;
 use App\Repository\DomainRepository;
+use App\Repository\DomainStatusRepository;
 use App\Repository\WatchListRepository;
 use App\Service\ChatNotificationService;
 use App\Service\InfluxdbService;
@@ -37,6 +41,8 @@ final readonly class SendDomainEventNotifHandler
         #[Autowire(param: 'influxdb_enabled')]
         private bool $influxdbEnabled,
         private InfluxdbService $influxdbService,
+        private DomainEventRepository $domainEventRepository,
+        private DomainStatusRepository $domainStatusRepository,
     ) {
         $this->sender = new Address($mailerSenderEmail, $mailerSenderName);
     }
@@ -51,20 +57,28 @@ final readonly class SendDomainEventNotifHandler
         $watchList = $this->watchListRepository->findOneBy(['token' => $message->watchListToken]);
         /** @var Domain $domain */
         $domain = $this->domainRepository->findOneBy(['ldhName' => $message->ldhName]);
+        $recipient = new Recipient($watchList->getUser()->getEmail());
 
         /*
          * For each new event whose date is after the domain name update date (before the current domain name update)
          */
 
-        /** @var DomainEvent $event */
-        foreach ($domain->getEvents()->filter(
-            fn ($event) => $message->updatedAt < $event->getDate() && $event->getDate() < new \DateTimeImmutable()) as $event
-        ) {
+        /** @var DomainEvent[] $newEvents */
+        $newEvents = $this->domainEventRepository->createQueryBuilder('de')
+            ->select()
+            ->where('de.domain = :domain')
+            ->andWhere('de.date > :updatedAt')
+            ->andWhere('de.date < :now')
+            ->setParameter('domain', $domain)
+            ->setParameter('updatedAt', $domain->getUpdatedAt())
+            ->setParameter('now', new \DateTimeImmutable())
+            ->getQuery()->getResult();
+
+        foreach ($newEvents as $event) {
             if (!in_array($event->getAction(), $watchList->getTrackedEvents())) {
                 continue;
             }
 
-            $recipient = new Recipient($watchList->getUser()->getEmail());
             $notification = new DomainUpdateNotification($this->sender, $event);
 
             $this->logger->info('New action has been detected on this domain name : an email is sent to user', [
@@ -75,6 +89,10 @@ final readonly class SendDomainEventNotifHandler
 
             $this->mailer->send($notification->asEmailMessage($recipient)->getMessage());
 
+            if ($this->influxdbEnabled) {
+                $this->influxdbService->addDomainNotificationPoint($domain, 'email', true);
+            }
+
             $webhookDsn = $watchList->getWebhookDsn();
             if (null !== $webhookDsn && 0 !== count($webhookDsn)) {
                 $this->logger->info('New action has been detected on this domain name : a notification is sent to user', [
@@ -84,11 +102,64 @@ final readonly class SendDomainEventNotifHandler
                 ]);
 
                 $this->chatNotificationService->sendChatNotification($watchList, $notification);
+                if ($this->influxdbEnabled) {
+                    $this->influxdbService->addDomainNotificationPoint($domain, 'chat', true);
+                }
             }
 
+            $this->statService->incrementStat('stats.alert.sent');
+        }
+
+        /** @var DomainStatus $domainStatus */
+        $domainStatus = $this->domainStatusRepository->createQueryBuilder('ds')
+            ->select()
+            ->where('ds.domain = :domain')
+            ->andWhere('ds.createdAt > :createdAt')
+            ->andWhere('ds.createdAt < :now')
+            ->orderBy('ds.createdAt DESC')
+            ->setParameter('domain', $domain)
+            ->setParameter('createdAt', $domain->getUpdatedAt())
+            ->setParameter('now', new \DateTimeImmutable())
+            ->getQuery()
+            ->getOneOrNullResult();
+
+        if (null !== $domainStatus && count(array_intersect(
+            $watchList->getTrackedEppStatus(),
+            [...$domainStatus->getAddStatus(), ...$domainStatus->getDeleteStatus()]
+        ))) {
+            $notification = new DomainStatusUpdateNotification($this->sender, $domain, $domainStatus);
+
+            $this->logger->info('New domain status has been detected on this domain name : an email is sent to user', [
+                'addStatus' => $domainStatus->getAddStatus(),
+                'deleteStatus' => $domainStatus->getDeleteStatus(),
+                'status' => $domain->getStatus(),
+                'ldhName' => $message->ldhName,
+                'username' => $watchList->getUser()->getUserIdentifier(),
+            ]);
+
+            $this->mailer->send($notification->asEmailMessage($recipient)->getMessage());
+
             if ($this->influxdbEnabled) {
-                $this->influxdbService->addDomainNotificationPoint($domain, 'chat', true);
+                $this->influxdbService->addDomainNotificationPoint($domain, 'email', true);
             }
+
+            $webhookDsn = $watchList->getWebhookDsn();
+            if (null !== $webhookDsn && 0 !== count($webhookDsn)) {
+                $this->logger->info('New domain status has been detected on this domain name : a notification is sent to user', [
+                    'addStatus' => $domainStatus->getAddStatus(),
+                    'deleteStatus' => $domainStatus->getDeleteStatus(),
+                    'status' => $domain->getStatus(),
+                    'ldhName' => $message->ldhName,
+                    'username' => $watchList->getUser()->getUserIdentifier(),
+                ]);
+
+                $this->chatNotificationService->sendChatNotification($watchList, $notification);
+
+                if ($this->influxdbEnabled) {
+                    $this->influxdbService->addDomainNotificationPoint($domain, 'chat', true);
+                }
+            }
+
             $this->statService->incrementStat('stats.alert.sent');
         }
     }
