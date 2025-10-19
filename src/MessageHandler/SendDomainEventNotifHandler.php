@@ -116,7 +116,7 @@ final readonly class SendDomainEventNotifHandler
             ->where('ds.domain = :domain')
             ->andWhere('ds.createdAt > :createdAt')
             ->andWhere('ds.createdAt < :now')
-            ->orderBy('ds.createdAt DESC')
+            ->orderBy('ds.createdAt', 'DESC')
             ->setParameter('domain', $domain)
             ->setParameter('createdAt', $domain->getUpdatedAt())
             ->setParameter('now', new \DateTimeImmutable())
