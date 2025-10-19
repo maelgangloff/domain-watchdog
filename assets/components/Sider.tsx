@@ -14,7 +14,6 @@ import {
     SafetyOutlined,
     SearchOutlined,
     TableOutlined,
-    TeamOutlined,
     UserOutlined
 } from '@ant-design/icons'
 import {Menu} from 'antd'
@@ -45,14 +44,6 @@ export function Sider({isAuthenticated}: { isAuthenticated: boolean }) {
                     title: t`Domain Finder`,
                     disabled: !isAuthenticated,
                     onClick: () => navigate('/search/domain')
-                },
-                {
-                    key: '/search/entity',
-                    icon: <TeamOutlined/>,
-                    label: t`Entity`,
-                    title: t`Entity Finder`,
-                    disabled: !isAuthenticated,
-                    onClick: () => navigate('/search/entity')
                 },
                 /*
                         {
