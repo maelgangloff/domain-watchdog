@@ -315,7 +315,7 @@ class RDAPService
     private function updateDomainStatus(Domain $domain, array $rdapData): void
     {
         if (isset($rdapData['status']) && is_array($rdapData['status'])) {
-            $status = array_unique($rdapData['status']);
+            $status = array_map(fn ($s) => strtolower($s), array_unique($rdapData['status']));
             $addedStatus = array_diff($status, $domain->getStatus());
             $deletedStatus = array_diff($domain->getStatus(), $status);
             $domain->setStatus($status);
@@ -381,7 +381,7 @@ class RDAPService
                 }
 
                 $domain->addEvent($event
-                    ->setAction($rdapEvent['eventAction'])
+                    ->setAction(strtolower($rdapEvent['eventAction']))
                     ->setDate(new \DateTimeImmutable($rdapEvent['eventDate']))
                     ->setDeleted(false));
 
@@ -460,11 +460,12 @@ class RDAPService
 
     private function fetchOrCreateNameserver(array $rdapNameserver, Domain $domain): Nameserver
     {
+        $ldhName = strtolower(rtrim($rdapNameserver['ldhName'], '.'));
         $nameserver = $this->nameserverRepository->findOneBy([
-            'ldhName' => strtolower($rdapNameserver['ldhName']),
+            'ldhName' => $ldhName,
         ]);
 
-        $existingDomainNS = $domain->getNameservers()->findFirst(fn (int $key, Nameserver $ns) => $ns->getLdhName() === $rdapNameserver['ldhName']);
+        $existingDomainNS = $domain->getNameservers()->findFirst(fn (int $key, Nameserver $ns) => $ns->getLdhName() === $ldhName);
 
         if (null !== $existingDomainNS) {
             return $existingDomainNS;
@@ -472,7 +473,7 @@ class RDAPService
             $nameserver = new Nameserver();
         }
 
-        $nameserver->setLdhName($rdapNameserver['ldhName']);
+        $nameserver->setLdhName($ldhName);
 
         return $nameserver;
     }
@@ -502,7 +503,7 @@ class RDAPService
             $nameserver->addNameserverEntity($nameserverEntity
                 ->setNameserver($nameserver)
                 ->setEntity($entity)
-                ->setStatus(array_unique($rdapNameserver['status']))
+                ->setStatus(array_map(fn ($s) => strtolower($s), array_unique($rdapNameserver['status'])))
                 ->setRoles($roles));
 
             $this->em->persist($nameserverEntity);
@@ -530,7 +531,7 @@ class RDAPService
             $roles = array_merge(...$roles);
         }
 
-        return $roles;
+        return array_map(fn ($x) => strtolower($x), $roles);
     }
 
     /**
@@ -646,7 +647,7 @@ class RDAPService
                 $entity->addEvent(
                     (new EntityEvent())
                         ->setEntity($entity)
-                        ->setAction($rdapEntityEvent['eventAction'])
+                        ->setAction(strtolower($rdapEntityEvent['eventAction']))
                         ->setDate(new \DateTimeImmutable($rdapEntityEvent['eventDate']))
                         ->setDeleted(false));
             }
