@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2025-09-24 21:40+0000\n"
+"PO-Revision-Date: 2025-10-19 19:58+0000\n"
 "Last-Translator: Maël Gangloff <contact@maelgangloff.fr>\n"
 "Language-Team: German <https://weblate.vinceh121.me/projects/domain-watchdog/"
 "domain-watchdog-dashboard/de/>\n"
@@ -460,10 +460,8 @@ msgstr ""
 "erste Watchlist"
 
 #: assets/components/tracking/watchlist/TrackedDomainTable.tsx:238
-#, fuzzy
-#| msgid "Create"
 msgid "Create now"
-msgstr "Erstellen"
+msgstr "Jetzt erstellen"
 
 #: assets/components/tracking/watchlist/TrackedDomainTable.tsx:244
 msgid ""
@@ -511,10 +509,8 @@ msgstr "Verfolgte Ereignisse"
 
 #: assets/components/tracking/watchlist/WatchlistCard.tsx:110
 #: assets/components/tracking/watchlist/WatchlistForm.tsx:217
-#, fuzzy
-#| msgid "Tracked events"
 msgid "Tracked EPP status"
-msgstr "Verfolgte Ereignisse"
+msgstr "Verfolgter EPP-Status"
 
 #: assets/components/tracking/watchlist/WatchlistForm.tsx:111
 msgid "Name"
@@ -547,16 +543,12 @@ msgid "Add a Domain name"
 msgstr "Einen Domänennamen hinzufügen"
 
 #: assets/components/tracking/watchlist/WatchlistForm.tsx:193
-#, fuzzy
-#| msgid "At least one trigger"
 msgid "At least one event"
-msgstr "Mindestens ein Auslöser"
+msgstr "Mindestens eine Veranstaltung"
 
 #: assets/components/tracking/watchlist/WatchlistForm.tsx:219
-#, fuzzy
-#| msgid "At least one trigger"
 msgid "At least one EPP status"
-msgstr "Mindestens ein Auslöser"
+msgstr "Mindestens ein EPP-Status"
 
 #: assets/components/tracking/watchlist/WatchlistForm.tsx:243
 #: assets/components/tracking/watchlist/WatchlistForm.tsx:258
