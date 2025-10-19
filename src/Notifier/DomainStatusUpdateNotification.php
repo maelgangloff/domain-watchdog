@@ -53,7 +53,7 @@ class DomainStatusUpdateNotification extends DomainWatchdogNotification
             ->to($recipient->getEmail())
             ->priority(Email::PRIORITY_HIGH)
             ->subject("Domain EPP status changed $ldhName")
-            ->htmlTemplate('emails/success/domain_updated.html.twig')
+            ->htmlTemplate('emails/success/domain_status_updated.html.twig')
             ->locale('en')
             ->context([
                 'domain' => $this->domain,
