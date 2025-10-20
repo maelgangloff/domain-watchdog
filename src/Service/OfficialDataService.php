@@ -168,8 +168,8 @@ class OfficialDataService
             $this->tldRepository->createQueryBuilder('t')
                 ->update()
                 ->set('t.deletedAt', 'COALESCE(t.removalDate, CURRENT_TIMESTAMP())')
-                ->where('t.tld != :tld')
-                ->setParameter('tld', self::DOMAIN_DOT)
+                ->where('t.tld != :dot')
+                ->setParameter('dot', self::DOMAIN_DOT)
                 ->getQuery()->execute();
 
             $tldEntity = $this->tldRepository->findOneBy(['tld' => $tld]);
@@ -181,6 +181,8 @@ class OfficialDataService
                 $this->logger->notice('New TLD detected according to IANA', [
                     'tld' => $tld,
                 ]);
+            } else {
+                $this->em->refresh($tldEntity);
             }
 
             $type = $this->getTldType($tld);

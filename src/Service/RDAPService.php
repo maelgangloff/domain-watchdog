@@ -425,6 +425,8 @@ class RDAPService
 
             if (null === $domainEntity) {
                 $domainEntity = new DomainEntity();
+            } else {
+                $this->em->refresh($domainEntity);
             }
 
             $domain->addDomainEntity($domainEntity
