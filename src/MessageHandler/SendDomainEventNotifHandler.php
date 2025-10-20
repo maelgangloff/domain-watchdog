@@ -70,7 +70,7 @@ final readonly class SendDomainEventNotifHandler
             ->andWhere('de.date > :updatedAt')
             ->andWhere('de.date < :now')
             ->setParameter('domain', $domain)
-            ->setParameter('updatedAt', $domain->getUpdatedAt())
+            ->setParameter('updatedAt', $message->updatedAt)
             ->setParameter('now', new \DateTimeImmutable())
             ->getQuery()->getResult();
 
@@ -114,12 +114,10 @@ final readonly class SendDomainEventNotifHandler
         $domainStatus = $this->domainStatusRepository->createQueryBuilder('ds')
             ->select()
             ->where('ds.domain = :domain')
-            ->andWhere('ds.createdAt > :createdAt')
-            ->andWhere('ds.createdAt < :now')
+            ->andWhere('ds.date = :date')
             ->orderBy('ds.createdAt', 'DESC')
             ->setParameter('domain', $domain)
-            ->setParameter('createdAt', $domain->getUpdatedAt())
-            ->setParameter('now', new \DateTimeImmutable())
+            ->setParameter('date', $message->updatedAt)
             ->getQuery()
             ->getOneOrNullResult();
 
