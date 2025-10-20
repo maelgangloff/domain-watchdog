@@ -21,8 +21,8 @@ class DomainRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('d')
                 ->addSelect('events')
                 ->leftJoin('d.events', 'events')
-                ->where('d.tld = :tld')
-                ->setParameter('tld', $tld)
+                ->where('d.tld = :dot')
+                ->setParameter('dot', $tld)
                 ->getQuery()
                 ->getResult();
     }
