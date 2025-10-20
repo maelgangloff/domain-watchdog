@@ -378,6 +378,10 @@ class RDAPService
 
                 if (null === $event) {
                     $event = new DomainEvent();
+                } else {
+                    // at this point Doctrine doesn't know that the events are
+                    // deleted in the database, so refresh in order to make the diff work
+                    $this->em->refresh($event);
                 }
 
                 $domain->addEvent($event

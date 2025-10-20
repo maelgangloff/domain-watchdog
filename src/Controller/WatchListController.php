@@ -115,10 +115,10 @@ class WatchListController extends AbstractController
                     ->where('de.domain = :domain')
                     ->andWhere('de.action = \'expiration\'')
                     ->andWhere('de.deleted = FALSE')
-                    ->setParameter('domain', $domain)
                     ->orderBy('de.date', 'DESC')
                     ->setMaxResults(1)
                     ->getQuery()
+                    ->setParameter('domain', $domain)
                     ->getOneOrNullResult();
 
                 if (!$domain->getDeleted() && null !== $exp && !in_array($domain, $domains)) {
