@@ -46,3 +46,4 @@ api_platform:
         # Provider exception
         App\Exception\Provider\UserNoExplicitConsentException: 451
         App\Exception\Provider\AbstractProviderException: 400
+        Metaregistrar\EPP\eppException: 400
