@@ -15,6 +15,7 @@ use App\Tests\Service\RDAPServiceTest;
 use App\Tests\State\WatchListUpdateProcessorTest;
 use Doctrine\ORM\EntityManagerInterface;
 use PHPUnit\Framework\Attributes\DependsExternal;
+use Symfony\Component\HttpClient\Exception\ServerException;
 use Symfony\Component\Uid\UuidV4;
 
 class AbstractProviderTest extends ApiTestCase
@@ -75,41 +76,45 @@ class AbstractProviderTest extends ApiTestCase
 
     private function testGenericProvider(ConnectorProvider $connectorProvider, array $authData): void
     {
-        // Create a Connector
-        $client = ConnectorControllerTest::createClientWithCredentials(ConnectorControllerTest::getToken(UserFactory::createOne()));
-        $response = $client->request('POST', '/api/connectors', ['json' => [
-            'authData' => $authData,
-            'provider' => $connectorProvider->value,
-        ]]);
-        $this->assertResponseStatusCodeSame(201);
+        try {
+            // Create a Connector
+            $client = ConnectorControllerTest::createClientWithCredentials(ConnectorControllerTest::getToken(UserFactory::createOne()));
+            $response = $client->request('POST', '/api/connectors', ['json' => [
+                'authData' => $authData,
+                'provider' => $connectorProvider->value,
+            ]]);
+            $this->assertResponseStatusCodeSame(201);
 
-        /** @var EntityManagerInterface $entityManager */
-        $entityManager = self::getContainer()->get(EntityManagerInterface::class);
+            /** @var EntityManagerInterface $entityManager */
+            $entityManager = self::getContainer()->get(EntityManagerInterface::class);
 
-        // Create a Watchlist with the domain name
-        WatchListUpdateProcessorTest::createUserAndWatchlist($client,
-            ['/api/domains/example.com'],
-            '/api/connectors/'.$response->toArray()['id']);
+            // Create a Watchlist with the domain name
+            WatchListUpdateProcessorTest::createUserAndWatchlist($client,
+                ['/api/domains/example.com'],
+                '/api/connectors/'.$response->toArray()['id']);
 
-        $response = $client->request('GET', '/api/watchlists');
-        $watchlist = $entityManager->getRepository(WatchList::class)->findOneBy(['token' => $response->toArray()['hydra:member'][0]['token']]);
+            $response = $client->request('GET', '/api/watchlists');
+            $watchlist = $entityManager->getRepository(WatchList::class)->findOneBy(['token' => $response->toArray()['hydra:member'][0]['token']]);
 
-        $domain = (new Domain())
-            ->setLdhName((new UuidV4()).'.com')
-            ->setDeleted(true)
-            ->setTld($entityManager->getReference(Tld::class, 'fr'))
-            ->setDelegationSigned(false);
+            $domain = (new Domain())
+                ->setLdhName((new UuidV4()).'.com')
+                ->setDeleted(true)
+                ->setTld($entityManager->getReference(Tld::class, 'fr'))
+                ->setDelegationSigned(false);
 
-        $entityManager->persist($domain);
-        $watchlist->addDomain($domain);
+            $entityManager->persist($domain);
+            $watchlist->addDomain($domain);
 
-        $entityManager->flush();
+            $entityManager->flush();
 
-        // Trigger the Order Domain message
-        $orderDomainHandler = self::getContainer()->get(OrderDomainHandler::class);
-        $message = new OrderDomain($watchlist->getToken(), $domain->getLdhName());
-        $orderDomainHandler($message);
+            // Trigger the Order Domain message
+            $orderDomainHandler = self::getContainer()->get(OrderDomainHandler::class);
+            $message = new OrderDomain($watchlist->getToken(), $domain->getLdhName());
+            $orderDomainHandler($message);
 
-        $this->assertResponseStatusCodeSame(200);
+            $this->assertResponseStatusCodeSame(200);
+        } catch (ServerException $e) {
+            $this->markTestSkipped('Provider '.$connectorProvider->value.' is not ready. Response HTTP '.$e->getResponse()->getStatusCode());
+        }
     }
 }
