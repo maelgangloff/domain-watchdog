@@ -355,14 +355,7 @@ class RDAPService
      */
     private function updateDomainEvents(Domain $domain, array $rdapData): void
     {
-        $this->domainEventRepository->createQueryBuilder('de')
-            ->update()
-            ->set('de.deleted', ':deleted')
-            ->where('de.domain = :domain')
-            ->setParameter('deleted', true)
-            ->setParameter('domain', $domain)
-            ->getQuery()
-            ->execute();
+        $this->domainEventRepository->setDomainEventAsDeleted($domain);
 
         if (isset($rdapData['events']) && is_array($rdapData['events'])) {
             foreach ($rdapData['events'] as $rdapEvent) {
@@ -399,16 +392,7 @@ class RDAPService
      */
     private function updateDomainEntities(Domain $domain, array $rdapData): void
     {
-        $now = new \DateTimeImmutable();
-
-        $this->domainEntityRepository->createQueryBuilder('de')
-            ->update()
-            ->set('de.deletedAt', ':now')
-            ->where('de.domain = :domain')
-            ->andWhere('de.deletedAt IS NOT NULL')
-            ->setParameter('now', $now)
-            ->setParameter('domain', $domain)
-            ->getQuery()->execute();
+        $this->domainEntityRepository->setDomainEntityAsDeleted($domain);
 
         if (!isset($rdapData['entities']) || !is_array($rdapData['entities'])) {
             return;

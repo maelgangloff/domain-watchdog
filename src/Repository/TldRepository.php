@@ -28,6 +28,16 @@ class TldRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    public function setAllTldAsDeleted()
+    {
+        return $this->createQueryBuilder('t')
+            ->update()
+            ->set('t.deletedAt', 'COALESCE(t.removalDate, CURRENT_TIMESTAMP())')
+            ->where('t.tld != :dot')
+            ->setParameter('dot', '.')
+            ->getQuery()->execute();
+    }
+
     //    /**
     //     * @return Tld[] Returns an array of Tld objects
     //     */

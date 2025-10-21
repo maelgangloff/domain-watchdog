@@ -7,7 +7,6 @@ use App\Config\TldType;
 use App\Entity\IcannAccreditation;
 use App\Entity\RdapServer;
 use App\Entity\Tld;
-use App\Repository\DomainRepository;
 use App\Repository\IcannAccreditationRepository;
 use App\Repository\RdapServerRepository;
 use App\Repository\TldRepository;
@@ -63,8 +62,8 @@ class OfficialDataService
 
     public const DOMAIN_DOT = '.';
 
-    public function __construct(private HttpClientInterface $client,
-        private readonly DomainRepository $domainRepository,
+    public function __construct(
+        private readonly HttpClientInterface $client,
         private readonly RdapServerRepository $rdapServerRepository,
         private readonly TldRepository $tldRepository,
         private readonly IcannAccreditationRepository $icannAccreditationRepository,
@@ -165,12 +164,7 @@ class OfficialDataService
                 continue;
             }
 
-            $this->tldRepository->createQueryBuilder('t')
-                ->update()
-                ->set('t.deletedAt', 'COALESCE(t.removalDate, CURRENT_TIMESTAMP())')
-                ->where('t.tld != :dot')
-                ->setParameter('dot', self::DOMAIN_DOT)
-                ->getQuery()->execute();
+            $this->tldRepository->setAllTldAsDeleted();
 
             $tldEntity = $this->tldRepository->findOneBy(['tld' => $tld]);
 
@@ -304,15 +298,5 @@ class OfficialDataService
         }
 
         $this->em->flush();
-    }
-
-    public function updateDomainsWhenTldIsDeleted(): void
-    {
-        $this->domainRepository->createQueryBuilder('d')
-            ->update()
-            ->set('d.deleted', ':deleted')
-            ->where('d.tld IN (SELECT t FROM '.Tld::class.' t WHERE t.deletedAt IS NOT NULL)')
-            ->setParameter('deleted', true)
-            ->getQuery()->execute();
     }
 }

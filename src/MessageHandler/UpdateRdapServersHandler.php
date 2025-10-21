@@ -3,6 +3,7 @@
 namespace App\MessageHandler;
 
 use App\Message\UpdateRdapServers;
+use App\Repository\DomainRepository;
 use App\Service\OfficialDataService;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
@@ -17,7 +18,7 @@ final readonly class UpdateRdapServersHandler
 {
     public function __construct(
         private OfficialDataService $officialDataService,
-        private ParameterBagInterface $bag,
+        private ParameterBagInterface $bag, private DomainRepository $domainRepository,
     ) {
     }
 
@@ -41,7 +42,7 @@ final readonly class UpdateRdapServersHandler
         try {
             $this->officialDataService->updateTldListIANA();
             $this->officialDataService->updateGTldListICANN();
-            $this->officialDataService->updateDomainsWhenTldIsDeleted();
+            $this->domainRepository->setDomainDeletedIfTldIsDeleted();
         } catch (\Throwable $throwable) {
             $throws[] = $throwable;
         }

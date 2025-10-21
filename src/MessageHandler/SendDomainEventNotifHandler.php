@@ -64,15 +64,7 @@ final readonly class SendDomainEventNotifHandler
          */
 
         /** @var DomainEvent[] $newEvents */
-        $newEvents = $this->domainEventRepository->createQueryBuilder('de')
-            ->select()
-            ->where('de.domain = :domain')
-            ->andWhere('de.date > :updatedAt')
-            ->andWhere('de.date < :now')
-            ->setParameter('domain', $domain)
-            ->setParameter('updatedAt', $message->updatedAt)
-            ->setParameter('now', new \DateTimeImmutable())
-            ->getQuery()->getResult();
+        $newEvents = $this->domainEventRepository->findNewDomainEvents($domain, $message->updatedAt);
 
         foreach ($newEvents as $event) {
             if (!in_array($event->getAction(), $watchList->getTrackedEvents())) {
@@ -111,15 +103,7 @@ final readonly class SendDomainEventNotifHandler
         }
 
         /** @var DomainStatus $domainStatus */
-        $domainStatus = $this->domainStatusRepository->createQueryBuilder('ds')
-            ->select()
-            ->where('ds.domain = :domain')
-            ->andWhere('ds.date = :date')
-            ->orderBy('ds.createdAt', 'DESC')
-            ->setParameter('domain', $domain)
-            ->setParameter('date', $message->updatedAt)
-            ->getQuery()
-            ->getOneOrNullResult();
+        $domainStatus = $this->domainStatusRepository->findNewDomainStatus($domain, $message->updatedAt);
 
         if (null !== $domainStatus && count(array_intersect(
             $watchList->getTrackedEppStatus(),

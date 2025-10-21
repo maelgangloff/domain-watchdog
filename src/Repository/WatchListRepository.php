@@ -16,6 +16,15 @@ class WatchListRepository extends ServiceEntityRepository
         parent::__construct($registry, WatchList::class);
     }
 
+    public function getTrackedDomainCount()
+    {
+        return $this->createQueryBuilder('w')
+            ->select('COUNT(DISTINCT d.ldhName)')
+            ->join('w.domains', 'd')
+            ->where('d.deleted = FALSE')
+            ->getQuery()->getSingleScalarResult();
+    }
+
     //    /**
     //     * @return WatchList[] Returns an array of WatchList objects
     //     */

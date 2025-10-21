@@ -34,22 +34,10 @@ class StatisticsController extends AbstractController
             ->setAlertSent($this->pool->getItem('stats.alert.sent')->get() ?? 0)
 
             ->setDomainTracked(
-                $this->getCachedItem('stats.domain.tracked', fn () => $this->watchListRepository->createQueryBuilder('w')
-                    ->join('w.domains', 'd')
-                    ->select('COUNT(DISTINCT d.ldhName)')
-                    ->where('d.deleted = FALSE')
-                    ->getQuery()->getSingleColumnResult()[0])
+                $this->getCachedItem('stats.domain.tracked', fn () => $this->watchListRepository->getTrackedDomainCount())
             )
             ->setDomainCount(
-                $this->getCachedItem('stats.domain.count', fn () => $this->domainRepository->createQueryBuilder('d')
-                    ->join('d.tld', 't')
-                    ->select('t.tld tld')
-                    ->addSelect('COUNT(d.ldhName) AS domain')
-                    ->addGroupBy('t.tld')
-                    ->where('d.deleted = FALSE')
-                    ->orderBy('domain', 'DESC')
-                    ->setMaxResults(5)
-                    ->getQuery()->getArrayResult())
+                $this->getCachedItem('stats.domain.count', fn () => $this->domainRepository->getActiveDomainCountByTld())
             )
             ->setDomainCountTotal(
                 $this->getCachedItem('stats.domain.total', fn () => $this->domainRepository->count(['deleted' => false])

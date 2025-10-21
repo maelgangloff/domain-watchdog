@@ -110,16 +110,7 @@ class WatchListController extends AbstractController
             /** @var Domain $domain */
             foreach ($watchList->getDomains()->getIterator() as $domain) {
                 /** @var DomainEvent|null $exp */
-                $exp = $this->domainEventRepository->createQueryBuilder('de')
-                    ->select()
-                    ->where('de.domain = :domain')
-                    ->andWhere('de.action = \'expiration\'')
-                    ->andWhere('de.deleted = FALSE')
-                    ->orderBy('de.date', 'DESC')
-                    ->setMaxResults(1)
-                    ->getQuery()
-                    ->setParameter('domain', $domain)
-                    ->getOneOrNullResult();
+                $exp = $this->domainEventRepository->findLastExpirationDomainEvent($domain);
 
                 if (!$domain->getDeleted() && null !== $exp && !in_array($domain, $domains)) {
                     $domains[] = $domain;

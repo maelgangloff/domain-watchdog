@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Entity\Domain;
 use App\Entity\DomainEntity;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -14,6 +15,18 @@ class DomainEntityRepository extends ServiceEntityRepository
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, DomainEntity::class);
+    }
+
+    public function setDomainEntityAsDeleted(Domain $domain)
+    {
+        return $this->createQueryBuilder('de')
+            ->update()
+            ->set('de.deletedAt', ':now')
+            ->where('de.domain = :domain')
+            ->andWhere('de.deletedAt IS NOT NULL')
+            ->setParameter('now', new \DateTimeImmutable())
+            ->setParameter('domain', $domain)
+            ->getQuery()->execute();
     }
 
     //    /**
