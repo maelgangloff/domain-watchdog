@@ -75,13 +75,13 @@ class DomainTest extends KernelTestCase
         /** @var EntityManagerInterface $entityManager */
         $entityManager = self::getContainer()->get(EntityManagerInterface::class);
         /** @var Tld $arpaTld */
-        $arpaTld = $entityManager->getRepository(Tld::class)->find('arpa');
+        $arpaTld = $entityManager->getReference(Tld::class, 'arpa');
 
         $now = new \DateTimeImmutable();
 
         // Domain deleted
         $domainDeleted = (new Domain())
-            ->setLdhName((new UuidV4())->toString())
+            ->setLdhName((new UuidV4())->toString().'.arpa')
             ->setTld($arpaTld)
             ->setDeleted(true);
 
@@ -89,7 +89,7 @@ class DomainTest extends KernelTestCase
 
         // Domain with future expiration event
         $domainExpirationEvent = (new Domain())
-            ->setLdhName((new UuidV4())->toString())
+            ->setLdhName((new UuidV4())->toString().'.arpa')
             ->setTld($arpaTld)
             ->addEvent(
                 (new DomainEvent())
@@ -102,7 +102,7 @@ class DomainTest extends KernelTestCase
 
         // Domain with pending delete status
         $domainPendingDelete = (new Domain())
-            ->setLdhName((new UuidV4())->toString())
+            ->setLdhName((new UuidV4())->toString().'.arpa')
             ->setTld($arpaTld)
             ->setStatus(['pending delete']);
 
@@ -116,7 +116,7 @@ class DomainTest extends KernelTestCase
 
         // Domain in redemption period
         $domainRedemption = (new Domain())
-            ->setLdhName((new UuidV4())->toString())
+            ->setLdhName((new UuidV4())->toString().'.arpa')
             ->setTld($arpaTld)
             ->setStatus(['redemption period']);
 
@@ -130,7 +130,7 @@ class DomainTest extends KernelTestCase
 
         // Domain with deletion event today
         $domainDeletionToday = (new Domain())
-            ->setLdhName((new UuidV4())->toString())
+            ->setLdhName((new UuidV4())->toString().'.arpa')
             ->setTld($arpaTld)
             ->setStatus(['pending delete'])
             ->addEvent(
@@ -144,7 +144,7 @@ class DomainTest extends KernelTestCase
 
         // Domain with status but not enough data
         $domainNotEnoughData = (new Domain())
-            ->setLdhName((new UuidV4())->toString())
+            ->setLdhName((new UuidV4())->toString().'.arpa')
             ->setTld($arpaTld)
             ->setStatus(['pending delete']);
 
