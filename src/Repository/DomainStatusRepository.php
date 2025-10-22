@@ -17,7 +17,7 @@ class DomainStatusRepository extends ServiceEntityRepository
         parent::__construct($registry, DomainStatus::class);
     }
 
-    public function findNewDomainStatus(Domain $domain, \DateTimeImmutable $updatedAt)
+    public function findNewDomainStatus(Domain $domain, \DateTimeImmutable $updatedAt): ?DomainStatus
     {
         return $this->createQueryBuilder('ds')
             ->select()
@@ -26,6 +26,18 @@ class DomainStatusRepository extends ServiceEntityRepository
             ->orderBy('ds.createdAt', 'DESC')
             ->setParameter('domain', $domain)
             ->setParameter('date', $updatedAt)
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
+
+    public function findLastDomainStatus(Domain $domain): ?DomainStatus
+    {
+        return $this->createQueryBuilder('ds')
+            ->select()
+            ->where('ds.domain = :domain')
+            ->setParameter('domain', $domain)
+            ->orderBy('ds.createdAt', 'DESC')
+            ->setMaxResults(1)
             ->getQuery()
             ->getOneOrNullResult();
     }

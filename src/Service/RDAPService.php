@@ -80,7 +80,8 @@ class RDAPService
         private readonly StatService $statService,
         private readonly InfluxdbService $influxService,
         #[Autowire(param: 'influxdb_enabled')]
-        private readonly bool $influxdbEnabled, private readonly DomainStatusRepository $domainStatusRepository,
+        private readonly bool $influxdbEnabled,
+        private readonly DomainStatusRepository $domainStatusRepository,
     ) {
     }
 
@@ -721,14 +722,7 @@ class RDAPService
     private function calculateDaysFromStatus(Domain $domain, \DateTimeImmutable $now): ?int
     {
         /** @var ?DomainStatus $lastStatus */
-        $lastStatus = $this->domainStatusRepository->createQueryBuilder('ds')
-            ->select()
-            ->where('ds.domain = :domain')
-            ->setParameter('domain', $domain)
-            ->orderBy('ds.createdAt', 'DESC')
-            ->setMaxResults(1)
-            ->getQuery()
-            ->getOneOrNullResult();
+        $lastStatus = $this->domainStatusRepository->findLastDomainStatus($domain);
 
         if (null === $lastStatus) {
             return null;
