@@ -33,12 +33,12 @@ final class AutoRegisterDomainProviderTest extends ApiTestCase
         $client = AutoRegisterDomainProviderTest::createClientWithCredentials(AutoRegisterDomainProviderTest::getToken(UserFactory::createOne()));
 
         $mockedDomain = $this->getMockBuilder(Domain::class)->getMock();
-        $mockedDomain->method('isToBeUpdated')->willReturn(false);
 
         $mockedDomainRepository = $this->createMock(DomainRepository::class);
         $mockedDomainRepository->method('findOneBy')->willReturn($mockedDomain);
 
         $rdapServiceMocked = $this->createMock(RDAPService::class);
+        $rdapServiceMocked->method('isToBeUpdated')->willReturn(false);
         $rdapServiceMocked->expects(self::never())->method('registerDomain');
 
         $container = static::getContainer();

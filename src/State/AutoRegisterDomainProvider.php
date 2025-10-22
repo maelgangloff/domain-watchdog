@@ -6,9 +6,14 @@ use ApiPlatform\Metadata\Operation;
 use ApiPlatform\State\ProviderInterface;
 use App\Entity\Domain;
 use App\Entity\WatchList;
+use App\Exception\DomainNotFoundException;
+use App\Exception\MalformedDomainException;
+use App\Exception\TldNotSupportedException;
+use App\Exception\UnknownRdapServerException;
 use App\Message\SendDomainEventNotif;
 use App\Repository\DomainRepository;
 use App\Service\RDAPService;
+use Doctrine\ORM\OptimisticLockException;
 use Psr\Log\LoggerInterface;
 use Random\Randomizer;
 use Symfony\Bundle\SecurityBundle\Security;
@@ -16,8 +21,14 @@ use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpKernel\Exception\TooManyRequestsHttpException;
 use Symfony\Component\HttpKernel\KernelInterface;
+use Symfony\Component\Messenger\Exception\ExceptionInterface;
 use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\RateLimiter\RateLimiterFactory;
+use Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface;
+use Symfony\Contracts\HttpClient\Exception\DecodingExceptionInterface;
+use Symfony\Contracts\HttpClient\Exception\RedirectionExceptionInterface;
+use Symfony\Contracts\HttpClient\Exception\ServerExceptionInterface;
+use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 
 readonly class AutoRegisterDomainProvider implements ProviderInterface
 {
@@ -34,6 +45,20 @@ readonly class AutoRegisterDomainProvider implements ProviderInterface
     ) {
     }
 
+    /**
+     * @throws RedirectionExceptionInterface
+     * @throws DomainNotFoundException
+     * @throws TldNotSupportedException
+     * @throws DecodingExceptionInterface
+     * @throws ClientExceptionInterface
+     * @throws OptimisticLockException
+     * @throws TransportExceptionInterface
+     * @throws MalformedDomainException
+     * @throws ServerExceptionInterface
+     * @throws UnknownRdapServerException
+     * @throws ExceptionInterface
+     * @throws \Exception
+     */
     public function provide(Operation $operation, array $uriVariables = [], array $context = []): object|array|null
     {
         $userId = $this->security->getUser()->getUserIdentifier();
@@ -51,7 +76,7 @@ readonly class AutoRegisterDomainProvider implements ProviderInterface
         // If the domain name exists in the database, recently updated and not important, we return the stored Domain
         if (null !== $domain
             && !$domain->getDeleted()
-            && !$domain->isToBeUpdated(true, true)
+            && !$this->RDAPService->isToBeUpdated($domain, true, true)
             && ($request && !filter_var($request->get('forced', false), FILTER_VALIDATE_BOOLEAN))
         ) {
             $this->logger->debug('It is not necessary to update the domain name', [

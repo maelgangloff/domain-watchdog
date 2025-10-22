@@ -9,6 +9,7 @@ use App\Entity\User;
 use App\Entity\WatchList;
 use App\Repository\DomainEventRepository;
 use App\Repository\WatchListRepository;
+use App\Service\CalendarService;
 use App\Service\RDAPService;
 use Doctrine\Common\Collections\Collection;
 use Eluceo\iCal\Domain\Entity\Calendar;
@@ -30,7 +31,7 @@ class WatchListController extends AbstractController
     public function __construct(
         private readonly WatchListRepository $watchListRepository,
         private readonly DomainEventRepository $domainEventRepository,
-        private readonly RDAPService $RDAPService,
+        private readonly RDAPService $RDAPService, private readonly CalendarService $calendarService,
     ) {
     }
 
@@ -74,7 +75,7 @@ class WatchListController extends AbstractController
 
         /** @var Domain $domain */
         foreach ($watchList->getDomains()->getIterator() as $domain) {
-            foreach ($domain->getDomainCalendarEvents() as $event) {
+            foreach ($this->calendarService->getDomainCalendarEvents($domain) as $event) {
                 $calendar->addEvent($event);
             }
         }

@@ -14,18 +14,6 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-use Eluceo\iCal\Domain\Entity\Attendee;
-use Eluceo\iCal\Domain\Entity\Event;
-use Eluceo\iCal\Domain\Enum\EventStatus;
-use Eluceo\iCal\Domain\ValueObject\Category;
-use Eluceo\iCal\Domain\ValueObject\Date;
-use Eluceo\iCal\Domain\ValueObject\EmailAddress;
-use Eluceo\iCal\Domain\ValueObject\SingleDay;
-use Eluceo\iCal\Domain\ValueObject\Timestamp;
-use Sabre\VObject\EofException;
-use Sabre\VObject\InvalidDataException;
-use Sabre\VObject\ParseException;
-use Sabre\VObject\Reader;
 use Symfony\Component\Serializer\Attribute\Groups;
 use Symfony\Component\Serializer\Attribute\SerializedName;
 
@@ -387,7 +375,7 @@ class Domain
      *
      * @throws \Exception
      */
-    protected function isToBeWatchClosely(): bool
+    public function isToBeWatchClosely(): bool
     {
         $status = $this->getStatus();
         if ((!empty($status) && count(array_intersect($status, self::IMPORTANT_STATUS))) || $this->getDeleted()) {
@@ -402,47 +390,6 @@ class Domain
         usort($events, fn (DomainEvent $e1, DomainEvent $e2) => $e2->getDate() <=> $e1->getDate());
 
         return !empty($events) && in_array($events[0]->getAction(), self::IMPORTANT_EVENTS);
-    }
-
-    /**
-     * Returns true if one or more of these conditions are met:
-     * - It has been more than 7 days since the domain name was last updated
-     * - It has been more than 12 minutes and the domain name has statuses that suggest it is not stable
-     * - It has been more than 1 day and the domain name is blocked in DNS
-     *
-     * @throws \Exception
-     */
-    public function isToBeUpdated(bool $fromUser = true, bool $intensifyLastDay = false): bool
-    {
-        $updatedAtDiff = $this->getUpdatedAt()->diff(new \DateTimeImmutable());
-
-        if ($updatedAtDiff->days >= 7) {
-            return true;
-        }
-
-        if ($this->getDeleted()) {
-            return $fromUser;
-        }
-
-        $expiresIn = $this->getExpiresInDays();
-
-        if ($intensifyLastDay && (0 === $expiresIn || 1 === $expiresIn)) {
-            return true;
-        }
-
-        $minutesDiff = $updatedAtDiff->h * 60 + $updatedAtDiff->i;
-        if (($minutesDiff >= 12 || $fromUser) && $this->isToBeWatchClosely()) {
-            return true;
-        }
-
-        if (
-            count(array_intersect($this->getStatus(), ['auto renew period', 'client hold', 'server hold'])) > 0
-            && $updatedAtDiff->days >= 1
-        ) {
-            return true;
-        }
-
-        return false;
     }
 
     /**
@@ -537,72 +484,6 @@ class Domain
         }
 
         return $this;
-    }
-
-    /**
-     * @return Event[]
-     *
-     * @throws ParseException
-     * @throws EofException
-     * @throws InvalidDataException
-     * @throws \Exception
-     */
-    public function getDomainCalendarEvents(): array
-    {
-        $events = [];
-        $attendees = [];
-
-        /* @var DomainEntity $entity */
-        foreach ($this->getDomainEntities()->filter(fn (DomainEntity $domainEntity) => !$domainEntity->getDeletedAt())->getIterator() as $domainEntity) {
-            $jCard = $domainEntity->getEntity()->getJCard();
-
-            if (empty($jCard)) {
-                continue;
-            }
-
-            $vCardData = Reader::readJson($jCard);
-
-            if (empty($vCardData->EMAIL) || empty($vCardData->FN)) {
-                continue;
-            }
-
-            $email = (string) $vCardData->EMAIL;
-
-            if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-                continue;
-            }
-
-            $attendees[] = (new Attendee(new EmailAddress($email)))->setDisplayName((string) $vCardData->FN);
-        }
-
-        /** @var DomainEvent $event */
-        foreach ($this->getEvents()->filter(fn (DomainEvent $e) => $e->getDate()->diff(new \DateTimeImmutable('now'))->y <= 10)->getIterator() as $event) {
-            $events[] = (new Event())
-                ->setLastModified(new Timestamp($this->getUpdatedAt()))
-                ->setStatus(EventStatus::CONFIRMED())
-                ->setSummary($this->getLdhName().': '.$event->getAction())
-                ->addCategory(new Category($event->getAction()))
-                ->setAttendees($attendees)
-                ->setOccurrence(new SingleDay(new Date($event->getDate()))
-                );
-        }
-
-        $expiresInDays = $this->getExpiresInDays();
-
-        if (null !== $expiresInDays) {
-            $events[] = (new Event())
-                ->setLastModified(new Timestamp($this->getUpdatedAt()))
-                ->setStatus(EventStatus::CONFIRMED())
-                ->setSummary($this->getLdhName().': estimated WHOIS release date')
-                ->addCategory(new Category('release'))
-                ->setAttendees($attendees)
-                ->setOccurrence(new SingleDay(new Date(
-                    (new \DateTimeImmutable())->setTime(0, 0)->add(new \DateInterval('P'.$expiresInDays.'D'))
-                ))
-                );
-        }
-
-        return $events;
     }
 
     #[Groups(['domain:item', 'domain:list'])]

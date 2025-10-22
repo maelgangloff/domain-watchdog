@@ -788,6 +788,47 @@ class RDAPService
         ]);
     }
 
+    /**
+     * Returns true if one or more of these conditions are met:
+     * - It has been more than 7 days since the domain name was last updated
+     * - It has been more than 12 minutes and the domain name has statuses that suggest it is not stable
+     * - It has been more than 1 day and the domain name is blocked in DNS
+     *
+     * @throws \Exception
+     */
+    public function isToBeUpdated(Domain $domain, bool $fromUser = true, bool $intensifyLastDay = false): bool
+    {
+        $updatedAtDiff = $domain->getUpdatedAt()->diff(new \DateTimeImmutable());
+
+        if ($updatedAtDiff->days >= 7) {
+            return true;
+        }
+
+        if ($domain->getDeleted()) {
+            return $fromUser;
+        }
+
+        $expiresIn = $this->getExpiresInDays($domain);
+
+        if ($intensifyLastDay && (0 === $expiresIn || 1 === $expiresIn)) {
+            return true;
+        }
+
+        $minutesDiff = $updatedAtDiff->h * 60 + $updatedAtDiff->i;
+        if (($minutesDiff >= 12 || $fromUser) && $domain->isToBeWatchClosely()) {
+            return true;
+        }
+
+        if (
+            count(array_intersect($domain->getStatus(), ['auto renew period', 'client hold', 'server hold'])) > 0
+            && $updatedAtDiff->days >= 1
+        ) {
+            return true;
+        }
+
+        return false;
+    }
+
     /*
        private function calculateDaysFromEvents(\DateTimeImmutable $now): ?int
        {

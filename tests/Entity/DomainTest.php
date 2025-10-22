@@ -8,6 +8,7 @@ use App\Entity\Domain;
 use App\Entity\DomainEvent;
 use App\Entity\DomainStatus;
 use App\Exception\MalformedDomainException;
+use App\Service\RDAPService;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
@@ -49,9 +50,6 @@ final class DomainTest extends TestCase
         );
     }
 
-    /**
-     * @throws \Exception
-     */
     public function testGetExpiresInDays(): void
     {
         $this->assertNull(
@@ -235,17 +233,21 @@ final class DomainTest extends TestCase
         array $status,
         bool $expected,
     ): void {
-        $mock = $this->getMockBuilder(Domain::class)
-            ->onlyMethods(['getUpdatedAt', 'getDeleted', 'getExpiresInDays', 'isToBeWatchClosely', 'getStatus'])
+        $rdapServiceMock = $this->getMockBuilder(RDAPService::class)
+            ->onlyMethods(['getExpiresInDays'])
             ->getMock();
 
-        $mock->method('getUpdatedAt')->willReturn($updatedAt);
-        $mock->method('getDeleted')->willReturn($deleted);
-        $mock->method('getExpiresInDays')->willReturn($expiresIn);
-        $mock->method('isToBeWatchClosely')->willReturn($watchClosely);
-        $mock->method('getStatus')->willReturn($status);
+        $domainMock = $this->getMockBuilder(Domain::class)
+            ->onlyMethods(['getUpdatedAt', 'getDeleted', 'isToBeWatchClosely', 'getStatus'])
+            ->getMock();
 
-        $result = $mock->isToBeUpdated($fromUser, $intensifyLastDay);
+        $domainMock->method('getUpdatedAt')->willReturn($updatedAt);
+        $domainMock->method('getDeleted')->willReturn($deleted);
+        $rdapServiceMock->method('getExpiresInDays')->willReturn($expiresIn);
+        $domainMock->method('isToBeWatchClosely')->willReturn($watchClosely);
+        $domainMock->method('getStatus')->willReturn($status);
+
+        $result = $rdapServiceMock->isToBeUpdated($domainMock, $fromUser, $intensifyLastDay);
 
         $this->assertEquals($expected, $result);
     }

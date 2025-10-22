@@ -96,7 +96,7 @@ final readonly class UpdateDomainsFromWatchlistHandler
          */
 
         /** @var Domain $domain */
-        foreach ($watchList->getDomains()->filter(fn ($domain) => $domain->isToBeUpdated(false, null !== $watchList->getConnector())) as $domain
+        foreach ($watchList->getDomains()->filter(fn ($domain) => $this->RDAPService->isToBeUpdated($domain, false, null !== $watchList->getConnector())) as $domain
         ) {
             $updatedAt = $domain->getUpdatedAt();
             $deleted = $domain->getDeleted();
