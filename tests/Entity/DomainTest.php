@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Tests\Entity;
 
-use ApiPlatform\Symfony\Bundle\Test\ApiTestCase;
 use App\Entity\Domain;
 use App\Entity\DomainEvent;
 use App\Entity\DomainStatus;
@@ -16,9 +15,10 @@ use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Exception\ORMException;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\DependsExternal;
+use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\Uid\UuidV4;
 
-class DomainTest extends ApiTestCase
+class DomainTest extends KernelTestCase
 {
     public function testIsRedemptionPeriod(): void
     {

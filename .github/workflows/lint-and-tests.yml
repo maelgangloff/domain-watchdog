@@ -24,7 +24,7 @@ jobs:
             -   name: Set up PHP
                 uses: shivammathur/setup-php@v2
                 with:
-                    php-version: '8.3'
+                    php-version: '8.4'
                     extensions: mbstring, xml, intl, curl, iconv, pdo_pgsql, sodium, zip, http
 
             -   name: Cache Composer dependencies
@@ -67,7 +67,7 @@ jobs:
             -   name: Set up PHP
                 uses: shivammathur/setup-php@v2
                 with:
-                    php-version: '8.3'
+                    php-version: '8.4'
 
             -   name: Run PHPStan
                 run: vendor/bin/phpstan analyse
@@ -94,7 +94,7 @@ jobs:
             -   name: Set up PHP
                 uses: shivammathur/setup-php@v2
                 with:
-                    php-version: '8.3'
+                    php-version: '8.4'
 
             -   name: Run PHP-CS-Fixer
                 run: vendor/bin/php-cs-fixer fix --dry-run --diff
@@ -136,7 +136,7 @@ jobs:
             -   name: Set up PHP
                 uses: shivammathur/setup-php@v2
                 with:
-                    php-version: '8.3'
+                    php-version: '8.4'
                     extensions: mbstring, xml, intl, curl, iconv, pdo_pgsql, sodium, zip, http
 
             -   name: Prepare database
