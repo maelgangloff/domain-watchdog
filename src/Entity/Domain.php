@@ -148,6 +148,8 @@ class Domain
     #[Groups(['domain:item'])]
     private Collection $dnsKey;
 
+    private ?int $expiresInDays;
+
     private const IMPORTANT_EVENTS = [EventAction::Deletion->value, EventAction::Expiration->value];
     private const IMPORTANT_STATUS = [
         'redemption period',
@@ -508,122 +510,6 @@ class Domain
     }
 
     /**
-     * @throws \DateMalformedIntervalStringException
-     */
-    private function calculateDaysFromStatus(\DateTimeImmutable $now): ?int
-    {
-        $lastStatus = $this->getDomainStatuses()->first();
-        if (false === $lastStatus) {
-            return null;
-        }
-
-        if ($this->isPendingDelete() && (
-            in_array('pending delete', $lastStatus->getAddStatus())
-            || in_array('redemption period', $lastStatus->getDeleteStatus()))
-        ) {
-            return self::daysBetween($now, $lastStatus->getCreatedAt()->add(new \DateInterval('P'. 5 .'D')));
-        }
-
-        if ($this->isRedemptionPeriod()
-            && in_array('redemption period', $lastStatus->getAddStatus())
-        ) {
-            return self::daysBetween($now, $lastStatus->getCreatedAt()->add(new \DateInterval('P'.(30 + 5).'D')));
-        }
-
-        return null;
-    }
-
-    /*
-    private function calculateDaysFromEvents(\DateTimeImmutable $now): ?int
-    {
-        $lastChangedEvent = $this->getEvents()->findFirst(fn (int $i, DomainEvent $e) => !$e->getDeleted() && EventAction::LastChanged->value === $e->getAction());
-        if (null === $lastChangedEvent) {
-            return null;
-        }
-
-        if ($this->isRedemptionPeriod()) {
-            return self::daysBetween($now, $lastChangedEvent->getDate()->add(new \DateInterval('P'.(30 + 5).'D')));
-        }
-        if ($this->isPendingDelete()) {
-            return self::daysBetween($now, $lastChangedEvent->getDate()->add(new \DateInterval('P'. 5 .'D')));
-        }
-
-        return null;
-    }
-    */
-
-    private static function daysBetween(\DateTimeImmutable $start, \DateTimeImmutable $end): int
-    {
-        $interval = $start->setTime(0, 0)->diff($end->setTime(0, 0));
-
-        return $interval->invert ? -$interval->days : $interval->days;
-    }
-
-    private static function returnExpiresIn(array $guesses): ?int
-    {
-        $filteredGuesses = array_filter($guesses, function ($value) {
-            return null !== $value;
-        });
-
-        if (empty($filteredGuesses)) {
-            return null;
-        }
-
-        return max(min($filteredGuesses), 0);
-    }
-
-    /**
-     * @throws \Exception
-     */
-    private function getRelevantDates(): array
-    {
-        $expiredAt = $deletedAt = null;
-        foreach ($this->getEvents()->getIterator() as $event) {
-            if (!$event->getDeleted()) {
-                if ('expiration' === $event->getAction()) {
-                    $expiredAt = $event->getDate();
-                } elseif ('deletion' === $event->getAction()) {
-                    $deletedAt = $event->getDate();
-                }
-            }
-        }
-
-        return [$expiredAt, $deletedAt];
-    }
-
-    /**
-     * @throws \Exception
-     */
-    #[Groups(['domain:item', 'domain:list'])]
-    public function getExpiresInDays(): ?int
-    {
-        if ($this->getDeleted()) {
-            return null;
-        }
-
-        $now = new \DateTimeImmutable();
-        [$expiredAt, $deletedAt] = $this->getRelevantDates();
-
-        if ($expiredAt) {
-            $guess = self::daysBetween($now, $expiredAt->add(new \DateInterval('P'.(45 + 30 + 5).'D')));
-        }
-
-        if ($deletedAt) {
-            // It has been observed that AFNIC, on the last day, adds a "deleted" event and removes the redemption period status.
-            if (0 === self::daysBetween($now, $deletedAt) && $this->isPendingDelete()) {
-                return 0;
-            }
-
-            $guess = self::daysBetween($now, $deletedAt->add(new \DateInterval('P'. 30 .'D')));
-        }
-
-        return self::returnExpiresIn([
-            $guess ?? null,
-            $this->calculateDaysFromStatus($now),
-        ]);
-    }
-
-    /**
      * @return Collection<int, DnsKey>
      */
     public function getDnsKey(): Collection
@@ -717,5 +603,18 @@ class Domain
         }
 
         return $events;
+    }
+
+    #[Groups(['domain:item', 'domain:list'])]
+    public function getExpiresInDays(): ?int
+    {
+        return $this->expiresInDays;
+    }
+
+    public function setExpiresInDays(?int $expiresInDays): static
+    {
+        $this->expiresInDays = $expiresInDays;
+
+        return $this;
     }
 }

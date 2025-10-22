@@ -17,17 +17,18 @@ class DomainEventRepository extends ServiceEntityRepository
         parent::__construct($registry, DomainEvent::class);
     }
 
-    public function findLastExpirationDomainEvent(Domain $domain)
+    public function findLastDomainEvent(Domain $domain, string $action)
     {
         return $this->createQueryBuilder('de')
             ->select()
             ->where('de.domain = :domain')
-            ->andWhere('de.action = \'expiration\'')
+            ->andWhere('de.action = :action')
             ->andWhere('de.deleted = FALSE')
             ->orderBy('de.date', 'DESC')
             ->setMaxResults(1)
             ->getQuery()
             ->setParameter('domain', $domain)
+            ->setParameter('action', $action)
             ->getOneOrNullResult();
     }
 

@@ -9,6 +9,7 @@ use App\Entity\User;
 use App\Entity\WatchList;
 use App\Repository\DomainEventRepository;
 use App\Repository\WatchListRepository;
+use App\Service\RDAPService;
 use Doctrine\Common\Collections\Collection;
 use Eluceo\iCal\Domain\Entity\Calendar;
 use Eluceo\iCal\Presentation\Component\Property;
@@ -29,6 +30,7 @@ class WatchListController extends AbstractController
     public function __construct(
         private readonly WatchListRepository $watchListRepository,
         private readonly DomainEventRepository $domainEventRepository,
+        private readonly RDAPService $RDAPService,
     ) {
     }
 
@@ -110,9 +112,10 @@ class WatchListController extends AbstractController
             /** @var Domain $domain */
             foreach ($watchList->getDomains()->getIterator() as $domain) {
                 /** @var DomainEvent|null $exp */
-                $exp = $this->domainEventRepository->findLastExpirationDomainEvent($domain);
+                $exp = $this->domainEventRepository->findLastDomainEvent($domain, 'expiration');
 
                 if (!$domain->getDeleted() && null !== $exp && !in_array($domain, $domains)) {
+                    $domain->setExpiresInDays($this->RDAPService->getExpiresInDays($domain));
                     $domains[] = $domain;
                 }
             }

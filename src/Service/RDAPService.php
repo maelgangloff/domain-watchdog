@@ -23,6 +23,7 @@ use App\Exception\UnknownRdapServerException;
 use App\Repository\DomainEntityRepository;
 use App\Repository\DomainEventRepository;
 use App\Repository\DomainRepository;
+use App\Repository\DomainStatusRepository;
 use App\Repository\EntityEventRepository;
 use App\Repository\EntityRepository;
 use App\Repository\IcannAccreditationRepository;
@@ -79,7 +80,7 @@ class RDAPService
         private readonly StatService $statService,
         private readonly InfluxdbService $influxService,
         #[Autowire(param: 'influxdb_enabled')]
-        private readonly bool $influxdbEnabled,
+        private readonly bool $influxdbEnabled, private readonly DomainStatusRepository $domainStatusRepository,
     ) {
     }
 
@@ -715,5 +716,114 @@ class RDAPService
                 'ldhName' => $domain->getLdhName(),
             ]);
         }
+    }
+
+    private function calculateDaysFromStatus(Domain $domain, \DateTimeImmutable $now): ?int
+    {
+        /** @var ?DomainStatus $lastStatus */
+        $lastStatus = $this->domainStatusRepository->createQueryBuilder('ds')
+            ->select()
+            ->where('ds.domain = :domain')
+            ->setParameter('domain', $domain)
+            ->orderBy('ds.createdAt', 'DESC')
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getOneOrNullResult();
+
+        if (null === $lastStatus) {
+            return null;
+        }
+
+        if ($domain->isPendingDelete() && (
+            in_array('pending delete', $lastStatus->getAddStatus())
+            || in_array('redemption period', $lastStatus->getDeleteStatus()))
+        ) {
+            return self::daysBetween($now, $lastStatus->getCreatedAt()->add(new \DateInterval('P'. 5 .'D')));
+        }
+
+        if ($domain->isRedemptionPeriod()
+            && in_array('redemption period', $lastStatus->getAddStatus())
+        ) {
+            return self::daysBetween($now, $lastStatus->getCreatedAt()->add(new \DateInterval('P'.(30 + 5).'D')));
+        }
+
+        return null;
+    }
+
+    private function getRelevantDates(Domain $domain): array
+    {
+        /** @var ?DomainEvent $expirationEvent */
+        $expirationEvent = $this->domainEventRepository->findLastDomainEvent($domain, 'expiration');
+        /** @var ?DomainEvent $deletionEvent */
+        $deletionEvent = $this->domainEventRepository->findLastDomainEvent($domain, 'deletion');
+
+        return [$expirationEvent?->getDate(), $deletionEvent?->getDate()];
+    }
+
+    public function getExpiresInDays(Domain $domain): ?int
+    {
+        if ($domain->getDeleted()) {
+            return null;
+        }
+
+        $now = new \DateTimeImmutable();
+        [$expiredAt, $deletedAt] = $this->getRelevantDates($domain);
+
+        if ($expiredAt) {
+            $guess = self::daysBetween($now, $expiredAt->add(new \DateInterval('P'.(45 + 30 + 5).'D')));
+        }
+
+        if ($deletedAt) {
+            // It has been observed that AFNIC, on the last day, adds a "deleted" event and removes the redemption period status.
+            if (0 === self::daysBetween($now, $deletedAt) && $domain->isPendingDelete()) {
+                return 0;
+            }
+
+            $guess = self::daysBetween($now, $deletedAt->add(new \DateInterval('P'. 30 .'D')));
+        }
+
+        return self::returnExpiresIn([
+            $guess ?? null,
+            $this->calculateDaysFromStatus($domain, $now),
+        ]);
+    }
+
+    /*
+       private function calculateDaysFromEvents(\DateTimeImmutable $now): ?int
+       {
+           $lastChangedEvent = $this->getEvents()->findFirst(fn (int $i, DomainEvent $e) => !$e->getDeleted() && EventAction::LastChanged->value === $e->getAction());
+           if (null === $lastChangedEvent) {
+               return null;
+           }
+
+           if ($this->isRedemptionPeriod()) {
+               return self::daysBetween($now, $lastChangedEvent->getDate()->add(new \DateInterval('P'.(30 + 5).'D')));
+           }
+           if ($this->isPendingDelete()) {
+               return self::daysBetween($now, $lastChangedEvent->getDate()->add(new \DateInterval('P'. 5 .'D')));
+           }
+
+           return null;
+       }
+       */
+
+    private static function daysBetween(\DateTimeImmutable $start, \DateTimeImmutable $end): int
+    {
+        $interval = $start->setTime(0, 0)->diff($end->setTime(0, 0));
+
+        return $interval->invert ? -$interval->days : $interval->days;
+    }
+
+    private static function returnExpiresIn(array $guesses): ?int
+    {
+        $filteredGuesses = array_filter($guesses, function ($value) {
+            return null !== $value;
+        });
+
+        if (empty($filteredGuesses)) {
+            return null;
+        }
+
+        return max(min($filteredGuesses), 0);
     }
 }
