@@ -10,9 +10,9 @@ use App\Entity\DomainStatus;
 use App\Exception\MalformedDomainException;
 use App\Service\RDAPService;
 use PHPUnit\Framework\Attributes\DataProvider;
-use PHPUnit\Framework\TestCase;
+use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
-final class DomainTest extends TestCase
+final class DomainTest extends KernelTestCase
 {
     public function testIsRedemptionPeriod(): void
     {
@@ -234,6 +234,7 @@ final class DomainTest extends TestCase
         bool $expected,
     ): void {
         $rdapServiceMock = $this->getMockBuilder(RDAPService::class)
+            ->disableOriginalConstructor()
             ->onlyMethods(['getExpiresInDays'])
             ->getMock();
 
