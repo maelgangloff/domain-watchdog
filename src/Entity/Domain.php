@@ -512,7 +512,7 @@ class Domain
      */
     private function calculateDaysFromStatus(\DateTimeImmutable $now): ?int
     {
-        $lastStatus = $this->getDomainStatuses()->last();
+        $lastStatus = $this->getDomainStatuses()->first();
         if (false === $lastStatus) {
             return null;
         }
