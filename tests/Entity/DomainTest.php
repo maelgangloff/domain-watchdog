@@ -74,7 +74,8 @@ class DomainTest extends KernelTestCase
     {
         /** @var EntityManagerInterface $entityManager */
         $entityManager = self::getContainer()->get(EntityManagerInterface::class);
-        $arpaTld = $entityManager->getReference(Tld::class, 'arpa');
+        /** @var Tld $arpaTld */
+        $arpaTld = $entityManager->getRepository(Tld::class)->find('arpa');
 
         $now = new \DateTimeImmutable();
 
