@@ -127,7 +127,7 @@ class Domain
 
     #[ORM\Column(nullable: false, options: ['default' => false])]
     #[Groups(['domain:item', 'domain:list'])]
-    private ?bool $delegationSigned = null;
+    private bool $delegationSigned = false;
 
     /**
      * @var Collection<int, DnsKey>
