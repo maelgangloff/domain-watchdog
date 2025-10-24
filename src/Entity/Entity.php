@@ -13,7 +13,7 @@ use Symfony\Component\Serializer\Attribute\SerializedName;
 
 #[ORM\Entity(repositoryClass: EntityRepository::class)]
 #[ORM\UniqueConstraint(
-    columns: ['tld_id', 'handle']
+    columns: ['tld_id', 'handle', 'from_accredited_registrar_id']
 )]
 #[ApiResource(
     operations: [
@@ -95,6 +95,9 @@ class Entity
     #[ORM\ManyToOne(inversedBy: 'entities')]
     #[Groups(['entity:list', 'entity:item', 'domain:item'])]
     private ?IcannAccreditation $icannAccreditation = null;
+
+    #[ORM\ManyToOne]
+    private ?IcannAccreditation $fromAccreditedRegistrar = null;
 
     public function __construct()
     {
@@ -261,6 +264,18 @@ class Entity
     public function setIcannAccreditation(?IcannAccreditation $icannAccreditation): static
     {
         $this->icannAccreditation = $icannAccreditation;
+
+        return $this;
+    }
+
+    public function getFromAccreditedRegistrar(): ?IcannAccreditation
+    {
+        return $this->fromAccreditedRegistrar;
+    }
+
+    public function setFromAccreditedRegistrar(?IcannAccreditation $fromAccreditedRegistrar): static
+    {
+        $this->fromAccreditedRegistrar = $fromAccreditedRegistrar;
 
         return $this;
     }

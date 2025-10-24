@@ -12,6 +12,7 @@ use App\Entity\DomainEvent;
 use App\Entity\DomainStatus;
 use App\Entity\Entity;
 use App\Entity\EntityEvent;
+use App\Entity\IcannAccreditation;
 use App\Entity\Nameserver;
 use App\Entity\NameserverEntity;
 use App\Entity\RdapServer;
@@ -49,6 +50,7 @@ use Symfony\Contracts\HttpClient\ResponseInterface;
 class RDAPService
 {
     public const ENTITY_HANDLE_BLACKLIST = [
+        'REDACTED',
         'REDACTED_FOR_PRIVACY',
         'ANO00-FRNIC',
         'not applicable',
@@ -117,7 +119,7 @@ class RDAPService
      * @throws UnknownRdapServerException
      * @throws \Exception
      */
-    public function registerDomain(string $fqdn): Domain
+    public function registerDomain(string $fqdn, ?IcannAccreditation $icannAccreditation = null): Domain
     {
         $idnDomain = RDAPService::convertToIdn($fqdn);
         $tld = $this->getTld($idnDomain);
@@ -126,10 +128,11 @@ class RDAPService
             'ldhName' => $idnDomain,
         ]);
 
-        $rdapServer = $this->fetchRdapServer($tld);
         $domain = $this->domainRepository->findOneBy(['ldhName' => $idnDomain]);
 
-        $rdapData = $this->fetchRdapResponse($rdapServer, $idnDomain, $domain);
+        $rdapServer = $icannAccreditation ? (new RdapServer())->setUrl($icannAccreditation->getRdapBaseUrl()) : $this->fetchRdapServer($tld);
+
+        $rdapData = $this->fetchRdapResponse($rdapServer, $idnDomain, $domain, null === $icannAccreditation);
         $this->em->beginTransaction();
 
         if (null === $domain) {
@@ -139,25 +142,49 @@ class RDAPService
 
         $this->em->lock($domain, LockMode::PESSIMISTIC_WRITE);
 
-        $this->updateDomainStatus($domain, $rdapData);
+        if (null === $icannAccreditation) {
+            $this->updateDomainStatus($domain, $rdapData);
 
-        if (in_array('free', $domain->getStatus())) {
-            throw DomainNotFoundException::fromDomain($idnDomain);
+            if (in_array('free', $domain->getStatus())) {
+                throw DomainNotFoundException::fromDomain($idnDomain);
+            }
+
+            $domain
+                ->setRdapServer($rdapServer)
+                ->setDelegationSigned(isset($rdapData['secureDNS']['delegationSigned']) && $rdapData['secureDNS']['delegationSigned']);
+
+            $this->updateDomainHandle($domain, $rdapData);
+
+            $this->updateDomainEvents($domain, $rdapData);
+
+            $this->updateDomainEntities($domain, $rdapData);
+
+            $this->updateDomainNameservers($domain, $rdapData);
+            $this->updateDomainDsData($domain, $rdapData);
+
+            $domain->setDeleted(false)->updateTimestamps();
+
+            /** @var ?DomainEntity $registrar */
+            $registrar = $this->domainEntityRepository->getDomainEntityFromDomainAndRoles($domain, ['registrar']);
+
+            if (null !== $registrar?->getEntity()?->getIcannAccreditation()?->getRdapBaseUrl()) {
+                try {
+                    $this->registerDomain($idnDomain, $registrar->getEntity()->getIcannAccreditation());
+                } catch (DomainNotFoundException) {
+                    $this->logger->warning('Domain name exists for the registry but not for the registrar', [
+                        'ldhName' => $domain->getLdhName(),
+                        'icannAccreditation' => $registrar->getEntity()->getIcannAccreditation()->getId(),
+                    ]);
+                } catch (\Throwable) {
+                    $this->logger->error('Domain name cannot be updated from the registrar RDAP server', [
+                        'ldhName' => $domain->getLdhName(),
+                        'icannAccreditation' => $registrar->getEntity()->getIcannAccreditation()->getId(),
+                    ]);
+                }
+            }
+        } else {
+            $this->updateDomainEntities($domain, $rdapData, $icannAccreditation);
         }
-
-        $domain
-            ->setRdapServer($rdapServer)
-            ->setDelegationSigned(isset($rdapData['secureDNS']['delegationSigned']) && $rdapData['secureDNS']['delegationSigned']);
-
-        $this->updateDomainHandle($domain, $rdapData);
-
-        $this->updateDomainEvents($domain, $rdapData);
-        $this->updateDomainEntities($domain, $rdapData);
-        $this->updateDomainNameservers($domain, $rdapData);
-        $this->updateDomainDsData($domain, $rdapData);
-
-        $domain->setDeleted(false)->updateTimestamps();
-
         $this->em->flush();
         $this->em->commit();
 
@@ -240,7 +267,7 @@ class RDAPService
      * @throws ClientExceptionInterface
      * @throws \Exception
      */
-    private function fetchRdapResponse(RdapServer $rdapServer, string $idnDomain, ?Domain $domain): array
+    private function fetchRdapResponse(RdapServer $rdapServer, string $idnDomain, ?Domain $domain, bool $handleRdapException = true): array
     {
         $rdapServerUrl = $rdapServer->getUrl();
         $this->logger->info('An RDAP query to update this domain name will be made', [
@@ -254,7 +281,10 @@ class RDAPService
 
             return $req->toArray();
         } catch (\Exception $e) {
-            throw $this->handleRdapException($e, $idnDomain, $domain, $req ?? null);
+            if ($handleRdapException) {
+                throw $this->handleRdapException($e, $idnDomain, $domain, $req ?? null);
+            }
+            throw DomainNotFoundException::fromDomain($idnDomain);
         } finally {
             if ($this->influxdbEnabled && isset($req)) {
                 $this->influxService->addRdapQueryPoint($rdapServer, $idnDomain, $req->getInfo());
@@ -392,9 +422,11 @@ class RDAPService
     /**
      * @throws \Exception
      */
-    private function updateDomainEntities(Domain $domain, array $rdapData): void
+    private function updateDomainEntities(Domain $domain, array $rdapData, ?IcannAccreditation $icannAccreditation = null): void
     {
-        $this->domainEntityRepository->setDomainEntityAsDeleted($domain);
+        if (!$icannAccreditation) {
+            $this->domainEntityRepository->setDomainEntityAsDeleted($domain);
+        }
 
         if (!isset($rdapData['entities']) || !is_array($rdapData['entities'])) {
             return;
@@ -402,7 +434,11 @@ class RDAPService
 
         foreach ($rdapData['entities'] as $rdapEntity) {
             $roles = $this->extractEntityRoles($rdapData['entities'], $rdapEntity);
-            $entity = $this->registerEntity($rdapEntity, $roles, $domain->getLdhName(), $domain->getTld());
+            if ($domain->getDomainEntities()->findFirst(fn (int $i, DomainEntity $de) => count(array_intersect($de->getRoles(), $roles)) > 0)) {
+                continue;
+            }
+
+            $entity = $this->registerEntity($rdapEntity, $roles, $domain->getLdhName(), $domain->getTld(), $icannAccreditation);
 
             $domainEntity = $this->domainEntityRepository->findOneBy([
                 'domain' => $domain,
@@ -513,8 +549,8 @@ class RDAPService
                     ? $targetEntity['handle'] === $e['handle']
                     : (
                         isset($targetEntity['vcardArray']) && isset($e['vcardArray'])
-                                ? $targetEntity['vcardArray'] === $e['vcardArray']
-                                : $targetEntity === $e
+                            ? $targetEntity['vcardArray'] === $e['vcardArray']
+                            : $targetEntity === $e
                     )
             )
         );
@@ -529,7 +565,7 @@ class RDAPService
     /**
      * @throws \Exception
      */
-    private function registerEntity(array $rdapEntity, array $roles, string $domain, Tld $tld): Entity
+    private function registerEntity(array $rdapEntity, array $roles, string $domain, Tld $tld, ?IcannAccreditation $fromAccreditedRegistrar = null): Entity
     {
         /*
          * If there is no number to identify the entity, one is generated from the domain name and the roles associated with this entity
@@ -547,6 +583,7 @@ class RDAPService
         $entity = $this->entityRepository->findOneBy([
             'handle' => $rdapEntity['handle'],
             'tld' => $tld,
+            'fromAccreditedRegistrar' => $fromAccreditedRegistrar,
         ]);
 
         if (null === $entity) {
@@ -574,7 +611,7 @@ class RDAPService
             }
         }
 
-        $entity->setHandle($rdapEntity['handle'])->setIcannAccreditation($icannAccreditation);
+        $entity->setHandle($rdapEntity['handle'])->setIcannAccreditation($icannAccreditation)->setFromAccreditedRegistrar($fromAccreditedRegistrar);
 
         if (isset($rdapEntity['remarks']) && is_array($rdapEntity['remarks'])) {
             $entity->setRemarks($rdapEntity['remarks']);

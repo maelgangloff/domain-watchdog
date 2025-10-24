@@ -29,6 +29,20 @@ class DomainEntityRepository extends ServiceEntityRepository
             ->getQuery()->execute();
     }
 
+    public function getDomainEntityFromDomainAndRoles(Domain $domain, array $roles)
+    {
+        return $this->createQueryBuilder('de')
+            ->select()
+            ->where('de.deletedAt IS NULL')
+            ->andWhere('de.domain = :domain')
+            ->andWhere('JSONB_CONTAINS(de.roles, :roles) = true')
+            ->setMaxResults(1)
+            ->getQuery()
+            ->setParameter('domain', $domain)
+            ->setParameter('roles', json_encode($roles))
+            ->getOneOrNullResult();
+    }
+
     //    /**
     //     * @return DomainEntity[] Returns an array of DomainEntity objects
     //     */
