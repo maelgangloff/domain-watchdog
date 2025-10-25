@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2025-10-19 19:58+0000\n"
+"PO-Revision-Date: 2025-10-25 19:52+0000\n"
 "Last-Translator: Maël Gangloff <contact@maelgangloff.fr>\n"
 "Language-Team: German <https://weblate.vinceh121.me/projects/domain-watchdog/"
 "domain-watchdog-dashboard/de/>\n"
@@ -422,22 +422,16 @@ msgstr ".${ tld.tld } Registrierung"
 
 #: assets/components/tracking/watchlist/DisableWatchlistButton.tsx:18
 #: assets/components/tracking/watchlist/DisableWatchlistButton.tsx:26
-#, fuzzy
-#| msgid "Delete the Watchlist"
 msgid "Disable the Watchlist"
-msgstr "Löschen der Watchlist"
+msgstr "Deaktivieren der Watchlist"
 
 #: assets/components/tracking/watchlist/DisableWatchlistButton.tsx:19
-#, fuzzy
-#| msgid "Are you sure to delete this Watchlist?"
 msgid "Are you sure to disable this Watchlist?"
-msgstr "Möchten Sie diese Watchlist wirklich löschen?"
+msgstr "Möchten Sie diese Watchlist wirklich deaktivieren?"
 
 #: assets/components/tracking/watchlist/DisableWatchlistButton.tsx:29
-#, fuzzy
-#| msgid "Delete the Watchlist"
 msgid "Enable the Watchlist"
-msgstr "Löschen der Watchlist"
+msgstr "Aktivieren Sie die Beobachtungsliste"
 
 #: assets/components/tracking/watchlist/TrackedDomainTable.tsx:29
 msgid ""
