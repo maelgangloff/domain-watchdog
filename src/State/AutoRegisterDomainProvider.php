@@ -63,7 +63,7 @@ readonly class AutoRegisterDomainProvider implements ProviderInterface
      */
     public function provide(Operation $operation, array $uriVariables = [], array $context = []): object|array|null
     {
-        $fromWatchlist = Watchlist::class === $context['root_operation']?->getClass();
+        $fromWatchlist = array_key_exists('root_operation', $context) && Watchlist::class === $context['root_operation']?->getClass();
 
         $userId = $this->security->getUser()->getUserIdentifier();
         $idnDomain = RDAPService::convertToIdn($uriVariables['ldhName']);
