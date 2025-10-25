@@ -6,7 +6,6 @@ use App\Entity\Domain;
 use App\Entity\Watchlist;
 use App\Message\UpdateDomainsFromWatchlist;
 use App\MessageHandler\UpdateDomainsFromWatchlistHandler;
-use App\Service\RDAPService;
 use App\Tests\State\WatchlistUpdateProcessorTest;
 use Doctrine\ORM\EntityManagerInterface;
 use PHPUnit\Framework\Attributes\DependsExternal;
