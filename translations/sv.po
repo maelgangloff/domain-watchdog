@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "PO-Revision-Date: 2025-10-19 19:58+0000\n"
 "Last-Translator: Maël Gangloff <contact@maelgangloff.fr>\n"
-"Language-Team: Swedish <https://weblate.vinceh121.me/projects/"
-"domain-watchdog/domain-watchdog-dashboard/sv/>\n"
+"Language-Team: Swedish <https://weblate.vinceh121.me/projects/domain-"
+"watchdog/domain-watchdog-dashboard/sv/>\n"
 "Language: sv\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -332,11 +332,13 @@ msgstr "Är du säker på att du vill ta bort denna Connector?"
 
 #: assets/components/tracking/connector/ConnectorsList.tsx:43
 #: assets/components/tracking/watchlist/DeleteWatchlistButton.tsx:16
+#: assets/components/tracking/watchlist/DisableWatchlistButton.tsx:21
 msgid "Yes"
 msgstr "Ja"
 
 #: assets/components/tracking/connector/ConnectorsList.tsx:44
 #: assets/components/tracking/watchlist/DeleteWatchlistButton.tsx:17
+#: assets/components/tracking/watchlist/DisableWatchlistButton.tsx:22
 msgid "No"
 msgstr "Nej"
 
@@ -378,6 +380,16 @@ msgstr "QR-kod för iCalendar-export"
 msgid "Export events to iCalendar format"
 msgstr "Exportera händelser till iCalendar-format"
 
+#: assets/components/tracking/watchlist/CreateWatchlistButton.tsx:33
+#: assets/components/tracking/watchlist/CreateWatchlistButton.tsx:35
+msgid "Create a Watchlist"
+msgstr "Skapa en Watchlist"
+
+#: assets/components/tracking/watchlist/CreateWatchlistButton.tsx:45
+#: assets/components/tracking/watchlist/UpdateWatchlistButton.tsx:56
+msgid "Cancel"
+msgstr "Avboka"
+
 #: assets/components/tracking/watchlist/DeleteWatchlistButton.tsx:13
 #: assets/components/tracking/watchlist/DeleteWatchlistButton.tsx:21
 msgid "Delete the Watchlist"
@@ -403,6 +415,25 @@ msgstr "Register"
 #, javascript-format
 msgid ".${ tld.tld } Registry"
 msgstr ".${ tld.tld } Register"
+
+#: assets/components/tracking/watchlist/DisableWatchlistButton.tsx:18
+#: assets/components/tracking/watchlist/DisableWatchlistButton.tsx:26
+#, fuzzy
+#| msgid "Delete the Watchlist"
+msgid "Disable the Watchlist"
+msgstr "Ta bort Watchlist"
+
+#: assets/components/tracking/watchlist/DisableWatchlistButton.tsx:19
+#, fuzzy
+#| msgid "Are you sure to delete this Watchlist?"
+msgid "Are you sure to disable this Watchlist?"
+msgstr "Är du säker på att du vill ta bort den här Watchlist?"
+
+#: assets/components/tracking/watchlist/DisableWatchlistButton.tsx:29
+#, fuzzy
+#| msgid "Delete the Watchlist"
+msgid "Enable the Watchlist"
+msgstr "Ta bort Watchlist"
 
 #: assets/components/tracking/watchlist/TrackedDomainTable.tsx:29
 msgid ""
@@ -481,24 +512,20 @@ msgstr "Redigera bevakningslistan"
 msgid "Update a Watchlist"
 msgstr "Uppdatera en bevakningslista"
 
-#: assets/components/tracking/watchlist/UpdateWatchlistButton.tsx:56
-msgid "Cancel"
-msgstr "Avboka"
-
-#: assets/components/tracking/watchlist/WatchlistCard.tsx:46
+#: assets/components/tracking/watchlist/WatchlistCard.tsx:54
 msgid "This Watchlist is not linked to a Connector."
 msgstr "Denna Watchlist är inte kopplad till en Connector."
 
-#: assets/components/tracking/watchlist/WatchlistCard.tsx:51
+#: assets/components/tracking/watchlist/WatchlistCard.tsx:59
 msgid "Watchlist"
 msgstr "Watchlist"
 
-#: assets/components/tracking/watchlist/WatchlistCard.tsx:88
+#: assets/components/tracking/watchlist/WatchlistCard.tsx:97
 #: assets/components/tracking/watchlist/WatchlistForm.tsx:191
 msgid "Tracked events"
 msgstr "Spårade händelser"
 
-#: assets/components/tracking/watchlist/WatchlistCard.tsx:110
+#: assets/components/tracking/watchlist/WatchlistCard.tsx:119
 #: assets/components/tracking/watchlist/WatchlistForm.tsx:217
 msgid "Tracked EPP status"
 msgstr "Spårad EPP-status"
@@ -784,17 +811,13 @@ msgstr "Connector skapad!"
 msgid "Create a Connector"
 msgstr "Skapa en Connector"
 
-#: assets/pages/tracking/WatchlistPage.tsx:45
+#: assets/pages/tracking/WatchlistPage.tsx:42
 msgid "Watchlist created !"
 msgstr "Watchlist skapad!"
 
-#: assets/pages/tracking/WatchlistPage.tsx:57
+#: assets/pages/tracking/WatchlistPage.tsx:53
 msgid "Watchlist updated !"
 msgstr "Watchlist uppdaterad!"
-
-#: assets/pages/tracking/WatchlistPage.tsx:81
-msgid "Create a Watchlist"
-msgstr "Skapa en Watchlist"
 
 #: assets/pages/UserPage.tsx:19
 #: assets/utils/providers/forms/EppConnectorForm.tsx:129
