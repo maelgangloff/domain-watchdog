@@ -1,15 +1,15 @@
 import React, {useEffect, useState} from 'react'
-import {Card, Divider, Flex, Form, message} from 'antd'
+import {Divider, Flex, Form, message} from 'antd'
 import type {Watchlist} from '../../utils/api'
 import {getWatchlists, postWatchlist, putWatchlist} from '../../utils/api'
 import type {AxiosError} from 'axios'
 import {t} from 'ttag'
-import {WatchlistForm} from '../../components/tracking/watchlist/WatchlistForm'
 import {WatchlistsList} from '../../components/tracking/watchlist/WatchlistsList'
 import type {Connector} from '../../utils/api/connectors'
 import { getConnectors} from '../../utils/api/connectors'
 
 import {showErrorAPI} from '../../utils/functions/showErrorAPI'
+import {CreateWatchlistButton} from "../../components/tracking/watchlist/CreateWatchlistButton"
 
 interface FormValuesType {
     name?: string
@@ -20,17 +20,15 @@ interface FormValuesType {
     dsn?: string[]
 }
 
-const getRequestDataFromFormCreation = (values: FormValuesType) => {
-    const domainsURI = values.domains.map(d => '/api/domains/' + d.toLowerCase())
-    return {
-        name: values.name,
-        domains: domainsURI,
+const getRequestDataFromFormCreation = (values: FormValuesType) =>
+    ({        name: values.name,
+        domains: values.domains.map(d => '/api/domains/' + d.toLowerCase()),
         trackedEvents: values.trackedEvents,
         trackedEppStatus: values.trackedEppStatus,
         connector: values.connector !== undefined ? ('/api/connectors/' + values.connector) : undefined,
-        dsn: values.dsn
-    }
-}
+        dsn: values.dsn,
+        enabled: true
+    })
 
 export default function WatchlistPage() {
     const [form] = Form.useForm()
@@ -38,15 +36,13 @@ export default function WatchlistPage() {
     const [watchlists, setWatchlists] = useState<Watchlist[]>()
     const [connectors, setConnectors] = useState<Array<Connector & { id: string }>>()
 
-    const onCreateWatchlist = (values: FormValuesType) => {
-        postWatchlist(getRequestDataFromFormCreation(values)).then(() => {
+    const onCreateWatchlist = async (values: FormValuesType) => await postWatchlist(getRequestDataFromFormCreation(values)).then(() => {
             form.resetFields()
             refreshWatchlists()
             messageApi.success(t`Watchlist created !`)
         }).catch((e: AxiosError) => {
             showErrorAPI(e, messageApi)
         })
-    }
 
     const onUpdateWatchlist = async (values: FormValuesType & { token: string }) => await putWatchlist({
             token: values.token,
@@ -78,18 +74,18 @@ export default function WatchlistPage() {
     return (
         <Flex gap='middle' align='center' justify='center' vertical>
             {contextHolder}
-            <Card size='small' loading={connectors === undefined} title={t`Create a Watchlist`} style={{width: '100%'}}>
-                {(connectors != null) &&
-                    <WatchlistForm form={form} onFinish={onCreateWatchlist} connectors={connectors} isCreation/>}
-            </Card>
-            <Divider/>
+
             {(connectors != null) && (watchlists != null) && watchlists.length > 0 &&
-                <WatchlistsList
-                    watchlists={watchlists}
-                    onDelete={refreshWatchlists}
-                    connectors={connectors}
-                    onUpdateWatchlist={onUpdateWatchlist}
-                />}
+                <>
+                    <CreateWatchlistButton onUpdateWatchlist={onCreateWatchlist} connectors={connectors} />
+                    <Divider/>
+                    <WatchlistsList
+                        watchlists={watchlists}
+                        onChange={refreshWatchlists}
+                        connectors={connectors}
+                        onUpdateWatchlist={onUpdateWatchlist}
+                    />
+                </>}
         </Flex>
     )
 }

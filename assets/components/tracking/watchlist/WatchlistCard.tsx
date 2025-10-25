@@ -17,8 +17,9 @@ import {actionToColor} from '../../../utils/functions/actionToColor'
 import {DomainToTag} from '../../../utils/functions/DomainToTag'
 import type {Watchlist} from '../../../utils/api'
 import {eppStatusCodeToColor} from "../../../utils/functions/eppStatusCodeToColor"
+import {DisableWatchlistButton} from "./DisableWatchlistButton"
 
-export function WatchlistCard({watchlist, onUpdateWatchlist, connectors, onDelete}: {
+export function WatchlistCard({watchlist, onUpdateWatchlist, connectors, onChange}: {
     watchlist: Watchlist
     onUpdateWatchlist: (values: {
         domains: string[],
@@ -27,7 +28,7 @@ export function WatchlistCard({watchlist, onUpdateWatchlist, connectors, onDelet
         token: string
     }) => Promise<void>
     connectors: Array<Connector & { id: string }>
-    onDelete: () => void
+    onChange: () => void
 }) {
     const rdapEventNameTranslated = rdapEventNameTranslation()
     const rdapEventDetailTranslated = rdapEventDetailTranslation()
@@ -36,7 +37,14 @@ export function WatchlistCard({watchlist, onUpdateWatchlist, connectors, onDelet
     return (
         <>
             <Card
+                aria-disabled={true}
                 type='inner'
+                style={{
+                    width: '100%',
+                    opacity: watchlist.enabled ? 1 : 0.5,
+                    filter: watchlist.enabled ? 'none' : 'grayscale(0.7)',
+                    transition: 'all 0.3s ease',
+                }}
                 title={<>
                     {
                         (watchlist.connector != null)
@@ -52,7 +60,6 @@ export function WatchlistCard({watchlist, onUpdateWatchlist, connectors, onDelet
                     </Tooltip>
                 </>}
                 size='small'
-                style={{width: '100%'}}
                 extra={
                     <Space size='middle'>
                         <ViewDiagramWatchlistButton token={watchlist.token}/>
@@ -65,7 +72,9 @@ export function WatchlistCard({watchlist, onUpdateWatchlist, connectors, onDelet
                             connectors={connectors}
                         />
 
-                        <DeleteWatchlistButton watchlist={watchlist} onDelete={onDelete}/>
+                        <DisableWatchlistButton watchlist={watchlist} onChange={onChange}
+                                                enabled={watchlist.enabled}/>
+                        <DeleteWatchlistButton watchlist={watchlist} onDelete={onChange}/>
                     </Space>
                 }
             >

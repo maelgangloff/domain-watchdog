@@ -25,6 +25,14 @@ class WatchlistRepository extends ServiceEntityRepository
             ->getQuery()->getSingleScalarResult();
     }
 
+    public function getEnabledWatchlist()
+    {
+        return $this->createQueryBuilder('w')
+            ->select()
+            ->where('w.isEnabled = true')
+            ->getQuery()->execute();
+    }
+
     //    /**
     //     * @return Watchlist[] Returns an array of Watchlist objects
     //     */

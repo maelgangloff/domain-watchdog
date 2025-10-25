@@ -6,6 +6,7 @@ use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\Delete;
 use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\GetCollection;
+use ApiPlatform\Metadata\Patch;
 use ApiPlatform\Metadata\Post;
 use ApiPlatform\Metadata\Put;
 use App\Repository\WatchlistRepository;
@@ -90,6 +91,12 @@ use Symfony\Component\Validator\Constraints as Assert;
             processor: WatchlistUpdateProcessor::class,
         ),
         new Put(
+            normalizationContext: ['groups' => 'watchlist:list'],
+            denormalizationContext: ['groups' => ['watchlist:update']],
+            security: 'object.getUser() == user',
+            processor: WatchlistUpdateProcessor::class,
+        ),
+        new Patch(
             normalizationContext: ['groups' => 'watchlist:list'],
             denormalizationContext: ['groups' => ['watchlist:update']],
             security: 'object.getUser() == user',
@@ -207,6 +214,10 @@ class Watchlist
         new Assert\NotBlank(),
     ])]
     private array $trackedEppStatus = [];
+
+    #[ORM\Column(type: Types::BOOLEAN)]
+    #[Groups(['watchlist:list', 'watchlist:item', 'watchlist:create', 'watchlist:update'])]
+    private ?bool $enabled = null;
 
     public function __construct()
     {
@@ -329,6 +340,18 @@ class Watchlist
     public function setTrackedEppStatus(array $trackedEppStatus): static
     {
         $this->trackedEppStatus = $trackedEppStatus;
+
+        return $this;
+    }
+
+    public function isEnabled(): ?bool
+    {
+        return $this->enabled;
+    }
+
+    public function setEnabled(bool $enabled): static
+    {
+        $this->enabled = $enabled;
 
         return $this;
     }

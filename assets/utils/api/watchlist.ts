@@ -32,6 +32,18 @@ export async function postWatchlist(watchlist: WatchlistRequest) {
     return response.data
 }
 
+export async function patchWatchlist(token: string, watchlist: Partial<WatchlistRequest>) {
+    const response = await request<{ token: string }>({
+        method: 'PATCH',
+        url: 'watchlists/' + token,
+        data: watchlist,
+        headers: {
+            'Content-Type': 'application/merge-patch+json'
+        }
+    })
+    return response.data
+}
+
 export async function deleteWatchlist(token: string): Promise<void> {
     await request({
         method: 'DELETE',

@@ -31,7 +31,7 @@ final readonly class ProcessWatchlistTriggerHandler
          */
 
         $randomizer = new Randomizer();
-        $watchlists = $randomizer->shuffleArray($this->watchlistRepository->findAll());
+        $watchlists = $randomizer->shuffleArray($this->watchlistRepository->getEnabledWatchlist());
 
         /** @var Watchlist $watchlist */
         foreach ($watchlists as $watchlist) {

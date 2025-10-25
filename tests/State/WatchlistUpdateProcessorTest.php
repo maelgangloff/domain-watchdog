@@ -46,6 +46,7 @@ final class WatchlistUpdateProcessorTest extends ApiTestCase
             'name' => 'My modified Watchlist',
             'trackedEvents' => ['last changed'],
             'trackedEppStatus' => [],
+            'enabled' => true
         ]]);
         $this->assertResponseIsSuccessful();
         $this->assertMatchesResourceItemJsonSchema(Watchlist::class);
@@ -64,6 +65,7 @@ final class WatchlistUpdateProcessorTest extends ApiTestCase
             'trackedEvents' => ['last changed', 'transfer', 'expiration', 'deletion'],
             'trackedEppStatus' => ['redemption period', 'pending delete', 'client hold', 'server hold'],
             'connector' => $connectorId,
+            'enabled' => true,
         ]]);
 
         return $client;

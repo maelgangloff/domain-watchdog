@@ -1,15 +1,17 @@
-import {Button, Drawer, Form, Typography} from 'antd'
+import {Button, Drawer, Form} from 'antd'
 import {t} from 'ttag'
 import {WatchlistForm} from './WatchlistForm'
 import React, {useState} from 'react'
-import {EditOutlined} from '@ant-design/icons'
 import type {Connector} from '../../../utils/api/connectors'
-import type {Watchlist} from '../../../utils/api'
 import useBreakpoint from "../../../hooks/useBreakpoint"
 
-export function UpdateWatchlistButton({watchlist, onUpdateWatchlist, connectors}: {
-    watchlist: Watchlist
-    onUpdateWatchlist: (values: { domains: string[], trackedEvents: string[], trackedEppStatus: string[], token: string }) => Promise<void>
+export function CreateWatchlistButton({onUpdateWatchlist, connectors}: {
+    onUpdateWatchlist: (values: {
+        domains: string[],
+        trackedEvents: string[],
+        trackedEppStatus: string[],
+        token: string
+    }) => Promise<void>
     connectors: Array<Connector & { id: string }>
 }) {
     const [form] = Form.useForm()
@@ -26,24 +28,11 @@ export function UpdateWatchlistButton({watchlist, onUpdateWatchlist, connectors}
 
     return (
         <>
-            <Typography.Link>
-                <EditOutlined
-                    title={t`Edit the Watchlist`} onClick={() => {
-                    showDrawer()
-                    form.setFields([
-                        {name: 'token', value: watchlist.token},
-                        {name: 'name', value: watchlist.name},
-                        {name: 'connector', value: watchlist.connector?.id},
-                        {name: 'domains', value: watchlist.domains.map(d => d.ldhName)},
-                        {name: 'trackedEvents', value: watchlist.trackedEvents},
-                        {name: 'trackedEppStatus', value: watchlist.trackedEppStatus},
-                        {name: 'dsn', value: watchlist.dsn}
-                    ])
-                }}
-                />
-            </Typography.Link>
+            <Button type='default' block onClick={() => {
+                showDrawer()
+            }}>{t`Create a Watchlist`}</Button>
             <Drawer
-                title={t`Update a Watchlist`}
+                title={t`Create a Watchlist`}
                 width={sm ? '100%' : '80%'}
                 onClose={onClose}
                 open={open}
@@ -62,8 +51,7 @@ export function UpdateWatchlistButton({watchlist, onUpdateWatchlist, connectors}
                         onUpdateWatchlist(values).then(onClose).catch(() => setLoading(false))
                     }}
                     connectors={connectors}
-                    isCreation={false}
-                    watchlist={watchlist}
+                    isCreation
                 />
             </Drawer>
         </>

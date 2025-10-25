@@ -84,6 +84,7 @@ export interface WatchlistRequest {
     trackedEppStatus?: string[]
     connector?: string
     dsn?: string[]
+    enabled?: boolean
 }
 
 export interface Watchlist {
@@ -100,6 +101,7 @@ export interface Watchlist {
         createdAt: string
     }
     createdAt: string
+    enabled: boolean
 }
 
 export interface InstanceConfig {
