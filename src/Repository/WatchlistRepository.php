@@ -29,7 +29,7 @@ class WatchlistRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('w')
             ->select()
-            ->where('w.isEnabled = true')
+            ->where('w.enabled = true')
             ->getQuery()->execute();
     }
 
