@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Domain;
 use App\Entity\Tld;
+use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -49,6 +50,22 @@ class DomainRepository extends ServiceEntityRepository
             ->where('d.tld IN (SELECT t FROM '.Tld::class.' t WHERE t.deletedAt IS NOT NULL)')
             ->setParameter('deleted', true)
             ->getQuery()->execute();
+    }
+
+    public function getMyTrackedDomains(User $user): array
+    {
+        return $this->createQueryBuilder('d')
+            ->select('d')
+            ->distinct()
+            ->join('d.watchLists', 'w')
+            ->join('d.events', 'de')
+            ->where('w.user = :user')
+            ->andWhere('d.deleted = false')
+            ->andWhere("de.action = 'expiration'")
+            ->andWhere('de.deleted = false')
+            ->getQuery()
+            ->setParameter('user', $user)
+            ->execute();
     }
 
     //    /**
