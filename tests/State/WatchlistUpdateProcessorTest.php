@@ -46,13 +46,32 @@ final class WatchlistUpdateProcessorTest extends ApiTestCase
             'name' => 'My modified Watchlist',
             'trackedEvents' => ['last changed'],
             'trackedEppStatus' => [],
-            'enabled' => true
+            'enabled' => true,
         ]]);
         $this->assertResponseIsSuccessful();
         $this->assertMatchesResourceItemJsonSchema(Watchlist::class);
         $data = $response->toArray();
         $this->assertCount(2, $data['domains']);
         $this->assertCount(1, $data['trackedEvents']);
+    }
+
+    #[DependsExternal(RDAPServiceTest::class, 'testUpdateRdapServers')]
+    public function testPartialUpdateWatchlist(): void
+    {
+        $client = self::createUserAndWatchlist();
+        $response = $client->request('GET', '/api/watchlists');
+        $token = $response->toArray()['hydra:member'][0]['token'];
+
+        $response = $client->request('PATCH', '/api/watchlists/'.$token, [
+            'headers' => ['Content-Type' => 'application/merge-patch+json'],
+            'json' => [
+                'enabled' => false,
+            ],
+        ]);
+        $this->assertResponseIsSuccessful();
+        $this->assertMatchesResourceItemJsonSchema(Watchlist::class);
+        $data = $response->toArray();
+        $this->assertFalse($data['enabled']);
     }
 
     public static function createUserAndWatchlist(?Client $client = null, array $domains = ['/api/domains/example.com'], ?string $connectorId = null): Client
