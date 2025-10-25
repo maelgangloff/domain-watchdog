@@ -13,6 +13,7 @@ use App\Exception\UnknownRdapServerException;
 use App\Message\SendDomainEventNotif;
 use App\Repository\DomainRepository;
 use App\Service\RDAPService;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\OptimisticLockException;
 use Psr\Log\LoggerInterface;
 use Random\Randomizer;
@@ -42,6 +43,7 @@ readonly class AutoRegisterDomainProvider implements ProviderInterface
         private DomainRepository $domainRepository,
         private MessageBusInterface $bus,
         private RequestStack $requestStack,
+        private EntityManagerInterface $em,
     ) {
     }
 
@@ -61,6 +63,8 @@ readonly class AutoRegisterDomainProvider implements ProviderInterface
      */
     public function provide(Operation $operation, array $uriVariables = [], array $context = []): object|array|null
     {
+        $fromWatchlist = Watchlist::class === $context['root_operation']?->getClass();
+
         $userId = $this->security->getUser()->getUserIdentifier();
         $idnDomain = RDAPService::convertToIdn($uriVariables['ldhName']);
 
@@ -97,7 +101,30 @@ readonly class AutoRegisterDomainProvider implements ProviderInterface
         }
 
         $updatedAt = null === $domain ? new \DateTimeImmutable('now') : $domain->getUpdatedAt();
-        $domain = $this->RDAPService->registerDomain($idnDomain);
+
+        try {
+            $domain = $this->RDAPService->registerDomain($idnDomain);
+        } catch (DomainNotFoundException $exception) {
+            if (!$fromWatchlist) {
+                throw $exception;
+            }
+
+            $domain = $this->domainRepository->findOneBy(['ldhName' => $idnDomain]);
+            if (null !== $domain) {
+                return $domain;
+            }
+
+            $domain = (new Domain())
+                ->setLdhName($idnDomain)
+                ->setTld($this->RDAPService->getTld($idnDomain))
+                ->setDelegationSigned(false)
+                ->setDeleted(true);
+
+            $this->em->persist($domain);
+            $this->em->flush();
+
+            return $domain;
+        }
 
         $randomizer = new Randomizer();
         $watchlists = $randomizer->shuffleArray($domain->getWatchlists()->toArray());

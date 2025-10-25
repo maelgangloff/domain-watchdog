@@ -330,7 +330,7 @@ class Domain
         return $this;
     }
 
-    private function setUpdatedAt(?\DateTimeImmutable $updatedAt): void
+    public function setUpdatedAt(?\DateTimeImmutable $updatedAt): void
     {
         $this->updatedAt = $updatedAt;
     }

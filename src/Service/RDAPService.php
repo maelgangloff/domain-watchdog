@@ -289,7 +289,6 @@ class RDAPService
                 }
 
                 $domain->setDeleted(true);
-                $this->em->persist($domain);
                 $this->em->flush();
             }
 
