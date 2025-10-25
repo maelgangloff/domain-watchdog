@@ -3,10 +3,10 @@
 namespace App\Tests\Controller;
 
 use ApiPlatform\Symfony\Bundle\Test\ApiTestCase;
-use App\Entity\WatchList;
+use App\Entity\Watchlist;
 use App\Tests\AuthenticatedUserTrait;
 use App\Tests\Service\RDAPServiceTest;
-use App\Tests\State\WatchListUpdateProcessorTest;
+use App\Tests\State\WatchlistUpdateProcessorTest;
 use PHPUnit\Framework\Attributes\DependsExternal;
 use Zenstruck\Foundry\Test\Factories;
 
@@ -18,12 +18,12 @@ final class WatchlistControllerTest extends ApiTestCase
     #[DependsExternal(RDAPServiceTest::class, 'testUpdateRdapServers')]
     public function testGetWatchlistCollection(): void
     {
-        $client = WatchListUpdateProcessorTest::createUserAndWatchlist();
+        $client = WatchlistUpdateProcessorTest::createUserAndWatchlist();
 
         $response = $client->request('GET', '/api/watchlists');
 
         $this->assertResponseIsSuccessful();
-        $this->assertMatchesResourceCollectionJsonSchema(WatchList::class);
+        $this->assertMatchesResourceCollectionJsonSchema(Watchlist::class);
 
         $data = $response->toArray();
         $this->assertArrayHasKey('hydra:member', $data);
@@ -33,7 +33,7 @@ final class WatchlistControllerTest extends ApiTestCase
     #[DependsExternal(RDAPServiceTest::class, 'testUpdateRdapServers')]
     public function testGetTrackedDomains()
     {
-        $client = WatchListUpdateProcessorTest::createUserAndWatchlist(null, ['/api/domains/example.org']);
+        $client = WatchlistUpdateProcessorTest::createUserAndWatchlist(null, ['/api/domains/example.org']);
         $response = $client->request('GET', '/api/tracked');
 
         $this->assertResponseIsSuccessful();
@@ -46,7 +46,7 @@ final class WatchlistControllerTest extends ApiTestCase
     #[DependsExternal(RDAPServiceTest::class, 'testUpdateRdapServers')]
     public function testGetWatchlistFeeds()
     {
-        $client = WatchListUpdateProcessorTest::createUserAndWatchlist();
+        $client = WatchlistUpdateProcessorTest::createUserAndWatchlist();
 
         $response = $client->request('GET', '/api/watchlists');
         $token = $response->toArray()['hydra:member'][0]['token'];

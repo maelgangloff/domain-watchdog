@@ -8,8 +8,8 @@ use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Metadata\Post;
 use ApiPlatform\Metadata\Put;
-use App\Repository\WatchListRepository;
-use App\State\WatchListUpdateProcessor;
+use App\Repository\WatchlistRepository;
+use App\State\WatchlistUpdateProcessor;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
@@ -19,7 +19,7 @@ use Symfony\Component\Serializer\Attribute\SerializedName;
 use Symfony\Component\Uid\Uuid;
 use Symfony\Component\Validator\Constraints as Assert;
 
-#[ORM\Entity(repositoryClass: WatchListRepository::class)]
+#[ORM\Entity(repositoryClass: WatchlistRepository::class)]
 #[ApiResource(
     shortName: 'Watchlist',
     operations: [
@@ -87,13 +87,13 @@ use Symfony\Component\Validator\Constraints as Assert;
         new Post(
             normalizationContext: ['groups' => 'watchlist:list'],
             denormalizationContext: ['groups' => 'watchlist:create'],
-            processor: WatchListUpdateProcessor::class,
+            processor: WatchlistUpdateProcessor::class,
         ),
         new Put(
             normalizationContext: ['groups' => 'watchlist:list'],
             denormalizationContext: ['groups' => ['watchlist:update']],
             security: 'object.getUser() == user',
-            processor: WatchListUpdateProcessor::class,
+            processor: WatchlistUpdateProcessor::class,
         ),
         new Delete(
             security: 'object.getUser() == user'
@@ -146,9 +146,9 @@ use Symfony\Component\Validator\Constraints as Assert;
         ),
     ],
 )]
-class WatchList
+class Watchlist
 {
-    #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'watchLists')]
+    #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'watchlists')]
     #[ORM\JoinColumn(nullable: false, onDelete: 'CASCADE')]
     public ?User $user = null;
 
@@ -160,14 +160,14 @@ class WatchList
     /**
      * @var Collection<int, Domain>
      */
-    #[ORM\ManyToMany(targetEntity: Domain::class, inversedBy: 'watchLists')]
-    #[ORM\JoinTable(name: 'watch_lists_domains',
-        joinColumns: [new ORM\JoinColumn(name: 'watch_list_token', referencedColumnName: 'token', onDelete: 'CASCADE')],
+    #[ORM\ManyToMany(targetEntity: Domain::class, inversedBy: 'watchlists')]
+    #[ORM\JoinTable(name: 'watchlist_domains',
+        joinColumns: [new ORM\JoinColumn(name: 'watchlist_token', referencedColumnName: 'token', onDelete: 'CASCADE')],
         inverseJoinColumns: [new ORM\JoinColumn(name: 'domain_ldh_name', referencedColumnName: 'ldh_name', onDelete: 'CASCADE')])]
     #[Groups(['watchlist:create', 'watchlist:list', 'watchlist:item', 'watchlist:update'])]
     private Collection $domains;
 
-    #[ORM\ManyToOne(inversedBy: 'watchLists')]
+    #[ORM\ManyToOne(inversedBy: 'watchlists')]
     #[Groups(['watchlist:list', 'watchlist:item', 'watchlist:create', 'watchlist:update'])]
     private ?Connector $connector = null;
 

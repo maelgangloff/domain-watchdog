@@ -6,7 +6,7 @@ use ApiPlatform\Metadata\Operation;
 use ApiPlatform\State\ProcessorInterface;
 use App\Entity\Domain;
 use App\Entity\User;
-use App\Entity\WatchList;
+use App\Entity\Watchlist;
 use App\Notifier\TestChatNotification;
 use App\Service\ChatNotificationService;
 use App\Service\Provider\AbstractProvider;
@@ -19,7 +19,7 @@ use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\Serializer\Exception\ExceptionInterface;
 
-readonly class WatchListUpdateProcessor implements ProcessorInterface
+readonly class WatchlistUpdateProcessor implements ProcessorInterface
 {
     public function __construct(
         private Security $security,
@@ -34,9 +34,9 @@ readonly class WatchListUpdateProcessor implements ProcessorInterface
     }
 
     /**
-     * @param WatchList $data
+     * @param Watchlist $data
      *
-     * @return WatchList
+     * @return Watchlist
      *
      * @throws ExceptionInterface
      * @throws \Exception
@@ -57,12 +57,12 @@ readonly class WatchListUpdateProcessor implements ProcessorInterface
                 throw new AccessDeniedHttpException('You have exceeded the maximum number of domain names allowed in this Watchlist');
             }
 
-            $userWatchLists = $user->getWatchLists();
+            $userWatchlists = $user->getWatchlists();
 
             /** @var Domain[] $trackedDomains */
-            $trackedDomains = $userWatchLists
-                ->filter(fn (WatchList $wl) => $wl->getToken() !== $data->getToken())
-                ->reduce(fn (array $acc, WatchList $wl) => [...$acc, ...$wl->getDomains()->toArray()], []);
+            $trackedDomains = $userWatchlists
+                ->filter(fn (Watchlist $wl) => $wl->getToken() !== $data->getToken())
+                ->reduce(fn (array $acc, Watchlist $wl) => [...$acc, ...$wl->getDomains()->toArray()], []);
 
             /** @var Domain $domain */
             foreach ($data->getDomains()->getIterator() as $domain) {

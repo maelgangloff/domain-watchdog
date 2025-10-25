@@ -82,10 +82,10 @@ class Domain
     private array $status = [];
 
     /**
-     * @var Collection<int, WatchList>
+     * @var Collection<int, Watchlist>
      */
-    #[ORM\ManyToMany(targetEntity: WatchList::class, mappedBy: 'domains', cascade: ['persist'])]
-    private Collection $watchLists;
+    #[ORM\ManyToMany(targetEntity: Watchlist::class, mappedBy: 'domains', cascade: ['persist'])]
+    private Collection $watchlists;
 
     /**
      * @var Collection<int, Nameserver>
@@ -154,7 +154,7 @@ class Domain
     {
         $this->events = new ArrayCollection();
         $this->domainEntities = new ArrayCollection();
-        $this->watchLists = new ArrayCollection();
+        $this->watchlists = new ArrayCollection();
         $this->nameservers = new ArrayCollection();
         $this->updatedAt = new \DateTimeImmutable('now');
         $this->createdAt = $this->updatedAt;
@@ -263,27 +263,27 @@ class Domain
     }
 
     /**
-     * @return Collection<int, WatchList>
+     * @return Collection<int, Watchlist>
      */
-    public function getWatchLists(): Collection
+    public function getWatchlists(): Collection
     {
-        return $this->watchLists;
+        return $this->watchlists;
     }
 
-    public function addWatchList(WatchList $watchList): static
+    public function addWatchlists(Watchlist $watchlist): static
     {
-        if (!$this->watchLists->contains($watchList)) {
-            $this->watchLists->add($watchList);
-            $watchList->addDomain($this);
+        if (!$this->watchlists->contains($watchlist)) {
+            $this->watchlists->add($watchlist);
+            $watchlist->addDomain($this);
         }
 
         return $this;
     }
 
-    public function removeWatchList(WatchList $watchList): static
+    public function removeWatchlists(Watchlist $watchlist): static
     {
-        if ($this->watchLists->removeElement($watchList)) {
-            $watchList->removeDomain($this);
+        if ($this->watchlists->removeElement($watchlist)) {
+            $watchlist->removeDomain($this);
         }
 
         return $this;

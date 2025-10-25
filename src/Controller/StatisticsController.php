@@ -4,7 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Statistics;
 use App\Repository\DomainRepository;
-use App\Repository\WatchListRepository;
+use App\Repository\WatchlistRepository;
 use Psr\Cache\CacheItemPoolInterface;
 use Psr\Cache\InvalidArgumentException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -15,7 +15,7 @@ class StatisticsController extends AbstractController
     public function __construct(
         private readonly CacheItemPoolInterface $pool,
         private readonly DomainRepository $domainRepository,
-        private readonly WatchListRepository $watchListRepository,
+        private readonly WatchlistRepository $watchlistRepository,
         private readonly KernelInterface $kernel,
     ) {
     }
@@ -34,7 +34,7 @@ class StatisticsController extends AbstractController
             ->setAlertSent($this->pool->getItem('stats.alert.sent')->get() ?? 0)
 
             ->setDomainTracked(
-                $this->getCachedItem('stats.domain.tracked', fn () => $this->watchListRepository->getTrackedDomainCount())
+                $this->getCachedItem('stats.domain.tracked', fn () => $this->watchlistRepository->getTrackedDomainCount())
             )
             ->setDomainCount(
                 $this->getCachedItem('stats.domain.count', fn () => $this->domainRepository->getActiveDomainCountByTld())

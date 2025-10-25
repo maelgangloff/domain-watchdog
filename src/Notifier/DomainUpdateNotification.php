@@ -27,7 +27,7 @@ class DomainUpdateNotification extends DomainWatchdogNotification
         $ldhName = $this->domainEvent->getDomain()->getLdhName();
         $action = $this->domainEvent->getAction();
         $this->subject("Domain changed $ldhName ($action)")
-            ->content("Domain name $ldhName information has been updated ($action).")
+            ->content("Domain name $ldhName events has been updated ($action).")
             ->importance(Notification::IMPORTANCE_HIGH);
 
         return ChatMessage::fromNotification($this);
@@ -38,7 +38,7 @@ class DomainUpdateNotification extends DomainWatchdogNotification
         $ldhName = $this->domainEvent->getDomain()->getLdhName();
         $action = $this->domainEvent->getAction();
         $this->subject("Domain changed $ldhName ($action)")
-            ->content("Domain name $ldhName information has been updated ($action).")
+            ->content("Domain name $ldhName events has been updated ($action).")
             ->importance(Notification::IMPORTANCE_HIGH);
 
         return PushMessage::fromNotification($this);
@@ -52,8 +52,8 @@ class DomainUpdateNotification extends DomainWatchdogNotification
             ->from($this->sender)
             ->to($recipient->getEmail())
             ->priority(Email::PRIORITY_HIGH)
-            ->subject("Domain name $ldhName information has been updated")
-            ->htmlTemplate('emails/success/domain_updated.html.twig')
+            ->subject("Domain name $ldhName events has been updated")
+            ->htmlTemplate('emails/success/domain_event_updated.html.twig')
             ->locale('en')
             ->context([
                 'event' => $this->domainEvent,

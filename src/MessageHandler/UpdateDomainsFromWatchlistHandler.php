@@ -3,7 +3,7 @@
 namespace App\MessageHandler;
 
 use App\Entity\Domain;
-use App\Entity\WatchList;
+use App\Entity\Watchlist;
 use App\Exception\DomainNotFoundException;
 use App\Exception\TldNotSupportedException;
 use App\Exception\UnknownRdapServerException;
@@ -12,7 +12,7 @@ use App\Message\SendDomainEventNotif;
 use App\Message\UpdateDomainsFromWatchlist;
 use App\Notifier\DomainDeletedNotification;
 use App\Repository\DomainRepository;
-use App\Repository\WatchListRepository;
+use App\Repository\WatchlistRepository;
 use App\Service\ChatNotificationService;
 use App\Service\Provider\AbstractProvider;
 use App\Service\Provider\CheckDomainProviderInterface;
@@ -38,7 +38,7 @@ final readonly class UpdateDomainsFromWatchlistHandler
         string $mailerSenderEmail,
         string $mailerSenderName,
         private MessageBusInterface $bus,
-        private WatchListRepository $watchListRepository,
+        private WatchlistRepository $watchlistRepository,
         private LoggerInterface $logger,
         #[Autowire(service: 'service_container')]
         private ContainerInterface $locator,
@@ -52,29 +52,29 @@ final readonly class UpdateDomainsFromWatchlistHandler
      */
     public function __invoke(UpdateDomainsFromWatchlist $message): void
     {
-        /** @var WatchList $watchList */
-        $watchList = $this->watchListRepository->findOneBy(['token' => $message->watchListToken]);
+        /** @var Watchlist $watchlist */
+        $watchlist = $this->watchlistRepository->findOneBy(['token' => $message->watchlistToken]);
 
         $this->logger->debug('Domain names listed in the Watchlist will be updated', [
-            'watchlist' => $message->watchListToken,
+            'watchlist' => $message->watchlistToken,
         ]);
 
         /** @var AbstractProvider $connectorProvider */
-        $connectorProvider = $this->getConnectorProvider($watchList);
+        $connectorProvider = $this->getConnectorProvider($watchlist);
 
         if ($connectorProvider instanceof CheckDomainProviderInterface) {
             $this->logger->debug('Watchlist is linked to a connector', [
-                'watchlist' => $watchList->getToken(),
-                'connector' => $watchList->getConnector()->getId(),
+                'watchlist' => $watchlist->getToken(),
+                'connector' => $watchlist->getConnector()->getId(),
             ]);
 
-            $domainList = array_unique(array_map(fn (Domain $d) => $d->getLdhName(), $watchList->getDomains()->toArray()));
+            $domainList = array_unique(array_map(fn (Domain $d) => $d->getLdhName(), $watchlist->getDomains()->toArray()));
 
             try {
                 $checkedDomains = $connectorProvider->checkDomains(...$domainList);
             } catch (\Throwable $exception) {
                 $this->logger->warning('Unable to check domain names availability with this connector', [
-                    'connector' => $watchList->getConnector()->getId(),
+                    'connector' => $watchlist->getConnector()->getId(),
                     'ldhName' => $domainList,
                 ]);
 
@@ -82,7 +82,7 @@ final readonly class UpdateDomainsFromWatchlistHandler
             }
 
             foreach ($checkedDomains as $domain) {
-                $this->bus->dispatch(new OrderDomain($watchList->getToken(), $domain));
+                $this->bus->dispatch(new OrderDomain($watchlist->getToken(), $domain));
             }
 
             return;
@@ -96,7 +96,7 @@ final readonly class UpdateDomainsFromWatchlistHandler
          */
 
         /** @var Domain $domain */
-        foreach ($watchList->getDomains()->filter(fn ($domain) => $this->RDAPService->isToBeUpdated($domain, false, null !== $watchList->getConnector())) as $domain
+        foreach ($watchlist->getDomains()->filter(fn ($domain) => $this->RDAPService->isToBeUpdated($domain, false, null !== $watchlist->getConnector())) as $domain
         ) {
             $updatedAt = $domain->getUpdatedAt();
             $deleted = $domain->getDeleted();
@@ -107,22 +107,22 @@ final readonly class UpdateDomainsFromWatchlistHandler
                  * We send messages that correspond to the sending of notifications that will not be processed here.
                  */
                 $this->RDAPService->registerDomain($domain->getLdhName());
-                $this->bus->dispatch(new SendDomainEventNotif($watchList->getToken(), $domain->getLdhName(), $updatedAt));
+                $this->bus->dispatch(new SendDomainEventNotif($watchlist->getToken(), $domain->getLdhName(), $updatedAt));
             } catch (DomainNotFoundException) {
                 $newDomain = $this->domainRepository->findOneBy(['ldhName' => $domain->getLdhName()]);
 
                 if (!$deleted && null !== $newDomain && $newDomain->getDeleted()) {
                     $notification = new DomainDeletedNotification($this->sender, $domain);
-                    $this->mailer->send($notification->asEmailMessage(new Recipient($watchList->getUser()->getEmail()))->getMessage());
-                    $this->chatNotificationService->sendChatNotification($watchList, $notification);
+                    $this->mailer->send($notification->asEmailMessage(new Recipient($watchlist->getUser()->getEmail()))->getMessage());
+                    $this->chatNotificationService->sendChatNotification($watchlist, $notification);
                 }
 
-                if ($watchList->getConnector()) {
+                if ($watchlist->getConnector()) {
                     /*
                      * If the domain name no longer appears in the WHOIS AND a connector is associated with this Watchlist,
                      * this connector is used to purchase the domain name.
                      */
-                    $this->bus->dispatch(new OrderDomain($watchList->getToken(), $domain->getLdhName()));
+                    $this->bus->dispatch(new OrderDomain($watchlist->getToken(), $domain->getLdhName()));
                 }
             } catch (TldNotSupportedException|UnknownRdapServerException) {
                 /*
@@ -132,9 +132,9 @@ final readonly class UpdateDomainsFromWatchlistHandler
         }
     }
 
-    private function getConnectorProvider(WatchList $watchList): ?object
+    private function getConnectorProvider(Watchlist $watchlist): ?object
     {
-        $connector = $watchList->getConnector();
+        $connector = $watchlist->getConnector();
         if (null === $connector || null === $connector->getProvider()) {
             return null;
         }

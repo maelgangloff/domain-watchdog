@@ -5,7 +5,7 @@ namespace App\State;
 use ApiPlatform\Metadata\Operation;
 use ApiPlatform\State\ProviderInterface;
 use App\Entity\Domain;
-use App\Entity\WatchList;
+use App\Entity\Watchlist;
 use App\Exception\DomainNotFoundException;
 use App\Exception\MalformedDomainException;
 use App\Exception\TldNotSupportedException;
@@ -100,11 +100,11 @@ readonly class AutoRegisterDomainProvider implements ProviderInterface
         $domain = $this->RDAPService->registerDomain($idnDomain);
 
         $randomizer = new Randomizer();
-        $watchLists = $randomizer->shuffleArray($domain->getWatchLists()->toArray());
+        $watchlists = $randomizer->shuffleArray($domain->getWatchlists()->toArray());
 
-        /** @var WatchList $watchList */
-        foreach ($watchLists as $watchList) {
-            $this->bus->dispatch(new SendDomainEventNotif($watchList->getToken(), $domain->getLdhName(), $updatedAt));
+        /** @var Watchlist $watchlist */
+        foreach ($watchlists as $watchlist) {
+            $this->bus->dispatch(new SendDomainEventNotif($watchlist->getToken(), $domain->getLdhName(), $updatedAt));
         }
 
         return $domain;

@@ -2,20 +2,20 @@
 
 namespace App\MessageHandler;
 
-use App\Entity\WatchList;
-use App\Message\ProcessWatchListsTrigger;
+use App\Entity\Watchlist;
+use App\Message\ProcessWatchlistTrigger;
 use App\Message\UpdateDomainsFromWatchlist;
-use App\Repository\WatchListRepository;
+use App\Repository\WatchlistRepository;
 use Random\Randomizer;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 use Symfony\Component\Messenger\Exception\ExceptionInterface;
 use Symfony\Component\Messenger\MessageBusInterface;
 
 #[AsMessageHandler]
-final readonly class ProcessWatchListsTriggerHandler
+final readonly class ProcessWatchlistTriggerHandler
 {
     public function __construct(
-        private WatchListRepository $watchListRepository,
+        private WatchlistRepository $watchlistRepository,
         private MessageBusInterface $bus,
     ) {
     }
@@ -23,7 +23,7 @@ final readonly class ProcessWatchListsTriggerHandler
     /**
      * @throws ExceptionInterface
      */
-    public function __invoke(ProcessWatchListsTrigger $message): void
+    public function __invoke(ProcessWatchlistTrigger $message): void
     {
         /*
          * We shuffle the watch lists to process them in an order that we consider random.
@@ -31,11 +31,11 @@ final readonly class ProcessWatchListsTriggerHandler
          */
 
         $randomizer = new Randomizer();
-        $watchLists = $randomizer->shuffleArray($this->watchListRepository->findAll());
+        $watchlists = $randomizer->shuffleArray($this->watchlistRepository->findAll());
 
-        /** @var WatchList $watchList */
-        foreach ($watchLists as $watchList) {
-            $this->bus->dispatch(new UpdateDomainsFromWatchlist($watchList->getToken()));
+        /** @var Watchlist $watchlist */
+        foreach ($watchlists as $watchlist) {
+            $this->bus->dispatch(new UpdateDomainsFromWatchlist($watchlist->getToken()));
         }
     }
 }

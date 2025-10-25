@@ -3,7 +3,7 @@
 namespace App\Service;
 
 use App\Config\WebhookScheme;
-use App\Entity\WatchList;
+use App\Entity\Watchlist;
 use App\Exception\UnsupportedDsnSchemeException;
 use App\Notifier\DomainWatchdogNotification;
 use Symfony\Component\Notifier\Exception\TransportExceptionInterface;
@@ -21,9 +21,9 @@ readonly class ChatNotificationService
      * @throws UnsupportedDsnSchemeException
      * @throws TransportExceptionInterface
      */
-    public function sendChatNotification(WatchList $watchList, DomainWatchdogNotification $notification): void
+    public function sendChatNotification(Watchlist $watchlist, DomainWatchdogNotification $notification): void
     {
-        $webhookDsn = $watchList->getWebhookDsn();
+        $webhookDsn = $watchlist->getWebhookDsn();
 
         if (empty($webhookDsn)) {
             return;

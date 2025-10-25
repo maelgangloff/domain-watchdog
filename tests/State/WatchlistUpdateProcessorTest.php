@@ -4,14 +4,14 @@ namespace App\Tests\State;
 
 use ApiPlatform\Symfony\Bundle\Test\ApiTestCase;
 use ApiPlatform\Symfony\Bundle\Test\Client;
-use App\Entity\WatchList;
+use App\Entity\Watchlist;
 use App\Factory\UserFactory;
 use App\Tests\AuthenticatedUserTrait;
 use App\Tests\Service\RDAPServiceTest;
 use PHPUnit\Framework\Attributes\DependsExternal;
 use Zenstruck\Foundry\Test\Factories;
 
-final class WatchListUpdateProcessorTest extends ApiTestCase
+final class WatchlistUpdateProcessorTest extends ApiTestCase
 {
     use Factories;
     use AuthenticatedUserTrait;
@@ -22,7 +22,7 @@ final class WatchListUpdateProcessorTest extends ApiTestCase
         self::createUserAndWatchlist();
         $this->assertResponseIsSuccessful();
         $this->assertResponseStatusCodeSame(201);
-        $this->assertMatchesResourceItemJsonSchema(WatchList::class);
+        $this->assertMatchesResourceItemJsonSchema(Watchlist::class);
     }
 
     #[DependsExternal(RDAPServiceTest::class, 'testUpdateRdapServers')]
@@ -48,7 +48,7 @@ final class WatchListUpdateProcessorTest extends ApiTestCase
             'trackedEppStatus' => [],
         ]]);
         $this->assertResponseIsSuccessful();
-        $this->assertMatchesResourceItemJsonSchema(WatchList::class);
+        $this->assertMatchesResourceItemJsonSchema(Watchlist::class);
         $data = $response->toArray();
         $this->assertCount(2, $data['domains']);
         $this->assertCount(1, $data['trackedEvents']);

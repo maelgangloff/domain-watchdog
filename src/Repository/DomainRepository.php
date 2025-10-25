@@ -55,7 +55,7 @@ class DomainRepository extends ServiceEntityRepository
     public function getMyTrackedDomains(User $user): array
     {
         return $this->createQueryBuilder('d')
-        ->join('d.watchLists', 'w')
+        ->join('d.watchlists', 'w')
         ->where('w.user = :user')
         ->andWhere('d.deleted = false')
         ->setParameter('user', $user)

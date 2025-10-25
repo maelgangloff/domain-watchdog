@@ -30,7 +30,7 @@ readonly class ConnectorDeleteProcessor implements ProcessorInterface
      */
     public function process(mixed $data, Operation $operation, array $uriVariables = [], array $context = []): mixed
     {
-        foreach ($data->getWatchLists()->getIterator() as $watchlist) {
+        foreach ($data->getWatchlists()->getIterator() as $watchlist) {
             $watchlist->setConnector(null);
         }
 

@@ -6,9 +6,9 @@ use App\Entity\Domain;
 use App\Entity\DomainEvent;
 use App\Entity\DomainStatus;
 use App\Entity\User;
-use App\Entity\WatchList;
+use App\Entity\Watchlist;
 use App\Repository\DomainRepository;
-use App\Repository\WatchListRepository;
+use App\Repository\WatchlistRepository;
 use App\Service\CalendarService;
 use App\Service\RDAPService;
 use Doctrine\Common\Collections\Collection;
@@ -26,10 +26,10 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
-class WatchListController extends AbstractController
+class WatchlistController extends AbstractController
 {
     public function __construct(
-        private readonly WatchListRepository $watchListRepository,
+        private readonly WatchlistRepository $watchlistRepository,
         private readonly RDAPService $RDAPService,
         private readonly CalendarService $calendarService,
         private readonly DomainRepository $domainRepository,
@@ -40,17 +40,17 @@ class WatchListController extends AbstractController
         path: '/api/watchlists',
         name: 'watchlist_get_all_mine',
         defaults: [
-            '_api_resource_class' => WatchList::class,
+            '_api_resource_class' => Watchlist::class,
             '_api_operation_name' => 'get_all_mine',
         ],
         methods: ['GET']
     )]
-    public function getWatchLists(): Collection
+    public function getWatchlists(): Collection
     {
         /** @var User $user */
         $user = $this->getUser();
 
-        return $user->getWatchLists();
+        return $user->getWatchlists();
     }
 
     /**
@@ -63,26 +63,26 @@ class WatchListController extends AbstractController
         path: '/api/watchlists/{token}/calendar',
         name: 'watchlist_calendar',
         defaults: [
-            '_api_resource_class' => WatchList::class,
+            '_api_resource_class' => Watchlist::class,
             '_api_operation_name' => 'calendar',
         ]
     )]
     public function getWatchlistCalendar(string $token): Response
     {
-        /** @var WatchList $watchList */
-        $watchList = $this->watchListRepository->findOneBy(['token' => $token]);
+        /** @var Watchlist $watchlist */
+        $watchlist = $this->watchlistRepository->findOneBy(['token' => $token]);
 
         $calendar = new Calendar();
 
         /** @var Domain $domain */
-        foreach ($watchList->getDomains()->getIterator() as $domain) {
+        foreach ($watchlist->getDomains()->getIterator() as $domain) {
             foreach ($this->calendarService->getDomainCalendarEvents($domain) as $event) {
                 $calendar->addEvent($event);
             }
         }
 
         $calendarResponse = (new CalendarFactory())->createCalendar($calendar);
-        $calendarName = $watchList->getName();
+        $calendarName = $watchlist->getName();
         if (null !== $calendarName) {
             $calendarResponse->withProperty(new Property('X-WR-CALNAME', new TextValue($calendarName)));
         }
@@ -99,7 +99,7 @@ class WatchListController extends AbstractController
         path: '/api/tracked',
         name: 'watchlist_get_tracked_domains',
         defaults: [
-            '_api_resource_class' => WatchList::class,
+            '_api_resource_class' => Watchlist::class,
             '_api_operation_name' => 'get_tracked_domains',
         ]
     )]
@@ -125,14 +125,14 @@ class WatchListController extends AbstractController
         path: '/api/watchlists/{token}/rss/events',
         name: 'watchlist_rss_events',
         defaults: [
-            '_api_resource_class' => WatchList::class,
+            '_api_resource_class' => Watchlist::class,
             '_api_operation_name' => 'rss_events',
         ]
     )]
     public function getWatchlistRssEventsFeed(string $token, Request $request): Response
     {
-        /** @var WatchList $watchlist */
-        $watchlist = $this->watchListRepository->findOneBy(['token' => $token]);
+        /** @var Watchlist $watchlist */
+        $watchlist = $this->watchlistRepository->findOneBy(['token' => $token]);
 
         $feed = (new Feed())
             ->setLanguage('en')
@@ -163,14 +163,14 @@ class WatchListController extends AbstractController
         path: '/api/watchlists/{token}/rss/status',
         name: 'watchlist_rss_status',
         defaults: [
-            '_api_resource_class' => WatchList::class,
+            '_api_resource_class' => Watchlist::class,
             '_api_operation_name' => 'rss_status',
         ]
     )]
     public function getWatchlistRssStatusFeed(string $token, Request $request): Response
     {
-        /** @var WatchList $watchlist */
-        $watchlist = $this->watchListRepository->findOneBy(['token' => $token]);
+        /** @var Watchlist $watchlist */
+        $watchlist = $this->watchlistRepository->findOneBy(['token' => $token]);
 
         $feed = (new Feed())
             ->setLanguage('en')

@@ -2,7 +2,7 @@
 
 namespace App\Command;
 
-use App\Message\ProcessWatchListsTrigger;
+use App\Message\ProcessWatchlistTrigger;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -12,10 +12,10 @@ use Symfony\Component\Messenger\Exception\ExceptionInterface;
 use Symfony\Component\Messenger\MessageBusInterface;
 
 #[AsCommand(
-    name: 'app:process-watchlists',
-    description: 'Process watchlists and send emails if necessary',
+    name: 'app:process-watchlist',
+    description: 'Process watchlist and send emails if necessary',
 )]
-class ProcessWatchlistsCommand extends Command
+class ProcessWatchlistCommand extends Command
 {
     public function __construct(private readonly MessageBusInterface $bus)
     {
@@ -33,7 +33,7 @@ class ProcessWatchlistsCommand extends Command
     {
         $io = new SymfonyStyle($input, $output);
 
-        $this->bus->dispatch(new ProcessWatchListsTrigger());
+        $this->bus->dispatch(new ProcessWatchlistTrigger());
 
         $io->success('Watchlist processing triggered!');
 

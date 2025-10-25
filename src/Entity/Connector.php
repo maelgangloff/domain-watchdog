@@ -61,10 +61,10 @@ class Connector
     private array $authData = [];
 
     /**
-     * @var Collection<int, WatchList>
+     * @var Collection<int, Watchlist>
      */
-    #[ORM\OneToMany(targetEntity: WatchList::class, mappedBy: 'connector')]
-    private Collection $watchLists;
+    #[ORM\OneToMany(targetEntity: Watchlist::class, mappedBy: 'connector')]
+    private Collection $watchlists;
 
     #[Groups(['connector:list', 'watchlist:list'])]
     #[ORM\Column]
@@ -76,7 +76,7 @@ class Connector
     public function __construct()
     {
         $this->id = Uuid::v4();
-        $this->watchLists = new ArrayCollection();
+        $this->watchlists = new ArrayCollection();
     }
 
     public function getId(): ?string
@@ -121,29 +121,29 @@ class Connector
     }
 
     /**
-     * @return Collection<int, WatchList>
+     * @return Collection<int, Watchlist>
      */
-    public function getWatchLists(): Collection
+    public function getWatchlists(): Collection
     {
-        return $this->watchLists;
+        return $this->watchlists;
     }
 
-    public function addWatchList(WatchList $watchList): static
+    public function addWatchlist(Watchlist $watchlist): static
     {
-        if (!$this->watchLists->contains($watchList)) {
-            $this->watchLists->add($watchList);
-            $watchList->setConnector($this);
+        if (!$this->watchlists->contains($watchlist)) {
+            $this->watchlists->add($watchlist);
+            $watchlist->setConnector($this);
         }
 
         return $this;
     }
 
-    public function removeWatchList(WatchList $watchList): static
+    public function removeWatchlist(Watchlist $watchlist): static
     {
-        if ($this->watchLists->removeElement($watchList)) {
+        if ($this->watchlists->removeElement($watchlist)) {
             // set the owning side to null (unless already changed)
-            if ($watchList->getConnector() === $this) {
-                $watchList->setConnector(null);
+            if ($watchlist->getConnector() === $this) {
+                $watchlist->setConnector(null);
             }
         }
 
@@ -164,6 +164,6 @@ class Connector
 
     public function getWatchlistCount(): ?int
     {
-        return $this->watchLists->count();
+        return $this->watchlists->count();
     }
 }

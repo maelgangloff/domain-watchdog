@@ -66,10 +66,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $password = null;
 
     /**
-     * @var Collection<int, WatchList>
+     * @var Collection<int, Watchlist>
      */
-    #[ORM\OneToMany(targetEntity: WatchList::class, mappedBy: 'user', orphanRemoval: true)]
-    private Collection $watchLists;
+    #[ORM\OneToMany(targetEntity: Watchlist::class, mappedBy: 'user', orphanRemoval: true)]
+    private Collection $watchlists;
 
     /**
      * @var Collection<int, Connector>
@@ -91,7 +91,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function __construct()
     {
-        $this->watchLists = new ArrayCollection();
+        $this->watchlists = new ArrayCollection();
         $this->connectors = new ArrayCollection();
     }
 
@@ -168,29 +168,29 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     /**
-     * @return Collection<int, WatchList>
+     * @return Collection<int, Watchlist>
      */
-    public function getWatchLists(): Collection
+    public function getWatchlists(): Collection
     {
-        return $this->watchLists;
+        return $this->watchlists;
     }
 
-    public function addWatchList(WatchList $watchList): static
+    public function addWatchlist(Watchlist $watchlist): static
     {
-        if (!$this->watchLists->contains($watchList)) {
-            $this->watchLists->add($watchList);
-            $watchList->setUser($this);
+        if (!$this->watchlists->contains($watchlist)) {
+            $this->watchlists->add($watchlist);
+            $watchlist->setUser($this);
         }
 
         return $this;
     }
 
-    public function removeWatchList(WatchList $watchList): static
+    public function removeWatchlist(Watchlist $watchlist): static
     {
-        if ($this->watchLists->removeElement($watchList)) {
+        if ($this->watchlists->removeElement($watchlist)) {
             // set the owning side to null (unless already changed)
-            if ($watchList->getUser() === $this) {
-                $watchList->setUser(null);
+            if ($watchlist->getUser() === $this) {
+                $watchlist->setUser(null);
             }
         }
 

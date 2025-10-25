@@ -6,13 +6,13 @@ use ApiPlatform\Symfony\Bundle\Test\ApiTestCase;
 use App\Config\ConnectorProvider;
 use App\Entity\Domain;
 use App\Entity\Tld;
-use App\Entity\WatchList;
+use App\Entity\Watchlist;
 use App\Factory\UserFactory;
 use App\Message\OrderDomain;
 use App\MessageHandler\OrderDomainHandler;
 use App\Tests\Controller\ConnectorControllerTest;
 use App\Tests\Service\RDAPServiceTest;
-use App\Tests\State\WatchListUpdateProcessorTest;
+use App\Tests\State\WatchlistUpdateProcessorTest;
 use Doctrine\ORM\EntityManagerInterface;
 use PHPUnit\Framework\Attributes\DependsExternal;
 use Symfony\Component\HttpClient\Exception\ServerException;
@@ -89,12 +89,12 @@ class AbstractProviderTest extends ApiTestCase
             $entityManager = self::getContainer()->get(EntityManagerInterface::class);
 
             // Create a Watchlist with the domain name
-            WatchListUpdateProcessorTest::createUserAndWatchlist($client,
+            WatchlistUpdateProcessorTest::createUserAndWatchlist($client,
                 ['/api/domains/example.com'],
                 '/api/connectors/'.$response->toArray()['id']);
 
             $response = $client->request('GET', '/api/watchlists');
-            $watchlist = $entityManager->getRepository(WatchList::class)->findOneBy(['token' => $response->toArray()['hydra:member'][0]['token']]);
+            $watchlist = $entityManager->getRepository(Watchlist::class)->findOneBy(['token' => $response->toArray()['hydra:member'][0]['token']]);
 
             $domain = (new Domain())
                 ->setLdhName((new UuidV4()).'.com')

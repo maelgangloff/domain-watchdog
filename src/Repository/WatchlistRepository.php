@@ -2,18 +2,18 @@
 
 namespace App\Repository;
 
-use App\Entity\WatchList;
+use App\Entity\Watchlist;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceEntityRepository<WatchList>
+ * @extends ServiceEntityRepository<Watchlist>
  */
-class WatchListRepository extends ServiceEntityRepository
+class WatchlistRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, WatchList::class);
+        parent::__construct($registry, Watchlist::class);
     }
 
     public function getTrackedDomainCount()
@@ -26,7 +26,7 @@ class WatchListRepository extends ServiceEntityRepository
     }
 
     //    /**
-    //     * @return WatchList[] Returns an array of WatchList objects
+    //     * @return Watchlist[] Returns an array of Watchlist objects
     //     */
     //    public function findByExampleField($value): array
     //    {
@@ -40,7 +40,7 @@ class WatchListRepository extends ServiceEntityRepository
     //        ;
     //    }
 
-    //    public function findOneBySomeField($value): ?WatchList
+    //    public function findOneBySomeField($value): ?Watchlist
     //    {
     //        return $this->createQueryBuilder('b')
     //            ->andWhere('b.exampleField = :val')

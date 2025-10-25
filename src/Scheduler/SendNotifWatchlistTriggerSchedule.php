@@ -2,7 +2,7 @@
 
 namespace App\Scheduler;
 
-use App\Message\ProcessWatchListsTrigger;
+use App\Message\ProcessWatchlistTrigger;
 use Symfony\Component\Scheduler\Attribute\AsSchedule;
 use Symfony\Component\Scheduler\RecurringMessage;
 use Symfony\Component\Scheduler\Schedule;
@@ -10,7 +10,7 @@ use Symfony\Component\Scheduler\ScheduleProviderInterface;
 use Symfony\Contracts\Cache\CacheInterface;
 
 #[AsSchedule('notif_watchlist')]
-final readonly class SendNotifWatchListTriggerSchedule implements ScheduleProviderInterface
+final readonly class SendNotifWatchlistTriggerSchedule implements ScheduleProviderInterface
 {
     public function __construct(
         private CacheInterface $cache,
@@ -21,7 +21,7 @@ final readonly class SendNotifWatchListTriggerSchedule implements ScheduleProvid
     {
         return (new Schedule())
             ->add(
-                RecurringMessage::every('5 minutes', new ProcessWatchListsTrigger()),
+                RecurringMessage::every('5 minutes', new ProcessWatchlistTrigger()),
             )
             ->stateful($this->cache);
     }

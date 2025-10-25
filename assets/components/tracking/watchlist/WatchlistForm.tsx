@@ -33,7 +33,7 @@ export function WatchlistForm({form, connectors, onFinish, isCreation}: {
     connectors: Array<Connector & { id: string }>
     onFinish: (values: { domains: string[], trackedEvents: string[], trackedEppStatus: string[], token: string }) => void
     isCreation: boolean,
-    watchList?: Watchlist,
+    watchlist?: Watchlist,
 }) {
     const rdapEventNameTranslated = rdapEventNameTranslation()
     const rdapEventDetailTranslated = rdapEventDetailTranslation()
