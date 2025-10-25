@@ -56,11 +56,8 @@ class DomainRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('d')
         ->join('d.watchLists', 'w')
-        ->join('d.events', 'de')
         ->where('w.user = :user')
         ->andWhere('d.deleted = false')
-        ->andWhere("de.action = 'expiration'")
-        ->andWhere('de.deleted = false')
         ->setParameter('user', $user)
         ->getQuery()
         ->getResult();

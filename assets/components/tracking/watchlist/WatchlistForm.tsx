@@ -98,8 +98,8 @@ export function WatchlistForm({form, connectors, onFinish, isCreation}: {
             form={form}
             onFinish={onFinish}
             initialValues={{
-                trackedEvents: ['last changed', 'transfer', 'expiration', 'deletion'],
-                trackedEppStatus: ['redemption period', 'pending delete', 'client hold', 'server hold']
+                trackedEvents: ['last changed', 'transfer', 'deletion'],
+                trackedEppStatus: ['auto renew period', 'redemption period', 'pending delete', 'client hold', 'server hold']
         }}
         >
 
