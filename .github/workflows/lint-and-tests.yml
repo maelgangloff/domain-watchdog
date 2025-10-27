@@ -108,6 +108,7 @@ jobs:
             GANDI_PAT_TOKEN: ${{ secrets.GANDI_PAT_TOKEN }}
             NAMECOM_USERNAME: ${{ secrets.NAMECOM_USERNAME }}
             NAMECOM_PASSWORD: ${{ secrets.NAMECOM_PASSWORD }}
+            OPENPROVIDER_TOKEN: ${{ secrets.OPENPROVIDER_TOKEN }}
         services:
             postgres:
                 image: postgres
