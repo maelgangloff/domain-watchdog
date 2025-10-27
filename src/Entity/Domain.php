@@ -5,11 +5,14 @@ namespace App\Entity;
 use ApiPlatform\Metadata\ApiProperty;
 use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\GetCollection;
+use ApiPlatform\Metadata\QueryParameter;
 use App\Config\EventAction;
 use App\Exception\MalformedDomainException;
 use App\Repository\DomainRepository;
 use App\Service\RDAPService;
 use App\State\AutoRegisterDomainProvider;
+use App\State\FindDomainListFromEntityProvider;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
@@ -29,6 +32,22 @@ use Symfony\Component\Serializer\Attribute\SerializedName;
             ]
         ),
         */
+        new GetCollection(
+            uriTemplate: '/domains',
+            normalizationContext: [
+                'groups' => [
+                    'domain:list',
+                    'tld:list',
+                    'event:list',
+                    'domain:list',
+                    'event:list',
+                ],
+            ],
+            provider: FindDomainListFromEntityProvider::class,
+            parameters: [
+                'registrant' => new QueryParameter(description: 'The exact name of the registrant (case insensitive)', required: true),
+            ]
+        ),
         new Get(
             uriTemplate: '/domains/{ldhName}', // Do not delete this line, otherwise Symfony interprets the TLD of the domain name as a return type
             normalizationContext: [
