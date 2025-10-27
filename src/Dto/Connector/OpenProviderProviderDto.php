@@ -27,8 +27,4 @@ final class OpenProviderProviderDto extends DefaultProviderDto
     public int $period = 1;
 
     public string $nsGroup;
-
-    #[Assert\Choice(['off', 'on', 'default'])]
-    #[Assert\NotBlank]
-    public string $autoRenew = 'default';
 }

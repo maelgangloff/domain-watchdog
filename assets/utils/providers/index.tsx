@@ -7,6 +7,7 @@ import NamecheapConnectorForm from "./forms/NamecheapConnectorForm"
 import AutoDnsConnectorForm from "./forms/AutoDnsConnectorForm"
 import NamecomConnectorForm from "./forms/NamecomConnectorForm"
 import EppConnectorForm from "./forms/EppConnectorForm"
+import OpenProviderConnectorForm from "./forms/OpenProviderConnectorForm"
 
 export const formItemLayoutWithOutLabel = {
     wrapperCol: {
@@ -41,7 +42,11 @@ export const providersConfig: Record<ConnectorProvider, ProviderConfig> = {
         tosLink: 'https://www.name.com/policies/',
         form: NamecomConnectorForm
     },
+    [ConnectorProvider.OpenProvider]: {
+        tosLink: 'https://www.openprovider.com/legal/terms-conditions',
+        form: OpenProviderConnectorForm
+    },
     [ConnectorProvider.EPP]: {
         form: EppConnectorForm
-    }
+    },
 }

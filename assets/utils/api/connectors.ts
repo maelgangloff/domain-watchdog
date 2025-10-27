@@ -7,6 +7,7 @@ export enum ConnectorProvider {
     AutoDNS = 'autodns',
     Namecheap = 'namecheap',
     'Name.com' = 'namecom',
+    OpenProvider = 'openprovider',
     EPP = 'epp'
 }
 

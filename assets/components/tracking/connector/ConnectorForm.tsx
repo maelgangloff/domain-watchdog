@@ -53,7 +53,7 @@ export function ConnectorForm({form, onCreate}: { form: FormInstance, onCreate: 
                         <h2>{t`Choose a registrar`}</h2>
                         <Row gutter={[16, 16]} justify='center'>
                             {Object.keys(providersConfig).map((provider: string) => (
-                                <Col key={provider as ConnectorProvider} xs={24} sm={12} md={8} lg={6} xl={4}>
+                                <Col key={provider as ConnectorProvider} xs={24} sm={12} md={8} lg={6} xl={3}>
                                     <Card
                                         hoverable
                                         style={{textAlign: "center"}}
