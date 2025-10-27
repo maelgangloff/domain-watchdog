@@ -54,3 +54,4 @@ when@test:
         namecom_password: '%env(string:NAMECOM_PASSWORD)%'
         namecheap_username: '%env(string:NAMECHEAP_USERNAME)%'
         namecheap_token: '%env(string:NAMECHEAP_TOKEN)%'
+        openprovider_token: '%env(string:OPENPROVIDER_TOKEN)%'

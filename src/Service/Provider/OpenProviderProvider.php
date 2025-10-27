@@ -87,7 +87,7 @@ class OpenProviderProvider extends AbstractProvider
             // use_domicile
         ];
 
-        if (null !== $this->authData->resellerHandle) {
+        if (!empty($this->authData->resellerHandle)) {
             $payload['resellerHandle'] = $this->authData->resellerHandle;
         }
 
@@ -126,6 +126,11 @@ class OpenProviderProvider extends AbstractProvider
     protected function getSupportedTldList(): array
     {
         return [];
+    }
+
+    public function isSupported(Domain ...$domainList): bool
+    {
+        return true;
     }
 
     /**

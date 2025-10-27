@@ -74,6 +74,29 @@ class AbstractProviderTest extends ApiTestCase
         ]);
     }
 
+    // #[DependsExternal(RDAPServiceTest::class, 'testUpdateRdapServers')]
+    public function testOpenProvider()
+    {
+        $openproviderToken = static::getContainer()->getParameter('openprovider_token');
+
+        if (!$openproviderToken) {
+            $this->markTestSkipped('Missing OpenProvider token');
+        }
+
+        $this->testGenericProvider(ConnectorProvider::OPENPROVIDER, [
+            'waiveRetractationPeriod' => true,
+            'acceptConditions' => true,
+            'ownerLegalAge' => true,
+            'token' => $openproviderToken,
+            'adminHandle' => 'HANDLE',
+            'billingHandle' => 'HANDLE',
+            'ownerHandle' => 'HANDLE',
+            'techHandle' => 'HANDLE',
+            'period' => 1,
+            'nsGroup' => 'dns-openprovider',
+        ]);
+    }
+
     private function testGenericProvider(ConnectorProvider $connectorProvider, array $authData): void
     {
         try {
@@ -99,7 +122,7 @@ class AbstractProviderTest extends ApiTestCase
             $domain = (new Domain())
                 ->setLdhName((new UuidV4()).'.com')
                 ->setDeleted(true)
-                ->setTld($entityManager->getReference(Tld::class, 'fr'))
+                ->setTld($entityManager->getReference(Tld::class, 'com'))
                 ->setDelegationSigned(false);
 
             $entityManager->persist($domain);
