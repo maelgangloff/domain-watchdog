@@ -62,7 +62,7 @@ WHERE LOWER(org||fn) NOT LIKE '%redacted%'
   AND sub.tld_id IS NOT NULL
   AND (LOWER(org) = LOWER(:var) OR LOWER(fn) = LOWER(:var))
 GROUP BY COALESCE(org, fn)
-HAVING COALESCE(org, fn) != '' AND COALESCE(org, fn) != '' IS NOT NULL
+HAVING COALESCE(org, fn) != '' AND COALESCE(org, fn) IS NOT NULL
 ORDER BY cnt DESC;
 SQL;
         $query = $this->em->createNativeQuery($sql, $rsm);
