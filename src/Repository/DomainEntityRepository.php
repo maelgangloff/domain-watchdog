@@ -23,7 +23,7 @@ class DomainEntityRepository extends ServiceEntityRepository
             ->update()
             ->set('de.deletedAt', ':now')
             ->where('de.domain = :domain')
-            ->andWhere('de.deletedAt IS NOT NULL')
+            ->andWhere('de.deletedAt IS NULL')
             ->setParameter('now', new \DateTimeImmutable())
             ->setParameter('domain', $domain)
             ->getQuery()->execute();

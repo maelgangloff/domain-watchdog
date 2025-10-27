@@ -55,10 +55,10 @@ WHERE LOWER(org||fn) NOT LIKE '%redacted%'
   AND handle NOT IN ($handleBlacklist)
   AND de.roles @> '["registrant"]'
   AND sub.tld_id IS NOT NULL
-  AND (LOWER(org) = LOWER(:var) OR LOWER(fn) = LOWER(:var));
+  AND (LOWER(org) = LOWER(:registrant) OR LOWER(fn) = LOWER(:registrant));
 SQL;
         $result = $this->em->createNativeQuery($sql, $rsm)
-            ->setParameter('var', trim($request->get('registrant')))
+            ->setParameter('registrant', trim($request->get('registrant')))
             ->getOneOrNullResult();
 
         if (!$result) {
