@@ -7,10 +7,18 @@ namespace App\Tests\Entity;
 use App\Entity\Domain;
 use App\Entity\DomainEvent;
 use App\Entity\DomainStatus;
+use App\Entity\Tld;
+use App\Exception\MalformedDomainException;
+use App\Service\RDAPService;
+use App\Tests\Service\RDAPServiceTest;
+use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\Exception\ORMException;
 use PHPUnit\Framework\Attributes\DataProvider;
-use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\Attributes\DependsExternal;
+use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
+use Symfony\Component\Uid\UuidV4;
 
-final class DomainTest extends TestCase
+class DomainTest extends KernelTestCase
 {
     public function testIsRedemptionPeriod(): void
     {
@@ -49,117 +57,107 @@ final class DomainTest extends TestCase
     }
 
     /**
-     * @throws \Exception
+     * @throws MalformedDomainException
+     * @throws ORMException
      */
-    public function testGetExpiresInDays(): void
-    {
-        $this->assertNull(
-            (new Domain())
-                ->setDeleted(true)
-                ->getExpiresInDays(),
-            'No guess if the domain is flagged as deleted'
-        );
+    #[DataProvider('domainProvider')]
+    #[DependsExternal(RDAPServiceTest::class, 'testUpdateRdapServers')]
+    public function testGetExpiresInDays(
+        ?int $expected,
+        array $status,
+        ?DomainStatus $domainStatus,
+        ?DomainEvent $domainEvent,
+        bool $deleted,
+        string $message,
+    ): void {
+        /** @var EntityManagerInterface $entityManager */
+        $entityManager = self::getContainer()->get(EntityManagerInterface::class);
+        /** @var RDAPService $RDAPService */
+        $RDAPService = self::getContainer()->get(RDAPService::class);
 
-        $this->assertEquals(
-            90, // Expiration date (10 days) + Auto Renew Period (45 days) + Redemption Period (30 days) + Pending Delete (5 days)
-            (new Domain())
-                ->addEvent(
-                    (new DomainEvent())
-                        ->setDate((new \DateTimeImmutable())->add(new \DateInterval('P10D')))
-                        ->setAction('expiration')
-                        ->setDeleted(false)
-                )->getExpiresInDays(),
-            'Guess based on domain events date'
-        );
+        /** @var Tld $arpaTld */
+        $arpaTld = $entityManager->getReference(Tld::class, 'arpa');
 
-        $this->assertEquals(
-            5, // Pending Delete (5 days)
-            (new Domain())
-                ->setStatus(['pending delete'])
-                ->addDomainStatus(
-                    (new DomainStatus())
-                        ->setAddStatus(['pending delete'])
-                        ->setDeleteStatus(['active'])
-                        ->setCreatedAt(new \DateTimeImmutable())
-                        ->setDate(new \DateTimeImmutable())
-                )->getExpiresInDays(),
-            'Guess based on domain EPP status'
-        );
+        $domain = (new Domain())
+            ->setLdhName((new UuidV4())->toString().'.arpa')
+            ->setTld($arpaTld)
+            ->setDeleted($deleted)
+            ->setStatus($status);
 
-        $this->assertEquals(
-            35, // Redemption Period (15 days) + Pending Delete (5 days)
-            (new Domain())
-                ->setStatus(['redemption period'])
-                ->addDomainStatus(
-                    (new DomainStatus())
-                        ->setAddStatus(['redemption period'])
-                        ->setDeleteStatus(['active'])
-                        ->setCreatedAt(new \DateTimeImmutable())
-                        ->setDate(new \DateTimeImmutable())
-                )->getExpiresInDays(),
-            'Domain name entered in the redemption period'
-        );
+        $entityManager->persist($domain);
 
-        $this->assertEquals(
-            5, // Pending Delete (5 days)
-            (new Domain())
-                ->setStatus(['pending delete'])
-                ->addEvent(
-                    (new DomainEvent())
-                        ->setDate((new \DateTimeImmutable())->sub(new \DateInterval('P10D')))
-                        ->setAction('expiration')
-                        ->setDeleted(false)
-                )
-                ->addDomainStatus(
-                    (new DomainStatus())
-                        ->setAddStatus(['pending delete'])
-                        ->setDeleteStatus(['active'])
-                        ->setCreatedAt(new \DateTimeImmutable())
-                        ->setDate(new \DateTimeImmutable())
-                )->getExpiresInDays(),
-            'Domain name entered in the pending delete period'
-        );
+        if (null !== $domainEvent) {
+            $entityManager->persist($domainEvent);
+            $domain->addEvent($domainEvent);
+        }
 
-        $this->assertEquals(
-            1,
-            (new Domain())
-                ->setStatus(['pending delete'])
-                ->addEvent(
-                    (new DomainEvent())
-                        ->setDate((new \DateTimeImmutable())->sub(new \DateInterval('P'.(45 + 30 + 4).'D')))
-                        ->setAction('expiration')
-                        ->setDeleted(false)
-                )
-                ->addDomainStatus(
-                    (new DomainStatus())
-                        ->setAddStatus(['pending delete'])
-                        ->setDeleteStatus(['active'])
-                        ->setCreatedAt(new \DateTimeImmutable())
-                        ->setDate(new \DateTimeImmutable())
-                )->getExpiresInDays(),
-            'Guess based on domain status in priority'
-        );
+        if (null !== $domainStatus) {
+            $entityManager->persist($domainStatus);
+            $domain->addDomainStatus($domainStatus);
+        }
 
-        $this->assertNull(
-            (new Domain())->setStatus(['pending delete'])->getExpiresInDays(),
-            'Not enough data to guess'
-        );
+        $entityManager->flush();
 
-        $this->assertEquals(
-            0,
-            (new Domain())
-                ->setStatus(['pending delete'])
-                ->addEvent(
-                    (new DomainEvent())
-                        ->setDate(new \DateTimeImmutable())
-                        ->setAction('deletion')
-                        ->setDeleted(false)
-                )->getExpiresInDays(),
-            'deletion event on last day (AFNIC)'
-        );
+        $this->assertEquals($expected, $RDAPService->getExpiresInDays($domain), $message);
     }
 
-    public function testSetLdhName(): void
+    public static function domainProvider(): array
+    {
+        $now = new \DateTimeImmutable();
+
+        return [
+            [
+                null,
+                [],
+                null,
+                null,
+                true,
+                'No guess if the domain is flagged as deleted',
+            ],
+            [
+                90,
+                [],
+                null,
+                (new DomainEvent())->setDate($now->add(new \DateInterval('P10D')))->setAction('expiration')->setDeleted(false),
+                false,
+                'Guess based on domain events date',
+            ],
+            [
+                5,
+                ['pending delete'],
+                (new DomainStatus())->setDate($now)->setCreatedAt($now)->setAddStatus(['pending delete'])->setDeleteStatus(['active']),
+                null,
+                false,
+                'Guess based on domain EPP status',
+            ],
+            [
+                35,
+                ['redemption period'],
+                (new DomainStatus())->setDate($now)->setCreatedAt($now)->setAddStatus(['redemption period'])->setDeleteStatus(['active']),
+                null,
+                false,
+                'Domain name entered in the redemption period',
+            ],
+            [
+                0,
+                ['pending delete'],
+                null,
+                (new DomainEvent())->setDate($now)->setAction('deletion')->setDeleted(false),
+                false,
+                'Domain name entered in the pending delete period',
+            ],
+            [
+                null,
+                ['pending delete'],
+                null,
+                null,
+                false,
+                'Not enough data to guess',
+            ],
+        ];
+    }
+
+    public function testIdnDomainName(): void
     {
         /*
          * @see https://en.wikipedia.org/wiki/IDN_Test_TLDs
@@ -178,6 +176,12 @@ final class DomainTest extends TestCase
             (new Domain())->setLdhName('test.例え.テスト')->getLdhName(),
             'IDN FQDN'
         );
+    }
+
+    public function testInvalidDomainName()
+    {
+        $this->expectException(MalformedDomainException::class);
+        (new Domain())->setLdhName('*');
     }
 
     public static function isToBeUpdatedProvider(): array
@@ -228,17 +232,22 @@ final class DomainTest extends TestCase
         array $status,
         bool $expected,
     ): void {
-        $mock = $this->getMockBuilder(Domain::class)
-            ->onlyMethods(['getUpdatedAt', 'getDeleted', 'getExpiresInDays', 'isToBeWatchClosely', 'getStatus'])
+        $rdapServiceMock = $this->getMockBuilder(RDAPService::class)
+            ->disableOriginalConstructor()
+            ->onlyMethods(['getExpiresInDays'])
             ->getMock();
 
-        $mock->method('getUpdatedAt')->willReturn($updatedAt);
-        $mock->method('getDeleted')->willReturn($deleted);
-        $mock->method('getExpiresInDays')->willReturn($expiresIn);
-        $mock->method('isToBeWatchClosely')->willReturn($watchClosely);
-        $mock->method('getStatus')->willReturn($status);
+        $domainMock = $this->getMockBuilder(Domain::class)
+            ->onlyMethods(['getUpdatedAt', 'getDeleted', 'isToBeWatchClosely', 'getStatus'])
+            ->getMock();
 
-        $result = $mock->isToBeUpdated($fromUser, $intensifyLastDay);
+        $domainMock->method('getUpdatedAt')->willReturn($updatedAt);
+        $domainMock->method('getDeleted')->willReturn($deleted);
+        $rdapServiceMock->method('getExpiresInDays')->willReturn($expiresIn);
+        $domainMock->method('isToBeWatchClosely')->willReturn($watchClosely);
+        $domainMock->method('getStatus')->willReturn($status);
+
+        $result = $rdapServiceMock->isToBeUpdated($domainMock, $fromUser, $intensifyLastDay);
 
         $this->assertEquals($expected, $result);
     }

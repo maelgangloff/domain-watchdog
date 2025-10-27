@@ -1,0 +1,191 @@
+name: Lint and Tests
+
+on:
+    push:
+        branches: [ "master", "develop" ]
+    pull_request:
+        branches: [ "master", "develop" ]
+
+permissions:
+    contents: read
+    checks: write
+    pull-requests: write
+
+jobs:
+    php-setup:
+        name: PHP Setup
+        runs-on: ubuntu-latest
+        outputs:
+            vendor-path: ${{ steps.upload.outputs.artifact-path }}
+        steps:
+            -   name: Checkout code
+                uses: actions/checkout@v3
+
+            -   name: Set up PHP
+                uses: shivammathur/setup-php@v2
+                with:
+                    php-version: '8.4'
+                    extensions: mbstring, xml, intl, curl, iconv, pdo_pgsql, sodium, zip, http
+
+            -   name: Cache Composer dependencies
+                uses: actions/cache@v3
+                with:
+                    path: vendor
+                    key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+                    restore-keys: |
+                        ${{ runner.os }}-composer-
+
+            -   name: Install dependencies
+                run: composer install --prefer-dist --no-progress --no-suggest --optimize-autoloader
+
+            -   name: Upload vendor folder
+                uses: actions/upload-artifact@v4
+                with:
+                    name: php-vendor
+                    path: vendor
+                id: upload
+
+
+    phpstan:
+        name: PHPStan
+        runs-on: ubuntu-latest
+        needs: php-setup
+        steps:
+            -   name: Checkout code
+                uses: actions/checkout@v3
+
+            -   name: Download PHP vendor
+                uses: actions/download-artifact@v4
+                with:
+                    name: php-vendor
+                    path: vendor
+
+            -   name: Set executable permissions
+                run: chmod +x vendor/bin/*
+
+
+            -   name: Set up PHP
+                uses: shivammathur/setup-php@v2
+                with:
+                    php-version: '8.4'
+
+            -   name: Run PHPStan
+                run: vendor/bin/phpstan analyse
+
+
+    cs-fixer:
+        name: PHP-CS-Fixer
+        runs-on: ubuntu-latest
+        needs: [ php-setup, phpstan ]
+        steps:
+            -   name: Checkout code
+                uses: actions/checkout@v3
+
+            -   name: Download PHP vendor
+                uses: actions/download-artifact@v4
+                with:
+                    name: php-vendor
+                    path: vendor
+
+            -   name: Set executable permissions
+                run: chmod +x vendor/bin/*
+
+
+            -   name: Set up PHP
+                uses: shivammathur/setup-php@v2
+                with:
+                    php-version: '8.4'
+
+            -   name: Run PHP-CS-Fixer
+                run: vendor/bin/php-cs-fixer fix --dry-run --diff
+
+
+    tests:
+        name: Tests
+        runs-on: ubuntu-latest
+        needs: [ php-setup, cs-fixer, phpstan ]
+        env:
+            GANDI_PAT_TOKEN: ${{ secrets.GANDI_PAT_TOKEN }}
+            NAMECOM_USERNAME: ${{ secrets.NAMECOM_USERNAME }}
+            NAMECOM_PASSWORD: ${{ secrets.NAMECOM_PASSWORD }}
+        services:
+            postgres:
+                image: postgres
+                env:
+                    POSTGRES_PASSWORD: postgres
+                options: >-
+                    --health-cmd pg_isready
+                    --health-interval 10s
+                    --health-timeout 5s
+                    --health-retries 5
+                ports:
+                    - 5432:5432
+        steps:
+            -   name: Checkout code
+                uses: actions/checkout@v3
+
+            -   name: Download PHP vendor
+                uses: actions/download-artifact@v4
+                with:
+                    name: php-vendor
+                    path: vendor
+
+            -   name: Set executable permissions
+                run: chmod +x vendor/bin/*
+
+            -   name: Set up PHP
+                uses: shivammathur/setup-php@v2
+                with:
+                    php-version: '8.4'
+                    extensions: mbstring, xml, intl, curl, iconv, pdo_pgsql, sodium, zip, http
+
+            -   name: Prepare database
+                run: bin/console --env=test doctrine:database:create && bin/console --env=test doctrine:migrations:migrate
+
+            -   name: Create JWT keys
+                run: bin/console lexik:jwt:generate-keypair
+
+            -   name: Add extra RDAP servers
+                run: ln -s custom_rdap_servers.example.yaml config/app/custom_rdap_servers.yaml
+
+            -   name: Run PHPUnit
+                run: vendor/bin/phpunit --coverage-text --log-junit test-results.xml
+
+            -   name: Publish Test Results
+                uses: EnricoMi/publish-unit-test-result-action@v2
+                if: (!cancelled())
+                with:
+                    files: |
+                        test-results.xml
+
+    eslint:
+        name: ESLint
+        runs-on: ubuntu-latest
+        needs: php-setup
+        steps:
+            -   name: Checkout code
+                uses: actions/checkout@v3
+
+            -   name: Download PHP vendor
+                uses: actions/download-artifact@v4
+                with:
+                    name: php-vendor
+                    path: vendor
+
+            -   name: Set executable permissions
+                run: chmod +x vendor/bin/*
+
+
+            -   name: Cache Node modules
+                uses: actions/cache@v3
+                with:
+                    path: node_modules
+                    key: ${{ runner.os }}-node-${{ hashFiles('**/yarn.lock') }}
+                    restore-keys: |
+                        ${{ runner.os }}-node-
+
+            -   name: Install frontend dependencies
+                run: npm install --global yarn && yarn install
+
+            -   name: Run ESLint
+                run: yarn run eslint

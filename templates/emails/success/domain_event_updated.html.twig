@@ -1,0 +1,15 @@
+{% extends "emails/base.html.twig" %}
+
+{% set email_color = '#0056b3' %}
+{% set title = 'Domain Watchdog Alert' %}
+{% block content %}
+    <p>Hello, <br/>
+        We are pleased to inform you that a new action has been detected on a domain name in your watchlist.<br/>
+        <strong>Domain name:</strong> {{ event.domain.ldhName }}<br/>
+        <strong>Action:</strong> {{ event.action }}<br/>
+        <strong>Effective Date:</strong> {{ event.date | date("c") }}<br/>
+        <br/><br/>
+        Thank you for your attention.<br/>
+        Best regards<br/>
+    </p>
+{% endblock %}

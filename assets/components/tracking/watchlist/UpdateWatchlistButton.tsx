@@ -5,19 +5,19 @@ import React, {useState} from 'react'
 import {EditOutlined} from '@ant-design/icons'
 import type {Connector} from '../../../utils/api/connectors'
 import type {Watchlist} from '../../../utils/api'
+import useBreakpoint from "../../../hooks/useBreakpoint"
 
 export function UpdateWatchlistButton({watchlist, onUpdateWatchlist, connectors}: {
     watchlist: Watchlist
-    onUpdateWatchlist: (values: { domains: string[], triggers: string[], token: string }) => Promise<void>
+    onUpdateWatchlist: (values: { domains: string[], trackedEvents: string[], trackedEppStatus: string[], token: string }) => Promise<void>
     connectors: Array<Connector & { id: string }>
 }) {
     const [form] = Form.useForm()
     const [open, setOpen] = useState(false)
     const [loading, setLoading] = useState(false)
+    const sm = useBreakpoint('sm')
 
-    const showDrawer = () => {
-        setOpen(true)
-    }
+    const showDrawer = () => setOpen(true)
 
     const onClose = () => {
         setOpen(false)
@@ -35,7 +35,8 @@ export function UpdateWatchlistButton({watchlist, onUpdateWatchlist, connectors}
                         {name: 'name', value: watchlist.name},
                         {name: 'connector', value: watchlist.connector?.id},
                         {name: 'domains', value: watchlist.domains.map(d => d.ldhName)},
-                        {name: 'triggers', value: [...new Set(watchlist.triggers?.map(t => t.event))]},
+                        {name: 'trackedEvents', value: watchlist.trackedEvents},
+                        {name: 'trackedEppStatus', value: watchlist.trackedEppStatus},
                         {name: 'dsn', value: watchlist.dsn}
                     ])
                 }}
@@ -43,7 +44,7 @@ export function UpdateWatchlistButton({watchlist, onUpdateWatchlist, connectors}
             </Typography.Link>
             <Drawer
                 title={t`Update a Watchlist`}
-                width='80%'
+                width={sm ? '100%' : '80%'}
                 onClose={onClose}
                 open={open}
                 loading={loading}
@@ -62,7 +63,7 @@ export function UpdateWatchlistButton({watchlist, onUpdateWatchlist, connectors}
                     }}
                     connectors={connectors}
                     isCreation={false}
-                    watchList={watchlist}
+                    watchlist={watchlist}
                 />
             </Drawer>
         </>

@@ -8,7 +8,7 @@ interface IcannAccreditationList {
 
 export async function getIcannAccreditations(params: object): Promise<IcannAccreditationList> {
     return (await request<IcannAccreditationList>({
-        url: 'entities/icann-accreditations',
+        url: 'icann-accreditations',
         params
     })).data
 }

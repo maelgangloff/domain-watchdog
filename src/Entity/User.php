@@ -15,6 +15,8 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Serializer\Attribute\Groups;
+use Symfony\Component\Serializer\Attribute\SerializedName;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\UniqueConstraint(name: 'UNIQ_IDENTIFIER_EMAIL', fields: ['email'])]
@@ -46,6 +48,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(length: 180)]
     #[Groups(['user:list', 'user:register'])]
+    #[Assert\Email]
+    #[Assert\NotBlank]
     private ?string $email = null;
 
     /**
@@ -59,14 +63,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @var string|null The hashed password
      */
     #[ORM\Column(nullable: true)]
-    #[Groups(['user:register'])]
     private ?string $password = null;
 
     /**
-     * @var Collection<int, WatchList>
+     * @var Collection<int, Watchlist>
      */
-    #[ORM\OneToMany(targetEntity: WatchList::class, mappedBy: 'user', orphanRemoval: true)]
-    private Collection $watchLists;
+    #[ORM\OneToMany(targetEntity: Watchlist::class, mappedBy: 'user', orphanRemoval: true)]
+    private Collection $watchlists;
 
     /**
      * @var Collection<int, Connector>
@@ -75,11 +78,20 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private Collection $connectors;
 
     #[ORM\Column]
-    private bool $isVerified = false;
+    private ?\DateTimeImmutable $createdAt = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?\DateTimeImmutable $verifiedAt = null;
+
+    #[Assert\PasswordStrength]
+    #[Assert\NotBlank]
+    #[SerializedName('password')]
+    #[Groups(['user:register'])]
+    private ?string $plainPassword = null;
 
     public function __construct()
     {
-        $this->watchLists = new ArrayCollection();
+        $this->watchlists = new ArrayCollection();
         $this->connectors = new ArrayCollection();
     }
 
@@ -152,33 +164,33 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function eraseCredentials(): void
     {
         // If you store any temporary, sensitive data on the user, clear it here
-        // $this->plainPassword = null;
+        $this->plainPassword = null;
     }
 
     /**
-     * @return Collection<int, WatchList>
+     * @return Collection<int, Watchlist>
      */
-    public function getWatchLists(): Collection
+    public function getWatchlists(): Collection
     {
-        return $this->watchLists;
+        return $this->watchlists;
     }
 
-    public function addWatchList(WatchList $watchList): static
+    public function addWatchlist(Watchlist $watchlist): static
     {
-        if (!$this->watchLists->contains($watchList)) {
-            $this->watchLists->add($watchList);
-            $watchList->setUser($this);
+        if (!$this->watchlists->contains($watchlist)) {
+            $this->watchlists->add($watchlist);
+            $watchlist->setUser($this);
         }
 
         return $this;
     }
 
-    public function removeWatchList(WatchList $watchList): static
+    public function removeWatchlist(Watchlist $watchlist): static
     {
-        if ($this->watchLists->removeElement($watchList)) {
+        if ($this->watchlists->removeElement($watchlist)) {
             // set the owning side to null (unless already changed)
-            if ($watchList->getUser() === $this) {
-                $watchList->setUser(null);
+            if ($watchlist->getUser() === $this) {
+                $watchlist->setUser(null);
             }
         }
 
@@ -215,14 +227,38 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function isVerified(): bool
+    public function getCreatedAt(): ?\DateTimeImmutable
     {
-        return $this->isVerified;
+        return $this->createdAt;
     }
 
-    public function setVerified(bool $isVerified): static
+    public function setCreatedAt(\DateTimeImmutable $createdAt): static
     {
-        $this->isVerified = $isVerified;
+        $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    public function getVerifiedAt(): ?\DateTimeImmutable
+    {
+        return $this->verifiedAt;
+    }
+
+    public function setVerifiedAt(\DateTimeImmutable $verifiedAt): static
+    {
+        $this->verifiedAt = $verifiedAt;
+
+        return $this;
+    }
+
+    public function getPlainPassword(): ?string
+    {
+        return $this->plainPassword;
+    }
+
+    public function setPlainPassword(?string $plainPassword): self
+    {
+        $this->plainPassword = $plainPassword;
 
         return $this;
     }

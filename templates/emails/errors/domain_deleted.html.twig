@@ -1,15 +1,15 @@
-{% extends "../base.html.twig" %}
+{% extends "base.html.twig" %}
 
 {% set email_color = '#0056b3' %}
 {% set title = 'Domain Watchdog Alert' %}
 {% block content %}
     <p>Hello, <br/>
-        We are pleased to inform you that a domain name in your watchlist has been detected as deleted from the WHOIS database.<br/>
+        This is to inform you that a domain name in your watchlist has been detected as deleted from the WHOIS database.<br/>
         <strong>Domain name:</strong> {{ domain.ldhName }}<br/>
         <strong>Detection Date:</strong> {{ domain.updatedAt | date("c") }}<br/>
         <br/>
         This domain has been identified as deleted and is potentially available for registration until it is registered by another party.<br/><br/>
-        Thank you for your understanding,<br/>
-        Sincerely,<br/>
+        Thank you for your attention.<br/>
+        Best regards<br/>
     </p>
 {% endblock %}

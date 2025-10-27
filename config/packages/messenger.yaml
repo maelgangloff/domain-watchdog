@@ -23,7 +23,7 @@ framework:
             Symfony\Component\Notifier\Message\SmsMessage: async
 
             App\Message\OrderDomain: async
-            App\Message\ProcessWatchListsTrigger: async
+            App\Message\ProcessWatchlistTrigger: async
             App\Message\SendDomainEventNotif: async
             App\Message\UpdateDomainsFromWatchlist: async
             App\Message\UpdateRdapServers: async

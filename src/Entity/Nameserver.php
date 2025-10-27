@@ -56,7 +56,6 @@ class Nameserver
      * @var Collection<int, Domain>
      */
     #[ORM\ManyToMany(targetEntity: Domain::class, mappedBy: 'nameservers')]
-    #[Groups(['nameserver:item'])]
     private Collection $domains;
 
     public function __construct()

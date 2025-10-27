@@ -17,7 +17,7 @@ framework:
 
         user_register:
             policy: token_bucket
-            limit: 1
+            limit: 5
             rate: { interval: '5 minutes' }
 
         rdap_requests:

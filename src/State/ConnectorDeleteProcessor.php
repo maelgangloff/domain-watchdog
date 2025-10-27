@@ -6,7 +6,7 @@ use ApiPlatform\Metadata\Operation;
 use ApiPlatform\State\ProcessorInterface;
 use App\Config\ConnectorProvider;
 use App\Entity\Connector;
-use App\Service\Connector\EppClientProvider;
+use App\Service\Provider\EppClientProvider;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
@@ -30,7 +30,7 @@ readonly class ConnectorDeleteProcessor implements ProcessorInterface
      */
     public function process(mixed $data, Operation $operation, array $uriVariables = [], array $context = []): mixed
     {
-        foreach ($data->getWatchLists()->getIterator() as $watchlist) {
+        foreach ($data->getWatchlists()->getIterator() as $watchlist) {
             $watchlist->setConnector(null);
         }
 

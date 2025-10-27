@@ -1,0 +1,23 @@
+{% extends "emails/base.html.twig" %}
+{% set email_color = '#0056b3' %}
+{% set title = 'Domain Watchdog Alert' %}
+{% block content %}
+    <p>Hello,</p>
+    <p>We would like to inform you that a change has been detected in the EPP status of one of the domains on your watchlist.</p>
+
+    <p>
+        <strong>Domain name:</strong> {{ domain.ldhName }}<br/>
+        <strong>Current EPP status:</strong> {{ domain.status | join(' | ') }}<br/>
+        {% if domainStatus.addStatus is not empty %}
+            <strong>[+] Added status:</strong> {{ domainStatus.addStatus | join(' | ') }}<br/>
+        {% endif %}
+        {% if domainStatus.deleteStatus is not empty %}
+            <strong>[-] Removed status:</strong> {{ domainStatus.deleteStatus | join(' | ') }}<br/>
+        {% endif %}
+    </p>
+
+    <p>
+        Thank you for your attention.<br/>
+        Best regards<br/>
+    </p>
+{% endblock %}

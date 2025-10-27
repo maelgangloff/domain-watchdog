@@ -2,12 +2,12 @@
 
 namespace App\Config;
 
-use App\Service\Connector\AutodnsProvider;
-use App\Service\Connector\EppClientProvider;
-use App\Service\Connector\GandiProvider;
-use App\Service\Connector\NamecheapProvider;
-use App\Service\Connector\NameComProvider;
-use App\Service\Connector\OvhProvider;
+use App\Service\Provider\AutodnsProvider;
+use App\Service\Provider\EppClientProvider;
+use App\Service\Provider\GandiProvider;
+use App\Service\Provider\NamecheapProvider;
+use App\Service\Provider\NameComProvider;
+use App\Service\Provider\OvhProvider;
 
 enum ConnectorProvider: string
 {

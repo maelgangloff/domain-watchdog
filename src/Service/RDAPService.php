@@ -5,8 +5,6 @@ namespace App\Service;
 use App\Config\DnsKey\Algorithm;
 use App\Config\DnsKey\DigestType;
 use App\Config\EventAction;
-use App\Config\RegistrarStatus;
-use App\Config\TldType;
 use App\Entity\DnsKey;
 use App\Entity\Domain;
 use App\Entity\DomainEntity;
@@ -18,28 +16,30 @@ use App\Entity\Nameserver;
 use App\Entity\NameserverEntity;
 use App\Entity\RdapServer;
 use App\Entity\Tld;
+use App\Exception\DomainNotFoundException;
+use App\Exception\MalformedDomainException;
+use App\Exception\TldNotSupportedException;
+use App\Exception\UnknownRdapServerException;
 use App\Repository\DomainEntityRepository;
 use App\Repository\DomainEventRepository;
 use App\Repository\DomainRepository;
+use App\Repository\DomainStatusRepository;
 use App\Repository\EntityEventRepository;
 use App\Repository\EntityRepository;
+use App\Repository\IcannAccreditationRepository;
 use App\Repository\NameserverEntityRepository;
 use App\Repository\NameserverRepository;
 use App\Repository\RdapServerRepository;
 use App\Repository\TldRepository;
 use Doctrine\DBAL\LockMode;
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\ORM\Exception\ORMException;
+use Doctrine\ORM\OptimisticLockException;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\HttpClient\Exception\ClientException;
-use Symfony\Component\HttpFoundation\Exception\BadRequestException;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use Symfony\Component\Yaml\Yaml;
 use Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\DecodingExceptionInterface;
-use Symfony\Contracts\HttpClient\Exception\HttpExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\RedirectionExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\ServerExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
@@ -48,39 +48,6 @@ use Symfony\Contracts\HttpClient\ResponseInterface;
 
 class RDAPService
 {
-    /* @see https://www.iana.org/domains/root/db */
-    public const ISO_TLD_EXCEPTION = ['ac', 'eu', 'uk', 'su', 'tp'];
-    public const INFRA_TLD = ['arpa'];
-    public const SPONSORED_TLD = [
-        'aero',
-        'asia',
-        'cat',
-        'coop',
-        'edu',
-        'gov',
-        'int',
-        'jobs',
-        'mil',
-        'museum',
-        'post',
-        'tel',
-        'travel',
-        'xxx',
-    ];
-    public const TEST_TLD = [
-        'xn--kgbechtv',
-        'xn--hgbk6aj7f53bba',
-        'xn--0zwm56d',
-        'xn--g6w251d',
-        'xn--80akhbyknj4f',
-        'xn--11b5bs3a9aj6g',
-        'xn--jxalpdlp',
-        'xn--9t4b11yi5a',
-        'xn--deba0ad',
-        'xn--zckzah',
-        'xn--hlcj6aya9esc7a',
-    ];
-
     public const ENTITY_HANDLE_BLACKLIST = [
         'REDACTED_FOR_PRIVACY',
         'ANO00-FRNIC',
@@ -96,29 +63,39 @@ class RDAPService
         'Private',
     ];
 
-    public function __construct(private HttpClientInterface $client,
-        private EntityRepository $entityRepository,
-        private DomainRepository $domainRepository,
-        private DomainEventRepository $domainEventRepository,
-        private NameserverRepository $nameserverRepository,
-        private NameserverEntityRepository $nameserverEntityRepository,
-        private EntityEventRepository $entityEventRepository,
-        private DomainEntityRepository $domainEntityRepository,
-        private RdapServerRepository $rdapServerRepository,
-        private TldRepository $tldRepository,
-        private EntityManagerInterface $em,
-        private LoggerInterface $logger,
-        private StatService $statService,
-        private InfluxdbService $influxService,
+    public function __construct(
+        private readonly HttpClientInterface $client,
+        private readonly EntityRepository $entityRepository,
+        private readonly DomainRepository $domainRepository,
+        private readonly DomainEventRepository $domainEventRepository,
+        private readonly NameserverRepository $nameserverRepository,
+        private readonly NameserverEntityRepository $nameserverEntityRepository,
+        private readonly EntityEventRepository $entityEventRepository,
+        private readonly DomainEntityRepository $domainEntityRepository,
+        private readonly RdapServerRepository $rdapServerRepository,
+        private readonly TldRepository $tldRepository,
+        private readonly IcannAccreditationRepository $icannAccreditationRepository,
+        private readonly EntityManagerInterface $em,
+        private readonly LoggerInterface $logger,
+        private readonly StatService $statService,
+        private readonly InfluxdbService $influxService,
         #[Autowire(param: 'influxdb_enabled')]
-        private bool $influxdbEnabled,
+        private readonly bool $influxdbEnabled,
+        private readonly DomainStatusRepository $domainStatusRepository,
     ) {
     }
 
     /**
-     * @throws HttpExceptionInterface
-     * @throws TransportExceptionInterface
+     * @throws RedirectionExceptionInterface
+     * @throws DomainNotFoundException
      * @throws DecodingExceptionInterface
+     * @throws TldNotSupportedException
+     * @throws ClientExceptionInterface
+     * @throws OptimisticLockException
+     * @throws TransportExceptionInterface
+     * @throws ServerExceptionInterface
+     * @throws MalformedDomainException
+     * @throws UnknownRdapServerException
      */
     public function registerDomains(array $domains): void
     {
@@ -128,11 +105,16 @@ class RDAPService
     }
 
     /**
-     * @throws TransportExceptionInterface
-     * @throws ServerExceptionInterface
+     * @throws DomainNotFoundException
      * @throws RedirectionExceptionInterface
      * @throws DecodingExceptionInterface
+     * @throws TldNotSupportedException
      * @throws ClientExceptionInterface
+     * @throws OptimisticLockException
+     * @throws TransportExceptionInterface
+     * @throws MalformedDomainException
+     * @throws ServerExceptionInterface
+     * @throws UnknownRdapServerException
      * @throws \Exception
      */
     public function registerDomain(string $fqdn): Domain
@@ -140,8 +122,8 @@ class RDAPService
         $idnDomain = RDAPService::convertToIdn($fqdn);
         $tld = $this->getTld($idnDomain);
 
-        $this->logger->info('An update request for domain name {idnDomain} is requested.', [
-            'idnDomain' => $idnDomain,
+        $this->logger->debug('Update request for a domain name is requested', [
+            'ldhName' => $idnDomain,
         ]);
 
         $rdapServer = $this->fetchRdapServer($tld);
@@ -160,7 +142,7 @@ class RDAPService
         $this->updateDomainStatus($domain, $rdapData);
 
         if (in_array('free', $domain->getStatus())) {
-            throw new NotFoundHttpException("The domain name $idnDomain is not present in the WHOIS database.");
+            throw DomainNotFoundException::fromDomain($idnDomain);
         }
 
         $domain
@@ -182,46 +164,69 @@ class RDAPService
         return $domain;
     }
 
+    /**
+     * @throws TldNotSupportedException
+     * @throws MalformedDomainException
+     */
     public function getTld(string $domain): Tld
     {
-        if (!str_contains($domain, '.')) {
-            $tldEntity = $this->tldRepository->findOneBy(['tld' => '.']);
+        if (!str_contains($domain, OfficialDataService::DOMAIN_DOT)) {
+            $tldEntity = $this->tldRepository->findOneBy(['tld' => OfficialDataService::DOMAIN_DOT]);
 
             if (null == $tldEntity) {
-                throw new NotFoundHttpException("The requested TLD $domain is not yet supported, please try again with another one");
+                throw TldNotSupportedException::fromTld(OfficialDataService::DOMAIN_DOT);
             }
 
             return $tldEntity;
         }
 
-        $lastDotPosition = strrpos($domain, '.');
+        $lastDotPosition = strrpos($domain, OfficialDataService::DOMAIN_DOT);
 
         if (false === $lastDotPosition) {
-            throw new BadRequestException('Domain must contain at least one dot');
+            throw MalformedDomainException::fromDomain($domain);
         }
 
         $tld = self::convertToIdn(substr($domain, $lastDotPosition + 1));
-        $tldEntity = $this->tldRepository->findOneBy(['tld' => $tld]);
+        $tldEntity = $this->tldRepository->findOneBy(['tld' => $tld, 'deletedAt' => null]);
 
         if (null === $tldEntity) {
-            throw new NotFoundHttpException("The requested TLD $tld is not yet supported, please try again with another one");
+            $this->logger->debug('Domain name cannot be updated because the TLD is not supported', [
+                'ldhName' => $domain,
+            ]);
+            throw TldNotSupportedException::fromTld($tld);
         }
 
         return $tldEntity;
     }
 
+    /**
+     * @throws MalformedDomainException
+     */
     public static function convertToIdn(string $fqdn): string
     {
-        return strtolower(idn_to_ascii($fqdn));
+        $ascii = strtolower(idn_to_ascii($fqdn));
+
+        if (OfficialDataService::DOMAIN_DOT !== $fqdn && !preg_match('/^(xn--)?[a-z0-9-]+(\.[a-z0-9-]+)*$/', $ascii)) {
+            throw MalformedDomainException::fromDomain($fqdn);
+        }
+
+        return $ascii;
     }
 
+    /**
+     * @throws UnknownRdapServerException
+     */
     private function fetchRdapServer(Tld $tld): RdapServer
     {
         $tldString = $tld->getTld();
         $rdapServer = $this->rdapServerRepository->findOneBy(['tld' => $tldString], ['updatedAt' => 'DESC']);
 
         if (null === $rdapServer) {
-            throw new NotFoundHttpException("TLD $tldString : Unable to determine which RDAP server to contact");
+            $this->logger->debug('Unable to determine which RDAP server to contact', [
+                'tld' => $tldString,
+            ]);
+
+            throw UnknownRdapServerException::fromTld($tldString);
         }
 
         return $rdapServer;
@@ -238,15 +243,14 @@ class RDAPService
     private function fetchRdapResponse(RdapServer $rdapServer, string $idnDomain, ?Domain $domain): array
     {
         $rdapServerUrl = $rdapServer->getUrl();
-        $this->logger->notice('An RDAP query to update the domain name {idnDomain} will be made to {server}.', [
-            'idnDomain' => $idnDomain,
+        $this->logger->info('An RDAP query to update this domain name will be made', [
+            'ldhName' => $idnDomain,
             'server' => $rdapServerUrl,
         ]);
 
         try {
-            $this->statService->incrementStat('stats.rdap_queries.count');
-
             $req = $this->client->request('GET', $rdapServerUrl.'domain/'.$idnDomain);
+            $this->statService->incrementStat('stats.rdap_queries.count');
 
             return $req->toArray();
         } catch (\Exception $e) {
@@ -269,8 +273,8 @@ class RDAPService
             || ($e instanceof TransportExceptionInterface && null !== $response && !in_array('content-length', $response->getHeaders(false)) && 404 === $response->getStatusCode())
         ) {
             if (null !== $domain) {
-                $this->logger->notice('The domain name {idnDomain} has been deleted from the WHOIS database.', [
-                    'idnDomain' => $idnDomain,
+                $this->logger->info('Domain name has been deleted from the WHOIS database', [
+                    'ldhName' => $idnDomain,
                 ]);
 
                 $domain->updateTimestamps();
@@ -285,12 +289,15 @@ class RDAPService
                 }
 
                 $domain->setDeleted(true);
-                $this->em->persist($domain);
                 $this->em->flush();
             }
 
-            throw new NotFoundHttpException("The domain name $idnDomain is not present in the WHOIS database.");
+            throw DomainNotFoundException::fromDomain($idnDomain);
         }
+
+        $this->logger->error('Unable to perform an RDAP query for this domain name', [
+            'ldhName' => $idnDomain,
+        ]);
 
         return $e;
     }
@@ -299,8 +306,8 @@ class RDAPService
     {
         $domain = new Domain();
 
-        $this->logger->info('The domain name {idnDomain} was not known to this Domain Watchdog instance.', [
-            'idnDomain' => $idnDomain,
+        $this->logger->debug('Domain name was not known to this instance', [
+            'ldhName' => $idnDomain,
         ]);
 
         return $domain->setTld($tld)->setLdhName($idnDomain)->setDeleted(false);
@@ -308,8 +315,8 @@ class RDAPService
 
     private function updateDomainStatus(Domain $domain, array $rdapData): void
     {
-        if (isset($rdapData['status'])) {
-            $status = array_unique($rdapData['status']);
+        if (isset($rdapData['status']) && is_array($rdapData['status'])) {
+            $status = array_map(fn ($s) => strtolower($s), array_unique($rdapData['status']));
             $addedStatus = array_diff($status, $domain->getStatus());
             $deletedStatus = array_diff($domain->getStatus(), $status);
             $domain->setStatus($status);
@@ -327,8 +334,8 @@ class RDAPService
                 }
             }
         } else {
-            $this->logger->warning('The domain name {idnDomain} has no WHOIS status.', [
-                'idnDomain' => $domain->getLdhName(),
+            $this->logger->warning('Domain name has no WHOIS status', [
+                'ldhName' => $domain->getLdhName(),
             ]);
         }
     }
@@ -338,21 +345,18 @@ class RDAPService
         if (isset($rdapData['handle'])) {
             $domain->setHandle($rdapData['handle']);
         } else {
-            $this->logger->warning('The domain name {idnDomain} has no handle key.', [
-                'idnDomain' => $domain->getLdhName(),
+            $this->logger->warning('Domain name has no handle key', [
+                'ldhName' => $domain->getLdhName(),
             ]);
         }
     }
 
     /**
-     * @throws \DateMalformedStringException
      * @throws \Exception
      */
     private function updateDomainEvents(Domain $domain, array $rdapData): void
     {
-        foreach ($domain->getEvents()->getIterator() as $event) {
-            $event->setDeleted(true);
-        }
+        $this->domainEventRepository->setDomainEventAsDeleted($domain);
 
         if (isset($rdapData['events']) && is_array($rdapData['events'])) {
             foreach ($rdapData['events'] as $rdapEvent) {
@@ -368,10 +372,14 @@ class RDAPService
 
                 if (null === $event) {
                     $event = new DomainEvent();
+                } else {
+                    // at this point Doctrine doesn't know that the events are
+                    // deleted in the database, so refresh in order to make the diff work
+                    $this->em->refresh($event);
                 }
 
                 $domain->addEvent($event
-                    ->setAction($rdapEvent['eventAction'])
+                    ->setAction(strtolower($rdapEvent['eventAction']))
                     ->setDate(new \DateTimeImmutable($rdapEvent['eventDate']))
                     ->setDeleted(false));
 
@@ -381,14 +389,11 @@ class RDAPService
     }
 
     /**
-     * @throws \DateMalformedStringException
      * @throws \Exception
      */
     private function updateDomainEntities(Domain $domain, array $rdapData): void
     {
-        foreach ($domain->getDomainEntities()->getIterator() as $domainEntity) {
-            $domainEntity->setDeleted(true);
-        }
+        $this->domainEntityRepository->setDomainEntityAsDeleted($domain);
 
         if (!isset($rdapData['entities']) || !is_array($rdapData['entities'])) {
             return;
@@ -405,13 +410,15 @@ class RDAPService
 
             if (null === $domainEntity) {
                 $domainEntity = new DomainEntity();
+            } else {
+                $this->em->refresh($domainEntity);
             }
 
             $domain->addDomainEntity($domainEntity
                 ->setDomain($domain)
                 ->setEntity($entity)
                 ->setRoles($roles)
-                ->setDeleted(false));
+                ->setDeletedAt(null));
 
             $this->em->persist($domainEntity);
             $this->em->flush();
@@ -419,11 +426,11 @@ class RDAPService
     }
 
     /**
-     * @throws \DateMalformedStringException
+     * @throws \Exception
      */
     private function updateDomainNameservers(Domain $domain, array $rdapData): void
     {
-        if (array_key_exists('nameservers', $rdapData) && is_array($rdapData['nameservers'])) {
+        if (isset($rdapData['nameservers']) && is_array($rdapData['nameservers'])) {
             $domain->getNameservers()->clear();
             $this->em->persist($domain);
 
@@ -436,19 +443,20 @@ class RDAPService
                 }
             }
         } else {
-            $this->logger->warning('The domain name {idnDomain} has no nameservers.', [
-                'idnDomain' => $domain->getLdhName(),
+            $this->logger->warning('Domain name has no nameservers', [
+                'ldhName' => $domain->getLdhName(),
             ]);
         }
     }
 
     private function fetchOrCreateNameserver(array $rdapNameserver, Domain $domain): Nameserver
     {
+        $ldhName = strtolower(rtrim($rdapNameserver['ldhName'], '.'));
         $nameserver = $this->nameserverRepository->findOneBy([
-            'ldhName' => strtolower($rdapNameserver['ldhName']),
+            'ldhName' => $ldhName,
         ]);
 
-        $existingDomainNS = $domain->getNameservers()->findFirst(fn (int $key, Nameserver $ns) => $ns->getLdhName() === $rdapNameserver['ldhName']);
+        $existingDomainNS = $domain->getNameservers()->findFirst(fn (int $key, Nameserver $ns) => $ns->getLdhName() === $ldhName);
 
         if (null !== $existingDomainNS) {
             return $existingDomainNS;
@@ -456,13 +464,13 @@ class RDAPService
             $nameserver = new Nameserver();
         }
 
-        $nameserver->setLdhName($rdapNameserver['ldhName']);
+        $nameserver->setLdhName($ldhName);
 
         return $nameserver;
     }
 
     /**
-     * @throws \DateMalformedStringException
+     * @throws \Exception
      */
     private function updateNameserverEntities(Nameserver $nameserver, array $rdapNameserver, Tld $tld): void
     {
@@ -486,7 +494,7 @@ class RDAPService
             $nameserver->addNameserverEntity($nameserverEntity
                 ->setNameserver($nameserver)
                 ->setEntity($entity)
-                ->setStatus(array_unique($rdapNameserver['status']))
+                ->setStatus(array_map(fn ($s) => strtolower($s), array_unique($rdapNameserver['status'])))
                 ->setRoles($roles));
 
             $this->em->persist($nameserverEntity);
@@ -514,40 +522,14 @@ class RDAPService
             $roles = array_merge(...$roles);
         }
 
-        return $roles;
+        return array_map(fn ($x) => strtolower($x), $roles);
     }
 
     /**
-     * @throws \DateMalformedStringException
      * @throws \Exception
      */
     private function registerEntity(array $rdapEntity, array $roles, string $domain, Tld $tld): Entity
     {
-        $entity = null;
-
-        /**
-         * If the RDAP server transmits the entity's IANA number, it is used as a priority to identify the entity.
-         *
-         * @see https://datatracker.ietf.org/doc/html/rfc7483#section-4.8
-         */
-        $isIANAid = false;
-        if (isset($rdapEntity['publicIds'])) {
-            foreach ($rdapEntity['publicIds'] as $publicId) {
-                if ('IANA Registrar ID' === $publicId['type'] && isset($publicId['identifier']) && '' !== $publicId['identifier']) {
-                    $entity = $this->entityRepository->findOneBy([
-                        'handle' => $publicId['identifier'],
-                        'tld' => null,
-                    ]);
-
-                    if (null !== $entity) {
-                        $rdapEntity['handle'] = $publicId['identifier'];
-                        $isIANAid = true;
-                        break;
-                    }
-                }
-            }
-        }
-
         /*
          * If there is no number to identify the entity, one is generated from the domain name and the roles associated with this entity
          */
@@ -555,31 +537,43 @@ class RDAPService
             sort($roles);
             $rdapEntity['handle'] = 'DW-FAKEHANDLE-'.$domain.'-'.implode(',', $roles);
 
-            $this->logger->warning('The entity {handle} has no handle key.', [
+            $this->logger->warning('Entity has no handle key', [
                 'handle' => $rdapEntity['handle'],
+                'ldhName' => $domain,
             ]);
         }
 
-        if (null === $entity) {
-            $entity = $this->entityRepository->findOneBy([
-                'handle' => $rdapEntity['handle'],
-                'tld' => $tld,
-            ]);
-        }
-
-        if ($isIANAid && null !== $entity) {
-            return $entity;
-        }
+        $entity = $this->entityRepository->findOneBy([
+            'handle' => $rdapEntity['handle'],
+            'tld' => $tld,
+        ]);
 
         if (null === $entity) {
             $entity = (new Entity())->setTld($tld);
 
-            $this->logger->info('The entity {handle} was not known to this Domain Watchdog instance.', [
+            $this->logger->debug('Entity was not known to this instance', [
                 'handle' => $rdapEntity['handle'],
+                'ldhName' => $domain,
             ]);
         }
 
-        $entity->setHandle($rdapEntity['handle']);
+        /**
+         * If the RDAP server transmits the entity's IANA number, it is used as a priority to identify the entity.
+         *
+         * @see https://datatracker.ietf.org/doc/html/rfc7483#section-4.8
+         */
+        $icannAccreditation = null;
+        if (isset($rdapEntity['publicIds'])) {
+            foreach ($rdapEntity['publicIds'] as $publicId) {
+                if ('IANA Registrar ID' === $publicId['type'] && isset($publicId['identifier']) && '' !== $publicId['identifier']) {
+                    $icannAccreditation = $this->icannAccreditationRepository->findOneBy([
+                        'id' => (int) $publicId['identifier'],
+                    ]);
+                }
+            }
+        }
+
+        $entity->setHandle($rdapEntity['handle'])->setIcannAccreditation($icannAccreditation);
 
         if (isset($rdapEntity['remarks']) && is_array($rdapEntity['remarks'])) {
             $entity->setRemarks($rdapEntity['remarks']);
@@ -644,7 +638,7 @@ class RDAPService
                 $entity->addEvent(
                     (new EntityEvent())
                         ->setEntity($entity)
-                        ->setAction($rdapEntityEvent['eventAction'])
+                        ->setAction(strtolower($rdapEntityEvent['eventAction']))
                         ->setDate(new \DateTimeImmutable($rdapEntityEvent['eventDate']))
                         ->setDeleted(false));
             }
@@ -675,12 +669,18 @@ class RDAPService
                     try {
                         $blob = hex2bin($rdapDsData['digest']);
                     } catch (\Exception) {
-                        $this->logger->warning('DNSSEC digest is not a valid hexadecimal value.');
+                        $this->logger->warning('DNSSEC digest is not a valid hexadecimal value', [
+                            'ldhName' => $domain,
+                            'value' => $rdapDsData['digest'],
+                        ]);
                         continue;
                     }
 
                     if (false === $blob) {
-                        $this->logger->warning('DNSSEC digest is not a valid hexadecimal value.');
+                        $this->logger->warning('DNSSEC digest is not a valid hexadecimal value', [
+                            'ldhName' => $domain,
+                            'value' => $rdapDsData['digest'],
+                        ]);
                         continue;
                     }
                     $dsData->setDigest($blob);
@@ -700,7 +700,11 @@ class RDAPService
 
                 if (array_key_exists($dsData->getDigestType()->value, $digestLengthByte)
                     && strlen($dsData->getDigest()) / 2 !== $digestLengthByte[$dsData->getDigestType()->value]) {
-                    $this->logger->warning('DNSSEC digest does not have a valid length according to the digest type.');
+                    $this->logger->warning('DNSSEC digest does not have a valid length according to the digest type', [
+                        'ldhName' => $domain,
+                        'value' => $dsData->getDigest(),
+                        'type' => $dsData->getDigestType()->name,
+                    ]);
                     continue;
                 }
 
@@ -708,237 +712,152 @@ class RDAPService
                 $this->em->persist($dsData);
             }
         } else {
-            $this->logger->warning('The domain name {idnDomain} has no DS record.', [
-                'idnDomain' => $domain->getLdhName(),
+            $this->logger->warning('Domain name has no DS record', [
+                'ldhName' => $domain->getLdhName(),
             ]);
         }
     }
 
-    /**
-     * @throws TransportExceptionInterface
-     * @throws ServerExceptionInterface
-     * @throws RedirectionExceptionInterface
-     * @throws DecodingExceptionInterface
-     * @throws ClientExceptionInterface
-     * @throws ORMException
-     */
-    public function updateRDAPServersFromIANA(): void
+    private function calculateDaysFromStatus(Domain $domain, \DateTimeImmutable $now): ?int
     {
-        $this->logger->info('Start of update the RDAP server list from IANA.');
+        /** @var ?DomainStatus $lastStatus */
+        $lastStatus = $this->domainStatusRepository->findLastDomainStatus($domain);
 
-        $dnsRoot = $this->client->request(
-            'GET', 'https://data.iana.org/rdap/dns.json'
-        )->toArray();
-
-        $this->updateRDAPServers($dnsRoot);
-    }
-
-    /**
-     * @throws ORMException
-     * @throws \Exception
-     */
-    private function updateRDAPServers(array $dnsRoot): void
-    {
-        foreach ($dnsRoot['services'] as $service) {
-            foreach ($service[0] as $tld) {
-                if ('.' === $tld && null === $this->tldRepository->findOneBy(['tld' => $tld])) {
-                    $this->em->persist((new Tld())->setTld('.')->setType(TldType::root));
-                    $this->em->flush();
-                }
-
-                $tldEntity = $this->tldRepository->findOneBy(['tld' => $tld]);
-                if (null === $tldEntity) {
-                    $tldEntity = (new Tld())->setTld($tld)->setType(TldType::gTLD);
-                    $this->em->persist($tldEntity);
-                }
-
-                foreach ($service[1] as $rdapServerUrl) {
-                    $server = $this->rdapServerRepository->findOneBy(['tld' => $tldEntity->getTld(), 'url' => $rdapServerUrl]);
-
-                    if (null === $server) {
-                        $server = new RdapServer();
-                    }
-
-                    $server
-                        ->setTld($tldEntity)
-                        ->setUrl($rdapServerUrl)
-                        ->setUpdatedAt(new \DateTimeImmutable($dnsRoot['publication'] ?? 'now'));
-
-                    $this->em->persist($server);
-                }
-            }
-        }
-        $this->em->flush();
-    }
-
-    /**
-     * @throws ORMException
-     */
-    public function updateRDAPServersFromFile(string $fileName): void
-    {
-        if (!file_exists($fileName)) {
-            return;
+        if (null === $lastStatus) {
+            return null;
         }
 
-        $this->logger->info('Start of update the RDAP server list from custom config file.');
-        $this->updateRDAPServers(Yaml::parseFile($fileName));
-    }
-
-    /**
-     * @throws TransportExceptionInterface
-     * @throws ServerExceptionInterface
-     * @throws RedirectionExceptionInterface
-     * @throws ClientExceptionInterface
-     */
-    public function updateTldListIANA(): void
-    {
-        $this->logger->info('Start of retrieval of the list of TLDs according to IANA.');
-        $tldList = array_map(
-            fn ($tld) => strtolower($tld),
-            explode(PHP_EOL,
-                $this->client->request(
-                    'GET', 'https://data.iana.org/TLD/tlds-alpha-by-domain.txt'
-                )->getContent()
-            ));
-        array_shift($tldList);
-
-        foreach ($tldList as $tld) {
-            if ('' === $tld) {
-                continue;
-            }
-
-            $tldEntity = $this->tldRepository->findOneBy(['tld' => $tld]);
-
-            if (null === $tldEntity) {
-                $tldEntity = new Tld();
-                $tldEntity->setTld($tld);
-
-                $this->logger->notice('New TLD detected according to IANA ({tld}).', [
-                    'tld' => $tld,
-                ]);
-            }
-
-            $type = $this->getTldType($tld);
-
-            if (null !== $type) {
-                $tldEntity->setType($type);
-            } elseif (null === $tldEntity->isContractTerminated()) { // ICANN managed, must be a ccTLD
-                $tldEntity->setType(TldType::ccTLD);
-            } else {
-                $tldEntity->setType(TldType::gTLD);
-            }
-
-            $this->em->persist($tldEntity);
+        if ($domain->isPendingDelete() && (
+            in_array('pending delete', $lastStatus->getAddStatus())
+            || in_array('redemption period', $lastStatus->getDeleteStatus()))
+        ) {
+            return self::daysBetween($now, $lastStatus->getCreatedAt()->add(new \DateInterval('P'. 5 .'D')));
         }
-        $this->em->flush();
-    }
 
-    /**
-     * @throws TransportExceptionInterface
-     * @throws ServerExceptionInterface
-     * @throws RedirectionExceptionInterface
-     * @throws DecodingExceptionInterface
-     * @throws ClientExceptionInterface
-     * @throws \Exception
-     */
-    public function updateRegistrarListIANA(): void
-    {
-        $this->logger->info('Start of retrieval of the list of Registrar IDs according to IANA.');
-        $registrarList = $this->client->request(
-            'GET', 'https://www.iana.org/assignments/registrar-ids/registrar-ids.xml'
-        );
-
-        $data = new \SimpleXMLElement($registrarList->getContent());
-
-        foreach ($data->registry->record as $registrar) {
-            $entity = $this->entityRepository->findOneBy(['handle' => $registrar->value, 'tld' => null]);
-            if (null === $entity) {
-                $entity = new Entity();
-            }
-            $entity
-                ->setHandle($registrar->value)
-                ->setTld(null)
-                ->setJCard(['vcard', [['version', [], 'text', '4.0'], ['fn', [], 'text', (string) $registrar->name]]])
-                ->setRemarks(null)
-                ->getIcannAccreditation()
-                    ->setRegistrarName($registrar->name)
-                    ->setStatus(RegistrarStatus::from($registrar->status))
-                    ->setRdapBaseUrl($registrar->rdapurl->count() ? ($registrar->rdapurl->server) : null)
-                    ->setUpdated(null !== $registrar->attributes()->updated ? new \DateTimeImmutable($registrar->attributes()->updated) : null)
-                    ->setDate(null !== $registrar->attributes()->date ? new \DateTimeImmutable($registrar->attributes()->date) : null);
-
-            $this->em->persist($entity);
-        }
-        $this->em->flush();
-    }
-
-    private function getTldType(string $tld): ?TldType
-    {
-        if (in_array(strtolower($tld), self::ISO_TLD_EXCEPTION)) {
-            return TldType::ccTLD;
-        }
-        if (in_array(strtolower($tld), self::INFRA_TLD)) {
-            return TldType::iTLD;
-        }
-        if (in_array(strtolower($tld), self::SPONSORED_TLD)) {
-            return TldType::sTLD;
-        }
-        if (in_array(strtolower($tld), self::TEST_TLD)) {
-            return TldType::tTLD;
+        if ($domain->isRedemptionPeriod()
+            && in_array('redemption period', $lastStatus->getAddStatus())
+        ) {
+            return self::daysBetween($now, $lastStatus->getCreatedAt()->add(new \DateInterval('P'.(30 + 5).'D')));
         }
 
         return null;
     }
 
-    /**
-     * @throws TransportExceptionInterface
-     * @throws ServerExceptionInterface
-     * @throws RedirectionExceptionInterface
-     * @throws ClientExceptionInterface
-     * @throws DecodingExceptionInterface
-     * @throws \Exception
-     */
-    public function updateGTldListICANN(): void
+    private function getRelevantDates(Domain $domain): array
     {
-        $this->logger->info('Start of retrieval of the list of gTLDs according to ICANN.');
+        /** @var ?DomainEvent $expirationEvent */
+        $expirationEvent = $this->domainEventRepository->findLastDomainEvent($domain, 'expiration');
+        /** @var ?DomainEvent $deletionEvent */
+        $deletionEvent = $this->domainEventRepository->findLastDomainEvent($domain, 'deletion');
 
-        $gTldList = $this->client->request(
-            'GET', 'https://www.icann.org/resources/registries/gtlds/v2/gtlds.json'
-        )->toArray()['gTLDs'];
+        return [$expirationEvent?->getDate(), $deletionEvent?->getDate()];
+    }
 
-        foreach ($gTldList as $gTld) {
-            if ('' === $gTld['gTLD']) {
-                continue;
-            }
-            /** @var Tld|null $gtTldEntity */
-            $gtTldEntity = $this->tldRepository->findOneBy(['tld' => $gTld['gTLD']]);
-
-            if (null === $gtTldEntity) {
-                $gtTldEntity = new Tld();
-                $gtTldEntity->setTld($gTld['gTLD'])->setType(TldType::gTLD);
-                $this->logger->notice('New gTLD detected according to ICANN ({tld}).', [
-                    'tld' => $gTld['gTLD'],
-                ]);
-            }
-
-            $gtTldEntity
-                ->setContractTerminated($gTld['contractTerminated'])
-                ->setRegistryOperator($gTld['registryOperator'])
-                ->setSpecification13($gTld['specification13']);
-            // NOTICE: sTLDs are listed in ICANN's gTLD list
-
-            if (null !== $gTld['removalDate']) {
-                $gtTldEntity->setRemovalDate(new \DateTimeImmutable($gTld['removalDate']));
-            }
-            if (null !== $gTld['delegationDate']) {
-                $gtTldEntity->setDelegationDate(new \DateTimeImmutable($gTld['delegationDate']));
-            }
-            if (null !== $gTld['dateOfContractSignature']) {
-                $gtTldEntity->setDateOfContractSignature(new \DateTimeImmutable($gTld['dateOfContractSignature']));
-            }
-            $this->em->persist($gtTldEntity);
+    public function getExpiresInDays(Domain $domain): ?int
+    {
+        if ($domain->getDeleted()) {
+            return null;
         }
 
-        $this->em->flush();
+        $now = new \DateTimeImmutable();
+        [$expiredAt, $deletedAt] = $this->getRelevantDates($domain);
+
+        if ($expiredAt) {
+            $guess = self::daysBetween($now, $expiredAt->add(new \DateInterval('P'.(45 + 30 + 5).'D')));
+        }
+
+        if ($deletedAt) {
+            // It has been observed that AFNIC, on the last day, adds a "deleted" event and removes the redemption period status.
+            if (0 === self::daysBetween($now, $deletedAt) && $domain->isPendingDelete()) {
+                return 0;
+            }
+
+            $guess = self::daysBetween($now, $deletedAt->add(new \DateInterval('P'. 30 .'D')));
+        }
+
+        return self::returnExpiresIn([
+            $guess ?? null,
+            $this->calculateDaysFromStatus($domain, $now),
+        ]);
+    }
+
+    /**
+     * Returns true if one or more of these conditions are met:
+     * - It has been more than 7 days since the domain name was last updated
+     * - It has been more than 12 minutes and the domain name has statuses that suggest it is not stable
+     * - It has been more than 1 day and the domain name is blocked in DNS
+     *
+     * @throws \Exception
+     */
+    public function isToBeUpdated(Domain $domain, bool $fromUser = true, bool $intensifyLastDay = false): bool
+    {
+        $updatedAtDiff = $domain->getUpdatedAt()->diff(new \DateTimeImmutable());
+
+        if ($updatedAtDiff->days >= 7) {
+            return true;
+        }
+
+        if ($domain->getDeleted()) {
+            return $fromUser;
+        }
+
+        $expiresIn = $this->getExpiresInDays($domain);
+
+        if ($intensifyLastDay && (0 === $expiresIn || 1 === $expiresIn)) {
+            return true;
+        }
+
+        $minutesDiff = $updatedAtDiff->h * 60 + $updatedAtDiff->i;
+        if (($minutesDiff >= 12 || $fromUser) && $domain->isToBeWatchClosely()) {
+            return true;
+        }
+
+        if (
+            count(array_intersect($domain->getStatus(), ['auto renew period', 'client hold', 'server hold'])) > 0
+            && $updatedAtDiff->days >= 1
+        ) {
+            return true;
+        }
+
+        return false;
+    }
+
+    /*
+       private function calculateDaysFromEvents(\DateTimeImmutable $now): ?int
+       {
+           $lastChangedEvent = $this->getEvents()->findFirst(fn (int $i, DomainEvent $e) => !$e->getDeleted() && EventAction::LastChanged->value === $e->getAction());
+           if (null === $lastChangedEvent) {
+               return null;
+           }
+
+           if ($this->isRedemptionPeriod()) {
+               return self::daysBetween($now, $lastChangedEvent->getDate()->add(new \DateInterval('P'.(30 + 5).'D')));
+           }
+           if ($this->isPendingDelete()) {
+               return self::daysBetween($now, $lastChangedEvent->getDate()->add(new \DateInterval('P'. 5 .'D')));
+           }
+
+           return null;
+       }
+       */
+
+    private static function daysBetween(\DateTimeImmutable $start, \DateTimeImmutable $end): int
+    {
+        $interval = $start->setTime(0, 0)->diff($end->setTime(0, 0));
+
+        return $interval->invert ? -$interval->days : $interval->days;
+    }
+
+    private static function returnExpiresIn(array $guesses): ?int
+    {
+        $filteredGuesses = array_filter($guesses, function ($value) {
+            return null !== $value;
+        });
+
+        if (empty($filteredGuesses)) {
+            return null;
+        }
+
+        return max(min($filteredGuesses), 0);
     }
 }

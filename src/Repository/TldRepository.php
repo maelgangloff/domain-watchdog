@@ -16,6 +16,28 @@ class TldRepository extends ServiceEntityRepository
         parent::__construct($registry, Tld::class);
     }
 
+    /**
+     * @return Tld[] Returns an array of deleted Tld
+     */
+    public function findDeleted(): array
+    {
+        return $this->createQueryBuilder('t')
+            ->andWhere('t.deletedAt IS NOT NULL')
+            ->orderBy('t.deletedAt', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function setAllTldAsDeleted()
+    {
+        return $this->createQueryBuilder('t')
+            ->update()
+            ->set('t.deletedAt', 'COALESCE(t.removalDate, CURRENT_TIMESTAMP())')
+            ->where('t.tld != :dot')
+            ->setParameter('dot', '.')
+            ->getQuery()->execute();
+    }
+
     //    /**
     //     * @return Tld[] Returns an array of Tld objects
     //     */

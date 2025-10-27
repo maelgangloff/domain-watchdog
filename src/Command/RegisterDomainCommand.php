@@ -2,7 +2,7 @@
 
 namespace App\Command;
 
-use App\Entity\WatchList;
+use App\Entity\Watchlist;
 use App\Message\SendDomainEventNotif;
 use App\Repository\DomainRepository;
 use App\Service\RDAPService;
@@ -48,7 +48,7 @@ class RegisterDomainCommand extends Command
 
         try {
             if (null !== $domain && !$force) {
-                if (!$domain->isToBeUpdated(true, true)) {
+                if (!$this->rdapService->isToBeUpdated($domain, true, true)) {
                     $io->warning('The domain name is already present in the database and does not need to be updated at this time.');
 
                     return Command::SUCCESS;
@@ -60,11 +60,11 @@ class RegisterDomainCommand extends Command
 
             if ($notif) {
                 $randomizer = new Randomizer();
-                $watchLists = $randomizer->shuffleArray($domain->getWatchLists()->toArray());
+                $watchlists = $randomizer->shuffleArray($domain->getWatchlists()->toArray());
 
-                /** @var WatchList $watchList */
-                foreach ($watchLists as $watchList) {
-                    $this->bus->dispatch(new SendDomainEventNotif($watchList->getToken(), $domain->getLdhName(), $updatedAt));
+                /** @var Watchlist $watchlist */
+                foreach ($watchlists as $watchlist) {
+                    $this->bus->dispatch(new SendDomainEventNotif($watchlist->getToken(), $domain->getLdhName(), $updatedAt));
                 }
             }
         } catch (\Throwable $e) {

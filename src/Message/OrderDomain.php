@@ -5,7 +5,7 @@ namespace App\Message;
 final class OrderDomain
 {
     public function __construct(
-        public string $watchListToken,
+        public string $watchlistToken,
         public string $ldhName,
     ) {
     }

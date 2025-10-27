@@ -2,14 +2,18 @@ import type { FormInstance, SelectProps} from 'antd'
 import {Button, Form, Input, Select, Space, Tag, Tooltip, Typography} from 'antd'
 import {t} from 'ttag'
 import {ApiOutlined, MinusCircleOutlined, PlusOutlined} from '@ant-design/icons'
-import React, {useState} from 'react'
+import React from 'react'
 import type {Connector} from '../../../utils/api/connectors'
-import {rdapEventDetailTranslation, rdapEventNameTranslation} from '../../../utils/functions/rdapTranslation'
+import {
+    rdapDomainStatusCodeDetailTranslation,
+    rdapEventDetailTranslation,
+    rdapEventNameTranslation
+} from '../../../utils/functions/rdapTranslation'
 import {actionToColor} from '../../../utils/functions/actionToColor'
 import {actionToIcon} from '../../../utils/functions/actionToIcon'
 import type {EventAction, Watchlist} from '../../../utils/api'
-import { createWatchlistTrigger, deleteWatchlistTrigger} from '../../../utils/api'
 import {formItemLayoutWithOutLabel} from "../../../utils/providers"
+import {eppStatusCodeToColor} from "../../../utils/functions/eppStatusCodeToColor"
 
 type TagRender = SelectProps['tagRender']
 
@@ -24,17 +28,18 @@ const formItemLayout = {
     }
 }
 
-export function WatchlistForm({form, connectors, onFinish, isCreation, watchList}: {
+export function WatchlistForm({form, connectors, onFinish, isCreation}: {
     form: FormInstance
     connectors: Array<Connector & { id: string }>
-    onFinish: (values: { domains: string[], triggers: string[], token: string }) => void
+    onFinish: (values: { domains: string[], trackedEvents: string[], trackedEppStatus: string[], token: string }) => void
     isCreation: boolean,
-    watchList?: Watchlist,
+    watchlist?: Watchlist,
 }) {
     const rdapEventNameTranslated = rdapEventNameTranslation()
     const rdapEventDetailTranslated = rdapEventDetailTranslation()
+    const rdapDomainStatusCodeDetailTranslated = rdapDomainStatusCodeDetailTranslation()
 
-    const triggerTagRenderer: TagRender = ({value, closable, onClose}: {
+    const eventActionTagRenderer: TagRender = ({value, closable, onClose}: {
         value: EventAction
         closable: boolean
         onClose: () => void
@@ -61,40 +66,30 @@ export function WatchlistForm({form, connectors, onFinish, isCreation, watchList
         )
     }
 
-    const [triggersLoading, setTriggersLoading] = useState(false)
-
-    const createTrigger = async (event: string) => {
-        if (isCreation) return
-
-        setTriggersLoading(true)
-        await createWatchlistTrigger(watchList!.token, {
-            watchList: watchList!['@id'],
-            event,
-            action: 'email',
-        })
-        await createWatchlistTrigger(watchList!.token, {
-            watchList: watchList!['@id'],
-            event,
-            action: 'chat',
-        })
-        setTriggersLoading(false)
-    }
-
-    const removeTrigger = async (event: string) => {
-        if (isCreation) return
-
-        setTriggersLoading(true)
-        await deleteWatchlistTrigger(watchList!.token, {
-            watchList: watchList!['@id'],
-            event,
-            action: 'email',
-        })
-        await deleteWatchlistTrigger(watchList!.token, {
-            watchList: watchList!['@id'],
-            event,
-            action: 'chat',
-        })
-        setTriggersLoading(false)
+    const domainStatusTagRenderer: TagRender = ({value, closable, onClose}: {
+        value: EventAction
+        closable: boolean
+        onClose: () => void
+    }) => {
+        const onPreventMouseDown = (event: React.MouseEvent<HTMLSpanElement>) => {
+            event.preventDefault()
+            event.stopPropagation()
+        }
+        return (
+            <Tooltip
+                title={rdapDomainStatusCodeDetailTranslated[value as keyof typeof rdapDomainStatusCodeDetailTranslated] || undefined}
+            >
+                <Tag
+                    color={eppStatusCodeToColor(value)}
+                    onMouseDown={onPreventMouseDown}
+                    closable={closable}
+                    onClose={onClose}
+                    style={{marginInlineEnd: 4}}
+                >
+                    {value}
+                </Tag>
+            </Tooltip>
+        )
     }
 
     return (
@@ -102,7 +97,10 @@ export function WatchlistForm({form, connectors, onFinish, isCreation, watchList
             {...formItemLayoutWithOutLabel}
             form={form}
             onFinish={onFinish}
-            initialValues={{triggers: ['last changed', 'transfer', 'expiration', 'deletion']}}
+            initialValues={{
+                trackedEvents: ['last changed', 'transfer', 'deletion'],
+                trackedEppStatus: ['auto renew period', 'redemption period', 'pending delete', 'client hold', 'server hold']
+        }}
         >
 
             <Form.Item name='token' hidden>
@@ -191,8 +189,8 @@ export function WatchlistForm({form, connectors, onFinish, isCreation, watchList
             </Form.List>
             <Form.Item
                 label={t`Tracked events`}
-                name='triggers'
-                rules={[{required: true, message: t`At least one trigger`, type: 'array'}]}
+                name='trackedEvents'
+                rules={[{required: true, message: t`At least one event`, type: 'array'}]}
                 labelCol={{
                     xs: {span: 24},
                     sm: {span: 4}
@@ -205,15 +203,38 @@ export function WatchlistForm({form, connectors, onFinish, isCreation, watchList
             >
                 <Select
                     mode='multiple'
-                    tagRender={triggerTagRenderer}
+                    tagRender={eventActionTagRenderer}
                     style={{width: '100%'}}
-                    onSelect={createTrigger}
-                    onDeselect={removeTrigger}
-                    loading={triggersLoading}
                     options={Object.keys(rdapEventNameTranslated).map(e => ({
                         value: e,
                         title: rdapEventDetailTranslated[e as keyof typeof rdapEventDetailTranslated] || undefined,
                         label: rdapEventNameTranslated[e as keyof typeof rdapEventNameTranslated]
+                    }))}
+                />
+            </Form.Item>
+
+            <Form.Item
+                label={t`Tracked EPP status`}
+                name='trackedEppStatus'
+                rules={[{required: true, message: t`At least one EPP status`, type: 'array'}]}
+                labelCol={{
+                    xs: {span: 24},
+                    sm: {span: 4}
+                }}
+                wrapperCol={{
+                    md: {span: 12},
+                    sm: {span: 20}
+                }}
+                required
+            >
+                <Select
+                    mode='multiple'
+                    tagRender={domainStatusTagRenderer}
+                    style={{width: '100%'}}
+                    options={Object.keys(rdapDomainStatusCodeDetailTranslated).map(e => ({
+                        value: e,
+                        title: rdapDomainStatusCodeDetailTranslated[e as keyof typeof rdapDomainStatusCodeDetailTranslated] || undefined,
+                        label: e
                     }))}
                 />
             </Form.Item>

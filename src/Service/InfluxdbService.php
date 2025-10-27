@@ -2,7 +2,6 @@
 
 namespace App\Service;
 
-use App\Config\TriggerAction;
 use App\Entity\Connector;
 use App\Entity\Domain;
 use App\Entity\RdapServer;
@@ -53,6 +52,7 @@ readonly class InfluxdbService
         ], (int) floor($info['start_time'] * 1e3),
             WritePrecision::MS)
         );
+        $this->client->close();
     }
 
     public function addDomainOrderPoint(Connector $connector, Domain $domain, bool $success): void
@@ -64,17 +64,19 @@ readonly class InfluxdbService
         ], [
             'success' => $success,
         ]));
+        $this->client->close();
     }
 
-    public function addDomainNotificationPoint(Domain $domain, TriggerAction $triggerAction, bool $success): void
+    public function addDomainNotificationPoint(Domain $domain, string $triggerAction, bool $success): void
     {
         $this->writePoints(new Point('domain_notification', [
             'domain' => $domain->getLdhName(),
             'tld' => $domain->getTld()->getTld(),
-            'medium' => $triggerAction->value,
+            'medium' => $triggerAction,
         ], [
             'success' => $success,
         ]));
+        $this->client->close();
     }
 
     private function writePoints(Point ...$points): void
@@ -89,5 +91,6 @@ readonly class InfluxdbService
         } catch (\Throwable) {
             // TODO: Add a retry mechanism if writing fails
         }
+        $this->client->close();
     }
 }

@@ -3,15 +3,15 @@
 namespace App\MessageHandler;
 
 use App\Entity\Domain;
-use App\Entity\WatchList;
+use App\Entity\Watchlist;
 use App\Message\OrderDomain;
 use App\Notifier\DomainOrderErrorNotification;
 use App\Notifier\DomainOrderNotification;
 use App\Repository\DomainRepository;
-use App\Repository\WatchListRepository;
+use App\Repository\WatchlistRepository;
 use App\Service\ChatNotificationService;
-use App\Service\Connector\AbstractProvider;
 use App\Service\InfluxdbService;
+use App\Service\Provider\AbstractProvider;
 use App\Service\StatService;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
@@ -31,7 +31,7 @@ final readonly class OrderDomainHandler
     public function __construct(
         string $mailerSenderEmail,
         string $mailerSenderName,
-        private WatchListRepository $watchListRepository,
+        private WatchlistRepository $watchlistRepository,
         private DomainRepository $domainRepository,
         private KernelInterface $kernel,
         private MailerInterface $mailer,
@@ -54,12 +54,12 @@ final readonly class OrderDomainHandler
      */
     public function __invoke(OrderDomain $message): void
     {
-        /** @var WatchList $watchList */
-        $watchList = $this->watchListRepository->findOneBy(['token' => $message->watchListToken]);
+        /** @var Watchlist $watchlist */
+        $watchlist = $this->watchlistRepository->findOneBy(['token' => $message->watchlistToken]);
         /** @var Domain $domain */
         $domain = $this->domainRepository->findOneBy(['ldhName' => $message->ldhName]);
 
-        $connector = $watchList->getConnector();
+        $connector = $watchlist->getConnector();
 
         /*
          * We make sure that the domain name is marked absent from WHOIS in the database before continuing.
@@ -71,8 +71,8 @@ final readonly class OrderDomainHandler
             return;
         }
 
-        $this->logger->notice('Watchlist {watchlist} is linked to connector {connector}. A purchase attempt will be made for domain name {ldhName} with provider {provider}.', [
-            'watchlist' => $message->watchListToken,
+        $this->logger->notice('Watchlist is linked to a connector : a purchase attempt will be made for this domain name', [
+            'watchlist' => $message->watchlistToken,
             'connector' => $connector->getId(),
             'ldhName' => $message->ldhName,
             'provider' => $connector->getProvider()->value,
@@ -93,14 +93,15 @@ final readonly class OrderDomainHandler
              * The user is authenticated to ensure that the credentials are still valid.
              * If no errors occur, the purchase is attempted.
              */
+            $connectorProvider->authenticate($connector->getAuthData());
 
             $connectorProvider->orderDomain($domain, $this->kernel->isDebug());
 
             /*
              * If the purchase was successful, the statistics are updated and a success message is sent to the user.
              */
-            $this->logger->notice('Watchlist {watchlist} is linked to connector {connector}. A purchase was successfully made for domain {ldhName} with provider {provider}.', [
-                'watchlist' => $message->watchListToken,
+            $this->logger->notice('Watchlist is linked to connector : a purchase was successfully made for this domain name', [
+                'watchlist' => $message->watchlistToken,
                 'connector' => $connector->getId(),
                 'ldhName' => $message->ldhName,
                 'provider' => $connector->getProvider()->value,
@@ -111,15 +112,18 @@ final readonly class OrderDomainHandler
                 $this->influxdbService->addDomainOrderPoint($connector, $domain, true);
             }
             $notification = (new DomainOrderNotification($this->sender, $domain, $connector));
-            $this->mailer->send($notification->asEmailMessage(new Recipient($watchList->getUser()->getEmail()))->getMessage());
-            $this->chatNotificationService->sendChatNotification($watchList, $notification);
+            $this->mailer->send($notification->asEmailMessage(new Recipient($watchlist->getUser()->getEmail()))->getMessage());
+            $this->chatNotificationService->sendChatNotification($watchlist, $notification);
         } catch (\Throwable $exception) {
             /*
              * The purchase was not successful (for several possible reasons that we have not determined).
              * The user is informed and the exception is raised, which may allow you to try again.
              */
-            $this->logger->warning('Unable to complete purchase. An error message is sent to user {username}.', [
-                'username' => $watchList->getUser()->getUserIdentifier(),
+            $this->logger->warning('Unable to complete purchase : an error message is sent to the user', [
+                'watchlist' => $message->watchlistToken,
+                'connector' => $connector->getId(),
+                'ldhName' => $message->ldhName,
+                'provider' => $connector->getProvider()->value,
             ]);
 
             $this->statService->incrementStat('stats.domain.purchase.failed');
@@ -127,8 +131,8 @@ final readonly class OrderDomainHandler
                 $this->influxdbService->addDomainOrderPoint($connector, $domain, false);
             }
             $notification = (new DomainOrderErrorNotification($this->sender, $domain));
-            $this->mailer->send($notification->asEmailMessage(new Recipient($watchList->getUser()->getEmail()))->getMessage());
-            $this->chatNotificationService->sendChatNotification($watchList, $notification);
+            $this->mailer->send($notification->asEmailMessage(new Recipient($watchlist->getUser()->getEmail()))->getMessage());
+            $this->chatNotificationService->sendChatNotification($watchlist, $notification);
 
             throw $exception;
         }

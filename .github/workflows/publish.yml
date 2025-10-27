@@ -70,6 +70,8 @@ jobs:
                     platforms: ${{ matrix.platform }}
                     labels: ${{ steps.meta.outputs.labels }}
                     outputs: type=image,name=${{ github.repository }},name-canonical=true,push=true
+                    cache-from: type=gha
+                    cache-to: type=gha,mode=max
 
             -   name: Export digest
                 run: |

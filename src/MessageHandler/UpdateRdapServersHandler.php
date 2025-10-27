@@ -3,7 +3,8 @@
 namespace App\MessageHandler;
 
 use App\Message\UpdateRdapServers;
-use App\Service\RDAPService;
+use App\Repository\DomainRepository;
+use App\Service\OfficialDataService;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 use Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface;
@@ -16,8 +17,8 @@ use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 final readonly class UpdateRdapServersHandler
 {
     public function __construct(
-        private RDAPService $RDAPService,
-        private ParameterBagInterface $bag,
+        private OfficialDataService $officialDataService,
+        private ParameterBagInterface $bag, private DomainRepository $domainRepository,
     ) {
     }
 
@@ -39,8 +40,9 @@ final readonly class UpdateRdapServersHandler
          */
 
         try {
-            $this->RDAPService->updateTldListIANA();
-            $this->RDAPService->updateGTldListICANN();
+            $this->officialDataService->updateTldListIANA();
+            $this->officialDataService->updateGTldListICANN();
+            $this->domainRepository->setDomainDeletedIfTldIsDeleted();
         } catch (\Throwable $throwable) {
             $throws[] = $throwable;
         }
@@ -50,7 +52,7 @@ final readonly class UpdateRdapServersHandler
          */
 
         try {
-            $this->RDAPService->updateRDAPServersFromIANA();
+            $this->officialDataService->updateRDAPServersFromIANA();
         } catch (\Throwable $throwable) {
             $throws[] = $throwable;
         }
@@ -60,13 +62,13 @@ final readonly class UpdateRdapServersHandler
          */
 
         try {
-            $this->RDAPService->updateRDAPServersFromFile($this->bag->get('custom_rdap_servers_file'));
+            $this->officialDataService->updateRDAPServersFromFile($this->bag->get('custom_rdap_servers_file'));
         } catch (\Throwable $throwable) {
             $throws[] = $throwable;
         }
 
         try {
-            $this->RDAPService->updateRegistrarListIANA();
+            $this->officialDataService->updateRegistrarListIANA();
         } catch (\Throwable $throwable) {
             $throws[] = $throwable;
         }

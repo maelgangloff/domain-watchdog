@@ -21,6 +21,7 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\RateLimiter\RateLimiterFactory;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Serializer\SerializerInterface;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class RegistrationController extends AbstractController
 {
@@ -33,6 +34,7 @@ class RegistrationController extends AbstractController
         private readonly SerializerInterface $serializer,
         private readonly LoggerInterface $logger,
         private readonly KernelInterface $kernel,
+        private readonly ValidatorInterface $validator,
     ) {
     }
 
@@ -44,7 +46,7 @@ class RegistrationController extends AbstractController
         name: 'user_register',
         defaults: [
             '_api_resource_class' => User::class,
-            '_api_operation_name' => 'register',
+            '_api_operation_name' => 'user_register',
         ],
         methods: ['POST']
     )]
@@ -64,22 +66,21 @@ class RegistrationController extends AbstractController
         }
 
         $user = $this->serializer->deserialize($request->getContent(), User::class, 'json', ['groups' => 'user:register']);
-        if (null === $user->getEmail() || null === $user->getPassword()) {
-            throw new BadRequestHttpException('Bad request');
+        $violations = $this->validator->validate($user);
+
+        if ($violations->count() > 0) {
+            throw new BadRequestHttpException($violations->get(0));
         }
 
         $user->setPassword(
             $userPasswordHasher->hashPassword(
                 $user,
-                $user->getPassword()
+                $user->getPlainPassword()
             )
-        );
-
-        $this->em->persist($user);
-        $this->em->flush();
+        )->setCreatedAt(new \DateTimeImmutable());
 
         if (false === (bool) $this->getParameter('registration_verify_email')) {
-            $user->setVerified(true);
+            $user->setVerifiedAt($user->getCreatedAt());
         } else {
             $email = $this->emailVerifier->sendEmailConfirmation('app_verify_email', $user,
                 (new TemplatedEmail())
@@ -91,13 +92,16 @@ class RegistrationController extends AbstractController
             );
 
             $signedUrl = (string) $email->getContext()['signedUrl'];
-            $this->logger->notice('The validation link for user {username} is {signedUrl}', [
+            $this->logger->notice('The validation link for this user is generated', [
                 'username' => $user->getUserIdentifier(),
                 'signedUrl' => $signedUrl,
             ]);
         }
 
-        $this->logger->info('A new user has registered ({username}).', [
+        $this->em->persist($user);
+        $this->em->flush();
+
+        $this->logger->info('New user has registered', [
             'username' => $user->getUserIdentifier(),
         ]);
 
@@ -121,7 +125,7 @@ class RegistrationController extends AbstractController
 
         $this->emailVerifier->handleEmailConfirmation($request, $user);
 
-        $this->logger->info('User {username} has validated his email address.', [
+        $this->logger->info('User has validated his email address', [
             'username' => $user->getUserIdentifier(),
         ]);
 

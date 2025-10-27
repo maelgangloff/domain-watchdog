@@ -1,4 +1,4 @@
-import type {TrackedDomains, Watchlist, WatchlistRequest, WatchlistTrigger} from './index'
+import type {TrackedDomains, Watchlist, WatchlistRequest} from './index'
 import {request} from './index'
 
 interface WatchlistList {
@@ -32,6 +32,18 @@ export async function postWatchlist(watchlist: WatchlistRequest) {
     return response.data
 }
 
+export async function patchWatchlist(token: string, watchlist: Partial<WatchlistRequest>) {
+    const response = await request<{ token: string }>({
+        method: 'PATCH',
+        url: 'watchlists/' + token,
+        data: watchlist,
+        headers: {
+            'Content-Type': 'application/merge-patch+json'
+        }
+    })
+    return response.data
+}
+
 export async function deleteWatchlist(token: string): Promise<void> {
     await request({
         method: 'DELETE',
@@ -55,21 +67,4 @@ export async function getTrackedDomainList(params: { page: number, itemsPerPage:
         params
     })
     return response.data
-}
-
-export async function createWatchlistTrigger(watchListToken: string, watchListTrigger: WatchlistTrigger): Promise<WatchlistTrigger> {
-    const response = await request<WatchlistTrigger>({
-        method: 'POST',
-        url: `watchlist-triggers`,
-        data: watchListTrigger,
-    })
-    return response.data
-}
-
-export async function deleteWatchlistTrigger(watchListToken: string, watchListTrigger: WatchlistTrigger): Promise<void> {
-    await request<void>({
-        method: 'DELETE',
-        url: `watchlists/${watchListToken}/triggers/${watchListTrigger.action}/${watchListTrigger.event}`,
-        data: watchListTrigger
-    })
 }

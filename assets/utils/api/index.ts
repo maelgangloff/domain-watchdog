@@ -16,8 +16,6 @@ export type EventAction =
     | 'enum validation expiration'
     | string
 
-export type TriggerAction = 'email' | 'chat'
-
 export interface Event {
     action: EventAction
     date: string
@@ -32,6 +30,11 @@ export interface Entity {
         string,
             string | string[],
     ]>] | []
+    remarks?: {
+      type: string
+      description: string
+    }[]
+    icannAccreditation?: IcannAccreditation
 }
 
 export interface Nameserver {
@@ -59,7 +62,7 @@ export interface Domain {
         entity: Entity
         events: Event[]
         roles: string[]
-        deleted: boolean
+        deletedAt?: string
     }>
     nameservers: Nameserver[]
     tld: Tld
@@ -74,18 +77,14 @@ export interface User {
     roles: string[]
 }
 
-export interface WatchlistTrigger {
-    event: EventAction
-    action: TriggerAction
-    watchList?: string
-}
-
 export interface WatchlistRequest {
     name?: string
     domains: string[]
-    triggers?: Array<WatchlistTrigger>
+    trackedEvents?: string[]
+    trackedEppStatus?: string[]
     connector?: string
     dsn?: string[]
+    enabled?: boolean
 }
 
 export interface Watchlist {
@@ -93,7 +92,8 @@ export interface Watchlist {
     name?: string
     token: string
     domains: Domain[]
-    triggers?: Array<WatchlistTrigger>
+    trackedEvents?: string[]
+    trackedEppStatus?: string[]
     dsn?: string[]
     connector?: {
         id: string
@@ -101,6 +101,7 @@ export interface Watchlist {
         createdAt: string
     }
     createdAt: string
+    enabled: boolean
 }
 
 export interface InstanceConfig {
@@ -125,13 +126,11 @@ export interface TrackedDomains {
 }
 
 export interface IcannAccreditation {
-    handle: string
-    icannAccreditation: {
-        registrarName: string
-        status: string
-        date?: string
-        updated?: string
-    }
+    id: number
+    registrarName: string
+    status: string
+    date?: string
+    updated?: string
 }
 
 export async function request<T = object, R = AxiosResponse<T>, D = object>(config: AxiosRequestConfig): Promise<R> {
