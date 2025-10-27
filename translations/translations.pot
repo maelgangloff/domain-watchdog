@@ -63,6 +63,13 @@ msgstr ""
 #: assets/utils/providers/forms/EppConnectorForm.tsx:227
 #: assets/utils/providers/forms/EppConnectorForm.tsx:239
 #: assets/utils/providers/forms/GandiConnectorForm.tsx:15
+#: assets/utils/providers/forms/OpenProviderConnectorForm.tsx:29
+#: assets/utils/providers/forms/OpenProviderConnectorForm.tsx:39
+#: assets/utils/providers/forms/OpenProviderConnectorForm.tsx:47
+#: assets/utils/providers/forms/OpenProviderConnectorForm.tsx:54
+#: assets/utils/providers/forms/OpenProviderConnectorForm.tsx:61
+#: assets/utils/providers/forms/OpenProviderConnectorForm.tsx:79
+#: assets/utils/providers/forms/OpenProviderConnectorForm.tsx:94
 #: assets/utils/providers/forms/OvhCloudConnectorForm.tsx:37
 #: assets/utils/providers/forms/OvhCloudConnectorForm.tsx:51
 #: assets/utils/providers/forms/OvhCloudConnectorForm.tsx:59
@@ -771,16 +778,19 @@ msgstr ""
 
 #: assets/utils/functions/rdapTranslation.ts:7
 #: assets/utils/providers/forms/EppConnectorForm.tsx:241
+#: assets/utils/providers/forms/OpenProviderConnectorForm.tsx:41
 msgid "Registrant"
 msgstr ""
 
 #: assets/utils/functions/rdapTranslation.ts:8
 #: assets/utils/providers/forms/EppConnectorForm.tsx:251
+#: assets/utils/providers/forms/OpenProviderConnectorForm.tsx:55
 msgid "Technical"
 msgstr ""
 
 #: assets/utils/functions/rdapTranslation.ts:9
 #: assets/utils/providers/forms/EppConnectorForm.tsx:246
+#: assets/utils/providers/forms/OpenProviderConnectorForm.tsx:48
 msgid "Administrative"
 msgstr ""
 
@@ -790,11 +800,13 @@ msgstr ""
 
 #: assets/utils/functions/rdapTranslation.ts:11
 #: assets/utils/providers/forms/EppConnectorForm.tsx:256
+#: assets/utils/providers/forms/OpenProviderConnectorForm.tsx:63
 msgid "Billing"
 msgstr ""
 
 #: assets/utils/functions/rdapTranslation.ts:13
 #: assets/utils/providers/forms/EppConnectorForm.tsx:266
+#: assets/utils/providers/forms/OpenProviderConnectorForm.tsx:68
 msgid "Reseller"
 msgstr ""
 
@@ -1226,6 +1238,7 @@ msgstr ""
 
 #: assets/utils/providers/forms/AutoDnsConnectorForm.tsx:10
 #: assets/utils/providers/forms/NamecomConnectorForm.tsx:11
+#: assets/utils/providers/forms/OpenProviderConnectorForm.tsx:18
 msgid ""
 "This provider does not provide a list of supported TLD. Please double check "
 "if the domain you want to register is supported."
@@ -1370,6 +1383,7 @@ msgid "Domain configuration"
 msgstr ""
 
 #: assets/utils/providers/forms/EppConnectorForm.tsx:204
+#: assets/utils/providers/forms/OpenProviderConnectorForm.tsx:74
 msgid "Registration period"
 msgstr ""
 
@@ -1386,6 +1400,7 @@ msgid "Auth-Info Code"
 msgstr ""
 
 #: assets/utils/providers/forms/EppConnectorForm.tsx:233
+#: assets/utils/providers/forms/OpenProviderConnectorForm.tsx:33
 msgid "NIC Handle"
 msgstr ""
 
@@ -1425,7 +1440,7 @@ msgstr ""
 
 #: assets/utils/providers/forms/NamecheapConnectorForm.tsx:13
 msgid ""
-"Retreive an API key and whitelist this instance's IP address on Namecheap's "
+"Retrieve an API key and whitelist this instance's IP address on Namecheap's "
 "website"
 msgstr ""
 
@@ -1439,6 +1454,22 @@ msgstr ""
 msgid ""
 "Retrieve a set of tokens from your customer account on the Provider's "
 "website"
+msgstr ""
+
+#: assets/utils/providers/forms/OpenProviderConnectorForm.tsx:24
+msgid "Token"
+msgstr ""
+
+#: assets/utils/providers/forms/OpenProviderConnectorForm.tsx:27
+msgid "Obtain an API key by following the provider's instructions"
+msgstr ""
+
+#: assets/utils/providers/forms/OpenProviderConnectorForm.tsx:88
+msgid "Nameserver group"
+msgstr ""
+
+#: assets/utils/providers/forms/OpenProviderConnectorForm.tsx:92
+msgid "Create an NS group and write the group name here"
 msgstr ""
 
 #: assets/utils/providers/forms/OvhCloudConnectorForm.tsx:15

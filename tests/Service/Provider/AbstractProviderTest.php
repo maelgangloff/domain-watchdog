@@ -74,7 +74,7 @@ class AbstractProviderTest extends ApiTestCase
         ]);
     }
 
-    // #[DependsExternal(RDAPServiceTest::class, 'testUpdateRdapServers')]
+    #[DependsExternal(RDAPServiceTest::class, 'testUpdateRdapServers')]
     public function testOpenProvider()
     {
         $openproviderToken = static::getContainer()->getParameter('openprovider_token');
