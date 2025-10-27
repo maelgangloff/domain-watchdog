@@ -12,7 +12,7 @@ use App\Exception\MalformedDomainException;
 use App\Repository\DomainRepository;
 use App\Service\RDAPService;
 use App\State\AutoRegisterDomainProvider;
-use App\State\FindDomainListFromEntityProvider;
+use App\State\FindDomainCollectionFromEntityProvider;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
@@ -42,7 +42,7 @@ use Symfony\Component\Serializer\Attribute\SerializedName;
                     'event:list',
                 ],
             ],
-            provider: FindDomainListFromEntityProvider::class,
+            provider: FindDomainCollectionFromEntityProvider::class,
             parameters: [
                 'registrant' => new QueryParameter(description: 'The exact name of the registrant (case insensitive)', required: true),
             ]

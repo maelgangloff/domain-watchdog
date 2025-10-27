@@ -10,7 +10,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Query\ResultSetMapping;
 use Symfony\Component\HttpFoundation\RequestStack;
 
-readonly class FindDomainListFromEntityProvider implements ProviderInterface
+readonly class FindDomainCollectionFromEntityProvider implements ProviderInterface
 {
     public function __construct(
         private RequestStack $requestStack,

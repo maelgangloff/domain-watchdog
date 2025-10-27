@@ -8,11 +8,9 @@ use App\Factory\UserFactory;
 use App\Tests\AuthenticatedUserTrait;
 use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 use Zenstruck\Foundry\Test\Factories;
-use Zenstruck\Foundry\Test\ResetDatabase;
 
 final class MeControllerTest extends ApiTestCase
 {
-    use ResetDatabase;
     use Factories;
     use AuthenticatedUserTrait;
 

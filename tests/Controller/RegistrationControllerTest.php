@@ -7,11 +7,9 @@ use App\Factory\UserFactory;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Zenstruck\Foundry\Test\Factories;
-use Zenstruck\Foundry\Test\ResetDatabase;
 
 final class RegistrationControllerTest extends ApiTestCase
 {
-    use ResetDatabase;
     use Factories;
 
     protected static ContainerInterface $container;
