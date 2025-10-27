@@ -22,18 +22,13 @@ readonly class FindDomainListFromEntityProvider implements ProviderInterface
     {
         $request = $this->requestStack->getCurrentRequest();
         $rsm = (new ResultSetMapping())
-            ->addScalarResult('handles', 'handles')
-            ->addScalarResult('domain_ids', 'domain_ids')
-            ->addScalarResult('registrant', 'registrant');
+            ->addScalarResult('domain_ids', 'domain_ids');
 
         $handleBlacklist = join(',', array_map(fn (string $s) => "'$s'", RDAPService::ENTITY_HANDLE_BLACKLIST));
 
         $sql = <<<SQL
 SELECT
-    array_agg(DISTINCT sub.handle || '.' || sub.tld_id) AS handles,
-    array_agg(DISTINCT de.domain_id) AS domain_ids,
-    COUNT(de.domain_id) AS cnt,
-    COALESCE(org, fn) AS registrant
+    array_agg(DISTINCT de.domain_id) AS domain_ids
 FROM (
     SELECT
         e.handle AS handle,
@@ -60,15 +55,11 @@ WHERE LOWER(org||fn) NOT LIKE '%redacted%'
   AND handle NOT IN ($handleBlacklist)
   AND de.roles @> '["registrant"]'
   AND sub.tld_id IS NOT NULL
-  AND (LOWER(org) = LOWER(:var) OR LOWER(fn) = LOWER(:var))
-GROUP BY COALESCE(org, fn)
-HAVING COALESCE(org, fn) != '' AND COALESCE(org, fn) IS NOT NULL
-ORDER BY cnt DESC;
+  AND (LOWER(org) = LOWER(:var) OR LOWER(fn) = LOWER(:var));
 SQL;
-        $query = $this->em->createNativeQuery($sql, $rsm);
-        $query->setParameter('var', trim($request->get('registrant')));
-
-        $result = $query->getOneOrNullResult();
+        $result = $this->em->createNativeQuery($sql, $rsm)
+            ->setParameter('var', trim($request->get('registrant')))
+            ->getOneOrNullResult();
 
         if (!$result) {
             return null;
