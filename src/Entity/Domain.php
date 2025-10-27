@@ -39,7 +39,6 @@ use Symfony\Component\Serializer\Attribute\SerializedName;
                     'domain:list',
                     'tld:list',
                     'event:list',
-                    'domain:list',
                     'event:list',
                 ],
             ],

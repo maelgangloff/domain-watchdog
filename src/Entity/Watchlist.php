@@ -43,7 +43,6 @@ use Symfony\Component\Validator\Constraints as Assert;
                     'domain:list',
                     'tld:list',
                     'event:list',
-                    'domain:list',
                     'event:list',
                 ],
             ],
