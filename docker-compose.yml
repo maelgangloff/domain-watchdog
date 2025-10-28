@@ -11,7 +11,8 @@ services:
             APP_ENV: prod
             SERVER_NAME: ${SERVER_NAME:-:80}
             DATABASE_URL: postgresql://${POSTGRES_USER:-app}:${POSTGRES_PASSWORD:-!ChangeMe!}@database:${POSTGRES_PORT:-5432}/${POSTGRES_DB:-app}?serverVersion=${POSTGRES_VERSION:-15}&charset=${POSTGRES_CHARSET:-utf8}
-            MESSENGER_TRANSPORT_DSN: redis://valkey:6379/messages
+            MESSENGER_ASYNC_TRANSPORT_DSN: redis://valkey:6379/messages
+            MESSENGER_RDAP_ASYNC_TRANSPORT_DSN: redis://valkey:6379/messages-rdap
         volumes:
             - caddy_data:/data
             - caddy_config:/config
@@ -31,7 +32,8 @@ services:
         environment:
             APP_ENV: prod
             DATABASE_URL: postgresql://${POSTGRES_USER:-app}:${POSTGRES_PASSWORD:-!ChangeMe!}@database:${POSTGRES_PORT:-5432}/${POSTGRES_DB:-app}?serverVersion=${POSTGRES_VERSION:-15}&charset=${POSTGRES_CHARSET:-utf8}
-            MESSENGER_TRANSPORT_DSN: redis://valkey:6379/messages
+            MESSENGER_ASYNC_TRANSPORT_DSN: redis://valkey:6379/messages
+            MESSENGER_RDAP_ASYNC_TRANSPORT_DSN: redis://valkey:6379/messages-rdap
         depends_on:
             - database
         healthcheck:

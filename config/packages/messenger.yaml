@@ -5,18 +5,12 @@ framework:
         transports:
             # https://symfony.com/doc/current/messenger.html#transport-configuration
             async:
-                dsn: '%env(MESSENGER_TRANSPORT_DSN)%'
-                options:
-                    queue_name: messages_async
-                    group: messages_async
+                dsn: '%env(MESSENGER_ASYNC_TRANSPORT_DSN)%'
                 retry_strategy:
                     max_retries: 3
                     multiplier: 2
             rdap_async:
-                dsn: '%env(MESSENGER_TRANSPORT_DSN)%'
-                options:
-                    queue_name: messages_rdap_async
-                    group: messages_rdap_async
+                dsn: '%env(MESSENGER_RDAP_ASYNC_TRANSPORT_DSN)%'
                 retry_strategy:
                     delay: 1000
                     multiplier: 2
