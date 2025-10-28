@@ -96,6 +96,11 @@ final readonly class UpdateDomainHandler
              * We send messages that correspond to the sending of notifications that will not be processed here.
              */
             $this->RDAPService->registerDomain($domain->getLdhName());
+
+            /** @var Watchlist $wl */
+            foreach ($domain->getWatchlists()->getIterator() as $wl) {
+                $this->bus->dispatch(new DetectDomainChange($wl->getToken(), $domain->getLdhName(), $updatedAt));
+            }
         } catch (DomainNotFoundException) {
             $newDomain = $this->domainRepository->findOneBy(['ldhName' => $domain->getLdhName()]);
 
@@ -116,11 +121,6 @@ final readonly class UpdateDomainHandler
             /*
              * In this case, the domain name can no longer be updated. Unfortunately, there is nothing more that can be done.
              */
-        }
-
-        /** @var Watchlist $wl */
-        foreach ($domain->getWatchlists()->getIterator() as $wl) {
-            $this->bus->dispatch(new DetectDomainChange($wl->getToken(), $domain->getLdhName(), $updatedAt));
         }
     }
 }
