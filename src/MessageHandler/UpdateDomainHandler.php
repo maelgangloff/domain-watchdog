@@ -3,6 +3,7 @@
 namespace App\MessageHandler;
 
 use App\Entity\RdapServer;
+use App\Entity\Watchlist;
 use App\Exception\DomainNotFoundException;
 use App\Exception\MalformedDomainException;
 use App\Exception\TldNotSupportedException;
@@ -22,11 +23,9 @@ use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 use Symfony\Component\Messenger\Exception\ExceptionInterface;
-use Symfony\Component\Messenger\Exception\RecoverableMessageHandlingException;
 use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Mime\Address;
 use Symfony\Component\Notifier\Recipient\Recipient;
-use Symfony\Component\RateLimiter\RateLimiterFactory;
 use Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\DecodingExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\RedirectionExceptionInterface;
@@ -46,7 +45,7 @@ final readonly class UpdateDomainHandler
         private MessageBusInterface $bus,
         private WatchlistRepository $watchlistRepository,
         private DomainRepository $domainRepository,
-        private RateLimiterFactory $rdapRequestsLimiter, private LoggerInterface $logger,
+        private LoggerInterface $logger,
     ) {
         $this->sender = new Address($mailerSenderEmail, $mailerSenderName);
     }
@@ -63,6 +62,7 @@ final readonly class UpdateDomainHandler
      * @throws ServerExceptionInterface
      * @throws MalformedDomainException
      * @throws ExceptionInterface
+     * @throws \Exception
      */
     public function __invoke(UpdateDomain $message): void
     {
@@ -76,21 +76,16 @@ final readonly class UpdateDomainHandler
 
             return;
         }
-        $limiter = $this->rdapRequestsLimiter->create($rdapServer->getUrl());
-        $limit = $limiter->consume();
-
-        if (!$limit->isAccepted()) {
-            $retryAfter = $limit->getRetryAfter()->getTimestamp() - time();
-
-            $this->logger->warning('Security rate limit reached for this RDAP server', [
-                'url' => $rdapServer->getUrl(),
-                'retryAfter' => $retryAfter,
-            ]);
-
-            throw new RecoverableMessageHandlingException('Rate limit reached', 0, null, $retryAfter);
-        }
 
         $watchlist = $this->watchlistRepository->findOneBy(['token' => $message->watchlistToken]);
+
+        if (!$this->RDAPService->isToBeUpdated($domain, false, null !== $watchlist->getConnector())) {
+            $this->logger->debug('The domain name is already present in the database and does not need to be updated at this time', [
+                'ldhName' => $domain->getLdhName(),
+            ]);
+
+            return;
+        }
 
         $updatedAt = $domain->getUpdatedAt();
         $deleted = $domain->getDeleted();
@@ -101,7 +96,6 @@ final readonly class UpdateDomainHandler
              * We send messages that correspond to the sending of notifications that will not be processed here.
              */
             $this->RDAPService->registerDomain($domain->getLdhName());
-            $this->bus->dispatch(new DetectDomainChange($watchlist->getToken(), $domain->getLdhName(), $updatedAt));
         } catch (DomainNotFoundException) {
             $newDomain = $this->domainRepository->findOneBy(['ldhName' => $domain->getLdhName()]);
 
@@ -122,6 +116,11 @@ final readonly class UpdateDomainHandler
             /*
              * In this case, the domain name can no longer be updated. Unfortunately, there is nothing more that can be done.
              */
+        }
+
+        /** @var Watchlist $wl */
+        foreach ($domain->getWatchlists()->getIterator() as $wl) {
+            $this->bus->dispatch(new DetectDomainChange($wl->getToken(), $domain->getLdhName(), $updatedAt));
         }
     }
 }

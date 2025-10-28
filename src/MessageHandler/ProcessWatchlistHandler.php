@@ -79,8 +79,7 @@ final readonly class ProcessWatchlistHandler
          */
 
         /** @var Domain $domain */
-        foreach ($watchlist->getDomains()->filter(fn ($domain) => $this->RDAPService->isToBeUpdated($domain, false, null !== $watchlist->getConnector())) as $domain
-        ) {
+        foreach ($watchlist->getDomains()->filter(fn ($domain) => $this->RDAPService->isToBeUpdated($domain, false, null !== $watchlist->getConnector())) as $domain) {
             $this->bus->dispatch(new UpdateDomain($domain->getLdhName(), $watchlist->getToken()));
         }
     }

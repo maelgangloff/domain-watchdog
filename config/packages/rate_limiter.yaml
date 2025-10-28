@@ -24,8 +24,3 @@ framework:
             policy: sliding_window
             limit: 10
             interval: '1 hour'
-
-        rdap_requests:
-            policy: sliding_window
-            limit: 2
-            interval: '1 second'

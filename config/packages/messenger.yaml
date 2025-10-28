@@ -14,8 +14,7 @@ framework:
                 retry_strategy:
                     delay: 1000
                     multiplier: 2
-                    max_retries: 10
-                    max_delay: 10000
+                    max_delay: 86400000
 
             failed: 'doctrine://default?queue_name=failed'
             # sync: 'sync://'
@@ -37,6 +36,3 @@ framework:
             App\Message\UpdateRdapServers: async
             App\Message\ValidateConnectorCredentials: async
             App\Message\UpdateDomain: rdap_async
-
-            # Route your messages to the transports
-            # 'App\Message\YourMessage': async
