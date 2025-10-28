@@ -10,7 +10,7 @@ use App\Exception\DomainNotFoundException;
 use App\Exception\MalformedDomainException;
 use App\Exception\TldNotSupportedException;
 use App\Exception\UnknownRdapServerException;
-use App\Message\SendDomainEventNotif;
+use App\Message\DetectDomainChange;
 use App\Repository\DomainRepository;
 use App\Service\RDAPService;
 use Doctrine\ORM\EntityManagerInterface;
@@ -37,7 +37,7 @@ readonly class AutoRegisterDomainProvider implements ProviderInterface
         private RDAPService $RDAPService,
         private KernelInterface $kernel,
         private ParameterBagInterface $parameterBag,
-        private RateLimiterFactory $rdapRequestsLimiter,
+        private RateLimiterFactory $userRdapRequestsLimiter,
         private Security $security,
         private LoggerInterface $logger,
         private DomainRepository $domainRepository,
@@ -92,7 +92,7 @@ readonly class AutoRegisterDomainProvider implements ProviderInterface
         }
 
         if (false === $this->kernel->isDebug() && true === $this->parameterBag->get('limited_features')) {
-            $limiter = $this->rdapRequestsLimiter->create($userId);
+            $limiter = $this->userRdapRequestsLimiter->create($userId);
             $limit = $limiter->consume();
 
             if (!$limit->isAccepted()) {
@@ -131,7 +131,7 @@ readonly class AutoRegisterDomainProvider implements ProviderInterface
 
         /** @var Watchlist $watchlist */
         foreach ($watchlists as $watchlist) {
-            $this->bus->dispatch(new SendDomainEventNotif($watchlist->getToken(), $domain->getLdhName(), $updatedAt));
+            $this->bus->dispatch(new DetectDomainChange($watchlist->getToken(), $domain->getLdhName(), $updatedAt));
         }
 
         return $domain;

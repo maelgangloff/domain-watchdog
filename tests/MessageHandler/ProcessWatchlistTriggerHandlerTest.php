@@ -2,9 +2,9 @@
 
 namespace App\Tests\MessageHandler;
 
-use App\Message\ProcessWatchlistTrigger;
-use App\Message\UpdateDomainsFromWatchlist;
-use App\MessageHandler\ProcessWatchlistTriggerHandler;
+use App\Message\ProcessAllWatchlist;
+use App\Message\ProcessWatchlist;
+use App\MessageHandler\ProcessAllWatchlistHandler;
 use App\Tests\State\WatchlistUpdateProcessorTest;
 use PHPUnit\Framework\Attributes\DependsExternal;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
@@ -16,16 +16,16 @@ final class ProcessWatchlistTriggerHandlerTest extends KernelTestCase
     public function testSendMessage()
     {
         $container = self::getContainer();
-        $handler = $container->get(ProcessWatchlistTriggerHandler::class);
+        $handler = $container->get(ProcessAllWatchlistHandler::class);
 
         /** @var TraceableMessageBus $bus */
         $bus = $container->get('messenger.bus.default');
         $bus->reset();
 
-        $handler(new ProcessWatchlistTrigger());
+        $handler(new ProcessAllWatchlist());
 
         $dispatched = $bus->getDispatchedMessages();
         $this->assertNotEmpty($dispatched);
-        $this->assertInstanceOf(UpdateDomainsFromWatchlist::class, $dispatched[0]['message']);
+        $this->assertInstanceOf(ProcessWatchlist::class, $dispatched[0]['message']);
     }
 }

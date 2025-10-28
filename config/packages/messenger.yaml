@@ -9,6 +9,14 @@ framework:
                 retry_strategy:
                     max_retries: 3
                     multiplier: 2
+            rdap_async:
+                dsn: '%env(MESSENGER_TRANSPORT_DSN)%'
+                retry_strategy:
+                    delay: 1000
+                    multiplier: 2
+                    max_retries: 10
+                    max_delay: 10000
+
             failed: 'doctrine://default?queue_name=failed'
             # sync: 'sync://'
 
@@ -23,11 +31,12 @@ framework:
             Symfony\Component\Notifier\Message\SmsMessage: async
 
             App\Message\OrderDomain: async
-            App\Message\ProcessWatchlistTrigger: async
-            App\Message\SendDomainEventNotif: async
-            App\Message\UpdateDomainsFromWatchlist: async
+            App\Message\DetectDomainChange: async
+            App\Message\ProcessAllWatchlist: async
+            App\Message\ProcessWatchlist: async
             App\Message\UpdateRdapServers: async
             App\Message\ValidateConnectorCredentials: async
+            App\Message\UpdateDomain: async
 
             # Route your messages to the transports
             # 'App\Message\YourMessage': async

@@ -2,7 +2,7 @@
 
 namespace App\Message;
 
-final class SendDomainEventNotif
+final class DetectDomainChange
 {
     public function __construct(
         public string $watchlistToken,

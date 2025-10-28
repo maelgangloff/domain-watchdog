@@ -4,8 +4,8 @@ namespace App\Tests\MessageHandler;
 
 use App\Entity\Domain;
 use App\Entity\Watchlist;
-use App\Message\UpdateDomainsFromWatchlist;
-use App\MessageHandler\UpdateDomainsFromWatchlistHandler;
+use App\Message\ProcessWatchlist;
+use App\MessageHandler\ProcessWatchlistHandler;
 use App\Tests\State\WatchlistUpdateProcessorTest;
 use Doctrine\ORM\EntityManagerInterface;
 use PHPUnit\Framework\Attributes\DependsExternal;
@@ -20,7 +20,7 @@ final class UpdateDomainsFromWatchlistHandlerTest extends KernelTestCase
     {
         $container = self::getContainer();
         $entityManager = $container->get(EntityManagerInterface::class);
-        $handler = $container->get(UpdateDomainsFromWatchlistHandler::class);
+        $handler = $container->get(ProcessWatchlistHandler::class);
         $bus = $container->get('messenger.bus.default');
 
         $deletedDomainLdhName = new UuidV4().'.com';
@@ -40,7 +40,7 @@ final class UpdateDomainsFromWatchlistHandlerTest extends KernelTestCase
         /* @var TraceableMessageBus $bus */
         $bus->reset();
 
-        $handler(new UpdateDomainsFromWatchlist($watchlist->getToken()));
+        $handler(new ProcessWatchlist($watchlist->getToken()));
 
         $this->expectNotToPerformAssertions();
     }

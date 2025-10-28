@@ -6,7 +6,7 @@ use App\Entity\Domain;
 use App\Entity\DomainEvent;
 use App\Entity\DomainStatus;
 use App\Entity\Watchlist;
-use App\Message\SendDomainEventNotif;
+use App\Message\DetectDomainChange;
 use App\Notifier\DomainStatusUpdateNotification;
 use App\Notifier\DomainUpdateNotification;
 use App\Repository\DomainEventRepository;
@@ -25,7 +25,7 @@ use Symfony\Component\Mime\Address;
 use Symfony\Component\Notifier\Recipient\Recipient;
 
 #[AsMessageHandler]
-final readonly class SendDomainEventNotifHandler
+final readonly class DetectDomainChangeHandler
 {
     private Address $sender;
 
@@ -51,7 +51,7 @@ final readonly class SendDomainEventNotifHandler
      * @throws TransportExceptionInterface
      * @throws \Exception
      */
-    public function __invoke(SendDomainEventNotif $message): void
+    public function __invoke(DetectDomainChange $message): void
     {
         /** @var Watchlist $watchlist */
         $watchlist = $this->watchlistRepository->findOneBy(['token' => $message->watchlistToken]);
