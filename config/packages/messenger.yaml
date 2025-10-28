@@ -36,7 +36,7 @@ framework:
             App\Message\ProcessWatchlist: async
             App\Message\UpdateRdapServers: async
             App\Message\ValidateConnectorCredentials: async
-            App\Message\UpdateDomain: async
+            App\Message\UpdateDomain: rdap_async
 
             # Route your messages to the transports
             # 'App\Message\YourMessage': async
