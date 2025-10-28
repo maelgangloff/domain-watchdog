@@ -88,7 +88,7 @@ readonly class AutoRegisterDomainProvider implements ProviderInterface
                 'updatedAt' => $domain->getUpdatedAt()->format(\DateTimeInterface::ATOM),
             ]);
 
-            return $domain;
+            return $domain->setExpiresInDays($this->RDAPService->getExpiresInDays($domain));
         }
 
         if (false === $this->kernel->isDebug() && true === $this->parameterBag->get('limited_features')) {
@@ -111,7 +111,7 @@ readonly class AutoRegisterDomainProvider implements ProviderInterface
 
             $domain = $this->domainRepository->findOneBy(['ldhName' => $idnDomain]);
             if (null !== $domain) {
-                return $domain;
+                return $domain->setExpiresInDays($this->RDAPService->getExpiresInDays($domain));
             }
 
             $domain = (new Domain())
@@ -123,7 +123,7 @@ readonly class AutoRegisterDomainProvider implements ProviderInterface
             $this->em->persist($domain);
             $this->em->flush();
 
-            return $domain;
+            return $domain->setExpiresInDays($this->RDAPService->getExpiresInDays($domain));
         }
 
         $randomizer = new Randomizer();
@@ -134,6 +134,6 @@ readonly class AutoRegisterDomainProvider implements ProviderInterface
             $this->bus->dispatch(new DetectDomainChange($watchlist->getToken(), $domain->getLdhName(), $updatedAt));
         }
 
-        return $domain;
+        return $domain->setExpiresInDays($this->RDAPService->getExpiresInDays($domain));
     }
 }
