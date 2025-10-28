@@ -3,7 +3,7 @@
 namespace App\Command;
 
 use App\Entity\Watchlist;
-use App\Message\SendDomainEventNotif;
+use App\Message\DetectDomainChange;
 use App\Repository\DomainRepository;
 use App\Service\RDAPService;
 use Random\Randomizer;
@@ -64,7 +64,7 @@ class RegisterDomainCommand extends Command
 
                 /** @var Watchlist $watchlist */
                 foreach ($watchlists as $watchlist) {
-                    $this->bus->dispatch(new SendDomainEventNotif($watchlist->getToken(), $domain->getLdhName(), $updatedAt));
+                    $this->bus->dispatch(new DetectDomainChange($watchlist->getToken(), $domain->getLdhName(), $updatedAt));
                 }
             }
         } catch (\Throwable $e) {

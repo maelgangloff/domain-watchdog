@@ -20,7 +20,7 @@ framework:
             limit: 5
             rate: { interval: '5 minutes' }
 
-        rdap_requests:
+        user_rdap_requests:
             policy: sliding_window
             limit: 10
             interval: '1 hour'
