@@ -7,14 +7,16 @@ framework:
             async:
                 dsn: '%env(MESSENGER_TRANSPORT_DSN)%'
                 options:
-                    consumer: '%env(MESSENGER_CONSUMER_NAME)%'
+                    queue_name: messages_async
+                    group: messages_async
                 retry_strategy:
                     max_retries: 3
                     multiplier: 2
             rdap_async:
                 dsn: '%env(MESSENGER_TRANSPORT_DSN)%'
                 options:
-                    consumer: '%env(MESSENGER_CONSUMER_NAME)%'
+                    queue_name: messages_rdap_async
+                    group: messages_rdap_async
                 retry_strategy:
                     delay: 1000
                     multiplier: 2
