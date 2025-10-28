@@ -95,7 +95,7 @@ class OpenProviderProvider extends AbstractProvider
             return;
         }
 
-        $res = $this->client->request('POST', '/v1beta/domain', (new HttpOptions())
+        $res = $this->client->request('POST', '/v1beta/domains', (new HttpOptions())
             ->setAuthBearer($this->authData->token)
             ->setHeader('Accept', 'application/json')
             ->setBaseUri(self::BASE_URL)
