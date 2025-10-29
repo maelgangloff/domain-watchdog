@@ -345,7 +345,7 @@ class RDAPService
         if (isset($rdapData['handle'])) {
             $domain->setHandle($rdapData['handle']);
         } else {
-            $this->logger->warning('Domain name has no handle key', [
+            $this->logger->debug('Domain name has no handle key', [
                 'ldhName' => $domain->getLdhName(),
             ]);
         }
@@ -443,7 +443,7 @@ class RDAPService
                 }
             }
         } else {
-            $this->logger->warning('Domain name has no nameservers', [
+            $this->logger->debug('Domain name has no nameservers', [
                 'ldhName' => $domain->getLdhName(),
             ]);
         }
@@ -537,7 +537,7 @@ class RDAPService
             sort($roles);
             $rdapEntity['handle'] = 'DW-FAKEHANDLE-'.$domain.'-'.implode(',', $roles);
 
-            $this->logger->warning('Entity has no handle key', [
+            $this->logger->debug('Entity has no handle key', [
                 'handle' => $rdapEntity['handle'],
                 'ldhName' => $domain,
             ]);
@@ -712,7 +712,7 @@ class RDAPService
                 $this->em->persist($dsData);
             }
         } else {
-            $this->logger->warning('Domain name has no DS record', [
+            $this->logger->info('Domain name has no DS record', [
                 'ldhName' => $domain->getLdhName(),
             ]);
         }
