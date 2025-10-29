@@ -67,6 +67,13 @@ final readonly class UpdateDomainHandler
     public function __invoke(UpdateDomain $message): void
     {
         $domain = $this->domainRepository->findOneBy(['ldhName' => $message->ldhName]);
+
+        if (null === $domain) {
+            $this->RDAPService->registerDomain($message->ldhName);
+
+            return;
+        }
+
         /** @var ?RdapServer $rdapServer */
         $rdapServer = $domain->getTld()->getRdapServers()->first();
         if (null === $rdapServer) {
@@ -78,6 +85,15 @@ final readonly class UpdateDomainHandler
         }
 
         $watchlist = $this->watchlistRepository->findOneBy(['token' => $message->watchlistToken]);
+
+        if (null === $watchlist) {
+            /** @var Watchlist $wl */
+            foreach ($domain->getWatchlists()->getIterator() as $wl) {
+                $this->bus->dispatch(new UpdateDomain($message->ldhName, $wl->getToken()));
+            }
+
+            return;
+        }
 
         if (!$this->RDAPService->isToBeUpdated($domain, false, null !== $watchlist->getConnector())) {
             $this->logger->debug('The domain name is already present in the database and does not need to be updated at this time', [
