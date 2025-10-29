@@ -728,8 +728,8 @@ class RDAPService
         }
 
         if ($domain->isPendingDelete() && (
-            in_array('pending delete', $lastStatus->getAddStatus())
-            || in_array('redemption period', $lastStatus->getDeleteStatus()))
+            in_array('pending delete', $lastStatus->getAddStatus() ?? [])
+            || in_array('redemption period', $lastStatus->getDeleteStatus() ?? []))
         ) {
             return self::daysBetween($now, $lastStatus->getCreatedAt()->add(new \DateInterval('P'. 5 .'D')));
         }
