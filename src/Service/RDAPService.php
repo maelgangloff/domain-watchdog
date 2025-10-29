@@ -712,7 +712,7 @@ class RDAPService
                 $this->em->persist($dsData);
             }
         } else {
-            $this->logger->info('Domain name has no DS record', [
+            $this->logger->debug('Domain name has no DS record', [
                 'ldhName' => $domain->getLdhName(),
             ]);
         }
