@@ -34,6 +34,7 @@ services:
             DATABASE_URL: postgresql://${POSTGRES_USER:-app}:${POSTGRES_PASSWORD:-!ChangeMe!}@database:${POSTGRES_PORT:-5432}/${POSTGRES_DB:-app}?serverVersion=${POSTGRES_VERSION:-15}&charset=${POSTGRES_CHARSET:-utf8}
             MESSENGER_ASYNC_TRANSPORT_DSN: redis://valkey:6379/messages
             MESSENGER_RDAP_ASYNC_TRANSPORT_DSN: redis://valkey:6379/messages-rdap
+            MESSENGER_CONSUMER_NAME: worker
         depends_on:
             - database
         healthcheck:
