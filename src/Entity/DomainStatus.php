@@ -21,19 +21,19 @@ class DomainStatus
 
     #[ORM\Column]
     #[Groups(['domain:item'])]
-    private ?\DateTimeImmutable $createdAt;
+    private \DateTimeImmutable $createdAt;
 
     #[ORM\Column]
     #[Groups(['domain:item'])]
-    private ?\DateTimeImmutable $date;
+    private \DateTimeImmutable $date;
 
     #[ORM\Column(type: Types::JSON, nullable: true)]
     #[Groups(['domain:item'])]
-    private ?array $addStatus = [];
+    private array $addStatus = [];
 
     #[ORM\Column(type: Types::JSON, nullable: true)]
     #[Groups(['domain:item'])]
-    private ?array $deleteStatus = [];
+    private array $deleteStatus = [];
 
     public function __construct()
     {
@@ -82,24 +82,24 @@ class DomainStatus
         return $this;
     }
 
-    public function getAddStatus(): ?array
+    public function getAddStatus(): array
     {
         return $this->addStatus;
     }
 
-    public function setAddStatus(?array $addStatus): static
+    public function setAddStatus(array $addStatus): static
     {
         $this->addStatus = $addStatus;
 
         return $this;
     }
 
-    public function getDeleteStatus(): ?array
+    public function getDeleteStatus(): array
     {
         return $this->deleteStatus;
     }
 
-    public function setDeleteStatus(?array $deleteStatus): static
+    public function setDeleteStatus(array $deleteStatus): static
     {
         $this->deleteStatus = $deleteStatus;
 
