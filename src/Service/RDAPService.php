@@ -803,7 +803,7 @@ class RDAPService
 
         $expiresIn = $this->getExpiresInDays($domain);
 
-        if ($intensifyLastDay && (0 === $expiresIn || 1 === $expiresIn)) {
+        if ($updatedAtDiff->s >= 5 && $intensifyLastDay && (0 === $expiresIn || 1 === $expiresIn)) {
             return true;
         }
 
