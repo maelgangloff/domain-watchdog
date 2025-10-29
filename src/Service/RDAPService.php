@@ -735,7 +735,7 @@ class RDAPService
         }
 
         if ($domain->isRedemptionPeriod()
-            && in_array('redemption period', $lastStatus->getAddStatus())
+            && in_array('redemption period', $lastStatus->getAddStatus() ?? [])
         ) {
             return self::daysBetween($now, $lastStatus->getCreatedAt()->add(new \DateInterval('P'.(30 + 5).'D')));
         }
