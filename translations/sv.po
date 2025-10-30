@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "PO-Revision-Date: 2025-10-25 19:52+0000\n"
 "Last-Translator: Maël Gangloff <contact@maelgangloff.fr>\n"
-"Language-Team: Swedish <https://weblate.vinceh121.me/projects/"
-"domain-watchdog/domain-watchdog-dashboard/sv/>\n"
+"Language-Team: Swedish <https://weblate.vinceh121.me/projects/domain-"
+"watchdog/domain-watchdog-dashboard/sv/>\n"
 "Language: sv\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -385,11 +385,6 @@ msgstr "Exportera händelser till iCalendar-format"
 msgid "Create a Watchlist"
 msgstr "Skapa en Watchlist"
 
-#: assets/components/tracking/watchlist/CreateWatchlistButton.tsx:45
-#: assets/components/tracking/watchlist/UpdateWatchlistButton.tsx:56
-msgid "Cancel"
-msgstr "Avboka"
-
 #: assets/components/tracking/watchlist/DeleteWatchlistButton.tsx:13
 #: assets/components/tracking/watchlist/DeleteWatchlistButton.tsx:21
 msgid "Delete the Watchlist"
@@ -505,6 +500,10 @@ msgstr "Redigera bevakningslistan"
 #: assets/components/tracking/watchlist/UpdateWatchlistButton.tsx:46
 msgid "Update a Watchlist"
 msgstr "Uppdatera en bevakningslista"
+
+#: assets/components/tracking/watchlist/UpdateWatchlistButton.tsx:56
+msgid "Cancel"
+msgstr "Avboka"
 
 #: assets/components/tracking/watchlist/WatchlistCard.tsx:54
 msgid "This Watchlist is not linked to a Connector."

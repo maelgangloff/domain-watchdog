@@ -389,11 +389,6 @@ msgstr "Ereignisse in das iCalendar-Format exportieren"
 msgid "Create a Watchlist"
 msgstr "Erstellen Sie eine Watchlist"
 
-#: assets/components/tracking/watchlist/CreateWatchlistButton.tsx:45
-#: assets/components/tracking/watchlist/UpdateWatchlistButton.tsx:56
-msgid "Cancel"
-msgstr "Abbrechen"
-
 #: assets/components/tracking/watchlist/DeleteWatchlistButton.tsx:13
 #: assets/components/tracking/watchlist/DeleteWatchlistButton.tsx:21
 msgid "Delete the Watchlist"
@@ -514,6 +509,10 @@ msgstr "Bearbeiten der Watchlist"
 #: assets/components/tracking/watchlist/UpdateWatchlistButton.tsx:46
 msgid "Update a Watchlist"
 msgstr "Aktualisieren einer Watchlist"
+
+#: assets/components/tracking/watchlist/UpdateWatchlistButton.tsx:56
+msgid "Cancel"
+msgstr "Abbrechen"
 
 #: assets/components/tracking/watchlist/WatchlistCard.tsx:54
 msgid "This Watchlist is not linked to a Connector."
