@@ -365,11 +365,6 @@ msgstr ""
 msgid "Create a Watchlist"
 msgstr ""
 
-#: assets/components/tracking/watchlist/CreateWatchlistButton.tsx:45
-#: assets/components/tracking/watchlist/UpdateWatchlistButton.tsx:56
-msgid "Cancel"
-msgstr ""
-
 #: assets/components/tracking/watchlist/DeleteWatchlistButton.tsx:13
 #: assets/components/tracking/watchlist/DeleteWatchlistButton.tsx:21
 msgid "Delete the Watchlist"
@@ -478,6 +473,10 @@ msgstr ""
 
 #: assets/components/tracking/watchlist/UpdateWatchlistButton.tsx:46
 msgid "Update a Watchlist"
+msgstr ""
+
+#: assets/components/tracking/watchlist/UpdateWatchlistButton.tsx:56
+msgid "Cancel"
 msgstr ""
 
 #: assets/components/tracking/watchlist/WatchlistCard.tsx:54

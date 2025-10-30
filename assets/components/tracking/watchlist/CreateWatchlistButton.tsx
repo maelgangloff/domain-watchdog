@@ -42,7 +42,6 @@ export function CreateWatchlistButton({onUpdateWatchlist, connectors}: {
                         paddingBottom: 80
                     }
                 }}
-                extra={<Button onClick={onClose}>{t`Cancel`}</Button>}
             >
                 <WatchlistForm
                     form={form}

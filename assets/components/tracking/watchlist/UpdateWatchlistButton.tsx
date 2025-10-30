@@ -1,4 +1,4 @@
-import {Button, Drawer, Form, Typography} from 'antd'
+import {Drawer, Form, Typography} from 'antd'
 import {t} from 'ttag'
 import {WatchlistForm} from './WatchlistForm'
 import React, {useState} from 'react'
@@ -53,7 +53,6 @@ export function UpdateWatchlistButton({watchlist, onUpdateWatchlist, connectors}
                         paddingBottom: 80
                     }
                 }}
-                extra={<Button onClick={onClose}>{t`Cancel`}</Button>}
             >
                 <WatchlistForm
                     form={form}
