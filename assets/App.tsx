@@ -83,7 +83,7 @@ export default function App(): React.ReactElement {
                         <Layout.Header style={{padding: 0}}/>
                         <Layout.Content style={sm ? {margin: '24px 0'} : {margin: '24px 16px 0'}}>
                             <div style={{
-                                padding: 24,
+                                padding: sm ? 8 : 24,
                                 minHeight: 360
                             }}
                             >
