@@ -11,6 +11,7 @@ import {getCountryCode} from '../../utils/functions/getCountryCode'
 import {tldToEmoji} from '../../utils/functions/tldToEmoji'
 import {BankOutlined, FlagOutlined, GlobalOutlined, TrademarkOutlined} from "@ant-design/icons"
 import {Link} from "react-router-dom"
+import useBreakpoint from "../../hooks/useBreakpoint";
 
 const {Text, Paragraph} = Typography
 
@@ -30,6 +31,7 @@ function TldTable(filters: FiltersType) {
         Country?: string
     }
 
+    const sm = useBreakpoint('sm')
     const [dataTable, setDataTable] = useState<TableRow[]>([])
     const [total, setTotal] = useState(0)
 
@@ -110,14 +112,15 @@ function TldTable(filters: FiltersType) {
                     fetchData({...filters, page, itemsPerPage})
                 }
             }}
-
-            scroll={{y: '50vh'}}
+            scroll={sm ? {} : {y: '50vh'}}
+            size={sm ? 'small' : 'large'}
         />
     )
 }
 
 export default function TldPage() {
     const [activeTabKey, setActiveTabKey] = useState<string>('gTLD')
+    const sm = useBreakpoint("sm")
 
     const contentList: Record<string, React.ReactNode> = {
         sTLD: <>
@@ -185,6 +188,7 @@ export default function TldPage() {
                 activeTabKey={activeTabKey}
                 key={activeTabKey}
                 onTabChange={(k: string) => setActiveTabKey(k)}
+                size={sm ? 'small' : 'default'}
             >
                 {contentList[activeTabKey]}
 
