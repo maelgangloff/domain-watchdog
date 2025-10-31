@@ -1,4 +1,4 @@
-import {Button, ConfigProvider, Flex, FloatButton, Layout, theme, Tooltip, Typography} from 'antd'
+import {Button, ConfigProvider, Drawer, Flex, FloatButton, Layout, theme, Tooltip, Typography} from 'antd'
 import {Link, Navigate, Route, Routes, useLocation, useNavigate} from 'react-router-dom'
 import TextPage from './pages/TextPage'
 import DomainSearchPage from './pages/search/DomainSearchPage'
@@ -7,7 +7,7 @@ import TldPage from './pages/infrastructure/TldPage'
 import StatisticsPage from './pages/StatisticsPage'
 import WatchlistPage from './pages/tracking/WatchlistPage'
 import UserPage from './pages/UserPage'
-import React, {useCallback, useEffect, useMemo, useState} from 'react'
+import React, {PropsWithChildren, useCallback, useEffect, useMemo, useState} from 'react'
 import {getUser} from './utils/api'
 import LoginPage, {AuthenticatedContext} from './pages/LoginPage'
 import ConnectorPage from './pages/tracking/ConnectorPage'
@@ -24,6 +24,40 @@ const LICENSE_LINK = 'https://www.gnu.org/licenses/agpl-3.0.txt'
 
 const ProjectLink = <Typography.Link key="projectLink" target='_blank' href={PROJECT_LINK}>Domain Watchdog</Typography.Link>
 const LicenseLink = <Typography.Link key="licenceLink" target='_blank' href={LICENSE_LINK}>AGPL-3.0-or-later</Typography.Link>
+
+function SiderWrapper(props: PropsWithChildren<{sidebarCollapsed: boolean, setSidebarCollapsed: (collapsed: boolean) => void}>): React.ReactElement {
+    const {sidebarCollapsed, setSidebarCollapsed, children} = props
+    const sm = useBreakpoint('sm')
+    const location = useLocation()
+
+    useEffect(() => {
+        if (sm) {
+            setSidebarCollapsed(false)
+        }
+    }, [location])
+
+    if (sm) {
+        return <Drawer
+                placement="left"
+                open={sidebarCollapsed}
+                onClose={() => setSidebarCollapsed(false)}
+                closeIcon={null}
+                styles={{body: {padding: 0, height: '100%', background: '#001529'}}}
+                width='200px'>
+            {children}
+        </Drawer>
+    } else {
+        return <Layout.Sider
+                collapsible
+                breakpoint='sm'
+                width={220}
+                trigger={null}
+                collapsed={sidebarCollapsed && sm}
+                {...(sm ? {collapsedWidth: 0} : {})}>
+            {children}
+        </Layout.Sider>
+    }
+}
 
 export default function App(): React.ReactElement {
     const navigate = useNavigate()
@@ -76,9 +110,9 @@ export default function App(): React.ReactElement {
         >
             <AuthenticatedContext.Provider value={contextValue}>
                 <Layout hasSider style={{minHeight: '100vh'}}>
-                    <Layout.Sider collapsible breakpoint='sm' width={220} trigger={null} collapsed={sidebarCollapsed && sm} {...(sm ? {collapsedWidth: 0} : {})}>
+                    <SiderWrapper sidebarCollapsed={sidebarCollapsed} setSidebarCollapsed={setSidebarCollapsed}>
                         <Sider isAuthenticated={isAuthenticated}/>
-                    </Layout.Sider>
+                    </SiderWrapper>
                     <Layout>
                         <Layout.Header style={{padding: 0}}>
                             {sm &&
