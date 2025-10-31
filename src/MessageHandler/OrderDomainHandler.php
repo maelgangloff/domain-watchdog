@@ -3,6 +3,7 @@
 namespace App\MessageHandler;
 
 use App\Entity\Domain;
+use App\Entity\DomainPurchase;
 use App\Entity\Watchlist;
 use App\Message\OrderDomain;
 use App\Notifier\DomainOrderErrorNotification;
@@ -13,6 +14,7 @@ use App\Service\ChatNotificationService;
 use App\Service\InfluxdbService;
 use App\Service\Provider\AbstractProvider;
 use App\Service\StatService;
+use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -42,7 +44,7 @@ final readonly class OrderDomainHandler
         #[Autowire(service: 'service_container')]
         private ContainerInterface $locator,
         #[Autowire(param: 'influxdb_enabled')]
-        private bool $influxdbEnabled,
+        private bool $influxdbEnabled, private EntityManagerInterface $em,
     ) {
         $this->sender = new Address($mailerSenderEmail, $mailerSenderName);
     }
@@ -114,6 +116,16 @@ final readonly class OrderDomainHandler
             $notification = (new DomainOrderNotification($this->sender, $domain, $connector));
             $this->mailer->send($notification->asEmailMessage(new Recipient($watchlist->getUser()->getEmail()))->getMessage());
             $this->chatNotificationService->sendChatNotification($watchlist, $notification);
+
+            $this->em->persist((new DomainPurchase())
+                ->setDomain($domain)
+                ->setConnector($connector)
+                ->setConnectorProvider($connector->getProvider())
+                ->setDomainOrderedAt(new \DateTimeImmutable())
+                ->setUser($watchlist->getUser())
+                ->setDomainDeletedAt($domain->getUpdatedAt())
+                ->setDomainUpdatedAt($message->updatedAt));
+            $this->em->flush();
         } catch (\Throwable $exception) {
             /*
              * The purchase was not successful (for several possible reasons that we have not determined).
@@ -133,6 +145,16 @@ final readonly class OrderDomainHandler
             $notification = (new DomainOrderErrorNotification($this->sender, $domain));
             $this->mailer->send($notification->asEmailMessage(new Recipient($watchlist->getUser()->getEmail()))->getMessage());
             $this->chatNotificationService->sendChatNotification($watchlist, $notification);
+
+            $this->em->persist((new DomainPurchase())
+                ->setDomain($domain)
+                ->setConnector($connector)
+                ->setConnectorProvider($connector->getProvider())
+                ->setDomainOrderedAt(null)
+                ->setUser($watchlist->getUser())
+                ->setDomainDeletedAt($domain->getUpdatedAt())
+                ->setDomainUpdatedAt($message->updatedAt));
+            $this->em->flush();
 
             throw $exception;
         }

@@ -131,7 +131,7 @@ final readonly class UpdateDomainHandler
                  * If the domain name no longer appears in the WHOIS AND a connector is associated with this Watchlist,
                  * this connector is used to purchase the domain name.
                  */
-                $this->bus->dispatch(new OrderDomain($watchlist->getToken(), $domain->getLdhName()));
+                $this->bus->dispatch(new OrderDomain($watchlist->getToken(), $domain->getLdhName(), $updatedAt));
             }
         } catch (TldNotSupportedException|UnknownRdapServerException) {
             /*

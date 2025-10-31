@@ -7,6 +7,7 @@ use App\Entity\Watchlist;
 use App\Message\OrderDomain;
 use App\Message\ProcessWatchlist;
 use App\Message\UpdateDomain;
+use App\Repository\DomainRepository;
 use App\Repository\WatchlistRepository;
 use App\Service\Provider\AbstractProvider;
 use App\Service\Provider\CheckDomainProviderInterface;
@@ -26,7 +27,7 @@ final readonly class ProcessWatchlistHandler
         private WatchlistRepository $watchlistRepository,
         private LoggerInterface $logger,
         #[Autowire(service: 'service_container')]
-        private ContainerInterface $locator,
+        private ContainerInterface $locator, private DomainRepository $domainRepository,
     ) {
     }
 
@@ -64,8 +65,10 @@ final readonly class ProcessWatchlistHandler
                 throw $exception;
             }
 
-            foreach ($checkedDomains as $domain) {
-                $this->bus->dispatch(new OrderDomain($watchlist->getToken(), $domain));
+            /** @var string $ldhName */
+            foreach ($checkedDomains as $ldhName) {
+                $domain = $this->domainRepository->findOneBy(['ldhName' => $ldhName]);
+                $this->bus->dispatch(new OrderDomain($watchlist->getToken(), $domain->getLdhName(), $domain->getUpdatedAt()));
             }
 
             return;

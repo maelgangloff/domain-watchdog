@@ -73,10 +73,17 @@ class Connector
     #[Groups(['connector:list'])]
     protected int $watchlistCount;
 
+    /**
+     * @var Collection<int, DomainPurchase>
+     */
+    #[ORM\OneToMany(targetEntity: DomainPurchase::class, mappedBy: 'connector')]
+    private Collection $domainPurchases;
+
     public function __construct()
     {
         $this->id = Uuid::v4();
         $this->watchlists = new ArrayCollection();
+        $this->domainPurchases = new ArrayCollection();
     }
 
     public function getId(): ?string
@@ -165,5 +172,35 @@ class Connector
     public function getWatchlistCount(): ?int
     {
         return $this->watchlists->count();
+    }
+
+    /**
+     * @return Collection<int, DomainPurchase>
+     */
+    public function getDomainPurchases(): Collection
+    {
+        return $this->domainPurchases;
+    }
+
+    public function addDomainPurchase(DomainPurchase $domainPurchase): static
+    {
+        if (!$this->domainPurchases->contains($domainPurchase)) {
+            $this->domainPurchases->add($domainPurchase);
+            $domainPurchase->setConnector($this);
+        }
+
+        return $this;
+    }
+
+    public function removeDomainPurchase(DomainPurchase $domainPurchase): static
+    {
+        if ($this->domainPurchases->removeElement($domainPurchase)) {
+            // set the owning side to null (unless already changed)
+            if ($domainPurchase->getConnector() === $this) {
+                $domainPurchase->setConnector(null);
+            }
+        }
+
+        return $this;
     }
 }
