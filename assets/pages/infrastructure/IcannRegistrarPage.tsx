@@ -5,6 +5,7 @@ import {t} from 'ttag'
 import type {ColumnType} from 'antd/es/table'
 import {CheckCircleOutlined, SettingOutlined, CloseCircleOutlined} from "@ant-design/icons"
 import {getIcannAccreditations} from "../../utils/api/icann-accreditations"
+import useBreakpoint from "../../hooks/useBreakpoint"
 
 const {Text, Paragraph} = Typography
 
@@ -19,6 +20,7 @@ function RegistrarListTable(filters: FiltersType) {
         name: string
     }
 
+    const sm = useBreakpoint('sm')
     const [dataTable, setDataTable] = useState<TableRow[]>([])
     const [total, setTotal] = useState(0)
 
@@ -63,14 +65,15 @@ function RegistrarListTable(filters: FiltersType) {
                     fetchData({...filters, page, itemsPerPage})
                 }
             }}
-
-            scroll={{y: '50vh'}}
+            scroll={sm ? {} : {y: '50vh'}}
+            size={sm ? 'small' : 'large'}
         />
     )
 }
 
 export default function IcannRegistrarPage() {
     const [activeTabKey, setActiveTabKey] = useState<string>('Accredited')
+    const sm = useBreakpoint('sm')
 
     const contentList: Record<string, React.ReactNode> = {
         Accredited: <>
@@ -125,6 +128,7 @@ export default function IcannRegistrarPage() {
                 activeTabKey={activeTabKey}
                 key={activeTabKey}
                 onTabChange={(k: string) => setActiveTabKey(k)}
+                size={sm ? 'small' : 'default'}
             >
                 {contentList[activeTabKey]}
 
