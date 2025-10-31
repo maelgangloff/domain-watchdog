@@ -24,6 +24,7 @@ use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 use Symfony\Component\Messenger\Exception\ExceptionInterface;
 use Symfony\Component\Messenger\MessageBusInterface;
+use Symfony\Component\Messenger\Stamp\TransportNamesStamp;
 use Symfony\Component\Mime\Address;
 use Symfony\Component\Notifier\Recipient\Recipient;
 use Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface;
@@ -89,7 +90,9 @@ final readonly class UpdateDomainHandler
         if (null === $watchlist) {
             /** @var Watchlist $wl */
             foreach ($domain->getWatchlists()->getIterator() as $wl) {
-                $this->bus->dispatch(new UpdateDomain($message->ldhName, $wl->getToken()));
+                $this->bus->dispatch(new UpdateDomain($message->ldhName, $wl->getToken()), [
+                    new TransportNamesStamp('rdap_low'),
+                ]);
             }
 
             return;

@@ -10,7 +10,7 @@ framework:
                     max_retries: 3
                     multiplier: 2
             rdap_high:
-                dsn: '%env(MESSENGER_RDAP_ASYNC_TRANSPORT_DSN)%'
+                dsn: '%env(MESSENGER_RDAP_HIGH_TRANSPORT_DSN)%'
                 options:
                     consumer: '%env(MESSENGER_CONSUMER_NAME)%'
                 retry_strategy:
@@ -19,7 +19,7 @@ framework:
                     max_delay: 86400000
 
             rdap_low:
-                dsn: '%env(MESSENGER_RDAP_ASYNC_TRANSPORT_DSN)%'
+                dsn: '%env(MESSENGER_RDAP_LOW_TRANSPORT_DSN)%'
                 options:
                     consumer: '%env(MESSENGER_CONSUMER_NAME)%'
                 retry_strategy:
