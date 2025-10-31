@@ -76,7 +76,7 @@ export default function App(): React.ReactElement {
         >
             <AuthenticatedContext.Provider value={contextValue}>
                 <Layout hasSider style={{minHeight: '100vh'}}>
-                    <Layout.Sider collapsible breakpoint='sm' width={220} trigger={null} collapsed={sidebarCollapsed} {...(sm ? {collapsedWidth: 0} : {})}>
+                    <Layout.Sider collapsible breakpoint='sm' width={220} trigger={null} collapsed={sidebarCollapsed && sm} {...(sm ? {collapsedWidth: 0} : {})}>
                         <Sider isAuthenticated={isAuthenticated}/>
                     </Layout.Sider>
                     <Layout>
