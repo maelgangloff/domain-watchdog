@@ -1,4 +1,4 @@
-import {Button, Form, Input, message, Space} from 'antd'
+import {Button, Flex, Form, Input, message} from 'antd'
 import {t} from 'ttag'
 import React, {useContext, useEffect} from 'react'
 import {getUser, login} from '../utils/api'
@@ -60,18 +60,15 @@ export function LoginForm({ssoLogin}: { ssoLogin?: boolean }) {
                     <Input.Password/>
                 </Form.Item>
 
-                <Space>
-                    <Form.Item wrapperCol={{offset: 8, span: 16}}>
+                <Flex wrap justify="center" gap="middle">
                         <Button type='primary' htmlType='submit'>
                             {t`Submit`}
                         </Button>
-                    </Form.Item>
-                    {ssoLogin && <Form.Item wrapperCol={{offset: 8, span: 16}}>
+                    {ssoLogin &&
                         <Button type='dashed' htmlType='button' href='/login/oauth'>
                             {t`Log in with SSO`}
-                        </Button>
-                    </Form.Item>}
-                </Space>
+                        </Button>}
+                </Flex>
             </Form>
         </>
     )
