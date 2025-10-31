@@ -22,8 +22,8 @@ import IcannRegistrarPage from "./pages/infrastructure/IcannRegistrarPage"
 const PROJECT_LINK = 'https://github.com/maelgangloff/domain-watchdog'
 const LICENSE_LINK = 'https://www.gnu.org/licenses/agpl-3.0.txt'
 
-const ProjectLink = <Typography.Link target='_blank' href={PROJECT_LINK}>Domain Watchdog</Typography.Link>
-const LicenseLink = <Typography.Link target='_blank' href={LICENSE_LINK}>AGPL-3.0-or-later</Typography.Link>
+const ProjectLink = <Typography.Link key="projectLink" target='_blank' href={PROJECT_LINK}>Domain Watchdog</Typography.Link>
+const LicenseLink = <Typography.Link key="licenceLink" target='_blank' href={LICENSE_LINK}>AGPL-3.0-or-later</Typography.Link>
 
 export default function App(): React.ReactElement {
     const navigate = useNavigate()
