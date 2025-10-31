@@ -15,7 +15,7 @@ class DomainPurchase
     private ?string $id;
 
     #[ORM\ManyToOne(inversedBy: 'domainPurchases')]
-    #[ORM\JoinColumn(referencedColumnName: 'ldh_name', nullable: false)]
+    #[ORM\JoinColumn(referencedColumnName: 'ldh_name', onDelete: 'CASCADE')]
     private ?Domain $domain = null;
 
     #[ORM\Column]
@@ -28,9 +28,11 @@ class DomainPurchase
     private ?ConnectorProvider $connectorProvider = null;
 
     #[ORM\ManyToOne(inversedBy: 'domainPurchases')]
+    #[ORM\JoinColumn(referencedColumnName: 'id', nullable: true, onDelete: 'SET NULL')]
     private ?Connector $connector = null;
 
     #[ORM\ManyToOne(inversedBy: 'domainPurchases')]
+    #[ORM\JoinColumn(referencedColumnName: 'id', nullable: true, onDelete: 'SET NULL')]
     private ?User $user = null;
 
     #[ORM\Column]
