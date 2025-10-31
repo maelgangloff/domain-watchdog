@@ -1,6 +1,6 @@
 import {Button, Flex, Form, Input, message} from 'antd'
 import {t} from 'ttag'
-import React, {useContext, useEffect} from 'react'
+import React, {useContext, useEffect, useState} from 'react'
 import {getUser, login} from '../utils/api'
 import {AuthenticatedContext} from '../pages/LoginPage'
 import {useNavigate} from 'react-router-dom'
@@ -16,6 +16,7 @@ export function LoginForm({ssoLogin}: { ssoLogin?: boolean }) {
     const navigate = useNavigate()
     const [messageApi, contextHolder] = message.useMessage()
     const {setIsAuthenticated} = useContext(AuthenticatedContext)
+    const [loading, setLoading] = useState(false);
 
     useEffect(() => {
         getUser().then(() => {
@@ -25,12 +26,15 @@ export function LoginForm({ssoLogin}: { ssoLogin?: boolean }) {
     }, [])
 
     const onFinish = (data: FieldType) => {
+        setLoading(true);
+
         login(data.username, data.password).then(() => {
             setIsAuthenticated(true)
             navigate('/home')
         }).catch((e) => {
             setIsAuthenticated(false)
             showErrorAPI(e, messageApi)
+            setLoading(true);
         })
     }
     return (
@@ -43,6 +47,7 @@ export function LoginForm({ssoLogin}: { ssoLogin?: boolean }) {
                 style={{maxWidth: 600}}
                 onFinish={onFinish}
                 autoComplete='off'
+                disabled={loading}
             >
                 <Form.Item
                     label={t`Email address`}
