@@ -34,7 +34,7 @@ export default function LoginPage() {
     }, [])
 
     const grid = [
-        <Card.Grid style={{width: md ? '100%' : '50%', textAlign: 'center'}} hoverable={false}>
+        <Card.Grid key="form" style={{width: md ? '100%' : '50%', textAlign: 'center'}} hoverable={false}>
             {wantRegister ? <RegisterForm/> : <LoginForm ssoLogin={configuration?.ssoLogin}/>}
             {
                 configuration?.registerEnabled &&
@@ -47,13 +47,13 @@ export default function LoginPage() {
                 </Button>
             }
         </Card.Grid>,
-        <Card.Grid style={{width: md ? '100%' : '50%'}} hoverable={false}>
+        <Card.Grid key="ads" style={{width: md ? '100%' : '50%'}} hoverable={false}>
             <TextPage resource='ads.md'/>
         </Card.Grid>
-    ];
+    ]
 
     if (md) {
-        grid.reverse();
+        grid.reverse()
     }
 
     return (
