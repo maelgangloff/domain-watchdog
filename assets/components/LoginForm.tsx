@@ -16,7 +16,7 @@ export function LoginForm({ssoLogin}: { ssoLogin?: boolean }) {
     const navigate = useNavigate()
     const [messageApi, contextHolder] = message.useMessage()
     const {setIsAuthenticated} = useContext(AuthenticatedContext)
-    const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState(false)
 
     useEffect(() => {
         getUser().then(() => {
@@ -26,7 +26,7 @@ export function LoginForm({ssoLogin}: { ssoLogin?: boolean }) {
     }, [])
 
     const onFinish = (data: FieldType) => {
-        setLoading(true);
+        setLoading(true)
 
         login(data.username, data.password).then(() => {
             setIsAuthenticated(true)
@@ -34,7 +34,7 @@ export function LoginForm({ssoLogin}: { ssoLogin?: boolean }) {
         }).catch((e) => {
             setIsAuthenticated(false)
             showErrorAPI(e, messageApi)
-            setLoading(true);
+            setLoading(false)
         })
     }
     return (
