@@ -22,6 +22,7 @@ import {
 } from '@ant-design/icons'
 import {DomainToTag} from '../../../utils/functions/DomainToTag'
 import {isDomainLocked} from "../../../utils/functions/isDomainLocked"
+import useBreakpoint from "../../../hooks/useBreakpoint"
 
 export function TrackedDomainTable() {
     const REDEMPTION_NOTICE = (
@@ -53,6 +54,7 @@ export function TrackedDomainTable() {
     const [dataTable, setDataTable] = useState<TableRow[]>([])
     const [total, setTotal] = useState<number>()
     const [specialNotice, setSpecialNotice] = useState<ReactElement[]>([])
+    const sm = useBreakpoint('sm')
 
     const rdapStatusCodeDetailTranslated = rdapStatusCodeDetailTranslation()
 
@@ -268,7 +270,8 @@ export function TrackedDomainTable() {
                         fetchData({page, itemsPerPage})
                     }
                 }}
-                scroll={{y: '50vh'}}
+                scroll={sm ? {} : {y: '50vh'}}
+                size={sm ? 'small' : 'large'}
             />
         </Skeleton>
 }
