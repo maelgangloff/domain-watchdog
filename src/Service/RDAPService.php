@@ -491,10 +491,13 @@ class RDAPService
                 $nameserverEntity = new NameserverEntity();
             }
 
+            if (isset($rdapEntity['status']) && is_array($rdapEntity['status'])) {
+                $nameserverEntity->setStatus($rdapNameserver['status']);
+            }
+
             $nameserver->addNameserverEntity($nameserverEntity
                 ->setNameserver($nameserver)
                 ->setEntity($entity)
-                ->setStatus(array_map(fn ($s) => strtolower($s), array_unique($rdapNameserver['status'])))
                 ->setRoles($roles));
 
             $this->em->persist($nameserverEntity);
