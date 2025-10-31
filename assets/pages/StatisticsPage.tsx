@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react'
 import type { Statistics} from '../utils/api'
 import {getStatistics} from '../utils/api'
-import {Card, Col, Divider, Row, Statistic, Tooltip} from 'antd'
+import {Card, Col, Divider, Flex, Row, Statistic, Tooltip} from 'antd'
 import {t} from 'ttag'
 import {
   AimOutlined,
@@ -104,20 +104,19 @@ export default function StatisticsPage() {
                 </Col>
             </Row>
             <Divider/>
-            <Row gutter={16} justify='center' align='middle'>
+            <Flex gap={16} wrap justify='center' align='middle'>
                 {stats?.domainCount
                     .sort((a, b) => b.domain - a.domain)
-                    .map(({domain, tld}) => <Col key={tld} span={4}>
-                        <Card bordered={false}>
+                    .map(({domain, tld}) =>
+                        <Card key={tld} bordered={false}>
                             <Statistic
                                 loading={stats === undefined}
                                 title={tld ? tld : t`TLD`}
                                 value={domain}
                                 valueStyle={{color: 'darkorange'}}
                             />
-                        </Card>
-                    </Col>)}
-            </Row>
+                        </Card>)}
+            </Flex>
         </>
     )
 }
