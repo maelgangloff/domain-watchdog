@@ -15,7 +15,7 @@ import NotFoundPage from './pages/NotFoundPage'
 import useBreakpoint from './hooks/useBreakpoint'
 import {Sider} from './components/Sider'
 import {jt, t} from 'ttag'
-import {BugOutlined, InfoCircleOutlined, MergeOutlined} from '@ant-design/icons'
+import {BugOutlined, InfoCircleOutlined, MergeOutlined, MenuOutlined} from '@ant-design/icons'
 import TrackedDomainPage from './pages/tracking/TrackedDomainPage'
 import IcannRegistrarPage from "./pages/infrastructure/IcannRegistrarPage"
 
@@ -30,6 +30,7 @@ export default function App(): React.ReactElement {
     const location = useLocation()
     const sm = useBreakpoint('sm')
 
+    const [sidebarCollapsed, setSidebarCollapsed] = useState(false)
     const [isAuthenticated, setIsAuthenticated] = useState(false)
 
     const authenticated = useCallback((authenticated: boolean) => {
@@ -75,12 +76,17 @@ export default function App(): React.ReactElement {
         >
             <AuthenticatedContext.Provider value={contextValue}>
                 <Layout hasSider style={{minHeight: '100vh'}}>
-                    {/* Ant will use a break-off tab to toggle the collapse of the sider when collapseWidth = 0 */}
-                    <Layout.Sider collapsible breakpoint='sm' width={220} {...(sm ? {collapsedWidth: 0} : {})}>
+                    <Layout.Sider collapsible breakpoint='sm' width={220} trigger={null} collapsed={sidebarCollapsed} {...(sm ? {collapsedWidth: 0} : {})}>
                         <Sider isAuthenticated={isAuthenticated}/>
                     </Layout.Sider>
                     <Layout>
-                        <Layout.Header style={{padding: 0}}/>
+                        <Layout.Header style={{padding: 0}}>
+                            {sm &&
+                                <Button type="text" style={{marginLeft: 8}} onClick={() => setSidebarCollapsed(!sidebarCollapsed)}>
+                                    <MenuOutlined />
+                                </Button>
+                            }
+                        </Layout.Header>
                         <Layout.Content style={sm ? {margin: '24px 0'} : {margin: '24px 16px 0'}}>
                             <div style={{
                                 padding: sm ? 8 : 24,
