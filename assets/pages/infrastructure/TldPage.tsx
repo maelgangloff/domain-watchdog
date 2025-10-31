@@ -11,7 +11,7 @@ import {getCountryCode} from '../../utils/functions/getCountryCode'
 import {tldToEmoji} from '../../utils/functions/tldToEmoji'
 import {BankOutlined, FlagOutlined, GlobalOutlined, TrademarkOutlined} from "@ant-design/icons"
 import {Link} from "react-router-dom"
-import useBreakpoint from "../../hooks/useBreakpoint";
+import useBreakpoint from "../../hooks/useBreakpoint"
 
 const {Text, Paragraph} = Typography
 

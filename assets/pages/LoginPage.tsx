@@ -6,7 +6,7 @@ import {LoginForm} from '../components/LoginForm'
 import type { InstanceConfig} from '../utils/api'
 import {getConfiguration} from '../utils/api'
 import {RegisterForm} from '../components/RegisterForm'
-import useBreakpoint from "../hooks/useBreakpoint";
+import useBreakpoint from "../hooks/useBreakpoint"
 
 export const AuthenticatedContext = createContext<
     {
