@@ -1,4 +1,4 @@
-import {Button, ConfigProvider, FloatButton, Layout, Space, theme, Tooltip, Typography} from 'antd'
+import {Button, ConfigProvider, Flex, FloatButton, Layout, theme, Tooltip, Typography} from 'antd'
 import {Link, Navigate, Route, Routes, useLocation, useNavigate} from 'react-router-dom'
 import TextPage from './pages/TextPage'
 import DomainSearchPage from './pages/search/DomainSearchPage'
@@ -116,7 +116,7 @@ export default function App(): React.ReactElement {
                             </div>
                         </Layout.Content>
                         <Layout.Footer style={{textAlign: 'center'}}>
-                            <Space size='middle' wrap align='center'>
+                            <Flex gap='middle' wrap justify='space-evenly'>
                                 <Link to='/tos'><Button type='text'>{t`TOS`}</Button></Link>
                                 <Link to='/privacy'><Button type='text'>{t`Privacy Policy`}</Button></Link>
                                 <Link to='/faq'><Button type='text'>{t`FAQ`}</Button></Link>
@@ -129,7 +129,7 @@ export default function App(): React.ReactElement {
                                     >{t`Documentation`}
                                     </Button>
                                 </Typography.Link>
-                            </Space>
+                            </Flex>
                             <Typography.Paragraph style={{marginTop: '1em'}}>
                                 {jt`${ProjectLink} is an open source project distributed under the ${LicenseLink} license.`}
                             </Typography.Paragraph>
