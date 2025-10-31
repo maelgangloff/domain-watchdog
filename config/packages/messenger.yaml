@@ -9,12 +9,21 @@ framework:
                 retry_strategy:
                     max_retries: 3
                     multiplier: 2
-            rdap_async:
+            rdap_high:
                 dsn: '%env(MESSENGER_RDAP_ASYNC_TRANSPORT_DSN)%'
                 options:
                     consumer: '%env(MESSENGER_CONSUMER_NAME)%'
                 retry_strategy:
                     delay: 1000
+                    multiplier: 2
+                    max_delay: 86400000
+
+            rdap_low:
+                dsn: '%env(MESSENGER_RDAP_ASYNC_TRANSPORT_DSN)%'
+                options:
+                    consumer: '%env(MESSENGER_CONSUMER_NAME)%'
+                retry_strategy:
+                    delay: 2000
                     multiplier: 2
                     max_delay: 86400000
 
@@ -37,4 +46,4 @@ framework:
             App\Message\ProcessWatchlist: async
             App\Message\UpdateRdapServers: async
             App\Message\ValidateConnectorCredentials: async
-            App\Message\UpdateDomain: rdap_async
+            App\Message\UpdateDomain: rdap_high

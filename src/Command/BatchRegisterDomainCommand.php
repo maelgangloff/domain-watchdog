@@ -11,6 +11,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\Messenger\Exception\ExceptionInterface;
 use Symfony\Component\Messenger\MessageBusInterface;
+use Symfony\Component\Messenger\Stamp\TransportNamesStamp;
 
 #[AsCommand(
     name: 'app:batch-register-domains',
@@ -54,7 +55,9 @@ class BatchRegisterDomainCommand extends Command
         $io->title('Registering domains');
         /** @var string $ldhName */
         foreach ($domains as $ldhName) {
-            $this->messageBus->dispatch(new UpdateDomain($ldhName, null));
+            $this->messageBus->dispatch(new UpdateDomain($ldhName, null), [
+                new TransportNamesStamp('rdap_low'),
+            ]);
         }
 
         $io->success(sprintf('Imported %d domain names.', count($domains)));
