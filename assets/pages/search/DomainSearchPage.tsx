@@ -47,6 +47,7 @@ export default function DomainSearchPage() {
     const addToWatchlist = async (watchlist: Watchlist) => {
         await addDomainToWatchlist(watchlist, domain!.ldhName).then(() => {
             setAddToWatchlistModal(false)
+            messageApi.success(t`${domain?.ldhName} added to ${watchlist.name}`)
         }).catch((e: AxiosError) => {
             showErrorAPI(e, messageApi)
         })

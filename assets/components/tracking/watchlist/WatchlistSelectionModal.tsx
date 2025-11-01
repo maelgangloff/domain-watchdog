@@ -53,12 +53,12 @@ export default function WatchlistSelectionModal(props: WatchlistSelectionModalPr
         {...props.modalProps ?? {}}
     >
         <Flex vertical>
-            <Typography.Text>
+            <Typography.Paragraph>
                 {
                     props.description
                     || t`Select one of your available watchlists`
                 }
-            </Typography.Text>
+            </Typography.Paragraph>
             <Select
                 placeholder={t`Watchlist`}
                 style={{width: '100%'}}
