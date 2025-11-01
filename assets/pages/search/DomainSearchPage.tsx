@@ -69,19 +69,17 @@ export default function DomainSearchPage() {
             </Skeleton>
         </Flex>
         {domain
-            && <FloatButton.Group
-                trigger='click'
+            && <FloatButton
                 style={{
                     position: 'fixed',
                     insetInlineEnd: (100 - 40) / 2,
                     bottom: 100 - 40 / 2
                 }}
-                icon={<CaretUpOutlined/>}
-            >
-                <Tooltip title={t`Add to watchlist`} placement='left'>
-                    <FloatButton icon={<PlusOutlined />} onClick={() => setAddToWatchlistModal(true)} />
-                </Tooltip>
-            </FloatButton.Group>
+                tooltip={t`Add to watchlist`}
+                type="primary"
+                icon={<PlusOutlined/>}
+                onClick={() => setAddToWatchlistModal(true)}
+            />
         }
         <WatchlistSelectionModal
             open={addToWatchlistModal}
