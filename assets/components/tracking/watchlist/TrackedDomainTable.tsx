@@ -28,6 +28,7 @@ export function TrackedDomainTable() {
     const REDEMPTION_NOTICE = (
         <Tooltip
             title={t`At least one domain name is in redemption period and will potentially be deleted soon`}
+            key="redeptionNotice"
         >
             <Tag color={eppStatusCodeToColor('redemption period')}>redemption period</Tag>
         </Tooltip>
@@ -36,6 +37,7 @@ export function TrackedDomainTable() {
     const PENDING_DELETE_NOTICE = (
         <Tooltip
             title={t`At least one domain name is pending deletion and will soon become available for registration again`}
+            key="pendingDeleteNotice"
         >
             <Tag color={eppStatusCodeToColor('pending delete')}>pending delete</Tag>
         </Tooltip>
@@ -222,6 +224,7 @@ export function TrackedDomainTable() {
                 text: <Tooltip
                     placement='bottomLeft'
                     title={rdapStatusCodeDetailTranslated[s as keyof typeof rdapStatusCodeDetailTranslated] || undefined}
+                    key={s}
                 >
                     <Tag color={eppStatusCodeToColor(s)}>{s}</Tag>
                 </Tooltip>,

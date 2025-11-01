@@ -10,6 +10,7 @@ export function statusToTag(s: string) {
         <Tooltip
             placement='bottomLeft'
             title={rdapStatusCodeDetailTranslated[s as keyof typeof rdapStatusCodeDetailTranslated] || undefined}
+            key={s}
         >
             <Tag color={eppStatusCodeToColor(s)}>{s}</Tag>
         </Tooltip>
