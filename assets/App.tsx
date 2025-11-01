@@ -1,4 +1,4 @@
-import {Button, ConfigProvider, Drawer, Flex, FloatButton, Layout, theme, Tooltip, Typography} from 'antd'
+import {Button, ConfigProvider, Drawer, Flex, Layout, theme, Typography} from 'antd'
 import {Link, Navigate, Route, Routes, useLocation, useNavigate} from 'react-router-dom'
 import TextPage from './pages/TextPage'
 import DomainSearchPage from './pages/search/DomainSearchPage'
@@ -16,7 +16,7 @@ import NotFoundPage from './pages/NotFoundPage'
 import useBreakpoint from './hooks/useBreakpoint'
 import {Sider} from './components/Sider'
 import {jt, t} from 'ttag'
-import {BugOutlined, InfoCircleOutlined, MergeOutlined, MenuOutlined} from '@ant-design/icons'
+import {MenuOutlined} from '@ant-design/icons'
 import TrackedDomainPage from './pages/tracking/TrackedDomainPage'
 import IcannRegistrarPage from "./pages/infrastructure/IcannRegistrarPage"
 
@@ -165,9 +165,24 @@ export default function App(): React.ReactElement {
                                     target='_blank'
                                     href='https://github.com/maelgangloff/domain-watchdog/wiki'
                                 >
-                                    <Button
-                                        type='text'
-                                    >{t`Documentation`}
+                                    <Button type='text'>
+                                        {t`Documentation`}
+                                    </Button>
+                                </Typography.Link>
+                                <Typography.Link
+                                    target='_blank'
+                                    href={PROJECT_LINK}
+                                >
+                                    <Button type='text'>
+                                        {t`Source code`}
+                                    </Button>
+                                </Typography.Link>
+                                <Typography.Link
+                                    target='_blank'
+                                    href={PROJECT_LINK + '/issues'}
+                                >
+                                    <Button type='text'>
+                                        {t`Submit an issue`}
                                     </Button>
                                 </Typography.Link>
                             </Flex>
@@ -176,22 +191,6 @@ export default function App(): React.ReactElement {
                             </Typography.Paragraph>
                         </Layout.Footer>
                     </Layout>
-                    <FloatButton.Group
-                        trigger='hover'
-                        style={{
-                            position: 'fixed',
-                            insetInlineEnd: (100 - 40) / 2,
-                            bottom: 100 - 40 / 2
-                        }}
-                        icon={<InfoCircleOutlined/>}
-                    >
-                        <Tooltip title={t`Official git repository`} placement='left'>
-                            <FloatButton icon={<MergeOutlined/>} target='_blank' href={PROJECT_LINK}/>
-                        </Tooltip>
-                        <Tooltip title={t`Submit an issue`} placement='left'>
-                            <FloatButton icon={<BugOutlined/>} target='_blank' href={PROJECT_LINK + '/issues'}/>
-                        </Tooltip>
-                    </FloatButton.Group>
                 </Layout>
             </AuthenticatedContext.Provider>
         </ConfigProvider>
