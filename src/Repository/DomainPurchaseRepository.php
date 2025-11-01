@@ -19,16 +19,16 @@ class DomainPurchaseRepository extends ServiceEntityRepository
     public function countSuccessDomainPurchase(): int
     {
         return $this->createQueryBuilder('dp')
-            ->select('COUNT(*)')
-            ->where('dp.domainOrderedAt != NULL')
+            ->select('COUNT(dp)')
+            ->where('dp.domainOrderedAt not NULL')
             ->getQuery()->getSingleScalarResult();
     }
 
     public function countFailDomainPurchase(): int
     {
         return $this->createQueryBuilder('dp')
-            ->select('COUNT(*)')
-            ->where('dp.domainOrderedAt == NULL')
+            ->select('COUNT(dp)')
+            ->where('dp.domainOrderedAt is NULL')
             ->getQuery()->getSingleScalarResult();
     }
 }
