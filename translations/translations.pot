@@ -3,44 +3,44 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Plural-Forms: nplurals=2; plural=(n!=1);\n"
 
-#: assets/App.tsx:120
+#: assets/App.tsx:161
 msgid "TOS"
 msgstr ""
 
-#: assets/App.tsx:121
+#: assets/App.tsx:162
 msgid "Privacy Policy"
 msgstr ""
 
-#: assets/App.tsx:122
+#: assets/App.tsx:163
 msgid "FAQ"
 msgstr ""
 
-#: assets/App.tsx:129
+#: assets/App.tsx:170
 msgid "Documentation"
 msgstr ""
 
-#: assets/App.tsx:134
+#: assets/App.tsx:175
 #, javascript-format
 msgid ""
 "${ ProjectLink } is an open source project distributed under the ${ "
 "LicenseLink } license."
 msgstr ""
 
-#: assets/App.tsx:147
+#: assets/App.tsx:188
 msgid "Official git repository"
 msgstr ""
 
-#: assets/App.tsx:150
+#: assets/App.tsx:191
 msgid "Submit an issue"
 msgstr ""
 
-#: assets/components/LoginForm.tsx:48
+#: assets/components/LoginForm.tsx:53
 #: assets/components/RegisterForm.tsx:37
 msgid "Email address"
 msgstr ""
 
-#: assets/components/LoginForm.tsx:50
-#: assets/components/LoginForm.tsx:58
+#: assets/components/LoginForm.tsx:55
+#: assets/components/LoginForm.tsx:63
 #: assets/components/RegisterForm.tsx:39
 #: assets/components/RegisterForm.tsx:47
 #: assets/components/search/DomainSearchBar.tsx:28
@@ -72,22 +72,22 @@ msgstr ""
 msgid "Required"
 msgstr ""
 
-#: assets/components/LoginForm.tsx:56
+#: assets/components/LoginForm.tsx:61
 #: assets/components/RegisterForm.tsx:45
 #: assets/utils/providers/forms/EppConnectorForm.tsx:138
 msgid "Password"
 msgstr ""
 
-#: assets/components/LoginForm.tsx:66
+#: assets/components/LoginForm.tsx:70
 msgid "Submit"
 msgstr ""
 
-#: assets/components/LoginForm.tsx:71
+#: assets/components/LoginForm.tsx:74
 msgid "Log in with SSO"
 msgstr ""
 
 #: assets/components/RegisterForm.tsx:54
-#: assets/pages/LoginPage.tsx:35
+#: assets/pages/LoginPage.tsx:60
 msgid "Register"
 msgstr ""
 
@@ -97,22 +97,22 @@ msgid "Registration"
 msgstr ""
 
 #: assets/components/search/DomainLifecycleSteps.tsx:24
-#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:133
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:137
 msgid "Active"
 msgstr ""
 
 #: assets/components/search/DomainLifecycleSteps.tsx:29
-#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:111
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:115
 msgid "Auto-Renew Grace Period"
 msgstr ""
 
 #: assets/components/search/DomainLifecycleSteps.tsx:35
-#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:119
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:123
 msgid "Redemption Grace Period"
 msgstr ""
 
 #: assets/components/search/DomainLifecycleSteps.tsx:40
-#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:127
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:131
 msgid "Pending Delete"
 msgstr ""
 
@@ -124,7 +124,7 @@ msgid ""
 msgstr ""
 
 #: assets/components/search/DomainResult.tsx:64
-#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:89
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:93
 msgid "Registry Lock"
 msgstr ""
 
@@ -135,7 +135,7 @@ msgid ""
 msgstr ""
 
 #: assets/components/search/DomainResult.tsx:75
-#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:95
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:99
 msgid "Registrar Lock"
 msgstr ""
 
@@ -146,12 +146,12 @@ msgid ""
 msgstr ""
 
 #: assets/components/search/DomainResult.tsx:84
-#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:101
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:105
 msgid "DNSSEC"
 msgstr ""
 
 #: assets/components/search/DomainResult.tsx:90
-#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:215
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:219
 msgid "EPP Status Codes"
 msgstr ""
 
@@ -177,7 +177,7 @@ msgid "Search"
 msgstr ""
 
 #: assets/components/Sider.tsx:43
-#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:175
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:179
 msgid "Domain"
 msgstr ""
 
@@ -192,7 +192,7 @@ msgstr ""
 
 #: assets/components/Sider.tsx:70
 #: assets/pages/StatisticsPage.tsx:114
-#: assets/pages/infrastructure/TldPage.tsx:79
+#: assets/pages/infrastructure/TldPage.tsx:81
 msgid "TLD"
 msgstr ""
 
@@ -250,13 +250,13 @@ msgid "Log out"
 msgstr ""
 
 #: assets/components/Sider.tsx:154
-#: assets/pages/LoginPage.tsx:35
-#: assets/pages/LoginPage.tsx:45
+#: assets/pages/LoginPage.tsx:46
+#: assets/pages/LoginPage.tsx:60
 msgid "Log in"
 msgstr ""
 
 #: assets/components/tracking/connector/ConnectorForm.tsx:36
-#: assets/pages/infrastructure/IcannRegistrarPage.tsx:49
+#: assets/pages/infrastructure/IcannRegistrarPage.tsx:51
 #: assets/utils/functions/rdapTranslation.ts:12
 msgid "Registrar"
 msgstr ""
@@ -328,17 +328,17 @@ msgstr ""
 msgid "No"
 msgstr ""
 
-#: assets/components/tracking/connector/ConnectorsList.tsx:48
+#: assets/components/tracking/connector/ConnectorsList.tsx:49
 #, javascript-format
 msgid "Creation date: ${ createdAt }"
 msgstr ""
 
-#: assets/components/tracking/connector/ConnectorsList.tsx:49
+#: assets/components/tracking/connector/ConnectorsList.tsx:50
 #, javascript-format
 msgid "Used in: ${ watchlistCount } Watchlist"
 msgstr ""
 
-#: assets/components/tracking/connector/ConnectorsList.tsx:52
+#: assets/components/tracking/connector/ConnectorsList.tsx:53
 msgid ""
 "You can stop using a connector at any time. To delete a connector, you must "
 "remove it from each linked Watchlist.\n"
@@ -348,7 +348,7 @@ msgid ""
 "withdrawal and were of the minimum age to consent to these conditions."
 msgstr ""
 
-#: assets/components/tracking/connector/ConnectorsList.tsx:56
+#: assets/components/tracking/connector/ConnectorsList.tsx:57
 msgid "The Provider’s conditions are accessible by following this hyperlink."
 msgstr ""
 
@@ -404,66 +404,66 @@ msgstr ""
 msgid "Enable the Watchlist"
 msgstr ""
 
-#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:29
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:30
 msgid ""
 "At least one domain name is in redemption period and will potentially be "
 "deleted soon"
 msgstr ""
 
-#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:37
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:39
 msgid ""
 "At least one domain name is pending deletion and will soon become available "
 "for registration again"
 msgstr ""
 
-#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:143
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:147
 msgid "Estimated number of days until WHOIS removal"
 msgstr ""
 
-#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:146
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:150
 #, javascript-format
 msgid "J ${ expiresInDays }"
 msgstr ""
 
-#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:152
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:156
 msgid "Deletion is imminent"
 msgstr ""
 
-#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:181
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:185
 msgid "Status"
 msgstr ""
 
-#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:187
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:191
 msgid "Options"
 msgstr ""
 
-#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:193
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:197
 msgid "Expiration date"
 msgstr ""
 
-#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:207
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:211
 msgid "Updated at"
 msgstr ""
 
-#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:235
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:240
 msgid "No tracked domain names were found, please create your first Watchlist"
 msgstr ""
 
-#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:238
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:243
 msgid "Create now"
 msgstr ""
 
-#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:244
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:249
 msgid ""
 "Please note that this table does not include domain names marked as expired "
 "or those with an unknown expiration date"
 msgstr ""
 
-#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:249
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:254
 msgid "At least one domain name you are tracking requires special attention"
 msgstr ""
 
-#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:255
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:260
 msgid "The domain names below are subject to special monitoring"
 msgstr ""
 
@@ -473,10 +473,6 @@ msgstr ""
 
 #: assets/components/tracking/watchlist/UpdateWatchlistButton.tsx:46
 msgid "Update a Watchlist"
-msgstr ""
-
-#: assets/components/tracking/watchlist/UpdateWatchlistButton.tsx:56
-msgid "Cancel"
 msgstr ""
 
 #: assets/components/tracking/watchlist/WatchlistCard.tsx:54
@@ -568,31 +564,31 @@ msgstr ""
 msgid "Reset"
 msgstr ""
 
-#: assets/pages/infrastructure/IcannRegistrarPage.tsx:43
+#: assets/pages/infrastructure/IcannRegistrarPage.tsx:45
 msgid "ID"
 msgstr ""
 
-#: assets/pages/infrastructure/IcannRegistrarPage.tsx:77
+#: assets/pages/infrastructure/IcannRegistrarPage.tsx:80
 msgid ""
 "An accredited number means that ICANN's contract with the registrar is "
 "ongoing."
 msgstr ""
 
-#: assets/pages/infrastructure/IcannRegistrarPage.tsx:82
+#: assets/pages/infrastructure/IcannRegistrarPage.tsx:85
 msgid "A reserved number can be used by TLD registries for specific operations."
 msgstr ""
 
-#: assets/pages/infrastructure/IcannRegistrarPage.tsx:87
+#: assets/pages/infrastructure/IcannRegistrarPage.tsx:90
 msgid ""
 "A terminated number means that ICANN's contract with the registrar has been "
 "terminated."
 msgstr ""
 
-#: assets/pages/infrastructure/IcannRegistrarPage.tsx:96
+#: assets/pages/infrastructure/IcannRegistrarPage.tsx:99
 msgid "This page lists ICANN-accredited registrars."
 msgstr ""
 
-#: assets/pages/infrastructure/IcannRegistrarPage.tsx:99
+#: assets/pages/infrastructure/IcannRegistrarPage.tsx:102
 msgid ""
 "The list is officially published and maintained by the Internet Assigned "
 "Numbers Authority (IANA), the organization responsible for managing the "
@@ -600,63 +596,63 @@ msgid ""
 "name extensions)."
 msgstr ""
 
-#: assets/pages/infrastructure/IcannRegistrarPage.tsx:111
+#: assets/pages/infrastructure/IcannRegistrarPage.tsx:114
 #: assets/utils/functions/rdapTranslation.ts:125
 msgid "Accredited"
 msgstr ""
 
-#: assets/pages/infrastructure/IcannRegistrarPage.tsx:116
+#: assets/pages/infrastructure/IcannRegistrarPage.tsx:119
 #: assets/utils/functions/rdapTranslation.ts:126
 msgid "Reserved"
 msgstr ""
 
-#: assets/pages/infrastructure/IcannRegistrarPage.tsx:121
+#: assets/pages/infrastructure/IcannRegistrarPage.tsx:124
 #: assets/utils/functions/rdapTranslation.ts:124
 msgid "Terminated"
 msgstr ""
 
-#: assets/pages/infrastructure/TldPage.tsx:86
+#: assets/pages/infrastructure/TldPage.tsx:88
 msgid "Flag"
 msgstr ""
 
-#: assets/pages/infrastructure/TldPage.tsx:89
+#: assets/pages/infrastructure/TldPage.tsx:91
 msgid "Country"
 msgstr ""
 
-#: assets/pages/infrastructure/TldPage.tsx:96
+#: assets/pages/infrastructure/TldPage.tsx:98
 msgid "Registry Operator"
 msgstr ""
 
-#: assets/pages/infrastructure/TldPage.tsx:124
+#: assets/pages/infrastructure/TldPage.tsx:127
 msgid ""
 "Top-level domains sponsored by specific organizations that set rules for "
 "registration and use, often related to particular interest groups or "
 "industries."
 msgstr ""
 
-#: assets/pages/infrastructure/TldPage.tsx:129
+#: assets/pages/infrastructure/TldPage.tsx:132
 msgid ""
 "Generic top-level domains open to everyone, not restricted by specific "
 "criteria, representing various themes or industries."
 msgstr ""
 
-#: assets/pages/infrastructure/TldPage.tsx:134
+#: assets/pages/infrastructure/TldPage.tsx:137
 msgid ""
 "Generic top-level domains associated with specific brands, allowing "
 "companies to use their own brand names as domains."
 msgstr ""
 
-#: assets/pages/infrastructure/TldPage.tsx:139
+#: assets/pages/infrastructure/TldPage.tsx:142
 msgid ""
 "Top-level domains based on country codes, identifying websites according to "
 "their country of origin."
 msgstr ""
 
-#: assets/pages/infrastructure/TldPage.tsx:148
+#: assets/pages/infrastructure/TldPage.tsx:151
 msgid "This page presents all active TLDs in the root zone database."
 msgstr ""
 
-#: assets/pages/infrastructure/TldPage.tsx:151
+#: assets/pages/infrastructure/TldPage.tsx:154
 msgid ""
 "IANA provides the list of currently active TLDs, regardless of their type, "
 "and ICANN provides the list of gTLDs.\n"
@@ -668,23 +664,23 @@ msgid ""
 "At the same time, the list of root RDAP servers is updated."
 msgstr ""
 
-#: assets/pages/infrastructure/TldPage.tsx:166
+#: assets/pages/infrastructure/TldPage.tsx:169
 msgid "Generic Top-Level-Domains"
 msgstr ""
 
-#: assets/pages/infrastructure/TldPage.tsx:171
+#: assets/pages/infrastructure/TldPage.tsx:174
 msgid "Country-Code Top-Level-Domains"
 msgstr ""
 
-#: assets/pages/infrastructure/TldPage.tsx:176
+#: assets/pages/infrastructure/TldPage.tsx:179
 msgid "Brand Generic Top-Level-Domains"
 msgstr ""
 
-#: assets/pages/infrastructure/TldPage.tsx:181
+#: assets/pages/infrastructure/TldPage.tsx:184
 msgid "Sponsored Top-Level-Domains"
 msgstr ""
 
-#: assets/pages/LoginPage.tsx:45
+#: assets/pages/LoginPage.tsx:46
 msgid "Create an account"
 msgstr ""
 

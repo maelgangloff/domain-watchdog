@@ -1,4 +1,4 @@
-import {Button, ConfigProvider, FloatButton, Layout, Space, theme, Tooltip, Typography} from 'antd'
+import {Button, ConfigProvider, Drawer, Flex, FloatButton, Layout, theme, Tooltip, Typography} from 'antd'
 import {Link, Navigate, Route, Routes, useLocation, useNavigate} from 'react-router-dom'
 import TextPage from './pages/TextPage'
 import DomainSearchPage from './pages/search/DomainSearchPage'
@@ -7,7 +7,8 @@ import TldPage from './pages/infrastructure/TldPage'
 import StatisticsPage from './pages/StatisticsPage'
 import WatchlistPage from './pages/tracking/WatchlistPage'
 import UserPage from './pages/UserPage'
-import React, {useCallback, useEffect, useMemo, useState} from 'react'
+import type {PropsWithChildren} from 'react'
+import React, { useCallback, useEffect, useMemo, useState} from 'react'
 import {getUser} from './utils/api'
 import LoginPage, {AuthenticatedContext} from './pages/LoginPage'
 import ConnectorPage from './pages/tracking/ConnectorPage'
@@ -15,21 +16,56 @@ import NotFoundPage from './pages/NotFoundPage'
 import useBreakpoint from './hooks/useBreakpoint'
 import {Sider} from './components/Sider'
 import {jt, t} from 'ttag'
-import {BugOutlined, InfoCircleOutlined, MergeOutlined} from '@ant-design/icons'
+import {BugOutlined, InfoCircleOutlined, MergeOutlined, MenuOutlined} from '@ant-design/icons'
 import TrackedDomainPage from './pages/tracking/TrackedDomainPage'
 import IcannRegistrarPage from "./pages/infrastructure/IcannRegistrarPage"
 
 const PROJECT_LINK = 'https://github.com/maelgangloff/domain-watchdog'
 const LICENSE_LINK = 'https://www.gnu.org/licenses/agpl-3.0.txt'
 
-const ProjectLink = <Typography.Link target='_blank' href={PROJECT_LINK}>Domain Watchdog</Typography.Link>
-const LicenseLink = <Typography.Link target='_blank' href={LICENSE_LINK}>AGPL-3.0-or-later</Typography.Link>
+const ProjectLink = <Typography.Link key="projectLink" target='_blank' href={PROJECT_LINK}>Domain Watchdog</Typography.Link>
+const LicenseLink = <Typography.Link key="licenceLink" target='_blank' href={LICENSE_LINK}>AGPL-3.0-or-later</Typography.Link>
+
+function SiderWrapper(props: PropsWithChildren<{sidebarCollapsed: boolean, setSidebarCollapsed: (collapsed: boolean) => void}>): React.ReactElement {
+    const {sidebarCollapsed, setSidebarCollapsed, children} = props
+    const sm = useBreakpoint('sm')
+    const location = useLocation()
+
+    useEffect(() => {
+        if (sm) {
+            setSidebarCollapsed(false)
+        }
+    }, [location])
+
+    if (sm) {
+        return <Drawer
+                placement="left"
+                open={sidebarCollapsed}
+                onClose={() => setSidebarCollapsed(false)}
+                closeIcon={null}
+                styles={{body: {padding: 0, height: '100%', background: '#001529'}}}
+                width='200px'>
+            {children}
+        </Drawer>
+    } else {
+        return <Layout.Sider
+                collapsible
+                breakpoint='sm'
+                width={220}
+                trigger={null}
+                collapsed={sidebarCollapsed && sm}
+                {...(sm ? {collapsedWidth: 0} : {})}>
+            {children}
+        </Layout.Sider>
+    }
+}
 
 export default function App(): React.ReactElement {
     const navigate = useNavigate()
     const location = useLocation()
     const sm = useBreakpoint('sm')
 
+    const [sidebarCollapsed, setSidebarCollapsed] = useState(false)
     const [isAuthenticated, setIsAuthenticated] = useState(false)
 
     const authenticated = useCallback((authenticated: boolean) => {
@@ -75,15 +111,20 @@ export default function App(): React.ReactElement {
         >
             <AuthenticatedContext.Provider value={contextValue}>
                 <Layout hasSider style={{minHeight: '100vh'}}>
-                    {/* Ant will use a break-off tab to toggle the collapse of the sider when collapseWidth = 0 */}
-                    <Layout.Sider collapsible breakpoint='sm' width={220} {...(sm ? {collapsedWidth: 0} : {})}>
+                    <SiderWrapper sidebarCollapsed={sidebarCollapsed} setSidebarCollapsed={setSidebarCollapsed}>
                         <Sider isAuthenticated={isAuthenticated}/>
-                    </Layout.Sider>
+                    </SiderWrapper>
                     <Layout>
-                        <Layout.Header style={{padding: 0}}/>
+                        <Layout.Header style={{padding: 0}}>
+                            {sm &&
+                                <Button type="text" style={{marginLeft: 8}} onClick={() => setSidebarCollapsed(!sidebarCollapsed)}>
+                                    <MenuOutlined />
+                                </Button>
+                            }
+                        </Layout.Header>
                         <Layout.Content style={sm ? {margin: '24px 0'} : {margin: '24px 16px 0'}}>
                             <div style={{
-                                padding: 24,
+                                padding: sm ? 8 : 24,
                                 minHeight: 360
                             }}
                             >
@@ -116,7 +157,7 @@ export default function App(): React.ReactElement {
                             </div>
                         </Layout.Content>
                         <Layout.Footer style={{textAlign: 'center'}}>
-                            <Space size='middle' wrap align='center'>
+                            <Flex gap='middle' wrap justify='center'>
                                 <Link to='/tos'><Button type='text'>{t`TOS`}</Button></Link>
                                 <Link to='/privacy'><Button type='text'>{t`Privacy Policy`}</Button></Link>
                                 <Link to='/faq'><Button type='text'>{t`FAQ`}</Button></Link>
@@ -129,7 +170,7 @@ export default function App(): React.ReactElement {
                                     >{t`Documentation`}
                                     </Button>
                                 </Typography.Link>
-                            </Space>
+                            </Flex>
                             <Typography.Paragraph style={{marginTop: '1em'}}>
                                 {jt`${ProjectLink} is an open source project distributed under the ${LicenseLink} license.`}
                             </Typography.Paragraph>
