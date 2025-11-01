@@ -16,28 +16,19 @@ class DomainPurchaseRepository extends ServiceEntityRepository
         parent::__construct($registry, DomainPurchase::class);
     }
 
-    //    /**
-    //     * @return DomainPurchase[] Returns an array of DomainPurchase objects
-    //     */
-    //    public function findByExampleField($value): array
-    //    {
-    //        return $this->createQueryBuilder('d')
-    //            ->andWhere('d.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->orderBy('d.id', 'ASC')
-    //            ->setMaxResults(10)
-    //            ->getQuery()
-    //            ->getResult()
-    //        ;
-    //    }
+    public function countSuccessDomainPurchase(): int
+    {
+        return $this->createQueryBuilder('dp')
+            ->select('COUNT(*)')
+            ->where('dp.domainOrderedAt != NULL')
+            ->getQuery()->getSingleScalarResult();
+    }
 
-    //    public function findOneBySomeField($value): ?DomainPurchase
-    //    {
-    //        return $this->createQueryBuilder('d')
-    //            ->andWhere('d.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->getQuery()
-    //            ->getOneOrNullResult()
-    //        ;
-    //    }
+    public function countFailDomainPurchase(): int
+    {
+        return $this->createQueryBuilder('dp')
+            ->select('COUNT(*)')
+            ->where('dp.domainOrderedAt == NULL')
+            ->getQuery()->getSingleScalarResult();
+    }
 }

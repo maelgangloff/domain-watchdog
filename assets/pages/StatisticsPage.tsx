@@ -95,7 +95,7 @@ export default function StatisticsPage() {
                             <Statistic
                                 loading={stats === undefined}
                                 title={t`Success rate`}
-                                value={successRate === undefined ? '-' : successRate * 100}
+                                value={successRate === undefined ? '-' : (successRate * 100).toFixed(2)}
                                 suffix='%'
                                 valueStyle={{color: successRate === undefined ? 'grey' : successRate >= 0.5 ? 'darkgreen' : 'orange'}}
                             />

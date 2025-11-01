@@ -109,7 +109,6 @@ final readonly class OrderDomainHandler
                 'provider' => $connector->getProvider()->value,
             ]);
 
-            $this->statService->incrementStat('stats.domain.purchased');
             if ($this->influxdbEnabled) {
                 $this->influxdbService->addDomainOrderPoint($connector, $domain, true);
             }
@@ -138,7 +137,6 @@ final readonly class OrderDomainHandler
                 'provider' => $connector->getProvider()->value,
             ]);
 
-            $this->statService->incrementStat('stats.domain.purchase.failed');
             if ($this->influxdbEnabled) {
                 $this->influxdbService->addDomainOrderPoint($connector, $domain, false);
             }
