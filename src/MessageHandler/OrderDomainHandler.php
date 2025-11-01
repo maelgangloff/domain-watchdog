@@ -13,7 +13,6 @@ use App\Repository\WatchlistRepository;
 use App\Service\ChatNotificationService;
 use App\Service\InfluxdbService;
 use App\Service\Provider\AbstractProvider;
-use App\Service\StatService;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
@@ -38,7 +37,6 @@ final readonly class OrderDomainHandler
         private KernelInterface $kernel,
         private MailerInterface $mailer,
         private LoggerInterface $logger,
-        private StatService $statService,
         private ChatNotificationService $chatNotificationService,
         private InfluxdbService $influxdbService,
         #[Autowire(service: 'service_container')]
