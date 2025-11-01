@@ -15,23 +15,23 @@ msgstr ""
 msgid "FAQ"
 msgstr ""
 
-#: assets/App.tsx:170
+#: assets/App.tsx:169
 msgid "Documentation"
 msgstr ""
 
-#: assets/App.tsx:175
+#: assets/App.tsx:177
+msgid "Source code"
+msgstr ""
+
+#: assets/App.tsx:185
+msgid "Submit an issue"
+msgstr ""
+
+#: assets/App.tsx:190
 #, javascript-format
 msgid ""
 "${ ProjectLink } is an open source project distributed under the ${ "
 "LicenseLink } license."
-msgstr ""
-
-#: assets/App.tsx:188
-msgid "Official git repository"
-msgstr ""
-
-#: assets/App.tsx:191
-msgid "Submit an issue"
 msgstr ""
 
 #: assets/components/LoginForm.tsx:53
@@ -480,6 +480,7 @@ msgid "This Watchlist is not linked to a Connector."
 msgstr ""
 
 #: assets/components/tracking/watchlist/WatchlistCard.tsx:59
+#: assets/components/tracking/watchlist/WatchlistSelectionModal.tsx:65
 msgid "Watchlist"
 msgstr ""
 
@@ -562,6 +563,10 @@ msgstr ""
 
 #: assets/components/tracking/watchlist/WatchlistForm.tsx:334
 msgid "Reset"
+msgstr ""
+
+#: assets/components/tracking/watchlist/WatchlistSelectionModal.tsx:61
+msgid "Select one of your available watchlists"
 msgstr ""
 
 #: assets/pages/infrastructure/IcannRegistrarPage.tsx:45
@@ -688,14 +693,28 @@ msgstr ""
 msgid "Sorry, the page you visited does not exist."
 msgstr ""
 
-#: assets/pages/search/DomainSearchPage.tsx:32
+#: assets/pages/search/DomainSearchPage.tsx:36
 msgid "Found !"
 msgstr ""
 
-#: assets/pages/search/DomainSearchPage.tsx:55
+#: assets/pages/search/DomainSearchPage.tsx:53
+#, javascript-format
+msgid "${ ldhName } added to ${ watchlist.name }"
+msgstr ""
+
+#: assets/pages/search/DomainSearchPage.tsx:70
 msgid ""
 "Although the domain exists in my database, it has been deleted from the "
 "WHOIS by its registrar."
+msgstr ""
+
+#: assets/pages/search/DomainSearchPage.tsx:82
+msgid "Add to watchlist"
+msgstr ""
+
+#: assets/pages/search/DomainSearchPage.tsx:92
+#, javascript-format
+msgid "Add ${ domainLdhName } to a watchlist"
 msgstr ""
 
 #: assets/pages/StatisticsPage.tsx:35
@@ -760,7 +779,7 @@ msgstr ""
 msgid "Roles"
 msgstr ""
 
-#: assets/utils/functions/DomainToTag.tsx:16
+#: assets/utils/functions/DomainToTag.tsx:14
 msgid "The domain name was updated less than a week ago."
 msgstr ""
 
