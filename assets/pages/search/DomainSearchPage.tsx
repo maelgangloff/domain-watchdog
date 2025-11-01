@@ -1,9 +1,9 @@
 import React, {useEffect, useState} from 'react'
 import type {FormProps} from 'antd'
-import {Tooltip} from 'antd'
 import {FloatButton} from 'antd'
 import {Empty, Flex, message, Skeleton} from 'antd'
-import {addDomainToWatchlist, Domain, Watchlist} from '../../utils/api'
+import type { Domain, Watchlist} from '../../utils/api'
+import {addDomainToWatchlist} from '../../utils/api'
 import {getDomain} from '../../utils/api'
 import type {AxiosError} from 'axios'
 import {t} from 'ttag'
@@ -12,8 +12,8 @@ import {DomainSearchBar} from '../../components/search/DomainSearchBar'
 import {DomainResult} from '../../components/search/DomainResult'
 import {showErrorAPI} from '../../utils/functions/showErrorAPI'
 import {useNavigate, useParams} from 'react-router-dom'
-import {CaretUpOutlined, PlusOutlined} from '@ant-design/icons'
-import WatchlistSelectionModal from "../../components/tracking/watchlist/WatchlistSelectionModal";
+import {PlusOutlined} from '@ant-design/icons'
+import WatchlistSelectionModal from '../../components/tracking/watchlist/WatchlistSelectionModal'
 
 export default function DomainSearchPage() {
     const {query} = useParams()

@@ -1,6 +1,8 @@
 import React, {useEffect, useState} from "react"
-import {Flex, Modal, ModalProps, Select, Tag, Typography} from "antd"
-import {getWatchlists, Watchlist} from "../../../utils/api"
+import type { ModalProps} from "antd"
+import {Flex, Modal, Select, Typography} from "antd"
+import type { Watchlist} from "../../../utils/api"
+import {getWatchlists} from "../../../utils/api"
 import {t} from 'ttag'
 import {DomainToTag} from "../../../utils/functions/DomainToTag"
 
