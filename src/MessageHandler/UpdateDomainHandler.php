@@ -98,7 +98,7 @@ final readonly class UpdateDomainHandler
         if (null === $watchlist) {
             /** @var Watchlist $wl */
             foreach ($domain->getWatchlists()->getIterator() as $wl) {
-                $this->bus->dispatch(new UpdateDomain($message->ldhName, $wl->getToken()), [
+                $this->bus->dispatch(new UpdateDomain($message->ldhName, $wl->getToken(), false), [
                     new TransportNamesStamp('rdap_low'),
                 ]);
             }
