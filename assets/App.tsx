@@ -157,7 +157,7 @@ export default function App(): React.ReactElement {
                             </div>
                         </Layout.Content>
                         <Layout.Footer style={{textAlign: 'center'}}>
-                            <Flex gap='middle' wrap justify='space-evenly'>
+                            <Flex gap='middle' wrap justify='center'>
                                 <Link to='/tos'><Button type='text'>{t`TOS`}</Button></Link>
                                 <Link to='/privacy'><Button type='text'>{t`Privacy Policy`}</Button></Link>
                                 <Link to='/faq'><Button type='text'>{t`FAQ`}</Button></Link>
