@@ -18,6 +18,7 @@ import WatchlistSelectionModal from '../../components/tracking/watchlist/Watchli
 export default function DomainSearchPage() {
     const {query} = useParams()
     const [domain, setDomain] = useState<Domain | null>()
+    const domainLdhName = domain?.ldhName
     const [loading, setLoading] = useState(false)
     const [addToWatchlistModal, setAddToWatchlistModal] = useState(false)
 
@@ -47,7 +48,9 @@ export default function DomainSearchPage() {
     const addToWatchlist = async (watchlist: Watchlist) => {
         await addDomainToWatchlist(watchlist, domain!.ldhName).then(() => {
             setAddToWatchlistModal(false)
-            messageApi.success(t`${domain?.ldhName} added to ${watchlist.name}`)
+
+            const ldhName = domain?.ldhName
+            messageApi.success(t`${ldhName} added to ${watchlist.name}`)
         }).catch((e: AxiosError) => {
             showErrorAPI(e, messageApi)
         })
@@ -86,7 +89,7 @@ export default function DomainSearchPage() {
             open={addToWatchlistModal}
             onFinish={addToWatchlist}
             modalProps={{
-                title: t`Add ${domain?.ldhName} to a watchlist`,
+                title: t`Add ${domainLdhName} to a watchlist`,
                 onCancel: () => setAddToWatchlistModal(false),
                 onClose: () => setAddToWatchlistModal(false),
             }}
