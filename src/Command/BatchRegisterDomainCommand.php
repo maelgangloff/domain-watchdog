@@ -7,6 +7,7 @@ use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\Messenger\Exception\ExceptionInterface;
@@ -28,7 +29,9 @@ class BatchRegisterDomainCommand extends Command
     protected function configure(): void
     {
         $this
-            ->addArgument('file', InputArgument::REQUIRED, 'Path to a file containing a list of domain names');
+            ->addArgument('file', InputArgument::REQUIRED, 'Path to a file containing a list of domain names')
+            ->addOption('only-new', 'on', InputOption::VALUE_NEGATABLE, 'Do not update domain names if they are already in the database', false)
+        ;
     }
 
     /**
@@ -38,6 +41,7 @@ class BatchRegisterDomainCommand extends Command
     {
         $io = new SymfonyStyle($input, $output);
         $file = $input->getArgument('file');
+        $onlyNew = (bool) $input->getOption('only-new');
 
         if (!file_exists($file) || !is_readable($file)) {
             $io->error(sprintf('File "%s" does not exist or is not readable.', $file));
@@ -55,7 +59,7 @@ class BatchRegisterDomainCommand extends Command
         $io->title('Registering domains');
         /** @var string $ldhName */
         foreach ($domains as $ldhName) {
-            $this->messageBus->dispatch(new UpdateDomain($ldhName, null), [
+            $this->messageBus->dispatch(new UpdateDomain($ldhName, null, $onlyNew), [
                 new TransportNamesStamp('rdap_low'),
             ]);
         }

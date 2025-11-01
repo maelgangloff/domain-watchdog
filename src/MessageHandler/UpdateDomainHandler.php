@@ -69,6 +69,14 @@ final readonly class UpdateDomainHandler
     {
         $domain = $this->domainRepository->findOneBy(['ldhName' => $message->ldhName]);
 
+        if (null !== $domain && $message->onlyNew) {
+            $this->logger->debug('The domain name is already present in the database', [
+                'ldhName' => $domain->getLdhName(),
+            ]);
+
+            return;
+        }
+
         if (null === $domain) {
             $this->RDAPService->registerDomain($message->ldhName);
 
