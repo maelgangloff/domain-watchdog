@@ -8,6 +8,7 @@ use App\Entity\Watchlist;
 use App\Message\OrderDomain;
 use App\Notifier\DomainOrderErrorNotification;
 use App\Notifier\DomainOrderNotification;
+use App\Repository\DomainPurchaseRepository;
 use App\Repository\DomainRepository;
 use App\Repository\WatchlistRepository;
 use App\Service\ChatNotificationService;
@@ -42,7 +43,7 @@ final readonly class OrderDomainHandler
         #[Autowire(service: 'service_container')]
         private ContainerInterface $locator,
         #[Autowire(param: 'influxdb_enabled')]
-        private bool $influxdbEnabled, private EntityManagerInterface $em,
+        private bool $influxdbEnabled, private EntityManagerInterface $em, private DomainPurchaseRepository $domainPurchaseRepository,
     ) {
         $this->sender = new Address($mailerSenderEmail, $mailerSenderName);
     }
@@ -142,15 +143,24 @@ final readonly class OrderDomainHandler
             $this->mailer->send($notification->asEmailMessage(new Recipient($watchlist->getUser()->getEmail()))->getMessage());
             $this->chatNotificationService->sendChatNotification($watchlist, $notification);
 
-            $this->em->persist((new DomainPurchase())
-                ->setDomain($domain)
-                ->setConnector($connector)
-                ->setConnectorProvider($connector->getProvider())
-                ->setDomainOrderedAt(null)
-                ->setUser($watchlist->getUser())
-                ->setDomainDeletedAt($domain->getUpdatedAt())
-                ->setDomainUpdatedAt($message->updatedAt));
-            $this->em->flush();
+            $domainPurchase = $this->domainPurchaseRepository->findOneBy([
+                'domain' => $domain,
+                'connector' => $connector,
+                'domainOrderedAt' => null,
+                'domainUpdatedAt' => $message->updatedAt,
+                'user' => $watchlist->getUser(),
+            ]);
+            if (null === $domainPurchase) {
+                $this->em->persist((new DomainPurchase())
+                    ->setDomain($domain)
+                    ->setConnector($connector)
+                    ->setConnectorProvider($connector->getProvider())
+                    ->setDomainOrderedAt(null)
+                    ->setUser($watchlist->getUser())
+                    ->setDomainDeletedAt($domain->getUpdatedAt())
+                    ->setDomainUpdatedAt($message->updatedAt));
+                $this->em->flush();
+            }
 
             throw $exception;
         }
