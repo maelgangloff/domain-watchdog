@@ -80,7 +80,7 @@ export default function StatisticsPage() {
                             loading={stats === undefined}
                             title={t`Purchased domain names`}
                             prefix={<FieldTimeOutlined/>}
-                            value={stats?.domainPurchased}
+                            value={(stats?.domainPurchased??0) - (stats?.domainPurchaseFailed??0)}
                             valueStyle={{color: 'green'}}
                         />
                     </Card>
