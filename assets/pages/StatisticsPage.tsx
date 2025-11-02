@@ -18,10 +18,8 @@ export default function StatisticsPage() {
         getStatistics().then(setStats)
     }, [])
 
-    const totalDomainPurchase = (stats?.domainPurchased ?? 0) + (stats?.domainPurchaseFailed ?? 0)
-
     const successRate = stats !== undefined
-        ? (totalDomainPurchase === 0 ? undefined : stats.domainPurchased / totalDomainPurchase)
+        ? (stats?.domainPurchased === 0 ? undefined : ((stats?.domainPurchased ?? 0) - (stats?.domainPurchaseFailed ?? 0)) /  stats?.domainPurchased)
         : undefined
 
     return (

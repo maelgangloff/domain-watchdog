@@ -191,7 +191,7 @@ msgid "Infrastructure"
 msgstr ""
 
 #: assets/components/Sider.tsx:70
-#: assets/pages/StatisticsPage.tsx:114
+#: assets/pages/StatisticsPage.tsx:112
 #: assets/pages/infrastructure/TldPage.tsx:81
 msgid "TLD"
 msgstr ""
@@ -698,33 +698,33 @@ msgid ""
 "WHOIS by its registrar."
 msgstr ""
 
-#: assets/pages/StatisticsPage.tsx:35
+#: assets/pages/StatisticsPage.tsx:33
 msgid "RDAP queries"
 msgstr ""
 
-#: assets/pages/StatisticsPage.tsx:44
+#: assets/pages/StatisticsPage.tsx:42
 msgid "Alerts sent"
 msgstr ""
 
-#: assets/pages/StatisticsPage.tsx:58
+#: assets/pages/StatisticsPage.tsx:56
 msgid "Domain names in database"
 msgstr ""
 
-#: assets/pages/StatisticsPage.tsx:69
+#: assets/pages/StatisticsPage.tsx:67
 msgid "Tracked domain names"
 msgstr ""
 
-#: assets/pages/StatisticsPage.tsx:83
+#: assets/pages/StatisticsPage.tsx:81
 msgid "Purchased domain names"
 msgstr ""
 
-#: assets/pages/StatisticsPage.tsx:93
+#: assets/pages/StatisticsPage.tsx:91
 msgid ""
 "This value is based on the status code of the HTTP response from the "
 "providers following the domain order."
 msgstr ""
 
-#: assets/pages/StatisticsPage.tsx:97
+#: assets/pages/StatisticsPage.tsx:95
 msgid "Success rate"
 msgstr ""
 
