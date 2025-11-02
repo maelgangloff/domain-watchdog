@@ -28,8 +28,10 @@ export default function WatchlistSelectionModal(props: WatchlistSelectionModalPr
     const [validationLoading, setValidationLoading] = useState(false)
 
     useEffect(() => {
-        getWatchlists().then(list => setWatchlists(list["hydra:member"]))
-    }, [])
+        if (props.open && !watchlists) {
+            getWatchlists().then(list => setWatchlists(list["hydra:member"]))
+        }
+    }, [props.open])
 
     const onFinish = () => {
         const promise = props.onFinish(selectedWatchlist as Watchlist)
