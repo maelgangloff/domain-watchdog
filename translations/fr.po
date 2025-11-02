@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2025-10-25 19:52+0000\n"
+"PO-Revision-Date: 2025-11-02 12:54+0000\n"
 "Last-Translator: Maël Gangloff <contact@maelgangloff.fr>\n"
 "Language-Team: French <https://weblate.vinceh121.me/projects/domain-watchdog/"
 "domain-watchdog-dashboard/fr/>\n"
@@ -29,7 +29,7 @@ msgstr "Documentation"
 
 #: assets/App.tsx:177
 msgid "Source code"
-msgstr ""
+msgstr "Code source"
 
 #: assets/App.tsx:185
 msgid "Submit an issue"
@@ -613,11 +613,11 @@ msgstr "Réinitialiser"
 #: assets/components/tracking/watchlist/WatchlistSelectionModal.tsx:29
 #, javascript-format
 msgid "${ rest.length } more"
-msgstr ""
+msgstr "+${ rest.length } autres"
 
 #: assets/components/tracking/watchlist/WatchlistSelectionModal.tsx:82
 msgid "Select one of your available Watchlists"
-msgstr ""
+msgstr "Sélectionnez une de vos Watchlists disponibles"
 
 #: assets/pages/infrastructure/IcannRegistrarPage.tsx:45
 msgid "ID"
@@ -781,7 +781,7 @@ msgstr "Trouvé !"
 #: assets/pages/search/DomainSearchPage.tsx:53
 #, javascript-format
 msgid "${ ldhName } added to ${ watchlist.name }"
-msgstr ""
+msgstr "${ ldhName } ajouté à ${ watchlist.name }"
 
 #: assets/pages/search/DomainSearchPage.tsx:70
 msgid ""
@@ -792,15 +792,13 @@ msgstr ""
 "WHOIS par son bureau d'enregistrement."
 
 #: assets/pages/search/DomainSearchPage.tsx:82
-#, fuzzy
-#| msgid "Edit the Watchlist"
 msgid "Add to Watchlist"
-msgstr "Modifier la Watchlist"
+msgstr "Ajouter à la Watchlist"
 
 #: assets/pages/search/DomainSearchPage.tsx:92
 #, javascript-format
 msgid "Add ${ domainLdhName } to a Watchlist"
-msgstr ""
+msgstr "Ajouter ${ domainLdhName } à une Watchlist"
 
 #: assets/pages/search/DomainSearchPage.tsx:95
 msgid "Cancel"
@@ -808,7 +806,7 @@ msgstr "Annuler"
 
 #: assets/pages/search/DomainSearchPage.tsx:96
 msgid "Add"
-msgstr ""
+msgstr "Ajouter"
 
 #: assets/pages/StatisticsPage.tsx:33
 msgid "RDAP queries"
