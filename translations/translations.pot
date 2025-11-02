@@ -571,7 +571,7 @@ msgid "${ rest.length } more"
 msgstr ""
 
 #: assets/components/tracking/watchlist/WatchlistSelectionModal.tsx:82
-msgid "Select one of your available watchlists"
+msgid "Select one of your available Watchlists"
 msgstr ""
 
 #: assets/pages/infrastructure/IcannRegistrarPage.tsx:45
@@ -714,12 +714,20 @@ msgid ""
 msgstr ""
 
 #: assets/pages/search/DomainSearchPage.tsx:82
-msgid "Add to watchlist"
+msgid "Add to Watchlist"
 msgstr ""
 
 #: assets/pages/search/DomainSearchPage.tsx:92
 #, javascript-format
-msgid "Add ${ domainLdhName } to a watchlist"
+msgid "Add ${ domainLdhName } to a Watchlist"
+msgstr ""
+
+#: assets/pages/search/DomainSearchPage.tsx:95
+msgid "Cancel"
+msgstr ""
+
+#: assets/pages/search/DomainSearchPage.tsx:96
+msgid "Add"
 msgstr ""
 
 #: assets/pages/StatisticsPage.tsx:35

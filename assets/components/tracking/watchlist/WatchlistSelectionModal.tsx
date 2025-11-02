@@ -79,7 +79,7 @@ export default function WatchlistSelectionModal(props: WatchlistSelectionModalPr
             <Typography.Paragraph>
                 {
                     props.description
-                    || t`Select one of your available watchlists`
+                    || t`Select one of your available Watchlists`
                 }
             </Typography.Paragraph>
             <Select

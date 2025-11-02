@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react'
-import type {FormProps} from 'antd'
+import type { FormProps} from 'antd'
 import {FloatButton} from 'antd'
 import {Empty, Flex, message, Skeleton} from 'antd'
 import type {Domain, Watchlist} from '../../utils/api'
@@ -79,7 +79,7 @@ export default function DomainSearchPage() {
                     insetInlineEnd: (100 - 40) / 2,
                     bottom: 100 - 40 / 2
                 }}
-                tooltip={t`Add to watchlist`}
+                tooltip={t`Add to Watchlist`}
                 type="primary"
                 icon={<PlusOutlined/>}
                 onClick={() => setAddToWatchlistModal(true)}
@@ -89,10 +89,12 @@ export default function DomainSearchPage() {
             open={addToWatchlistModal}
             onFinish={addToWatchlist}
             modalProps={{
-                title: t`Add ${domainLdhName} to a watchlist`,
+                title: t`Add ${domainLdhName} to a Watchlist`,
                 onCancel: () => setAddToWatchlistModal(false),
                 onClose: () => setAddToWatchlistModal(false),
-            }}
+                cancelText: t`Cancel`,
+                okText: t`Add`
+        }}
         />
     </>
 }
