@@ -200,7 +200,7 @@ msgstr "Domänenfinder"
 msgid "Infrastructure"
 msgstr "Infrastruktur"
 
-#: assets/components/Sider.tsx:70 assets/pages/StatisticsPage.tsx:114
+#: assets/components/Sider.tsx:70 assets/pages/StatisticsPage.tsx:112
 #: assets/pages/infrastructure/TldPage.tsx:81
 msgid "TLD"
 msgstr "TLD"
@@ -774,27 +774,27 @@ msgstr ""
 "Obwohl die Domain in meiner Datenbank vorhanden ist, wurde sie von ihrem "
 "Registrar aus dem WHOIS gelöscht."
 
-#: assets/pages/StatisticsPage.tsx:35
+#: assets/pages/StatisticsPage.tsx:33
 msgid "RDAP queries"
 msgstr "RDAP-Abfragen"
 
-#: assets/pages/StatisticsPage.tsx:44
+#: assets/pages/StatisticsPage.tsx:42
 msgid "Alerts sent"
 msgstr "Gesendete Warnungen"
 
-#: assets/pages/StatisticsPage.tsx:58
+#: assets/pages/StatisticsPage.tsx:56
 msgid "Domain names in database"
 msgstr "Domänennamen in der Datenbank"
 
-#: assets/pages/StatisticsPage.tsx:69
+#: assets/pages/StatisticsPage.tsx:67
 msgid "Tracked domain names"
 msgstr "Verfolgte Domänennamen"
 
-#: assets/pages/StatisticsPage.tsx:83
+#: assets/pages/StatisticsPage.tsx:81
 msgid "Purchased domain names"
 msgstr "Gekaufte Domänennamen"
 
-#: assets/pages/StatisticsPage.tsx:93
+#: assets/pages/StatisticsPage.tsx:91
 msgid ""
 "This value is based on the status code of the HTTP response from the "
 "providers following the domain order."
@@ -802,7 +802,7 @@ msgstr ""
 "Dieser Wert basiert auf dem Statuscode der HTTP-Antwort der Anbieter nach "
 "dem Domainkauf."
 
-#: assets/pages/StatisticsPage.tsx:97
+#: assets/pages/StatisticsPage.tsx:95
 msgid "Success rate"
 msgstr "Erfolgsrate"
 
