@@ -11,7 +11,6 @@ use App\Repository\DomainRepository;
 use App\Repository\WatchlistRepository;
 use App\Service\CalendarService;
 use App\Service\RDAPService;
-use Doctrine\Common\Collections\Collection;
 use Eluceo\iCal\Domain\Entity\Calendar;
 use Eluceo\iCal\Presentation\Component\Property;
 use Eluceo\iCal\Presentation\Component\Property\Value\TextValue;
@@ -34,23 +33,6 @@ class WatchlistController extends AbstractController
         private readonly CalendarService $calendarService,
         private readonly DomainRepository $domainRepository,
     ) {
-    }
-
-    #[Route(
-        path: '/api/watchlists',
-        name: 'watchlist_get_all_mine',
-        defaults: [
-            '_api_resource_class' => Watchlist::class,
-            '_api_operation_name' => 'get_all_mine',
-        ],
-        methods: ['GET']
-    )]
-    public function getWatchlists(): Collection
-    {
-        /** @var User $user */
-        $user = $this->getUser();
-
-        return $user->getWatchlists();
     }
 
     /**

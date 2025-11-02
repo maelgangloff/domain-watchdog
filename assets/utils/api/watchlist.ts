@@ -44,6 +44,13 @@ export async function patchWatchlist(token: string, watchlist: Partial<Watchlist
     return response.data
 }
 
+export async function addDomainToWatchlist(watchlist: Watchlist, ldhName: string) {
+    const domains = watchlist.domains.map(d => '/api/domains/' + d.ldhName)
+    domains.push('/api/domains/' + ldhName)
+
+    return patchWatchlist(watchlist.token, {domains})
+}
+
 export async function deleteWatchlist(token: string): Promise<void> {
     await request({
         method: 'DELETE',
