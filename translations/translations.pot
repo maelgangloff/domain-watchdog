@@ -480,7 +480,7 @@ msgid "This Watchlist is not linked to a Connector."
 msgstr ""
 
 #: assets/components/tracking/watchlist/WatchlistCard.tsx:59
-#: assets/components/tracking/watchlist/WatchlistSelectionModal.tsx:65
+#: assets/components/tracking/watchlist/WatchlistSelectionModal.tsx:86
 msgid "Watchlist"
 msgstr ""
 
@@ -565,7 +565,12 @@ msgstr ""
 msgid "Reset"
 msgstr ""
 
-#: assets/components/tracking/watchlist/WatchlistSelectionModal.tsx:61
+#: assets/components/tracking/watchlist/WatchlistSelectionModal.tsx:29
+#, javascript-format
+msgid "${ rest.length } more"
+msgstr ""
+
+#: assets/components/tracking/watchlist/WatchlistSelectionModal.tsx:82
 msgid "Select one of your available watchlists"
 msgstr ""
 

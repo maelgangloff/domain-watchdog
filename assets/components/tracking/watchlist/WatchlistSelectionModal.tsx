@@ -1,16 +1,35 @@
 import React, {useEffect, useState} from "react"
-import type { ModalProps} from "antd"
+import type {ModalProps} from "antd"
+import {Tag, Tooltip} from "antd"
 import {Flex, Modal, Select, Typography} from "antd"
-import type { Watchlist} from "../../../utils/api"
+import type {Domain, Watchlist} from "../../../utils/api"
 import {getWatchlists} from "../../../utils/api"
 import {t} from 'ttag'
 import {DomainToTag} from "../../../utils/functions/DomainToTag"
+import {EllipsisOutlined} from '@ant-design/icons'
+
+const MAX_DOMAIN_TAGS = 25
 
 function WatchlistOption({watchlist}: {watchlist: Watchlist}) {
+    let domains = watchlist.domains
+    let rest: Domain[]|undefined = undefined
+
+    if (domains.length > MAX_DOMAIN_TAGS) {
+        rest = domains.slice(MAX_DOMAIN_TAGS)
+        domains = domains.slice(0, MAX_DOMAIN_TAGS)
+    }
+
     return <Flex vertical>
         <Typography.Text strong>{watchlist.name}</Typography.Text>
-        <Flex wrap>
-            {watchlist.domains.map(d => <DomainToTag link={false} domain={d} key={d.ldhName} />)}
+        <Flex wrap gap='4px'>
+            {domains.map(d => <DomainToTag link={false} domain={d} key={d.ldhName} />)}
+            {rest
+                && <Tooltip title={rest.map(d => <DomainToTag link={false} domain={d} key={d.ldhName} />)}>
+                    <Tag icon={<EllipsisOutlined/>} color='processing'>
+                        {t`${rest.length} more`}
+                    </Tag>
+                </Tooltip>
+            }
         </Flex>
     </Flex>
 }
