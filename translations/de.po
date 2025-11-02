@@ -22,11 +22,19 @@ msgstr "Datenschutzrichtlinie"
 msgid "FAQ"
 msgstr "Häufig gestellte Fragen"
 
-#: assets/App.tsx:170
+#: assets/App.tsx:169
 msgid "Documentation"
 msgstr "Dokumentation"
 
-#: assets/App.tsx:175
+#: assets/App.tsx:177
+msgid "Source code"
+msgstr ""
+
+#: assets/App.tsx:185
+msgid "Submit an issue"
+msgstr "Ein Problem melden"
+
+#: assets/App.tsx:190
 #, javascript-format
 msgid ""
 "${ ProjectLink } is an open source project distributed under the $"
@@ -34,14 +42,6 @@ msgid ""
 msgstr ""
 "${ ProjectLink } ist ein Open-Source-Projekt, das unter der ${ LicenseLink }-"
 "Lizenz vertrieben wird."
-
-#: assets/App.tsx:188
-msgid "Official git repository"
-msgstr "Offizielles Git-Repository"
-
-#: assets/App.tsx:191
-msgid "Submit an issue"
-msgstr "Ein Problem melden"
 
 #: assets/components/LoginForm.tsx:53 assets/components/RegisterForm.tsx:37
 msgid "Email address"
@@ -515,6 +515,7 @@ msgid "This Watchlist is not linked to a Connector."
 msgstr "Diese Beobachtungsliste ist nicht mit einem Connector verknüpft."
 
 #: assets/components/tracking/watchlist/WatchlistCard.tsx:59
+#: assets/components/tracking/watchlist/WatchlistSelectionModal.tsx:86
 msgid "Watchlist"
 msgstr "Watchlist"
 
@@ -605,6 +606,15 @@ msgstr "Aktualisieren"
 #: assets/components/tracking/watchlist/WatchlistForm.tsx:334
 msgid "Reset"
 msgstr "Zurücksetzen"
+
+#: assets/components/tracking/watchlist/WatchlistSelectionModal.tsx:29
+#, javascript-format
+msgid "${ rest.length } more"
+msgstr ""
+
+#: assets/components/tracking/watchlist/WatchlistSelectionModal.tsx:82
+msgid "Select one of your available Watchlists"
+msgstr ""
 
 #: assets/pages/infrastructure/IcannRegistrarPage.tsx:45
 msgid "ID"
@@ -762,17 +772,41 @@ msgstr "Ein Konto erstellen"
 msgid "Sorry, the page you visited does not exist."
 msgstr "Es tut uns leid, die von Ihnen besuchte Seite existiert nicht."
 
-#: assets/pages/search/DomainSearchPage.tsx:32
+#: assets/pages/search/DomainSearchPage.tsx:36
 msgid "Found !"
 msgstr "Gefunden !"
 
-#: assets/pages/search/DomainSearchPage.tsx:55
+#: assets/pages/search/DomainSearchPage.tsx:53
+#, javascript-format
+msgid "${ ldhName } added to ${ watchlist.name }"
+msgstr ""
+
+#: assets/pages/search/DomainSearchPage.tsx:70
 msgid ""
 "Although the domain exists in my database, it has been deleted from the "
 "WHOIS by its registrar."
 msgstr ""
 "Obwohl die Domain in meiner Datenbank vorhanden ist, wurde sie von ihrem "
 "Registrar aus dem WHOIS gelöscht."
+
+#: assets/pages/search/DomainSearchPage.tsx:82
+#, fuzzy
+#| msgid "Edit the Watchlist"
+msgid "Add to Watchlist"
+msgstr "Bearbeiten der Watchlist"
+
+#: assets/pages/search/DomainSearchPage.tsx:92
+#, javascript-format
+msgid "Add ${ domainLdhName } to a Watchlist"
+msgstr ""
+
+#: assets/pages/search/DomainSearchPage.tsx:95
+msgid "Cancel"
+msgstr "Abbrechen"
+
+#: assets/pages/search/DomainSearchPage.tsx:96
+msgid "Add"
+msgstr ""
 
 #: assets/pages/StatisticsPage.tsx:33
 msgid "RDAP queries"
@@ -838,7 +872,7 @@ msgstr "Benutzername"
 msgid "Roles"
 msgstr "Rollen"
 
-#: assets/utils/functions/DomainToTag.tsx:16
+#: assets/utils/functions/DomainToTag.tsx:14
 msgid "The domain name was updated less than a week ago."
 msgstr "Der Domänenname wurde vor weniger als einer Woche aktualisiert."
 
@@ -1740,8 +1774,8 @@ msgstr ""
 "Sind Sie sich bei dieser Einstellung sicher? Dies kann zu zusätzlichen "
 "Gebühren durch den API-Anbieter führen"
 
-#~ msgid "Cancel"
-#~ msgstr "Abbrechen"
+#~ msgid "Official git repository"
+#~ msgstr "Offizielles Git-Repository"
 
 #~ msgid "Entity"
 #~ msgstr "Entität"

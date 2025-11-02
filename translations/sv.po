@@ -22,11 +22,19 @@ msgstr "Integritetspolicy"
 msgid "FAQ"
 msgstr "Vanliga frågor"
 
-#: assets/App.tsx:170
+#: assets/App.tsx:169
 msgid "Documentation"
 msgstr "Dokumentation"
 
-#: assets/App.tsx:175
+#: assets/App.tsx:177
+msgid "Source code"
+msgstr ""
+
+#: assets/App.tsx:185
+msgid "Submit an issue"
+msgstr "Skicka in ett ärende"
+
+#: assets/App.tsx:190
 #, javascript-format
 msgid ""
 "${ ProjectLink } is an open source project distributed under the $"
@@ -34,14 +42,6 @@ msgid ""
 msgstr ""
 "${ ProjectLink } är ett projekt med öppen källkod som distribueras under "
 "licensen ${ LicenseLink }."
-
-#: assets/App.tsx:188
-msgid "Official git repository"
-msgstr "Officiellt git-arkiv"
-
-#: assets/App.tsx:191
-msgid "Submit an issue"
-msgstr "Skicka in ett ärende"
 
 #: assets/components/LoginForm.tsx:53 assets/components/RegisterForm.tsx:37
 msgid "Email address"
@@ -506,6 +506,7 @@ msgid "This Watchlist is not linked to a Connector."
 msgstr "Denna Watchlist är inte kopplad till en Connector."
 
 #: assets/components/tracking/watchlist/WatchlistCard.tsx:59
+#: assets/components/tracking/watchlist/WatchlistSelectionModal.tsx:86
 msgid "Watchlist"
 msgstr "Watchlist"
 
@@ -594,6 +595,15 @@ msgstr "Uppdatera"
 #: assets/components/tracking/watchlist/WatchlistForm.tsx:334
 msgid "Reset"
 msgstr "Återställa"
+
+#: assets/components/tracking/watchlist/WatchlistSelectionModal.tsx:29
+#, javascript-format
+msgid "${ rest.length } more"
+msgstr ""
+
+#: assets/components/tracking/watchlist/WatchlistSelectionModal.tsx:82
+msgid "Select one of your available Watchlists"
+msgstr ""
 
 #: assets/pages/infrastructure/IcannRegistrarPage.tsx:45
 msgid "ID"
@@ -743,17 +753,41 @@ msgstr "Skapa ett konto"
 msgid "Sorry, the page you visited does not exist."
 msgstr "Tyvärr, sidan du besökte finns inte."
 
-#: assets/pages/search/DomainSearchPage.tsx:32
+#: assets/pages/search/DomainSearchPage.tsx:36
 msgid "Found !"
 msgstr "Hittat!"
 
-#: assets/pages/search/DomainSearchPage.tsx:55
+#: assets/pages/search/DomainSearchPage.tsx:53
+#, javascript-format
+msgid "${ ldhName } added to ${ watchlist.name }"
+msgstr ""
+
+#: assets/pages/search/DomainSearchPage.tsx:70
 msgid ""
 "Although the domain exists in my database, it has been deleted from the "
 "WHOIS by its registrar."
 msgstr ""
 "Även om domänen finns i min databas har den tagits bort från WHOIS av dess "
 "registrar."
+
+#: assets/pages/search/DomainSearchPage.tsx:82
+#, fuzzy
+#| msgid "Edit the Watchlist"
+msgid "Add to Watchlist"
+msgstr "Redigera bevakningslistan"
+
+#: assets/pages/search/DomainSearchPage.tsx:92
+#, javascript-format
+msgid "Add ${ domainLdhName } to a Watchlist"
+msgstr ""
+
+#: assets/pages/search/DomainSearchPage.tsx:95
+msgid "Cancel"
+msgstr "Avboka"
+
+#: assets/pages/search/DomainSearchPage.tsx:96
+msgid "Add"
+msgstr ""
 
 #: assets/pages/StatisticsPage.tsx:33
 msgid "RDAP queries"
@@ -819,7 +853,7 @@ msgstr "Användarnamn"
 msgid "Roles"
 msgstr "Roller"
 
-#: assets/utils/functions/DomainToTag.tsx:16
+#: assets/utils/functions/DomainToTag.tsx:14
 msgid "The domain name was updated less than a week ago."
 msgstr "Domännamnet uppdaterades för mindre än en vecka sedan."
 
@@ -1692,8 +1726,8 @@ msgstr ""
 "Är du säker på den här inställningen? Detta kan resultera i ytterligare "
 "avgifter från API-leverantören"
 
-#~ msgid "Cancel"
-#~ msgstr "Avboka"
+#~ msgid "Official git repository"
+#~ msgstr "Officiellt git-arkiv"
 
 #~ msgid "Entity"
 #~ msgstr "Enhet"
