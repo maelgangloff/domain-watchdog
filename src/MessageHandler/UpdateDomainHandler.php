@@ -79,7 +79,13 @@ final readonly class UpdateDomainHandler
         }
 
         if (null === $domain) {
-            $this->registerDomain($message->ldhName);
+            try {
+                $this->RDAPService->registerDomain($message->ldhName);
+            } catch (TldNotSupportedException|MalformedDomainException $exception) {
+                throw new UnrecoverableMessageHandlingException($exception->getMessage(), 0, $exception);
+            } catch (UnknownRdapServerException|DomainNotFoundException) {
+                return;
+            }
 
             return;
         }
@@ -123,7 +129,7 @@ final readonly class UpdateDomainHandler
              * Domain name update
              * We send messages that correspond to the sending of notifications that will not be processed here.
              */
-            $this->registerDomain($domain->getLdhName());
+            $this->RDAPService->registerDomain($message->ldhName);
 
             /** @var Watchlist $wl */
             foreach ($domain->getWatchlists()->getIterator() as $wl) {
@@ -145,35 +151,12 @@ final readonly class UpdateDomainHandler
                  */
                 $this->bus->dispatch(new OrderDomain($watchlist->getToken(), $domain->getLdhName(), $updatedAt));
             }
-        } catch (TldNotSupportedException|UnknownRdapServerException) {
+        } catch (TldNotSupportedException|MalformedDomainException $exception) {
             /*
              * In this case, the domain name can no longer be updated. Unfortunately, there is nothing more that can be done.
              */
-        }
-    }
-
-    /**
-     * @throws OptimisticLockException
-     * @throws \Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface
-     * @throws ServerExceptionInterface
-     * @throws RedirectionExceptionInterface
-     * @throws DecodingExceptionInterface
-     * @throws ClientExceptionInterface
-     */
-    private function registerDomain(string $ldhName): void
-    {
-        try {
-            $this->RDAPService->registerDomain($ldhName);
-        } catch (
-            TldNotSupportedException|
-            MalformedDomainException
-                $exception
-        ) {
             throw new UnrecoverableMessageHandlingException($exception->getMessage(), 0, $exception);
-        } catch (
-            UnknownRdapServerException|
-            DomainNotFoundException
-        ) {
+        } catch (UnknownRdapServerException) {
             return;
         }
     }
