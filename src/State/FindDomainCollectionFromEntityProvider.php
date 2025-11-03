@@ -45,13 +45,13 @@ FROM (
     FROM entity e
 ) sub
 JOIN domain_entity de ON de.entity_uid = sub.id
-WHERE LOWER(org||fn) NOT LIKE '%redacted%'
-  AND LOWER(org||fn) NOT LIKE '%privacy%'
+WHERE LOWER(org||fn) NOT LIKE '%redacted for privacy%'	
+  AND LOWER(org||fn) NOT LIKE '%data protected%'
   AND LOWER(org||fn) NOT LIKE '%registration private%'
   AND LOWER(org||fn) NOT LIKE '%domain administrator%'
   AND LOWER(org||fn) NOT LIKE '%registry super user account%'
-  AND LOWER(org||fn) NOT LIKE '%ano nymous%'
-  AND LOWER(org||fn) NOT LIKE '%by proxy%'
+  AND LOWER(org||fn) not like '%ano nymous%'
+  AND LOWER(org||fn) not in ('na', 'n/a', '-', 'none', 'not applicable')
   AND handle NOT IN ($handleBlacklist)
   AND de.roles @> '["registrant"]'
   AND sub.tld_id IS NOT NULL

@@ -2,6 +2,7 @@
 
 namespace App\MessageHandler;
 
+use App\Entity\Domain;
 use App\Entity\RdapServer;
 use App\Entity\Watchlist;
 use App\Exception\DomainNotFoundException;
@@ -23,6 +24,7 @@ use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 use Symfony\Component\Messenger\Exception\ExceptionInterface;
+use Symfony\Component\Messenger\Exception\UnrecoverableMessageHandlingException;
 use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Messenger\Stamp\TransportNamesStamp;
 use Symfony\Component\Mime\Address;
@@ -61,7 +63,6 @@ final readonly class UpdateDomainHandler
      * @throws \Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface
      * @throws UnsupportedDsnSchemeException
      * @throws ServerExceptionInterface
-     * @throws MalformedDomainException
      * @throws ExceptionInterface
      * @throws \Exception
      */
@@ -78,7 +79,7 @@ final readonly class UpdateDomainHandler
         }
 
         if (null === $domain) {
-            $this->RDAPService->registerDomain($message->ldhName);
+            $this->registerDomain($message->ldhName);
 
             return;
         }
@@ -122,7 +123,7 @@ final readonly class UpdateDomainHandler
              * Domain name update
              * We send messages that correspond to the sending of notifications that will not be processed here.
              */
-            $this->RDAPService->registerDomain($domain->getLdhName());
+            $this->registerDomain($domain->getLdhName());
 
             /** @var Watchlist $wl */
             foreach ($domain->getWatchlists()->getIterator() as $wl) {
@@ -148,6 +149,29 @@ final readonly class UpdateDomainHandler
             /*
              * In this case, the domain name can no longer be updated. Unfortunately, there is nothing more that can be done.
              */
+        }
+    }
+
+    /**
+     * @throws OptimisticLockException
+     * @throws \Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface
+     * @throws ServerExceptionInterface
+     * @throws RedirectionExceptionInterface
+     * @throws DecodingExceptionInterface
+     * @throws ClientExceptionInterface
+     */
+    private function registerDomain(string $ldhName): void
+    {
+        try {
+            $this->RDAPService->registerDomain($ldhName);
+        } catch (
+            DomainNotFoundException|
+            TldNotSupportedException|
+            MalformedDomainException|
+            UnknownRdapServerException
+            $exception
+        ) {
+            throw new UnrecoverableMessageHandlingException($exception->getMessage(), 0, $exception);
         }
     }
 }
