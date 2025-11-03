@@ -50,8 +50,9 @@ WHERE LOWER(org||fn) NOT LIKE '%redacted for privacy%'
   AND LOWER(org||fn) NOT LIKE '%registration private%'
   AND LOWER(org||fn) NOT LIKE '%domain administrator%'
   AND LOWER(org||fn) NOT LIKE '%registry super user account%'
-  AND LOWER(org||fn) not like '%ano nymous%'
-  AND LOWER(org||fn) not in ('na', 'n/a', '-', 'none', 'not applicable')
+  AND LOWER(org||fn) NOT LIKE '%ano nymous%'
+  AND LOWER(org||fn) NOT LIKE '%redacted%'
+  AND LOWER(org||fn) NOT IN ('na', 'n/a', '-', 'none', 'not applicable')
   AND handle NOT IN ($handleBlacklist)
   AND de.roles @> '["registrant"]'
   AND sub.tld_id IS NOT NULL

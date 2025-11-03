@@ -165,13 +165,16 @@ final readonly class UpdateDomainHandler
         try {
             $this->RDAPService->registerDomain($ldhName);
         } catch (
-            DomainNotFoundException|
             TldNotSupportedException|
-            MalformedDomainException|
-            UnknownRdapServerException
-            $exception
+            MalformedDomainException
+                $exception
         ) {
             throw new UnrecoverableMessageHandlingException($exception->getMessage(), 0, $exception);
+        } catch (
+            UnknownRdapServerException|
+            DomainNotFoundException
+        ) {
+            return;
         }
     }
 }
