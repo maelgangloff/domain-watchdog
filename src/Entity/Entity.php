@@ -3,7 +3,6 @@
 namespace App\Entity;
 
 use ApiPlatform\Metadata\ApiProperty;
-use ApiPlatform\Metadata\ApiResource;
 use App\Repository\EntityRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -14,30 +13,6 @@ use Symfony\Component\Serializer\Attribute\SerializedName;
 #[ORM\Entity(repositoryClass: EntityRepository::class)]
 #[ORM\UniqueConstraint(
     columns: ['tld_id', 'handle']
-)]
-#[ApiResource(
-    operations: [
-        /*
-        new GetCollection(
-            uriTemplate: '/entities',
-            normalizationContext: ['groups' => ['entity:list', 'event:list']]
-        ),
-
-        new Get(
-            uriTemplate: '/entities/{id}',
-            normalizationContext: [
-                'groups' => [
-                    'event:list',
-                    'entity:item',
-                    'domain-entity:domain',
-                    'domain:list',
-                    'nameserver-entity:nameserver',
-                    'nameserver:list',
-                ],
-            ]
-        ),
-        */
-    ]
 )]
 class Entity
 {

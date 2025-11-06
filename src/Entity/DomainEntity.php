@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Attribute\Groups;
 
 #[ORM\Entity(repositoryClass: DomainEntityRepository::class)]
+#[ORM\Index(name: 'domain_entity_roles_idx', columns: ['roles'])]
 class DomainEntity
 {
     #[ORM\Id]

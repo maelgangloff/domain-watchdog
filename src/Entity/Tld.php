@@ -31,6 +31,7 @@ use Symfony\Component\Serializer\Attribute\Groups;
 )]
 #[ApiFilter(SearchFilter::class)]
 #[ORM\Entity(repositoryClass: TldRepository::class)]
+#[ORM\Index(name: 'tld_type_idx', columns: ['type'])]
 class Tld
 {
     #[ORM\Id]

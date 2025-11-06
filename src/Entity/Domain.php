@@ -60,6 +60,9 @@ use Symfony\Component\Serializer\Attribute\SerializedName;
                     'ds:list',
                 ],
             ],
+            parameters: [
+                'forced' => new QueryParameter(schema: ['type' => 'boolean'], description: 'Force an RDAP request', required: false),
+            ],
         ),
     ],
     provider: AutoRegisterDomainProvider::class
