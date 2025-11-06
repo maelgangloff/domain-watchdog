@@ -19,7 +19,6 @@ final class Version20251106151250 extends AbstractMigration
 
     public function up(Schema $schema): void
     {
-
         $this->addSql("UPDATE domain_status
 SET add_status = (
     SELECT jsonb_agg(value::text::jsonb)
