@@ -317,8 +317,8 @@ class RDAPService
     {
         if (isset($rdapData['status']) && is_array($rdapData['status'])) {
             $status = array_map(fn ($s) => strtolower($s), array_unique($rdapData['status']));
-            $addedStatus = array_diff($status, $domain->getStatus());
-            $deletedStatus = array_diff($domain->getStatus(), $status);
+            $addedStatus = array_values(array_diff($status, $domain->getStatus()));
+            $deletedStatus = array_values(array_diff($domain->getStatus(), $status));
             $domain->setStatus($status);
 
             if (count($addedStatus) > 0 || count($deletedStatus) > 0) {
