@@ -69,7 +69,7 @@ class Entity
         type: 'string',
         insertable: false,
         updatable: false,
-        columnDefinition: "VARCHAR(255) GENERATED ALWAYS AS (LOWER(jsonb_path_query_first(j_card, '$[1]?(@[0] == \"fn\")[3]') #>> '{}')) STORED",
+        columnDefinition: "VARCHAR(255) GENERATED ALWAYS AS (UPPER(jsonb_path_query_first(j_card, '$[1]?(@[0] == \"fn\")[3]') #>> '{}')) STORED",
         generated: 'ALWAYS',
     )]
     private ?string $jCardFn;
@@ -78,7 +78,7 @@ class Entity
         type: 'string',
         insertable: false,
         updatable: false,
-        columnDefinition: "VARCHAR(255) GENERATED ALWAYS AS (LOWER(jsonb_path_query_first(j_card, '$[1]?(@[0] == \"org\")[3]') #>> '{}')) STORED",
+        columnDefinition: "VARCHAR(255) GENERATED ALWAYS AS (UPPER(jsonb_path_query_first(j_card, '$[1]?(@[0] == \"org\")[3]') #>> '{}')) STORED",
         generated: 'ALWAYS',
     )]
     private ?string $jCardOrg;
