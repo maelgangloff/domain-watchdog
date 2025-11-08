@@ -46,7 +46,7 @@ readonly class FindDomainCollectionFromEntityProvider implements ProviderInterfa
                 'de.entity',
                 'e',
                 Join::WITH,
-                'e.tld IS NOT NULL AND e.handle NOT IN (:blacklist) AND (UPPER(e.jCardOrg) = UPPER(:registrant) OR UPPER(e.jCardFn) = UPPER(:registrant))'
+                'e.tld IS NOT NULL AND e.handle NOT IN (:blacklist) AND (e.jCardOrg = UPPER(:registrant) OR e.jCardFn = UPPER(:registrant))'
             )
             ->setParameter('registrant', $registrant)
             ->setParameter('blacklist', RDAPService::ENTITY_HANDLE_BLACKLIST)
