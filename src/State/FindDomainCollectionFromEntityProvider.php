@@ -4,79 +4,53 @@ namespace App\State;
 
 use ApiPlatform\Metadata\Operation;
 use ApiPlatform\State\ProviderInterface;
-use App\Entity\Domain;
+use App\Repository\DomainRepository;
 use App\Service\RDAPService;
-use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\ORM\Query\ResultSetMapping;
+use Doctrine\ORM\Query\Expr\Join;
 use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 readonly class FindDomainCollectionFromEntityProvider implements ProviderInterface
 {
     public function __construct(
         private RequestStack $requestStack,
-        private EntityManagerInterface $em,
+        private DomainRepository $domainRepository,
     ) {
     }
 
     public function provide(Operation $operation, array $uriVariables = [], array $context = []): object|array|null
     {
         $request = $this->requestStack->getCurrentRequest();
-        $rsm = (new ResultSetMapping())
-            ->addScalarResult('domain_ids', 'domain_ids');
+        $registrant = trim((string) $request->get('registrant'));
 
-        $handleBlacklist = join(',', array_map(fn (string $s) => "'$s'", RDAPService::ENTITY_HANDLE_BLACKLIST));
+        $forbidden = [
+            'redacted',
+            'privacy',
+            'registration private',
+            'domain administrator',
+            'registry super user account',
+            'ano nymous',
+            'by proxy',
+        ];
 
-        $sql = <<<SQL
-SELECT
-    array_agg(DISTINCT de.domain_id) AS domain_ids
-FROM (
-    SELECT
-        e.handle AS handle,
-        e.id,
-        e.tld_id,
-        jsonb_path_query_first(
-            e.j_card,
-            '$[1] ? (@[0] == "fn")[3]'
-        ) #>> '{}' AS fn,
-        jsonb_path_query_first(
-            e.j_card,
-            '$[1] ? (@[0] == "org")[3]'
-        ) #>> '{}' AS org
-    FROM entity e
-) sub
-JOIN domain_entity de ON de.entity_uid = sub.id
-WHERE LOWER(org||fn) NOT LIKE '%redacted for privacy%'	
-  AND LOWER(org||fn) NOT LIKE '%data protected%'
-  AND LOWER(org||fn) NOT LIKE '%registration private%'
-  AND LOWER(org||fn) NOT LIKE '%domain administrator%'
-  AND LOWER(org||fn) NOT LIKE '%registry super user account%'
-  AND LOWER(org||fn) NOT LIKE '%ano nymous%'
-  AND LOWER(org||fn) NOT LIKE '%redacted%'
-  AND LOWER(org||fn) NOT IN ('na', 'n/a', '-', 'none', 'not applicable')
-  AND handle NOT IN ($handleBlacklist)
-  AND de.roles @> '["registrant"]'
-  AND sub.tld_id IS NOT NULL
-  AND (LOWER(org) = LOWER(:registrant) OR LOWER(fn) = LOWER(:registrant));
-SQL;
-        $result = $this->em->createNativeQuery($sql, $rsm)
-            ->setParameter('registrant', trim($request->get('registrant')))
-            ->getOneOrNullResult();
-
-        if (!$result) {
-            return null;
+        foreach ($forbidden as $word) {
+            if (str_contains(strtolower($registrant), $word)) {
+                throw new BadRequestHttpException('Forbidden search term');
+            }
         }
 
-        $domainList = array_filter(explode(',', trim($result['domain_ids'], '{}')));
-
-        if (empty($domainList)) {
-            return [];
-        }
-
-        return $this->em->getRepository(Domain::class)
-            ->createQueryBuilder('d')
-            ->where('d.ldhName IN (:list)')
-            ->setParameter('list', $domainList)
-            ->getQuery()
-            ->getResult();
+        return $this->domainRepository->createQueryBuilder('d')
+            ->select('DISTINCT d')
+            ->join('d.domainEntities', 'de', Join::WITH, 'de.deletedAt IS NULL AND JSONB_CONTAINS(de.roles, :role) = true')
+            ->join(
+                'de.entity',
+                'e',
+                Join::WITH,
+                'e.tld IS NOT NULL AND e.handle NOT IN (:blacklist) AND (UPPER(e.jCardOrg) = UPPER(:registrant) OR UPPER(e.jCardFn) = UPPER(:registrant))'
+            )
+            ->setParameter('registrant', $registrant)
+            ->setParameter('blacklist', RDAPService::ENTITY_HANDLE_BLACKLIST)
+            ->setParameter('role', '"registrant"')
+            ->getQuery()->getResult();
     }
 }
