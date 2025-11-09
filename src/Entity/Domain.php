@@ -44,7 +44,14 @@ use Symfony\Component\Serializer\Attribute\SerializedName;
             ],
             provider: FindDomainCollectionFromEntityProvider::class,
             parameters: [
-                'registrant' => new QueryParameter(description: 'The exact name of the registrant (case insensitive)', required: true),
+                'registrant' => new QueryParameter(
+                    description: 'The exact name of the registrant contact (case insensitive)',
+                    required: false
+                ),
+                'administrative' => new QueryParameter(
+                    description: 'The exact name of the administrative contact (case insensitive)',
+                    required: false
+                ),
             ]
         ),
         new Get(

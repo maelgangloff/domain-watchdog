@@ -22,6 +22,11 @@ readonly class FindDomainCollectionFromEntityProvider implements ProviderInterfa
     {
         $request = $this->requestStack->getCurrentRequest();
         $registrant = trim((string) $request->get('registrant'));
+        $administrative = trim((string) $request->get('administrative'));
+
+        if ('' === $registrant && '' === $administrative) {
+            throw new BadRequestHttpException('Either "registrant" or "administrative" must be provided');
+        }
 
         $forbidden = [
             'redacted',
@@ -34,23 +39,59 @@ readonly class FindDomainCollectionFromEntityProvider implements ProviderInterfa
         ];
 
         foreach ($forbidden as $word) {
-            if (str_contains(strtolower($registrant), $word)) {
+            if (str_contains(strtolower($registrant.' '.$administrative), $word)) {
                 throw new BadRequestHttpException('Forbidden search term');
             }
         }
 
-        return $this->domainRepository->createQueryBuilder('d')
+        $qb = $this->domainRepository->createQueryBuilder('d')
             ->select('DISTINCT d')
-            ->join('d.domainEntities', 'de', Join::WITH, 'de.deletedAt IS NULL AND JSONB_CONTAINS(de.roles, :role) = true')
-            ->join(
-                'de.entity',
-                'e',
-                Join::WITH,
-                'e.tld IS NOT NULL AND e.handle NOT IN (:blacklist) AND (e.jCardOrg = UPPER(:registrant) OR e.jCardFn = UPPER(:registrant))'
-            )
-            ->setParameter('registrant', $registrant)
-            ->setParameter('blacklist', RDAPService::ENTITY_HANDLE_BLACKLIST)
-            ->setParameter('role', '"registrant"')
-            ->getQuery()->getResult();
+            ->setParameter('blacklist', RDAPService::ENTITY_HANDLE_BLACKLIST);
+
+        $orX = $qb->expr()->orX();
+
+        if ($registrant) {
+            $qb
+                ->leftJoin(
+                    'd.domainEntities',
+                    'der',
+                    Join::WITH,
+                    'der.deletedAt IS NULL AND JSONB_CONTAINS(der.roles, \'"registrant"\') = true'
+                )
+                ->leftJoin(
+                    'der.entity',
+                    'er',
+                    Join::WITH,
+                    'er.handle NOT IN (:blacklist) AND (er.jCardOrg = UPPER(:registrant) OR er.jCardFn = UPPER(:registrant))'
+                )
+                ->setParameter('registrant', $registrant);
+
+            $orX->add('er.id IS NOT NULL');
+        }
+
+        if ($administrative) {
+            $qb
+                ->leftJoin(
+                    'd.domainEntities',
+                    'dea',
+                    Join::WITH,
+                    'dea.deletedAt IS NULL AND JSONB_CONTAINS(dea.roles, \'"administrative"\') = true'
+                )
+                ->leftJoin(
+                    'dea.entity',
+                    'ea',
+                    Join::WITH,
+                    'ea.handle NOT IN (:blacklist) AND (ea.jCardOrg = UPPER(:administrative) OR ea.jCardFn = UPPER(:administrative))'
+                )
+                ->setParameter('administrative', $administrative);
+
+            $orX->add('ea.id IS NOT NULL');
+        }
+
+        if ($orX->count() > 0) {
+            $qb->andWhere($orX);
+        }
+
+        return $qb->getQuery()->getResult();
     }
 }
