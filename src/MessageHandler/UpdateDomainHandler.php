@@ -20,6 +20,9 @@ use App\Service\ChatNotificationService;
 use App\Service\RDAPService;
 use Doctrine\ORM\OptimisticLockException;
 use Psr\Log\LoggerInterface;
+use Symfony\Component\Lock\Key;
+use Symfony\Component\Lock\LockFactory;
+use Symfony\Component\Lock\SharedLockInterface;
 use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
@@ -49,6 +52,7 @@ final readonly class UpdateDomainHandler
         private WatchlistRepository $watchlistRepository,
         private DomainRepository $domainRepository,
         private LoggerInterface $logger,
+        private LockFactory $lockFactory,
     ) {
         $this->sender = new Address($mailerSenderEmail, $mailerSenderName);
     }
@@ -68,6 +72,7 @@ final readonly class UpdateDomainHandler
      */
     public function __invoke(UpdateDomain $message): void
     {
+        /** @var ?Domain $domain */
         $domain = $this->domainRepository->findOneBy(['ldhName' => $message->ldhName]);
 
         if (null !== $domain && $message->onlyNew) {
@@ -79,12 +84,24 @@ final readonly class UpdateDomainHandler
         }
 
         if (null === $domain) {
+            $lock = $this->createDomainLock($message->ldhName);
+
+            if (!$lock->acquire()) {
+                $this->logger->notice('Update of this domain name is locked because it is already in progress', [
+                    'ldhName' => $message->ldhName,
+                ]);
+
+                return;
+            }
+
             try {
                 $this->RDAPService->registerDomain($message->ldhName);
             } catch (TldNotSupportedException|MalformedDomainException $exception) {
                 throw new UnrecoverableMessageHandlingException($exception->getMessage(), 0, $exception);
             } catch (UnknownRdapServerException|DomainNotFoundException) {
                 return;
+            } finally {
+                $lock->release();
             }
 
             return;
@@ -124,6 +141,16 @@ final readonly class UpdateDomainHandler
         $updatedAt = $domain->getUpdatedAt();
         $deleted = $domain->getDeleted();
 
+        $lock = $this->createDomainLock($message->ldhName);
+
+        if (!$lock->acquire()) {
+            $this->logger->notice('Update of this domain name is locked because it is already in progress', [
+                'ldhName' => $message->ldhName,
+            ]);
+
+            return;
+        }
+
         try {
             /*
              * Domain name update
@@ -158,6 +185,17 @@ final readonly class UpdateDomainHandler
             throw new UnrecoverableMessageHandlingException($exception->getMessage(), 0, $exception);
         } catch (UnknownRdapServerException) {
             return;
+        } finally {
+            $lock->release();
         }
+    }
+
+    private function createDomainLock(string $ldhName): SharedLockInterface
+    {
+        return $this->lockFactory->createLockFromKey(
+            new Key('domain_update.'.$ldhName),
+            ttl: 600,
+            autoRelease: false
+        );
     }
 }
