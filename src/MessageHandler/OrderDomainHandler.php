@@ -48,7 +48,6 @@ final readonly class OrderDomainHandler
         #[Autowire(param: 'influxdb_enabled')]
         private bool $influxdbEnabled, private EntityManagerInterface $em,
         private DomainPurchaseRepository $domainPurchaseRepository,
-        #[Target('lock')]
         private LockFactory $lockFactory,
     ) {
         $this->sender = new Address($mailerSenderEmail, $mailerSenderName);
