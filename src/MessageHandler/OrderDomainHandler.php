@@ -17,8 +17,11 @@ use App\Service\Provider\AbstractProvider;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
+use Symfony\Component\DependencyInjection\Attribute\Target;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpKernel\KernelInterface;
+use Symfony\Component\Lock\Key;
+use Symfony\Component\Lock\LockFactory;
 use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
@@ -43,7 +46,10 @@ final readonly class OrderDomainHandler
         #[Autowire(service: 'service_container')]
         private ContainerInterface $locator,
         #[Autowire(param: 'influxdb_enabled')]
-        private bool $influxdbEnabled, private EntityManagerInterface $em, private DomainPurchaseRepository $domainPurchaseRepository,
+        private bool $influxdbEnabled, private EntityManagerInterface $em,
+        private DomainPurchaseRepository $domainPurchaseRepository,
+        #[Target('lock')]
+        private LockFactory $lockFactory,
     ) {
         $this->sender = new Address($mailerSenderEmail, $mailerSenderName);
     }
@@ -69,6 +75,23 @@ final readonly class OrderDomainHandler
          */
 
         if (null === $connector || !$domain->getDeleted()) {
+            return;
+        }
+
+        $lock = $this->lockFactory->createLockFromKey(
+            new Key('domain_purchase.'.$domain->getLdhName().'.'.$connector->getId()),
+            ttl: 600,
+            autoRelease: false
+        );
+
+        if (!$lock->acquire()) {
+            $this->logger->notice('Purchase attempt is already launched for this domain name with this connector', [
+                'watchlist' => $message->watchlistToken,
+                'connector' => $connector->getId(),
+                'ldhName' => $message->ldhName,
+                'provider' => $connector->getProvider()->value,
+            ]);
+
             return;
         }
 
@@ -161,6 +184,8 @@ final readonly class OrderDomainHandler
                     ->setDomainUpdatedAt($message->updatedAt));
                 $this->em->flush();
             }
+
+            $lock->release();
 
             throw $exception;
         }

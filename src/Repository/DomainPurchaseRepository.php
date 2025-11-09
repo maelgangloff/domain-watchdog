@@ -20,7 +20,7 @@ class DomainPurchaseRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('dp')
             ->select('COUNT(dp)')
-            ->where('dp.domainOrderedAt not NULL')
+            ->where('dp.domainOrderedAt IS NOT NULL')
             ->getQuery()->getSingleScalarResult();
     }
 
@@ -28,7 +28,7 @@ class DomainPurchaseRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('dp')
             ->select('COUNT(dp)')
-            ->where('dp.domainOrderedAt is NULL')
+            ->where('dp.domainOrderedAt IS NULL')
             ->getQuery()->getSingleScalarResult();
     }
 }

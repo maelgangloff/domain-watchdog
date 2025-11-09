@@ -23,6 +23,7 @@
     "php": ">=8.4",
     "ext-ctype": "*",
     "ext-iconv": "*",
+    "ext-redis": "*",
     "ext-simplexml": "*",
     "api-platform/core": "^3.3",
     "doctrine/dbal": "^3",
