@@ -26,6 +26,7 @@ class DomainStatusRepository extends ServiceEntityRepository
             ->orderBy('ds.createdAt', 'DESC')
             ->setParameter('domain', $domain)
             ->setParameter('date', $updatedAt)
+            ->setMaxResults(1)
             ->getQuery()
             ->getOneOrNullResult();
     }
