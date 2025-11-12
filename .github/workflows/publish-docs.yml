@@ -11,10 +11,6 @@ jobs:
             name: Domain Watchdog Documentation
             url: https://domainwatchdog.eu
 
-        defaults:
-            run:
-                working-directory: docs
-
         steps:
             -   name: Checkout source
                 uses: actions/checkout@v4
@@ -26,9 +22,11 @@ jobs:
 
             -   name: Install dependencies
                 run: npm install --global yarn && yarn install
+                working-directory: docs
 
             -   name: Build Astro site
                 run: yarn run build
+                working-directory: docs
 
             -   name: Upload build via SCP
                 uses: appleboy/scp-action@master
