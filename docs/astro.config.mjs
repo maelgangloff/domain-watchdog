@@ -14,7 +14,7 @@ export default defineConfig({
             favicon: './src/assets/logo.png',
             description: 'An app that uses RDAP to collect publicly available info about domains, track their history, and purchase then when they are delete',
             editLink: {
-                baseUrl: 'https://github.com/maelgangloff/domainwatchdog.eu/edit/master/'
+                baseUrl: 'https://github.com/maelgangloff/domain-watchdog/edit/develop/docs/'
             },
             tagline: 'Your companion in the quest for domain names 🔍',
             lastUpdated: true,
