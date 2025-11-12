@@ -251,7 +251,7 @@ class RDAPService
         ]);
 
         try {
-            $req = $this->client->request('GET', 'http://localhost:3000');
+            $req = $this->client->request('GET', $rdapServerUrl.'domain/'.$idnDomain);
             $this->statService->incrementStat('stats.rdap_queries.count');
 
             return $req->toArray();
