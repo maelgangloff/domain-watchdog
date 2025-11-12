@@ -18,6 +18,7 @@ use App\Entity\RdapServer;
 use App\Entity\Tld;
 use App\Exception\DomainNotFoundException;
 use App\Exception\MalformedDomainException;
+use App\Exception\RdapServerException;
 use App\Exception\TldNotSupportedException;
 use App\Exception\UnknownRdapServerException;
 use App\Repository\DomainEntityRepository;
@@ -37,6 +38,7 @@ use Doctrine\ORM\OptimisticLockException;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\HttpClient\Exception\ClientException;
+use Symfony\Component\HttpClient\Exception\ServerException;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\DecodingExceptionInterface;
@@ -249,7 +251,7 @@ class RDAPService
         ]);
 
         try {
-            $req = $this->client->request('GET', $rdapServerUrl.'domain/'.$idnDomain);
+            $req = $this->client->request('GET', 'http://localhost:3000');
             $this->statService->incrementStat('stats.rdap_queries.count');
 
             return $req->toArray();
@@ -292,12 +294,16 @@ class RDAPService
                 $this->em->flush();
             }
 
-            throw DomainNotFoundException::fromDomain($idnDomain);
+            return DomainNotFoundException::fromDomain($idnDomain);
         }
 
         $this->logger->error('Unable to perform an RDAP query for this domain name', [
             'ldhName' => $idnDomain,
         ]);
+
+        if ($e instanceof ServerException) {
+            return RdapServerException::fromServerException($e);
+        }
 
         return $e;
     }
