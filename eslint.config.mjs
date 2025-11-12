@@ -15,7 +15,7 @@ export default [
         },
     },
     {
-        ignores: ["public", "vendor", "webpack.config.js"]
+        ignores: ["public", "vendor", "webpack.config.js", "docs"]
     },
     {
         settings: {
