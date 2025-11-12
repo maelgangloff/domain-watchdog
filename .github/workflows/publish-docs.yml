@@ -11,6 +11,10 @@ jobs:
             name: Domain Watchdog Documentation
             url: https://domainwatchdog.eu
 
+        defaults:
+            run:
+                working-directory: docs
+
         steps:
             -   name: Checkout source
                 uses: actions/checkout@v4
@@ -33,7 +37,7 @@ jobs:
                     port: 2004
                     username: deploy
                     key: ${{ secrets.DEPLOYER_PRIVATE_KEY }}
-                    source: "dist/*"
+                    source: "docs/dist/*"
                     target: /var/www/domainwatchdog.eu/
                     overwrite: true
                     debug: true
