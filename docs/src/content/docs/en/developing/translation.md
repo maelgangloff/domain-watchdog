@@ -1,0 +1,12 @@
+---
+title: Translation
+---
+
+The project is translated into several languages to allow as many people as possible to easily understand the interface.
+Feel free to contribute and add a translation if you wish!
+
+The current status of the translation is given below.
+
+<a href="https://weblate.vinceh121.me/engage/domain-watchdog/">
+<img src="https://weblate.vinceh121.me/widget/domain-watchdog/domain-watchdog-dashboard/open-graph.png" alt="Translation status" />
+</a>
