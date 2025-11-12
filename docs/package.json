@@ -1,6 +1,10 @@
 {
   "name": "domainwatchdog.eu",
   "private": true,
+  "author": {
+    "name": "Maël Gangloff",
+    "email": "contact@maelgangloff.fr"
+  },
   "type": "module",
   "license": "AGPL-3.0-or-later",
   "version": "0.0.1",
