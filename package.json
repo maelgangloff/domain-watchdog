@@ -69,6 +69,6 @@
     "watch": "encore dev --watch",
     "build": "encore production --progress",
     "ttag:po2json": "cd translations; for i in $(find . -name \"*.po\"); do ttag po2json $i > ../public/locales/$i.json; done; cd ..",
-    "ttag:extract": "ttag extract $(find assets -name '*.ts' -or -name '*.tsx' | sort) -o translations/translations.pot"
+    "ttag:extract": "ttag extract $(find assets -name 'assets/*.ts' -or -name 'assets/*.tsx' | sort) -o translations/translations.pot"
   }
 }
