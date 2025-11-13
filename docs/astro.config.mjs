@@ -12,7 +12,7 @@ export default defineConfig({
             logo: {
                 src: './src/assets/logo.png'
             },
-            favicon: './src/assets/logo.png',
+            favicon: 'logo.png',
             description: 'An app that uses RDAP to collect publicly available info about domains, track their history, and purchase then when they are delete',
             editLink: {
                 baseUrl: 'https://github.com/maelgangloff/domain-watchdog/edit/develop/docs/'
