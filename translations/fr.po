@@ -1687,8 +1687,12 @@ msgid "It indicates the organization that will pay for the ordered product"
 msgstr "Il indique l'organisation qui paiera le produit commandé"
 
 #: assets/utils/providers/forms/NamecheapConnectorForm.tsx:13
+#, fuzzy
+#| msgid ""
+#| "Retreive an API key and whitelist this instance's IP address on "
+#| "Namecheap's website"
 msgid ""
-"Retreive an API key and whitelist this instance's IP address on Namecheap's "
+"Retrieve an API key and whitelist this instance's IP address on Namecheap's "
 "website"
 msgstr ""
 "Récupérez une clé API et ajoutez l'adresse IP de cette instance à la liste "
