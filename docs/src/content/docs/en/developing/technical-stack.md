@@ -2,7 +2,7 @@
 title: Technical stack
 ---
 
-This page lists the main technologies used in the project, with links to their reference documentation. Specific version
+This page lists the main technologies used in the project, with links to their documentation. Specific version
 information can be found in the project’s dependency files (`composer.lock`, `package.json`, etc.). The architecture
 diagram below summarizes how these services interact.
 
@@ -14,14 +14,14 @@ diagram below summarizes how these services interact.
 
 The programming language is **PHP**.
 
-The backend is developed using the **Symfony** framework ([reference documentation](https://symfony.com/doc)).
+The backend is developed using the **Symfony** framework ([documentation](https://symfony.com/doc)).
 
 The API is made possible by the **API Platform**
-project ([reference documentation](https://api-platform.com/docs/symfony/)).
+project ([documentation](https://api-platform.com/docs/symfony/)).
 
 ### SQL database
 
-This project requires a **PostgreSQL** database ([reference documentation](https://www.postgresql.org/docs/current/)).
+This project requires a **PostgreSQL** database ([documentation](https://www.postgresql.org/docs/current/)).
 
 Other database types cannot be used because some migrations were specifically written to leverage the performance of
 this database management system.
@@ -59,8 +59,8 @@ ___
 
 The language for frontend development is **TypeScript**.
 
-The framework used for the frontend is **React** ([reference documentation](https://react.dev/reference/react)).
+The framework used for the frontend is **React** ([documentation](https://react.dev/reference/react)).
 
 ### Component Library
 
-The component library used is **Ant Design** ([reference documentation](https://ant.design/components/overview/)).
+The component library used is **Ant Design** ([documentation](https://ant.design/components/overview/)).

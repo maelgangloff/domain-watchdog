@@ -1,3 +1,21 @@
 ---
 title: Install with Docker
 ---
+
+1. Download the [docker-compose.yml](https://github.com/maelgangloff/domain-watchdog/blob/develop/docker-compose.yml)
+   and modify it as needed
+2. Download the [.env](https://github.com/maelgangloff/domain-watchdog/blob/develop/.env) and modify it as needed
+3. Add static files to customize your instance (under `public/content`)
+4. Pull the latest version of the Domain Watchdog image from Docker Hub
+
+```shell
+docker compose pull
+```
+
+5. Start the project in production environment
+
+```shell
+docker compose up
+```
+
+By default, the container listens on http://localhost:8080, but you can configure this in environment variables.
