@@ -4,7 +4,7 @@
 <br/>
 
 Domain Watchdog is an app that uses RDAP to collect publicly available info about domains, track their history, and purchase them.
-For more information please check [the wiki](https://github.com/maelgangloff/domain-watchdog/wiki) !
+For more information please check out [the documentation](https://domainwatchdog.eu) !
 
 ## Why use it?
 
@@ -20,23 +20,27 @@ detailed history of events (ownership changes, renewals, etc.) is not feasible w
 ## Install
 
 > [!TIP]
-> For more details on the installation procedure, please refer to [INSTALL.md](/INSTALL.md).
+> For more details on the installation procedure, please refer to the documentation.
 
 ### Docker Deployment
 
-1. Clone the repository
-2. Modify environment variables (.env) and add static files to customize your instance (see [INSTALL.md](/INSTALL.md))
-3. Pull the latest version of the Domain Watchdog image from Docker Hub.
-    ```shell
-    docker compose pull
-    ```
-4. Start the project in production environment. If you want, you can also build the Docker image to use yourself.
-    ```shell
-    docker compose up
-    ```
+1. Download the [docker-compose.yml](https://github.com/maelgangloff/domain-watchdog/blob/develop/docker-compose.yml)
+   and modify it as needed
+2. Download the [.env](https://github.com/maelgangloff/domain-watchdog/blob/develop/.env) and modify it as needed
+3. Add static files to customize your instance (under `public/content`)
+4. Pull the latest version of the Domain Watchdog image from Docker Hub
+
+```shell
+docker compose pull
+```
+
+5. Start the project in production environment
+
+```shell
+docker compose up
+```
 
 By default, the container listens on http://localhost:8080, but you can configure this in environment variables.
-See the [Docker Compose file](./docker-compose.yml).
 
 ## Features
 

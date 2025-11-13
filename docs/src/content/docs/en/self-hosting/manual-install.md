@@ -1,4 +1,6 @@
-# Installation and Update
+---
+title: Manual Install
+---
 
 ## Installation
 
