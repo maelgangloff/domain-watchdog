@@ -37,7 +37,6 @@ export default defineConfig({
                 {
                     label: 'Developing',
                     items: [
-                        {label: 'Getting started', slug: 'developing/getting-started'},
                         {slug: 'developing/technical-stack'},
                         {slug: 'developing/translation'},
                         {label: 'Contributing', autogenerate: {directory: 'developing/contributing'}}

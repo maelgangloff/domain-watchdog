@@ -1452,7 +1452,7 @@ msgstr ""
 
 #: assets/utils/providers/forms/NamecheapConnectorForm.tsx:13
 msgid ""
-"Retreive an API key and whitelist this instance's IP address on Namecheap's "
+"Retrieve an API key and whitelist this instance's IP address on Namecheap's "
 "website"
 msgstr ""
 

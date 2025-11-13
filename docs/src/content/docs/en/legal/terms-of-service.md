@@ -1,3 +1,0 @@
----
-title: Terms of service
----

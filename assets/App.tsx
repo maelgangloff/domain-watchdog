@@ -163,7 +163,7 @@ export default function App(): React.ReactElement {
                                 <Link to='/faq'><Button type='text'>{t`FAQ`}</Button></Link>
                                 <Typography.Link
                                     target='_blank'
-                                    href='https://github.com/maelgangloff/domain-watchdog/wiki'
+                                    href='https://domainwatchdog.eu'
                                 >
                                     <Button type='text'>
                                         {t`Documentation`}

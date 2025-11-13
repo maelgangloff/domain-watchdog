@@ -10,7 +10,7 @@ export default function NamecheapConnectorForm() {
                 label={t`Username`}
                 name={['authData', 'ApiUser']}
                 help={<Typography.Link target='_blank' href='https://ap.www.namecheap.com/settings/tools/apiaccess/'>
-                    {t`Retreive an API key and whitelist this instance's IP address on Namecheap's website`}
+                    {t`Retrieve an API key and whitelist this instance's IP address on Namecheap's website`}
                 </Typography.Link>}
             >
                 <Input prefix={<UserOutlined/>} autoComplete='off'/>
