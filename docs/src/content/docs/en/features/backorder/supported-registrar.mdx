@@ -2,13 +2,15 @@
 title: Supported registrar
 ---
 
+import {LinkButton} from '@astrojs/starlight/components';
+
 :::caution[Reminder]
 
 * Please note that this project is NOT affiliated IN ANY WAY with the API Providers used to order domain names.
 * The project installers are responsible for the use of their own instance.
 * Under no circumstances will the owner of this project be held responsible for other cases over which he has no
-  control.
-  :::
+control.
+:::
 
 ## OVH
 
@@ -21,12 +23,26 @@ title: Supported registrar
 | Subsidiary     | the country linked to the OVH subsidiary associated with your account            | Required |
 | Pricing mode   | choose whether you want to pay for a Premium domain name or only standard prices | Required |
 
+<LinkButton variant="secondary"
+            icon="external"
+            target="_blank"
+            href="https://api.ovh.com/createToken/?GET=/order/cart&GET=/order/cart/*&POST=/order/cart&POST=/order/cart/*&DELETE=/order/cart/*&GET=/domain/extensions">
+    Retrieve my token from the OVH website
+</LinkButton>
+
 ## Gandi
 
 | Field      | Description                                                      | Required |
 |------------|------------------------------------------------------------------|:--------:|
 | Token      | your account authentication token                                | Required | 
 | Sharing ID | indicates the organization that will pay for the ordered product | Optional |
+
+<LinkButton variant="secondary"
+            icon="external"
+            target="_blank"
+            href="https://admin.gandi.net/organizations/account/pat">
+    Retrieve my token from the Gandi website
+</LinkButton>
 
 ## Namecheap
 
@@ -39,6 +55,13 @@ connection. This information must also be entered in the configuration.
 |----------|---------------------------------------|:--------:|
 | API user | the API user as given by the Provider | Required | 
 | API key  | the API key as given by the Provider  | Required |
+
+<LinkButton variant="secondary"
+            icon="external"
+            target="_blank"
+            href="https://ap.www.namecheap.com/settings/tools/apiaccess/">
+    Retrieve my token from the Namecheap website
+</LinkButton>
 
 ## AutoDNS
 
@@ -55,6 +78,13 @@ supported.
 | Context       | the "context" as given by the Provider                        | Required |
 | Contact ID    | Contact ID of the domain name holder of the purchased domains | Required |
 
+<LinkButton variant="secondary"
+            icon="external"
+            target="_blank"
+            href="https://en.autodns.com/domain-robot-api/">
+    Retrieve my token from the AutoDNS website
+</LinkButton>
+
 ## Name.com
 
 :::caution
@@ -64,8 +94,15 @@ supported.
 
 | Field    | Description                       | Required |
 |----------|-----------------------------------|:--------:|
-| Username | the account username              | Required | 
-| Token    | your account authentication token | Required | 
+| Username | the account username              | Required |
+| Token    | your account authentication token | Required |
+
+<LinkButton variant="secondary"
+            icon="external"
+            target="_blank"
+            href="https://www.name.com/account/settings/api">
+    Retrieve my token from the Name.com website
+</LinkButton>
 
 ## Custom EPP server
 

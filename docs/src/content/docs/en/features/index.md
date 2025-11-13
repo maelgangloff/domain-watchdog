@@ -22,8 +22,3 @@ A confirmation email will be sent to you to verify your email address.
 ## Create a Watchlist
 
 ## Create a Connector
-
-## TLD list
-
-## ICANN-accredited registrar list
-

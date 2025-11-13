@@ -40,6 +40,7 @@ export default defineConfig({
                     label: 'Developing',
                     items: [
                         {slug: 'developing/technical-stack'},
+                        {slug: 'developing/add-provider'},
                         {slug: 'developing/translation'},
                         {label: 'Contributing', autogenerate: {directory: 'developing/contributing'}}
                     ],
