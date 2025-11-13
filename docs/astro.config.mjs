@@ -1,10 +1,12 @@
 // @ts-check
-import {defineConfig} from 'astro/config';
-import starlight from '@astrojs/starlight';
+import {defineConfig} from 'astro/config'
+import starlight from '@astrojs/starlight'
+
+const BASE_URL = 'https://domainwatchdog.eu'
 
 // https://astro.build/config
 export default defineConfig({
-    site: 'https://domainwatchdog.eu',
+    site: BASE_URL,
     integrations: [
         starlight({
             title: 'Domain Watchdog',
@@ -54,6 +56,10 @@ export default defineConfig({
             },
             head: [
                 {
+                    tag: 'meta',
+                    attrs: {property: 'og:image', content: BASE_URL + '/logo.png'},
+                },
+                {
                     tag: 'script',
                     attrs: {type: 'text/javascript'},
                     content: `var _paq = window._paq = window._paq || [];
@@ -76,4 +82,4 @@ _paq.push(['enableHeartBeatTimer']);
             ]
         })
     ]
-});
+})
