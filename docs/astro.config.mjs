@@ -57,6 +57,14 @@ export default defineConfig({
             head: [
                 {
                     tag: 'meta',
+                    attrs: {name: 'twitter:card', content: 'summary'},
+                },
+                {
+                    tag: 'meta',
+                    attrs: {name: 'twitter:url', content: BASE_URL},
+                },
+                {
+                    tag: 'meta',
                     attrs: {property: 'og:image', content: BASE_URL + '/logo.png'},
                 },
                 {
