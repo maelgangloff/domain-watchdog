@@ -2,7 +2,7 @@
 title: Manual Install
 ---
 
-import {LinkCard, Steps} from '@astrojs/starlight/components';
+import {FileTree, LinkCard, Steps} from '@astrojs/starlight/components';
 
 ## Installation
 
@@ -30,11 +30,11 @@ git clone https://github.com/maelgangloff/domain-watchdog.git
 #### Backend
 
 <Steps>
-1. Install dependencies:
+1. Install dependencies
     ```shell
     composer install
     ```
-2. Set up your environment variables:
+2. Set up your environment variables
     ```shell
     cp .env .env.local
     ```
@@ -44,15 +44,15 @@ git clone https://github.com/maelgangloff/domain-watchdog.git
     ```shell
     php bin/console lexik:jwt:generate-keypair
     ```
-4. Run database migrations:
+4. Run database migrations
     ```shell
     php bin/console doctrine:migrations:migrate
     ```
-5. Start the Symfony server:
+5. Start the Symfony server
     ```shell
     symfony server:start
     ```
-6. Build assets:
+6. Build assets
     ```shell
     php bin/console assets:install
     ```
@@ -62,28 +62,30 @@ git clone https://github.com/maelgangloff/domain-watchdog.git
 #### Frontend
 
 <Steps>
-1. Install dependencies:
+1. Install dependencies
     ```shell
     yarn install
     ```
-2. Generate language files:
+2. Generate language files
     ```shell
     yarn run ttag:po2json
     ```
-3. Make the final build:
+3. Make the final build
     ```shell
     yarn build
     ```
-4. Add and modify the following files as you wish:
-    ~~~
-    public/content/home.md
-    public/content/privacy.md
-    public/content/tos.md
-    public/content/faq.md
-    public/images/icons-512.png
-    public/images/banner.png
-    public/favicon.ico
-    ~~~
+4. Add and modify the following files as you wish
+    <FileTree>
+        - public
+            - content
+                - home.md
+                - privacy.md
+                - tos.md
+                - faq.md
+                - icons-512.png
+                - banner.png
+                - favicon.ico
+    </FileTree>
 </Steps>
 
 ## Update
@@ -99,19 +101,19 @@ git pull origin master
 ### Backend
 
 <Steps>
-1. Install dependencies:
+1. Install dependencies
     ```shell
     composer install
     ```
-2. Run database migrations:
+2. Run database migrations
     ```shell
     php bin/console doctrine:migrations:migrate
     ```
-3. Clearing the Symfony cache:
+3. Clearing the Symfony cache
     ```shell
     php bin/console cache:clear
     ```
-4. Build assets:
+4. Build assets
     ```shell
     php bin/console assets:install
     ```
@@ -120,15 +122,15 @@ git pull origin master
 ### Frontend
 
 <Steps>
-1. Install dependencies:
+1. Install dependencies
     ```shell
     yarn install
     ```
-2. Generate language files:
+2. Generate language files
     ```shell
     yarn run ttag:po2json
     ```
-3. Make the final build:
+3. Make the final build
     ```shell
     yarn build
     ```
