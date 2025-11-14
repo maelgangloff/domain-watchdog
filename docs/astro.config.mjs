@@ -15,7 +15,7 @@ export default defineConfig({
                 src: './src/assets/logo.png'
             },
             favicon: 'logo.png',
-            description: 'An app that uses RDAP to collect publicly available info about domains, track their history, and purchase then when they are delete',
+            description: 'An app that uses RDAP to collect publicly available info about domains, track their history, and purchase then when they expire',
             editLink: {
                 baseUrl: 'https://github.com/maelgangloff/domain-watchdog/edit/develop/docs/'
             },
@@ -58,6 +58,13 @@ export default defineConfig({
             head: [
                 {
                     tag: 'meta',
+                    attrs: {
+                        name: 'keywords',
+                        content: 'Domain Watchdog, RDAP, WHOIS, domain monitoring, domain history, domain expiration, domain tracker'
+                    },
+                },
+                {
+                    tag: 'meta',
                     attrs: {name: 'twitter:card', content: 'summary'},
                 },
                 {
@@ -67,6 +74,10 @@ export default defineConfig({
                 {
                     tag: 'meta',
                     attrs: {property: 'og:image', content: BASE_URL + '/logo.png'},
+                },
+                {
+                    tag: 'meta',
+                    attrs: {property: 'og:image:alt', content: 'Domain Watchdog logo'},
                 },
                 {
                     tag: 'script',
