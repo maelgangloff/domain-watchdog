@@ -2,26 +2,24 @@
 title: Connector
 ---
 
-import {LinkCard} from '@astrojs/starlight/components';
+import {LinkCard, Steps} from '@astrojs/starlight/components';
 
 A Connector allows Domain Watchdog to communicate with an external domain registrar’s API to perform actions such as
 domain registration.
 
 ## Create a Connector
 
+<Steps>
 1. Choose an external API provider from the list of supported registrars.
-
-<LinkCard title="Supported registrar" description="List of supported registrars for creating a Connector" href="../supported-registrar"/>
-
+    <LinkCard title="Supported registrar" description="List of supported registrars for creating a Connector" href="../supported-registrar"/>
 2. Enter the required information using the credentials obtained from your provider’s customer area
-
-:::tip{icon="heart"}
-A link allows you to directly access the Provider's page to retrieve this authentication information
-:::
-
+    :::tip{icon="heart"}
+    A link allows you to directly access the Provider's page to retrieve this authentication information
+    :::
 3. Review and consent to the required terms. As a reminder, you can delete a Connector at any time from your personal
 space.
 4. Click the button to create your Connector. **Congratulations 🎉**
+</Steps>
 
 ## Legal considerations
 
