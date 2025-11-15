@@ -65,6 +65,13 @@ export default defineConfig({
                 },
                 {
                     tag: 'meta',
+                    attrs: {
+                        name: 'author',
+                        content: 'Maël Gangloff'
+                    },
+                },
+                {
+                    tag: 'meta',
                     attrs: {name: 'twitter:card', content: 'summary'},
                 },
                 {

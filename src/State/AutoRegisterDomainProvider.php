@@ -22,6 +22,9 @@ use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpKernel\Exception\TooManyRequestsHttpException;
 use Symfony\Component\HttpKernel\KernelInterface;
+use Symfony\Component\Lock\Key;
+use Symfony\Component\Lock\LockFactory;
+use Symfony\Component\Lock\SharedLockInterface;
 use Symfony\Component\Messenger\Exception\ExceptionInterface;
 use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\RateLimiter\RateLimiterFactory;
@@ -44,6 +47,7 @@ readonly class AutoRegisterDomainProvider implements ProviderInterface
         private MessageBusInterface $bus,
         private RequestStack $requestStack,
         private EntityManagerInterface $em,
+        private LockFactory $lockFactory,
     ) {
     }
 
@@ -100,6 +104,16 @@ readonly class AutoRegisterDomainProvider implements ProviderInterface
             }
         }
 
+        $lock = $this->createDomainLock($idnDomain);
+
+        if (!$lock->acquire() && null !== $domain) {
+            $this->logger->notice('Update of this domain name is locked because it is already in progress', [
+                'ldhName' => $idnDomain,
+            ]);
+
+            return $domain;
+        }
+
         $updatedAt = null === $domain ? new \DateTimeImmutable('now') : $domain->getUpdatedAt();
 
         try {
@@ -124,6 +138,8 @@ readonly class AutoRegisterDomainProvider implements ProviderInterface
             $this->em->flush();
 
             return $domain->setExpiresInDays($this->RDAPService->getExpiresInDays($domain));
+        } finally {
+            $lock->release();
         }
 
         $randomizer = new Randomizer();
@@ -135,5 +151,14 @@ readonly class AutoRegisterDomainProvider implements ProviderInterface
         }
 
         return $domain->setExpiresInDays($this->RDAPService->getExpiresInDays($domain));
+    }
+
+    private function createDomainLock(string $ldhName): SharedLockInterface
+    {
+        return $this->lockFactory->createLockFromKey(
+            new Key('domain_update.'.$ldhName),
+            ttl: 600,
+            autoRelease: false
+        );
     }
 }

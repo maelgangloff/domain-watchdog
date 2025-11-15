@@ -68,7 +68,7 @@ use Symfony\Component\Serializer\Attribute\SerializedName;
                 ],
             ],
             parameters: [
-                'forced' => new QueryParameter(schema: ['type' => 'boolean'], description: 'Force an RDAP request', required: false),
+                'forced' => new QueryParameter(schema: ['type' => 'boolean'], description: 'Force an RDAP request. If an update is already in progress, this parameter is ignored and the stored domain is returned.', required: false),
             ],
         ),
     ],
