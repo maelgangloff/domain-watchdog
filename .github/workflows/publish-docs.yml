@@ -2,7 +2,8 @@ name: Publish Documentation
 
 on:
     push:
-        paths: ['docs/**']
+        paths: [ 'docs/**' ]
+        branches-ignore: [ demo-instance ]
 
 jobs:
     build:
