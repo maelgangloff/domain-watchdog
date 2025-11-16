@@ -47,7 +47,7 @@ By default, the container listens on http://localhost:8080, but you can configur
 
 See [the documentation](https://domainwatchdog.eu) for information on setting up a development environment and making
 your contributions.  
-To add a new provider, a [dedicated page](https://domainwatchdog.eu/en/developing/add-provider/) is available.
+To add a new provider, a [dedicated page](https://domainwatchdog.eu/en/developing/implementing-new-provider/) is available.
 
 ## Security
 
