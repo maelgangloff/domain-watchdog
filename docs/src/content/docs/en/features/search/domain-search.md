@@ -1,5 +1,6 @@
 ---
 title: Domain search
+description: Domain search feature overview
 ---
 
 :::tip[Did you know?]

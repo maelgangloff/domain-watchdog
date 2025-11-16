@@ -1,5 +1,6 @@
 ---
 title: Pull Requests
+description: Instructions for submitting pull requests.
 ---
 
 When you want to propose a change to the source code, you will need to create a Pull Request on this project's GitHub

@@ -1,5 +1,6 @@
 ---
 title: Security policy
+description: Security policy describing vulnerability reporting, and guidelines to keep the project secure.
 ---
 
 ## Reporting a Vulnerability
