@@ -1392,6 +1392,11 @@ chalk@^5.3.0:
   resolved "https://registry.yarnpkg.com/chalk/-/chalk-5.6.2.tgz#b1238b6e23ea337af71c7f8a295db5af0c158aea"
   integrity sha512-7NzBL0rN6fMUW+f7A6Io4h40qQlG+xGmtMxfbnH/K7TAtt8JQWVQK+6g0UXKMeVJoyV5EkkNsErQ8pVD3bLHbA==
 
+change-case@^5.4.4:
+  version "5.4.4"
+  resolved "https://registry.yarnpkg.com/change-case/-/change-case-5.4.4.tgz#0d52b507d8fb8f204343432381d1a6d7bff97a02"
+  integrity sha512-HRQyTk2/YPEkt9TnUPbOpr64Uw3KOicFWPVBb+xiHvd6eBx/qPr9xqfBFDT8P2vWsvvz4jbEkfDe71W3VyNu2w==
+
 character-entities-html4@^2.0.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/character-entities-html4/-/character-entities-html4-2.1.0.tgz#1f1adb940c971a4b22ba39ddca6b618dc6e56b2b"
@@ -4073,6 +4078,13 @@ starlight-contributor-list@^0.3.1:
   integrity sha512-8F3BcnqeCgvI/OcagJCBsp71/XU9/zDiuSmsgAkWrRTxql0H2bG9Z9VXvmwzB/569QVlAsOwK7StAxDxqG6Myw==
   dependencies:
     "@11ty/eleventy-fetch" "^4.0.1"
+
+starlight-cooler-credit@^0.4.1:
+  version "0.4.1"
+  resolved "https://registry.yarnpkg.com/starlight-cooler-credit/-/starlight-cooler-credit-0.4.1.tgz#54551a35177143ef13525823aa279bc8d972ee23"
+  integrity sha512-XXfheeUWSBidS6aJMB1aksn3Zl+kBpMjmuZDFoiHzeCqzjGeTfgYz2AGo/eRNIXOkJlmk4wpUoD29xCtnrmn1A==
+  dependencies:
+    change-case "^5.4.4"
 
 starlight-links-validator@^0.19.1:
   version "0.19.1"

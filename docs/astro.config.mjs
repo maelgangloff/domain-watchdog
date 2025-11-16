@@ -3,6 +3,7 @@ import {defineConfig} from 'astro/config'
 import starlight from '@astrojs/starlight'
 import starlightLinksValidator from 'starlight-links-validator'
 import mermaid from "astro-mermaid"
+import starlightCoolerCredit from "starlight-cooler-credit"
 
 const BASE_URL = 'https://domainwatchdog.eu'
 
@@ -112,9 +113,19 @@ _paq.push(['enableHeartBeatTimer']);
 })();`
                 }
             ],
-            plugins: [starlightLinksValidator({
-                errorOnLocalLinks: false
-            })]
+            plugins: [
+                starlightLinksValidator({
+                    errorOnLocalLinks: false
+                }),
+                starlightCoolerCredit({
+                    credit: {
+                        title: '',
+                        href: 'https://maelgangloff.fr',
+                        description: 'Maintained with ♡ by Maël Gangloff & contributors'
+                    },
+                    showImage: false
+                })
+            ]
         }),
         mermaid()
     ]

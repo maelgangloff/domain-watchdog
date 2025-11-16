@@ -4,7 +4,7 @@
 <br/>
 
 Domain Watchdog is an app that uses RDAP to collect publicly available info about domains, track their history, and
-purchase them.
+purchase them.  
 For more information please check out [the documentation](https://domainwatchdog.eu) !
 
 ## Why use it?

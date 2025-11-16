@@ -22,6 +22,7 @@
     "mermaid": "^11.12.1",
     "sharp": "^0.34.2",
     "starlight-contributor-list": "^0.3.1",
+    "starlight-cooler-credit": "^0.4.1",
     "starlight-links-validator": "^0.19.1"
   }
 }
