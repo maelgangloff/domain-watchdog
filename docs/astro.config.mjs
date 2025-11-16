@@ -1,6 +1,8 @@
 // @ts-check
 import {defineConfig} from 'astro/config'
 import starlight from '@astrojs/starlight'
+import starlightLinksValidator from 'starlight-links-validator'
+import mermaid from "astro-mermaid"
 
 const BASE_URL = 'https://domainwatchdog.eu'
 
@@ -25,8 +27,12 @@ export default defineConfig({
             sidebar: [
                 {label: 'Getting started', slug: 'features'},
                 {
-                    label: 'Self hosting',
-                    autogenerate: {directory: 'self-hosting'},
+                    label: 'Installation & Configuration',
+                    items: [
+                        {label: 'Installation', autogenerate: {directory: 'install-config/install'}},
+                        {slug: 'install-config/configuration'},
+                        {slug: 'install-config/upgrade'},
+                    ]
                 },
                 {
                     label: 'Features',
@@ -44,10 +50,9 @@ export default defineConfig({
                         {slug: 'developing/translation'},
                         {label: 'Contributing', autogenerate: {directory: 'developing/contributing'}}
                     ],
-                    collapsed: true
                 },
-                {label: 'Legal', autogenerate: {directory: 'legal'}, collapsed: true}
-
+                {label: 'Legal', autogenerate: {directory: 'legal'}, collapsed: true},
+                {slug: 'acknowledgment'}
             ],
             locales: {
                 en: {
@@ -106,7 +111,11 @@ _paq.push(['enableHeartBeatTimer']);
     s.parentNode.insertBefore(g, s);
 })();`
                 }
-            ]
-        })
+            ],
+            plugins: [starlightLinksValidator({
+                errorOnLocalLinks: false
+            })]
+        }),
+        mermaid()
     ]
 })
