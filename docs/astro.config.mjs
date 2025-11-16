@@ -47,7 +47,7 @@ export default defineConfig({
                     label: 'Developing',
                     items: [
                         {slug: 'developing/technical-stack'},
-                        {slug: 'developing/add-provider'},
+                        {slug: 'developing/implementing-new-provider'},
                         {slug: 'developing/translation'},
                         {label: 'Contributing', autogenerate: {directory: 'developing/contributing'}}
                     ],
@@ -125,6 +125,9 @@ _paq.push(['enableHeartBeatTimer']);
                     },
                     showImage: false
                 })
+            ],
+            customCss: [
+                './src/styles/index.css'
             ]
         }),
         mermaid()
