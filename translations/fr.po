@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2025-11-02 12:54+0000\n"
+"PO-Revision-Date: 2025-11-16 00:42+0000\n"
 "Last-Translator: Maël Gangloff <contact@maelgangloff.fr>\n"
 "Language-Team: French <https://weblate.vinceh121.me/projects/domain-watchdog/"
 "domain-watchdog-dashboard/fr/>\n"
@@ -9,7 +9,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 5.13.2\n"
+"X-Generator: Weblate 5.14.3\n"
 
 #: assets/App.tsx:161
 msgid "TOS"
@@ -1687,16 +1687,12 @@ msgid "It indicates the organization that will pay for the ordered product"
 msgstr "Il indique l'organisation qui paiera le produit commandé"
 
 #: assets/utils/providers/forms/NamecheapConnectorForm.tsx:13
-#, fuzzy
-#| msgid ""
-#| "Retreive an API key and whitelist this instance's IP address on "
-#| "Namecheap's website"
 msgid ""
 "Retrieve an API key and whitelist this instance's IP address on Namecheap's "
 "website"
 msgstr ""
-"Récupérez une clé API et ajoutez l'adresse IP de cette instance à la liste "
-"blanche sur le site Web de Namecheap"
+"Récupérer une clé API et inscrire l'adresse IP de cette instance sur la "
+"liste blanche du site web de Namecheap"
 
 #: assets/utils/providers/forms/NamecheapConnectorForm.tsx:19
 #: assets/utils/providers/forms/NamecomConnectorForm.tsx:25
