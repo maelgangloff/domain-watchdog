@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2025-11-16 15:14+0000\n"
+"PO-Revision-Date: 2025-11-16 20:49+0000\n"
 "Last-Translator: Maël Gangloff <contact@maelgangloff.fr>\n"
 "Language-Team: Spanish <https://weblate.vinceh121.me/projects/"
 "domain-watchdog/domain-watchdog-dashboard/es/>\n"
@@ -747,12 +747,12 @@ msgid ""
 msgstr ""
 "La IANA proporciona la lista de TLD actualmente activos, independientemente "
 "de su tipo, e ICANN proporciona la lista de gTLD.\n"
-" En la mayoría de los casos, el ccTLD de dos letras asignado a un país se "
+"En la mayoría de los casos, el ccTLD de dos letras asignado a un país se "
 "crea de acuerdo con la norma ISO 3166-1.\n"
-" Estos datos se actualizan mensualmente. Se necesitan tres solicitudes HTTP "
+"Estos datos se actualizan mensualmente. Se necesitan tres solicitudes HTTP "
 "para la actualización completa de los TLD en Domain Watchdog "
 "(dos solicitudes a IANA y una a ICANN).\n"
-" Al mismo tiempo, se actualiza la lista de servidores RDAP raíz."
+"Al mismo tiempo, se actualiza la lista de servidores RDAP raíz."
 
 #: assets/pages/infrastructure/TldPage.tsx:169
 msgid "Generic Top-Level-Domains"
@@ -780,7 +780,7 @@ msgstr "Lo sentimos, la página que intentó visitar no existe."
 
 #: assets/pages/search/DomainSearchPage.tsx:36
 msgid "Found !"
-msgstr "Encontró !"
+msgstr "¡Encontrado!"
 
 #: assets/pages/search/DomainSearchPage.tsx:53
 #, javascript-format
