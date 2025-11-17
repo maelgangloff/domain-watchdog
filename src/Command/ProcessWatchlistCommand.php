@@ -2,7 +2,7 @@
 
 namespace App\Command;
 
-use App\Message\ProcessWatchlistTrigger;
+use App\Message\ProcessAllWatchlist;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -33,7 +33,7 @@ class ProcessWatchlistCommand extends Command
     {
         $io = new SymfonyStyle($input, $output);
 
-        $this->bus->dispatch(new ProcessWatchlistTrigger());
+        $this->bus->dispatch(new ProcessAllWatchlist());
 
         $io->success('Watchlist processing triggered!');
 

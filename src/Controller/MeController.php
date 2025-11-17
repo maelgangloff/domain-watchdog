@@ -12,14 +12,14 @@ class MeController extends AbstractController
 {
     public function __construct(
         private readonly SerializerInterface $serializer,
-        private readonly RateLimiterFactory $rdapRequestsLimiter,
+        private readonly RateLimiterFactory $userRdapRequestsLimiter,
     ) {
     }
 
     public function __invoke(): Response
     {
         $user = $this->getUser();
-        $limiter = $this->rdapRequestsLimiter->create($user->getUserIdentifier());
+        $limiter = $this->userRdapRequestsLimiter->create($user->getUserIdentifier());
         $limit = $limiter->consume(0);
 
         $data = $this->serializer->serialize($user, 'json', ['groups' => 'user:list']);

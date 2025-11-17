@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Statistics;
+use App\Repository\DomainPurchaseRepository;
 use App\Repository\DomainRepository;
 use App\Repository\WatchlistRepository;
 use Psr\Cache\CacheItemPoolInterface;
@@ -16,6 +17,7 @@ class StatisticsController extends AbstractController
         private readonly CacheItemPoolInterface $pool,
         private readonly DomainRepository $domainRepository,
         private readonly WatchlistRepository $watchlistRepository,
+        private readonly DomainPurchaseRepository $domainPurchaseRepository,
         private readonly KernelInterface $kernel,
     ) {
     }
@@ -29,8 +31,12 @@ class StatisticsController extends AbstractController
 
         $stats
             ->setRdapQueries($this->pool->getItem('stats.rdap_queries.count')->get() ?? 0)
-            ->setDomainPurchased($this->pool->getItem('stats.domain.purchased')->get() ?? 0)
-            ->setDomainPurchaseFailed($this->pool->getItem('stats.domain.purchase.failed')->get() ?? 0)
+            ->setDomainPurchased(
+                $this->getCachedItem('stats.domain.purchase', fn () => $this->domainPurchaseRepository->count())
+            )
+            ->setDomainPurchaseFailed(
+                $this->getCachedItem('stats.domain.purchase.failed', fn () => $this->domainPurchaseRepository->countFailDomainPurchase())
+            )
             ->setAlertSent($this->pool->getItem('stats.alert.sent')->get() ?? 0)
 
             ->setDomainTracked(

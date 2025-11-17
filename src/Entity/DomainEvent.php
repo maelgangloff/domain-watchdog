@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\UniqueConstraint(
     columns: ['action', 'date', 'domain_id']
 )]
+#[ORM\Index(name: 'domain_event_action_idx', columns: ['action'])]
 class DomainEvent extends Event
 {
     #[ORM\ManyToOne(targetEntity: Domain::class, inversedBy: 'events')]

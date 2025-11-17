@@ -1,0 +1,43 @@
+---
+title: Configuration
+description: Configuration guide explaining environment variables and settings required to run and customize the project.
+---
+
+import {LinkCard} from '@astrojs/starlight/components';
+
+<LinkCard title="Install with Docker" href="/en/install-config/install/docker-compose"/>
+
+## Environment variables
+
+| Variable                       | Description                                  |           Default           |
+|--------------------------------|----------------------------------------------|:---------------------------:|
+| `DATABASE_URL`                 | Please check Symfony config                  |                             |
+| `OUTGOING_IP`                  | Outgoing IPv4, needed for some providers     |                             |
+| `INFLUXDB_ENABLED`             | Enable the connection with InfluxDB          |           `false`           |
+| `INFLUXDB_URL`                 | InfluxDB URL                                 |   `http://localhost:8086`   |
+| `INFLUXDB_TOKEN`               | InfluxDB token                               |                             |
+| `INFLUXDB_BUCKET`              | InfluxDB bucket name                         |      `domainwatchdog`       |
+| `INFLUXDB_ORG`                 | InfluxDB organization                        |      `domainwatchdog`       |
+| `LIMITED_FEATURES`             | Limit certain features for users             |           `false`           |
+| `LIMIT_MAX_WATCHLIST`          | Maximum number of Watchlists per user        |             `0`             |
+| `LIMIT_MAX_WATCHLIST_DOMAINS`  | Maximum number of domains per Watchlist      |             `0`             |
+| `LIMIT_MAX_WATCHLIST_WEBHOOKS` | Maximum number of webhooks per Watchlist     |             `0`             |
+| `MAILER_SENDER_NAME`           | Name of the sender of emails                 |      `Domain Watchdog`      |
+| `MAILER_SENDER_EMAIL`          | Sender's email address                       | `notifications@example.com` |
+| `REGISTRATION_ENABLED`         | Enable user registration                     |           `true`            |
+| `REGISTRATION_VERIFY_EMAIL`    | Verify email addresses during registration   |           `false`           |
+| `MAILER_DSN`                   | Please check Symfony config                  |        `null://null`        |
+| `OAUTH_CLIENT_ID`              | Client ID (OAuth 2.0) for using external SSO |                             |
+| `OAUTH_CLIENT_SECRET`          | Client secret (OAuth 2.0)                    |                             |
+| `OAUTH_AUTHORIZATION_URL`      | Authorization URL (OAuth 2.0)                |                             |
+| `OAUTH_TOKEN_URL`              | Token URL (OAuth 2.0)                        |                             |
+| `OAUTH_USERINFO_URL`           | User Info URL (OAuth 2.0)                    |                             |
+| `OAUTH_SCOPE`                  | Scope (OAuth 2.0)                            |                             |
+
+
+## Authentication
+
+Currently, there is no way to delete your account, reset your password, or enable multifactor authentication.
+
+Registering users directly in the interface is recommended for individual instances. For multi-user environments, the
+recommended method is to use external SSO via the OAuth 2.0 protocol.

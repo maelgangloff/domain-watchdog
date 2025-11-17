@@ -89,10 +89,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[Groups(['user:register'])]
     private ?string $plainPassword = null;
 
+    /**
+     * @var Collection<int, DomainPurchase>
+     */
+    #[ORM\OneToMany(targetEntity: DomainPurchase::class, mappedBy: 'user')]
+    private Collection $domainPurchases;
+
     public function __construct()
     {
         $this->watchlists = new ArrayCollection();
         $this->connectors = new ArrayCollection();
+        $this->domainPurchases = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -259,6 +266,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setPlainPassword(?string $plainPassword): self
     {
         $this->plainPassword = $plainPassword;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, DomainPurchase>
+     */
+    public function getDomainPurchases(): Collection
+    {
+        return $this->domainPurchases;
+    }
+
+    public function addDomainPurchase(DomainPurchase $domainPurchase): static
+    {
+        if (!$this->domainPurchases->contains($domainPurchase)) {
+            $this->domainPurchases->add($domainPurchase);
+            $domainPurchase->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeDomainPurchase(DomainPurchase $domainPurchase): static
+    {
+        if ($this->domainPurchases->removeElement($domainPurchase)) {
+            // set the owning side to null (unless already changed)
+            if ($domainPurchase->getUser() === $this) {
+                $domainPurchase->setUser(null);
+            }
+        }
 
         return $this;
     }

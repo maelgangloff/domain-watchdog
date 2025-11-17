@@ -22,16 +22,16 @@ export function ConnectorsList({connectors, onDelete}: { connectors: ConnectorEl
         <>
             <Divider/>
             {connectors.map(connector => {
-                    const createdAt = <Typography.Text strong>
+                    const createdAt = <Typography.Text strong key={"createdAt"}>
                         {new Date(connector.createdAt).toLocaleString()}
                     </Typography.Text>
                     const {watchlistCount} = connector
                     const connectorName = Object.keys(ConnectorProvider).find(p => ConnectorProvider[p as keyof typeof ConnectorProvider] === connector.provider)
 
-                    return <>
-                        {contextHolder}
-                        <Card
-                            hoverable title={<Space>
+                    return <Card
+                            hoverable
+                            key={connector.id}
+                            title={<Space>
                             {t`Connector ${connectorName}`}<Typography.Text code>{connector.id}</Typography.Text>
                         </Space>}
                             size='small'
@@ -45,6 +45,7 @@ export function ConnectorsList({connectors, onDelete}: { connectors: ConnectorEl
                             ><DeleteFilled style={{color: token.colorError}}/>
                             </Popconfirm>}
                         >
+                            {contextHolder}
                             <Typography.Paragraph>{jt`Creation date: ${createdAt}`}</Typography.Paragraph>
                             <Typography.Paragraph>{t`Used in: ${watchlistCount} Watchlist`}</Typography.Paragraph>
                             <Card.Meta description={
@@ -58,7 +59,6 @@ The creation date corresponds to the date on which you consented to the creation
                                 </>
                             }/>
                         </Card>
-                    </>
                 }
             )}
         </>

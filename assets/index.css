@@ -10,4 +10,8 @@
 body {
     margin: 0;
     font-family: "Noto Color Emoji", sans-serif;
+
+    @media (prefers-color-scheme: dark) {
+        background: #000000;
+    }
 }

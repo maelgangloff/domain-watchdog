@@ -18,6 +18,7 @@ use App\Entity\RdapServer;
 use App\Entity\Tld;
 use App\Exception\DomainNotFoundException;
 use App\Exception\MalformedDomainException;
+use App\Exception\RdapServerException;
 use App\Exception\TldNotSupportedException;
 use App\Exception\UnknownRdapServerException;
 use App\Repository\DomainEntityRepository;
@@ -37,6 +38,7 @@ use Doctrine\ORM\OptimisticLockException;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\HttpClient\Exception\ClientException;
+use Symfony\Component\HttpClient\Exception\ServerException;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\DecodingExceptionInterface;
@@ -292,12 +294,16 @@ class RDAPService
                 $this->em->flush();
             }
 
-            throw DomainNotFoundException::fromDomain($idnDomain);
+            return DomainNotFoundException::fromDomain($idnDomain);
         }
 
         $this->logger->error('Unable to perform an RDAP query for this domain name', [
             'ldhName' => $idnDomain,
         ]);
+
+        if ($e instanceof ServerException) {
+            return RdapServerException::fromServerException($e);
+        }
 
         return $e;
     }
@@ -317,8 +323,8 @@ class RDAPService
     {
         if (isset($rdapData['status']) && is_array($rdapData['status'])) {
             $status = array_map(fn ($s) => strtolower($s), array_unique($rdapData['status']));
-            $addedStatus = array_diff($status, $domain->getStatus());
-            $deletedStatus = array_diff($domain->getStatus(), $status);
+            $addedStatus = array_values(array_diff($status, $domain->getStatus()));
+            $deletedStatus = array_values(array_diff($domain->getStatus(), $status));
             $domain->setStatus($status);
 
             if (count($addedStatus) > 0 || count($deletedStatus) > 0) {
@@ -345,7 +351,7 @@ class RDAPService
         if (isset($rdapData['handle'])) {
             $domain->setHandle($rdapData['handle']);
         } else {
-            $this->logger->warning('Domain name has no handle key', [
+            $this->logger->debug('Domain name has no handle key', [
                 'ldhName' => $domain->getLdhName(),
             ]);
         }
@@ -443,7 +449,7 @@ class RDAPService
                 }
             }
         } else {
-            $this->logger->warning('Domain name has no nameservers', [
+            $this->logger->debug('Domain name has no nameservers', [
                 'ldhName' => $domain->getLdhName(),
             ]);
         }
@@ -491,10 +497,13 @@ class RDAPService
                 $nameserverEntity = new NameserverEntity();
             }
 
+            if (isset($rdapNameserver['status']) && is_array($rdapNameserver['status'])) {
+                $nameserverEntity->setStatus(array_map(fn ($s) => strtolower($s), array_unique($rdapNameserver['status'])));
+            }
+
             $nameserver->addNameserverEntity($nameserverEntity
                 ->setNameserver($nameserver)
                 ->setEntity($entity)
-                ->setStatus(array_map(fn ($s) => strtolower($s), array_unique($rdapNameserver['status'])))
                 ->setRoles($roles));
 
             $this->em->persist($nameserverEntity);
@@ -537,7 +546,7 @@ class RDAPService
             sort($roles);
             $rdapEntity['handle'] = 'DW-FAKEHANDLE-'.$domain.'-'.implode(',', $roles);
 
-            $this->logger->warning('Entity has no handle key', [
+            $this->logger->debug('Entity has no handle key', [
                 'handle' => $rdapEntity['handle'],
                 'ldhName' => $domain,
             ]);
@@ -712,7 +721,7 @@ class RDAPService
                 $this->em->persist($dsData);
             }
         } else {
-            $this->logger->warning('Domain name has no DS record', [
+            $this->logger->debug('Domain name has no DS record', [
                 'ldhName' => $domain->getLdhName(),
             ]);
         }
@@ -803,7 +812,7 @@ class RDAPService
 
         $expiresIn = $this->getExpiresInDays($domain);
 
-        if ($intensifyLastDay && (0 === $expiresIn || 1 === $expiresIn)) {
+        if ($updatedAtDiff->s >= 5 && $intensifyLastDay && (0 === $expiresIn || 1 === $expiresIn)) {
             return true;
         }
 

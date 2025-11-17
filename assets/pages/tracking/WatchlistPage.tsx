@@ -74,8 +74,7 @@ export default function WatchlistPage() {
     return (
         <Flex gap='middle' align='center' justify='center' vertical>
             {contextHolder}
-
-            {(connectors != null) && (watchlists != null) && watchlists.length > 0 &&
+            {(connectors !== undefined) && (watchlists !== undefined) &&
                 <>
                     <CreateWatchlistButton onUpdateWatchlist={onCreateWatchlist} connectors={connectors} />
                     <Divider/>

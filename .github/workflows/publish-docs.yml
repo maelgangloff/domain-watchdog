@@ -1,0 +1,44 @@
+name: Publish Documentation
+
+on:
+    push:
+        paths: [ 'docs/**' ]
+        branches: [ develop ]
+
+jobs:
+    build:
+        runs-on: ubuntu-latest
+        environment:
+            name: Domain Watchdog Documentation
+            url: https://domainwatchdog.eu
+
+        steps:
+            -   name: Checkout source
+                uses: actions/checkout@v5
+                with:
+                    fetch-depth: 0
+
+            -   name: Setup Node
+                uses: actions/setup-node@v4
+                with:
+                    node-version: 24
+
+            -   name: Install dependencies
+                run: npm install --global yarn && yarn install
+                working-directory: docs
+
+            -   name: Build Astro site
+                run: yarn run build
+                working-directory: docs
+
+            -   name: Upload build via SCP
+                uses: appleboy/scp-action@master
+                with:
+                    host: dw1.srv.domainwatchdog.eu
+                    port: 2004
+                    username: deploy
+                    key: ${{ secrets.DEPLOYER_PRIVATE_KEY }}
+                    source: "docs/dist/*"
+                    target: /var/www/domainwatchdog.eu/
+                    overwrite: true
+                    debug: true

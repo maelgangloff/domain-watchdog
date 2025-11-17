@@ -10,7 +10,7 @@ use App\Exception\DomainNotFoundException;
 use App\Exception\MalformedDomainException;
 use App\Exception\TldNotSupportedException;
 use App\Exception\UnknownRdapServerException;
-use App\Message\SendDomainEventNotif;
+use App\Message\DetectDomainChange;
 use App\Repository\DomainRepository;
 use App\Service\RDAPService;
 use Doctrine\ORM\EntityManagerInterface;
@@ -22,6 +22,9 @@ use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpKernel\Exception\TooManyRequestsHttpException;
 use Symfony\Component\HttpKernel\KernelInterface;
+use Symfony\Component\Lock\Key;
+use Symfony\Component\Lock\LockFactory;
+use Symfony\Component\Lock\SharedLockInterface;
 use Symfony\Component\Messenger\Exception\ExceptionInterface;
 use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\RateLimiter\RateLimiterFactory;
@@ -37,13 +40,14 @@ readonly class AutoRegisterDomainProvider implements ProviderInterface
         private RDAPService $RDAPService,
         private KernelInterface $kernel,
         private ParameterBagInterface $parameterBag,
-        private RateLimiterFactory $rdapRequestsLimiter,
+        private RateLimiterFactory $userRdapRequestsLimiter,
         private Security $security,
         private LoggerInterface $logger,
         private DomainRepository $domainRepository,
         private MessageBusInterface $bus,
         private RequestStack $requestStack,
         private EntityManagerInterface $em,
+        private LockFactory $lockFactory,
     ) {
     }
 
@@ -88,16 +92,26 @@ readonly class AutoRegisterDomainProvider implements ProviderInterface
                 'updatedAt' => $domain->getUpdatedAt()->format(\DateTimeInterface::ATOM),
             ]);
 
-            return $domain;
+            return $domain->setExpiresInDays($this->RDAPService->getExpiresInDays($domain));
         }
 
         if (false === $this->kernel->isDebug() && true === $this->parameterBag->get('limited_features')) {
-            $limiter = $this->rdapRequestsLimiter->create($userId);
+            $limiter = $this->userRdapRequestsLimiter->create($userId);
             $limit = $limiter->consume();
 
             if (!$limit->isAccepted()) {
                 throw new TooManyRequestsHttpException($limit->getRetryAfter()->getTimestamp() - time());
             }
+        }
+
+        $lock = $this->createDomainLock($idnDomain);
+
+        if (!$lock->acquire() && null !== $domain) {
+            $this->logger->notice('Update of this domain name is locked because it is already in progress', [
+                'ldhName' => $idnDomain,
+            ]);
+
+            return $domain;
         }
 
         $updatedAt = null === $domain ? new \DateTimeImmutable('now') : $domain->getUpdatedAt();
@@ -111,7 +125,7 @@ readonly class AutoRegisterDomainProvider implements ProviderInterface
 
             $domain = $this->domainRepository->findOneBy(['ldhName' => $idnDomain]);
             if (null !== $domain) {
-                return $domain;
+                return $domain->setExpiresInDays($this->RDAPService->getExpiresInDays($domain));
             }
 
             $domain = (new Domain())
@@ -123,7 +137,9 @@ readonly class AutoRegisterDomainProvider implements ProviderInterface
             $this->em->persist($domain);
             $this->em->flush();
 
-            return $domain;
+            return $domain->setExpiresInDays($this->RDAPService->getExpiresInDays($domain));
+        } finally {
+            $lock->release();
         }
 
         $randomizer = new Randomizer();
@@ -131,9 +147,18 @@ readonly class AutoRegisterDomainProvider implements ProviderInterface
 
         /** @var Watchlist $watchlist */
         foreach ($watchlists as $watchlist) {
-            $this->bus->dispatch(new SendDomainEventNotif($watchlist->getToken(), $domain->getLdhName(), $updatedAt));
+            $this->bus->dispatch(new DetectDomainChange($watchlist->getToken(), $domain->getLdhName(), $updatedAt));
         }
 
-        return $domain;
+        return $domain->setExpiresInDays($this->RDAPService->getExpiresInDays($domain));
+    }
+
+    private function createDomainLock(string $ldhName): SharedLockInterface
+    {
+        return $this->lockFactory->createLockFromKey(
+            new Key('domain_update.'.$ldhName),
+            ttl: 600,
+            autoRelease: false
+        );
     }
 }

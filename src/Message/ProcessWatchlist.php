@@ -2,7 +2,7 @@
 
 namespace App\Message;
 
-final readonly class UpdateDomainsFromWatchlist
+final readonly class ProcessWatchlist
 {
     public function __construct(
         public string $watchlistToken,

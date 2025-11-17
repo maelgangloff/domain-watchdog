@@ -5,10 +5,28 @@ framework:
         transports:
             # https://symfony.com/doc/current/messenger.html#transport-configuration
             async:
-                dsn: '%env(MESSENGER_TRANSPORT_DSN)%'
+                dsn: '%env(MESSENGER_ASYNC_TRANSPORT_DSN)%'
                 retry_strategy:
                     max_retries: 3
                     multiplier: 2
+            rdap_high:
+                dsn: '%env(MESSENGER_RDAP_HIGH_TRANSPORT_DSN)%'
+                options:
+                    consumer: '%env(MESSENGER_CONSUMER_NAME)%'
+                retry_strategy:
+                    delay: 1000
+                    multiplier: 2
+                    max_delay: 86400000
+
+            rdap_low:
+                dsn: '%env(MESSENGER_RDAP_LOW_TRANSPORT_DSN)%'
+                options:
+                    consumer: '%env(MESSENGER_CONSUMER_NAME)%'
+                retry_strategy:
+                    delay: 2000
+                    multiplier: 2
+                    max_delay: 86400000
+
             failed: 'doctrine://default?queue_name=failed'
             # sync: 'sync://'
 
@@ -23,11 +41,9 @@ framework:
             Symfony\Component\Notifier\Message\SmsMessage: async
 
             App\Message\OrderDomain: async
-            App\Message\ProcessWatchlistTrigger: async
-            App\Message\SendDomainEventNotif: async
-            App\Message\UpdateDomainsFromWatchlist: async
+            App\Message\DetectDomainChange: async
+            App\Message\ProcessAllWatchlist: async
+            App\Message\ProcessWatchlist: async
             App\Message\UpdateRdapServers: async
             App\Message\ValidateConnectorCredentials: async
-
-            # Route your messages to the transports
-            # 'App\Message\YourMessage': async
+            App\Message\UpdateDomain: rdap_high

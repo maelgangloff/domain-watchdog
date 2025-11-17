@@ -2,9 +2,11 @@ name: Lint and Tests
 
 on:
     push:
-        branches: [ "master", "develop" ]
+        branches: [ "develop" ]
+        paths-ignore: [ "docs/**" ]
     pull_request:
-        branches: [ "master", "develop" ]
+        branches: [ "develop" ]
+        paths-ignore: [ "docs/**" ]
 
 permissions:
     contents: read
@@ -121,6 +123,15 @@ jobs:
                     --health-retries 5
                 ports:
                     - 5432:5432
+            valkey:
+                image: valkey/valkey:latest
+                options: >-
+                    --health-cmd "valkey-cli ping"
+                    --health-interval 10s
+                    --health-timeout 5s
+                    --health-retries 5
+                ports:
+                    - 6379:6379
         steps:
             -   name: Checkout code
                 uses: actions/checkout@v3

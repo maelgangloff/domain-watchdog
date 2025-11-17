@@ -44,7 +44,14 @@ use Symfony\Component\Serializer\Attribute\SerializedName;
             ],
             provider: FindDomainCollectionFromEntityProvider::class,
             parameters: [
-                'registrant' => new QueryParameter(description: 'The exact name of the registrant (case insensitive)', required: true),
+                'registrant' => new QueryParameter(
+                    description: 'The exact name of the registrant contact (case insensitive)',
+                    required: false
+                ),
+                'administrative' => new QueryParameter(
+                    description: 'The exact name of the administrative contact (case insensitive)',
+                    required: false
+                ),
             ]
         ),
         new Get(
@@ -59,6 +66,9 @@ use Symfony\Component\Serializer\Attribute\SerializedName;
                     'tld:item',
                     'ds:list',
                 ],
+            ],
+            parameters: [
+                'forced' => new QueryParameter(schema: ['type' => 'boolean'], description: 'Force an RDAP request. If an update is already in progress, this parameter is ignored and the stored domain is returned.', required: false),
             ],
         ),
     ],
@@ -156,6 +166,12 @@ class Domain
 
     private ?int $expiresInDays;
 
+    /**
+     * @var Collection<int, DomainPurchase>
+     */
+    #[ORM\OneToMany(targetEntity: DomainPurchase::class, mappedBy: 'domain', orphanRemoval: true)]
+    private Collection $domainPurchases;
+
     private const IMPORTANT_EVENTS = [EventAction::Deletion->value, EventAction::Expiration->value];
     private const IMPORTANT_STATUS = [
         'redemption period',
@@ -179,6 +195,7 @@ class Domain
         $this->deleted = false;
         $this->domainStatuses = new ArrayCollection();
         $this->dnsKey = new ArrayCollection();
+        $this->domainPurchases = new ArrayCollection();
     }
 
     public function getLdhName(): ?string
@@ -515,5 +532,41 @@ class Domain
         $this->expiresInDays = $expiresInDays;
 
         return $this;
+    }
+
+    /**
+     * @return Collection<int, DomainPurchase>
+     */
+    public function getDomainPurchases(): Collection
+    {
+        return $this->domainPurchases;
+    }
+
+    public function addDomainPurchase(DomainPurchase $domainPurchase): static
+    {
+        if (!$this->domainPurchases->contains($domainPurchase)) {
+            $this->domainPurchases->add($domainPurchase);
+            $domainPurchase->setDomain($this);
+        }
+
+        return $this;
+    }
+
+    public function removeDomainPurchase(DomainPurchase $domainPurchase): static
+    {
+        if ($this->domainPurchases->removeElement($domainPurchase)) {
+            // set the owning side to null (unless already changed)
+            if ($domainPurchase->getDomain() === $this) {
+                $domainPurchase->setDomain(null);
+            }
+        }
+
+        return $this;
+    }
+
+    #[Groups(['domain:item', 'domain:list'])]
+    public function getPurchaseCount(): ?int
+    {
+        return $this->domainPurchases->count();
     }
 }

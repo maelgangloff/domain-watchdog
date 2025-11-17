@@ -132,7 +132,7 @@ class AbstractProviderTest extends ApiTestCase
 
             // Trigger the Order Domain message
             $orderDomainHandler = self::getContainer()->get(OrderDomainHandler::class);
-            $message = new OrderDomain($watchlist->getToken(), $domain->getLdhName());
+            $message = new OrderDomain($watchlist->getToken(), $domain->getLdhName(), $domain->getUpdatedAt());
             $orderDomainHandler($message);
 
             $this->assertResponseStatusCodeSame(200);

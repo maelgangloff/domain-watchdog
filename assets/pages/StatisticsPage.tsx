@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react'
 import type { Statistics} from '../utils/api'
 import {getStatistics} from '../utils/api'
-import {Card, Col, Divider, Row, Statistic, Tooltip} from 'antd'
+import {Card, Col, Divider, Flex, Row, Statistic, Tooltip} from 'antd'
 import {t} from 'ttag'
 import {
   AimOutlined,
@@ -18,10 +18,8 @@ export default function StatisticsPage() {
         getStatistics().then(setStats)
     }, [])
 
-    const totalDomainPurchase = (stats?.domainPurchased ?? 0) + (stats?.domainPurchaseFailed ?? 0)
-
     const successRate = stats !== undefined
-        ? (totalDomainPurchase === 0 ? undefined : stats.domainPurchased / totalDomainPurchase)
+        ? (stats?.domainPurchased === 0 ? undefined : ((stats?.domainPurchased ?? 0) - (stats?.domainPurchaseFailed ?? 0)) /  stats?.domainPurchased)
         : undefined
 
     return (
@@ -82,7 +80,7 @@ export default function StatisticsPage() {
                             loading={stats === undefined}
                             title={t`Purchased domain names`}
                             prefix={<FieldTimeOutlined/>}
-                            value={stats?.domainPurchased}
+                            value={(stats?.domainPurchased??0) - (stats?.domainPurchaseFailed??0)}
                             valueStyle={{color: 'green'}}
                         />
                     </Card>
@@ -95,7 +93,7 @@ export default function StatisticsPage() {
                             <Statistic
                                 loading={stats === undefined}
                                 title={t`Success rate`}
-                                value={successRate === undefined ? '-' : successRate * 100}
+                                value={successRate === undefined ? '-' : (successRate * 100).toFixed(2)}
                                 suffix='%'
                                 valueStyle={{color: successRate === undefined ? 'grey' : successRate >= 0.5 ? 'darkgreen' : 'orange'}}
                             />
@@ -104,20 +102,19 @@ export default function StatisticsPage() {
                 </Col>
             </Row>
             <Divider/>
-            <Row gutter={16} justify='center' align='middle'>
+            <Flex gap={16} wrap justify='center' align='middle'>
                 {stats?.domainCount
                     .sort((a, b) => b.domain - a.domain)
-                    .map(({domain, tld}) => <Col key={tld} span={4}>
-                        <Card bordered={false}>
+                    .map(({domain, tld}) =>
+                        <Card key={tld} bordered={false}>
                             <Statistic
                                 loading={stats === undefined}
                                 title={tld ? tld : t`TLD`}
                                 value={domain}
                                 valueStyle={{color: 'darkorange'}}
                             />
-                        </Card>
-                    </Col>)}
-            </Row>
+                        </Card>)}
+            </Flex>
         </>
     )
 }

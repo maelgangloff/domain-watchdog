@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Entity\User;
 use App\Entity\Watchlist;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -31,6 +32,24 @@ class WatchlistRepository extends ServiceEntityRepository
             ->select()
             ->where('w.enabled = true')
             ->getQuery()->execute();
+    }
+
+    /**
+     * @return Watchlist[]
+     */
+    public function fetchWatchlistsForUser(User $user): array
+    {
+        return $this->createQueryBuilder('w')
+            ->addSelect('d')
+            ->addSelect('e')
+            ->addSelect('p')
+            ->leftJoin('w.domains', 'd')
+            ->leftJoin('d.events', 'e')
+            ->leftJoin('d.domainPurchases', 'p')
+            ->where('w.user = :user')
+            ->setParameter('user', $user)
+            ->getQuery()
+            ->getResult();
     }
 
     //    /**

@@ -50,6 +50,7 @@ use Symfony\Component\Serializer\Attribute\Groups;
     ]
 )]
 #[ORM\Entity(repositoryClass: IcannAccreditationRepository::class)]
+#[ORM\Index(name: 'icann_accreditation_status_idx', columns: ['status'])]
 class IcannAccreditation
 {
     #[ORM\Id]

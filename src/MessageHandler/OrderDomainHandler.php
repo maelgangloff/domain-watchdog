@@ -3,20 +3,24 @@
 namespace App\MessageHandler;
 
 use App\Entity\Domain;
+use App\Entity\DomainPurchase;
 use App\Entity\Watchlist;
 use App\Message\OrderDomain;
 use App\Notifier\DomainOrderErrorNotification;
 use App\Notifier\DomainOrderNotification;
+use App\Repository\DomainPurchaseRepository;
 use App\Repository\DomainRepository;
 use App\Repository\WatchlistRepository;
 use App\Service\ChatNotificationService;
 use App\Service\InfluxdbService;
 use App\Service\Provider\AbstractProvider;
-use App\Service\StatService;
+use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpKernel\KernelInterface;
+use Symfony\Component\Lock\Key;
+use Symfony\Component\Lock\LockFactory;
 use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
@@ -36,13 +40,14 @@ final readonly class OrderDomainHandler
         private KernelInterface $kernel,
         private MailerInterface $mailer,
         private LoggerInterface $logger,
-        private StatService $statService,
         private ChatNotificationService $chatNotificationService,
         private InfluxdbService $influxdbService,
         #[Autowire(service: 'service_container')]
         private ContainerInterface $locator,
         #[Autowire(param: 'influxdb_enabled')]
-        private bool $influxdbEnabled,
+        private bool $influxdbEnabled, private EntityManagerInterface $em,
+        private DomainPurchaseRepository $domainPurchaseRepository,
+        private LockFactory $lockFactory,
     ) {
         $this->sender = new Address($mailerSenderEmail, $mailerSenderName);
     }
@@ -68,6 +73,23 @@ final readonly class OrderDomainHandler
          */
 
         if (null === $connector || !$domain->getDeleted()) {
+            return;
+        }
+
+        $lock = $this->lockFactory->createLockFromKey(
+            new Key('domain_purchase.'.$domain->getLdhName().'.'.$connector->getId()),
+            ttl: 600,
+            autoRelease: false
+        );
+
+        if (!$lock->acquire()) {
+            $this->logger->notice('Purchase attempt is already launched for this domain name with this connector', [
+                'watchlist' => $message->watchlistToken,
+                'connector' => $connector->getId(),
+                'ldhName' => $message->ldhName,
+                'provider' => $connector->getProvider()->value,
+            ]);
+
             return;
         }
 
@@ -107,13 +129,22 @@ final readonly class OrderDomainHandler
                 'provider' => $connector->getProvider()->value,
             ]);
 
-            $this->statService->incrementStat('stats.domain.purchased');
             if ($this->influxdbEnabled) {
                 $this->influxdbService->addDomainOrderPoint($connector, $domain, true);
             }
             $notification = (new DomainOrderNotification($this->sender, $domain, $connector));
             $this->mailer->send($notification->asEmailMessage(new Recipient($watchlist->getUser()->getEmail()))->getMessage());
             $this->chatNotificationService->sendChatNotification($watchlist, $notification);
+
+            $this->em->persist((new DomainPurchase())
+                ->setDomain($domain)
+                ->setConnector($connector)
+                ->setConnectorProvider($connector->getProvider())
+                ->setDomainOrderedAt(new \DateTimeImmutable())
+                ->setUser($watchlist->getUser())
+                ->setDomainDeletedAt($domain->getUpdatedAt())
+                ->setDomainUpdatedAt($message->updatedAt));
+            $this->em->flush();
         } catch (\Throwable $exception) {
             /*
              * The purchase was not successful (for several possible reasons that we have not determined).
@@ -126,13 +157,33 @@ final readonly class OrderDomainHandler
                 'provider' => $connector->getProvider()->value,
             ]);
 
-            $this->statService->incrementStat('stats.domain.purchase.failed');
             if ($this->influxdbEnabled) {
                 $this->influxdbService->addDomainOrderPoint($connector, $domain, false);
             }
             $notification = (new DomainOrderErrorNotification($this->sender, $domain));
             $this->mailer->send($notification->asEmailMessage(new Recipient($watchlist->getUser()->getEmail()))->getMessage());
             $this->chatNotificationService->sendChatNotification($watchlist, $notification);
+
+            $domainPurchase = $this->domainPurchaseRepository->findOneBy([
+                'domain' => $domain,
+                'connector' => $connector,
+                'domainOrderedAt' => null,
+                'domainUpdatedAt' => $message->updatedAt,
+                'user' => $watchlist->getUser(),
+            ]);
+            if (null === $domainPurchase) {
+                $this->em->persist((new DomainPurchase())
+                    ->setDomain($domain)
+                    ->setConnector($connector)
+                    ->setConnectorProvider($connector->getProvider())
+                    ->setDomainOrderedAt(null)
+                    ->setUser($watchlist->getUser())
+                    ->setDomainDeletedAt($domain->getUpdatedAt())
+                    ->setDomainUpdatedAt($message->updatedAt));
+                $this->em->flush();
+            }
+
+            $lock->release();
 
             throw $exception;
         }

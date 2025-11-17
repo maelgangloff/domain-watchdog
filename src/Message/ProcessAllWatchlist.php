@@ -2,7 +2,7 @@
 
 namespace App\Message;
 
-final class ProcessWatchlistTrigger
+final class ProcessAllWatchlist
 {
     /*
      * Add whatever properties and methods you need

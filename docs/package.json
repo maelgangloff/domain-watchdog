@@ -1,0 +1,28 @@
+{
+  "name": "domainwatchdog.eu",
+  "private": true,
+  "author": {
+    "name": "Maël Gangloff",
+    "email": "contact@maelgangloff.fr"
+  },
+  "type": "module",
+  "license": "AGPL-3.0-or-later",
+  "version": "0.0.1",
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@astrojs/starlight": "^0.36.2",
+    "astro": "^5.6.1",
+    "astro-mermaid": "^1.1.0",
+    "mermaid": "^11.12.1",
+    "sharp": "^0.34.2",
+    "starlight-contributor-list": "^0.3.1",
+    "starlight-cooler-credit": "^0.4.1",
+    "starlight-links-validator": "^0.19.1"
+  }
+}

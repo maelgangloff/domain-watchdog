@@ -4,78 +4,94 @@ namespace App\State;
 
 use ApiPlatform\Metadata\Operation;
 use ApiPlatform\State\ProviderInterface;
-use App\Entity\Domain;
+use App\Repository\DomainRepository;
 use App\Service\RDAPService;
-use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\ORM\Query\ResultSetMapping;
+use Doctrine\ORM\Query\Expr\Join;
 use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 readonly class FindDomainCollectionFromEntityProvider implements ProviderInterface
 {
     public function __construct(
         private RequestStack $requestStack,
-        private EntityManagerInterface $em,
+        private DomainRepository $domainRepository,
     ) {
     }
 
     public function provide(Operation $operation, array $uriVariables = [], array $context = []): object|array|null
     {
         $request = $this->requestStack->getCurrentRequest();
-        $rsm = (new ResultSetMapping())
-            ->addScalarResult('domain_ids', 'domain_ids');
+        $registrant = trim((string) $request->get('registrant'));
+        $administrative = trim((string) $request->get('administrative'));
 
-        $handleBlacklist = join(',', array_map(fn (string $s) => "'$s'", RDAPService::ENTITY_HANDLE_BLACKLIST));
-
-        $sql = <<<SQL
-SELECT
-    array_agg(DISTINCT de.domain_id) AS domain_ids
-FROM (
-    SELECT
-        e.handle AS handle,
-        e.id,
-        e.tld_id,
-        jsonb_path_query_first(
-            e.j_card,
-            '$[1] ? (@[0] == "fn")[3]'
-        ) #>> '{}' AS fn,
-        jsonb_path_query_first(
-            e.j_card,
-            '$[1] ? (@[0] == "org")[3]'
-        ) #>> '{}' AS org
-    FROM entity e
-) sub
-JOIN domain_entity de ON de.entity_uid = sub.id
-WHERE LOWER(org||fn) NOT LIKE '%redacted%'
-  AND LOWER(org||fn) NOT LIKE '%privacy%'
-  AND LOWER(org||fn) NOT LIKE '%registration private%'
-  AND LOWER(org||fn) NOT LIKE '%domain administrator%'
-  AND LOWER(org||fn) NOT LIKE '%registry super user account%'
-  AND LOWER(org||fn) NOT LIKE '%ano nymous%'
-  AND LOWER(org||fn) NOT LIKE '%by proxy%'
-  AND handle NOT IN ($handleBlacklist)
-  AND de.roles @> '["registrant"]'
-  AND sub.tld_id IS NOT NULL
-  AND (LOWER(org) = LOWER(:registrant) OR LOWER(fn) = LOWER(:registrant));
-SQL;
-        $result = $this->em->createNativeQuery($sql, $rsm)
-            ->setParameter('registrant', trim($request->get('registrant')))
-            ->getOneOrNullResult();
-
-        if (!$result) {
-            return null;
+        if ('' === $registrant && '' === $administrative) {
+            throw new BadRequestHttpException('Either "registrant" or "administrative" must be provided');
         }
 
-        $domainList = array_filter(explode(',', trim($result['domain_ids'], '{}')));
+        $forbidden = [
+            'redacted',
+            'privacy',
+            'registration private',
+            'domain administrator',
+            'registry super user account',
+            'ano nymous',
+            'by proxy',
+        ];
 
-        if (empty($domainList)) {
-            return [];
+        foreach ($forbidden as $word) {
+            if (str_contains(strtolower($registrant.' '.$administrative), $word)) {
+                throw new BadRequestHttpException('Forbidden search term');
+            }
         }
 
-        return $this->em->getRepository(Domain::class)
-            ->createQueryBuilder('d')
-            ->where('d.ldhName IN (:list)')
-            ->setParameter('list', $domainList)
-            ->getQuery()
-            ->getResult();
+        $qb = $this->domainRepository->createQueryBuilder('d')
+            ->select('DISTINCT d')
+            ->setParameter('blacklist', RDAPService::ENTITY_HANDLE_BLACKLIST);
+
+        $orX = $qb->expr()->orX();
+
+        if ($registrant) {
+            $qb
+                ->leftJoin(
+                    'd.domainEntities',
+                    'der',
+                    Join::WITH,
+                    'der.deletedAt IS NULL AND JSONB_CONTAINS(der.roles, \'"registrant"\') = true'
+                )
+                ->leftJoin(
+                    'der.entity',
+                    'er',
+                    Join::WITH,
+                    'er.handle NOT IN (:blacklist) AND (er.jCardOrg = UPPER(:registrant) OR er.jCardFn = UPPER(:registrant))'
+                )
+                ->setParameter('registrant', $registrant);
+
+            $orX->add('er.id IS NOT NULL');
+        }
+
+        if ($administrative) {
+            $qb
+                ->leftJoin(
+                    'd.domainEntities',
+                    'dea',
+                    Join::WITH,
+                    'dea.deletedAt IS NULL AND JSONB_CONTAINS(dea.roles, \'"administrative"\') = true'
+                )
+                ->leftJoin(
+                    'dea.entity',
+                    'ea',
+                    Join::WITH,
+                    'ea.handle NOT IN (:blacklist) AND (ea.jCardOrg = UPPER(:administrative) OR ea.jCardFn = UPPER(:administrative))'
+                )
+                ->setParameter('administrative', $administrative);
+
+            $orX->add('ea.id IS NOT NULL');
+        }
+
+        if ($orX->count() > 0) {
+            $qb->andWhere($orX);
+        }
+
+        return $qb->getQuery()->getResult();
     }
 }

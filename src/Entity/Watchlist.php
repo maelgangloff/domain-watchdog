@@ -10,6 +10,7 @@ use ApiPlatform\Metadata\Patch;
 use ApiPlatform\Metadata\Post;
 use ApiPlatform\Metadata\Put;
 use App\Repository\WatchlistRepository;
+use App\State\MyWatchlistsProvider;
 use App\State\WatchlistUpdateProcessor;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -25,7 +26,6 @@ use Symfony\Component\Validator\Constraints as Assert;
     shortName: 'Watchlist',
     operations: [
         new GetCollection(
-            routeName: 'watchlist_get_all_mine',
             normalizationContext: [
                 'groups' => [
                     'watchlist:list',
@@ -34,6 +34,7 @@ use Symfony\Component\Validator\Constraints as Assert;
                 ],
             ],
             name: 'get_all_mine',
+            provider: MyWatchlistsProvider::class,
         ),
         new GetCollection(
             uriTemplate: '/tracked',

@@ -1,0 +1,221 @@
+---
+title: Implementing a new provider
+description: Step-by-step guide to adding a new Provider, with backend, frontend, and testing instructions to integrate a registrar into the project.
+---
+import {FileTree, Steps, Code, LinkCard} from "@astrojs/starlight/components";
+
+This project aims to be compatible with as many registrars as possible, giving users a choice when creating a Connector.
+
+::::caution
+Only registrars with a public and documented API can be offered. Using a registrar's private API is strictly prohibited.
+::::
+
+Adding a new Provider is straightforward. Simply follow the steps below.
+
+This guide explains how to add support for a new domain registrar.
+You’ll implement both the Backend (Provider logic) and the Frontend (configuration form).
+
+## Prerequisites
+
+<Steps>
+1. Read the API documentation of the new Provider and identify the sections related to user authentication and domain name registration.
+1. Set up your development environment.
+    <LinkCard title="Manual Installation" href="/en/install-config/install/manual-install" description='Install the project from source to begin development' />
+</Steps>
+
+## Backend
+
+In this section, you’ll implement the logic required to interact with the new Provider’s API.
+
+<Steps>
+    1. Create a new DTO class to validate user authentication data.
+        <FileTree>
+            - src
+              - Dto.Connector
+                - DefaultProviderDto.php default DTO, which will also be used
+                - **MySuperRegistrarProviderDto.php** your new DTO class
+        </FileTree>
+
+    1. Add the necessary class properties and assertions.
+       The DTO class must extend `DefaultProviderDto`.
+
+        Only include properties required for user authentication, domain name registration, and any legally required consents.
+        <Code code={`namespace App\\Dto\\Connector;
+
+            class MySuperRegistrarProviderDto extends DefaultProviderDto
+        `} lang="php" title='MySuperRegistrarProviderDto.php' mark={['extends DefaultProviderDto']} />
+
+    1. Create a new Provider class.
+        <FileTree>
+            - src
+              - Service
+                - Provider
+                  - AbstractProvider.php                defines the signature of methods
+                  - **MySuperRegistrarProvider.php**    your new Provider
+        </FileTree>
+
+    1. The class must extend `AbstractProvider`.
+        Refer to the existing Providers for implementation examples.
+        <Code code={`namespace App\\Service\\Provider;
+
+        #[Autoconfigure(public: true)]
+        class MySuperRegistrarProvider extends AbstractProvider
+        {
+            protected string $dtoClass = MySuperRegistrarProviderDto::class;
+
+            /** @var MySuperRegistrarProviderDto */
+            protected DefaultProviderDto $authData;
+        `} lang="php" title='MySuperRegistrarProvider.php' mark={['extends AbstractProvider']} />
+       ::::note
+        You now need to implement the methods defined in `AbstractProvider`.
+
+        Refer to the official Provider API documentation as needed.
+        ::::
+
+    1. Implement the `assertAuthentication` method.
+
+       This method validates user authentication data.
+       Make a request to the Provider’s API to verify that the user’s credentials are valid.
+
+       The method must return `void` when authentication succeeds.
+       ::::tip
+       If an issue occurs, throw an appropriate exception from the `App\Exception\Provider` namespace.
+       ::::
+        <Code code={`
+        protected function assertAuthentication(): void
+        {
+            // TODO: Implement assertAuthentication() method.
+        }`} lang="php" title='MySuperRegistrarProvider.php' mark={['protected function assertAuthentication()']} />
+
+    1. Implement the `getCachedTldList` method.
+        <Code code={`
+        protected function getCachedTldList(): CacheItemInterface
+        {
+            return $this->cacheItemPool->getItem('app.provider.my-super-registrar.supported-tld');
+        }`} lang="php" title='MySuperRegistrarProvider.php' mark={['my-super-registrar']} />
+
+        This method returns the cache entry holding the list of TLDs supported by this Provider.
+        Even if the API does not currently provide this information, implement the method for future compatibility.
+
+    1. Implement the `getSupportedTldList` method.
+
+        If the Provider API does not offer a way to retrieve supported TLDs, return an empty array `[]`.
+        Otherwise, call the API and return the list of supported TLDs.
+        <Code code={`
+        protected function getSupportedTldList(): array
+        {
+            // TODO: Implement getSupportedTldList() method.
+        }`} lang="php" title='MySuperRegistrarProvider.php' />
+
+    1. Implement the `isSupported` method (if necessary).
+        Override `isSupported` **only if** the Provider API cannot list supported TLDs. In that case, return `true` to indicate that all TLDs are potentially valid.
+
+    1. Implement the `orderDomain` method.
+
+        Follow the Provider's API documentation to implement domain ordering using the required properties.
+        ::::tip
+        As with authentication, you may throw generic Provider exceptions in case of an error.
+        ::::
+        <Code code={`
+        public function orderDomain(Domain $domain, bool $dryRun): void
+        {
+            // TODO: Implement orderDomain() method.
+        }`} lang="php" title='MySuperRegistrarProvider.php' />
+
+    1. Add your Provider to the `ConnectorProvider` enumeration.
+        <Code code={`
+        namespace App\Config;
+
+        enum ConnectorProvider: string
+        {
+            // ...
+            case MY_SUPER_REGISTRAR = 'my-super-registrar';
+
+            public function getConnectorProvider(): string
+            {
+                return match ($this) {
+                    // ...
+                    ConnectorProvider::MY_SUPER_REGISTRAR => MySuperRegistrarProvider::class,
+            };
+        }`} lang="php" title='src/Config/ConnectorProvider.php' />
+</Steps>
+
+**Well done!** 🎉
+You have now completed the Backend implementation.
+Let’s continue with the Frontend! 🚀
+
+## Frontend
+
+<Steps>
+    1. Create a form containing the necessary fields for your Provider.
+        <FileTree>
+            - assets
+              - utils
+                - providers
+                  - forms
+                    - DefaultConnectorFormItems.tsx             fields shared by all
+                    - **MySuperRegistrarConnectorForm.tsx**
+        </FileTree>
+
+    1. Add the fields corresponding to the DTO you created earlier.
+       Check existing forms for reference.
+       If the Provider API does not allow retrieving supported TLDs, display this information as in the other forms.
+
+    1. Add your Provider to the `ConnectorProvider` enumeration.
+       The value must exactly match the one defined in PHP.
+
+       <Code code={`
+        export enum ConnectorProvider {
+            // ...
+            MY_SUPER_REGISTRAR = 'my-super-registrar'
+        }`} lang="ts" title='assets/utils/api/connectors.ts' />
+
+    1. Add the API terms of service link and the reference to your new form in the `index.ts` configuration file.
+        <Code code={`
+        export const providersConfig: Record<ConnectorProvider, ProviderConfig> = {
+            // ...
+            [ConnectorProvider.MY_SUPER_REGISTRAR]: {
+                tosLink: 'https://...',
+                form: MySuperRegistrarConnectorForm
+            }
+        }`} lang="ts" title='assets/utils/providers/index.ts' />
+
+    1. Ensure the interface renders correctly and fix any display issues.
+</Steps>
+
+**Great job!** 🎉
+Your Frontend implementation is now complete.
+
+## Testing
+
+<Steps>
+    1. Add the corresponding test function in the Provider test collection.
+        <Code code={`
+        #[DependsExternal(RDAPServiceTest::class, 'testUpdateRdapServers')]
+        public function testMySuperRegistrar()
+        {
+            $token = static::getContainer()->getParameter('my_super_registrar_token');
+            if (!$token) {
+                $this->markTestSkipped('Missing My Super Registrar token');
+            }
+
+            $this->testGenericProvider(ConnectorProvider::MY_SUPER_REGISTRAR, [
+                'waiveRetractationPeriod' => true,
+                'acceptConditions' => true,
+                'ownerLegalAge' => true,
+                'token' => $token,
+            ]);
+        }`} lang="php" title='tests/Service/Provider/AbstractProviderTest.php' />
+
+    1. Create a Symfony configuration parameter connecting the environment variable to the credentials.
+
+    1. Run the tests with PHPUnit:
+        ```shell
+        php vendor/bin/phpunit
+        ```
+    1. Ensure the test passes.
+    If it fails, fix the implementation accordingly.
+    Consider enabling code coverage to identify executed sections.
+</Steps>
+
+That's it! You’ve now finished implementing a new Provider. ✨

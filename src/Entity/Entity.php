@@ -3,7 +3,6 @@
 namespace App\Entity;
 
 use ApiPlatform\Metadata\ApiProperty;
-use ApiPlatform\Metadata\ApiResource;
 use App\Repository\EntityRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -15,30 +14,8 @@ use Symfony\Component\Serializer\Attribute\SerializedName;
 #[ORM\UniqueConstraint(
     columns: ['tld_id', 'handle']
 )]
-#[ApiResource(
-    operations: [
-        /*
-        new GetCollection(
-            uriTemplate: '/entities',
-            normalizationContext: ['groups' => ['entity:list', 'event:list']]
-        ),
-
-        new Get(
-            uriTemplate: '/entities/{id}',
-            normalizationContext: [
-                'groups' => [
-                    'event:list',
-                    'entity:item',
-                    'domain-entity:domain',
-                    'domain:list',
-                    'nameserver-entity:nameserver',
-                    'nameserver:list',
-                ],
-            ]
-        ),
-        */
-    ]
-)]
+#[ORM\Index(name: 'entity_j_card_fn_idx', columns: ['j_card_fn'])]
+#[ORM\Index(name: 'entity_j_card_org_idx', columns: ['j_card_org'])]
 class Entity
 {
     #[ORM\Id]
@@ -87,6 +64,24 @@ class Entity
     )]
     #[Groups(['entity:item', 'domain:item', 'watchlist:item'])]
     private array $jCard = [];
+
+    #[ORM\Column(
+        type: 'string',
+        insertable: false,
+        updatable: false,
+        columnDefinition: "VARCHAR(255) GENERATED ALWAYS AS (UPPER(jsonb_path_query_first(j_card, '$[1]?(@[0] == \"fn\")[3]') #>> '{}')) STORED",
+        generated: 'ALWAYS',
+    )]
+    private ?string $jCardFn;
+
+    #[ORM\Column(
+        type: 'string',
+        insertable: false,
+        updatable: false,
+        columnDefinition: "VARCHAR(255) GENERATED ALWAYS AS (UPPER(jsonb_path_query_first(j_card, '$[1]?(@[0] == \"org\")[3]') #>> '{}')) STORED",
+        generated: 'ALWAYS',
+    )]
+    private ?string $jCardOrg;
 
     #[ORM\Column(nullable: true)]
     #[Groups(['entity:item', 'domain:item', 'watchlist:item'])]
@@ -261,6 +256,30 @@ class Entity
     public function setIcannAccreditation(?IcannAccreditation $icannAccreditation): static
     {
         $this->icannAccreditation = $icannAccreditation;
+
+        return $this;
+    }
+
+    public function getJCardFn(): ?string
+    {
+        return $this->jCardFn;
+    }
+
+    public function getJCardOrg(): ?string
+    {
+        return $this->jCardOrg;
+    }
+
+    public function setJCardFn(?string $jCardFn): Entity
+    {
+        $this->jCardFn = $jCardFn;
+
+        return $this;
+    }
+
+    public function setJCardOrg(?string $jCardOrg): Entity
+    {
+        $this->jCardOrg = $jCardOrg;
 
         return $this;
     }
