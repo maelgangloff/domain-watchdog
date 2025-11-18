@@ -4,6 +4,7 @@ import starlight from '@astrojs/starlight'
 import starlightLinksValidator from 'starlight-links-validator'
 import mermaid from "astro-mermaid"
 import starlightCoolerCredit from "starlight-cooler-credit"
+import starlightKbd from 'starlight-kbd'
 
 const BASE_URL = 'https://domainwatchdog.eu'
 
@@ -24,7 +25,10 @@ export default defineConfig({
             },
             tagline: 'Your companion in the quest for domain names 🔍',
             lastUpdated: true,
-            social: [{icon: 'github', label: 'GitHub', href: 'https://github.com/maelgangloff/domain-watchdog'}],
+            social: [
+                {icon: 'github', label: 'GitHub', href: 'https://github.com/maelgangloff/domain-watchdog'},
+                {icon: 'seti:docker', label: 'Docker', href: 'https://hub.docker.com/r/maelgangloff/domain-watchdog'}
+            ],
             sidebar: [
                 {label: 'Getting started', slug: 'features'},
                 {
@@ -38,9 +42,10 @@ export default defineConfig({
                 {
                     label: 'Features',
                     items: [
+                        {slug: 'features/search/domain-search'},
                         {label: 'Domain back-order', autogenerate: {directory: 'features/backorder'}},
-                        {label: 'Domain search', autogenerate: {directory: 'features/search'}},
                         {label: 'Domain tracking', autogenerate: {directory: 'features/tracking'}},
+                        {label: 'Infrastructure', autogenerate: {directory: 'features/infrastructure'}},
                     ]
                 },
                 {
@@ -124,7 +129,13 @@ _paq.push(['enableHeartBeatTimer']);
                         description: 'Maintained with ♡ by Maël Gangloff & contributors'
                     },
                     showImage: false
-                })
+                }),
+                starlightKbd({
+                    types: [
+                        {id: 'mac', label: 'macOS', default: true},
+                        {id: 'windows', label: 'Windows'},
+                    ],
+                }),
             ],
             customCss: [
                 './src/styles/index.css'

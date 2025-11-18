@@ -4086,6 +4086,11 @@ starlight-cooler-credit@^0.4.1:
   dependencies:
     change-case "^5.4.4"
 
+starlight-kbd@^0.2.1:
+  version "0.2.1"
+  resolved "https://registry.yarnpkg.com/starlight-kbd/-/starlight-kbd-0.2.1.tgz#3656c23205d07b2c62902c4af6136e743deb571b"
+  integrity sha512-kFDWkB99GSk1korUrHezRxcjLhQ53axDyI9oZakEPB5ZNU3b+uwp2kVMhEg6B5yzekwFgf84UlNiWu9lYpfMoA==
+
 starlight-links-validator@^0.19.1:
   version "0.19.1"
   resolved "https://registry.yarnpkg.com/starlight-links-validator/-/starlight-links-validator-0.19.1.tgz#7c3c2f25e988104627c563ffbd27e523735200f1"
