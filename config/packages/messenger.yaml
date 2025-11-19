@@ -9,6 +9,8 @@ framework:
                 retry_strategy:
                     max_retries: 3
                     multiplier: 2
+                options:
+                    consumer: '%env(MESSENGER_CONSUMER_NAME)%'
             rdap_high:
                 dsn: '%env(MESSENGER_RDAP_HIGH_TRANSPORT_DSN)%'
                 options:
