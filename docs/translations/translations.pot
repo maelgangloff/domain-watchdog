@@ -153,6 +153,31 @@ msgid ""
 "These are the GLUE records."
 msgstr ""
 
+#: src/content/docs/en/definitions/dns.mdx:block 18 (code)
+msgid ""
+"; <<>> DiG 9.20.15 <<>> ns.icann.org @A0.ORG.AFILIAS-NST.INFO\n"
+";; global options: +cmd\n"
+";; Got answer:\n"
+";; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 52458\n"
+";; flags: qr rd; QUERY: 1, ANSWER: 0, AUTHORITY: 4, ADDITIONAL: 3\n"
+"\n"
+";; QUESTION SECTION:\n"
+";ns.icann.org.            IN    A\n"
+"\n"
+";; AUTHORITY SECTION:\n"
+"icann.org.        3600    IN    NS    ns.icann.org.\n"
+"icann.org.        3600    IN    NS    a.icann-servers.net.\n"
+"icann.org.        3600    IN    NS    c.icann-servers.net.\n"
+"icann.org.        3600    IN    NS    b.icann-servers.net.\n"
+"\n"
+";; ADDITIONAL SECTION:\n"
+"ns.icann.org.        3600    IN    A     199.4.138.53\n"
+"ns.icann.org.        3600    IN    AAAA  2001:500:89::53\n"
+"\n"
+";; Query time: 241 msec\n"
+";; SERVER: 199.19.56.1#53(A0.ORG.AFILIAS-NST.INFO) (UDP)\n"
+msgstr ""
+
 #: src/content/docs/en/definitions/dns.mdx:block 19 (header)
 msgid "See also"
 msgstr ""
@@ -1155,6 +1180,28 @@ msgstr ""
 msgid "Note the `Registrar WHOIS Server` field in the response."
 msgstr ""
 
+#: src/content/docs/en/definitions/whois.mdx:block 19 (code)
+msgid ""
+"$ whois --verbose example.com -h whois.verisign-grs.com.\n"
+"Using server whois.verisign-grs.com..\n"
+"Query string: \"example.com\"\n"
+"\n"
+"   Domain Name: EXAMPLE.COM\n"
+"   Registry Domain ID: 2336799_DOMAIN_COM-VRSN\n"
+"   Registrar WHOIS Server: whois.iana.org\n"
+"   Registrar URL: http://res-dom.iana.org\n"
+"   Updated Date: 2025-08-14T07:01:39Z\n"
+"   Creation Date: 1995-08-14T04:00:00Z\n"
+"   Registry Expiry Date: 2026-08-13T04:00:00Z\n"
+"   Registrar: RESERVED-Internet Assigned Numbers Authority\n"
+"   Domain Status: clientDeleteProhibited https://icann.org/epp#clientDeleteProhibited\n"
+"   Domain Status: clientTransferProhibited https://icann.org/epp#clientTransferProhibited\n"
+"   Name Server: A.IANA-SERVERS.NET\n"
+"   Name Server: B.IANA-SERVERS.NET\n"
+"   DNSSEC: signedDelegation\n"
+">>> Last update of whois database: 2025-11-20T08:05:54Z <<<\n"
+msgstr ""
+
 #: src/content/docs/en/definitions/whois.mdx:block 20 (header)
 msgid "Request to the Registrar (IANA)"
 msgstr ""
@@ -1163,6 +1210,22 @@ msgstr ""
 msgid ""
 "Following the referral, we query the specific Registrar to get the ownership"
 " details."
+msgstr ""
+
+#: src/content/docs/en/definitions/whois.mdx:block 22 (code)
+msgid ""
+"$ whois --verbose example.com -h whois.iana.org\n"
+"Using server whois.iana.org..\n"
+"Query string: \"example.com\"\n"
+"\n"
+"% IANA WHOIS server\n"
+"% for more information on IANA, visit http://www.iana.org\n"
+"% This query returned 1 object\n"
+"\n"
+"domain:       EXAMPLE.COM\n"
+"organisation: Internet Assigned Numbers Authority\n"
+"created:      1992-01-01\n"
+"source:       IANA\n"
 msgstr ""
 
 #: src/content/docs/en/definitions/whois.mdx:block 23 (header)
@@ -1286,6 +1349,15 @@ msgstr ""
 msgid "A checklist allows you to choose the type of change proposed:"
 msgstr ""
 
+#: src/content/docs/en/developing/contributing/pull-requests.mdx:block 12
+#: (code)
+msgid ""
+"- [ ] Bug fix (non-breaking change which fixes an issue)\n"
+"- [ ] New feature (non-breaking change which adds functionality)\n"
+"- [ ] Breaking change (fix or feature that would cause existing functionality to not work as expected)\n"
+"- [ ] This change requires a documentation update\n"
+msgstr ""
+
 #: src/content/docs/en/developing/contributing/pull-requests.mdx:block 13
 #: (paragraph)
 msgid ""
@@ -1302,6 +1374,15 @@ msgstr ""
 msgid ""
 "The checklist below allows you to self-assess the conformity of your "
 "proposal before submitting it for review:"
+msgstr ""
+
+#: src/content/docs/en/developing/contributing/pull-requests.mdx:block 16
+#: (code)
+msgid ""
+"- [x] Commit names follow the Conventional Commits convention\n"
+"- [x] I have checked the entire code before submitting it\n"
+"- [x] I have updated the documentation related to my commits\n"
+"- [x] My code does not generate errors\n"
 msgstr ""
 
 #: src/content/docs/en/developing/contributing/pull-requests.mdx:block 17
@@ -1371,6 +1452,113 @@ msgid ""
 "new Provider’s API."
 msgstr ""
 
+#: src/content/docs/en/developing/implementing-new-provider.mdx:block 12
+#: (code)
+msgid ""
+"1. Add the necessary class properties and assertions.\n"
+"   The DTO class must extend `DefaultProviderDto`.\n"
+"\n"
+"    Only include properties required for user authentication, domain name registration, and any legally required consents.\n"
+"    <Code code={`namespace App\\\\Dto\\\\Connector;\n"
+"\n"
+"        class MySuperRegistrarProviderDto extends DefaultProviderDto\n"
+"    `} lang=\"php\" title='MySuperRegistrarProviderDto.php' mark={['extends DefaultProviderDto']} />\n"
+"\n"
+"1. Create a new Provider class.\n"
+"    <FileTree>\n"
+"        - src\n"
+"          - Service\n"
+"            - Provider\n"
+"              - AbstractProvider.php                defines the signature of methods\n"
+"              - **MySuperRegistrarProvider.php**    your new Provider\n"
+"    </FileTree>\n"
+"\n"
+"1. The class must extend `AbstractProvider`.\n"
+"    Refer to the existing Providers for implementation examples.\n"
+"    <Code code={`namespace App\\\\Service\\\\Provider;\n"
+"\n"
+"    #[Autoconfigure(public: true)]\n"
+"    class MySuperRegistrarProvider extends AbstractProvider\n"
+"    {\n"
+"        protected string $dtoClass = MySuperRegistrarProviderDto::class;\n"
+"\n"
+"        /** @var MySuperRegistrarProviderDto */\n"
+"        protected DefaultProviderDto $authData;\n"
+"    `} lang=\"php\" title='MySuperRegistrarProvider.php' mark={['extends AbstractProvider']} />\n"
+"   ::::note\n"
+"    You now need to implement the methods defined in `AbstractProvider`.\n"
+"\n"
+"    Refer to the official Provider API documentation as needed.\n"
+"    ::::\n"
+"\n"
+"1. Implement the `assertAuthentication` method.\n"
+"\n"
+"   This method validates user authentication data.\n"
+"   Make a request to the Provider’s API to verify that the user’s credentials are valid.\n"
+"\n"
+"   The method must return `void` when authentication succeeds.\n"
+"   ::::tip\n"
+"   If an issue occurs, throw an appropriate exception from the `App\\Exception\\Provider` namespace.\n"
+"   ::::\n"
+"    <Code code={`\n"
+"    protected function assertAuthentication(): void\n"
+"    {\n"
+"        // TODO: Implement assertAuthentication() method.\n"
+"    }`} lang=\"php\" title='MySuperRegistrarProvider.php' mark={['protected function assertAuthentication()']} />\n"
+"\n"
+"1. Implement the `getCachedTldList` method.\n"
+"    <Code code={`\n"
+"    protected function getCachedTldList(): CacheItemInterface\n"
+"    {\n"
+"        return $this->cacheItemPool->getItem('app.provider.my-super-registrar.supported-tld');\n"
+"    }`} lang=\"php\" title='MySuperRegistrarProvider.php' mark={['my-super-registrar']} />\n"
+"\n"
+"    This method returns the cache entry holding the list of TLDs supported by this Provider.\n"
+"    Even if the API does not currently provide this information, implement the method for future compatibility.\n"
+"\n"
+"1. Implement the `getSupportedTldList` method.\n"
+"\n"
+"    If the Provider API does not offer a way to retrieve supported TLDs, return an empty array `[]`.\n"
+"    Otherwise, call the API and return the list of supported TLDs.\n"
+"    <Code code={`\n"
+"    protected function getSupportedTldList(): array\n"
+"    {\n"
+"        // TODO: Implement getSupportedTldList() method.\n"
+"    }`} lang=\"php\" title='MySuperRegistrarProvider.php' />\n"
+"\n"
+"1. Implement the `isSupported` method (if necessary).\n"
+"    Override `isSupported` **only if** the Provider API cannot list supported TLDs. In that case, return `true` to indicate that all TLDs are potentially valid.\n"
+"\n"
+"1. Implement the `orderDomain` method.\n"
+"\n"
+"    Follow the Provider's API documentation to implement domain ordering using the required properties.\n"
+"    ::::tip\n"
+"    As with authentication, you may throw generic Provider exceptions in case of an error.\n"
+"    ::::\n"
+"    <Code code={`\n"
+"    public function orderDomain(Domain $domain, bool $dryRun): void\n"
+"    {\n"
+"        // TODO: Implement orderDomain() method.\n"
+"    }`} lang=\"php\" title='MySuperRegistrarProvider.php' />\n"
+"\n"
+"1. Add your Provider to the `ConnectorProvider` enumeration.\n"
+"    <Code code={`\n"
+"    namespace App\\Config;\n"
+"\n"
+"    enum ConnectorProvider: string\n"
+"    {\n"
+"        // ...\n"
+"        case MY_SUPER_REGISTRAR = 'my-super-registrar';\n"
+"\n"
+"        public function getConnectorProvider(): string\n"
+"        {\n"
+"            return match ($this) {\n"
+"                // ...\n"
+"                ConnectorProvider::MY_SUPER_REGISTRAR => MySuperRegistrarProvider::class,\n"
+"        };\n"
+"    }`} lang=\"php\" title='src/Config/ConnectorProvider.php' />\n"
+msgstr ""
+
 #: src/content/docs/en/developing/implementing-new-provider.mdx:block 14
 #: (paragraph)
 msgid ""
@@ -1383,6 +1571,35 @@ msgstr ""
 msgid "Frontend"
 msgstr ""
 
+#: src/content/docs/en/developing/implementing-new-provider.mdx:block 17
+#: (code)
+msgid ""
+"1. Add the fields corresponding to the DTO you created earlier.\n"
+"   Check existing forms for reference.\n"
+"   If the Provider API does not allow retrieving supported TLDs, display this information as in the other forms.\n"
+"\n"
+"1. Add your Provider to the `ConnectorProvider` enumeration.\n"
+"   The value must exactly match the one defined in PHP.\n"
+"\n"
+"   <Code code={`\n"
+"    export enum ConnectorProvider {\n"
+"        // ...\n"
+"        MY_SUPER_REGISTRAR = 'my-super-registrar'\n"
+"    }`} lang=\"ts\" title='assets/utils/api/connectors.ts' />\n"
+"\n"
+"1. Add the API terms of service link and the reference to your new form in the `index.ts` configuration file.\n"
+"    <Code code={`\n"
+"    export const providersConfig: Record<ConnectorProvider, ProviderConfig> = {\n"
+"        // ...\n"
+"        [ConnectorProvider.MY_SUPER_REGISTRAR]: {\n"
+"            tosLink: 'https://...',\n"
+"            form: MySuperRegistrarConnectorForm\n"
+"        }\n"
+"    }`} lang=\"ts\" title='assets/utils/providers/index.ts' />\n"
+"\n"
+"1. Ensure the interface renders correctly and fix any display issues.\n"
+msgstr ""
+
 #: src/content/docs/en/developing/implementing-new-provider.mdx:block 19
 #: (paragraph)
 msgid "**Great job!** 🎉 Your Frontend implementation is now complete."
@@ -1391,6 +1608,28 @@ msgstr ""
 #: src/content/docs/en/developing/implementing-new-provider.mdx:block 20
 #: (header)
 msgid "Testing"
+msgstr ""
+
+#: src/content/docs/en/developing/implementing-new-provider.mdx:block 22
+#: (code)
+msgid ""
+"        $this->testGenericProvider(ConnectorProvider::MY_SUPER_REGISTRAR, [\n"
+"            'waiveRetractationPeriod' => true,\n"
+"            'acceptConditions' => true,\n"
+"            'ownerLegalAge' => true,\n"
+"            'token' => $token,\n"
+"        ]);\n"
+"    }`} lang=\"php\" title='tests/Service/Provider/AbstractProviderTest.php' />\n"
+"\n"
+"1. Create a Symfony configuration parameter connecting the environment variable to the credentials.\n"
+"\n"
+"1. Run the tests with PHPUnit:\n"
+"    ```shell\n"
+"    php vendor/bin/phpunit\n"
+"    ```\n"
+"1. Ensure the test passes.\n"
+"If it fails, fix the implementation accordingly.\n"
+"Consider enabling code coverage to identify executed sections.\n"
 msgstr ""
 
 #: src/content/docs/en/developing/implementing-new-provider.mdx:block 24
@@ -2561,9 +2800,19 @@ msgstr ""
 msgid "Pull the latest version of the Domain Watchdog image from Docker Hub"
 msgstr ""
 
+#: src/content/docs/en/install-config/install/docker-compose.mdx:block 4
+#: (code)
+msgid "docker compose pull\n"
+msgstr ""
+
 #: src/content/docs/en/install-config/install/docker-compose.mdx:block 5
 #: (ordered list)
 msgid "Start the project in production environment"
+msgstr ""
+
+#: src/content/docs/en/install-config/install/docker-compose.mdx:block 6
+#: (code)
+msgid "docker compose up\n"
 msgstr ""
 
 #: src/content/docs/en/install-config/install/docker-compose.mdx:block 7
@@ -2625,24 +2874,31 @@ msgstr ""
 msgid "Clone the repository:"
 msgstr ""
 
-#: src/content/docs/en/install-config/install/manual-install.mdx:block 12
-#: (ordered list)
-msgid "Generate the cryptographic key pair for the JWT signature"
+#: src/content/docs/en/install-config/install/manual-install.mdx:block 9
+#: (code)
+msgid "git clone https://github.com/maelgangloff/domain-watchdog.git\n"
 msgstr ""
 
 #: src/content/docs/en/install-config/install/manual-install.mdx:block 12
 #: (ordered list)
-msgid "Run database migrations"
+msgid ""
+"Generate the cryptographic key pair for the JWT signaturephp bin/console "
+"lexik:jwt:generate-keypair\n"
 msgstr ""
 
 #: src/content/docs/en/install-config/install/manual-install.mdx:block 12
 #: (ordered list)
-msgid "Start the Symfony server"
+msgid "Run database migrationsphp bin/console doctrine:migrations:migrate\n"
 msgstr ""
 
 #: src/content/docs/en/install-config/install/manual-install.mdx:block 12
 #: (ordered list)
-msgid "Build assets"
+msgid "Start the Symfony serversymfony server:start\n"
+msgstr ""
+
+#: src/content/docs/en/install-config/install/manual-install.mdx:block 12
+#: (ordered list)
+msgid "Build assetsphp bin/console assets:install\n"
 msgstr ""
 
 #: src/content/docs/en/install-config/install/manual-install.mdx:block 12
@@ -2670,6 +2926,10 @@ msgstr ""
 
 #: src/content/docs/en/install-config/upgrade.mdx:block 4 (paragraph)
 msgid "Fetch updates from the remote repository:"
+msgstr ""
+
+#: src/content/docs/en/install-config/upgrade.mdx:block 5 (code)
+msgid "git pull origin master\n"
 msgstr ""
 
 #: src/content/docs/en/legal/faq.md:block 1 (header)
@@ -2705,4 +2965,3 @@ msgid ""
 "If you want to report a vulnerability, please contact the maintainer of this"
 " repository. Thanks!"
 msgstr ""
-
