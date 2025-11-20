@@ -1,0 +1,2720 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-11-20 13:19+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Automatically generated\n"
+"Language-Team: none\n"
+"Language: fr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n > 1;\n"
+"X-Generator: Translate Toolkit 3.16.3\n"
+
+#
+
+#: src/content/docs/en/acknowledgment.mdx:block 1 (header)
+msgid "title: Acknowledgment"
+msgstr ""
+
+#: src/content/docs/en/acknowledgment.mdx:block 2 (paragraph)
+msgid "import { ContributorList } from \"starlight-contributor-list\""
+msgstr ""
+
+#: src/content/docs/en/acknowledgment.mdx:block 3 (header)
+msgid "Contributors"
+msgstr ""
+
+#: src/content/docs/en/acknowledgment.mdx:block 4 (paragraph)
+msgid ""
+"A huge thank-you to everyone who has contributed to this project! Your "
+"ideas, bug reports, code improvements, and translations all help make this "
+"project better for everyone."
+msgstr ""
+
+#: src/content/docs/en/acknowledgment.mdx:block 5 (paragraph)
+msgid ""
+"<ContributorList githubRepo=\"maelgangloff/domain-watchdog\" "
+"ignore={['weblate']} />"
+msgstr ""
+
+#: src/content/docs/en/definitions/dns.mdx:block 1 (header)
+msgid ""
+"title: DNS Protocol\n"
+"description: What is DNS? Understand the Domain Name System, how it translates domain names into IP addresses, and its role in modern internet navigation."
+msgstr ""
+
+#: src/content/docs/en/definitions/dns.mdx:block 2 (paragraph)
+msgid "import {LinkCard} from \"@astrojs/starlight/components\";"
+msgstr ""
+
+#: src/content/docs/en/definitions/dns.mdx:block 3 (paragraph)
+msgid ""
+"**DNS (Domain Name System)** is the decentralized naming system for "
+"computers, services, or any resources connected to the internet or a private"
+" network. It acts as the \"phonebook of the internet\", translating human-"
+"readable domain names into machine-readable infos."
+msgstr ""
+
+#: src/content/docs/en/definitions/dns.mdx:block 4 (header)
+msgid "The Hierarchical Architecture"
+msgstr ""
+
+#: src/content/docs/en/definitions/dns.mdx:block 5 (paragraph)
+msgid ""
+"The DNS architecture is a distributed, hierarchical database resembling an "
+"inverted tree. This structure, known as the **Domain Name Space**, is "
+"processed from right to left:"
+msgstr ""
+
+#: src/content/docs/en/definitions/dns.mdx:block 6 (unordered list)
+msgid ""
+"**Root Level**: The top of the hierarchy, represented by a silent single dot"
+" (`.`) at the end of a fully qualified domain name."
+msgstr ""
+
+#: src/content/docs/en/definitions/dns.mdx:block 6 (unordered list)
+msgid ""
+"**Top-Level Domains (TLDs)**: The highest visible level (e.g., `.com`, "
+"`.org`, `.fr`)."
+msgstr ""
+
+#: src/content/docs/en/definitions/dns.mdx:block 6 (unordered list)
+msgid ""
+"**Second-Level Domains (SLDs)**: The specific name registered by an entity "
+"(e.g., `example` in `example.com`)."
+msgstr ""
+
+#: src/content/docs/en/definitions/dns.mdx:block 6 (unordered list)
+msgid ""
+"**Subdomains**: Further subdivisions for specific services or organizational"
+" structures (e.g., `www`, `blog`, or `api`)."
+msgstr ""
+
+#: src/content/docs/en/definitions/dns.mdx:block 7 (header)
+msgid "Authoritative Servers"
+msgstr ""
+
+#: src/content/docs/en/definitions/dns.mdx:block 8 (paragraph)
+msgid ""
+"Authoritative DNS servers hold the definitive resource records for a "
+"specific domain zone. Unlike recursive resolvers that cache answers, "
+"authoritative servers provide the original data."
+msgstr ""
+
+#: src/content/docs/en/definitions/dns.mdx:block 9 (paragraph)
+msgid "When a client requests a domain, the resolution chain queries:"
+msgstr ""
+
+#: src/content/docs/en/definitions/dns.mdx:block 10 (ordered list)
+msgid "**Root Servers**: Directs to the TLD servers."
+msgstr ""
+
+#: src/content/docs/en/definitions/dns.mdx:block 10 (ordered list)
+msgid "**TLD Servers**: Directs to the domain's authoritative nameservers."
+msgstr ""
+
+#: src/content/docs/en/definitions/dns.mdx:block 10 (ordered list)
+msgid ""
+"**Authoritative Server**: Returns the final IP address (or other record)."
+msgstr ""
+
+#: src/content/docs/en/definitions/dns.mdx:block 11 (paragraph)
+msgid ""
+"<LinkCard title=\"Top Level Domain\" description=\"An overview of Top-Level "
+"Domains (TLDs), their classification (gTLD, ccTLD, etc.), and the structure "
+"of the DNS root zone.\" href=\"/en/definitions/top-level-domain\"/>"
+msgstr ""
+
+#: src/content/docs/en/definitions/dns.mdx:block 12 (header)
+msgid "GLUE Records"
+msgstr ""
+
+#: src/content/docs/en/definitions/dns.mdx:block 13 (paragraph)
+msgid ""
+"A GLUE record is an A (or AAAA) record **provided by the parent zone** to "
+"prevent circular dependencies. Normally, the parent zone only delegates, but"
+" here it must provide data. They are strictly necessary when a domain's "
+"nameserver is a subdomain of the domain itself (e.g., `example.com` uses "
+"`ns1.example.com` as its nameserver). Without the GLUE record in the `.com` "
+"zone pointing to `ns1`'s IP, the resolver would be stuck in a loop trying to"
+" resolve the nameserver's name."
+msgstr ""
+
+#: src/content/docs/en/definitions/dns.mdx:block 14 (header)
+msgid "Example: `ns.icann.org`"
+msgstr ""
+
+#: src/content/docs/en/definitions/dns.mdx:block 15 (paragraph)
+msgid ""
+"In this example, `icann.org` uses `ns.icann.org` as one of its nameservers."
+msgstr ""
+
+#: src/content/docs/en/definitions/dns.mdx:block 16 (paragraph)
+msgid ""
+"To resolve `icann.org`, you must query `ns.icann.org`, but you cannot find "
+"`ns.icann.org` without first resolving `icann.org`."
+msgstr ""
+
+#: src/content/docs/en/definitions/dns.mdx:block 17 (paragraph)
+msgid ""
+"When querying the `.org` TLD server (`A0.ORG.AFILIAS-NST.INFO`), the server "
+"returns the Nameserver (NS) records in the **Authority Section**, but "
+"crucially, it also provides the IP addresses in the **Additional Section**. "
+"These are the GLUE records."
+msgstr ""
+
+#: src/content/docs/en/definitions/dns.mdx:block 19 (header)
+msgid "See also"
+msgstr ""
+
+#: src/content/docs/en/definitions/dns.mdx:block 20 (unordered list)
+msgid ""
+"[Domain Name System](https://en.wikipedia.org/wiki/Domain_Name_System) on "
+"Wikipedia"
+msgstr ""
+
+#: src/content/docs/en/definitions/dnssec.mdx:block 1 (header)
+msgid ""
+"title: DNSSEC description: Secure your domain resolution. Learn about DNSSEC"
+" (Domain Name System Security Extensions) and how it protects users from "
+"forged DNS data."
+msgstr ""
+
+#: src/content/docs/en/definitions/dnssec.mdx:block 3 (paragraph)
+msgid ""
+"**DNSSEC (Domain Name System Security Extensions)** adds a layer of "
+"cryptographic security to the DNS protocol. It defends against specific "
+"attacks, such as **DNS cache poisoning** and **man-in-the-middle attacks**, "
+"by ensuring that the DNS data received is identical to what the zone owner "
+"published."
+msgstr ""
+
+#: src/content/docs/en/definitions/dnssec.mdx:block 4 (header)
+msgid "What DNSSEC does"
+msgstr ""
+
+#: src/content/docs/en/definitions/dnssec.mdx:block 5 (paragraph)
+msgid ""
+"DNSSEC employs public-key cryptography to establish a **Chain of Trust**."
+msgstr ""
+
+#: src/content/docs/en/definitions/dnssec.mdx:block 6 (unordered list)
+msgid ""
+"**Origin Authentication**: Verifies that the data comes from the correct "
+"authoritative server."
+msgstr ""
+
+#: src/content/docs/en/definitions/dnssec.mdx:block 6 (unordered list)
+msgid "**Data Integrity**: Ensures the data has not been modified in transit."
+msgstr ""
+
+#: src/content/docs/en/definitions/dnssec.mdx:block 6 (unordered list)
+msgid ""
+"**Authenticated Denial of Existence**: Proves securely that a domain or "
+"record does *not* exist (using NSEC/NSEC3)."
+msgstr ""
+
+#: src/content/docs/en/definitions/dnssec.mdx:block 7 (paragraph)
+msgid "New resource records enable this validation:"
+msgstr ""
+
+#: src/content/docs/en/definitions/dnssec.mdx:block 8 (unordered list)
+msgid "`RRSIG`: The digital signature associated with a record set."
+msgstr ""
+
+#: src/content/docs/en/definitions/dnssec.mdx:block 8 (unordered list)
+msgid "`DNSKEY`: The public key used to verify the RRSIG."
+msgstr ""
+
+#: src/content/docs/en/definitions/dnssec.mdx:block 8 (unordered list)
+msgid ""
+"`DS` (Delegation Signer): A hash of the child zone's key, stored in the "
+"parent zone to link the trust chain."
+msgstr ""
+
+#: src/content/docs/en/definitions/dnssec.mdx:block 9 (header)
+msgid "What DNSSEC does not do"
+msgstr ""
+
+#: src/content/docs/en/definitions/dnssec.mdx:block 10 (unordered list)
+msgid ""
+"**No Encryption**: DNS queries and responses remain in plain text (unlike "
+"DoH or DoT)."
+msgstr ""
+
+#: src/content/docs/en/definitions/dnssec.mdx:block 10 (unordered list)
+msgid ""
+"**No Identity Validation**: It does not validate the legitimacy of the "
+"domain owner (e.g., it doesn't prevent phishing domains, it just proves the "
+"phishing domain's IP is correct)."
+msgstr ""
+
+#: src/content/docs/en/definitions/dnssec.mdx:block 11 (header)
+msgid "Configure DNSSEC on your Domain Name"
+msgstr ""
+
+#: src/content/docs/en/definitions/dnssec.mdx:block 12 (paragraph)
+msgid "Implementing DNSSEC involves two main stages:"
+msgstr ""
+
+#: src/content/docs/en/definitions/dnssec.mdx:block 13 (ordered list)
+msgid ""
+"**Signing the Zone**: The authoritative nameserver generates keys (`ZSK` and"
+" `KSK`) and signs the zone data, creating `RRSIG` and `DNSKEY` records."
+msgstr ""
+
+#: src/content/docs/en/definitions/dnssec.mdx:block 13 (ordered list)
+msgid ""
+"**Establishing Trust**: The domain owner must send the `DS` record (hash of "
+"the KSK) to the Registrar. The Registrar forwards this to the Registry for "
+"publication in the parent TLD zone."
+msgstr ""
+
+#: src/content/docs/en/definitions/dnssec.mdx:block 14 (paragraph)
+msgid ""
+"<LinkCard title=\"Domain name\" description=\"An explanation of what a "
+"domain name is and its structure.\" href=\"/en/definitions/domain-name\"/>"
+msgstr ""
+
+#: src/content/docs/en/definitions/dnssec.mdx:block 15 (header)
+msgid "The Adoption of DNSSEC"
+msgstr ""
+
+#: src/content/docs/en/definitions/dnssec.mdx:block 16 (paragraph)
+msgid ""
+"Adoption is a top-down process starting from the Root Zone. While the Root "
+"and most TLDs are signed, adoption at the end-user level (Second-Level "
+"Domains) relies on registrar support and registrant awareness."
+msgstr ""
+
+#: src/content/docs/en/definitions/dnssec.mdx:block 17 (paragraph)
+msgid ""
+"<LinkCard title=\"Top Level Domain\" description=\"An overview of Top-Level "
+"Domains (TLDs) and their classification (gTLD, ccTLD, etc.).\" "
+"href=\"/en/definitions/top-level-domain\"/>"
+msgstr ""
+
+#: src/content/docs/en/definitions/dnssec.mdx:block 19 (unordered list)
+msgid ""
+"[DNSSEC World Map](https://stats.labs.apnic.net/dnssec) of the APNIC Labs"
+msgstr ""
+
+#: src/content/docs/en/definitions/domain-lifecycle.mdx:block 1 (header)
+msgid ""
+"title: Domain Lifecycle description: Explore the domain lifecycle, from "
+"registration and renewal to expiration and redemption. Know the critical "
+"phases for managing your domain name."
+msgstr ""
+
+#: src/content/docs/en/definitions/domain-lifecycle.mdx:block 3 (paragraph)
+msgid ""
+"The **Domain Lifecycle** defines the statuses a domain name traverses from "
+"its creation to its deletion. Understanding these phases is critical to "
+"prevent unintentional loss of a domain."
+msgstr ""
+
+#: src/content/docs/en/definitions/domain-lifecycle.mdx:block 4 (header)
+msgid "The Generic Life Cycle"
+msgstr ""
+
+#: src/content/docs/en/definitions/domain-lifecycle.mdx:block 5 (paragraph)
+msgid ""
+"![Generic Domain Name Life Cycle](https://www.icann.org/en/registrars/gtld-"
+"lifecycle.jpg)"
+msgstr ""
+
+#: src/content/docs/en/definitions/domain-lifecycle.mdx:block 6 (paragraph)
+msgid ""
+"For most Generic Top-Level Domains (gTLDs) regulated by ICANN, the cycle "
+"follows this path:"
+msgstr ""
+
+#: src/content/docs/en/definitions/domain-lifecycle.mdx:block 7 (ordered list)
+msgid "**Available**: The domain is open for registration."
+msgstr ""
+
+#: src/content/docs/en/definitions/domain-lifecycle.mdx:block 7 (ordered list)
+msgid ""
+"**Registered (Active)**: The domain is owned and functional. It can be "
+"updated, transferred, or renewed (typically 1–10 years)."
+msgstr ""
+
+#: src/content/docs/en/definitions/domain-lifecycle.mdx:block 7 (ordered list)
+msgid ""
+"**Auto-Renew Grace Period**: (0–45 days) The domain expires. The owner can "
+"usually renew it at the standard rate. The domain may stop resolving "
+"(ServerHold)."
+msgstr ""
+
+#: src/content/docs/en/definitions/domain-lifecycle.mdx:block 7 (ordered list)
+msgid ""
+"**Redemption Grace Period**: (30 days) The domain is deleted from the "
+"registrar but held by the registry. Recovery is possible but requires a "
+"higher **restoration fee**."
+msgstr ""
+
+#: src/content/docs/en/definitions/domain-lifecycle.mdx:block 7 (ordered list)
+msgid ""
+"**Pending Delete**: (5 days) The domain is scheduled for permanent deletion."
+" It cannot be recovered or renewed."
+msgstr ""
+
+#: src/content/docs/en/definitions/domain-lifecycle.mdx:block 7 (ordered list)
+msgid ""
+"**Released**: The domain becomes **Available** again for public "
+"registration."
+msgstr ""
+
+#: src/content/docs/en/definitions/domain-lifecycle.mdx:block 9 (header)
+msgid "Special Cases of some ccTLDs"
+msgstr ""
+
+#: src/content/docs/en/definitions/domain-lifecycle.mdx:block 10 (paragraph)
+msgid ""
+"Country Code Top-Level Domains (ccTLDs) operate under local regulations, "
+"leading to diverse lifecycles:"
+msgstr ""
+
+#: src/content/docs/en/definitions/domain-lifecycle.mdx:block 11 (unordered
+#: list)
+msgid ""
+"**No Grace Periods**: Some ccTLDs enter \"Pending Delete\" immediately upon "
+"expiration."
+msgstr ""
+
+#: src/content/docs/en/definitions/domain-lifecycle.mdx:block 11 (unordered
+#: list)
+msgid ""
+"**Pre-Expiration Renewal**: Some registries require renewal fees to be paid "
+"weeks before the actual expiration date."
+msgstr ""
+
+#: src/content/docs/en/definitions/domain-lifecycle.mdx:block 11 (unordered
+#: list)
+msgid ""
+"**Manual Processes**: Restoration in some ccTLDs may require manual "
+"intervention and paperwork."
+msgstr ""
+
+#: src/content/docs/en/definitions/domain-lifecycle.mdx:block 14 (unordered
+#: list)
+msgid ""
+"[Life Cycle of a Typical gTLD Domain "
+"Name](https://www.icann.org/en/contracted-parties/accredited-"
+"registrars/resources/gtld-lifecycle) on the ICANN website"
+msgstr ""
+
+#: src/content/docs/en/definitions/domain-name.mdx:block 1 (header)
+msgid ""
+"title: Domain name description: Define your identity online. An explanation "
+"of what a domain name is and its structure."
+msgstr ""
+
+#: src/content/docs/en/definitions/domain-name.mdx:block 2 (paragraph)
+msgid ""
+"A **Domain Name** is a human-readable identification string used to locate "
+"resources on the Internet. It maps complex numerical IP addresses to "
+"memorable names."
+msgstr ""
+
+#: src/content/docs/en/definitions/domain-name.mdx:block 3 (header)
+msgid "The Structure of a Domain Name"
+msgstr ""
+
+#: src/content/docs/en/definitions/domain-name.mdx:block 4 (paragraph)
+msgid "A domain name is read hierarchically from right to left:"
+msgstr ""
+
+#: src/content/docs/en/definitions/domain-name.mdx:block 5 (ordered list)
+msgid "**Top-Level Domain (TLD)**: The suffix (e.g., `.com`, `.fr`)."
+msgstr ""
+
+#: src/content/docs/en/definitions/domain-name.mdx:block 5 (ordered list)
+msgid ""
+"**Second-Level Domain (SLD)**: The unique name chosen by the registrant "
+"(e.g., `example`)."
+msgstr ""
+
+#: src/content/docs/en/definitions/domain-name.mdx:block 5 (ordered list)
+msgid "**Subdomain**: prefixes for specific services (e.g., `www`, `api`)."
+msgstr ""
+
+#: src/content/docs/en/definitions/domain-name.mdx:block 6 (paragraph)
+msgid ""
+"A **Fully Qualified Domain Name (FQDN)** includes all labels up to the root "
+"(e.g., `www.example.com.`)."
+msgstr ""
+
+#: src/content/docs/en/definitions/domain-name.mdx:block 7 (header)
+msgid "The EPP Statuses"
+msgstr ""
+
+#: src/content/docs/en/definitions/domain-name.mdx:block 8 (paragraph)
+msgid ""
+"The Extensible Provisioning Protocol (EPP) assigns status codes to domains "
+"to indicate their state or restrictions. These are visible in WHOIS/RDAP "
+"lookups."
+msgstr ""
+
+#: src/content/docs/en/definitions/domain-name.mdx:block 9 (header)
+msgid "Server Statuses (Set by Registry)"
+msgstr ""
+
+#: src/content/docs/en/definitions/domain-name.mdx:block 10 (paragraph)
+msgid ""
+"The registry can apply EPP codes to modify the state of a domain name. These"
+" are all codes except those beginning with `client`, which are reserved for "
+"registrars. Generic codes are listed in the ICANN documentation."
+msgstr ""
+
+#: src/content/docs/en/definitions/domain-name.mdx:block 11 (paragraph)
+msgid ""
+"Some registries have developed additional codes to describe non-standard "
+"cases. For example, AFNIC added the code `server trade prohibited` to "
+"describe the prohibition of the `trade` operation on a domain name. This "
+"operation is part of AFNIC's EPP extension and is not a standard operation "
+"for a domain name."
+msgstr ""
+
+#: src/content/docs/en/definitions/domain-name.mdx:block 12 (header)
+msgid "Client Statuses (Set by Registrar)"
+msgstr ""
+
+#: src/content/docs/en/definitions/domain-name.mdx:block 13 (paragraph)
+msgid ""
+"Registrars can also apply EPP codes to a domain name. These codes always "
+"begin with `client` to distinguish them from the codes applied by the "
+"registry."
+msgstr ""
+
+#: src/content/docs/en/definitions/domain-name.mdx:block 14 (paragraph)
+msgid "Some codes have the same effect as those applied by the registry."
+msgstr ""
+
+#: src/content/docs/en/definitions/domain-name.mdx:block 15 (paragraph)
+msgid ""
+"For example, the `client hold` and `server hold` codes block the resolution "
+"of a domain name's DNS zone. This means that the top-level domain name's DNS"
+" zone no longer contains the `NS` records necessary for delegating the "
+"domain name's zone. This results in the complete shutdown of services for "
+"the domain name. This code is often used by the registrar to strongly "
+"encourage the registrant to pay renewal fees (when the domain name is not in"
+" its redemption period)."
+msgstr ""
+
+#: src/content/docs/en/definitions/domain-name.mdx:block 16 (header)
+msgid "Internationalized Domain Name (IDN)"
+msgstr ""
+
+#: src/content/docs/en/definitions/domain-name.mdx:block 17 (paragraph)
+msgid ""
+"An IDN is a domain name that contains characters other than the standard "
+"ASCII format (a-z, 0-9, and hyphens). This includes characters with "
+"diacritics (accents) or characters from non-Latin scripts (Arabic, Chinese, "
+"Cyrillic, etc.)."
+msgstr ""
+
+#: src/content/docs/en/definitions/domain-name.mdx:block 18 (paragraph)
+msgid ""
+"To function in the legacy DNS system, IDNs are converted into an ASCII-"
+"compatible format called **Punycode**, which always begins with `xn--`."
+msgstr ""
+
+#: src/content/docs/en/definitions/domain-name.mdx:block 19 (table)
+msgid "Display"
+msgstr ""
+
+#: src/content/docs/en/definitions/domain-name.mdx:block 19 (table)
+msgid "Punycode"
+msgstr ""
+
+#: src/content/docs/en/definitions/domain-name.mdx:block 19 (table)
+msgid "`maëlgangloff.fr`"
+msgstr ""
+
+#: src/content/docs/en/definitions/domain-name.mdx:block 19 (table)
+msgid "`xn--malgangloff-0bb.fr`"
+msgstr ""
+
+#: src/content/docs/en/definitions/domain-name.mdx:block 21 (unordered list)
+msgid "[EPP Status Codes](https://icann.org/epp) on the ICANN website"
+msgstr ""
+
+#: src/content/docs/en/definitions/epp.mdx:block 1 (header)
+msgid ""
+"title: EPP Protocol description: What is a Domain Name Registrar? Learn "
+"their role in managing the registration and transfer of domain names for the"
+" public."
+msgstr ""
+
+#: src/content/docs/en/definitions/epp.mdx:block 3 (paragraph)
+msgid ""
+"The **Extensible Provisioning Protocol (EPP)** is the standard application-"
+"layer protocol for allocating objects within registries over the Internet. "
+"While primarily used for domain names, it can also manage contacts and host "
+"objects."
+msgstr ""
+
+#: src/content/docs/en/definitions/epp.mdx:block 4 (header)
+msgid "The Actors"
+msgstr ""
+
+#: src/content/docs/en/definitions/epp.mdx:block 5 (header)
+msgid "Client (Registrar)"
+msgstr ""
+
+#: src/content/docs/en/definitions/epp.mdx:block 6 (paragraph)
+msgid ""
+"The Registrar acts as the EPP Client. They send XML commands to create, "
+"update, renew, or delete domain names based on customer requests."
+msgstr ""
+
+#: src/content/docs/en/definitions/epp.mdx:block 7 (paragraph)
+msgid ""
+"<LinkCard title=\"Registrar\" description=\"What is a Domain Name "
+"Registrar?\" href=\"/en/definitions/registrar\"/>"
+msgstr ""
+
+#: src/content/docs/en/definitions/epp.mdx:block 8 (header)
+msgid "Server (Registry)"
+msgstr ""
+
+#: src/content/docs/en/definitions/epp.mdx:block 9 (paragraph)
+msgid ""
+"The Registry acts as the EPP Server. It processes the commands, validates "
+"logic (e.g., \"is this domain available?\"), updates the central database, "
+"and returns success or error responses."
+msgstr ""
+
+#: src/content/docs/en/definitions/epp.mdx:block 10 (paragraph)
+msgid ""
+"<LinkCard title=\"Registry\" description=\"What is a Domain Name Registry?\""
+" href=\"/en/definitions/registry\"/>"
+msgstr ""
+
+#: src/content/docs/en/definitions/epp.mdx:block 11 (header)
+msgid "The Protocol Mechanism"
+msgstr ""
+
+#: src/content/docs/en/definitions/epp.mdx:block 12 (paragraph)
+msgid ""
+"EPP uses **XML** messages transported over **TCP**, secured by **TLS**. It "
+"is a stateful protocol, meaning a session is established (Login) before "
+"commands are executed."
+msgstr ""
+
+#: src/content/docs/en/definitions/epp.mdx:block 13 (paragraph)
+msgid "Common EPP commands include:"
+msgstr ""
+
+#: src/content/docs/en/definitions/epp.mdx:block 14 (unordered list)
+msgid "`<check>`: Verify availability."
+msgstr ""
+
+#: src/content/docs/en/definitions/epp.mdx:block 14 (unordered list)
+msgid "`<create>`: Register a new object."
+msgstr ""
+
+#: src/content/docs/en/definitions/epp.mdx:block 14 (unordered list)
+msgid "`<info>`: Retrieve object details."
+msgstr ""
+
+#: src/content/docs/en/definitions/epp.mdx:block 14 (unordered list)
+msgid "`<transfer>`: Initiate a registrar transfer."
+msgstr ""
+
+#: src/content/docs/en/definitions/epp.mdx:block 14 (unordered list)
+msgid "`<poll>`: Retrieve asynchronous notifications from the Registry."
+msgstr ""
+
+#: src/content/docs/en/definitions/epp.mdx:block 16 (unordered list)
+msgid ""
+"[RFC 5730 - Extensible Provisioning Protocol "
+"(EPP)](https://datatracker.ietf.org/doc/html/rfc5730)"
+msgstr ""
+
+#: src/content/docs/en/definitions/icann.mdx:block 1 (header)
+msgid ""
+"title: ICANN description: Learn about ICANN (Internet Corporation for "
+"Assigned Names and Numbers), the non-profit organization coordinating the "
+"global internet's unique identifiers."
+msgstr ""
+
+#: src/content/docs/en/definitions/icann.mdx:block 3 (paragraph)
+msgid ""
+"**ICANN (Internet Corporation for Assigned Names and Numbers)** is the non-"
+"profit organization responsible for coordinating the maintenance and "
+"security of the global Internet's unique identifiers."
+msgstr ""
+
+#: src/content/docs/en/definitions/icann.mdx:block 4 (paragraph)
+msgid ""
+"ICANN acts as the primary governance body for the technical infrastructure "
+"of the DNS. Its responsibilities include:"
+msgstr ""
+
+#: src/content/docs/en/definitions/icann.mdx:block 5 (unordered list)
+msgid ""
+"**IANA Functions**: Managing the allocation of IP address space and the Root"
+" Zone of the DNS."
+msgstr ""
+
+#: src/content/docs/en/definitions/icann.mdx:block 5 (unordered list)
+msgid ""
+"**Policy Development**: Facilitating the creation of global policies for the"
+" domain name system via a multi-stakeholder model."
+msgstr ""
+
+#: src/content/docs/en/definitions/icann.mdx:block 6 (header)
+msgid "Managing Top-Level Domains"
+msgstr ""
+
+#: src/content/docs/en/definitions/icann.mdx:block 7 (paragraph)
+msgid ""
+"ICANN decides which new Top-Level Domains (TLDs) are added to the Root Zone."
+msgstr ""
+
+#: src/content/docs/en/definitions/icann.mdx:block 8 (unordered list)
+msgid ""
+"It oversees the **New gTLD Program**, which expanded the internet from a few"
+" dozen extensions (like `.com`) to over 1,000 (like `.app`, `.shop`)."
+msgstr ""
+
+#: src/content/docs/en/definitions/icann.mdx:block 8 (unordered list)
+msgid ""
+"It delegates **ccTLDs** (like `.uk`, `.fr`) to specific country managers, "
+"although it has less direct control over their local policies."
+msgstr ""
+
+#: src/content/docs/en/definitions/icann.mdx:block 10 (header)
+msgid "Accrediting Registrars"
+msgstr ""
+
+#: src/content/docs/en/definitions/icann.mdx:block 11 (paragraph)
+msgid ""
+"ICANN manages the accreditation system for Registrars wishing to sell "
+"generic TLDs. Accreditation ensures that companies handling domain "
+"registrations adhere to security, stability, and data retention standards."
+msgstr ""
+
+#: src/content/docs/en/definitions/icann.mdx:block 14 (unordered list)
+msgid "[Official website](https://www.icann.org/)"
+msgstr ""
+
+#: src/content/docs/en/definitions/rdap.mdx:block 1 (header)
+msgid ""
+"title: RDAP Protocol description: The modern data access protocol. "
+"Understand RDAP (Registration Data Access Protocol) for reliable and "
+"structured access to domain registration and ownership data."
+msgstr ""
+
+#: src/content/docs/en/definitions/rdap.mdx:block 3 (paragraph)
+msgid ""
+"The **Registration Data Access Protocol (RDAP)** is the modern standard for "
+"accessing registration data. It was designed to replace the legacy WHOIS "
+"protocol by addressing its lack of standardization and security."
+msgstr ""
+
+#: src/content/docs/en/definitions/rdap.mdx:block 4 (header)
+msgid "Key Improvements over WHOIS"
+msgstr ""
+
+#: src/content/docs/en/definitions/rdap.mdx:block 5 (unordered list)
+msgid ""
+"**Structured Data (JSON)**: Unlike WHOIS, which returns unstructured free "
+"text, RDAP returns data in JSON format. This allows for easy automated "
+"parsing and consistent display by clients."
+msgstr ""
+
+#: src/content/docs/en/definitions/rdap.mdx:block 5 (unordered list)
+msgid "**Standardized Queries**: RDAP uses RESTful web services (HTTP/HTTPS)."
+msgstr ""
+
+#: src/content/docs/en/definitions/rdap.mdx:block 5 (unordered list)
+msgid ""
+"**Internationalization**: Native support for non-Latin characters (IDNs)."
+msgstr ""
+
+#: src/content/docs/en/definitions/rdap.mdx:block 5 (unordered list)
+msgid ""
+"**Differentiated Access**: RDAP supports authentication, allowing registries"
+" to show limited data to the public (GDPR compliance) while providing full "
+"data to accredited authorities."
+msgstr ""
+
+#: src/content/docs/en/definitions/rdap.mdx:block 6 (paragraph)
+msgid ""
+"<LinkCard title=\"WHOIS Protocol\" description=\"Get an overview of the "
+"WHOIS Protocol.\" href=\"/en/definitions/whois\"/>"
+msgstr ""
+
+#: src/content/docs/en/definitions/rdap.mdx:block 7 (header)
+msgid "Deployment Status"
+msgstr ""
+
+#: src/content/docs/en/definitions/rdap.mdx:block 8 (paragraph)
+msgid ""
+"ICANN mandates RDAP implementation for all accredited Registrars and gTLD "
+"Registries. While WHOIS is still widely used by legacy systems, RDAP is the "
+"authoritative source for gTLD registration data. Adoption among ccTLDs is "
+"voluntary and ongoing."
+msgstr ""
+
+#: src/content/docs/en/definitions/rdap.mdx:block 10 (unordered list)
+msgid "[RDAP Deployment Dashboard](https://deployment.rdap.org)"
+msgstr ""
+
+#: src/content/docs/en/definitions/registrar.mdx:block 1 (header)
+msgid ""
+"title: Registrar description: What is a Domain Name Registrar? Learn their "
+"role in managing the registration and transfer of domain names for the "
+"public."
+msgstr ""
+
+#: src/content/docs/en/definitions/registrar.mdx:block 3 (paragraph)
+msgid ""
+"A **Registrar** is an accredited commercial entity that sells domain name "
+"registrations to the public. They act as the intermediary between the "
+"Registrant (the domain owner) and the Registry (the database operator)."
+msgstr ""
+
+#: src/content/docs/en/definitions/registrar.mdx:block 5 (header)
+msgid "Core Responsibilities"
+msgstr ""
+
+#: src/content/docs/en/definitions/registrar.mdx:block 6 (header)
+msgid "Administrative Management"
+msgstr ""
+
+#: src/content/docs/en/definitions/registrar.mdx:block 7 (unordered list)
+msgid ""
+"**Registration & Renewal**: Handling the purchase and periodic renewal of "
+"domains."
+msgstr ""
+
+#: src/content/docs/en/definitions/registrar.mdx:block 7 (unordered list)
+msgid ""
+"**Lifecycle Management**: Managing grace periods, redemption fees, and "
+"transfers."
+msgstr ""
+
+#: src/content/docs/en/definitions/registrar.mdx:block 7 (unordered list)
+msgid ""
+"**Data Accuracy**: Collecting and maintaining accurate contact information "
+"for WHOIS/RDAP directories."
+msgstr ""
+
+#: src/content/docs/en/definitions/registrar.mdx:block 8 (header)
+msgid "Technical Services"
+msgstr ""
+
+#: src/content/docs/en/definitions/registrar.mdx:block 9 (unordered list)
+msgid ""
+"**EPP Interface**: Translating user actions into EPP commands sent to the "
+"Registry."
+msgstr ""
+
+#: src/content/docs/en/definitions/registrar.mdx:block 9 (unordered list)
+msgid ""
+"**DNS Hosting**: Most registrars provide default nameservers, allowing users"
+" to manage their DNS records (A, MX, CNAME) via a user-friendly dashboard."
+msgstr ""
+
+#: src/content/docs/en/definitions/registrar.mdx:block 9 (unordered list)
+msgid "**DNSSEC**: Facilitating the rotation and publication of DS records."
+msgstr ""
+
+#: src/content/docs/en/definitions/registrar.mdx:block 10 (paragraph)
+msgid ""
+"<LinkCard title=\"DNS Protocol\" description=\"What is DNS? Understand the "
+"Domain Name System.\" href=\"/en/definitions/dns\"/>"
+msgstr ""
+
+#: src/content/docs/en/definitions/registrar.mdx:block 12 (unordered list)
+msgid ""
+"[Domain name registrar](https://en.wikipedia.org/wiki/Domain_name_registrar)"
+" on Wikipedia"
+msgstr ""
+
+#: src/content/docs/en/definitions/registry.mdx:block 1 (header)
+msgid ""
+"title: Registry description: Understand the Domain Name Registry? Learn how "
+"these organizations manage the central database for all domain names under a"
+" specific TLD."
+msgstr ""
+
+#: src/content/docs/en/definitions/registry.mdx:block 3 (paragraph)
+msgid ""
+"A **Registry** (or Registry Operator) is the organization responsible for "
+"maintaining the master database of all domain names registered under a "
+"specific Top-Level Domain (TLD)."
+msgstr ""
+
+#: src/content/docs/en/definitions/registry.mdx:block 4 (header)
+msgid "Technical Roles"
+msgstr ""
+
+#: src/content/docs/en/definitions/registry.mdx:block 5 (paragraph)
+msgid ""
+"The Registry is the authoritative source for its TLD. Its duties include:"
+msgstr ""
+
+#: src/content/docs/en/definitions/registry.mdx:block 6 (unordered list)
+msgid ""
+"**Zone File Generation**: Publishing the zone file that directs global DNS "
+"traffic to the correct nameservers for every domain in the extension."
+msgstr ""
+
+#: src/content/docs/en/definitions/registry.mdx:block 6 (unordered list)
+msgid ""
+"**IDN & DNSSEC Management**: Enforcing policies for special characters and "
+"managing the cryptographic signing of the TLD zone."
+msgstr ""
+
+#: src/content/docs/en/definitions/registry.mdx:block 6 (unordered list)
+msgid ""
+"**WHOIS/RDAP Server**: Operating the directory service that provides public "
+"information about registered domains."
+msgstr ""
+
+#: src/content/docs/en/definitions/registry.mdx:block 7 (header)
+msgid "Operational Roles"
+msgstr ""
+
+#: src/content/docs/en/definitions/registry.mdx:block 8 (paragraph)
+msgid ""
+"Registries generally do not sell directly to the public. Instead, they:"
+msgstr ""
+
+#: src/content/docs/en/definitions/registry.mdx:block 9 (unordered list)
+msgid "Define the **Acceptable Use Policies** for the TLD."
+msgstr ""
+
+#: src/content/docs/en/definitions/registry.mdx:block 9 (unordered list)
+msgid "Set the wholesale price for domains."
+msgstr ""
+
+#: src/content/docs/en/definitions/registry.mdx:block 9 (unordered list)
+msgid "Accredit and connect with **Registrars** via EPP."
+msgstr ""
+
+#: src/content/docs/en/definitions/registry.mdx:block 12 (unordered list)
+msgid ""
+"[Domain name registry](https://en.wikipedia.org/wiki/Domain_name_registry) "
+"on Wikipedia"
+msgstr ""
+
+#: src/content/docs/en/definitions/top-level-domain.mdx:block 1 (header)
+msgid ""
+"title: Top-Level Domain (TLD) description: An overview of Top-Level Domains "
+"(TLDs), their classification (gTLD, ccTLD, etc.), and the structure of the "
+"DNS root zone."
+msgstr ""
+
+#: src/content/docs/en/definitions/top-level-domain.mdx:block 2 (paragraph)
+msgid ""
+"A **Top-Level Domain (TLD)** is the rightmost segment of a domain name "
+"(after the last dot). TLDs are the highest level of the DNS hierarchy below "
+"the root."
+msgstr ""
+
+#: src/content/docs/en/definitions/top-level-domain.mdx:block 3 (header)
+msgid "TLD Classifications"
+msgstr ""
+
+#: src/content/docs/en/definitions/top-level-domain.mdx:block 4 (header)
+msgid "Generic TLD (gTLD)"
+msgstr ""
+
+#: src/content/docs/en/definitions/top-level-domain.mdx:block 5 (paragraph)
+msgid ""
+"Originally intended for specific use cases, most gTLDs are now open to "
+"everyone."
+msgstr ""
+
+#: src/content/docs/en/definitions/top-level-domain.mdx:block 6 (unordered
+#: list)
+msgid ""
+"**Legacy**: `.com` (commercial), `.net` (network), `.org` (organization)."
+msgstr ""
+
+#: src/content/docs/en/definitions/top-level-domain.mdx:block 6 (unordered
+#: list)
+msgid ""
+"**New gTLDs**: Thousands of niche extensions like `.app`, `.blog`, `.guru`."
+msgstr ""
+
+#: src/content/docs/en/definitions/top-level-domain.mdx:block 6 (unordered
+#: list)
+msgid ""
+"**Restricted**: Domains like `.bank` or `.pharmacy` require verification of "
+"eligibility."
+msgstr ""
+
+#: src/content/docs/en/definitions/top-level-domain.mdx:block 6 (unordered
+#: list)
+msgid "**Brand**: Closed TLDs for corporations, e.g., `.google` or `.bmw`."
+msgstr ""
+
+#: src/content/docs/en/definitions/top-level-domain.mdx:block 7 (header)
+msgid "Country Code TLD (ccTLD)"
+msgstr ""
+
+#: src/content/docs/en/definitions/top-level-domain.mdx:block 8 (paragraph)
+msgid ""
+"Reserved for countries and territories (two letters, based on ISO 3166)."
+msgstr ""
+
+#: src/content/docs/en/definitions/top-level-domain.mdx:block 9 (unordered
+#: list)
+msgid ""
+"**Examples**: `.uk` (United Kingdom), `.de` (Germany), `.io` (British Indian"
+" Ocean Territory)."
+msgstr ""
+
+#: src/content/docs/en/definitions/top-level-domain.mdx:block 9 (unordered
+#: list)
+msgid ""
+"**Rules**: Policies vary strictly by country. Some require local residency "
+"(e.g., `.no`, `.ca`), while others are marketed globally (e.g., `.tv`, "
+"`.ai`)."
+msgstr ""
+
+#: src/content/docs/en/definitions/top-level-domain.mdx:block 10 (header)
+msgid "Sponsored TLD (sTLD)"
+msgstr ""
+
+#: src/content/docs/en/definitions/top-level-domain.mdx:block 11 (paragraph)
+msgid "Managed by private organizations representing a specific community."
+msgstr ""
+
+#: src/content/docs/en/definitions/top-level-domain.mdx:block 12 (unordered
+#: list)
+msgid "`.gov` (US Government)"
+msgstr ""
+
+#: src/content/docs/en/definitions/top-level-domain.mdx:block 12 (unordered
+#: list)
+msgid "`.edu` (Accredited US institutions)"
+msgstr ""
+
+#: src/content/docs/en/definitions/top-level-domain.mdx:block 12 (unordered
+#: list)
+msgid "`.aero` (Aviation industry)"
+msgstr ""
+
+#: src/content/docs/en/definitions/top-level-domain.mdx:block 13 (header)
+msgid "Infrastructure TLD"
+msgstr ""
+
+#: src/content/docs/en/definitions/top-level-domain.mdx:block 14 (unordered
+#: list)
+msgid ""
+"`.arpa`: Managed by IANA, used exclusively for technical infrastructure "
+"(e.g., reverse DNS lookups)."
+msgstr ""
+
+#: src/content/docs/en/definitions/top-level-domain.mdx:block 15 (header)
+msgid "Reserved TLDs"
+msgstr ""
+
+#: src/content/docs/en/definitions/top-level-domain.mdx:block 16 (paragraph)
+msgid ""
+"Per [RFC 2606](https://tools.ietf.org/html/rfc2606), four TLDs are "
+"permanently reserved for testing and documentation to avoid confusion in "
+"production environments:"
+msgstr ""
+
+#: src/content/docs/en/definitions/top-level-domain.mdx:block 17 (unordered
+#: list)
+msgid "`.test`"
+msgstr ""
+
+#: src/content/docs/en/definitions/top-level-domain.mdx:block 17 (unordered
+#: list)
+msgid "`.example`"
+msgstr ""
+
+#: src/content/docs/en/definitions/top-level-domain.mdx:block 17 (unordered
+#: list)
+msgid "`.invalid`"
+msgstr ""
+
+#: src/content/docs/en/definitions/top-level-domain.mdx:block 17 (unordered
+#: list)
+msgid "`.localhost`"
+msgstr ""
+
+#: src/content/docs/en/definitions/top-level-domain.mdx:block 19 (unordered
+#: list)
+msgid ""
+"[Top-level domain (Wikipedia)](https://en.wikipedia.org/wiki/Top-"
+"level_domain)"
+msgstr ""
+
+#: src/content/docs/en/definitions/top-level-domain.mdx:block 19 (unordered
+#: list)
+msgid "[IANA Root Zone Database](https://www.iana.org/domains/root/db)"
+msgstr ""
+
+#: src/content/docs/en/definitions/whois.mdx:block 1 (header)
+msgid ""
+"title: WHOIS Protocol description: Get an overview of WHOIS. Learn how this "
+"protocol is used to query databases for information about the registered "
+"user or assignees of a domain name."
+msgstr ""
+
+#: src/content/docs/en/definitions/whois.mdx:block 3 (paragraph)
+msgid ""
+"WHOIS is a text-based query/response protocol (listening on **TCP Port 43**)"
+" widely used for querying databases that store the registered users or "
+"assignees of an Internet resource, such as a domain name or an IP address "
+"block."
+msgstr ""
+
+#: src/content/docs/en/definitions/whois.mdx:block 4 (header)
+msgid "Core Use Cases"
+msgstr ""
+
+#: src/content/docs/en/definitions/whois.mdx:block 5 (unordered list)
+msgid ""
+"**Availability Check**: Verifying if a specific domain name is available for"
+" registration."
+msgstr ""
+
+#: src/content/docs/en/definitions/whois.mdx:block 5 (unordered list)
+msgid ""
+"**Ownership Identification**: Identifying the Registrant or the Registrar "
+"managing the domain."
+msgstr ""
+
+#: src/content/docs/en/definitions/whois.mdx:block 5 (unordered list)
+msgid ""
+"**Technical Troubleshooting**: Finding the authoritative nameservers or the "
+"technical contacts to resolve network issues."
+msgstr ""
+
+#: src/content/docs/en/definitions/whois.mdx:block 5 (unordered list)
+msgid ""
+"**Legal & Abuse**: Providing a record for law enforcement, intellectual "
+"property protection, and abuse reporting."
+msgstr ""
+
+#: src/content/docs/en/definitions/whois.mdx:block 6 (header)
+msgid "Thick vs. Thin Registries"
+msgstr ""
+
+#: src/content/docs/en/definitions/whois.mdx:block 7 (paragraph)
+msgid ""
+"Understanding WHOIS responses requires understanding how the TLD Registry "
+"stores data."
+msgstr ""
+
+#: src/content/docs/en/definitions/whois.mdx:block 8 (header)
+msgid "Thin Registry (e.g., .com, .net)"
+msgstr ""
+
+#: src/content/docs/en/definitions/whois.mdx:block 9 (paragraph)
+msgid ""
+"The Registry only stores technical data (DNSSEC, Nameservers) and a pointer "
+"to the Registrar."
+msgstr ""
+
+#: src/content/docs/en/definitions/whois.mdx:block 10 (paragraph)
+msgid ""
+"To get the full contact details, a second WHOIS query must be sent to the "
+"**Registrar's WHOIS server**."
+msgstr ""
+
+#: src/content/docs/en/definitions/whois.mdx:block 11 (header)
+msgid "Thick Registry (e.g., .org, .info, most ccTLDs)"
+msgstr ""
+
+#: src/content/docs/en/definitions/whois.mdx:block 12 (paragraph)
+msgid ""
+"The Registry stores *all* information, including the Registrant's contact "
+"details and administrative data."
+msgstr ""
+
+#: src/content/docs/en/definitions/whois.mdx:block 13 (paragraph)
+msgid "A single query to the Registry provides the full record."
+msgstr ""
+
+#: src/content/docs/en/definitions/whois.mdx:block 14 (header)
+msgid "Example: Recursive WHOIS Query"
+msgstr ""
+
+#: src/content/docs/en/definitions/whois.mdx:block 15 (paragraph)
+msgid ""
+"The standard `whois` command line tool often handles the \"Thin Registry\" "
+"redirect automatically. However, seeing the raw steps helps understand the "
+"protocol."
+msgstr ""
+
+#: src/content/docs/en/definitions/whois.mdx:block 16 (paragraph)
+msgid ""
+"In the example below for a **Thin TLD** (`.com`), we first query the "
+"Registry, which points us to the Registrar."
+msgstr ""
+
+#: src/content/docs/en/definitions/whois.mdx:block 17 (header)
+msgid "Request to the Registry (Verisign)"
+msgstr ""
+
+#: src/content/docs/en/definitions/whois.mdx:block 18 (paragraph)
+msgid "Note the `Registrar WHOIS Server` field in the response."
+msgstr ""
+
+#: src/content/docs/en/definitions/whois.mdx:block 20 (header)
+msgid "Request to the Registrar (IANA)"
+msgstr ""
+
+#: src/content/docs/en/definitions/whois.mdx:block 21 (paragraph)
+msgid ""
+"Following the referral, we query the specific Registrar to get the ownership"
+" details."
+msgstr ""
+
+#: src/content/docs/en/definitions/whois.mdx:block 23 (header)
+msgid "Privacy Considerations"
+msgstr ""
+
+#: src/content/docs/en/definitions/whois.mdx:block 24 (paragraph)
+msgid ""
+"Since the implementation of the **GDPR** (General Data Protection "
+"Regulation) and similar global privacy laws, the WHOIS output has changed "
+"significantly."
+msgstr ""
+
+#: src/content/docs/en/definitions/whois.mdx:block 25 (unordered list)
+msgid ""
+"**Data Redaction**: Most personal fields (Name, Email, Phone) are now "
+"replaced with placeholders like `DATA REDACTED` or `Redacted for Privacy`."
+msgstr ""
+
+#: src/content/docs/en/definitions/whois.mdx:block 25 (unordered list)
+msgid ""
+"**Privacy Proxies**: Registrars often provide services that replace the "
+"registrant's details with the registrar's generic contact information to "
+"prevent spam and harassment."
+msgstr ""
+
+#: src/content/docs/en/definitions/whois.mdx:block 25 (unordered list)
+msgid ""
+"**Tiered Access**: Full, unredacted data is often no longer publicly "
+"available anonymously and requires a legitimate legal request or "
+"accreditation."
+msgstr ""
+
+#: src/content/docs/en/definitions/whois.mdx:block 26 (paragraph)
+msgid ""
+"<LinkCard title=\"RDAP Protocol\" href=\"/en/definitions/rdap\" "
+"description=\"Learn about the successor to WHOIS designed to handle "
+"structured data and privacy access.\"/>"
+msgstr ""
+
+#: src/content/docs/en/definitions/whois.mdx:block 28 (unordered list)
+msgid ""
+"[RFC 3912 - WHOIS Protocol "
+"Specification](https://datatracker.ietf.org/doc/html/rfc3912)"
+msgstr ""
+
+#: src/content/docs/en/developing/contributing/code-of-conduct.md:block 1
+#: (header)
+msgid ""
+"title: Code of Conduct description: Code of conduct outlining community "
+"standards and guidelines for respectful collaboration within the project."
+msgstr ""
+
+#: src/content/docs/en/developing/contributing/pull-requests.mdx:block 1
+#: (header)
+msgid ""
+"title: Pull Requests description: Instructions for submitting pull requests."
+msgstr ""
+
+#: src/content/docs/en/developing/contributing/pull-requests.mdx:block 2
+#: (paragraph)
+msgid ""
+"When you want to propose a change to the source code, you will need to "
+"create a Pull Request on this project's GitHub repository."
+msgstr ""
+
+#: src/content/docs/en/developing/contributing/pull-requests.mdx:block 3
+#: (paragraph)
+msgid ""
+"Note that if you are modifying several different parts, you should split it "
+"into multiple Pull Requests. This will make it easier to review and merge "
+"your proposals."
+msgstr ""
+
+#: src/content/docs/en/developing/contributing/pull-requests.mdx:block 4
+#: (paragraph)
+msgid "You will then be asked to fill in a few fields:"
+msgstr ""
+
+#: src/content/docs/en/developing/contributing/pull-requests.mdx:block 5
+#: (header)
+msgid "Title"
+msgstr ""
+
+#: src/content/docs/en/developing/contributing/pull-requests.mdx:block 6
+#: (paragraph)
+msgid ""
+"The Pull Request title should briefly describe the proposed changes. Please "
+"be concise and precise. For example, to add support for a new, fictitious "
+"provider called \"FakeRegistrar,\" you could write something like \"Add "
+"support for FakeRegistrar provider\"."
+msgstr ""
+
+#: src/content/docs/en/developing/contributing/pull-requests.mdx:block 7
+#: (header)
+msgid "Description"
+msgstr ""
+
+#: src/content/docs/en/developing/contributing/pull-requests.mdx:block 8
+#: (paragraph)
+msgid ""
+"For complex changes, please provide as much detail as possible. If your "
+"changes modify an existing API, you must mention this in the description, as"
+" it may have repercussions on projects related to Domain Watchdog."
+msgstr ""
+
+#: src/content/docs/en/developing/contributing/pull-requests.mdx:block 9
+#: (paragraph)
+msgid ""
+"If the proposal modifies the frontend, it would be best to include "
+"screenshots (desktop and mobile versions) to better visualize the proposal."
+msgstr ""
+
+#: src/content/docs/en/developing/contributing/pull-requests.mdx:block 10
+#: (header)
+msgid "Change Type"
+msgstr ""
+
+#: src/content/docs/en/developing/contributing/pull-requests.mdx:block 11
+#: (paragraph)
+msgid "A checklist allows you to choose the type of change proposed:"
+msgstr ""
+
+#: src/content/docs/en/developing/contributing/pull-requests.mdx:block 13
+#: (paragraph)
+msgid ""
+"This checklist helps to better identify the project's impact on the PR."
+msgstr ""
+
+#: src/content/docs/en/developing/contributing/pull-requests.mdx:block 14
+#: (header)
+msgid "Compliance Checklist"
+msgstr ""
+
+#: src/content/docs/en/developing/contributing/pull-requests.mdx:block 15
+#: (paragraph)
+msgid ""
+"The checklist below allows you to self-assess the conformity of your "
+"proposal before submitting it for review:"
+msgstr ""
+
+#: src/content/docs/en/developing/contributing/pull-requests.mdx:block 17
+#: (paragraph)
+msgid ""
+"In any case, if you experience any difficulties creating a PR, feel free to "
+"open one; we will help you ensure it complies with these requirements."
+msgstr ""
+
+#: src/content/docs/en/developing/implementing-new-provider.mdx:block 1
+#: (header)
+msgid ""
+"title: Implementing a new provider description: Step-by-step guide to adding"
+" a new Provider, with backend, frontend, and testing instructions to "
+"integrate a registrar into the project."
+msgstr ""
+
+#: src/content/docs/en/developing/implementing-new-provider.mdx:block 2
+#: (paragraph)
+msgid ""
+"import {FileTree, Steps, Code, LinkCard} from "
+"\"@astrojs/starlight/components\";"
+msgstr ""
+
+#: src/content/docs/en/developing/implementing-new-provider.mdx:block 3
+#: (paragraph)
+msgid ""
+"This project aims to be compatible with as many registrars as possible, "
+"giving users a choice when creating a Connector."
+msgstr ""
+
+#: src/content/docs/en/developing/implementing-new-provider.mdx:block 4
+#: (paragraph)
+msgid ""
+"::::caution Only registrars with a public and documented API can be offered."
+" Using a registrar's private API is strictly prohibited. ::::"
+msgstr ""
+
+#: src/content/docs/en/developing/implementing-new-provider.mdx:block 5
+#: (paragraph)
+msgid ""
+"Adding a new Provider is straightforward. Simply follow the steps below."
+msgstr ""
+
+#: src/content/docs/en/developing/implementing-new-provider.mdx:block 6
+#: (paragraph)
+msgid ""
+"This guide explains how to add support for a new domain registrar. You’ll "
+"implement both the Backend (Provider logic) and the Frontend (configuration "
+"form)."
+msgstr ""
+
+#: src/content/docs/en/developing/implementing-new-provider.mdx:block 7
+#: (header)
+msgid "Prerequisites"
+msgstr ""
+
+#: src/content/docs/en/developing/implementing-new-provider.mdx:block 9
+#: (header)
+msgid "Backend"
+msgstr ""
+
+#: src/content/docs/en/developing/implementing-new-provider.mdx:block 10
+#: (paragraph)
+msgid ""
+"In this section, you’ll implement the logic required to interact with the "
+"new Provider’s API."
+msgstr ""
+
+#: src/content/docs/en/developing/implementing-new-provider.mdx:block 14
+#: (paragraph)
+msgid ""
+"**Well done!** 🎉 You have now completed the Backend implementation. Let’s "
+"continue with the Frontend! 🚀"
+msgstr ""
+
+#: src/content/docs/en/developing/implementing-new-provider.mdx:block 15
+#: (header)
+msgid "Frontend"
+msgstr ""
+
+#: src/content/docs/en/developing/implementing-new-provider.mdx:block 19
+#: (paragraph)
+msgid "**Great job!** 🎉 Your Frontend implementation is now complete."
+msgstr ""
+
+#: src/content/docs/en/developing/implementing-new-provider.mdx:block 20
+#: (header)
+msgid "Testing"
+msgstr ""
+
+#: src/content/docs/en/developing/implementing-new-provider.mdx:block 24
+#: (paragraph)
+msgid "That's it! You’ve now finished implementing a new Provider. ✨"
+msgstr ""
+
+#: src/content/docs/en/developing/technical-stack.mdx:block 1 (header)
+msgid ""
+"title: Technical stack description: Overview of the project's technical "
+"stack, including frameworks, languages, and architecture used throughout the"
+" system."
+msgstr ""
+
+#: src/content/docs/en/developing/technical-stack.mdx:block 2 (paragraph)
+msgid ""
+"This page lists the main technologies used in the project, with links to "
+"their documentation. Specific version information can be found in the "
+"project’s dependency files (`composer.lock`, `package.json`, etc.). The "
+"architecture diagram below summarizes how these services interact."
+msgstr ""
+
+#: src/content/docs/en/developing/technical-stack.mdx:block 3 (paragraph)
+msgid ""
+"![Technical stack diagram](../../../../assets/images/dw-stack-diagram.png)"
+msgstr ""
+
+#: src/content/docs/en/developing/technical-stack.mdx:block 5 (header)
+msgid "Framework"
+msgstr ""
+
+#: src/content/docs/en/developing/technical-stack.mdx:block 6 (paragraph)
+msgid "The programming language is **PHP**."
+msgstr ""
+
+#: src/content/docs/en/developing/technical-stack.mdx:block 7 (paragraph)
+msgid ""
+"The backend is developed using the **Symfony** framework "
+"([documentation](https://symfony.com/doc))."
+msgstr ""
+
+#: src/content/docs/en/developing/technical-stack.mdx:block 8 (paragraph)
+msgid ""
+"The API is made possible by the **API Platform** project "
+"([documentation](https://api-platform.com/docs/symfony/))."
+msgstr ""
+
+#: src/content/docs/en/developing/technical-stack.mdx:block 9 (header)
+msgid "SQL database"
+msgstr ""
+
+#: src/content/docs/en/developing/technical-stack.mdx:block 10 (paragraph)
+msgid ""
+"This project requires a **PostgreSQL** database "
+"([documentation](https://www.postgresql.org/docs/current/))."
+msgstr ""
+
+#: src/content/docs/en/developing/technical-stack.mdx:block 11 (paragraph)
+msgid ""
+"Other database types cannot be used because some migrations were "
+"specifically written to leverage the performance of this database management"
+" system."
+msgstr ""
+
+#: src/content/docs/en/developing/technical-stack.mdx:block 12 (header)
+msgid "Key-value database"
+msgstr ""
+
+#: src/content/docs/en/developing/technical-stack.mdx:block 13 (paragraph)
+msgid "A **Redis-compatible** key-value database is required to:"
+msgstr ""
+
+#: src/content/docs/en/developing/technical-stack.mdx:block 14 (unordered
+#: list)
+msgid "Cache certain values"
+msgstr ""
+
+#: src/content/docs/en/developing/technical-stack.mdx:block 14 (unordered
+#: list)
+msgid "Implement locks to limit the possibility of conditional raises"
+msgstr ""
+
+#: src/content/docs/en/developing/technical-stack.mdx:block 14 (unordered
+#: list)
+msgid ""
+"Store messages to be distributed to workers to process asynchronous actions."
+" For example: updating domain names in a Watchlist on a high-priority RDAP "
+"client queue."
+msgstr ""
+
+#: src/content/docs/en/developing/technical-stack.mdx:block 15 (header)
+msgid "Time Series database"
+msgstr ""
+
+#: src/content/docs/en/developing/technical-stack.mdx:block 16 (paragraph)
+msgid ""
+"The **InfluxDB** database is optional. A data point is added for the "
+"following events:"
+msgstr ""
+
+#: src/content/docs/en/developing/technical-stack.mdx:block 17 (unordered
+#: list)
+msgid ""
+"RDAP requests from your instance: response time, requested domain name, HTTP"
+" status code, IP address of the RDAP server, etc."
+msgstr ""
+
+#: src/content/docs/en/developing/technical-stack.mdx:block 17 (unordered
+#: list)
+msgid ""
+"User notifications: adding events to a domain name, changing EPP statuses, "
+"etc."
+msgstr ""
+
+#: src/content/docs/en/developing/technical-stack.mdx:block 18 (header)
+msgid "SSO authentication"
+msgstr ""
+
+#: src/content/docs/en/developing/technical-stack.mdx:block 19 (paragraph)
+msgid "An **OAuth 2.0** server is not required to authenticate users."
+msgstr ""
+
+#: src/content/docs/en/developing/technical-stack.mdx:block 20 (paragraph)
+msgid ""
+"Using Single Sign-On (SSO) allows you to delegate user authentication to a "
+"third party. This can be useful if you only want people within your "
+"organization to be able to use this project instance. Furthermore, you can "
+"then configure advanced security policies such as passwordless login, "
+"passkeys, multifactor authentication, and more."
+msgstr ""
+
+#: src/content/docs/en/developing/technical-stack.mdx:block 23 (paragraph)
+msgid "The language for frontend development is **TypeScript**."
+msgstr ""
+
+#: src/content/docs/en/developing/technical-stack.mdx:block 24 (paragraph)
+msgid ""
+"The framework used for the frontend is **React** "
+"([documentation](https://react.dev/reference/react))."
+msgstr ""
+
+#: src/content/docs/en/developing/technical-stack.mdx:block 25 (header)
+msgid "Component Library"
+msgstr ""
+
+#: src/content/docs/en/developing/technical-stack.mdx:block 26 (paragraph)
+msgid ""
+"The component library used is **Ant Design** "
+"([documentation](https://ant.design/components/overview/))."
+msgstr ""
+
+#: src/content/docs/en/developing/translation.mdx:block 1 (header)
+msgid ""
+"title: Translation description: This project is available in several "
+"languages, the current translation status is available here."
+msgstr ""
+
+#: src/content/docs/en/developing/translation.mdx:block 2 (paragraph)
+msgid ""
+"The project is translated into several languages to allow as many people as "
+"possible to easily understand the interface. Feel free to contribute and add"
+" a translation!"
+msgstr ""
+
+#: src/content/docs/en/developing/translation.mdx:block 3 (paragraph)
+msgid "The current status of the translation is given below."
+msgstr ""
+
+#: src/content/docs/en/developing/translation.mdx:block 4 (paragraph)
+msgid ""
+"[![Translation status](https://weblate.vinceh121.me/widget/domain-"
+"watchdog/domain-watchdog-dashboard/open-"
+"graph.png)](https://weblate.vinceh121.me/engage/domain-watchdog/)"
+msgstr ""
+
+#: src/content/docs/en/developing/translation.mdx:block 5 (paragraph)
+msgid ""
+"If you don't find your language in the list above, feel free to open an "
+"issue on the project repository and request that a new language be added."
+msgstr ""
+
+#: src/content/docs/en/developing/translation.mdx:block 6 (paragraph)
+msgid ""
+"Once the language is added, you can start suggesting translations in the "
+"translation space. This project uses Weblate for community translation."
+msgstr ""
+
+#: src/content/docs/en/features/backorder/connector.mdx:block 1 (header)
+msgid ""
+"title: Connector description: Learn how the Backorder Connector works, its "
+"flow, requirements, and how it integrates with registrar APIs for domain "
+"backordering."
+msgstr ""
+
+#: src/content/docs/en/features/backorder/connector.mdx:block 2 (paragraph)
+msgid "import {LinkCard, Steps} from '@astrojs/starlight/components';"
+msgstr ""
+
+#: src/content/docs/en/features/backorder/connector.mdx:block 3 (paragraph)
+msgid ""
+"A Connector allows Domain Watchdog to communicate with an external domain "
+"registrar’s API to perform actions such as domain registration."
+msgstr ""
+
+#: src/content/docs/en/features/backorder/connector.mdx:block 4 (header)
+msgid "Create a Connector"
+msgstr ""
+
+#: src/content/docs/en/features/backorder/connector.mdx:block 6 (ordered list)
+msgid ""
+"Enter the required information using the credentials obtained from your "
+"provider’s customer area :::tip{icon=\"heart\"} A link allows you to "
+"directly access the Provider's page to retrieve this authentication "
+"information :::"
+msgstr ""
+
+#: src/content/docs/en/features/backorder/connector.mdx:block 6 (ordered list)
+msgid ""
+"Review and consent to the required terms. As a reminder, you can delete a "
+"Connector at any time from your personal space."
+msgstr ""
+
+#: src/content/docs/en/features/backorder/connector.mdx:block 6 (ordered list)
+msgid ""
+"Click the button to create your Connector. **Congratulations 🎉** </Steps>"
+msgstr ""
+
+#: src/content/docs/en/features/backorder/connector.mdx:block 7 (header)
+msgid "Legal considerations"
+msgstr ""
+
+#: src/content/docs/en/features/backorder/connector.mdx:block 8 (paragraph)
+msgid ""
+"These legal requirements ensure that all domain operations comply with "
+"registrar policies and applicable regulations."
+msgstr ""
+
+#: src/content/docs/en/features/backorder/connector.mdx:block 9 (paragraph)
+msgid ""
+"Domain Watchdog acts only as a technical interface and does not serve as a "
+"payment intermediary. Your credentials are transmitted directly to the "
+"provider’s API for domain operations. By creating a Connector, you consent "
+"to the provider’s terms and the use of your credentials for authorized "
+"operations."
+msgstr ""
+
+#: src/content/docs/en/features/backorder/connector.mdx:block 10 (paragraph)
+msgid "In particular, you must consent to:"
+msgstr ""
+
+#: src/content/docs/en/features/backorder/connector.mdx:block 11 (unordered
+#: list)
+msgid "Accept the provider’s API Terms of Use"
+msgstr ""
+
+#: src/content/docs/en/features/backorder/connector.mdx:block 11 (unordered
+#: list)
+msgid "Confirm that you are of legal age to accept these terms"
+msgstr ""
+
+#: src/content/docs/en/features/backorder/connector.mdx:block 12 (paragraph)
+msgid ""
+"Since the terms of use may change at any time, the link to these terms is "
+"always accessible on the page listing the Connectors."
+msgstr ""
+
+#: src/content/docs/en/features/backorder/supported-registrar.mdx:block 1
+#: (header)
+msgid ""
+"title: Supported registrar list description: List of registrars supported "
+"for domain backorders, with details on compatibility."
+msgstr ""
+
+#: src/content/docs/en/features/backorder/supported-registrar.mdx:block 2
+#: (paragraph)
+msgid "import {LinkButton} from '@astrojs/starlight/components';"
+msgstr ""
+
+#: src/content/docs/en/features/backorder/supported-registrar.mdx:block 3
+#: (paragraph)
+msgid ":::caution[Reminder]"
+msgstr ""
+
+#: src/content/docs/en/features/backorder/supported-registrar.mdx:block 4
+#: (unordered list)
+msgid ""
+"Please note that this project is NOT affiliated IN ANY WAY with the API "
+"Providers used to order domain names."
+msgstr ""
+
+#: src/content/docs/en/features/backorder/supported-registrar.mdx:block 4
+#: (unordered list)
+msgid ""
+"The project installers are responsible for the use of their own instance."
+msgstr ""
+
+#: src/content/docs/en/features/backorder/supported-registrar.mdx:block 4
+#: (unordered list)
+msgid ""
+"Under no circumstances will the owner of this project be held responsible "
+"for other cases over which he has no control. :::"
+msgstr ""
+
+#: src/content/docs/en/features/backorder/supported-registrar.mdx:block 5
+#: (header)
+msgid "OVH"
+msgstr ""
+
+#: src/content/docs/en/features/backorder/supported-registrar.mdx:block 6
+#: (table)
+msgid "Field"
+msgstr ""
+
+#: src/content/docs/en/features/backorder/supported-registrar.mdx:block 6
+#: (table)
+msgid "Required"
+msgstr ""
+
+#: src/content/docs/en/features/backorder/supported-registrar.mdx:block 6
+#: (table)
+msgid "App key"
+msgstr ""
+
+#: src/content/docs/en/features/backorder/supported-registrar.mdx:block 6
+#: (table)
+msgid "the key that allows OVH to identify your application"
+msgstr ""
+
+#: src/content/docs/en/features/backorder/supported-registrar.mdx:block 6
+#: (table)
+msgid "App secret key"
+msgstr ""
+
+#: src/content/docs/en/features/backorder/supported-registrar.mdx:block 6
+#: (table)
+msgid "the secret key associated with your application"
+msgstr ""
+
+#: src/content/docs/en/features/backorder/supported-registrar.mdx:block 6
+#: (table)
+msgid "Consumer key"
+msgstr ""
+
+#: src/content/docs/en/features/backorder/supported-registrar.mdx:block 6
+#: (table)
+msgid "the secret key that links the application to your account"
+msgstr ""
+
+#: src/content/docs/en/features/backorder/supported-registrar.mdx:block 6
+#: (table)
+msgid "Endpoint"
+msgstr ""
+
+#: src/content/docs/en/features/backorder/supported-registrar.mdx:block 6
+#: (table)
+msgid ""
+"allows you to choose which server to use (Europe, United States or Canada)"
+msgstr ""
+
+#: src/content/docs/en/features/backorder/supported-registrar.mdx:block 6
+#: (table)
+msgid "Subsidiary"
+msgstr ""
+
+#: src/content/docs/en/features/backorder/supported-registrar.mdx:block 6
+#: (table)
+msgid "the country linked to the OVH subsidiary associated with your account"
+msgstr ""
+
+#: src/content/docs/en/features/backorder/supported-registrar.mdx:block 6
+#: (table)
+msgid "Pricing mode"
+msgstr ""
+
+#: src/content/docs/en/features/backorder/supported-registrar.mdx:block 6
+#: (table)
+msgid ""
+"choose whether you want to pay for a Premium domain name or only standard "
+"prices"
+msgstr ""
+
+#: src/content/docs/en/features/backorder/supported-registrar.mdx:block 7
+#: (paragraph)
+msgid ""
+"<LinkButton variant=\"secondary\" icon=\"external\" target=\"_blank\" "
+"href=\"https://api.ovh.com/createToken/?GET=/order/cart&GET=/order/cart/*&POST=/order/cart&POST=/order/cart/*&DELETE=/order/cart/*&GET=/domain/extensions\">"
+" Retrieve my token from the OVH website </LinkButton>"
+msgstr ""
+
+#: src/content/docs/en/features/backorder/supported-registrar.mdx:block 8
+#: (header)
+msgid "Gandi"
+msgstr ""
+
+#: src/content/docs/en/features/backorder/supported-registrar.mdx:block 9
+#: (table)
+msgid "Token"
+msgstr ""
+
+#: src/content/docs/en/features/backorder/supported-registrar.mdx:block 9
+#: (table)
+msgid "your account authentication token"
+msgstr ""
+
+#: src/content/docs/en/features/backorder/supported-registrar.mdx:block 9
+#: (table)
+msgid "Sharing ID"
+msgstr ""
+
+#: src/content/docs/en/features/backorder/supported-registrar.mdx:block 9
+#: (table)
+msgid "indicates the organization that will pay for the ordered product"
+msgstr ""
+
+#: src/content/docs/en/features/backorder/supported-registrar.mdx:block 9
+#: (table)
+msgid "Optional"
+msgstr ""
+
+#: src/content/docs/en/features/backorder/supported-registrar.mdx:block 10
+#: (paragraph)
+msgid ""
+"<LinkButton variant=\"secondary\" icon=\"external\" target=\"_blank\" "
+"href=\"https://admin.gandi.net/organizations/account/pat\"> Retrieve my "
+"token from the Gandi website </LinkButton>"
+msgstr ""
+
+#: src/content/docs/en/features/backorder/supported-registrar.mdx:block 11
+#: (header)
+msgid "Namecheap"
+msgstr ""
+
+#: src/content/docs/en/features/backorder/supported-registrar.mdx:block 12
+#: (paragraph)
+msgid ""
+":::caution This provider requires that the IPv4 address of your instance be "
+"entered on its web interface when creating the API connection. This "
+"information must also be entered in the configuration. :::"
+msgstr ""
+
+#: src/content/docs/en/features/backorder/supported-registrar.mdx:block 13
+#: (table)
+msgid "API user"
+msgstr ""
+
+#: src/content/docs/en/features/backorder/supported-registrar.mdx:block 13
+#: (table)
+msgid "the API user as given by the Provider"
+msgstr ""
+
+#: src/content/docs/en/features/backorder/supported-registrar.mdx:block 13
+#: (table)
+msgid "API key"
+msgstr ""
+
+#: src/content/docs/en/features/backorder/supported-registrar.mdx:block 13
+#: (table)
+msgid "the API key as given by the Provider"
+msgstr ""
+
+#: src/content/docs/en/features/backorder/supported-registrar.mdx:block 14
+#: (paragraph)
+msgid ""
+"<LinkButton variant=\"secondary\" icon=\"external\" target=\"_blank\" "
+"href=\"https://ap.www.namecheap.com/settings/tools/apiaccess/\"> Retrieve my"
+" token from the Namecheap website </LinkButton>"
+msgstr ""
+
+#: src/content/docs/en/features/backorder/supported-registrar.mdx:block 15
+#: (header)
+msgid "AutoDNS"
+msgstr ""
+
+#: src/content/docs/en/features/backorder/supported-registrar.mdx:block 16
+#: (paragraph)
+msgid ""
+":::caution This provider does not provide a list of supported TLD. Please "
+"double-check if the domain you want to register is supported. :::"
+msgstr ""
+
+#: src/content/docs/en/features/backorder/supported-registrar.mdx:block 17
+#: (table)
+msgid "Username"
+msgstr ""
+
+#: src/content/docs/en/features/backorder/supported-registrar.mdx:block 17
+#: (table)
+msgid "the account username"
+msgstr ""
+
+#: src/content/docs/en/features/backorder/supported-registrar.mdx:block 17
+#: (table)
+msgid "Password"
+msgstr ""
+
+#: src/content/docs/en/features/backorder/supported-registrar.mdx:block 17
+#: (table)
+msgid "the account password"
+msgstr ""
+
+#: src/content/docs/en/features/backorder/supported-registrar.mdx:block 17
+#: (table)
+msgid "Owner consent"
+msgstr ""
+
+#: src/content/docs/en/features/backorder/supported-registrar.mdx:block 17
+#: (table)
+msgid "purchase consent"
+msgstr ""
+
+#: src/content/docs/en/features/backorder/supported-registrar.mdx:block 17
+#: (table)
+msgid "Context"
+msgstr ""
+
+#: src/content/docs/en/features/backorder/supported-registrar.mdx:block 17
+#: (table)
+msgid "the \"context\" as given by the Provider"
+msgstr ""
+
+#: src/content/docs/en/features/backorder/supported-registrar.mdx:block 17
+#: (table)
+msgid "Contact ID"
+msgstr ""
+
+#: src/content/docs/en/features/backorder/supported-registrar.mdx:block 17
+#: (table)
+msgid "Contact ID of the domain name holder of the purchased domains"
+msgstr ""
+
+#: src/content/docs/en/features/backorder/supported-registrar.mdx:block 18
+#: (paragraph)
+msgid ""
+"<LinkButton variant=\"secondary\" icon=\"external\" target=\"_blank\" "
+"href=\"https://en.autodns.com/domain-robot-api/\"> Retrieve my token from "
+"the AutoDNS website </LinkButton>"
+msgstr ""
+
+#: src/content/docs/en/features/backorder/supported-registrar.mdx:block 19
+#: (header)
+msgid "Name.com"
+msgstr ""
+
+#: src/content/docs/en/features/backorder/supported-registrar.mdx:block 22
+#: (paragraph)
+msgid ""
+"<LinkButton variant=\"secondary\" icon=\"external\" target=\"_blank\" "
+"href=\"https://www.name.com/account/settings/api\"> Retrieve my token from "
+"the Name.com website </LinkButton>"
+msgstr ""
+
+#: src/content/docs/en/features/backorder/supported-registrar.mdx:block 23
+#: (header)
+msgid "Custom EPP server"
+msgstr ""
+
+#: src/content/docs/en/features/backorder/supported-registrar.mdx:block 24
+#: (paragraph)
+msgid ""
+"This type of connector allows you to directly link your instance to a "
+"registry via the EPP protocol. This requires that you have signed a contract"
+" with a registry; you are then considered a registry in your own right."
+msgstr ""
+
+#: src/content/docs/en/features/backorder/supported-registrar.mdx:block 25
+#: (paragraph)
+msgid ""
+"Currently, the implementation of this feature has not been tested; your "
+"feedback is important!"
+msgstr ""
+
+#: src/content/docs/en/features/index.mdx:block 1 (header)
+msgid ""
+"title: Getting started description: Step-by-step guide to creating an "
+"account, searching domains, tracking changes, and enabling auto-purchase "
+"with Connectors."
+msgstr ""
+
+#: src/content/docs/en/features/index.mdx:block 3 (paragraph)
+msgid ""
+"On this page, you'll find a step-by-step guide to getting started with "
+"**Domain Watchdog** and exploring its main features. The sidebar menu on the"
+" left allows you to quickly navigate between all documentation sections."
+msgstr ""
+
+#: src/content/docs/en/features/index.mdx:block 4 (paragraph)
+msgid ""
+":::note Depending on the configuration of the instance on which you're "
+"performing these actions, some options may be limited or hidden. :::"
+msgstr ""
+
+#: src/content/docs/en/features/index.mdx:block 5 (header)
+msgid "Create an account"
+msgstr ""
+
+#: src/content/docs/en/features/index.mdx:block 6 (paragraph)
+msgid ""
+"If your instance allows user registration, you can create an account "
+"directly from the interface."
+msgstr ""
+
+#: src/content/docs/en/features/index.mdx:block 7 (paragraph)
+msgid "![User registration](../../../../assets/images/user-register.png)"
+msgstr ""
+
+#: src/content/docs/en/features/index.mdx:block 9 (paragraph)
+msgid ""
+"After confirming your email, you can log in and start using all available "
+"features."
+msgstr ""
+
+#: src/content/docs/en/features/index.mdx:block 10 (header)
+msgid "Search for a domain name"
+msgstr ""
+
+#: src/content/docs/en/features/index.mdx:block 11 (paragraph)
+msgid ""
+"Domain Watchdog uses the **RDAP protocol**, the modern replacement for "
+"WHOIS, to retrieve accurate information about domain names."
+msgstr ""
+
+#: src/content/docs/en/features/index.mdx:block 12 (paragraph)
+msgid ""
+"![Search for a domain name](../../../../assets/images/search-domain.png)"
+msgstr ""
+
+#: src/content/docs/en/features/index.mdx:block 13 (paragraph)
+msgid ""
+":::tip[Read more] To read the documentation related to domain name search, "
+"please click on the link below."
+msgstr ""
+
+#: src/content/docs/en/features/index.mdx:block 14 (paragraph)
+msgid ""
+"<LinkCard title=\"Domain search\" description=\"Obtain the details of a "
+"domain name registration and the history of observed events\" "
+"href=\"/en/features/search/domain-search\"/> :::"
+msgstr ""
+
+#: src/content/docs/en/features/index.mdx:block 15 (header)
+msgid "Create a Watchlist"
+msgstr ""
+
+#: src/content/docs/en/features/index.mdx:block 16 (paragraph)
+msgid ""
+"A **Watchlist** is a collection of domain names, triggers, and optionally an"
+" API Connector. It allows you to:"
+msgstr ""
+
+#: src/content/docs/en/features/index.mdx:block 17 (unordered list)
+msgid "monitor domain status changes"
+msgstr ""
+
+#: src/content/docs/en/features/index.mdx:block 17 (unordered list)
+msgid ""
+"receive notifications (email or webhook: Slack, Mattermost, Discord, etc.)"
+msgstr ""
+
+#: src/content/docs/en/features/index.mdx:block 17 (unordered list)
+msgid "optionally auto-purchase a domain when it expires"
+msgstr ""
+
+#: src/content/docs/en/features/index.mdx:block 18 (paragraph)
+msgid "![Create a Watchlist](../../../../assets/images/create-watchlist.png)"
+msgstr ""
+
+#: src/content/docs/en/features/index.mdx:block 19 (paragraph)
+msgid ""
+":::tip[Read more] To read the documentation related to the Watchlist, please"
+" click on the link below."
+msgstr ""
+
+#: src/content/docs/en/features/index.mdx:block 20 (paragraph)
+msgid ""
+"<LinkCard title=\"Watchlist\" description=\"Add domain names to a Watchlist "
+"to track them, be notified of any changes, and potentially buy them when "
+"they expire\" href=\"/en/features/tracking/watchlist\"/> :::"
+msgstr ""
+
+#: src/content/docs/en/features/index.mdx:block 21 (header)
+msgid "Watchlist notifications"
+msgstr ""
+
+#: src/content/docs/en/features/index.mdx:block 22 (paragraph)
+msgid ""
+"When a domain changes state, you’ll automatically receive a notification. "
+"You can also export domain events as **iCalendar** feeds."
+msgstr ""
+
+#: src/content/docs/en/features/index.mdx:block 24 (paragraph)
+msgid ""
+"A **Connector** is used to automatically order (backorder) a domain name "
+"using its provider’s API."
+msgstr ""
+
+#: src/content/docs/en/features/index.mdx:block 25 (paragraph)
+msgid "![Create a Connector](../../../../assets/images/create-connector.png)"
+msgstr ""
+
+#: src/content/docs/en/features/index.mdx:block 26 (paragraph)
+msgid ""
+":::tip[Read more] To read the documentation related to Connector, please "
+"click on the link below."
+msgstr ""
+
+#: src/content/docs/en/features/index.mdx:block 27 (paragraph)
+msgid ""
+"<LinkCard title=\"Connector\" description=\"Create a Connector to enable "
+"domain name purchases by linking it to your Watchlists\" "
+"href=\"/en/features/backorder/connector\"/> :::"
+msgstr ""
+
+#: src/content/docs/en/features/index.mdx:block 28 (header)
+msgid "Supported registrar list"
+msgstr ""
+
+#: src/content/docs/en/features/index.mdx:block 29 (paragraph)
+msgid ""
+"<LinkCard title=\"Supported registrar list\" description=\"List of "
+"registrars supported by this project\" "
+"href=\"/en/features/backorder/supported-registrar\"/>"
+msgstr ""
+
+#: src/content/docs/en/features/index.mdx:block 30 (header)
+msgid "Tracking table"
+msgstr ""
+
+#: src/content/docs/en/features/index.mdx:block 31 (paragraph)
+msgid ""
+"The Tracking table page displays a list of all the domain names you monitor "
+"via your Watchlists. This list is ordered, meaning the domain names are "
+"arranged according to their estimated deletion date."
+msgstr ""
+
+#: src/content/docs/en/features/index.mdx:block 32 (paragraph)
+msgid "![Tracking table](../../../../assets/images/tracking-table.png)"
+msgstr ""
+
+#: src/content/docs/en/features/index.mdx:block 33 (paragraph)
+msgid ""
+":::tip[Read more] To read the documentation related to the Tracking table, "
+"please click on the link below."
+msgstr ""
+
+#: src/content/docs/en/features/index.mdx:block 34 (paragraph)
+msgid ""
+"<LinkCard title=\"Tracking table\" description=\"List all the domains you're"
+" monitoring in your Watchlist and track the status of those domains\" "
+"href=\"/en/features/tracking/tracking-table\"/> :::"
+msgstr ""
+
+#: src/content/docs/en/features/infrastructure/icann-registrar-list.mdx:block
+#: 1 (header)
+msgid "title: ICANN Registrar list"
+msgstr ""
+
+#: src/content/docs/en/features/infrastructure/tld-list.mdx:block 1 (header)
+msgid "title: TLD list"
+msgstr ""
+
+#: src/content/docs/en/features/search/domain-search.mdx:block 1 (header)
+msgid "title: Domain search description: Domain search feature overview"
+msgstr ""
+
+#: src/content/docs/en/features/search/domain-search.mdx:block 2 (paragraph)
+msgid ""
+"import {Steps} from \"@astrojs/starlight/components\" import {Kbd} from "
+"\"starlight-kbd/components\""
+msgstr ""
+
+#: src/content/docs/en/features/search/domain-search.mdx:block 3 (paragraph)
+msgid ""
+":::tip[Did you know?] In this project, everything is done to minimize the "
+"number of requests to RDAP servers. Limitations imposed on end users help "
+"control the flow of RDAP requests. These limitations can be configured for "
+"each instance, in the environment variables. :::"
+msgstr ""
+
+#: src/content/docs/en/features/search/domain-search.mdx:block 4 (paragraph)
+msgid ""
+"The domain search feature allows users to look up information about a domain"
+" name through the user interface."
+msgstr ""
+
+#: src/content/docs/en/features/search/domain-search.mdx:block 5 (paragraph)
+msgid "To search for a domain name:"
+msgstr ""
+
+#: src/content/docs/en/features/search/domain-search.mdx:block 7 (paragraph)
+msgid ""
+"![Search for a domain name](../../../../../assets/images/search-domain.png)"
+msgstr ""
+
+#: src/content/docs/en/features/search/domain-search.mdx:block 8 (paragraph)
+msgid ""
+"If the extension you are searching for does **not** have an official RDAP "
+"server, an error message will inform you that no RDAP server is available."
+msgstr ""
+
+#: src/content/docs/en/features/search/domain-search.mdx:block 9 (header)
+msgid "Force Update"
+msgstr ""
+
+#: src/content/docs/en/features/search/domain-search.mdx:block 10 (paragraph)
+msgid ""
+"By default, if the domain information stored in the database is still "
+"considered valid, the system returns the existing record without performing "
+"a new RDAP query."
+msgstr ""
+
+#: src/content/docs/en/features/search/domain-search.mdx:block 11 (paragraph)
+msgid "If you need to force an RDAP update for a given domain:"
+msgstr ""
+
+#: src/content/docs/en/features/search/domain-search.mdx:block 12 (unordered
+#: list)
+msgid ""
+"Press <Kbd mac=\"Shift+Enter\" windows=\"Shift+Enter\" /> when submitting "
+"the search."
+msgstr ""
+
+#: src/content/docs/en/features/search/domain-search.mdx:block 13 (paragraph)
+msgid "This triggers a fresh lookup against the RDAP server."
+msgstr ""
+
+#: src/content/docs/en/features/tracking/tracking-table.mdx:block 1 (header)
+msgid "title: Tracking table"
+msgstr ""
+
+#: src/content/docs/en/features/tracking/tracking-table.mdx:block 2
+#: (paragraph)
+msgid "![Tracking table](../../../../../assets/images/tracking-table.png)"
+msgstr ""
+
+#: src/content/docs/en/features/tracking/watchlist.mdx:block 1 (header)
+msgid ""
+"title: Watchlist description: Learn how the domain watchlist works, enabling"
+" users to monitor domains and receive updates on changes."
+msgstr ""
+
+#: src/content/docs/en/features/tracking/watchlist.mdx:block 2 (paragraph)
+msgid "import {Steps} from '@astrojs/starlight/components';"
+msgstr ""
+
+#: src/content/docs/en/features/tracking/watchlist.mdx:block 3 (paragraph)
+msgid ""
+"A Watchlist is a list of domain names, triggers and possibly an API "
+"connector. They allow you to follow the life of the listed domain names and "
+"send you a notification when a change has been detected."
+msgstr ""
+
+#: src/content/docs/en/features/tracking/watchlist.mdx:block 4 (paragraph)
+msgid ""
+"If a domain has expired and a connector is linked to the Watchlist, then an "
+"order attempt will be made though the Connector provider's API."
+msgstr ""
+
+#: src/content/docs/en/features/tracking/watchlist.mdx:block 5 (paragraph)
+msgid ""
+":::note If the same domain name is present on several Watchlists, on the "
+"same principle as the race condition, it is not possible to predict in "
+"advance which user will win the domain name. The choice is left to chance..."
+" :::"
+msgstr ""
+
+#: src/content/docs/en/features/tracking/watchlist.mdx:block 7 (paragraph)
+msgid ""
+"![Create a Watchlist](../../../..//../assets/images/create-watchlist.png)"
+msgstr ""
+
+#: src/content/docs/en/features/tracking/watchlist.mdx:block 9 (paragraph)
+msgid "Now, it's your turn to create a Watchlist!"
+msgstr ""
+
+#: src/content/docs/en/features/tracking/watchlist.mdx:block 10 (header)
+msgid "Limitations"
+msgstr ""
+
+#: src/content/docs/en/features/tracking/watchlist.mdx:block 11 (paragraph)
+msgid ""
+"Depending on the instance configuration, there are several limitations to "
+"frame user behavior."
+msgstr ""
+
+#: src/content/docs/en/index.mdx:block 1 (header)
+msgid ""
+"title: Domain Watchdog description: An app that uses RDAP to collect "
+"publicly available info about domains, track their history, and purchase "
+"then when they expire template: splash hero: tagline: Your companion in the "
+"quest for domain names 🔍 image: file: ../../../assets/logo.png actions: - "
+"text: Get started link: /en/features icon: right-arrow - text: Demo link: "
+"https://demo.domainwatchdog.eu icon: external variant: minimal"
+msgstr ""
+
+#: src/content/docs/en/install-config/configuration.mdx:block 1 (header)
+msgid ""
+"title: Configuration description: Configuration guide explaining environment"
+" variables and settings required to run and customize the project."
+msgstr ""
+
+#: src/content/docs/en/install-config/configuration.mdx:block 2 (paragraph)
+msgid "import {LinkCard} from '@astrojs/starlight/components';"
+msgstr ""
+
+#: src/content/docs/en/install-config/configuration.mdx:block 4 (header)
+msgid "Environment variables"
+msgstr ""
+
+#: src/content/docs/en/install-config/configuration.mdx:block 5 (table)
+msgid "Variable"
+msgstr ""
+
+#: src/content/docs/en/install-config/configuration.mdx:block 5 (table)
+msgid "Default"
+msgstr ""
+
+#: src/content/docs/en/install-config/configuration.mdx:block 5 (table)
+msgid "`DATABASE_URL`"
+msgstr ""
+
+#: src/content/docs/en/install-config/configuration.mdx:block 5 (table)
+msgid "Please check Symfony config"
+msgstr ""
+
+#: src/content/docs/en/install-config/configuration.mdx:block 5 (table)
+msgid "`OUTGOING_IP`"
+msgstr ""
+
+#: src/content/docs/en/install-config/configuration.mdx:block 5 (table)
+msgid "Outgoing IPv4, needed for some providers"
+msgstr ""
+
+#: src/content/docs/en/install-config/configuration.mdx:block 5 (table)
+msgid "`INFLUXDB_ENABLED`"
+msgstr ""
+
+#: src/content/docs/en/install-config/configuration.mdx:block 5 (table)
+msgid "Enable the connection with InfluxDB"
+msgstr ""
+
+#: src/content/docs/en/install-config/configuration.mdx:block 5 (table)
+msgid "`false`"
+msgstr ""
+
+#: src/content/docs/en/install-config/configuration.mdx:block 5 (table)
+msgid "`INFLUXDB_URL`"
+msgstr ""
+
+#: src/content/docs/en/install-config/configuration.mdx:block 5 (table)
+msgid "InfluxDB URL"
+msgstr ""
+
+#: src/content/docs/en/install-config/configuration.mdx:block 5 (table)
+msgid "`http://localhost:8086`"
+msgstr ""
+
+#: src/content/docs/en/install-config/configuration.mdx:block 5 (table)
+msgid "`INFLUXDB_TOKEN`"
+msgstr ""
+
+#: src/content/docs/en/install-config/configuration.mdx:block 5 (table)
+msgid "InfluxDB token"
+msgstr ""
+
+#: src/content/docs/en/install-config/configuration.mdx:block 5 (table)
+msgid "`INFLUXDB_BUCKET`"
+msgstr ""
+
+#: src/content/docs/en/install-config/configuration.mdx:block 5 (table)
+msgid "InfluxDB bucket name"
+msgstr ""
+
+#: src/content/docs/en/install-config/configuration.mdx:block 5 (table)
+msgid "`domainwatchdog`"
+msgstr ""
+
+#: src/content/docs/en/install-config/configuration.mdx:block 5 (table)
+msgid "`INFLUXDB_ORG`"
+msgstr ""
+
+#: src/content/docs/en/install-config/configuration.mdx:block 5 (table)
+msgid "InfluxDB organization"
+msgstr ""
+
+#: src/content/docs/en/install-config/configuration.mdx:block 5 (table)
+msgid "`LIMITED_FEATURES`"
+msgstr ""
+
+#: src/content/docs/en/install-config/configuration.mdx:block 5 (table)
+msgid "Limit certain features for users"
+msgstr ""
+
+#: src/content/docs/en/install-config/configuration.mdx:block 5 (table)
+msgid "`LIMIT_MAX_WATCHLIST`"
+msgstr ""
+
+#: src/content/docs/en/install-config/configuration.mdx:block 5 (table)
+msgid "Maximum number of Watchlists per user"
+msgstr ""
+
+#: src/content/docs/en/install-config/configuration.mdx:block 5 (table)
+msgid "`0`"
+msgstr ""
+
+#: src/content/docs/en/install-config/configuration.mdx:block 5 (table)
+msgid "`LIMIT_MAX_WATCHLIST_DOMAINS`"
+msgstr ""
+
+#: src/content/docs/en/install-config/configuration.mdx:block 5 (table)
+msgid "Maximum number of domains per Watchlist"
+msgstr ""
+
+#: src/content/docs/en/install-config/configuration.mdx:block 5 (table)
+msgid "`LIMIT_MAX_WATCHLIST_WEBHOOKS`"
+msgstr ""
+
+#: src/content/docs/en/install-config/configuration.mdx:block 5 (table)
+msgid "Maximum number of webhooks per Watchlist"
+msgstr ""
+
+#: src/content/docs/en/install-config/configuration.mdx:block 5 (table)
+msgid "`MAILER_SENDER_NAME`"
+msgstr ""
+
+#: src/content/docs/en/install-config/configuration.mdx:block 5 (table)
+msgid "Name of the sender of emails"
+msgstr ""
+
+#: src/content/docs/en/install-config/configuration.mdx:block 5 (table)
+msgid "`Domain Watchdog`"
+msgstr ""
+
+#: src/content/docs/en/install-config/configuration.mdx:block 5 (table)
+msgid "`MAILER_SENDER_EMAIL`"
+msgstr ""
+
+#: src/content/docs/en/install-config/configuration.mdx:block 5 (table)
+msgid "Sender's email address"
+msgstr ""
+
+#: src/content/docs/en/install-config/configuration.mdx:block 5 (table)
+msgid "`notifications@example.com`"
+msgstr ""
+
+#: src/content/docs/en/install-config/configuration.mdx:block 5 (table)
+msgid "`REGISTRATION_ENABLED`"
+msgstr ""
+
+#: src/content/docs/en/install-config/configuration.mdx:block 5 (table)
+msgid "Enable user registration"
+msgstr ""
+
+#: src/content/docs/en/install-config/configuration.mdx:block 5 (table)
+msgid "`true`"
+msgstr ""
+
+#: src/content/docs/en/install-config/configuration.mdx:block 5 (table)
+msgid "`REGISTRATION_VERIFY_EMAIL`"
+msgstr ""
+
+#: src/content/docs/en/install-config/configuration.mdx:block 5 (table)
+msgid "Verify email addresses during registration"
+msgstr ""
+
+#: src/content/docs/en/install-config/configuration.mdx:block 5 (table)
+msgid "`MAILER_DSN`"
+msgstr ""
+
+#: src/content/docs/en/install-config/configuration.mdx:block 5 (table)
+msgid "`null://null`"
+msgstr ""
+
+#: src/content/docs/en/install-config/configuration.mdx:block 5 (table)
+msgid "`OAUTH_CLIENT_ID`"
+msgstr ""
+
+#: src/content/docs/en/install-config/configuration.mdx:block 5 (table)
+msgid "Client ID (OAuth 2.0) for using external SSO"
+msgstr ""
+
+#: src/content/docs/en/install-config/configuration.mdx:block 5 (table)
+msgid "`OAUTH_CLIENT_SECRET`"
+msgstr ""
+
+#: src/content/docs/en/install-config/configuration.mdx:block 5 (table)
+msgid "Client secret (OAuth 2.0)"
+msgstr ""
+
+#: src/content/docs/en/install-config/configuration.mdx:block 5 (table)
+msgid "`OAUTH_AUTHORIZATION_URL`"
+msgstr ""
+
+#: src/content/docs/en/install-config/configuration.mdx:block 5 (table)
+msgid "Authorization URL (OAuth 2.0)"
+msgstr ""
+
+#: src/content/docs/en/install-config/configuration.mdx:block 5 (table)
+msgid "`OAUTH_TOKEN_URL`"
+msgstr ""
+
+#: src/content/docs/en/install-config/configuration.mdx:block 5 (table)
+msgid "Token URL (OAuth 2.0)"
+msgstr ""
+
+#: src/content/docs/en/install-config/configuration.mdx:block 5 (table)
+msgid "`OAUTH_USERINFO_URL`"
+msgstr ""
+
+#: src/content/docs/en/install-config/configuration.mdx:block 5 (table)
+msgid "User Info URL (OAuth 2.0)"
+msgstr ""
+
+#: src/content/docs/en/install-config/configuration.mdx:block 5 (table)
+msgid "`OAUTH_SCOPE`"
+msgstr ""
+
+#: src/content/docs/en/install-config/configuration.mdx:block 5 (table)
+msgid "Scope (OAuth 2.0)"
+msgstr ""
+
+#: src/content/docs/en/install-config/configuration.mdx:block 6 (header)
+msgid "Authentication"
+msgstr ""
+
+#: src/content/docs/en/install-config/configuration.mdx:block 7 (paragraph)
+msgid ""
+"Currently, there is no way to delete your account, reset your password, or "
+"enable multifactor authentication."
+msgstr ""
+
+#: src/content/docs/en/install-config/configuration.mdx:block 8 (paragraph)
+msgid ""
+"Registering users directly in the interface is recommended for individual "
+"instances. For multi-user environments, the recommended method is to use "
+"external SSO via the OAuth 2.0 protocol."
+msgstr ""
+
+#: src/content/docs/en/install-config/install/docker-compose.mdx:block 1
+#: (header)
+msgid ""
+"title: Docker Compose installation description: Guide to installing the "
+"project using Docker Compose, with setup steps, and deployment notes."
+msgstr ""
+
+#: src/content/docs/en/install-config/install/docker-compose.mdx:block 3
+#: (ordered list)
+msgid ""
+"Download the [docker-compose.yml](https://github.com/maelgangloff/domain-"
+"watchdog/blob/develop/docker-compose.yml) and modify it as needed"
+msgstr ""
+
+#: src/content/docs/en/install-config/install/docker-compose.mdx:block 3
+#: (ordered list)
+msgid ""
+"Download the [.env](https://github.com/maelgangloff/domain-"
+"watchdog/blob/develop/.env) and modify it as needed <LinkCard "
+"title=\"Configuration\" description=\"List of environment variables\" "
+"href=\"/en/install-config/configuration/#environment-variables\"/>"
+msgstr ""
+
+#: src/content/docs/en/install-config/install/docker-compose.mdx:block 3
+#: (ordered list)
+msgid "Add static files to customize your instance (under `public/content`)"
+msgstr ""
+
+#: src/content/docs/en/install-config/install/docker-compose.mdx:block 3
+#: (ordered list)
+msgid "Pull the latest version of the Domain Watchdog image from Docker Hub"
+msgstr ""
+
+#: src/content/docs/en/install-config/install/docker-compose.mdx:block 5
+#: (ordered list)
+msgid "Start the project in production environment"
+msgstr ""
+
+#: src/content/docs/en/install-config/install/docker-compose.mdx:block 7
+#: (paragraph)
+msgid ""
+"By default, the container listens on http://localhost:8080, but you can "
+"configure this in environment variables."
+msgstr ""
+
+#: src/content/docs/en/install-config/install/manual-install.mdx:block 1
+#: (header)
+msgid ""
+"title: Manual installation description: Manual installation guide with "
+"system requirements, dependencies, and step-by-step instructions to install "
+"the project from source."
+msgstr ""
+
+#: src/content/docs/en/install-config/install/manual-install.mdx:block 2
+#: (paragraph)
+msgid ""
+"import {FileTree, LinkCard, Steps} from '@astrojs/starlight/components';"
+msgstr ""
+
+#: src/content/docs/en/install-config/install/manual-install.mdx:block 3
+#: (paragraph)
+msgid ""
+"To deploy a Domain Watchdog instance, please refer to the Symfony "
+"documentation on [How to deploy a Symfony "
+"application](https://symfony.com/doc/current/deployment.html)."
+msgstr ""
+
+#: src/content/docs/en/install-config/install/manual-install.mdx:block 5
+#: (unordered list)
+msgid "PHP 8.4 or higher"
+msgstr ""
+
+#: src/content/docs/en/install-config/install/manual-install.mdx:block 5
+#: (unordered list)
+msgid "PostgreSQL 16 or higher"
+msgstr ""
+
+#: src/content/docs/en/install-config/install/manual-install.mdx:block 6
+#: (paragraph)
+msgid ""
+"In order to retrieve information about domain names, Domain Watchdog will "
+"query the RDAP server responsible for the TLD. It is crucial that the Domain"
+" Watchdog instance is placed in a clean environment from which these servers"
+" can be queried. In particular, the DNS servers and root certificates of the"
+" system must be trusted."
+msgstr ""
+
+#: src/content/docs/en/install-config/install/manual-install.mdx:block 7
+#: (header)
+msgid "Steps"
+msgstr ""
+
+#: src/content/docs/en/install-config/install/manual-install.mdx:block 8
+#: (paragraph)
+msgid "Clone the repository:"
+msgstr ""
+
+#: src/content/docs/en/install-config/install/manual-install.mdx:block 12
+#: (ordered list)
+msgid "Generate the cryptographic key pair for the JWT signature"
+msgstr ""
+
+#: src/content/docs/en/install-config/install/manual-install.mdx:block 12
+#: (ordered list)
+msgid "Run database migrations"
+msgstr ""
+
+#: src/content/docs/en/install-config/install/manual-install.mdx:block 12
+#: (ordered list)
+msgid "Start the Symfony server"
+msgstr ""
+
+#: src/content/docs/en/install-config/install/manual-install.mdx:block 12
+#: (ordered list)
+msgid "Build assets"
+msgstr ""
+
+#: src/content/docs/en/install-config/install/manual-install.mdx:block 12
+#: (ordered list)
+msgid ""
+"Don't forget to set up workers to process the [message "
+"queue](https://symfony.com/doc/current/messenger.html) </Steps>"
+msgstr ""
+
+#: src/content/docs/en/install-config/upgrade.mdx:block 1 (header)
+msgid ""
+"title: Manual Upgrade description: Upgrade guide explaining how to safely "
+"update the project, including migrations, and versioning details."
+msgstr ""
+
+#: src/content/docs/en/install-config/upgrade.mdx:block 2 (paragraph)
+msgid "import {Steps} from \"@astrojs/starlight/components\";"
+msgstr ""
+
+#: src/content/docs/en/install-config/upgrade.mdx:block 3 (paragraph)
+msgid ""
+"**Any updates are your responsibility. Make a backup of the data if "
+"necessary.**"
+msgstr ""
+
+#: src/content/docs/en/install-config/upgrade.mdx:block 4 (paragraph)
+msgid "Fetch updates from the remote repository:"
+msgstr ""
+
+#: src/content/docs/en/legal/faq.md:block 1 (header)
+msgid "title: FAQ"
+msgstr ""
+
+#: src/content/docs/en/legal/license.md:block 1 (header)
+msgid ""
+"title: License description: Licensing information detailing usage rights, "
+"redistribution terms, and legal conditions for contributing and using the "
+"project."
+msgstr ""
+
+#: src/content/docs/en/legal/license.md:block 2 (paragraph)
+msgid ""
+"This entire project is licensed under [*GNU Affero General Public License "
+"v3.0 or later*](https://www.gnu.org/licenses/agpl-3.0.txt). Contributions "
+"are welcome as long as they do not contravene the Code of Conduct."
+msgstr ""
+
+#: src/content/docs/en/legal/security.md:block 1 (header)
+msgid ""
+"title: Security policy description: Security policy describing vulnerability"
+" reporting, and guidelines to keep the project secure."
+msgstr ""
+
+#: src/content/docs/en/legal/security.md:block 2 (header)
+msgid "Reporting a Vulnerability"
+msgstr ""
+
+#: src/content/docs/en/legal/security.md:block 3 (paragraph)
+msgid ""
+"If you want to report a vulnerability, please contact the maintainer of this"
+" repository. Thanks!"
+msgstr ""
