@@ -1,0 +1,44 @@
+---
+title: Domain Lifecycle
+description: Explore the domain lifecycle, from registration and renewal to expiration and redemption. Know the critical phases for managing your domain name.
+---
+
+import {LinkCard} from "@astrojs/starlight/components";
+
+The **Domain Lifecycle** defines the statuses a domain name traverses from its creation to its deletion.
+Understanding these phases is critical to prevent unintentional loss of a domain.
+
+## The Generic Life Cycle
+
+![Generic Domain Name Life Cycle](https://www.icann.org/en/registrars/gtld-lifecycle.jpg)
+
+For most Generic Top-Level Domains (gTLDs) regulated by ICANN, the cycle follows this path:
+
+1.  **Available**: The domain is open for registration.
+2.  **Registered (Active)**: The domain is owned and functional. It can be updated, transferred, or renewed (typically 1–10 years).
+3.  **Auto-Renew Grace Period**: (0–45 days) The domain expires. The owner can usually renew it at the standard rate. The domain may stop resolving (ServerHold).
+4.  **Redemption Grace Period**: (30 days) The domain is deleted from the registrar but held by the registry. Recovery is possible but requires a higher **restoration fee**.
+5.  **Pending Delete**: (5 days) The domain is scheduled for permanent deletion. It cannot be recovered or renewed.
+6.  **Released**: The domain becomes **Available** again for public registration.
+
+<LinkCard
+    title="Domain name"
+    description="An explanation of what a domain name is and its structure."
+    href="/en/definitions/domain-name"/>
+
+## Special Cases of some ccTLDs
+
+Country Code Top-Level Domains (ccTLDs) operate under local regulations, leading to diverse lifecycles:
+
+* **No Grace Periods**: Some ccTLDs enter "Pending Delete" immediately upon expiration.
+* **Pre-Expiration Renewal**: Some registries require renewal fees to be paid weeks before the actual expiration date.
+* **Manual Processes**: Restoration in some ccTLDs may require manual intervention and paperwork.
+
+<LinkCard
+    title="Top Level Domain"
+    description="An overview of Top-Level Domains (TLDs) and their classification (gTLD, ccTLD, etc.)."
+    href="/en/definitions/top-level-domain"/>
+
+## See also
+
+- [Life Cycle of a Typical gTLD Domain Name](https://www.icann.org/en/contracted-parties/accredited-registrars/resources/gtld-lifecycle) on the ICANN website

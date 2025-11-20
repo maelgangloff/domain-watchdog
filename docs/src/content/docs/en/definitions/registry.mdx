@@ -1,0 +1,33 @@
+---
+title: Registry
+description: Understand the Domain Name Registry? Learn how these organizations manage the central database for all domain names under a specific TLD.
+---
+
+import {LinkCard} from "@astrojs/starlight/components";
+
+A **Registry** (or Registry Operator) is the organization responsible for maintaining the master database of all domain names registered under a specific Top-Level Domain (TLD).
+
+## Technical Roles
+
+The Registry is the authoritative source for its TLD. Its duties include:
+
+* **Zone File Generation**: Publishing the zone file that directs global DNS traffic to the correct nameservers for every domain in the extension.
+* **IDN & DNSSEC Management**: Enforcing policies for special characters and managing the cryptographic signing of the TLD zone.
+* **WHOIS/RDAP Server**: Operating the directory service that provides public information about registered domains.
+
+## Operational Roles
+
+Registries generally do not sell directly to the public. Instead, they:
+
+* Define the **Acceptable Use Policies** for the TLD.
+* Set the wholesale price for domains.
+* Accredit and connect with **Registrars** via EPP.
+
+<LinkCard
+    title="Registrar"
+    description="What is a Domain Name Registrar?"
+    href="/en/definitions/registrar"/>
+
+## See also
+
+  - [Domain name registry](https://en.wikipedia.org/wiki/Domain_name_registry) on Wikipedia

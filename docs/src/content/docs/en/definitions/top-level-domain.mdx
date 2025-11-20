@@ -1,0 +1,50 @@
+---
+title: Top-Level Domain (TLD)
+description: An overview of Top-Level Domains (TLDs), their classification (gTLD, ccTLD, etc.), and the structure of the DNS root zone.
+---
+
+A **Top-Level Domain (TLD)** is the rightmost segment of a domain name (after the last dot). TLDs are the highest level of the DNS hierarchy below the root.
+
+## TLD Classifications
+
+### Generic TLD (gTLD)
+
+Originally intended for specific use cases, most gTLDs are now open to everyone.
+
+* **Legacy**: `.com` (commercial), `.net` (network), `.org` (organization).
+* **New gTLDs**: Thousands of niche extensions like `.app`, `.blog`, `.guru`.
+* **Restricted**: Domains like `.bank` or `.pharmacy` require verification of eligibility.
+* **Brand**: Closed TLDs for corporations, e.g., `.google` or `.bmw`.
+
+### Country Code TLD (ccTLD)
+
+Reserved for countries and territories (two letters, based on ISO 3166).
+
+* **Examples**: `.uk` (United Kingdom), `.de` (Germany), `.io` (British Indian Ocean Territory).
+* **Rules**: Policies vary strictly by country. Some require local residency (e.g., `.no`, `.ca`), while others are marketed globally (e.g., `.tv`, `.ai`).
+
+### Sponsored TLD (sTLD)
+
+Managed by private organizations representing a specific community.
+
+* `.gov` (US Government)
+* `.edu` (Accredited US institutions)
+* `.aero` (Aviation industry)
+
+### Infrastructure TLD
+
+* `.arpa`: Managed by IANA, used exclusively for technical infrastructure (e.g., reverse DNS lookups).
+
+## Reserved TLDs
+
+Per [RFC 2606](https://tools.ietf.org/html/rfc2606), four TLDs are permanently reserved for testing and documentation to avoid confusion in production environments:
+
+* `.test`
+* `.example`
+* `.invalid`
+* `.localhost`
+
+## See also
+
+- [Top-level domain (Wikipedia)](https://en.wikipedia.org/wiki/Top-level_domain)
+- [IANA Root Zone Database](https://www.iana.org/domains/root/db)

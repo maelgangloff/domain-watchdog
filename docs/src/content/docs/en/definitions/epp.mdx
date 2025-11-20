@@ -1,0 +1,44 @@
+---
+title: EPP Protocol
+description: What is a Domain Name Registrar? Learn their role in managing the registration and transfer of domain names for the public.
+---
+
+import {LinkCard} from "@astrojs/starlight/components";
+
+The **Extensible Provisioning Protocol (EPP)** is the standard application-layer protocol for allocating objects within registries over the Internet. While primarily used for domain names, it can also manage contacts and host objects.
+
+## The Actors
+
+### Client (Registrar)
+
+The Registrar acts as the EPP Client. They send XML commands to create, update, renew, or delete domain names based on customer requests.
+
+<LinkCard
+    title="Registrar"
+    description="What is a Domain Name Registrar?"
+    href="/en/definitions/registrar"/>
+
+### Server (Registry)
+
+The Registry acts as the EPP Server. It processes the commands, validates logic (e.g., "is this domain available?"), updates the central database, and returns success or error responses.
+
+<LinkCard
+    title="Registry"
+    description="What is a Domain Name Registry?"
+    href="/en/definitions/registry"/>
+
+## The Protocol Mechanism
+
+EPP uses **XML** messages transported over **TCP**, secured by **TLS**. It is a stateful protocol, meaning a session is established (Login) before commands are executed.
+
+Common EPP commands include:
+
+* `<check>`: Verify availability.
+* `<create>`: Register a new object.
+* `<info>`: Retrieve object details.
+* `<transfer>`: Initiate a registrar transfer.
+* `<poll>`: Retrieve asynchronous notifications from the Registry.
+
+## See also
+
+  - [RFC 5730 - Extensible Provisioning Protocol (EPP)](https://datatracker.ietf.org/doc/html/rfc5730)

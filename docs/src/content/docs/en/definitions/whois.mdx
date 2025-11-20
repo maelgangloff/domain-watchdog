@@ -1,0 +1,97 @@
+---
+title: WHOIS Protocol
+description: Get an overview of WHOIS. Learn how this protocol is used to query databases for information about the registered user or assignees of a domain name.
+---
+
+import {LinkCard} from "@astrojs/starlight/components";
+
+WHOIS is a text-based query/response protocol (listening on **TCP Port 43**) widely used for querying databases that store the registered users or assignees of an Internet resource, such as a domain name or an IP address block.
+
+## Core Use Cases
+
+* **Availability Check**: Verifying if a specific domain name is available for registration.
+* **Ownership Identification**: Identifying the Registrant or the Registrar managing the domain.
+* **Technical Troubleshooting**: Finding the authoritative nameservers or the technical contacts to resolve network issues.
+* **Legal & Abuse**: Providing a record for law enforcement, intellectual property protection, and abuse reporting.
+
+## Thick vs. Thin Registries
+
+Understanding WHOIS responses requires understanding how the TLD Registry stores data.
+
+### Thin Registry (e.g., .com, .net)
+
+The Registry only stores technical data (DNSSEC, Nameservers) and a pointer to the Registrar.
+
+To get the full contact details, a second WHOIS query must be sent to the **Registrar's WHOIS server**.
+
+### Thick Registry (e.g., .org, .info, most ccTLDs)
+
+The Registry stores *all* information, including the Registrant's contact details and administrative data.
+
+A single query to the Registry provides the full record.
+
+## Example: Recursive WHOIS Query
+
+The standard `whois` command line tool often handles the "Thin Registry" redirect automatically.
+However, seeing the raw steps helps understand the protocol.
+
+In the example below for a **Thin TLD** (`.com`), we first query the Registry, which points us to the Registrar.
+
+### Request to the Registry (Verisign)
+
+Note the `Registrar WHOIS Server` field in the response.
+
+```text title="WHOIS query to the Registry"
+$ whois --verbose example.com -h whois.verisign-grs.com.
+Using server whois.verisign-grs.com..
+Query string: "example.com"
+
+   Domain Name: EXAMPLE.COM
+   Registry Domain ID: 2336799_DOMAIN_COM-VRSN
+   Registrar WHOIS Server: whois.iana.org
+   Registrar URL: http://res-dom.iana.org
+   Updated Date: 2025-08-14T07:01:39Z
+   Creation Date: 1995-08-14T04:00:00Z
+   Registry Expiry Date: 2026-08-13T04:00:00Z
+   Registrar: RESERVED-Internet Assigned Numbers Authority
+   Domain Status: clientDeleteProhibited https://icann.org/epp#clientDeleteProhibited
+   Domain Status: clientTransferProhibited https://icann.org/epp#clientTransferProhibited
+   Name Server: A.IANA-SERVERS.NET
+   Name Server: B.IANA-SERVERS.NET
+   DNSSEC: signedDelegation
+>>> Last update of whois database: 2025-11-20T08:05:54Z <<<
+```
+
+### Request to the Registrar (IANA)
+
+Following the referral, we query the specific Registrar to get the ownership details.
+
+```text title="WHOIS query to the Registrar"
+$ whois --verbose example.com -h whois.iana.org
+Using server whois.iana.org..
+Query string: "example.com"
+
+% IANA WHOIS server
+% for more information on IANA, visit http://www.iana.org
+% This query returned 1 object
+
+domain:       EXAMPLE.COM
+organisation: Internet Assigned Numbers Authority
+created:      1992-01-01
+source:       IANA
+```
+
+## Privacy Considerations
+
+Since the implementation of the **GDPR** (General Data Protection Regulation) and similar global privacy laws, the WHOIS output has changed significantly.
+
+* **Data Redaction**: Most personal fields (Name, Email, Phone) are now replaced with placeholders like `DATA REDACTED` or `Redacted for Privacy`.
+* **Privacy Proxies**: Registrars often provide services that replace the registrant's details with the registrar's generic contact information to prevent spam and harassment.
+* **Tiered Access**: Full, unredacted data is often no longer publicly available anonymously and requires a legitimate legal request or accreditation.
+
+<LinkCard title="RDAP Protocol" href="/en/definitions/rdap"
+          description="Learn about the successor to WHOIS designed to handle structured data and privacy access."/>
+
+## See also
+
+* [RFC 3912 - WHOIS Protocol Specification](https://datatracker.ietf.org/doc/html/rfc3912)

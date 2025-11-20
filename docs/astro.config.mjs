@@ -58,7 +58,8 @@ export default defineConfig({
                     ],
                 },
                 {label: 'Legal', autogenerate: {directory: 'legal'}, collapsed: true},
-                {slug: 'acknowledgment'}
+                {slug: 'acknowledgment'},
+                {label: 'Definitions', autogenerate: {directory: 'definitions'}, collapsed: true},
             ],
             locales: {
                 en: {

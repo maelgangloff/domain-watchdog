@@ -1,0 +1,74 @@
+---
+title: DNS Protocol
+description: What is DNS? Understand the Domain Name System, how it translates domain names into IP addresses, and its role in modern internet navigation.
+---
+
+import {LinkCard} from "@astrojs/starlight/components";
+
+**DNS (Domain Name System)** is the decentralized naming system for computers, services, or any resources connected to the internet or a private network.
+It acts as the "phonebook of the internet", translating human-readable domain names into machine-readable infos.
+
+## The Hierarchical Architecture
+
+The DNS architecture is a distributed, hierarchical database resembling an inverted tree. This structure, known as the **Domain Name Space**, is processed from right to left:
+
+* **Root Level**: The top of the hierarchy, represented by a silent single dot (`.`) at the end of a fully qualified domain name.
+* **Top-Level Domains (TLDs)**: The highest visible level (e.g., `.com`, `.org`, `.fr`).
+* **Second-Level Domains (SLDs)**: The specific name registered by an entity (e.g., `example` in `example.com`).
+* **Subdomains**: Further subdivisions for specific services or organizational structures (e.g., `www`, `blog`, or `api`).
+
+## Authoritative Servers
+
+Authoritative DNS servers hold the definitive resource records for a specific domain zone. Unlike recursive resolvers that cache answers, authoritative servers provide the original data.
+
+When a client requests a domain, the resolution chain queries:
+
+1.  **Root Servers**: Directs to the TLD servers.
+2.  **TLD Servers**: Directs to the domain's authoritative nameservers.
+3.  **Authoritative Server**: Returns the final IP address (or other record).
+
+<LinkCard
+    title="Top Level Domain"
+    description="An overview of Top-Level Domains (TLDs), their classification (gTLD, ccTLD, etc.), and the structure of the DNS root zone."
+    href="/en/definitions/top-level-domain"/>
+
+## GLUE Records
+
+A GLUE record is an A (or AAAA) record **provided by the parent zone** to prevent circular dependencies. Normally, the parent zone only delegates, but here it must provide data.
+They are strictly necessary when a domain's nameserver is a subdomain of the domain itself (e.g., `example.com` uses `ns1.example.com` as its nameserver). Without the GLUE record in the `.com` zone pointing to `ns1`'s IP, the resolver would be stuck in a loop trying to resolve the nameserver's name.
+
+### Example: `ns.icann.org`
+
+In this example, `icann.org` uses `ns.icann.org` as one of its nameservers.
+
+To resolve `icann.org`, you must query `ns.icann.org`, but you cannot find `ns.icann.org` without first resolving `icann.org`.
+
+When querying the `.org` TLD server (`A0.ORG.AFILIAS-NST.INFO`), the server returns the Nameserver (NS) records in the **Authority Section**, but crucially, it also provides the IP addresses in the **Additional Section**. These are the GLUE records.
+
+```text title="DNS query of ns.icann.org using the dig command" {17-18}
+; <<>> DiG 9.20.15 <<>> ns.icann.org @A0.ORG.AFILIAS-NST.INFO
+;; global options: +cmd
+;; Got answer:
+;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 52458
+;; flags: qr rd; QUERY: 1, ANSWER: 0, AUTHORITY: 4, ADDITIONAL: 3
+
+;; QUESTION SECTION:
+;ns.icann.org.            IN    A
+
+;; AUTHORITY SECTION:
+icann.org.        3600    IN    NS    ns.icann.org.
+icann.org.        3600    IN    NS    a.icann-servers.net.
+icann.org.        3600    IN    NS    c.icann-servers.net.
+icann.org.        3600    IN    NS    b.icann-servers.net.
+
+;; ADDITIONAL SECTION:
+ns.icann.org.        3600    IN    A     199.4.138.53
+ns.icann.org.        3600    IN    AAAA  2001:500:89::53
+
+;; Query time: 241 msec
+;; SERVER: 199.19.56.1#53(A0.ORG.AFILIAS-NST.INFO) (UDP)
+```
+
+## See also
+
+- [Domain Name System](https://en.wikipedia.org/wiki/Domain_Name_System) on Wikipedia

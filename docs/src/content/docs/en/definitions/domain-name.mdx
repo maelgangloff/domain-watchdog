@@ -1,0 +1,53 @@
+---
+title: Domain name
+description: Define your identity online. An explanation of what a domain name is and its structure.
+---
+A **Domain Name** is a human-readable identification string used to locate resources on the Internet. It maps complex numerical IP addresses to memorable names.
+
+## The Structure of a Domain Name
+
+A domain name is read hierarchically from right to left:
+
+1.  **Top-Level Domain (TLD)**: The suffix (e.g., `.com`, `.fr`).
+2.  **Second-Level Domain (SLD)**: The unique name chosen by the registrant (e.g., `example`).
+3.  **Subdomain**: prefixes for specific services (e.g., `www`, `api`).
+
+A **Fully Qualified Domain Name (FQDN)** includes all labels up to the root (e.g., `www.example.com.`).
+
+## The EPP Statuses
+
+The Extensible Provisioning Protocol (EPP) assigns status codes to domains to indicate their state or restrictions. These are visible in WHOIS/RDAP lookups.
+
+### Server Statuses (Set by Registry)
+
+The registry can apply EPP codes to modify the state of a domain name. These are all codes except those beginning with `client`, which are reserved for registrars.
+Generic codes are listed in the ICANN documentation.
+
+Some registries have developed additional codes to describe non-standard cases.
+For example, AFNIC added the code `server trade prohibited` to describe the prohibition of the `trade` operation on a domain name.
+This operation is part of AFNIC's EPP extension and is not a standard operation for a domain name.
+
+### Client Statuses (Set by Registrar)
+
+Registrars can also apply EPP codes to a domain name. These codes always begin with `client` to distinguish them from the codes applied by the registry.
+
+Some codes have the same effect as those applied by the registry.
+
+For example, the `client hold` and `server hold` codes block the resolution of a domain name's DNS zone.
+This means that the top-level domain name's DNS zone no longer contains the `NS` records necessary for delegating the domain name's zone.
+This results in the complete shutdown of services for the domain name.
+This code is often used by the registrar to strongly encourage the registrant to pay renewal fees (when the domain name is not in its redemption period).
+
+## Internationalized Domain Name (IDN)
+
+An IDN is a domain name that contains characters other than the standard ASCII format (a-z, 0-9, and hyphens). This includes characters with diacritics (accents) or characters from non-Latin scripts (Arabic, Chinese, Cyrillic, etc.).
+
+To function in the legacy DNS system, IDNs are converted into an ASCII-compatible format called **Punycode**, which always begins with `xn--`.
+
+|      Display      |         Punycode         |
+|:-----------------:|:------------------------:|
+| `maëlgangloff.fr` | `xn--malgangloff-0bb.fr` |
+
+## See also
+
+  - [EPP Status Codes](https://icann.org/epp) on the ICANN website

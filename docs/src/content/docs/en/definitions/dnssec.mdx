@@ -1,0 +1,52 @@
+---
+title: DNSSEC
+description: Secure your domain resolution. Learn about DNSSEC (Domain Name System Security Extensions) and how it protects users from forged DNS data.
+---
+
+import {LinkCard} from "@astrojs/starlight/components";
+
+**DNSSEC (Domain Name System Security Extensions)** adds a layer of cryptographic security to the DNS protocol. It defends against specific attacks, such as **DNS cache poisoning** and **man-in-the-middle attacks**, by ensuring that the DNS data received is identical to what the zone owner published.
+
+## What DNSSEC does
+
+DNSSEC employs public-key cryptography to establish a **Chain of Trust**.
+
+* **Origin Authentication**: Verifies that the data comes from the correct authoritative server.
+* **Data Integrity**: Ensures the data has not been modified in transit.
+* **Authenticated Denial of Existence**: Proves securely that a domain or record does *not* exist (using NSEC/NSEC3).
+
+New resource records enable this validation:
+
+* `RRSIG`: The digital signature associated with a record set.
+* `DNSKEY`: The public key used to verify the RRSIG.
+* `DS` (Delegation Signer): A hash of the child zone's key, stored in the parent zone to link the trust chain.
+
+## What DNSSEC does not do
+
+  * **No Encryption**: DNS queries and responses remain in plain text (unlike DoH or DoT).
+  * **No Identity Validation**: It does not validate the legitimacy of the domain owner (e.g., it doesn't prevent phishing domains, it just proves the phishing domain's IP is correct).
+
+## Configure DNSSEC on your Domain Name
+
+Implementing DNSSEC involves two main stages:
+
+1.  **Signing the Zone**: The authoritative nameserver generates keys (`ZSK` and `KSK`) and signs the zone data, creating `RRSIG` and `DNSKEY` records.
+2.  **Establishing Trust**: The domain owner must send the `DS` record (hash of the KSK) to the Registrar. The Registrar forwards this to the Registry for publication in the parent TLD zone.
+
+<LinkCard
+    title="Domain name"
+    description="An explanation of what a domain name is and its structure."
+    href="/en/definitions/domain-name"/>
+
+## The Adoption of DNSSEC
+
+Adoption is a top-down process starting from the Root Zone. While the Root and most TLDs are signed, adoption at the end-user level (Second-Level Domains) relies on registrar support and registrant awareness.
+
+<LinkCard
+    title="Top Level Domain"
+    description="An overview of Top-Level Domains (TLDs) and their classification (gTLD, ccTLD, etc.)."
+    href="/en/definitions/top-level-domain"/>
+
+## See also
+
+- [DNSSEC World Map](https://stats.labs.apnic.net/dnssec) of the APNIC Labs
