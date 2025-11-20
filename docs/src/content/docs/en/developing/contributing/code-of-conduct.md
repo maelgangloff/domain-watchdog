@@ -2,6 +2,7 @@
 title: Code of Conduct
 description: Code of conduct outlining community standards and guidelines for respectful collaboration within the project.
 ---
+<!-- mdpo-disable -->
 
 ## Our Pledge
 
