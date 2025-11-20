@@ -3,29 +3,29 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-11-20 13:19+0000\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
+"PO-Revision-Date: 2025-11-20 14:22+0000\n"
+"Last-Translator: Maël Gangloff <contact@maelgangloff.fr>\n"
+"Language-Team: French <https://weblate.vinceh121.me/projects/domain-watchdog/"
+"domain-watchdog-documentation/fr/>\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Translate Toolkit 3.16.3\n"
+"X-Generator: Weblate 5.14.3\n"
 
 #
-
 #: src/content/docs/en/acknowledgment.mdx:block 1 (header)
 msgid "title: Acknowledgment"
-msgstr ""
+msgstr "title: Remerciements"
 
 #: src/content/docs/en/acknowledgment.mdx:block 2 (paragraph)
 msgid "import { ContributorList } from \"starlight-contributor-list\""
-msgstr ""
+msgstr "import { ContributorList } from \"starlight-contributor-list\""
 
 #: src/content/docs/en/acknowledgment.mdx:block 3 (header)
 msgid "Contributors"
-msgstr ""
+msgstr "Contributeurs"
 
 #: src/content/docs/en/acknowledgment.mdx:block 4 (paragraph)
 msgid ""
@@ -33,22 +33,30 @@ msgid ""
 "ideas, bug reports, code improvements, and translations all help make this "
 "project better for everyone."
 msgstr ""
+"Un grand merci à ceux qui ont contribué à ce projet ! Vos idées, rapports de "
+"bug, amélioration de code et traductions permettent d'améliorer ce projet et "
+"d'en faire profiter tout le monde."
 
 #: src/content/docs/en/acknowledgment.mdx:block 5 (paragraph)
 msgid ""
 "<ContributorList githubRepo=\"maelgangloff/domain-watchdog\" "
 "ignore={['weblate']} />"
 msgstr ""
+"<ContributorList githubRepo=\"maelgangloff/domain-watchdog\" ignore={"
+"['weblate']} />"
 
 #: src/content/docs/en/definitions/dns.mdx:block 1 (header)
 msgid ""
 "title: DNS Protocol\n"
 "description: What is DNS? Understand the Domain Name System, how it translates domain names into IP addresses, and its role in modern internet navigation."
 msgstr ""
+"title: Protocole DNS\n"
+"description: Qu'est-ce que DNS ? Comprendre le DNS, comment il permet de "
+"traduire les noms de domaines en adresses IP et son rôle dans Internet."
 
 #: src/content/docs/en/definitions/dns.mdx:block 2 (paragraph)
 msgid "import {LinkCard} from \"@astrojs/starlight/components\";"
-msgstr ""
+msgstr "import {LinkCard} from \"@astrojs/starlight/components\";"
 
 #: src/content/docs/en/definitions/dns.mdx:block 3 (paragraph)
 msgid ""
@@ -60,7 +68,7 @@ msgstr ""
 
 #: src/content/docs/en/definitions/dns.mdx:block 4 (header)
 msgid "The Hierarchical Architecture"
-msgstr ""
+msgstr "Une architecture hiérarchique"
 
 #: src/content/docs/en/definitions/dns.mdx:block 5 (paragraph)
 msgid ""
