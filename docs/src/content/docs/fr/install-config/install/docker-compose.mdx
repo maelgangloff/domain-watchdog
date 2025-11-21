@@ -1,0 +1,25 @@
+---
+title: Installation Docker Compose
+description: Guide pour installer le projet en utilisant Docker Compose, avec les étapes de configuration et les notes de déploiement.
+---
+
+import {LinkCard} from '@astrojs/starlight/components';
+
+1. Téléchargez le fichier [docker-compose.yml](https://github.com/maelgangloff/domain-watchdog/blob/develop/docker-compose.yml) et modifiez-le selon vos besoins
+2. Téléchargez le fichier [.env](https://github.com/maelgangloff/domain-watchdog/blob/develop/.env) et modifiez-le selon vos besoins
+<LinkCard title="Configuration" description="Liste des variables d'environnement" href="/en/install-config/configuration/#environment-variables"/>
+
+3. Ajoutez des fichiers statiques pour personnaliser votre instance (sous `public/content`)
+4. Récupérez la dernière version de l'image Domain Watchdog depuis Docker Hub
+
+```shell
+docker compose pull
+```
+
+5. Démarrez le projet en environnement de production
+
+```shell
+docker compose up
+```
+
+Par défaut, le conteneur écoute sur http://localhost:8080, mais vous pouvez configurer cela dans les variables d'environnement.

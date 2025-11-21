@@ -1,0 +1,53 @@
+---
+title: Nom de domaine
+description: Définissez votre identité en ligne. Une explication de ce qu'est un nom de domaine et de sa structure.
+---
+Un **Nom de Domaine** est une chaîne d'identification lisible par l'homme utilisée pour localiser des ressources sur Internet. Il mappe des adresses IP numériques complexes vers des noms mémorables.
+
+## La structure d'un nom de domaine
+
+Un nom de domaine se lit hiérarchiquement de droite à gauche :
+
+1.  **Domaine de premier niveau (TLD)** : Le suffixe (par exemple, `.com`, `.fr`).
+2.  **Domaine de second niveau (SLD)** : Le nom unique choisi par le titulaire (par exemple, `example`).
+3.  **Sous-domaine** : préfixes pour des services spécifiques (par exemple, `www`, `api`).
+
+Un **Nom de Domaine Complètement Qualifié (FQDN)** inclut tous les labels jusqu'à la racine (par exemple, `www.example.com.`).
+
+## Les statuts EPP
+
+Le protocole EPP (Extensible Provisioning Protocol) attribue des codes de statut aux domaines pour indiquer leur état ou des restrictions. Ceux-ci sont visibles dans les recherches WHOIS/RDAP.
+
+### Statuts serveur (définis par le registre)
+
+Le registre peut appliquer des codes EPP pour modifier l'état d'un nom de domaine. Ce sont tous les codes sauf ceux commençant par `client`, qui sont réservés aux bureaux d'enregistrement.
+Les codes génériques sont listés dans la documentation de l'ICANN.
+
+Certains registres ont développé des codes supplémentaires pour décrire des cas non standard.
+Par exemple, l'AFNIC a ajouté le code `server trade prohibited` pour décrire l'interdiction de l'opération de `trade` (cession) sur un nom de domaine.
+Cette opération fait partie de l'extension EPP de l'AFNIC et n'est pas une opération standard pour un nom de domaine.
+
+### Statuts client (définis par le bureau d'enregistrement)
+
+Les bureaux d'enregistrement peuvent également appliquer des codes EPP à un nom de domaine. Ces codes commencent toujours par `client` pour les distinguer des codes appliqués par le registre.
+
+Certains codes ont le même effet que ceux appliqués par le registre.
+
+Par exemple, les codes `client hold` et `server hold` bloquent la résolution de la zone DNS d'un nom de domaine.
+Cela signifie que la zone DNS du domaine de premier niveau ne contient plus les enregistrements `NS` nécessaires à la délégation de la zone du nom de domaine.
+Cela entraîne l'arrêt complet des services pour le nom de domaine.
+Ce code est souvent utilisé par le bureau d'enregistrement pour encourager fortement le titulaire à payer les frais de renouvellement (lorsque le nom de domaine n'est pas dans sa période de rédemption).
+
+## Nom de domaine internationalisé (IDN)
+
+Un IDN est un nom de domaine qui contient des caractères autres que le format ASCII standard (a-z, 0-9 et traits d'union). Cela inclut les caractères avec des diacritiques (accents) ou des caractères d'écritures non latines (arabe, chinois, cyrillique, etc.).
+
+Pour fonctionner dans le système DNS hérité, les IDN sont convertis dans un format compatible ASCII appelé **Punycode**, qui commence toujours par `xn--`.
+
+|     Affichage     |         Punycode         |
+|:-----------------:|:------------------------:|
+| `maëlgangloff.fr` | `xn--malgangloff-0bb.fr` |
+
+## Voir aussi
+
+  - [Codes de statut EPP](https://icann.org/epp) sur le site de l'ICANN

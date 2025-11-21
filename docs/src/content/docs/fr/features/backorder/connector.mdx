@@ -1,0 +1,39 @@
+---
+title: Connecteurs
+description: Découvrez comment fonctionne un Connecteur, ses prérequis et comment il s'intègre aux API des bureaux d'enregistrement.
+---
+
+import {LinkCard, Steps} from '@astrojs/starlight/components';
+
+Un Connecteur permet à Domain Watchdog de communiquer avec l'API d'un bureau d'enregistrement (registrar) pour effectuer des actions telles que l'enregistrement de domaine.
+
+## Créer un Connector
+
+<Steps>
+1.  Choisissez un fournisseur d'API externe dans la liste des bureaux d'enregistrement supportés.
+    <LinkCard title="Bureaux d'enregistrement supportés" description="Liste des registrars supportés pour la création d'un Connecteur" href="/fr/features/backorder/supported-registrar"/>
+
+2.  Saisissez les informations requises en utilisant les identifiants obtenus depuis l'espace client de votre fournisseur.
+    :::tip{icon="heart"}
+    Un lien vous permet d'accéder directement à la page du fournisseur pour récupérer ces informations d'authentification.
+    :::
+
+3.  Examinez et acceptez les conditions requises. Pour rappel, vous pouvez supprimer un Connecteur à tout moment depuis votre espace personnel.
+
+4.  Cliquez sur le bouton pour créer votre Connecteur. **Félicitations 🎉**
+</Steps>
+
+## Considérations juridiques
+
+Ces exigences légales garantissent que toutes les opérations sur les domaines sont conformes aux politiques des bureaux d'enregistrement et aux réglementations applicables.
+
+Domain Watchdog agit uniquement en tant qu'interface technique et ne sert pas d'intermédiaire de paiement.
+Vos identifiants sont transmis directement à l'API du fournisseur pour les opérations sur les domaines.
+En créant un Connecteur, vous consentez aux conditions du fournisseur et à l'utilisation de vos identifiants pour les opérations autorisées.
+
+En particulier, vous devez consentir à ces élements :
+
+  - Accepter les conditions d'utilisation de l'API du fournisseur
+  - Confirmer que vous avez l'âge légal pour accepter ces conditions
+
+Les conditions d'utilisation pouvant changer à tout moment, le lien vers ces conditions est toujours accessible sur la page listant les Connecteurs.

@@ -1,0 +1,108 @@
+---
+title: Liste des registrars supportés
+description: Liste des bureaux d'enregistrement supportés pour la récupération de domaines, avec détails sur la compatibilité.
+---
+
+import {LinkButton} from '@astrojs/starlight/components';
+
+:::caution[Rappel]
+  * Veuillez noter que ce projet N'EST PAS affilié aux fournisseurs d'API utilisés pour commander des noms de domaine.
+  * Les installeurs du projet sont responsables de l'utilisation de leur propre instance.
+  * En aucun cas, le mainteneur de ce projet ne pourra être tenu responsable d'autres cas sur lesquels il n'a aucun contrôle.
+:::
+
+## OVH
+
+| Champ          | Description                                                                                     | Requis |
+|----------------|-------------------------------------------------------------------------------------------------|:------:|
+| App key        | La clé qui permet à OVH d'identifier votre application                                          | Requis |
+| App secret key | La clé secrète associée à votre application                                                     | Requis |
+| Consumer key   | La clé secrète qui lie l'application à votre compte                                             | Requis |
+| Endpoint       | Permet de choisir quel serveur utiliser (Europe, États-Unis ou Canada)                          | Requis |
+| Subsidiary     | Le pays lié à la filiale OVH associée à votre compte                                            | Requis |
+| Pricing mode   | Choisissez si vous voulez payer pour un nom de domaine Premium ou uniquement les prix standards | Requis |
+
+<LinkButton variant="secondary"
+            icon="external"
+            target="\_blank"
+            href="https://www.google.com/search?q=https://api.ovh.com/createToken/%3FGET%3D/order/cart%26GET%3D/order/cart/*\&POST=/order/cart\&POST=/order/cart/*\&DELETE=/order/cart/\*\&GET=/domain/extensions">
+    Récupérer mon token sur le site d'OVH
+</LinkButton>
+
+## Gandi
+
+| Champ      | Description                                                |  Requis   |
+|------------|------------------------------------------------------------|:---------:|
+| Token      | Le token d'authentification de votre compte                |  Requis   |
+| Sharing ID | Indique l'organisation qui paiera pour le produit commandé | Optionnel |
+
+<LinkButton variant="secondary"
+            icon="external"
+            target="\_blank"
+            href="https://admin.gandi.net/organizations/account/pat">
+    Récupérer mon token sur le site de Gandi
+</LinkButton>
+
+## Namecheap
+
+:::caution
+Ce fournisseur exige que l'adresse IPv4 de votre instance soit renseignée sur son interface web lors de la création de la connexion API. Cette information doit également être saisie dans la configuration.
+:::
+
+| Champ    | Description                                          |  Requis  |
+|----------|------------------------------------------------------|:--------:|
+| API user | L'utilisateur API tel que donné par le Fournisseur   |  Requis  |
+| API key  | La clé API telle que donnée par le Fournisseur       |  Requis  |
+
+<LinkButton variant="secondary"
+            icon="external"
+            target="\_blank"
+            href="https://ap.www.namecheap.com/settings/tools/apiaccess/">
+    Récupérer mon token sur le site de Namecheap
+</LinkButton>
+
+## AutoDNS
+
+:::caution
+Ce fournisseur ne fournit pas de liste des TLD supportés. Merci de vérifier si le domaine que vous souhaitez enregistrer est supporté.
+:::
+
+| Champ         | Description                                                  |  Requis  |
+|---------------|--------------------------------------------------------------|:--------:|
+| Username      | Le nom d'utilisateur du compte                               |  Requis  |
+| Password      | Le mot de passe du compte                                    |  Requis  |
+| Owner consent | Consentement d'achat                                         |  Requis  |
+| Context       | Le "contexte" tel que donné par le Fournisseur               |  Requis  |
+| Contact ID    | ID de contact du titulaire des noms de domaine achetés       |  Requis  |
+
+<LinkButton variant="secondary"
+            icon="external"
+            target="\_blank"
+            href="https://en.autodns.com/domain-robot-api/">
+    Récupérer mon token sur le site d'AutoDNS
+</LinkButton>
+
+## Name.com
+
+:::caution
+Ce fournisseur ne fournit pas de liste des TLD supportés. Merci de vérifier si le domaine que vous souhaitez enregistrer est supporté.
+:::
+
+| Champ    | Description                                 |  Requis  |
+|----------|---------------------------------------------|:--------:|
+| Username | Le nom d'utilisateur du compte              |  Requis  |
+| Token    | Le token d'authentification de votre compte |  Requis  |
+
+<LinkButton variant="secondary"
+            icon="external"
+            target="\_blank"
+            href="https://www.name.com/account/settings/api">
+    Récupérer mon token sur le site de Name.com
+</LinkButton>
+
+## Serveur EPP personnalisé
+
+Ce type de connecteur vous permet de lier directement votre instance à un registre via le protocole EPP.
+Cela nécessite que vous ayez signé un contrat avec un registre ; vous êtes alors considéré comme un bureau d'enregistrement à part entière.
+
+Actuellement, l'implémentation de cette fonctionnalité n'a pas été testée ; vos retours sont importants !

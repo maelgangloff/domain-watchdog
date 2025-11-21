@@ -1,0 +1,42 @@
+---
+title: Configuration
+description: Guide de configuration expliquant les variables d'environnement et les paramètres nécessaires pour lancer et personnaliser le projet.
+---
+
+import {LinkCard} from '@astrojs/starlight/components';
+
+<LinkCard title="Installation avec Docker" href="/fr/install-config/install/docker-compose"/>
+
+## Variables d'environnement
+
+| Variable                       | Description                                             |           Défaut            |
+|--------------------------------|---------------------------------------------------------|:---------------------------:|
+| `DATABASE_URL`                 | Lire la documentation Symfony                           |                             |
+| `OUTGOING_IP`                  | IPv4 sortante, requise par certains fournisseurs        |                             |
+| `INFLUXDB_ENABLED`             | Activer la connexion avec InfluxDB                      |           `false`           |
+| `INFLUXDB_URL`                 | URL InfluxDB                                            |   `http://localhost:8086`   |
+| `INFLUXDB_TOKEN`               | Jeton (Token) InfluxDB                                  |                             |
+| `INFLUXDB_BUCKET`              | Nom du bucket InfluxDB                                  |      `domainwatchdog`       |
+| `INFLUXDB_ORG`                 | Organisation InfluxDB                                   |      `domainwatchdog`       |
+| `LIMITED_FEATURES`             | Limiter certaines fonctionnalités pour les utilisateurs |           `false`           |
+| `LIMIT_MAX_WATCHLIST`          | Nombre max. de listes de surveillance par utilisateur   |             `0`             |
+| `LIMIT_MAX_WATCHLIST_DOMAINS`  | Nombre max. de domaines par liste de surveillance       |             `0`             |
+| `LIMIT_MAX_WATCHLIST_WEBHOOKS` | Nombre max. de webhooks par liste de surveillance       |             `0`             |
+| `MAILER_SENDER_NAME`           | Nom de l'expéditeur des e-mails                         |      `Domain Watchdog`      |
+| `MAILER_SENDER_EMAIL`          | Adresse e-mail de l'expéditeur                          | `notifications@example.com` |
+| `REGISTRATION_ENABLED`         | Activer l'inscription des utilisateurs                  |           `true`            |
+| `REGISTRATION_VERIFY_EMAIL`    | Vérifier les e-mails lors de l'inscription              |           `false`           |
+| `MAILER_DSN`                   | Lire la documentation Symfony                           |        `null://null`        |
+| `OAUTH_CLIENT_ID`              | ID Client (OAuth 2.0) pour le SSO externe               |                             |
+| `OAUTH_CLIENT_SECRET`          | Secret Client (OAuth 2.0)                               |                             |
+| `OAUTH_AUTHORIZATION_URL`      | URL d'autorisation (OAuth 2.0)                          |                             |
+| `OAUTH_TOKEN_URL`              | URL de jeton (OAuth 2.0)                                |                             |
+| `OAUTH_USERINFO_URL`           | URL des informations utilisateur (OAuth 2.0)            |                             |
+| `OAUTH_SCOPE`                  | Scope (OAuth 2.0)                                       |                             |
+
+
+## Authentification
+
+Actuellement, il n'est pas possible de supprimer votre compte, de réinitialiser votre mot de passe ou d'activer l'authentification multifacteur.
+
+L'inscription directe des utilisateurs dans l'interface est recommandée pour les instances individuelles. Pour les environnements multi-utilisateurs, la méthode recommandée est d'utiliser un SSO externe via le protocole OAuth 2.0.

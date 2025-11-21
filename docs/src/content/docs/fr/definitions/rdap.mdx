@@ -1,0 +1,29 @@
+---
+title: Protocole RDAP
+description: Le protocole d'accès aux données moderne. Comprendre RDAP (Registration Data Access Protocol) pour un accès fiable et structuré aux données d'enregistrement et de propriété des domaines.
+---
+
+import {LinkCard} from "@astrojs/starlight/components";
+
+Le **RDAP (Registration Data Access Protocol)** est la norme moderne pour accéder aux données d'enregistrement. Il a été conçu pour remplacer l'ancien protocole WHOIS en remédiant à son manque de standardisation et de sécurité.
+
+## Améliorations clés par rapport à WHOIS
+
+  * **Données structurées (JSON)** : Contrairement à WHOIS, qui renvoie du texte libre non structuré, RDAP renvoie des données au format JSON. Cela permet une analyse automatisée facile et un affichage cohérent par les clients.
+  * **Requêtes standardisées** : RDAP utilise des services web RESTful (HTTP/HTTPS).
+  * **Internationalisation** : Support natif des caractères non latins (IDN).
+  * **Accès différencié** : RDAP prend en charge l'authentification, permettant aux registres d'afficher des données limitées au public (conformité RGPD) tout en fournissant des données complètes aux autorités accréditées.
+
+<LinkCard
+title="Protocole WHOIS"
+description="Obtenez un aperçu du protocole WHOIS."
+href="/fr/definitions/whois"/>
+
+## État du déploiement
+
+L'ICANN rend obligatoire la mise en œuvre de RDAP pour tous les bureaux d'enregistrement accrédités et les registres gTLD.
+Alors que WHOIS est encore largement utilisé par les systèmes hérités, RDAP est la source faisant autorité pour les données d'enregistrement gTLD. L'adoption parmi les ccTLD est volontaire et en cours.
+
+## Voir aussi
+
+  - [Tableau de bord de déploiement RDAP](https://deployment.rdap.org)

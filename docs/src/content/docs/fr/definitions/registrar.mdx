@@ -1,0 +1,36 @@
+---
+title: Bureau d'enregistrement
+description: Qu'est-ce qu'un bureau d'enregistrement de noms de domaine ? Apprenez leur rôle dans la gestion de l'enregistrement et du transfert des noms de domaine pour le public.
+---
+
+import {LinkCard} from "@astrojs/starlight/components";
+
+Un **Bureau d'enregistrement** (Registrar) est une entité commerciale accréditée qui vend des enregistrements de noms de domaine au public. Il agit comme intermédiaire entre le Titulaire (le propriétaire du domaine) et le Registre (l'opérateur de la base de données).
+
+<LinkCard
+title="Registre"
+description="Qu'est-ce qu'un registre de noms de domaine ?"
+href="/fr/definitions/registry"/>
+
+## Responsabilités principales
+
+### Gestion administrative
+
+  * **Enregistrement & Renouvellement** : Gestion de l'achat et du renouvellement périodique des domaines.
+  * **Gestion du cycle de vie** : Gestion des périodes de grâce, des frais de rédemption et des transferts.
+  * **Précision des données** : Collecte et maintien d'informations de contact précises pour les répertoires WHOIS/RDAP.
+
+### Services techniques
+
+  * **Interface EPP** : Traduction des actions de l'utilisateur en commandes EPP envoyées au Registre.
+  * **Hébergement DNS** : La plupart des bureaux d'enregistrement fournissent des serveurs de noms par défaut, permettant aux utilisateurs de gérer leurs enregistrements DNS (A, MX, CNAME) via un tableau de bord convivial.
+  * **DNSSEC** : Facilitation de la rotation et de la publication des enregistrements DS.
+
+<LinkCard
+title="Protocole DNS"
+description="Qu'est-ce que le DNS ? Comprendre le système de noms de domaine."
+href="/fr/definitions/dns"/>
+
+## Voir aussi
+
+  - [Bureau d'enregistrement (Domain name registrar)](https://fr.wikipedia.org/wiki/Registrar) sur Wikipédia

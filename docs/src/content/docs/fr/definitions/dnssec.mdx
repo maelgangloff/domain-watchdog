@@ -1,0 +1,52 @@
+---
+title: DNSSEC
+description: Sécurisez votre résolution de domaine. En savoir plus sur DNSSEC (Extensions de sécurité du système de noms de domaine) et comment il protège les utilisateurs contre les données DNS falsifiées.
+---
+
+import {LinkCard} from "@astrojs/starlight/components";
+
+**DNSSEC (Domain Name System Security Extensions)** ajoute une couche de sécurité cryptographique au protocole DNS. Il défend contre des attaques spécifiques, telles que l'**empoisonnement du cache DNS** et les **attaques de l'homme du milieu**, en garantissant que les données DNS reçues sont identiques à celles publiées par le propriétaire de la zone.
+
+## Ce que fait DNSSEC
+
+DNSSEC utilise la cryptographie à clé publique pour établir une **Chaîne de Confiance**.
+
+  * **Authentification de l'origine** : Vérifie que les données proviennent du bon serveur faisant autorité.
+  * **Intégrité des données** : Garantit que les données n'ont pas été modifiées en transit.
+  * **Déni d'existence authentifié** : Prouve de manière sécurisée qu'un domaine ou un enregistrement n'existe *pas* (en utilisant NSEC/NSEC3).
+
+De nouveaux enregistrements de ressources permettent cette validation :
+
+  * `RRSIG` : La signature numérique associée à un jeu d'enregistrements.
+  * `DNSKEY` : La clé publique utilisée pour vérifier le RRSIG.
+  * `DS` (Delegation Signer) : Un hachage de la clé de la zone enfant, stocké dans la zone parente pour lier la chaîne de confiance.
+
+## Ce que DNSSEC ne fait pas
+
+  * **Pas de chiffrement** : Les requêtes et réponses DNS restent en texte clair (contrairement à DoH ou DoT).
+  * **Pas de validation d'identité** : Il ne valide pas la légitimité du propriétaire du domaine (par exemple, il n'empêche pas les domaines de phishing, il prouve juste que l'IP du domaine de phishing est correcte).
+
+## Configurer DNSSEC sur votre nom de domaine
+
+La mise en œuvre de DNSSEC implique deux étapes principales :
+
+1.  **Signature de la zone** : Le serveur de noms faisant autorité génère des clés (`ZSK` et `KSK`) et signe les données de la zone, créant des enregistrements `RRSIG` et `DNSKEY`.
+2.  **Établissement de la confiance** : Le propriétaire du domaine doit envoyer l'enregistrement `DS` (hachage de la KSK) au Bureau d'enregistrement (Registrar). Le Bureau d'enregistrement transmet cela au Registre pour publication dans la zone TLD parente.
+
+<LinkCard
+title="Nom de domaine"
+description="Une explication de ce qu'est un nom de domaine et de sa structure."
+href="/fr/definitions/domain-name"/>
+
+## L'adoption de DNSSEC
+
+L'adoption est un processus descendant commençant par la Zone Racine. Alors que la Racine et la plupart des TLD sont signés, l'adoption au niveau de l'utilisateur final (domaines de second niveau) dépend du support du bureau d'enregistrement et de la sensibilisation du titulaire.
+
+<LinkCard
+title="Domaine de premier niveau"
+description="Un aperçu des domaines de premier niveau (TLD) et leur classification (gTLD, ccTLD, etc.)."
+href="/fr/definitions/top-level-domain"/>
+
+## Voir aussi
+
+  - [Carte mondiale DNSSEC](https://stats.labs.apnic.net/dnssec) des laboratoires APNIC

@@ -1,0 +1,86 @@
+---
+title: Installation manuelle
+description: Guide d'installation manuelle avec les prérequis système, les dépendances et les instructions étape par étape pour installer le projet depuis la source.
+---
+
+import {FileTree, LinkCard, Steps} from '@astrojs/starlight/components';
+
+Pour déployer une instance Domain Watchdog, veuillez vous référer à la documentation Symfony sur [Comment déployer une application Symfony](https://symfony.com/doc/current/deployment.html).
+
+## Prérequis
+
+- PHP 8.4 ou supérieur
+- PostgreSQL 16 ou supérieur
+
+Afin de récupérer des informations sur les noms de domaine, Domain Watchdog interrogera le serveur RDAP responsable du TLD.
+Il est crucial que l'instance Domain Watchdog soit placée dans un environnement propre à partir duquel ces serveurs peuvent être interrogés.
+En particulier, les serveurs DNS et les certificats racines du système doivent être de confiance.
+
+## Étapes
+
+Cloner le dépôt :
+
+```shell
+git clone https://github.com/maelgangloff/domain-watchdog.git
+```
+
+### Backend
+
+<Steps>
+1. Installer les dépendances
+    ```shell
+    composer install
+    ```
+2. Configurer les variables d'environnement
+    ```shell
+    cp .env .env.local
+    ```
+    <LinkCard title="Configuration" description="Liste des variables d'environnement" href="/fr/install-config/configuration"/>
+
+3. Générer la paire de clés cryptographiques pour la signature JWT
+    ```shell
+    php bin/console lexik:jwt:generate-keypair
+    ```
+4. Exécuter les migrations de base de données
+    ```shell
+    php bin/console doctrine:migrations:migrate
+    ```
+5. Démarrer le serveur Symfony
+    ```shell
+    symfony server:start
+    ```
+6. Construire les assets
+    ```shell
+    php bin/console assets:install
+    ```
+7. N'oubliez pas de configurer les workers pour traiter la [file d'attente de messages](https://symfony.com/doc/current/messenger.html)
+</Steps>
+
+### Frontend
+
+<Steps>
+1. Installer les dépendances
+    ```shell
+    yarn install
+    ```
+2. Générer les fichiers de langue
+    ```shell
+    yarn run ttag:po2json
+    ```
+3. Effectuer le build final
+    ```shell
+    yarn build
+    ```
+4. Ajoutez et modifiez les fichiers suivants si nécessaire
+    <FileTree>
+        - public
+            - content
+                - home.md
+                - privacy.md
+                - tos.md
+                - faq.md
+                - icons-512.png
+                - banner.png
+                - favicon.ico
+    </FileTree>
+</Steps>

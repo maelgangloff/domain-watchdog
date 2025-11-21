@@ -1,0 +1,52 @@
+---
+title: Mise à jour manuelle
+description: Guide de mise à jour expliquant comment mettre à jour le projet en toute sécurité, incluant les migrations et les détails de version.
+---
+
+import {Steps} from "@astrojs/starlight/components";
+
+**Toute mise à jour est sous votre responsabilité. Faites une sauvegarde des données si nécessaire.**
+
+Récupérer les mises à jour depuis le dépôt distant :
+
+```shell
+git pull origin master
+```
+
+## Backend
+
+<Steps>
+1. Installer les dépendances
+    ```shell
+    composer install
+    ```
+2. Exécuter les migrations de base de données
+    ```shell
+    php bin/console doctrine:migrations:migrate
+    ```
+3. Vider le cache Symfony
+    ```shell
+    php bin/console cache:clear
+    ```
+4. Construire les assets
+    ```shell
+    php bin/console assets:install
+    ```
+</Steps>
+
+## Frontend
+
+<Steps>
+1. Installer les dépendances
+    ```shell
+    yarn install
+    ```
+2. Générer les fichiers de langue
+    ```shell
+    yarn run ttag:po2json
+    ```
+3. Générer le build final
+    ```shell
+    yarn build
+    ```
+</Steps>

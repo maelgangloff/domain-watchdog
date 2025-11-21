@@ -30,41 +30,48 @@ export default defineConfig({
                 {icon: 'seti:docker', label: 'Docker', href: 'https://hub.docker.com/r/maelgangloff/domain-watchdog'}
             ],
             sidebar: [
-                {label: 'Getting started', slug: 'features'},
+                {label: 'Getting started', slug: 'features', translations: {fr: 'Premiers pas'}},
                 {
                     label: 'Installation & Configuration',
+                    translations: {fr: 'Installation & Configuration'},
                     items: [
-                        {label: 'Installation', autogenerate: {directory: 'install-config/install'}},
+                        {label: 'Installation', autogenerate: {directory: 'install-config/install'}, translations: {fr: 'Installation'}},
                         {slug: 'install-config/configuration'},
                         {slug: 'install-config/upgrade'},
                     ]
                 },
                 {
                     label: 'Features',
+                    translations: {fr: 'Fonctionnalités'},
                     items: [
                         {slug: 'features/search/domain-search'},
-                        {label: 'Domain back-order', autogenerate: {directory: 'features/backorder'}},
-                        {label: 'Domain tracking', autogenerate: {directory: 'features/tracking'}},
-                        {label: 'Infrastructure', autogenerate: {directory: 'features/infrastructure'}},
+                        {label: 'Domain back-order', autogenerate: {directory: 'features/backorder'}, translations: {fr: 'Achat automatisé'}},
+                        {label: 'Domain tracking', autogenerate: {directory: 'features/tracking'}, translations: {fr: 'Suivi des domaines'}},
+                        {label: 'Infrastructure', autogenerate: {directory: 'features/infrastructure'}, translations: {fr: 'Infrastructure'}},
                     ]
                 },
                 {
                     label: 'Developing',
+                    translations: {fr: 'Développement'},
                     items: [
                         {slug: 'developing/technical-stack'},
                         {slug: 'developing/implementing-new-provider'},
                         {slug: 'developing/translation'},
-                        {label: 'Contributing', autogenerate: {directory: 'developing/contributing'}}
+                        {label: 'Contributing', autogenerate: {directory: 'developing/contributing'}, translations: {fr: 'Contribuer'}}
                     ],
                 },
-                {label: 'Legal', autogenerate: {directory: 'legal'}, collapsed: true},
-                {slug: 'acknowledgment'},
-                {label: 'Definitions', autogenerate: {directory: 'definitions'}, collapsed: true},
+                {label: 'Legal', autogenerate: {directory: 'legal'}, collapsed: true, translations: {fr: 'Légal'}},
+                {slug: 'acknowledgment', translations: {fr: 'Remerciements'}},
+                {label: 'Definitions', autogenerate: {directory: 'definitions'}, collapsed: true, translations: {fr: 'Définitions'}},
             ],
             locales: {
                 en: {
                     label: 'English',
                     lang: 'en'
+                },
+                fr: {
+                    label: 'Français',
+                    lang: 'fr'
                 }
             },
             head: [
@@ -133,8 +140,8 @@ _paq.push(['enableHeartBeatTimer']);
                 }),
                 starlightKbd({
                     types: [
-                        {id: 'mac', label: 'macOS', default: true},
-                        {id: 'windows', label: 'Windows'},
+                        {id: 'generic', label: 'Generic', default: true},
+                        {id: 'mac', label: 'macOS'}
                     ],
                 }),
             ],

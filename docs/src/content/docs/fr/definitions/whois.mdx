@@ -1,0 +1,97 @@
+---
+title: Protocole WHOIS
+description: Obtenez un aperçu de WHOIS. Apprenez comment ce protocole est utilisé pour interroger des bases de données afin d'obtenir des informations sur l'utilisateur enregistré ou les attributaires d'un nom de domaine.
+---
+
+import {LinkCard} from "@astrojs/starlight/components";
+
+WHOIS est un protocole de requête/réponse basé sur du texte (écoutant sur le **Port TCP 43**) largement utilisé pour interroger des bases de données qui stockent les utilisateurs enregistrés ou les attributaires d'une ressource Internet, telle qu'un nom de domaine ou un bloc d'adresses IP.
+
+## Cas d'utilisation principaux
+
+  * **Vérification de la disponibilité** : Vérifier si un nom de domaine spécifique est disponible à l'enregistrement.
+  * **Identification de la propriété** : Identifier le Titulaire ou le Bureau d'enregistrement gérant le domaine.
+  * **Dépannage technique** : Trouver les serveurs de noms faisant autorité ou les contacts techniques pour résoudre les problèmes de réseau.
+  * **Juridique & Abus** : Fournir un dossier pour l'application de la loi, la protection de la propriété intellectuelle et le signalement des abus.
+
+## Registres Thick (Lourd) vs Thin (Léger)
+
+Comprendre les réponses WHOIS nécessite de comprendre comment le Registre TLD stocke les données.
+
+### Registre Thin (par exemple, .com, .net)
+
+Le Registre ne stocke que des données techniques (DNSSEC, serveurs de noms) et un pointeur vers le Bureau d'enregistrement.
+
+Pour obtenir les coordonnées complètes, une seconde requête WHOIS doit être envoyée au **serveur WHOIS du Bureau d'enregistrement**.
+
+### Registre Thick (par exemple, .org, .info, la plupart des ccTLD)
+
+Le Registre stocke *toutes* les informations, y compris les coordonnées du Titulaire et les données administratives.
+
+Une seule requête au Registre fournit l'enregistrement complet.
+
+## Exemple : Requête WHOIS récursive
+
+L'outil de ligne de commande standard `whois` gère souvent automatiquement la redirection du "Registre Thin".
+Cependant, voir les étapes brutes aide à comprendre le protocole.
+
+Dans l'exemple ci-dessous pour un **TLD Thin** (`.com`), nous interrogeons d'abord le Registre, qui nous dirige vers le Bureau d'enregistrement.
+
+### Requête au Registre (Verisign)
+
+Notez le champ `Registrar WHOIS Server` dans la réponse.
+
+```text title="Requête WHOIS au Registre"
+$ whois --verbose example.com -h whois.verisign-grs.com.
+Using server whois.verisign-grs.com..
+Query string: "example.com"
+
+   Domain Name: EXAMPLE.COM
+   Registry Domain ID: 2336799_DOMAIN_COM-VRSN
+   Registrar WHOIS Server: whois.iana.org
+   Registrar URL: http://res-dom.iana.org
+   Updated Date: 2025-08-14T07:01:39Z
+   Creation Date: 1995-08-14T04:00:00Z
+   Registry Expiry Date: 2026-08-13T04:00:00Z
+   Registrar: RESERVED-Internet Assigned Numbers Authority
+   Domain Status: clientDeleteProhibited https://icann.org/epp#clientDeleteProhibited
+   Domain Status: clientTransferProhibited https://icann.org/epp#clientTransferProhibited
+   Name Server: A.IANA-SERVERS.NET
+   Name Server: B.IANA-SERVERS.NET
+   DNSSEC: signedDelegation
+>>> Last update of whois database: 2025-11-20T08:05:54Z <<<
+```
+
+### Requête au Bureau d'enregistrement (IANA)
+
+Suite au renvoi, nous interrogeons le Bureau d'enregistrement spécifique pour obtenir les détails de propriété.
+
+```text title="Requête WHOIS au Bureau d'enregistrement"
+$ whois --verbose example.com -h whois.iana.org
+Using server whois.iana.org..
+Query string: "example.com"
+
+% IANA WHOIS server
+% for more information on IANA, visit http://www.iana.org
+% This query returned 1 object
+
+domain:       EXAMPLE.COM
+organisation: Internet Assigned Numbers Authority
+created:      1992-01-01
+source:       IANA
+```
+
+## Considérations de confidentialité
+
+Depuis la mise en œuvre du **RGPD** (Règlement Général sur la Protection des Données) et des lois mondiales similaires sur la confidentialité, la sortie WHOIS a considérablement changé.
+
+  * **Rédaction des données** : La plupart des champs personnels (Nom, Email, Téléphone) sont désormais remplacés par des espaces réservés comme `DATA REDACTED` ou `Redacted for Privacy`.
+  * **Proxies de confidentialité** : Les bureaux d'enregistrement fournissent souvent des services qui remplacent les détails du titulaire par les coordonnées génériques du bureau d'enregistrement pour empêcher le spam et le harcèlement.
+  * **Accès par niveaux** : Les données complètes et non rédigées ne sont souvent plus accessibles publiquement de manière anonyme et nécessitent une demande légale légitime ou une accréditation.
+
+<LinkCard title="Protocole RDAP" href="/fr/definitions/rdap"
+description="Découvrez le successeur de WHOIS conçu pour gérer les données structurées et l'accès confidentiel."/>
+
+## Voir aussi
+
+  * [RFC 3912 - Spécification du protocole WHOIS](https://datatracker.ietf.org/doc/html/rfc3912)

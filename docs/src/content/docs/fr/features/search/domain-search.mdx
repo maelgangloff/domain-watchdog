@@ -1,0 +1,33 @@
+---
+title: Recherche de noms de domaine
+description: Aperçu de la fonctionnalité de recherche de domaine
+---
+
+import {Steps} from "@astrojs/starlight/components"
+import {Kbd} from "starlight-kbd/components"
+
+:::tip[Le saviez-vous ?]
+Dans ce projet, tout est fait pour minimiser le nombre de requêtes vers les serveurs RDAP. Des limitations imposées aux utilisateurs finaux aident à contrôler le flux de requêtes RDAP.
+Ces limitations peuvent être configurées pour chaque instance, dans les variables d'environnement.
+:::
+
+La fonctionnalité de recherche de domaine permet aux utilisateurs de consulter des informations sur un nom de domaine via l'interface utilisateur.
+
+Pour rechercher un nom de domaine :
+
+<Steps>
+1. Saisissez le domaine dans la barre de recherche.
+2. Appuyez sur <Kbd mac="Enter" generic="Enter" /> pour soumettre la requête.
+</Steps>
+
+Si l'extension que vous recherchez ne possède pas de serveur RDAP officiel, un message d'erreur vous informera qu'aucun serveur RDAP n'est disponible.
+
+## Mise à jour forcée
+
+Par défaut, si les informations du domaine stockées dans la base de données sont toujours considérées comme valides, le système renvoie l'enregistrement existant sans effectuer de requête RDAP.
+
+Si vous devez forcer une mise à jour RDAP pour un domaine donné :
+
+  * Appuyez sur <Kbd mac="Shift+Enter" generic="Shift+Enter" /> lors de la recherche.
+
+Cela déclenche une nouvelle requête auprès du serveur RDAP.

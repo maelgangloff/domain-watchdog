@@ -1,0 +1,44 @@
+---
+title: Protocole EPP
+description: Qu'est-ce qu'un bureau d'enregistrement de noms de domaine ? Apprenez leur rôle dans la gestion de l'enregistrement et du transfert des noms de domaine pour le public.
+---
+
+import {LinkCard} from "@astrojs/starlight/components";
+
+L'**Extensible Provisioning Protocol (EPP)** est le protocole de couche application standard pour l'allocation d'objets au sein des registres sur Internet. Bien qu'il soit principalement utilisé pour les noms de domaine, il peut également gérer les contacts et les objets hôtes.
+
+## Les acteurs
+
+### Client (Bureau d'enregistrement)
+
+Le Bureau d'enregistrement (Registrar) agit comme le Client EPP. Il envoie des commandes XML pour créer, mettre à jour, renouveler ou supprimer des noms de domaine en fonction des demandes des clients.
+
+<LinkCard
+title="Bureau d'enregistrement"
+description="Qu'est-ce qu'un bureau d'enregistrement de noms de domaine ?"
+href="/fr/definitions/registrar"/>
+
+### Serveur (Registre)
+
+Le Registre agit comme le Serveur EPP. Il traite les commandes, valide la logique (par exemple, "ce domaine est-il disponible ?"), met à jour la base de données centrale et renvoie des réponses de succès ou d'erreur.
+
+<LinkCard
+title="Registre"
+description="Qu'est-ce qu'un registre de noms de domaine ?"
+href="/fr/definitions/registry"/>
+
+## Le mécanisme du protocole
+
+EPP utilise des messages **XML** transportés sur **TCP**, sécurisés par **TLS**. C'est un protocole à états, ce qui signifie qu'une session est établie (Connexion) avant que les commandes ne soient exécutées.
+
+Les commandes EPP courantes incluent :
+
+  * `<check>` : Vérifier la disponibilité.
+  * `<create>` : Enregistrer un nouvel objet.
+  * `<info>` : Récupérer les détails de l'objet.
+  * `<transfer>` : Initier un transfert de bureau d'enregistrement.
+  * `<poll>` : Récupérer les notifications asynchrones du Registre.
+
+## Voir aussi
+
+  - [RFC 5730 - Extensible Provisioning Protocol (EPP)](https://datatracker.ietf.org/doc/html/rfc5730)

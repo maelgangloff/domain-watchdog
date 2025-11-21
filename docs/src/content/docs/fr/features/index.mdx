@@ -1,0 +1,100 @@
+---
+title: Premiers pas
+description: Guide étape par étape pour créer un compte, rechercher des domaines, suivre les changements et activer l'achat automatique avec les Connecteurs.
+---
+
+import {LinkCard, Steps} from '@astrojs/starlight/components';
+
+Sur cette page, vous trouverez un guide étape par étape pour débuter avec **Domain Watchdog** et explorer ses principales fonctionnalités.
+Le menu latéral de gauche vous permet de naviguer rapidement entre toutes les sections.
+
+:::note
+Selon la configuration de l'instance sur laquelle vous effectuez ces actions, certaines options peuvent être limitées ou masquées.
+:::
+
+-----
+
+## Créer un compte
+
+Si votre instance autorise l'inscription des utilisateurs, vous pouvez créer un compte directement depuis l'interface.
+
+<Steps>
+1.  Cliquez sur le bouton **S'inscrire**.
+2.  Saisissez votre **adresse email** et votre **mot de passe**.
+3.  Un email de confirmation sera envoyé pour vérifier votre adresse.
+</Steps>
+
+Après avoir confirmé votre email, vous pouvez vous connecter et commencer à utiliser toutes les fonctionnalités disponibles.
+
+-----
+
+## Rechercher un nom de domaine
+
+Domain Watchdog utilise le **protocole RDAP**, en remplacement de WHOIS, pour récupérer des informations sur les noms de domaine.
+
+:::tip[En savoir plus]
+Pour lire la documentation relative à la recherche de noms de domaine, vous pouvez cliquer sur le lien ci-dessous.
+
+<LinkCard title="Recherche de nom de domaine"
+description="Obtenir les détails de l'enregistrement d'un nom de domaine et l'historique des événements observés"
+href="/fr/features/search/domain-search"/>
+:::
+
+-----
+
+## Créer une Watchlist
+
+Une **Watchlist** est une collection de noms de domaine, de déclencheurs et optionnellement d'un Connecteur API.
+Elle vous permet de :
+
+  - surveiller les changements d'état des domaines
+  - recevoir des notifications (email ou webhook : Slack, Mattermost, Discord, etc.)
+  - acheter automatiquement (optionnel) un domaine lorsqu'il expire
+
+:::tip[En savoir plus]
+Pour lire la documentation relative à la Watchlist, veuillez cliquer sur le lien ci-dessous.
+
+<LinkCard title="Watchlist"
+description="Ajouter des noms de domaine à une liste pour les suivre, être notifié de tout changement, et potentiellement les acheter quand ils expirent"
+href="/fr/features/tracking/watchlist"/>
+:::
+
+### Notifications de la Watchlist
+
+Lorsqu'un domaine change d'état, vous recevrez automatiquement une notification.
+Vous pouvez également exporter les événements de domaine sous forme de flux **iCalendar**.
+
+-----
+
+## Créer un Connecteur
+
+Un **Connecteur** est utilisé pour commander automatiquement (backorder) un nom de domaine en utilisant l'API de son fournisseur.
+
+:::tip[En savoir plus]
+Pour lire la documentation relative au Connecteur, vous pouvez cliquer sur le lien ci-dessous.
+
+<LinkCard title="Connecteur"
+description="Créer un Connecteur pour activer l'achat de noms de domaine en le liant à vos Listes de surveillance"
+href="/fr/features/backorder/connector"/>
+:::
+
+### Liste des registrars supportés
+
+<LinkCard title="Liste des registrars supportés"
+description="Liste des bureaux d'enregistrement supportés par ce projet"
+href="/fr/features/backorder/supported-registrar"/>
+
+-----
+
+### Tableau de suivi
+
+La page du Tableau de suivi affiche une liste de tous les noms de domaine que vous surveillez via vos Watchlists.
+Cette liste est ordonnée, ce qui signifie que les noms de domaine sont classés selon leur date de suppression estimée.
+
+:::tip[En savoir plus]
+Pour lire la documentation relative au Tableau de suivi, vous pouvez cliquer sur le lien ci-dessous.
+
+<LinkCard title="Tableau de suivi"
+description="Lister tous les domaines que vous surveillez dans votre Watchlist et suivre le statut de ces domaines"
+href="/fr/features/tracking/tracking-table"/>
+:::

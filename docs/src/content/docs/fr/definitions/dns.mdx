@@ -1,0 +1,78 @@
+---
+title: Protocole DNS
+description: Qu'est-ce que le DNS ? Comprendre le système de noms de domaine, comment il traduit les noms de domaine en adresses IP et son rôle dans la navigation Internet.
+---
+
+import {LinkCard} from "@astrojs/starlight/components";
+
+Le **DNS (Domain Name System)** est le système de nommage décentralisé pour les ordinateurs, les services ou toute ressource connectée à Internet ou à un réseau privé.
+Il agit comme "l'annuaire d'Internet", traduisant les noms de domaine lisibles par les humains en informations lisibles par les machines.
+
+## Une architecture hiérarchique
+
+L'architecture DNS est une base de données distribuée et hiérarchique ressemblant à un arbre inversé. Cette structure, connue sous le nom d'**Espace de Noms de Domaine** (Domain Name Space), est traitée de droite à gauche :
+
+[Image of DNS hierarchical structure]
+
+  * **Niveau Racine (Root)** : Le sommet de la hiérarchie, représenté par un point unique optionnel (`.`) à la fin d'un nom de domaine complet (FQDN).
+  * **Domaines de premier niveau (TLD)** : Le niveau visible le plus élevé (par exemple, `.com`, `.org`, `.fr`).
+  * **Domaines de second niveau (SLD)** : Le nom spécifique enregistré par une entité (par exemple, `example` dans `example.com`).
+  * **Sous-domaines** : Subdivisions supplémentaires pour des services spécifiques ou des structures organisationnelles (par exemple, `www`, `blog` ou `api`).
+
+## Serveurs faisant autorité
+
+Les serveurs DNS faisant autorité détiennent les enregistrements de ressources définitifs pour une zone de domaine spécifique. Contrairement aux résolveurs récursifs qui mettent les réponses en cache, les serveurs faisant autorité fournissent les données originales.
+
+[Image of DNS resolution process]
+
+Lorsqu'un client demande un domaine, la chaîne de résolution interroge :
+
+1.  **Serveurs Racines** : Dirigent vers les serveurs TLD.
+2.  **Serveurs TLD** : Dirigent vers les serveurs de noms faisant autorité du domaine.
+3.  **Serveur faisant autorité** : Renvoie l'adresse IP finale (ou un autre enregistrement).
+
+<LinkCard
+title="Domaine de premier niveau"
+description="Un aperçu des domaines de premier niveau (TLD), leur classification (gTLD, ccTLD, etc.) et la structure de la zone racine DNS."
+href="/fr/definitions/top-level-domain"/>
+
+## Enregistrements GLUE
+
+Un enregistrement GLUE est un enregistrement A (ou AAAA) **fourni par la zone parente** pour éviter les dépendances circulaires. Normalement, la zone parente ne fait que déléguer, mais ici, elle doit fournir des données.
+Ils sont strictement nécessaires lorsque le serveur de noms d'un domaine est un sous-domaine du domaine lui-même (par exemple, `example.com` utilise `ns1.example.com` comme serveur de noms). Sans l'enregistrement GLUE dans la zone `.com` pointant vers l'IP de `ns1`, le résolveur serait bloqué dans une boucle en essayant de résoudre le nom du serveur de noms.
+
+### Exemple : `ns.icann.org`
+
+Dans cet exemple, `icann.org` utilise `ns.icann.org` comme l'un de ses serveurs de noms.
+
+Pour résoudre `icann.org`, vous devez interroger `ns.icann.org`, mais vous ne pouvez pas trouver `ns.icann.org` sans d'abord résoudre `icann.org`.
+
+Lors de l'interrogation du serveur TLD `.org` (`A0.ORG.AFILIAS-NST.INFO`), le serveur renvoie les enregistrements de serveur de noms (NS) dans la **Section Autorité**, mais de manière cruciale, il fournit également les adresses IP dans la **Section Additionnelle**. Ce sont les enregistrements GLUE.
+
+```text title="Requête DNS de ns.icann.org utilisant la commande dig" {17-18}
+; <<>> DiG 9.20.15 <<>> ns.icann.org @A0.ORG.AFILIAS-NST.INFO
+;; global options: +cmd
+;; Got answer:
+;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 52458
+;; flags: qr rd; QUERY: 1, ANSWER: 0, AUTHORITY: 4, ADDITIONAL: 3
+
+;; QUESTION SECTION:
+;ns.icann.org.            IN    A
+
+;; AUTHORITY SECTION:
+icann.org.        3600    IN    NS    ns.icann.org.
+icann.org.        3600    IN    NS    a.icann-servers.net.
+icann.org.        3600    IN    NS    c.icann-servers.net.
+icann.org.        3600    IN    NS    b.icann-servers.net.
+
+;; ADDITIONAL SECTION:
+ns.icann.org.        3600    IN    A     199.4.138.53
+ns.icann.org.        3600    IN    AAAA  2001:500:89::53
+
+;; Query time: 241 msec
+;; SERVER: 199.19.56.1#53(A0.ORG.AFILIAS-NST.INFO) (UDP)
+```
+
+## Voir aussi
+
+  - [Domain Name System (Système de noms de domaine)](https://fr.wikipedia.org/wiki/Domain_Name_System) sur Wikipédia

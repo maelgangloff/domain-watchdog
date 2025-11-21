@@ -1,0 +1,33 @@
+---
+title: Registre
+description: Comprendre le registre de noms de domaine. Apprenez comment ces organisations gèrent la base de données centrale pour tous les noms de domaine sous un TLD spécifique.
+---
+
+import {LinkCard} from "@astrojs/starlight/components";
+
+Un **Registre** (ou Opérateur de Registre) est l'organisation responsable de la maintenance de la base de données maître de tous les noms de domaine enregistrés sous un domaine de premier niveau (TLD) spécifique.
+
+## Rôles techniques
+
+Le Registre est la source faisant autorité pour son TLD. Ses devoirs incluent :
+
+  * **Génération du fichier de zone** : Publication du fichier de zone qui dirige le trafic DNS mondial vers les bons serveurs de noms pour chaque domaine de l'extension.
+  * **Gestion IDN & DNSSEC** : Application des politiques pour les caractères spéciaux et gestion de la signature cryptographique de la zone TLD.
+  * **Serveur WHOIS/RDAP** : Exploitation du service d'annuaire qui fournit des informations publiques sur les domaines enregistrés.
+
+## Rôles opérationnels
+
+Les registres ne vendent généralement pas directement au public. Au lieu de cela, ils :
+
+  * Définissent les **Politiques d'Utilisation Acceptable** pour le TLD.
+  * Fixent le prix de gros pour les domaines.
+  * Accréditent et se connectent avec les **Bureaux d'enregistrement** via EPP.
+
+<LinkCard
+title="Bureau d'enregistrement"
+description="Qu'est-ce qu'un bureau d'enregistrement de noms de domaine ?"
+href="/fr/definitions/registrar"/>
+
+## Voir aussi
+
+  - [Registre de noms de domaine](https://fr.wikipedia.org/wiki/Registre_de_noms_de_domaine) sur Wikipédia

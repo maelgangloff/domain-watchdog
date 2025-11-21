@@ -1,0 +1,42 @@
+---
+title: Cycle de vie d'un domaine
+description: Explorez le cycle de vie d'un domaine, de l'enregistrement et du renouvellement à l'expiration et la rédemption. Connaissez les phases critiques pour gérer votre nom de domaine.
+---
+
+import {LinkCard} from "@astrojs/starlight/components";
+
+Le **Cycle de vie d'un domaine** définit les statuts qu'un nom de domaine traverse de sa création à sa suppression.
+Comprendre ces phases est critique pour éviter la perte involontaire d'un domaine.
+
+## Le cycle de vie générique
+
+Pour la plupart des domaines de premier niveau génériques (gTLD) régulés par l'ICANN, le cycle suit ce chemin :
+
+1.  **Disponible** : Le domaine est ouvert à l'enregistrement.
+2.  **Enregistré (Actif)** : Le domaine est détenu et fonctionnel. Il peut être mis à jour, transféré ou renouvelé (généralement 1 à 10 ans).
+3.  **Période de grâce de renouvellement automatique** : (0–45 jours) Le domaine expire. Le propriétaire peut généralement le renouveler au tarif standard. Le domaine peut cesser de résoudre (ServerHold).
+4.  **Période de rédemption** : (30 jours) Le domaine est supprimé du bureau d'enregistrement mais conservé par le registre. La récupération est possible mais nécessite des **frais de restauration** plus élevés.
+5.  **Suppression en attente** (Pending Delete) : (5 jours) Le domaine est programmé pour une suppression définitive. Il ne peut être ni récupéré ni renouvelé.
+6.  **Libéré** : Le domaine devient à nouveau **Disponible** pour l'enregistrement public.
+
+<LinkCard
+title="Nom de domaine"
+description="Une explication de ce qu'est un nom de domaine et de sa structure."
+href="/fr/definitions/domain-name"/>
+
+## Cas particuliers de certains ccTLD
+
+Les domaines de premier niveau géographiques (ccTLD) fonctionnent selon des réglementations locales, ce qui conduit à des cycles de vie divers :
+
+  * **Pas de périodes de grâce** : Certains ccTLD entrent en "Suppression en attente" immédiatement après l'expiration.
+  * **Renouvellement pré-expiration** : Certains registres exigent que les frais de renouvellement soient payés des semaines avant la date d'expiration réelle.
+  * **Processus manuels** : La restauration dans certains ccTLD peut nécessiter une intervention manuelle et de la paperasse.
+
+\<LinkCard
+title="Domaine de premier niveau"
+description="Un aperçu des domaines de premier niveau (TLD) et leur classification (gTLD, ccTLD, etc.)."
+href="/fr/definitions/top-level-domain"/\>
+
+## Voir aussi
+
+  - [Cycle de vie d'un nom de domaine gTLD typique](https://www.icann.org/en/contracted-parties/accredited-registrars/resources/gtld-lifecycle) sur le site de l'ICANN

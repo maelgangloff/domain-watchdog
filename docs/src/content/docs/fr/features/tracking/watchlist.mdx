@@ -1,0 +1,31 @@
+---
+title: Watchlist
+description: Découvrez comment fonctionne une Watchlist de domaines, permettant aux utilisateurs de suivre des domaines et de recevoir des mises à jour sur les changements.
+---
+
+import {Steps} from '@astrojs/starlight/components';
+
+Une Watchlist est une liste de noms de domaine, de déclencheurs et éventuellement d'un connecteur API.
+Elles vous permettent de suivre le cycle de vie des noms de domaine listés et de vous envoyer une notification lorsqu'un changement a été détecté.
+
+Si un domaine a expiré et qu'un connecteur est lié à la Watchlist, une tentative de commande sera alors effectuée via l'API du bureau d'enregistrement associé au Connecteur.
+
+:::note
+Si le même nom de domaine est présent sur plusieurs Watchlist, il n'est pas possible de prédire à l'avance quel utilisateur remportera le nom de domaine. Le choix est laissé au hasard...
+:::
+
+## Créer une Watchlist
+
+<Steps>
+1.  Choisissez un nom pour votre Watchlist afin de la retrouver plus facilement.
+2.  Ajoutez les noms de domaine que vous souhaitez suivre.
+3.  Sélectionnez les événements pour lesquels vous souhaitez recevoir une notification par email.
+4.  Ajoutez optionnellement un connecteur pour tenter d'acheter automatiquement un nom de domaine qui devient disponible.
+5.  Cliquez sur le bouton pour créer votre Watchlist. **Félicitations 🎉**
+</Steps>
+
+Maintenant, c'est à votre tour de créer une Watchlist !
+
+## Limitations
+
+Selon la configuration de l'instance, il existe plusieurs limitations pour encadrer le comportement des utilisateurs.
