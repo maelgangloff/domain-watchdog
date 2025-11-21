@@ -16,3 +16,106 @@ hero:
       variant: minimal
 ---
 
+<script type="application/ld+json" set:html={JSON.stringify(
+    {
+        "@context": "https://schema.org",
+        "@graph": [
+            {
+                "@type": "WebSite",
+                "@id": "https://domainwatchdog.eu/#website",
+                "url": "https://domainwatchdog.eu",
+                "name": "Domain Watchdog",
+                "description": "An open-source app to monitor domain names via RDAP, track history, and catch expiring domains.",
+                "license": "https://opensource.org/licenses/AGPL-3.0",
+                "publisher": {
+                    "@id": "https://maelgangloff.fr#me"
+                },
+                "copyrightHolder": {
+                    "@id": "https://maelgangloff.fr#me"
+                }
+            },
+            {
+                "@type": "WebApplication",
+                "@id": "https://github.com/maelgangloff/domain-watchdog/#app",
+                "name": "Domain Watchdog",
+                "headline": "Monitor domain names expiration and history via RDAP",
+                "description": "Self-hosted application for monitoring domain names, tracking RDAP history, and managing expiration alerts.",
+                "url": "https://domainwatchdog.eu",
+                "sameAs": [
+                    "https://github.com/maelgangloff/domain-watchdog"
+                ],
+                "image": {
+                    "@type": "ImageObject",
+                    "url": "https://domainwatchdog.eu/logo.png",
+                    "caption": "Domain Watchdog Logo"
+                },
+                "applicationCategory": "UtilitiesApplication",
+                "applicationSubCategory": "Domain Monitoring",
+                "operatingSystem": "Linux, Windows, macOS (via Docker or PHP 8.4+)",
+                "softwareRequirements": "PHP 8.4+, PHP, Composer, Node.js",
+                "featureList": "https://domainwatchdog.eu/en/features/",
+                "license": "https://opensource.org/licenses/AGPL-3.0",
+                "keywords": "RDAP, WHOIS, Domain Tracking, Cybersecurity, Self-hosted, PHP, Open Source",
+                "isAccessibleForFree": true,
+                "offers": {
+                    "@type": "Offer",
+                    "price": 0,
+                    "availability": "https://schema.org/InStock"
+                },
+                "author": {
+                    "@id": "https://maelgangloff.fr#me"
+                },
+                "maintainer": {
+                    "@id": "https://maelgangloff.fr#me"
+                },
+                "downloadUrl": "https://domainwatchdog.eu/en/install-config/install/docker-compose/",
+                "mainEntityOfPage": {
+                    "@id": "https://domainwatchdog.eu/#website"
+                },
+                "aggregateRating": {
+                    "@type": "AggregateRating",
+                    "ratingValue": 5,
+                    "bestRating": 5,
+                    "ratingCount": 261,
+                    "reviewAspect": "GitHub Stars"
+                }
+            },
+            {
+                "@type": "SoftwareSourceCode",
+                "@id": "https://github.com/maelgangloff/domain-watchdog/#source",
+                "name": "Domain Watchdog Source Code",
+                "codeRepository": "https://github.com/maelgangloff/domain-watchdog",
+                "codeSampleType": "full",
+                "programmingLanguage": [
+                    {
+                        "@type": "ComputerLanguage",
+                        "name": "PHP"
+                    },
+                    {
+                        "@type": "ComputerLanguage",
+                        "name": "TypeScript"
+                    }
+                ],
+                "runtimePlatform": "PHP",
+                "license": "https://opensource.org/licenses/AGPL-3.0",
+                "targetProduct": {
+                    "@id": "https://github.com/maelgangloff/domain-watchdog/#app"
+                },
+                "author": {
+                    "@id": "https://maelgangloff.fr#me"
+                }
+            },
+            {
+                "@type": "Person",
+                "@id": "https://maelgangloff.fr#me",
+                "name": "Maël Gangloff",
+                "url": "https://maelgangloff.fr",
+                "sameAs": [
+                    "https://maelgangloff.fr",
+                    "https://github.com/maelgangloff",
+                    "https://www.linkedin.com/in/maelgangloff"
+                ]
+            }
+        ]
+    }
+)}/>
