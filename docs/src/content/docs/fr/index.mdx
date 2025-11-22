@@ -15,3 +15,32 @@ hero:
       icon: external
       variant: minimal
 ---
+
+<script type="application/ld+json" set:html={JSON.stringify(
+    {
+        "@context": "https://schema.org",
+        "@graph": [
+            {
+                "@type": "WebSite",
+                "@id": "https://domainwatchdog.eu/#website",
+                "url": "https://domainwatchdog.eu/fr/",
+                "inLanguage": "fr",
+                "name": "Domain Watchdog",
+                "description": "Une plateforme qui utilise RDAP pour collecter et analyser des informations publiques sur les domaines, suivre leur historique et les acheter lorsqu'ils expirent.",
+            },
+            {
+                "@type": "WebApplication",
+                "@id": "https://github.com/maelgangloff/domain-watchdog/#app",
+                "name": "Domain Watchdog",
+                "inLanguage": "fr",
+                "headline": "Votre compagnon dans la quête de noms de domaines 🔍",
+                "description": "Une plateforme qui utilise RDAP pour collecter et analyser des informations publiques sur les domaines, suivre leur historique et les acheter lorsqu'ils expirent.",
+                "url": "https://domainwatchdog.eu/fr/",
+                "sameAs": ["https://github.com/maelgangloff/domain-watchdog"],
+                "featureList": "https://domainwatchdog.eu/fr/features/",
+                "keywords": "RDAP, WHOIS, Suivi de domaines, Cybersécurité, Self-hosted, PHP, Open Source",
+                "downloadUrl": "https://domainwatchdog.eu/fr/install-config/install/docker-compose/"
+            }
+        ]
+    }
+)}/>
