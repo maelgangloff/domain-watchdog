@@ -24,20 +24,18 @@ hero:
                 "@type": "WebSite",
                 "@id": "https://domainwatchdog.eu/#website",
                 "url": "https://domainwatchdog.eu",
+                "inLanguage": "en",
                 "name": "Domain Watchdog",
                 "description": "An open-source app to monitor domain names via RDAP, track history, and catch expiring domains.",
                 "license": "https://opensource.org/licenses/AGPL-3.0",
-                "publisher": {
-                    "@id": "https://maelgangloff.fr#me"
-                },
-                "copyrightHolder": {
-                    "@id": "https://maelgangloff.fr#me"
-                }
+                "publisher": { "@id": "https://domainwatchdog.eu/#org" },
+                "copyrightHolder": { "@id": "https://maelgangloff.fr#me" }
             },
             {
                 "@type": "WebApplication",
                 "@id": "https://github.com/maelgangloff/domain-watchdog/#app",
                 "name": "Domain Watchdog",
+                "inLanguage": "en",
                 "headline": "Monitor domain names expiration and history via RDAP",
                 "description": "Self-hosted application for monitoring domain names, tracking RDAP history, and managing expiration alerts.",
                 "url": "https://domainwatchdog.eu",
@@ -51,8 +49,17 @@ hero:
                 },
                 "applicationCategory": "UtilitiesApplication",
                 "applicationSubCategory": "Domain Monitoring",
-                "operatingSystem": "Linux, Windows, macOS (via Docker or PHP 8.4+)",
-                "softwareRequirements": "PHP 8.4+, PHP, Composer, Node.js",
+                "operatingSystem": [
+                    "Linux",
+                    "Windows",
+                    "macOS"
+                ],
+                "softwareRequirements": [
+                    "PHP >= 8.4",
+                    "Composer",
+                    "Node.js"
+                ],
+                "datePublished": "2023-10-01",
                 "featureList": "https://domainwatchdog.eu/en/features/",
                 "license": "https://opensource.org/licenses/AGPL-3.0",
                 "keywords": "RDAP, WHOIS, Domain Tracking, Cybersecurity, Self-hosted, PHP, Open Source",
@@ -62,22 +69,19 @@ hero:
                     "price": 0,
                     "availability": "https://schema.org/InStock"
                 },
-                "author": {
-                    "@id": "https://maelgangloff.fr#me"
-                },
-                "maintainer": {
-                    "@id": "https://maelgangloff.fr#me"
-                },
+                "creator": { "@id": "https://maelgangloff.fr#me" },
+                "author": { "@id": "https://maelgangloff.fr#me" },
+                "maintainer": { "@id": "https://maelgangloff.fr#me" },
                 "downloadUrl": "https://domainwatchdog.eu/en/install-config/install/docker-compose/",
-                "mainEntityOfPage": {
-                    "@id": "https://domainwatchdog.eu/#website"
+                "mainEntityOfPage": { "@id": "https://domainwatchdog.eu/#website" },
+                "interactionStatistic": {
+                    "@type": "InteractionCounter",
+                    "interactionType": "https://schema.org/LikeAction",
+                    "userInteractionCount": 261
                 },
-                "aggregateRating": {
-                    "@type": "AggregateRating",
-                    "ratingValue": 5,
-                    "bestRating": 5,
-                    "ratingCount": 261,
-                    "reviewAspect": "GitHub Stars"
+                "potentialAction": {
+                    "@type": "DownloadAction",
+                    "target": "https://domainwatchdog.eu/en/install-config/install/docker-compose/"
                 }
             },
             {
@@ -86,6 +90,8 @@ hero:
                 "name": "Domain Watchdog Source Code",
                 "codeRepository": "https://github.com/maelgangloff/domain-watchdog",
                 "codeSampleType": "full",
+                "softwareVersion": "1.3.4",
+                "datePublished": "2023-10-01",
                 "programmingLanguage": [
                     {
                         "@type": "ComputerLanguage",
@@ -98,12 +104,26 @@ hero:
                 ],
                 "runtimePlatform": "PHP",
                 "license": "https://opensource.org/licenses/AGPL-3.0",
-                "targetProduct": {
-                    "@id": "https://github.com/maelgangloff/domain-watchdog/#app"
+                "targetProduct": { "@id": "https://github.com/maelgangloff/domain-watchdog/#app" },
+                "author": { "@id": "https://maelgangloff.fr#me" },
+                "mainEntityOfPage": { "@id": "https://domainwatchdog.eu/#website" }
+            },
+            {
+                "@type": "Organization",
+                "@id": "https://domainwatchdog.eu/#org",
+                "name": "Domain Watchdog",
+                "url": "https://domainwatchdog.eu",
+                "logo": "https://domainwatchdog.eu/logo.png",
+                "founder": { "@id": "https://maelgangloff.fr#me" },
+                "maintainer": { "@id": "https://maelgangloff.fr#me" },
+                "contactPoint": {
+                    "@type": "ContactPoint",
+                    "contactType": "support",
+                    "email": "contact@domainwatchdog.eu"
                 },
-                "author": {
-                    "@id": "https://maelgangloff.fr#me"
-                }
+                "sameAs": [
+                    "https://github.com/maelgangloff/domain-watchdog"
+                ]
             },
             {
                 "@type": "Person",
@@ -114,6 +134,10 @@ hero:
                     "https://maelgangloff.fr",
                     "https://github.com/maelgangloff",
                     "https://www.linkedin.com/in/maelgangloff"
+                ],
+                "subjectOf": [
+                    { "@id": "https://github.com/maelgangloff/domain-watchdog/#app" },
+                    { "@id": "https://github.com/maelgangloff/domain-watchdog/#source" }
                 ]
             }
         ]
