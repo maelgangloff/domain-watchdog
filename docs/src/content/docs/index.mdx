@@ -16,6 +16,8 @@ hero:
       variant: minimal
 ---
 
+import {CardGrid, Card} from "@astrojs/starlight/components";
+
 <script type="application/ld+json" set:html={JSON.stringify(
     {
         "@context": "https://schema.org",
@@ -142,3 +144,31 @@ hero:
         ]
     }
 )}/>
+
+## Features
+
+<CardGrid>
+    <Card title="RDAP Search (WHOIS)" icon="magnifier">
+        Retrieve accurate domain, registrar, and entity details through structured RDAP lookups, the modern replacement for classic WHOIS queries.
+    </Card>
+
+    <Card title="Automated Domain Backordering" icon="puzzle">
+        Create triggers to automatically attempt domain registration when a domain enters its deletion phase or becomes available again.
+    </Card>
+
+    <Card title="Domain Monitoring & Alerts" icon="email">
+        Monitor domain status changes through customizable Watchlists and receive notifications by email or via webhooks like Slack, Mattermost, or Discord.
+    </Card>
+
+    <Card title="Historical Domain Timeline" icon="seti:clock">
+        Explore a complete lifecycle history based on RDAP data, including creation events, changes, renewals, transfers, and final deletion.
+    </Card>
+
+    <Card title="Deletion Forecasting" icon="rocket">
+        Visualize estimated deletion dates and track monitored domains ordered by their expected drop window to anticipate availability.
+    </Card>
+
+    <Card title="Open-Source & Self-Hosted" icon="seti:license">
+        A transparent, fully open-source project that you can host yourself to manage domain monitoring, RDAP insights, and automated workflows.
+    </Card>
+</CardGrid>

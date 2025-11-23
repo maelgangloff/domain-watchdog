@@ -16,6 +16,8 @@ hero:
       variant: minimal
 ---
 
+import {CardGrid, Card} from "@astrojs/starlight/components";
+
 <script type="application/ld+json" set:html={JSON.stringify(
     {
         "@context": "https://schema.org",
@@ -142,3 +144,31 @@ hero:
         ]
     }
 )}/>
+
+## Features
+
+<CardGrid>
+    <Card title="Recherche RDAP (WHOIS)" icon="magnifier">
+        Obtenez des détails sur les domaines, bureaux d'enregistrement (registrar) et entités via des recherches RDAP, le remplaçant du protocole WHOIS.
+    </Card>
+
+    <Card title="Backorder Automatisé de Domaines" icon="puzzle">
+        Créez des Connecteurs pour tenter automatiquement l'enregistrement d'un domaine lorsqu'il est supprimé de la base WHOIS et redevient disponible.
+    </Card>
+
+    <Card title="Surveillance de Domaines & Alertes" icon="email">
+        Surveillez les changements de statut des domaines via des Watchlists et recevez des notifications par e-mail ou via des webhooks comme Slack, Mattermost ou Discord.
+    </Card>
+
+    <Card title="Historique Chronologique" icon="seti:clock">
+        Explorez l'historique complet du cycle de vie basé sur les données RDAP, incluant la création, les modifications, les renouvellements, les transferts et la suppression finale.
+    </Card>
+
+    <Card title="Prévision des Suppressions" icon="rocket">
+        Visualisez les dates de suppression estimées et suivez vos domaines, triés par date de suppression prévue, pour anticiper leur disponibilité.
+    </Card>
+
+    <Card title="Open-Source & Auto-hébergé" icon="seti:license">
+        Un projet transparent et entièrement open-source que vous pouvez héberger vous-même pour gérer la surveillance de domaines, les informations RDAP et gérer vos automatisations.
+    </Card>
+</CardGrid>
