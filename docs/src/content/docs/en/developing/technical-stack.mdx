@@ -9,39 +9,40 @@ diagram below summarizes how these services interact.
 
 ```mermaid
 flowchart LR
-    subgraph INFRA[Infrastructure]
+    USER[[Users]]
 
-        subgraph IR[Internal Resources]
+    subgraph EXT[External Resources]
+        direction TB
+        RDAP[RDAP Servers]
+        PROVIDER[Supported Registrar API]
+    end
+
+    subgraph INFRA[Managed Infrastructure]
+        RP[[Reverse Proxy]]
+
+        subgraph APP_ZONE[Application]
+            DW(Domain Watchdog)
+        end
+
+        subgraph DATA[Persistence & State]
             PG[(PostgreSQL)]
             INFL[(InfluxDB)]
             REDIS[(Redis)]
-            OAUTH[(OAuth 2.0)]
         end
 
-        subgraph DR[Domain Registries]
-            RDAP[RDAP Servers]
-        end
-
-        subgraph P[Domain Registrars]
-            PROVIDER[Supported Registrar]
-        end
-
-        DW[Domain Watchdog]
+        OAUTH(OAuth 2.0 Provider)
     end
 
-    PG ---|Data Storage| DW
-    INFL ---|Metrics| DW
-    REDIS ---|Caching & Locking| DW
-    OAUTH ---|Identity Provider| DW
+    USER <==> |HTTPS| RP
+    RP <==> |HTTP| DW
 
-    RDAP ---|Query| DW
-    DW ---|HTTP| PROVIDER
+    DW --> |Read/Write| PG
+    DW --> |Store Metrics| INFL
+    DW --> |Cache/Lock| REDIS
+    DW <--> |Auth Check| OAUTH
 
-
-    USER[[Users]]
-    RP[[Reverse Proxy]]
-
-    DW <--> |HTTP| RP <--> |HTTP| USER
+    DW -.-> |Query Domain| RDAP
+    DW -.-> |API Actions| PROVIDER
 ```
 
 ## Backend
