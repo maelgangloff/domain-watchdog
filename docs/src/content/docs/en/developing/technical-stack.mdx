@@ -7,7 +7,42 @@ This page lists the main technologies used in the project, with links to their d
 information can be found in the project’s dependency files (`composer.lock`, `package.json`, etc.). The architecture
 diagram below summarizes how these services interact.
 
-![Technical stack diagram](../../../../assets/images/dw-stack-diagram.png)
+```mermaid
+flowchart LR
+    subgraph INFRA[Infrastructure]
+
+        subgraph IR[Internal Resources]
+            PG[(PostgreSQL)]
+            INFL[(InfluxDB)]
+            REDIS[(Redis)]
+            OAUTH[(OAuth 2.0)]
+        end
+
+        subgraph DR[Domain Registries]
+            RDAP[RDAP Servers]
+        end
+
+        subgraph P[Domain Registrars]
+            PROVIDER[Supported Registrar]
+        end
+
+        DW[Domain Watchdog]
+    end
+
+    PG ---|Data Storage| DW
+    INFL ---|Metrics| DW
+    REDIS ---|Caching & Locking| DW
+    OAUTH ---|Identity Provider| DW
+
+    RDAP ---|Query| DW
+    DW ---|HTTP| PROVIDER
+
+
+    USER[[Users]]
+    RP[[Reverse Proxy]]
+
+    DW <--> |HTTP| RP <--> |HTTP| USER
+```
 
 ## Backend
 
