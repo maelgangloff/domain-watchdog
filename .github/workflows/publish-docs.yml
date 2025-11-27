@@ -41,5 +41,5 @@ jobs:
                     source: "docs/dist/*"
                     target: /var/www/domainwatchdog.eu/
                     overwrite: true
-                    rm: true
                     debug: true
+                    strip_components: 2
