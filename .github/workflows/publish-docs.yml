@@ -31,6 +31,17 @@ jobs:
                 run: yarn run build
                 working-directory: docs
 
+
+            -   name: Clean target folder on server
+                uses: appleboy/ssh-action@v1
+                with:
+                    host: dw1.srv.domainwatchdog.eu
+                    port: 2004
+                    username: deploy
+                    key: ${{ secrets.DEPLOYER_PRIVATE_KEY }}
+                    script: |
+                        rm -rf /var/www/domainwatchdog.eu/*
+
             -   name: Upload build via SCP
                 uses: appleboy/scp-action@master
                 with:
