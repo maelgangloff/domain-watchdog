@@ -43,4 +43,3 @@ jobs:
                     overwrite: true
                     rm: true
                     debug: true
-                    strip_components: 2
