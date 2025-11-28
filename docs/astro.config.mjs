@@ -93,6 +93,10 @@ export default defineConfig({
                 },
                 {
                     tag: 'meta',
+                    attrs: {name: 'twitter:title', content: 'Domain Watchdog | Monitoring, Expiration & Backorder'},
+                },
+                {
+                    tag: 'meta',
                     attrs: {name: 'twitter:card', content: 'summary'},
                 },
                 {
