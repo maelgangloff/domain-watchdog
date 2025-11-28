@@ -16,7 +16,8 @@ export default defineConfig({
             title: 'Domain Watchdog',
             defaultLocale: 'en',
             logo: {
-                src: './src/assets/logo.png'
+                src: './src/assets/logo.png',
+                alt: 'Domain Watchdog logo'
             },
             favicon: 'logo.png',
             description: 'An app that uses RDAP to collect publicly available info about domains, track their history, and purchase then when they expire',
