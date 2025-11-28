@@ -87,18 +87,20 @@ To configure these variables, please modify the file specific to the test enviro
 ## Write new tests
 
 All tests should be placed under `tests/` and follow PHPUnit’s naming conventions (`*Test.php`).
-Ideally, every new code change proposal (via Pull Requests) **MUST** be accompanied by tests related to those changes.
-Please refer to the Contributing section for more information on the contribution guidelines.
+
+:::note
+Ideally, every proposed code change (via Pull Requests) **MUST** include tests covering the related modifications.
+Refer to the Contributing section for more details on the guidelines.
+:::
 
 <LinkCard title="Create a Pull Request" description="Instructions for submitting pull requests" href="/en/developing/contributing/pull-requests" />
 
-This is particularly important for anything related to the logic (i.e., the algorithms) of this project.
+This requirement is especially important for any change affecting the project’s logic or algorithms.
 
-However, if you are not familiar with writing software tests, feel free to propose changes, and other contributors can take over to ensure your contribution is compliant.
-
+If you are not yet familiar with writing tests, you are still welcome to submit your changes. Other contributors can help ensure the necessary tests are added.
 
 ### Writing tests for a new Provider
 
-The procedure for writing a specific test for a new provider is described on the dedicated page referenced below.
+The procedure for creating tests for a new provider is described on the dedicated page below.
 
 <LinkCard title="Testing a new Provider" description="Follow these steps to test your implementation of a new Provider" href="/en/developing/implementing-new-provider/#testing" />
