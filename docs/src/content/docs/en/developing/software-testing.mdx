@@ -1,0 +1,104 @@
+---
+title: Software Testing
+description: Discover how to launch and write unit and integration tests for this project using PHPUnit and a test database.
+---
+import {FileTree, LinkCard, Steps} from "@astrojs/starlight/components"
+
+Due to the nature of this project, it is essential to ensure that the logic is properly tested.
+
+For example, it is important to test whether the API calls to the supported Registrars are correctly implemented.
+
+## Run the tests
+
+Before proceeding, note that the first command drops the test database if it exists to ensure a clean testing environment.
+
+```shell
+php bin/console doctrine:database:drop --env=test --force
+```
+
+### Configure the test environment
+
+<Steps>
+    1. Create a test database
+        ```shell
+        php bin/console doctrine:database:create --env=test
+        ```
+        This command will create a blank database, suffixed with `_test` so as not to interfere with your development database.
+
+    1. Run the database migrations
+        ```shell
+        php bin/console doctrine:migrations:migrate --env=test
+        ```
+
+    1. Configure the specific environment variables for the tests
+        ```shell
+        cp .env.test .env.test.local
+        ```
+        This file is ignored by version control and lets you configure credentials or secrets required for certain integration tests.
+</Steps>
+
+### Run the tests with PHPUnit
+
+This project uses the [PHPUnit framework](https://phpunit.de/documentation.html) for writing and running tests.
+It is a good idea to read the [Symfony documentation specific to testing](https://symfony.com/doc/current/testing.html) before starting.
+
+To run the tests, execute the following command and observe the results.
+```shell
+php vendor/bin/phpunit
+```
+
+:::tip{icon="heart"}
+Depending on the integrated development environment (IDE) you use, it may have PHPUnit integration.
+This integration can be very useful for viewing code coverage and helping you interpret test results.
+:::
+
+If you choose to run the tests using the command line, you can expect to get a result similar to the one below.
+
+```text /D+(S)/ "Skipped: 1"
+PHPUnit 10.5.58 by Sebastian Bergmann and contributors.
+
+Runtime:       PHP 8.4.15
+Configuration: /home/maelgangloff/Documents/git/domain-watchdog/phpunit.dist.xml
+
+DDDDDDDDDDDDDDDDD.DDDDDD.............DDDDDDDDSDDDDDDDDD           55 / 55 (100%)
+
+Faker seed: 777840
+
+Time: 00:30.381, Memory: 318.50 MB
+
+OK, but there were issues!
+Tests: 55, Assertions: 86, Deprecations: 26, Skipped: 1.
+```
+
+In this example, note that a test has been skipped (the highlighted `S` in the result above).
+This test verifies the purchase of a domain name using a Registrar's sandbox API.
+Because authentication credentials are not set in the environment variables, this test is configured to be skipped.
+
+To configure these variables, please modify the file specific to the test environment.
+
+<FileTree>
+    - domain-watchdog
+        - .env.test
+        - **.env.test.local**
+        - ...
+</FileTree>
+
+
+## Write new tests
+
+All tests should be placed under `tests/` and follow PHPUnit’s naming conventions (`*Test.php`).
+Ideally, every new code change proposal (via Pull Requests) **MUST** be accompanied by tests related to those changes.
+Please refer to the Contributing section for more information on the contribution guidelines.
+
+<LinkCard title="Create a Pull Request" description="Instructions for submitting pull requests" href="/en/developing/contributing/pull-requests" />
+
+This is particularly important for anything related to the logic (i.e., the algorithms) of this project.
+
+However, if you are not familiar with writing software tests, feel free to propose changes, and other contributors can take over to ensure your contribution is compliant.
+
+
+### Writing tests for a new Provider
+
+The procedure for writing a specific test for a new provider is described on the dedicated page referenced below.
+
+<LinkCard title="Testing a new Provider" description="Follow these steps to test your implementation of a new Provider" href="/en/developing/implementing-new-provider/#testing" />

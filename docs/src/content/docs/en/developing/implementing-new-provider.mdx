@@ -35,6 +35,7 @@ In this section, you’ll implement the logic required to interact with the new 
               - Dto.Connector
                 - DefaultProviderDto.php default DTO, which will also be used
                 - **MySuperRegistrarProviderDto.php** your new DTO class
+                - ...
         </FileTree>
 
     1. Add the necessary class properties and assertions.
@@ -53,6 +54,7 @@ In this section, you’ll implement the logic required to interact with the new 
                 - Provider
                   - AbstractProvider.php                defines the signature of methods
                   - **MySuperRegistrarProvider.php**    your new Provider
+                  - ...
         </FileTree>
 
     1. The class must extend `AbstractProvider`.
@@ -142,6 +144,7 @@ In this section, you’ll implement the logic required to interact with the new 
 </Steps>
 
 **Well done!** 🎉
+
 You have now completed the Backend implementation.
 Let’s continue with the Frontend! 🚀
 
@@ -156,6 +159,7 @@ Let’s continue with the Frontend! 🚀
                   - forms
                     - DefaultConnectorFormItems.tsx             fields shared by all
                     - **MySuperRegistrarConnectorForm.tsx**
+                    - ...
         </FileTree>
 
     1. Add the fields corresponding to the DTO you created earlier.
@@ -185,6 +189,7 @@ Let’s continue with the Frontend! 🚀
 </Steps>
 
 **Great job!** 🎉
+
 Your Frontend implementation is now complete.
 
 ## Testing
@@ -219,4 +224,6 @@ Your Frontend implementation is now complete.
     Consider enabling code coverage to identify executed sections.
 </Steps>
 
-That's it! You’ve now finished implementing a new Provider. ✨
+That's it!
+
+You’ve now finished implementing a new Provider. ✨

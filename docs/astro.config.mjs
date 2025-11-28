@@ -56,6 +56,7 @@ export default defineConfig({
                     items: [
                         {slug: 'developing/technical-stack'},
                         {slug: 'developing/implementing-new-provider'},
+                        {slug: 'developing/software-testing'},
                         {slug: 'developing/translation'},
                         {label: 'Contributing', autogenerate: {directory: 'developing/contributing'}, translations: {fr: 'Contribuer'}}
                     ],
