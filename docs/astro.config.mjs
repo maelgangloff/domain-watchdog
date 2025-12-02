@@ -5,7 +5,10 @@ import starlightLinksValidator from 'starlight-links-validator'
 import mermaid from "astro-mermaid"
 import starlightCoolerCredit from "starlight-cooler-credit"
 import starlightKbd from 'starlight-kbd'
+import starlightOpenAPI, {createOpenAPISidebarGroup} from 'starlight-openapi'
 
+
+const domainWatchdogSidebarGroup = createOpenAPISidebarGroup()
 const BASE_URL = 'https://domainwatchdog.eu'
 
 // https://astro.build/config
@@ -62,9 +65,10 @@ export default defineConfig({
                         {label: 'Contributing', autogenerate: {directory: 'developing/contributing'}, translations: {fr: 'Contribuer'}}
                     ],
                 },
+                {label: 'Definitions', autogenerate: {directory: 'definitions'}, collapsed: true, translations: {fr: 'Définitions'}},
+                {label: 'Interoperability', items: [domainWatchdogSidebarGroup], badge: {text: 'DEV', class: 'caution'}, collapsed: true},
                 {label: 'Legal', autogenerate: {directory: 'legal'}, collapsed: true, translations: {fr: 'Légal'}},
                 {slug: 'acknowledgment', translations: {fr: 'Remerciements'}},
-                {label: 'Definitions', autogenerate: {directory: 'definitions'}, collapsed: true, translations: {fr: 'Définitions'}},
             ],
             locales: {
                 en: {
@@ -150,6 +154,13 @@ _paq.push(['enableHeartBeatTimer']);
                         {id: 'mac', label: 'macOS'}
                     ],
                 }),
+                starlightOpenAPI([
+                    {
+                        base: 'interoperability/api',
+                        schema: 'swagger_docs.json',
+                        sidebar: {operations: {badges: true}, group: domainWatchdogSidebarGroup}
+                    },
+                ]),
             ],
             customCss: [
                 './src/styles/index.css'

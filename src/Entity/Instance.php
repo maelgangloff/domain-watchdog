@@ -13,8 +13,7 @@ use App\Controller\InstanceController;
             controller: InstanceController::class,
             shortName: 'Configuration',
             description: 'Public configuration of the server',
-            read: false,
-            name: 'server-configuration',
+            read: false
         ),
     ]
 )]

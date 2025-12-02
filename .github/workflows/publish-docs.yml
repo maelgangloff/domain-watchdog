@@ -18,6 +18,26 @@ jobs:
                 with:
                     fetch-depth: 0
 
+            -   name: Set up PHP
+                uses: shivammathur/setup-php@v2
+                with:
+                    php-version: '8.4'
+                    extensions: mbstring, xml, intl, curl, iconv, pdo_pgsql, sodium, zip, http
+
+            -   name: Cache Composer dependencies
+                uses: actions/cache@v3
+                with:
+                    path: vendor
+                    key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+                    restore-keys: |
+                        ${{ runner.os }}-composer-
+
+            -   name: Install dependencies
+                run: composer install --prefer-dist --no-progress --no-suggest --optimize-autoloader
+
+            -   name: Generate Swagger JSON
+                run: bin/console api:openapi:export --output=docs/swagger_docs.json
+
             -   name: Setup Node
                 uses: actions/setup-node@v4
                 with:
