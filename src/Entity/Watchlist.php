@@ -10,6 +10,7 @@ use ApiPlatform\Metadata\Patch;
 use ApiPlatform\Metadata\Post;
 use ApiPlatform\Metadata\Put;
 use App\Repository\WatchlistRepository;
+use App\State\MyTrackedDomainProvider;
 use App\State\MyWatchlistsProvider;
 use App\State\WatchlistUpdateProcessor;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -33,12 +34,10 @@ use Symfony\Component\Validator\Constraints as Assert;
                     'event:list',
                 ],
             ],
-            name: 'get_all_mine',
             provider: MyWatchlistsProvider::class,
         ),
         new GetCollection(
             uriTemplate: '/tracked',
-            routeName: 'watchlist_get_tracked_domains',
             normalizationContext: [
                 'groups' => [
                     'domain:list',
@@ -47,7 +46,7 @@ use Symfony\Component\Validator\Constraints as Assert;
                     'event:list',
                 ],
             ],
-            name: 'get_tracked_domains'
+            provider: MyTrackedDomainProvider::class
         ),
         new Get(
             normalizationContext: [

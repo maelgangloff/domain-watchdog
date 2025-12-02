@@ -11,6 +11,7 @@ use App\Config\ConnectorProvider;
 use App\Repository\ConnectorRepository;
 use App\State\ConnectorCreateProcessor;
 use App\State\ConnectorDeleteProcessor;
+use App\State\MyConnectorsProvider;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -21,9 +22,8 @@ use Symfony\Component\Uid\Uuid;
     shortName: 'Connector',
     operations: [
         new GetCollection(
-            routeName: 'connector_get_all_mine',
             normalizationContext: ['groups' => 'connector:list'],
-            name: 'get_all_mine',
+            provider: MyConnectorsProvider::class
         ),
         new Get(
             normalizationContext: ['groups' => 'connector:list'],

@@ -23,15 +23,6 @@ use Symfony\Component\Serializer\Attribute\SerializedName;
 #[ORM\Entity(repositoryClass: DomainRepository::class)]
 #[ApiResource(
     operations: [
-        /*
-        new GetCollection(
-            normalizationContext: [
-                'groups' => [
-                    'domain:list'
-                ]
-            ]
-        ),
-        */
         new GetCollection(
             uriTemplate: '/domains',
             normalizationContext: [

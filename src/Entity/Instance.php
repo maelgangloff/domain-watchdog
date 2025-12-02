@@ -12,7 +12,9 @@ use App\Controller\InstanceController;
             uriTemplate: '/config',
             controller: InstanceController::class,
             shortName: 'Configuration',
+            description: 'Public configuration of the server',
             read: false,
+            name: 'server-configuration',
         ),
     ]
 )]

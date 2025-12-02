@@ -5,12 +5,9 @@ namespace App\Controller;
 use App\Entity\Domain;
 use App\Entity\DomainEvent;
 use App\Entity\DomainStatus;
-use App\Entity\User;
 use App\Entity\Watchlist;
-use App\Repository\DomainRepository;
 use App\Repository\WatchlistRepository;
 use App\Service\CalendarService;
-use App\Service\RDAPService;
 use Eluceo\iCal\Domain\Entity\Calendar;
 use Eluceo\iCal\Presentation\Component\Property;
 use Eluceo\iCal\Presentation\Component\Property\Value\TextValue;
@@ -29,9 +26,7 @@ class WatchlistController extends AbstractController
 {
     public function __construct(
         private readonly WatchlistRepository $watchlistRepository,
-        private readonly RDAPService $RDAPService,
         private readonly CalendarService $calendarService,
-        private readonly DomainRepository $domainRepository,
     ) {
     }
 
@@ -72,32 +67,6 @@ class WatchlistController extends AbstractController
         return new Response($calendarResponse, Response::HTTP_OK, [
             'Content-Type' => 'text/calendar; charset=utf-8',
         ]);
-    }
-
-    /**
-     * @throws \Exception
-     */
-    #[Route(
-        path: '/api/tracked',
-        name: 'watchlist_get_tracked_domains',
-        defaults: [
-            '_api_resource_class' => Watchlist::class,
-            '_api_operation_name' => 'get_tracked_domains',
-        ]
-    )]
-    public function getTrackedDomains(): array
-    {
-        /** @var User $user */
-        $user = $this->getUser();
-
-        $domains = $this->domainRepository->getMyTrackedDomains($user);
-        foreach ($domains as $domain) {
-            $domain->setExpiresInDays($this->RDAPService->getExpiresInDays($domain));
-        }
-
-        usort($domains, fn (Domain $d1, Domain $d2) => $d1->getExpiresInDays() - $d2->getExpiresInDays());
-
-        return $domains;
     }
 
     /**
