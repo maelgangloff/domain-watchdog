@@ -21,7 +21,7 @@ detailed history of events (ownership changes, renewals, etc.) is not feasible w
 ## Install
 
 > [!TIP]
-> For more details on the installation procedure, please refer to [the documentation](https://domainwatchdog.eu/en/self-hosting/docker-install/).
+> For more details on the installation procedure, please refer to [the documentation](https://domainwatchdog.eu/en/install-config/install/docker-compose/).
 
 ### Docker Deployment
 
