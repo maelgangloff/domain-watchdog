@@ -1,5 +1,5 @@
 ---
-title: Security policy
+title: 🔏 Security policy
 description: Security policy describing vulnerability reporting, and guidelines to keep the project secure. Please report any security issues.
 ---
 
@@ -7,7 +7,6 @@ description: Security policy describing vulnerability reporting, and guidelines 
 
 If you want to report a vulnerability, please contact the maintainer of this repository. Thanks!
 
-<!-- mdpo-disable-next-block -->
 ~~~
 Contact: mailto:contact@maelgangloff.fr
 Encryption: openpgp4fpr:323E63F1AB879F30B38F527611FDC81C24A7F629

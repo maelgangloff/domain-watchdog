@@ -34,7 +34,7 @@ export default defineConfig({
                 {icon: 'seti:docker', label: 'Docker', href: 'https://hub.docker.com/r/maelgangloff/domain-watchdog'}
             ],
             sidebar: [
-                {label: 'Getting started', slug: 'features', translations: {fr: 'Premiers pas'}},
+                {slug: 'features'},
                 {
                     label: 'Installation & Configuration',
                     translations: {fr: 'Installation & Configuration'},

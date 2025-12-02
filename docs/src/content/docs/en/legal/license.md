@@ -1,5 +1,5 @@
 ---
-title: License
+title: ⚖️ License
 description: Licensing information detailing usage rights, redistribution terms, and legal conditions for contributing and using the project.
 ---
 
