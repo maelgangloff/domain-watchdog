@@ -156,14 +156,15 @@ _paq.push(['enableHeartBeatTimer']);
                 }),
                 starlightOpenAPI([
                     {
-                        base: 'interoperability/api',
+                        base: 'en/interoperability/api',
                         schema: 'swagger_docs.json',
                         sidebar: {operations: {badges: true}, group: domainWatchdogSidebarGroup}
                     },
                 ]),
             ],
             customCss: [
-                './src/styles/index.css'
+                './src/styles/index.css',
+                '@fontsource/noto-color-emoji/400.css'
             ]
         }),
         mermaid()
