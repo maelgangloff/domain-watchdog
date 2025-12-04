@@ -165,7 +165,7 @@ _paq.push(['enableHeartBeatTimer']);
             ],
             customCss: [
                 './src/styles/index.css',
-                '@fontsource/noto-color-emoji/400.css'
+                '@fontsource/noto-color-emoji/emoji.css'
             ]
         }),
         mermaid()
