@@ -90,10 +90,11 @@ export default defineConfig({
                 },
                 {
                     tag: 'meta',
-                    attrs: {
-                        name: 'author',
-                        content: 'Maël Gangloff'
-                    },
+                    attrs: {name: 'author', content: 'Maël Gangloff'},
+                },
+                {
+                  tag: 'meta',
+                  attrs: {name: 'theme-color', content: '#475569'}
                 },
                 {
                     tag: 'meta',

@@ -1,14 +1,88 @@
 ---
-title: 🙌 Acknowledgment
-description: Many thanks to the contributors to this project, the developers and the translators, without whom this project could not exist.
+title: 🙌 Acknowledgments
+description: Many thanks to the contributors, developers, and translators whose work makes this project possible.
 ---
 
 import { ContributorList } from "starlight-contributor-list"
+import { LinkCard} from "@astrojs/starlight/components";
+import Testimonial from '~/components/testimonial.astro'
 
 ## Contributors
 
-A huge thank-you to everyone who has contributed to this project!
-Your ideas, bug reports, code improvements, and translations all help make this project better for everyone.
-
+Thank you to all the individuals who help improve this project.
+Your reports, discussions, code contributions, documentation efforts, and translations collectively enhance its quality, reliability, and accessibility.
 
 <ContributorList githubRepo="maelgangloff/domain-watchdog" ignore={['weblate']} />
+
+## Maintainer
+
+<Testimonial
+    name="Maël Gangloff"
+    username="maelgangloff"
+    cite="https://maelgangloff.fr"
+/>
+
+
+## Dependencies
+
+This project is built upon a variety of open-source tools and libraries.
+These dependencies enable essential features such as domain lookups, data storage, notifications, API handling, and more.
+
+To learn more about the technologies used and the architectural decisions behind the project, visit:
+
+<LinkCard
+    title="Technical Stack"
+    description="Overview of the frameworks, languages, and architectural components used by Domain Watchdog."
+    href="/en/technical-stack/"
+/>
+
+## External Data Sources
+
+Domain Watchdog integrates several publicly available datasets and standardized resources.
+These external inputs ensure accurate domain information, consistent behavior across TLDs, and reliable monitoring.
+
+### IANA
+
+The project relies on IANA’s published datasets, including:
+
+- the [complete list of Top-Level Domains (TLDs)](https://data.iana.org/TLD/tlds-alpha-by-domain.txt),
+- the [official list of accredited domain registrars](https://www.iana.org/assignments/registrar-ids/registrar-ids.xhtml),
+- registrar IANA identification numbers and their declared RDAP endpoints.
+
+These resources provide the foundation for consistent and up-to-date domain lookups.
+
+### ICANN
+
+ICANN’s [RDAP bootstrap file](https://data.iana.org/rdap/dns.json) offers a standardized mapping of each TLD to its corresponding RDAP server.
+This ensures reliable RDAP queries across registries and predictable resolution for all supported domain extensions.
+
+<LinkCard
+    title="ICANN"
+    href="/en/definitions/icann/"
+    description="Learn more about ICANN (Internet Corporation for Assigned Names and Numbers)."/>
+
+
+### RDAP Servers of the Registries
+
+The project also depends on the RDAP services provided by individual registries.
+These services supply authoritative domain registration data.
+
+For more information, see:
+
+<LinkCard
+    title="RDAP Protocol"
+    href="/en/definitions/rdap/"
+    description="Learn about the successor to WHOIS designed to handle structured data and privacy access."/>
+
+## Want to redistribute this project?
+
+What a great idea, we can't wait to see it! 😍
+
+This project is open source, and its source code is freely accessible.
+You may reuse, modify, and redistribute the project under the terms of the license.
+
+
+<LinkCard
+    title="Project License"
+    href="/en/legal/license/"
+    description="Licensing information detailing usage rights, redistribution terms, and legal conditions for contributing and using the project."/>

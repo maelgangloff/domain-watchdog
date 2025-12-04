@@ -1,0 +1,90 @@
+---
+import {Image} from 'astro:assets'
+
+interface Props {
+    username: string
+    name: string
+    cite: string
+}
+
+const {name, username, cite} = Astro.props
+---
+
+<li class="testimonial">
+    <blockquote class="quote" cite={cite}>
+        <slot/>
+    </blockquote>
+    <div class="footer">
+        <Image class="avatar" height="96" width="96" src={'https://avatars.githubusercontent.com/' + username} alt=""/>
+        <div>
+            <p class="name">{name}</p>
+            <a href={cite} class="username">@{username}</a>
+        </div>
+    </div>
+</li>
+
+<style>
+    .testimonial {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5em;
+    }
+
+    @media (min-width: 50rem) {
+        .testimonial {
+            gap: 2em;
+        }
+    }
+
+    .quote {
+        position: relative;
+        padding-inline-start: 1.5em;
+    }
+
+    .quote::before {
+        position: absolute;
+        content: '';
+        inset-block: 0.5em;
+        inset-inline-start: 0;
+        border-inline-start: 1px solid var(--sl-color-text-accent);
+    }
+
+    .quote > :global(* + *) {
+        margin-top: 0.75em;
+    }
+
+    .footer {
+        display: flex;
+        gap: 1rem;
+        align-items: center;
+    }
+
+    .avatar {
+        --outline-color: rgba(255, 255, 255, 0.33);
+        outline: 1px solid var(--outline-color);
+        outline-offset: -1px;
+        border-radius: 99rem;
+        width: 4em;
+        height: 4em;
+    }
+
+    :global([data-theme='light']) .avatar {
+        --outline-color: rgba(23, 25, 30, 0.33);
+    }
+
+    .name {
+        font-weight: 600;
+        font-size: var(--sl-text-h4);
+        color: var(--sl-color-white);
+        line-height: var(--sl-line-height-headings);
+    }
+
+    .username {
+        text-underline-offset: 4px;
+        color: var(--sl-color-text-accent);
+    }
+
+    .username:hover {
+        color: var(--sl-color-white);
+    }
+</style>
