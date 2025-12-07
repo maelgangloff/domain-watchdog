@@ -25,6 +25,8 @@ class Instance
 
     private ?bool $limitedFeatures = null;
 
+    private ?bool $ssoAutoRedirect = null;
+
     public function isSsoLogin(): ?bool
     {
         return $this->oauthEnabled;
@@ -57,6 +59,18 @@ class Instance
     public function setRegisterEnabled(?bool $registerEnabled): static
     {
         $this->registerEnabled = $registerEnabled;
+
+        return $this;
+    }
+
+    public function getSsoAutoRedirect(): ?bool
+    {
+        return $this->ssoAutoRedirect;
+    }
+
+    public function setSsoAutoRedirect(?bool $ssoAutoRedirect): static
+    {
+        $this->ssoAutoRedirect = $ssoAutoRedirect;
 
         return $this;
     }

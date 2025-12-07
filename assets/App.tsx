@@ -129,7 +129,7 @@ export default function App(): React.ReactElement {
                             }}
                             >
                                 <Routes>
-                                    <Route path='/' element={<Navigate to='/login'/>}/>
+                                    <Route path='/' element={<Navigate to='/home'/>}/>
                                     <Route path='/home' element={<TextPage resource='home.md'/>}/>
 
                                     <Route path='/search/domain' element={<DomainSearchPage/>}/>

@@ -105,6 +105,7 @@ export interface Watchlist {
 }
 
 export interface InstanceConfig {
+    ssoAutoRedirect: boolean
     ssoLogin: boolean
     limtedFeatures: boolean
     registerEnabled: boolean

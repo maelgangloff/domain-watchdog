@@ -30,7 +30,13 @@ export default function LoginPage() {
     }
 
     useEffect(() => {
-        getConfiguration().then(setConfiguration)
+        getConfiguration().then((configuration) => {
+            if(!configuration.registerEnabled && configuration.ssoLogin && configuration.ssoAutoRedirect) {
+                window.location.href = '/login/oauth'
+                return
+            }
+            setConfiguration(configuration)
+        })
     }, [])
 
     const grid = [
