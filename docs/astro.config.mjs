@@ -67,7 +67,7 @@ export default defineConfig({
                 },
                 {label: 'Definitions', autogenerate: {directory: 'definitions'}, collapsed: false, translations: {fr: 'Définitions'}},
                 {label: 'Interoperability', items: [domainWatchdogSidebarGroup], badge: {text: 'DEV', class: 'caution'}, collapsed: true},
-                {label: 'Legal', autogenerate: {directory: 'legal'}, collapsed: true, translations: {fr: 'Légal'}},
+                {label: 'Legal', autogenerate: {directory: 'legal'}, collapsed: false, translations: {fr: 'Légal'}},
                 {slug: 'acknowledgments', translations: {fr: 'Remerciements'}},
             ],
             locales: {

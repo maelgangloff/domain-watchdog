@@ -1,7 +1,15 @@
 api_platform:
     title: Domain Watchdog API
-    version: 1.0.0
+    description: List of operations that can be performed on the Domain Watchdog project API. These endpoints allow you to perform any useful action related to domain name searches, managing Watchlists and Connectors, etc.
+    version: 1.3.5
     asset_package: 'api_platform'
+    openapi:
+        contact:
+            name: Domain Watchdog
+            url: https://github.com/maelgangloff/domain-watchdog/
+        license:
+            name: GNU Affero General Public License v3.0
+            url: https://www.gnu.org/licenses/agpl-3.0.txt
     formats:
         jsonld: [ 'application/ld+json' ]
         xml: [ 'application/xml' ]
