@@ -11,6 +11,10 @@ use App\Controller\StatisticsController;
         new Get(
             uriTemplate: '/stats',
             controller: StatisticsController::class,
+            openapiContext: [
+                'summary' => 'Statistics of the server',
+                'description' => 'This endpoint allows you to retrieve key statistics from this API server. For example, you can retrieve the number of RDAP requests made, the number of domains in the database, the number of domains successfully purchased, the success rate, etc.',
+            ],
             shortName: 'Statistics',
             read: false,
         ),

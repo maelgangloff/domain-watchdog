@@ -14,18 +14,12 @@ use Symfony\Component\Serializer\Attribute\SerializedName;
 #[ORM\Entity(repositoryClass: NameserverRepository::class)]
 #[ApiResource(
     operations: [
-        /*
-        new GetCollection(
-            uriTemplate: '/nameservers',
-            normalizationContext: [
-                'groups' => [
-                    'nameserver:list',
-                ],
-            ]
-        ),
-        */
         new Get(
             uriTemplate: '/nameservers/{ldhName}',
+            openapiContext: [
+                'summary' => 'Retrieve a DNS server',
+                'description' => 'This endpoint allows you to retrieve details of a DNS server. Currently, it is not possible to list the domain names associated with a DNS server via this API.',
+            ],
             normalizationContext: [
                 'groups' => [
                     'nameserver:item',

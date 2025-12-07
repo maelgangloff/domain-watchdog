@@ -22,19 +22,35 @@ use Symfony\Component\Uid\Uuid;
     shortName: 'Connector',
     operations: [
         new GetCollection(
+            openapiContext: [
+                'summary' => 'Retrieve all my Connectors',
+                'description' => 'This endpoint allows you to retrieve all connectors linked to your account. These connectors can be linked to Watchlists to automate domain name purchases as soon as they are detected as deleted.',
+            ],
             normalizationContext: ['groups' => 'connector:list'],
-            provider: MyConnectorsProvider::class
+            provider: MyConnectorsProvider::class,
         ),
         new Get(
+            openapiContext: [
+                'summary' => 'Retrieve one of my connectors',
+                'description' => 'This endpoint allows you to retrieve the details of one of the Connectors.',
+            ],
             normalizationContext: ['groups' => 'connector:list'],
             security: 'object.getUser() == user'
         ),
         new Post(
+            openapiContext: [
+                'summary' => 'Create a Connector',
+                'description' => 'This endpoint allows you to create a cConnector from the information you provide in the request payload.',
+            ],
             normalizationContext: ['groups' => ['connector:create', 'connector:list']],
             denormalizationContext: ['groups' => 'connector:create'],
             processor: ConnectorCreateProcessor::class
         ),
         new Delete(
+            openapiContext: [
+                'summary' => 'Delete a Connector',
+                'description' => 'This endpoint allows you to delete a Connector. If the Connector is linked to Watchlists, they will not be deleted but will no longer be linked to a Connector.',
+            ],
             security: 'object.getUser() == user',
             processor: ConnectorDeleteProcessor::class
         ),

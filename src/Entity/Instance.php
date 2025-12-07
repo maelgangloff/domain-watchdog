@@ -11,8 +11,11 @@ use App\Controller\InstanceController;
         new Get(
             uriTemplate: '/config',
             controller: InstanceController::class,
+            openapiContext: [
+                'summary' => 'Public configuration of the server',
+                'description' => 'This endpoint allows you to retrieve the public configuration of the Domain Watchdog API server. For example, you can retrieve the user authentication configuration.',
+            ],
             shortName: 'Configuration',
-            description: 'Public configuration of the server',
             read: false
         ),
     ]

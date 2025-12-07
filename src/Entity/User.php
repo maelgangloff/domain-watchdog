@@ -27,13 +27,21 @@ use Symfony\Component\Validator\Constraints as Assert;
         new Get(
             uriTemplate: '/me',
             controller: MeController::class,
+            openapiContext: [
+                'summary' => 'Retrieve the current user\'s details',
+                'description' => 'This endpoint allows you to retrieve the details of the current user.',
+            ],
             normalizationContext: ['groups' => 'user:list'],
-            read: false
+            read: false,
         ),
         new Post(
             uriTemplate: '/register',
             routeName: 'user_register',
             controller: RegistrationController::class,
+            openapiContext: [
+                'summary' => 'Register a new user',
+                'description' => 'If the server configuration allows it, this endpoint enables the registration of a new user. Depending on the server configuration, a confirmation email may be sent to the provided email address so that the user can verify their email address.',
+            ],
             denormalizationContext: ['groups' => ['user:register']],
             read: false,
         ),

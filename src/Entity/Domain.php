@@ -25,6 +25,10 @@ use Symfony\Component\Serializer\Attribute\SerializedName;
     operations: [
         new GetCollection(
             uriTemplate: '/domains',
+            openapiContext: [
+                'summary' => 'Reverse Domain lookup',
+                'description' => 'This experimental endpoint allows listing domain names that meet a strict condition.',
+            ],
             normalizationContext: [
                 'groups' => [
                     'domain:list',
@@ -47,6 +51,10 @@ use Symfony\Component\Serializer\Attribute\SerializedName;
         ),
         new Get(
             uriTemplate: '/domains/{ldhName}', // Do not delete this line, otherwise Symfony interprets the TLD of the domain name as a return type
+            openapiContext: [
+                'summary' => 'Searching for a Domain',
+                'description' => 'This endpoint allows you to perform an RDAP lookup. The query is sent to the relevant registry. When the RDAP response is received, the domain name information is stored in a database for historical and cache purposes.',
+            ],
             normalizationContext: [
                 'groups' => [
                     'domain:item',

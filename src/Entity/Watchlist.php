@@ -27,6 +27,10 @@ use Symfony\Component\Validator\Constraints as Assert;
     shortName: 'Watchlist',
     operations: [
         new GetCollection(
+            openapiContext: [
+                'summary' => 'Retrieve all my Watchlists',
+                'description' => 'This endpoint allows you to retrieve the list of your Watchlists.',
+            ],
             normalizationContext: [
                 'groups' => [
                     'watchlist:list',
@@ -38,6 +42,10 @@ use Symfony\Component\Validator\Constraints as Assert;
         ),
         new GetCollection(
             uriTemplate: '/tracked',
+            openapiContext: [
+                'summary' => 'Retrieve tracked domain names',
+                'description' => 'This endpoint allows you to retrieve the list of domain names present in your Watchlists. The list does not contain duplicates.',
+            ],
             normalizationContext: [
                 'groups' => [
                     'domain:list',
@@ -49,6 +57,10 @@ use Symfony\Component\Validator\Constraints as Assert;
             provider: MyTrackedDomainProvider::class
         ),
         new Get(
+            openapiContext: [
+                'summary' => 'Retrieve the details of a Watchlist',
+                'description' => 'This endpoint allows you to retrieve the details of one of the Watchlists.',
+            ],
             normalizationContext: [
                 'groups' => [
                     'watchlist:item',
@@ -65,6 +77,8 @@ use Symfony\Component\Validator\Constraints as Assert;
         new Get(
             routeName: 'watchlist_calendar',
             openapiContext: [
+                'summary' => 'iCal feed of a Watchlist',
+                'description' => 'This endpoint allows you to retrieve the iCalendar feed from a Watchlist. This feed contains events that have occurred on your monitored domain names.',
                 'responses' => [
                     '200' => [
                         'description' => 'Watchlist iCalendar',
@@ -85,29 +99,47 @@ use Symfony\Component\Validator\Constraints as Assert;
             name: 'calendar'
         ),
         new Post(
+            openapiContext: [
+                'summary' => 'Create a Watchlist',
+                'description' => 'This endpoint allows you to create a new Watchlist. If the entered domain names are unknown or do not exist, an initial RDAP query will be performed on each of these domain names to establish a baseline. In other words, if you register a long Watchlist with unknown domain names, the query may take some time.',
+            ],
             normalizationContext: ['groups' => 'watchlist:list'],
             denormalizationContext: ['groups' => 'watchlist:create'],
             processor: WatchlistUpdateProcessor::class,
         ),
         new Put(
+            openapiContext: [
+                'summary' => 'Edit a Watchlist',
+                'description' => 'This endpoint allows you to modify a Watchlist.',
+            ],
             normalizationContext: ['groups' => 'watchlist:list'],
             denormalizationContext: ['groups' => ['watchlist:update']],
             security: 'object.getUser() == user',
             processor: WatchlistUpdateProcessor::class,
         ),
         new Patch(
+            openapiContext: [
+                'summary' => 'Edit a Watchlist',
+                'description' => 'This endpoint allows you to modify a Watchlist.',
+            ],
             normalizationContext: ['groups' => 'watchlist:list'],
             denormalizationContext: ['groups' => ['watchlist:update']],
             security: 'object.getUser() == user',
             processor: WatchlistUpdateProcessor::class,
         ),
         new Delete(
+            openapiContext: [
+                'summary' => 'Delete a Watchlist',
+                'description' => 'This endpoint allows you to delete a Watchlist.',
+            ],
             security: 'object.getUser() == user'
         ),
         new Get(
             routeName: 'watchlist_rss_status',
             defaults: ['_format' => 'xml'],
             openapiContext: [
+                'summary' => 'RSS feed of a Watchlist (EPP status)',
+                'description' => 'This experimental endpoint allows retrieving the RSS feed of a Watchlist. New entries in the feed correspond to a change in the EPP status of a domain name.',
                 'responses' => [
                     '200' => [
                         'description' => 'Domain EPP status RSS feed',
@@ -131,6 +163,9 @@ use Symfony\Component\Validator\Constraints as Assert;
             routeName: 'watchlist_rss_events',
             defaults: ['_format' => 'xml'],
             openapiContext: [
+                'summary' => 'RSS feed of a Watchlist (events)',
+                'description' => 'This experimental endpoint allows retrieving the RSS feed of a Watchlist. New entries in the feed correspond to a change in events for a domain name.',
+
                 'responses' => [
                     '200' => [
                         'description' => 'Domain events RSS feed',

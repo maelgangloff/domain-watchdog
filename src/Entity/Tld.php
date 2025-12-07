@@ -21,11 +21,19 @@ use Symfony\Component\Serializer\Attribute\Groups;
     operations: [
         new GetCollection(
             uriTemplate: '/tld',
-            normalizationContext: ['groups' => ['tld:list']]
+            openapiContext: [
+                'summary' => 'Retrieve the list of TLDs',
+                'description' => 'This endpoint allows you to retrieve the list of TLDs from a database. This list is based on information obtained from IANA and ICANN. It is possible to filter the query according to your criteria (TLD of a certain type, for example).',
+            ],
+            normalizationContext: ['groups' => ['tld:list']],
         ),
         new Get(
             uriTemplate: '/tld/{tld}',
-            normalizationContext: ['groups' => ['tld:item']]
+            openapiContext: [
+                'summary' => 'Retrieve a TLD',
+                'description' => 'This endpoint allows you to retrieve the details of a specific TLD (Top-Level Domain).',
+            ],
+            normalizationContext: ['groups' => ['tld:item']],
         ),
     ]
 )]

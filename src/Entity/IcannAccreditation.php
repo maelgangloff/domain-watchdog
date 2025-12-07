@@ -19,6 +19,8 @@ use Symfony\Component\Serializer\Attribute\Groups;
         new GetCollection(
             uriTemplate: '/icann-accreditations',
             openapiContext: [
+                'summary' => 'Retrieve ICANN accreditations',
+                'description' => 'This endpoint allows you to list the accreditations of registrars issued by ICANN. It is also possible to search to retrieve only currently valid accreditations.',
                 'parameters' => [
                     [
                         'name' => 'status',
