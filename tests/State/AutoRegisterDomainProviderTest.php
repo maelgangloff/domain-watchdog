@@ -28,6 +28,16 @@ final class AutoRegisterDomainProviderTest extends ApiTestCase
     }
 
     #[DependsExternal(RDAPServiceTest::class, 'testUpdateRdapServers')]
+    public function testRegisterDomainAnonymousUnauthorized(): void
+    {
+        $client = $this->createClient();
+        $client->request('GET', '/api/domains/example.com');
+
+        $this->assertResponseStatusCodeSame(401);
+    }
+
+
+    #[DependsExternal(RDAPServiceTest::class, 'testUpdateRdapServers')]
     public function testRegisterDomainAlreadyUpdated(): void
     {
         $client = AutoRegisterDomainProviderTest::createClientWithCredentials(AutoRegisterDomainProviderTest::getToken(UserFactory::createOne()));
