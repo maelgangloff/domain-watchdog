@@ -71,7 +71,7 @@ use Symfony\Component\Serializer\Attribute\SerializedName;
             ],
         ),
     ],
-    provider: AutoRegisterDomainProvider::class
+    provider: AutoRegisterDomainProvider::class,
 )]
 class Domain
 {

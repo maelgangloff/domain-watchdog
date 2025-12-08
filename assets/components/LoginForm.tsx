@@ -2,10 +2,10 @@ import {Button, Flex, Form, Input, message} from 'antd'
 import {t} from 'ttag'
 import React, {useContext, useEffect, useState} from 'react'
 import {getUser, login} from '../utils/api'
-import {AuthenticatedContext} from '../pages/LoginPage'
 import {useNavigate} from 'react-router-dom'
 
 import {showErrorAPI} from '../utils/functions/showErrorAPI'
+import {AuthenticatedContext} from "../contexts"
 
 interface FieldType {
     username: string
@@ -66,9 +66,9 @@ export function LoginForm({ssoLogin}: { ssoLogin?: boolean }) {
                 </Form.Item>
 
                 <Flex wrap justify="center" gap="middle">
-                        <Button type='primary' htmlType='submit'>
-                            {t`Submit`}
-                        </Button>
+                    <Button type='primary' htmlType='submit'>
+                        {t`Submit`}
+                    </Button>
                     {ssoLogin &&
                         <Button type='dashed' htmlType='button' href='/login/oauth'>
                             {t`Log in with SSO`}

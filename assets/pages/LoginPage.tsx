@@ -1,28 +1,16 @@
-import React, {createContext, useEffect, useState} from 'react'
+import React, { useContext, useEffect, useState} from 'react'
 import {Button, Card} from 'antd'
 import {t} from 'ttag'
 import TextPage from './TextPage'
 import {LoginForm} from '../components/LoginForm'
-import type { InstanceConfig} from '../utils/api'
-import {getConfiguration} from '../utils/api'
 import {RegisterForm} from '../components/RegisterForm'
 import useBreakpoint from "../hooks/useBreakpoint"
-
-export const AuthenticatedContext = createContext<
-    {
-        authenticated: (authenticated: boolean) => void
-        setIsAuthenticated: React.Dispatch<React.SetStateAction<boolean>>
-    }
->({
-    authenticated: () => {
-    },
-    setIsAuthenticated: () => {
-    }
-})
+import {ConfigurationContext} from "../contexts"
 
 export default function LoginPage() {
     const [wantRegister, setWantRegister] = useState<boolean>(false)
-    const [configuration, setConfiguration] = useState<InstanceConfig>()
+    const { configuration } = useContext(ConfigurationContext)
+
     const md = useBreakpoint('md')
 
     const toggleWantRegister = () => {
@@ -30,14 +18,11 @@ export default function LoginPage() {
     }
 
     useEffect(() => {
-        getConfiguration().then((configuration) => {
-            if(!configuration.registerEnabled && configuration.ssoLogin && configuration.ssoAutoRedirect) {
-                window.location.href = '/login/oauth'
-                return
-            }
-            setConfiguration(configuration)
-        })
-    }, [])
+        if(!configuration?.registerEnabled && configuration?.ssoLogin && configuration?.ssoAutoRedirect) {
+            window.location.href = '/login/oauth'
+            return
+        }
+    }, [configuration])
 
     const grid = [
         <Card.Grid key="form" style={{width: md ? '100%' : '50%', textAlign: 'center'}} hoverable={false}>

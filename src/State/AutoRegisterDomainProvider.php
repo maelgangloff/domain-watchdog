@@ -41,6 +41,7 @@ readonly class AutoRegisterDomainProvider implements ProviderInterface
         private KernelInterface $kernel,
         private ParameterBagInterface $parameterBag,
         private RateLimiterFactory $userRdapRequestsLimiter,
+        private RateLimiterFactory $publicRdapRequestsLimiter,
         private Security $security,
         private LoggerInterface $logger,
         private DomainRepository $domainRepository,
@@ -68,14 +69,20 @@ readonly class AutoRegisterDomainProvider implements ProviderInterface
     public function provide(Operation $operation, array $uriVariables = [], array $context = []): object|array|null
     {
         $fromWatchlist = array_key_exists('root_operation', $context) && Watchlist::class === $context['root_operation']?->getClass();
-
-        $userId = $this->security->getUser()->getUserIdentifier();
         $idnDomain = RDAPService::convertToIdn($uriVariables['ldhName']);
 
-        $this->logger->info('User wants to update a domain name', [
-            'username' => $userId,
-            'ldhName' => $idnDomain,
-        ]);
+        $user = $this->security->getUser();
+
+        if (null !== $user) {
+            $this->logger->info('User wants to update a domain name', [
+                'username' => $user->getUserIdentifier(),
+                'ldhName' => $idnDomain,
+            ]);
+        } else {
+            $this->logger->info('Anonymous wants to update a domain name', [
+                'ldhName' => $idnDomain,
+            ]);
+        }
 
         $request = $this->requestStack->getCurrentRequest();
 
@@ -96,7 +103,7 @@ readonly class AutoRegisterDomainProvider implements ProviderInterface
         }
 
         if (false === $this->kernel->isDebug() && true === $this->parameterBag->get('limited_features')) {
-            $limiter = $this->userRdapRequestsLimiter->create($userId);
+            $limiter = $user ? $this->userRdapRequestsLimiter->create($user->getUserIdentifier()) : $this->publicRdapRequestsLimiter->create($request->getClientIp());
             $limit = $limiter->consume();
 
             if (!$limit->isAccepted()) {

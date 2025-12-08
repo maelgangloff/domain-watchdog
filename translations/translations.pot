@@ -3,31 +3,31 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Plural-Forms: nplurals=2; plural=(n!=1);\n"
 
-#: assets/App.tsx:161
+#: assets/App.tsx:172
 msgid "TOS"
 msgstr ""
 
-#: assets/App.tsx:162
+#: assets/App.tsx:173
 msgid "Privacy Policy"
 msgstr ""
 
-#: assets/App.tsx:163
+#: assets/App.tsx:174
 msgid "FAQ"
 msgstr ""
 
-#: assets/App.tsx:169
+#: assets/App.tsx:180
 msgid "Documentation"
 msgstr ""
 
-#: assets/App.tsx:177
+#: assets/App.tsx:188
 msgid "Source code"
 msgstr ""
 
-#: assets/App.tsx:185
+#: assets/App.tsx:196
 msgid "Submit an issue"
 msgstr ""
 
-#: assets/App.tsx:190
+#: assets/App.tsx:201
 #, javascript-format
 msgid ""
 "${ ProjectLink } is an open source project distributed under the ${ "
@@ -87,7 +87,7 @@ msgid "Log in with SSO"
 msgstr ""
 
 #: assets/components/RegisterForm.tsx:54
-#: assets/pages/LoginPage.tsx:60
+#: assets/pages/LoginPage.tsx:51
 msgid "Register"
 msgstr ""
 
@@ -168,60 +168,60 @@ msgstr ""
 msgid "This domain name does not appear to be valid"
 msgstr ""
 
-#: assets/components/Sider.tsx:31
+#: assets/components/Sider.tsx:35
 msgid "Home"
 msgstr ""
 
-#: assets/components/Sider.tsx:37
+#: assets/components/Sider.tsx:41
 msgid "Search"
 msgstr ""
 
-#: assets/components/Sider.tsx:43
+#: assets/components/Sider.tsx:47
 #: assets/components/tracking/watchlist/TrackedDomainTable.tsx:179
 msgid "Domain"
 msgstr ""
 
-#: assets/components/Sider.tsx:44
+#: assets/components/Sider.tsx:48
 msgid "Domain Finder"
 msgstr ""
 
-#: assets/components/Sider.tsx:63
-#: assets/components/Sider.tsx:64
+#: assets/components/Sider.tsx:67
+#: assets/components/Sider.tsx:68
 msgid "Infrastructure"
 msgstr ""
 
-#: assets/components/Sider.tsx:70
+#: assets/components/Sider.tsx:74
 #: assets/pages/StatisticsPage.tsx:112
 #: assets/pages/infrastructure/TldPage.tsx:81
 msgid "TLD"
 msgstr ""
 
-#: assets/components/Sider.tsx:71
+#: assets/components/Sider.tsx:75
 msgid "TLD list"
 msgstr ""
 
-#: assets/components/Sider.tsx:78
-#: assets/components/Sider.tsx:79
+#: assets/components/Sider.tsx:82
+#: assets/components/Sider.tsx:83
 msgid "ICANN list"
 msgstr ""
 
-#: assets/components/Sider.tsx:87
+#: assets/components/Sider.tsx:91
 msgid "Tracking"
 msgstr ""
 
-#: assets/components/Sider.tsx:93
+#: assets/components/Sider.tsx:97
 msgid "My Watchlists"
 msgstr ""
 
-#: assets/components/Sider.tsx:100
+#: assets/components/Sider.tsx:104
 msgid "Tracking table"
 msgstr ""
 
-#: assets/components/Sider.tsx:107
+#: assets/components/Sider.tsx:111
 msgid "My Connectors"
 msgstr ""
 
-#: assets/components/Sider.tsx:131
+#: assets/components/Sider.tsx:135
 #. 
 #.         {
 #.             key: 'tools',
@@ -240,18 +240,18 @@ msgstr ""
 msgid "Statistics"
 msgstr ""
 
-#: assets/components/Sider.tsx:141
+#: assets/components/Sider.tsx:145
 #: assets/pages/UserPage.tsx:17
 msgid "My Account"
 msgstr ""
 
-#: assets/components/Sider.tsx:146
+#: assets/components/Sider.tsx:150
 msgid "Log out"
 msgstr ""
 
-#: assets/components/Sider.tsx:154
-#: assets/pages/LoginPage.tsx:46
-#: assets/pages/LoginPage.tsx:60
+#: assets/components/Sider.tsx:158
+#: assets/pages/LoginPage.tsx:37
+#: assets/pages/LoginPage.tsx:51
 msgid "Log in"
 msgstr ""
 
@@ -690,7 +690,7 @@ msgstr ""
 msgid "Sponsored Top-Level-Domains"
 msgstr ""
 
-#: assets/pages/LoginPage.tsx:46
+#: assets/pages/LoginPage.tsx:37
 msgid "Create an account"
 msgstr ""
 
@@ -698,35 +698,35 @@ msgstr ""
 msgid "Sorry, the page you visited does not exist."
 msgstr ""
 
-#: assets/pages/search/DomainSearchPage.tsx:36
+#: assets/pages/search/DomainSearchPage.tsx:37
 msgid "Found !"
 msgstr ""
 
-#: assets/pages/search/DomainSearchPage.tsx:53
+#: assets/pages/search/DomainSearchPage.tsx:54
 #, javascript-format
 msgid "${ ldhName } added to ${ watchlist.name }"
 msgstr ""
 
-#: assets/pages/search/DomainSearchPage.tsx:70
+#: assets/pages/search/DomainSearchPage.tsx:71
 msgid ""
 "Although the domain exists in my database, it has been deleted from the "
 "WHOIS by its registrar."
 msgstr ""
 
-#: assets/pages/search/DomainSearchPage.tsx:82
+#: assets/pages/search/DomainSearchPage.tsx:83
 msgid "Add to Watchlist"
 msgstr ""
 
-#: assets/pages/search/DomainSearchPage.tsx:92
+#: assets/pages/search/DomainSearchPage.tsx:93
 #, javascript-format
 msgid "Add ${ domainLdhName } to a Watchlist"
 msgstr ""
 
-#: assets/pages/search/DomainSearchPage.tsx:95
+#: assets/pages/search/DomainSearchPage.tsx:96
 msgid "Cancel"
 msgstr ""
 
-#: assets/pages/search/DomainSearchPage.tsx:96
+#: assets/pages/search/DomainSearchPage.tsx:97
 msgid "Add"
 msgstr ""
 

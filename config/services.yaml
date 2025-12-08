@@ -7,13 +7,27 @@ parameters:
     custom_rdap_servers_file: '%kernel.project_dir%/config/app/custom_rdap_servers.yaml'
 
     mailer_sender_email: '%env(string:MAILER_SENDER_EMAIL)%'
+
     mailer_sender_name: '%env(string:MAILER_SENDER_NAME)%'
+    env(MAILER_SENDER_NAME): Domain Watchdog
+
     oauth_enabled: '%env(OAUTH_CLIENT_ID)%'
+
     sso_auto_redirect: '%env(bool:SSO_AUTO_REDIRECT)%'
+    env(SSO_AUTO_REDIRECT): false
+
     registration_enabled: '%env(bool:REGISTRATION_ENABLED)%'
+    env(REGISTRATION_ENABLED): true
+
     registration_verify_email: '%env(bool:REGISTRATION_VERIFY_EMAIL)%'
+    env(REGISTRATION_VERIFY_EMAIL): false
+
+    public_rdap_lookup_enabled: '%env(bool:PUBLIC_RDAP_LOOKUP_ENABLED)%'
+    env(PUBLIC_RDAP_LOOKUP_ENABLED): false
 
     limited_features: '%env(bool:LIMITED_FEATURES)%'
+    env(LIMITED_FEATURES): false
+
     limit_max_watchlist: '%env(int:LIMIT_MAX_WATCHLIST)%'
     limit_max_watchlist_domains: '%env(int:LIMIT_MAX_WATCHLIST_DOMAINS)%'
     limit_max_watchlist_webhooks: '%env(int:LIMIT_MAX_WATCHLIST_WEBHOOKS)%'
@@ -21,6 +35,8 @@ parameters:
     outgoing_ip: '%env(string:OUTGOING_IP)%'
 
     influxdb_enabled: '%env(bool:INFLUXDB_ENABLED)%'
+    env(INFLUXDB_ENABLED): false
+
     influxdb_url: '%env(string:INFLUXDB_URL)%'
     influxdb_token: '%env(string:INFLUXDB_TOKEN)%'
     influxdb_bucket: '%env(string:INFLUXDB_BUCKET)%'

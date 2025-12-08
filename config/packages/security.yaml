@@ -60,6 +60,7 @@ security:
         - { path: ^/api$, roles: PUBLIC_ACCESS }
         - { path: ^/api/docs, roles: PUBLIC_ACCESS }
         - { path: ^/api/register$, roles: PUBLIC_ACCESS }
+        - { path: ^/api/domains/*, roles: CAN_RDAP_LOOKUP }
         - { path: "^/api/watchlists/[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/calendar$", roles: PUBLIC_ACCESS }
         - { path: "^/api/watchlists/[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/rss", roles: PUBLIC_ACCESS }
         - { path: "^/api/config$", roles: PUBLIC_ACCESS }
