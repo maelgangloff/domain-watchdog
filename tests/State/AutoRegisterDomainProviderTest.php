@@ -36,7 +36,6 @@ final class AutoRegisterDomainProviderTest extends ApiTestCase
         $this->assertResponseStatusCodeSame(401);
     }
 
-
     #[DependsExternal(RDAPServiceTest::class, 'testUpdateRdapServers')]
     public function testRegisterDomainAlreadyUpdated(): void
     {
