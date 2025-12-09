@@ -96,7 +96,7 @@ export function DomainResult({domain}: { domain: Domain }) {
                             {
                                 domain.events.length > 0 && <>
                                     <Divider orientation='left'>{t`Timeline`}</Divider>
-                                    <EventTimeline events={domainEvents}/>
+                                    <EventTimeline events={domainEvents} expiresInDays={domain.expiresInDays}/>
                                 </>
                             }
                             {

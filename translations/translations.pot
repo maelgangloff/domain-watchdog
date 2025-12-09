@@ -172,6 +172,14 @@ msgstr ""
 msgid "This domain name does not appear to be valid"
 msgstr ""
 
+#: assets/components/search/EventTimeline.tsx:14
+msgid "Estimated removal"
+msgstr ""
+
+#: assets/components/search/EventTimeline.tsx:15
+msgid "Estimated date when the WHOIS record is removed"
+msgstr ""
+
 #: assets/components/Sider.tsx:35
 msgid "Home"
 msgstr ""

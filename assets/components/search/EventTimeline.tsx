@@ -5,54 +5,94 @@ import useBreakpoint from '../../hooks/useBreakpoint'
 import {rdapEventDetailTranslation, rdapEventNameTranslation} from '../../utils/functions/rdapTranslation'
 import {actionToColor} from '../../utils/functions/actionToColor'
 import {actionToIcon} from '../../utils/functions/actionToIcon'
+import {ThunderboltOutlined} from "@ant-design/icons"
+import {t} from "ttag"
 
-export function EventTimeline({events}: { events: Event[] }) {
+function getWhoisRemoveTimelineEvent(expiresInDays: number) {
+    const locale = navigator.language.split('-')[0]
+    const sm = useBreakpoint('sm')
+    const eventName = t`Estimated removal`
+    const eventDetail = t`Estimated date when the WHOIS record is removed`
+
+    const dateStr =
+        <Typography.Text>
+            {new Date(new Date().getTime() + expiresInDays * 24 * 60 * 60 * 1e3).toLocaleDateString(locale)}
+        </Typography.Text>
+
+    const text = sm
+        ? {
+            children: <Tooltip placement='bottom' title={eventDetail}>
+                {eventName}&emsp;{dateStr}
+            </Tooltip>
+        }
+        : {
+            label: dateStr,
+            children: <Tooltip placement='left' title={eventDetail}>{eventName}</Tooltip>
+        }
+
+    return {
+        color: 'yellow',
+        dot: <ThunderboltOutlined style={{fontSize: '16px'}}/>,
+        pending: true,
+        ...text
+    }
+}
+
+
+export function EventTimeline({events, expiresInDays}: { events: Event[], expiresInDays?: number }) {
     const sm = useBreakpoint('sm')
 
     const locale = navigator.language.split('-')[0]
     const rdapEventNameTranslated = rdapEventNameTranslation()
     const rdapEventDetailTranslated = rdapEventDetailTranslation()
 
-    return (
-        <>
-            <Timeline
-                mode={sm ? 'left' : 'right'}
-                items={events.map(e => {
-                        const eventName = (
-                            <Typography.Text style={{color: e.deleted ? 'grey' : 'default'}}>
-                                {rdapEventNameTranslated[e.action as keyof typeof rdapEventNameTranslated] || e.action}
-                            </Typography.Text>
-                        )
+    const items = []
+    if (expiresInDays !== undefined) {
+        items.push(getWhoisRemoveTimelineEvent(expiresInDays))
+    }
 
-                        const dateStr = (
-                            <Typography.Text
-                                style={{color: e.deleted ? 'grey' : 'default'}}
-                            >{new Date(e.date).toLocaleString(locale)}
-                            </Typography.Text>
-                        )
+    items.push(
+        ...events
+            .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+            .map(e => {
+                    const eventName = (
+                        <Typography.Text style={{color: e.deleted ? 'grey' : 'default'}}>
+                            {rdapEventNameTranslated[e.action as keyof typeof rdapEventNameTranslated] || e.action}
+                        </Typography.Text>
+                    )
 
-                        const eventDetail = rdapEventDetailTranslated[e.action as keyof typeof rdapEventDetailTranslated] || undefined
+                    const dateStr = (
+                        <Typography.Text
+                            style={{color: e.deleted ? 'grey' : 'default'}}
+                        >{new Date(e.date).toLocaleString(locale)}
+                        </Typography.Text>
+                    )
 
-                        const text = sm
-                            ? {
-                                children: <Tooltip placement='bottom' title={eventDetail}>
-                                    {eventName}&emsp;{dateStr}
-                                </Tooltip>
-                            }
-                            : {
-                                label: dateStr,
-                                children: <Tooltip placement='left' title={eventDetail}>{eventName}</Tooltip>
-                            }
+                    const eventDetail = rdapEventDetailTranslated[e.action as keyof typeof rdapEventDetailTranslated] || undefined
 
-                        return {
-                            color: e.deleted ? 'grey' : actionToColor(e.action),
-                            dot: actionToIcon(e.action),
-                            pending: new Date(e.date).getTime() > new Date().getTime(),
-                            ...text
+                    const text = sm
+                        ? {
+                            children: <Tooltip placement='bottom' title={eventDetail}>
+                                {eventName}&emsp;{dateStr}
+                            </Tooltip>
                         }
+                        : {
+                            label: dateStr,
+                            children: <Tooltip placement='left' title={eventDetail}>{eventName}</Tooltip>
+                        }
+
+                    return {
+                        color: e.deleted ? 'grey' : actionToColor(e.action),
+                        dot: actionToIcon(e.action),
+                        pending: new Date(e.date).getTime() > new Date().getTime(),
+                        ...text
                     }
-                )}
-            />
-        </>
+                }
+            )
     )
+
+    return <Timeline
+        mode={sm ? 'left' : 'right'}
+        items={items}
+    />
 }
