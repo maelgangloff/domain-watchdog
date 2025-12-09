@@ -15,7 +15,8 @@ class InstanceController extends AbstractController
             ->setLimitedFeatures($this->getParameter('limited_features') ?? false)
             ->setOauthEnabled($this->getParameter('oauth_enabled') ?? false)
             ->setRegisterEnabled($this->getParameter('registration_enabled') ?? false)
-            ->setSsoAutoRedirect($this->getParameter('sso_auto_redirect') ?? false);
+            ->setSsoAutoRedirect($this->getParameter('sso_auto_redirect') ?? false)
+            ->setPublicRdapLookupEnabled($this->getParameter('public_rdap_lookup_enabled') ?? false);
 
         return $instance;
     }

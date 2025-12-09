@@ -17,10 +17,14 @@ import {
     UserOutlined
 } from '@ant-design/icons'
 import {Menu} from 'antd'
-import React from 'react'
+import React, {useContext} from 'react'
 import {useLocation, useNavigate} from 'react-router-dom'
+import {AuthenticatedContext, ConfigurationContext} from "../contexts"
 
-export function Sider({isAuthenticated}: { isAuthenticated: boolean }) {
+export function Sider() {
+    const {isAuthenticated} = useContext(AuthenticatedContext)
+    const {configuration} = useContext(ConfigurationContext)
+
     const navigate = useNavigate()
     const location = useLocation()
 
@@ -42,7 +46,7 @@ export function Sider({isAuthenticated}: { isAuthenticated: boolean }) {
                     icon: <CompassOutlined/>,
                     label: t`Domain`,
                     title: t`Domain Finder`,
-                    disabled: !isAuthenticated,
+                    disabled: !configuration?.publicRdapLookupEnabled && !isAuthenticated,
                     onClick: () => navigate('/search/domain')
                 },
                 /*

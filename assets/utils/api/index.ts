@@ -109,6 +109,7 @@ export interface InstanceConfig {
     ssoLogin: boolean
     limtedFeatures: boolean
     registerEnabled: boolean
+    publicRdapLookupEnabled: boolean
 }
 
 export interface Statistics {

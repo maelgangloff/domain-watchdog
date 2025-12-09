@@ -1,19 +1,18 @@
-import React, {useEffect, useState} from 'react'
-import type { FormProps} from 'antd'
-import {FloatButton} from 'antd'
-import {Empty, Flex, message, Skeleton} from 'antd'
+import React, {useContext, useEffect, useState} from 'react'
+import type {FormProps} from 'antd'
+import {Empty, Flex, FloatButton, message, Skeleton} from 'antd'
 import type {Domain, Watchlist} from '../../utils/api'
-import {addDomainToWatchlist} from '../../utils/api'
-import {getDomain} from '../../utils/api'
+import {addDomainToWatchlist, getDomain} from '../../utils/api'
 import type {AxiosError} from 'axios'
 import {t} from 'ttag'
-import type { FieldType} from '../../components/search/DomainSearchBar'
+import type {FieldType} from '../../components/search/DomainSearchBar'
 import {DomainSearchBar} from '../../components/search/DomainSearchBar'
 import {DomainResult} from '../../components/search/DomainResult'
 import {showErrorAPI} from '../../utils/functions/showErrorAPI'
 import {useNavigate, useParams} from 'react-router-dom'
 import {PlusOutlined} from '@ant-design/icons'
 import WatchlistSelectionModal from '../../components/tracking/watchlist/WatchlistSelectionModal'
+import {AuthenticatedContext} from "../../contexts"
 
 export default function DomainSearchPage() {
     const {query} = useParams()
@@ -21,6 +20,8 @@ export default function DomainSearchPage() {
     const domainLdhName = domain?.ldhName
     const [loading, setLoading] = useState(false)
     const [addToWatchlistModal, setAddToWatchlistModal] = useState(false)
+    const {isAuthenticated} = useContext(AuthenticatedContext)
+
 
     const [messageApi, contextHolder] = message.useMessage()
     const navigate = useNavigate()
@@ -72,7 +73,7 @@ export default function DomainSearchPage() {
                 }
             </Skeleton>
         </Flex>
-        {domain
+        {domain && isAuthenticated
             && <FloatButton
                 style={{
                     position: 'fixed',
@@ -94,7 +95,7 @@ export default function DomainSearchPage() {
                 onClose: () => setAddToWatchlistModal(false),
                 cancelText: t`Cancel`,
                 okText: t`Add`
-        }}
+            }}
         />
     </>
 }

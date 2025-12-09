@@ -1,4 +1,4 @@
-import {Button, ConfigProvider, Drawer, Flex, Layout, theme, Typography} from 'antd'
+import {Button, ConfigProvider, Drawer, Flex, Layout, message, theme, Typography} from 'antd'
 import {Link, Navigate, Route, Routes, useLocation, useNavigate} from 'react-router-dom'
 import TextPage from './pages/TextPage'
 import DomainSearchPage from './pages/search/DomainSearchPage'
@@ -9,8 +9,8 @@ import WatchlistPage from './pages/tracking/WatchlistPage'
 import UserPage from './pages/UserPage'
 import type {PropsWithChildren} from 'react'
 import React, { useCallback, useEffect, useMemo, useState} from 'react'
-import {getUser} from './utils/api'
-import LoginPage, {AuthenticatedContext} from './pages/LoginPage'
+import {getConfiguration, getUser, type InstanceConfig} from './utils/api'
+import LoginPage from './pages/LoginPage'
 import ConnectorPage from './pages/tracking/ConnectorPage'
 import NotFoundPage from './pages/NotFoundPage'
 import useBreakpoint from './hooks/useBreakpoint'
@@ -19,12 +19,14 @@ import {jt, t} from 'ttag'
 import {MenuOutlined} from '@ant-design/icons'
 import TrackedDomainPage from './pages/tracking/TrackedDomainPage'
 import IcannRegistrarPage from "./pages/infrastructure/IcannRegistrarPage"
+import type {AuthContextType} from "./contexts"
+import {AuthenticatedContext, ConfigurationContext} from "./contexts"
 
 const PROJECT_LINK = 'https://github.com/maelgangloff/domain-watchdog'
 const LICENSE_LINK = 'https://www.gnu.org/licenses/agpl-3.0.txt'
 
 const ProjectLink = <Typography.Link key="projectLink" target='_blank' href={PROJECT_LINK}>Domain Watchdog</Typography.Link>
-const LicenseLink = <Typography.Link key="licenceLink" target='_blank' href={LICENSE_LINK}>AGPL-3.0-or-later</Typography.Link>
+const LicenseLink = <Typography.Link key="licenceLink" target='_blank' rel='license' href={LICENSE_LINK}>AGPL-3.0-or-later</Typography.Link>
 
 function SiderWrapper(props: PropsWithChildren<{sidebarCollapsed: boolean, setSidebarCollapsed: (collapsed: boolean) => void}>): React.ReactElement {
     const {sidebarCollapsed, setSidebarCollapsed, children} = props
@@ -68,18 +70,22 @@ export default function App(): React.ReactElement {
     const [sidebarCollapsed, setSidebarCollapsed] = useState(false)
     const [isAuthenticated, setIsAuthenticated] = useState(false)
 
-    const authenticated = useCallback((authenticated: boolean) => {
-        setIsAuthenticated(authenticated)
-    }, [])
-
-    const contextValue = useMemo(() => ({
-        authenticated,
-        setIsAuthenticated
-    }), [authenticated, setIsAuthenticated])
+    const [configuration, setConfiguration] = useState<InstanceConfig | undefined>(undefined)
 
     const [darkMode, setDarkMode] = useState(false)
-
     const windowQuery = window.matchMedia('(prefers-color-scheme:dark)')
+    const [messageApi, contextHolder] = message.useMessage()
+
+
+    const authContextValue: AuthContextType = useMemo(() => ({
+        isAuthenticated,
+        setIsAuthenticated
+    }), [isAuthenticated])
+
+    const configContextValue = useMemo(() => ({
+        configuration,
+    }), [configuration])
+
     const darkModeChange = useCallback((event: MediaQueryListEvent) => {
         setDarkMode(event.matches)
     }, [])
@@ -93,14 +99,19 @@ export default function App(): React.ReactElement {
 
     useEffect(() => {
         setDarkMode(windowQuery.matches)
-        getUser().then(() => {
-            setIsAuthenticated(true)
-            if (location.pathname === '/login') navigate('/home')
-        }).catch(() => {
-            setIsAuthenticated(false)
-            const pathname = location.pathname
-            if (!['/login', '/tos', '/faq', '/privacy'].includes(pathname)) navigate('/home')
-        })
+        getConfiguration().then(configuration => {
+            setConfiguration(configuration)
+
+            getUser().then(() => {
+                setIsAuthenticated(true)
+                if (location.pathname === '/login') navigate('/home')
+            }).catch(() => {
+                setIsAuthenticated(false)
+                const pathname = location.pathname
+                if(configuration.publicRdapLookupEnabled) return navigate('/search/domain')
+                if (!['/login', '/tos', '/faq', '/privacy'].includes(pathname)) return navigate('/home')
+            })
+        }).catch(() => messageApi.error(t`Unable to contact the server, please reload the page.`))
     }, [])
 
     return (
@@ -109,10 +120,11 @@ export default function App(): React.ReactElement {
                 algorithm: darkMode ? theme.darkAlgorithm : undefined
             }}
         >
-            <AuthenticatedContext.Provider value={contextValue}>
+            <ConfigurationContext.Provider value={configContextValue}>
+            <AuthenticatedContext.Provider value={authContextValue}>
                 <Layout hasSider style={{minHeight: '100vh'}}>
                     <SiderWrapper sidebarCollapsed={sidebarCollapsed} setSidebarCollapsed={setSidebarCollapsed}>
-                        <Sider isAuthenticated={isAuthenticated}/>
+                        <Sider />
                     </SiderWrapper>
                     <Layout>
                         <Layout.Header style={{padding: 0}}>
@@ -128,8 +140,9 @@ export default function App(): React.ReactElement {
                                 minHeight: 360
                             }}
                             >
+                                {contextHolder}
                                 <Routes>
-                                    <Route path='/' element={<Navigate to='/home'/>}/>
+                                    <Route path='/' element={<Navigate to={configuration?.publicRdapLookupEnabled ? '/search/domain' : '/home'}/>}/>
                                     <Route path='/home' element={<TextPage resource='home.md'/>}/>
 
                                     <Route path='/search/domain' element={<DomainSearchPage/>}/>
@@ -158,8 +171,8 @@ export default function App(): React.ReactElement {
                         </Layout.Content>
                         <Layout.Footer style={{textAlign: 'center'}}>
                             <Flex gap='middle' wrap justify='center'>
-                                <Link to='/tos'><Button type='text'>{t`TOS`}</Button></Link>
-                                <Link to='/privacy'><Button type='text'>{t`Privacy Policy`}</Button></Link>
+                                <Link to='/tos' rel='terms-of-service'><Button type='text'>{t`TOS`}</Button></Link>
+                                <Link to='/privacy' rel='privacy-policy'><Button type='text'>{t`Privacy Policy`}</Button></Link>
                                 <Link to='/faq'><Button type='text'>{t`FAQ`}</Button></Link>
                                 <Typography.Link
                                     target='_blank'
@@ -193,6 +206,7 @@ export default function App(): React.ReactElement {
                     </Layout>
                 </Layout>
             </AuthenticatedContext.Provider>
+            </ConfigurationContext.Provider>
         </ConfigProvider>
     )
 }

@@ -30,6 +30,8 @@ class Instance
 
     private ?bool $ssoAutoRedirect = null;
 
+    private ?bool $publicRdapLookupEnabled = null;
+
     public function isSsoLogin(): ?bool
     {
         return $this->oauthEnabled;
@@ -74,6 +76,18 @@ class Instance
     public function setSsoAutoRedirect(?bool $ssoAutoRedirect): static
     {
         $this->ssoAutoRedirect = $ssoAutoRedirect;
+
+        return $this;
+    }
+
+    public function getPublicRdapLookupEnabled(): ?bool
+    {
+        return $this->publicRdapLookupEnabled;
+    }
+
+    public function setPublicRdapLookupEnabled(?bool $publicRdapLookupEnabled): static
+    {
+        $this->publicRdapLookupEnabled = $publicRdapLookupEnabled;
 
         return $this;
     }
