@@ -1,4 +1,4 @@
-import {Button, ConfigProvider, Drawer, Flex, Layout, theme, Typography} from 'antd'
+import {Button, ConfigProvider, Drawer, Flex, Layout, message, theme, Typography} from 'antd'
 import {Link, Navigate, Route, Routes, useLocation, useNavigate} from 'react-router-dom'
 import TextPage from './pages/TextPage'
 import DomainSearchPage from './pages/search/DomainSearchPage'
@@ -20,7 +20,7 @@ import {MenuOutlined} from '@ant-design/icons'
 import TrackedDomainPage from './pages/tracking/TrackedDomainPage'
 import IcannRegistrarPage from "./pages/infrastructure/IcannRegistrarPage"
 import type {AuthContextType} from "./contexts"
-import { AuthenticatedContext, ConfigurationContext} from "./contexts"
+import {AuthenticatedContext, ConfigurationContext} from "./contexts"
 
 const PROJECT_LINK = 'https://github.com/maelgangloff/domain-watchdog'
 const LICENSE_LINK = 'https://www.gnu.org/licenses/agpl-3.0.txt'
@@ -74,6 +74,7 @@ export default function App(): React.ReactElement {
 
     const [darkMode, setDarkMode] = useState(false)
     const windowQuery = window.matchMedia('(prefers-color-scheme:dark)')
+    const [messageApi, contextHolder] = message.useMessage()
 
 
     const authContextValue: AuthContextType = useMemo(() => ({
@@ -110,7 +111,7 @@ export default function App(): React.ReactElement {
                 if(configuration.publicRdapLookupEnabled) return navigate('/search/domain')
                 if (!['/login', '/tos', '/faq', '/privacy'].includes(pathname)) return navigate('/home')
             })
-        })
+        }).catch(() => messageApi.error(t`Unable to contact the server, please reload the page.`))
     }, [])
 
     return (
@@ -139,6 +140,7 @@ export default function App(): React.ReactElement {
                                 minHeight: 360
                             }}
                             >
+                                {contextHolder}
                                 <Routes>
                                     <Route path='/' element={<Navigate to={configuration?.publicRdapLookupEnabled ? '/search/domain' : '/home'}/>}/>
                                     <Route path='/home' element={<TextPage resource='home.md'/>}/>

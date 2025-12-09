@@ -20,7 +20,6 @@ export default function LoginPage() {
     useEffect(() => {
         if(!configuration?.registerEnabled && configuration?.ssoLogin && configuration?.ssoAutoRedirect) {
             window.location.href = '/login/oauth'
-            return
         }
     }, [configuration])
 
