@@ -13,12 +13,12 @@ export const ConfigurationContext = createContext<ConfigurationContextType>({
 
 
 export type AuthContextType = {
-    isAuthenticated: boolean
-    setIsAuthenticated: React.Dispatch<React.SetStateAction<boolean>>
+    isAuthenticated?: boolean
+    setIsAuthenticated: React.Dispatch<React.SetStateAction<boolean | undefined>>
 }
 
 export const AuthenticatedContext = createContext<AuthContextType>({
-    isAuthenticated: false,
+    isAuthenticated: undefined,
     setIsAuthenticated: () => {
     },
 })

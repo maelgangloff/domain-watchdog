@@ -12,7 +12,7 @@ function getWhoisRemoveTimelineEvent(expiresInDays: number) {
     const locale = navigator.language.split('-')[0]
     const sm = useBreakpoint('sm')
     const eventName = t`Estimated removal`
-    const eventDetail = t`Estimated date when the WHOIS record is removed`
+    const eventDetail = t`Estimated WHOIS removal date. This is the earliest date this record would be deleted, according to ICANN's standard lifecycle. Note that some registries have their own lifecycles.`
 
     const dateStr =
         <Typography.Text>

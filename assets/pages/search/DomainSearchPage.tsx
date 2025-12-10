@@ -1,6 +1,6 @@
 import React, {useContext, useEffect, useState} from 'react'
 import type {FormProps} from 'antd'
-import {Empty, Flex, FloatButton, message, Skeleton} from 'antd'
+import { Empty, Flex, FloatButton, message, Skeleton} from 'antd'
 import type {Domain, Watchlist} from '../../utils/api'
 import {addDomainToWatchlist, getDomain} from '../../utils/api'
 import type {AxiosError} from 'axios'
