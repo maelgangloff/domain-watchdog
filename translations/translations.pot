@@ -9,8 +9,8 @@ msgstr ""
 
 #: assets/App.tsx:132
 msgid ""
-"Please authenticate to take advantage of all features, monitor domains and "
-"manage your Connectors."
+"Please log in to access all features, monitor domains, and manage your "
+"Connectors."
 msgstr ""
 
 #: assets/App.tsx:133

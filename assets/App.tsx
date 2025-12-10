@@ -126,11 +126,11 @@ export default function App(): React.ReactElement {
         >
             <ConfigurationContext.Provider value={configContextValue}>
                 <AuthenticatedContext.Provider value={authContextValue}>
-                    {(configuration?.registerEnabled || configuration?.ssoLogin) && isAuthenticated === false && location.pathname !== '/login' &&
+                    {(configuration?.registerEnabled || configuration?.ssoLogin) && isAuthenticated === false && !['/login', '/home'].includes(location.pathname) &&
                         <Alert
                             type="warning"
-                            message={t`Please authenticate to take advantage of all features, monitor domains and manage your Connectors.`}
-                            action={<Link to='/login'><Button>{t`Log in`}`</Button></Link>}
+                            message={t`Please log in to access all features, monitor domains, and manage your Connectors.`}
+                            action={<Link to='/login'><Button>{t`Log in`}</Button></Link>}
                             banner closable/>
                     }
                     <Layout hasSider style={{minHeight: '100vh'}}>
