@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2025-12-10 10:15+0000\n"
+"PO-Revision-Date: 2025-12-10 11:43+0000\n"
 "Last-Translator: Maël Gangloff <contact@maelgangloff.fr>\n"
 "Language-Team: French <https://weblate.vinceh121.me/projects/domain-watchdog/"
 "domain-watchdog-dashboard/fr/>\n"
@@ -16,16 +16,12 @@ msgid "Unable to contact the server, please reload the page."
 msgstr "Impossible de contacter le serveur, merci de recharger la page."
 
 #: assets/App.tsx:132
-#, fuzzy
-#| msgid ""
-#| "Please authenticate to take advantage of all features, monitor domains "
-#| "and manage your Connectors."
 msgid ""
 "Please log in to access all features, monitor domains, and manage your "
 "Connectors."
 msgstr ""
-"Merci de vous authentifier pour profiter de toutes les fonctionnalités, "
-"surveiller des domaines et gérer vos Connecteurs."
+"Merci de vous authentifier pour accéder à toutes les fonctionnalités, "
+"surveiller les domaines et gérer vos Connecteurs."
 
 #: assets/App.tsx:133 assets/components/Sider.tsx:158
 #: assets/pages/LoginPage.tsx:36 assets/pages/LoginPage.tsx:50
