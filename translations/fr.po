@@ -11,11 +11,11 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
 "X-Generator: Weblate 5.14.3\n"
 
-#: assets/App.tsx:118
+#: assets/App.tsx:121
 msgid "Unable to contact the server, please reload the page."
 msgstr "Impossible de contacter le serveur, merci de recharger la page."
 
-#: assets/App.tsx:132
+#: assets/App.tsx:135
 msgid ""
 "Please log in to access all features, monitor domains, and manage your "
 "Connectors."
@@ -23,36 +23,36 @@ msgstr ""
 "Merci de vous authentifier pour accéder à toutes les fonctionnalités, "
 "surveiller les domaines et gérer vos Connecteurs."
 
-#: assets/App.tsx:133 assets/components/Sider.tsx:158
+#: assets/App.tsx:136 assets/components/Sider.tsx:158
 #: assets/pages/LoginPage.tsx:36 assets/pages/LoginPage.tsx:50
 msgid "Log in"
 msgstr "Se connecter"
 
-#: assets/App.tsx:187
+#: assets/App.tsx:191
 msgid "TOS"
 msgstr "CGU"
 
-#: assets/App.tsx:189
+#: assets/App.tsx:193
 msgid "Privacy Policy"
 msgstr "Politique de confidentialité"
 
-#: assets/App.tsx:190
+#: assets/App.tsx:194
 msgid "FAQ"
 msgstr "FAQ"
 
-#: assets/App.tsx:194
+#: assets/App.tsx:198
 msgid "Documentation"
 msgstr "Documentation"
 
-#: assets/App.tsx:199
+#: assets/App.tsx:203
 msgid "Source code"
 msgstr "Code source"
 
-#: assets/App.tsx:204
+#: assets/App.tsx:208
 msgid "Submit an issue"
 msgstr "Signaler un bug"
 
-#: assets/App.tsx:208
+#: assets/App.tsx:212
 #, javascript-format
 msgid ""
 "${ ProjectLink } is an open source project distributed under the $"
