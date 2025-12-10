@@ -75,8 +75,9 @@ export default function App(): React.ReactElement {
     const [sidebarCollapsed, setSidebarCollapsed] = useState(false)
     const [isAuthenticated, setIsAuthenticated] = useState<boolean | undefined>(undefined)
     const [configuration, setConfiguration] = useState<InstanceConfig | undefined>(undefined)
-
     const [darkMode, setDarkMode] = useState(false)
+    const [dismissLoginAlert, setDismissLoginAlert] = useState(() => localStorage.getItem('dismiss-login-alert') === 'true')
+
     const windowQuery = window.matchMedia('(prefers-color-scheme:dark)')
     const [messageApi, contextHolder] = message.useMessage()
 
@@ -100,6 +101,8 @@ export default function App(): React.ReactElement {
             windowQuery.removeEventListener('change', darkModeChange)
         }
     }, [windowQuery, darkModeChange])
+
+    useEffect(() => localStorage.setItem('dismiss-login-alert', dismissLoginAlert.toString()), [dismissLoginAlert])
 
     useEffect(() => {
         setDarkMode(windowQuery.matches)
@@ -126,11 +129,12 @@ export default function App(): React.ReactElement {
         >
             <ConfigurationContext.Provider value={configContextValue}>
                 <AuthenticatedContext.Provider value={authContextValue}>
-                    {(configuration?.registerEnabled || configuration?.ssoLogin) && isAuthenticated === false && !['/login', '/home'].includes(location.pathname) &&
+                    {!dismissLoginAlert && (configuration?.registerEnabled || configuration?.ssoLogin) && isAuthenticated === false && !['/login'].includes(location.pathname) &&
                         <Alert
                             type="warning"
                             message={t`Please log in to access all features, monitor domains, and manage your Connectors.`}
                             action={<Link to='/login'><Button>{t`Log in`}</Button></Link>}
+                            onClose={() => setDismissLoginAlert(true)}
                             banner closable/>
                     }
                     <Layout hasSider style={{minHeight: '100vh'}}>
