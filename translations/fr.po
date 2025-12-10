@@ -16,9 +16,13 @@ msgid "Unable to contact the server, please reload the page."
 msgstr "Impossible de contacter le serveur, merci de recharger la page."
 
 #: assets/App.tsx:132
+#, fuzzy
+#| msgid ""
+#| "Please authenticate to take advantage of all features, monitor domains "
+#| "and manage your Connectors."
 msgid ""
-"Please authenticate to take advantage of all features, monitor domains and "
-"manage your Connectors."
+"Please log in to access all features, monitor domains, and manage your "
+"Connectors."
 msgstr ""
 "Merci de vous authentifier pour profiter de toutes les fonctionnalités, "
 "surveiller des domaines et gérer vos Connecteurs."
