@@ -10,35 +10,46 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Generator: Weblate 5.14.3\n"
 
-#: assets/App.tsx:114
+#: assets/App.tsx:118
 msgid "Unable to contact the server, please reload the page."
 msgstr ""
 
-#: assets/App.tsx:174
+#: assets/App.tsx:132
+msgid ""
+"Please authenticate to take advantage of all features, monitor domains and "
+"manage your Connectors."
+msgstr ""
+
+#: assets/App.tsx:133 assets/components/Sider.tsx:158
+#: assets/pages/LoginPage.tsx:36 assets/pages/LoginPage.tsx:50
+msgid "Log in"
+msgstr "Anmelden"
+
+#: assets/App.tsx:187
 msgid "TOS"
 msgstr "Nutzungsbedingungen"
 
-#: assets/App.tsx:175
+#: assets/App.tsx:189
 msgid "Privacy Policy"
 msgstr "Datenschutzrichtlinie"
 
-#: assets/App.tsx:176
+#: assets/App.tsx:190
 msgid "FAQ"
 msgstr "Häufig gestellte Fragen"
 
-#: assets/App.tsx:182
+#: assets/App.tsx:194
 msgid "Documentation"
 msgstr "Dokumentation"
 
-#: assets/App.tsx:190
+#: assets/App.tsx:199
 msgid "Source code"
 msgstr "Quellcode"
 
-#: assets/App.tsx:198
+#: assets/App.tsx:204
 msgid "Submit an issue"
 msgstr "Ein Problem melden"
 
-#: assets/App.tsx:203
+#: assets/App.tsx:208
 #, javascript-format
 msgid ""
 "${ ProjectLink } is an open source project distributed under the $"
@@ -188,7 +199,10 @@ msgid "Estimated removal"
 msgstr ""
 
 #: assets/components/search/EventTimeline.tsx:15
-msgid "Estimated date when the WHOIS record is removed"
+msgid ""
+"Estimated WHOIS removal date. This is the earliest date this record would be "
+"deleted, according to ICANN's standard lifecycle. Note that some registries "
+"have their own lifecycles."
 msgstr ""
 
 #: assets/components/Sider.tsx:35
@@ -267,11 +281,6 @@ msgstr "Mein Konto"
 #: assets/components/Sider.tsx:150
 msgid "Log out"
 msgstr "Abmelden"
-
-#: assets/components/Sider.tsx:158 assets/pages/LoginPage.tsx:36
-#: assets/pages/LoginPage.tsx:50
-msgid "Log in"
-msgstr "Anmelden"
 
 #: assets/components/tracking/connector/ConnectorForm.tsx:36
 #: assets/pages/infrastructure/IcannRegistrarPage.tsx:51
