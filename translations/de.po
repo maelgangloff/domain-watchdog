@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2025-11-16 00:42+0000\n"
+"PO-Revision-Date: 2025-12-11 17:23+0000\n"
 "Last-Translator: Maël Gangloff <contact@maelgangloff.fr>\n"
 "Language-Team: German <https://weblate.vinceh121.me/projects/domain-watchdog/"
 "domain-watchdog-dashboard/de/>\n"
@@ -13,12 +13,15 @@ msgstr ""
 #: assets/App.tsx:121
 msgid "Unable to contact the server, please reload the page."
 msgstr ""
+"Der Server kann nicht kontaktiert werden, bitte laden Sie die Seite neu."
 
 #: assets/App.tsx:135
 msgid ""
 "Please log in to access all features, monitor domains, and manage your "
 "Connectors."
 msgstr ""
+"Bitte melden Sie sich an, um auf alle Funktionen zuzugreifen, Domains zu "
+"überwachen und Ihre Connectors zu verwalten."
 
 #: assets/App.tsx:136 assets/components/Sider.tsx:158
 #: assets/pages/LoginPage.tsx:36 assets/pages/LoginPage.tsx:50
@@ -196,15 +199,15 @@ msgstr "Dieser Domainname scheint nicht gültig zu sein"
 
 #: assets/components/search/EventTimeline.tsx:15
 msgid "Estimated removal"
-msgstr ""
+msgstr "Geschätzte Entfernung"
 
 #: assets/components/search/EventTimeline.tsx:15
 msgid "Estimated removal (incl. renewal)"
-msgstr ""
+msgstr "Geschätzte Entfernung (inkl. Erneuerung)"
 
 #: assets/components/search/EventTimeline.tsx:15
 msgid "Estimated removal (excl. renewal)"
-msgstr ""
+msgstr "Geschätzte Entfernung (ohne Erneuerung)"
 
 #: assets/components/search/EventTimeline.tsx:16
 msgid ""
@@ -212,6 +215,9 @@ msgid ""
 "deleted, according to ICANN's standard lifecycle. Note that some registries "
 "have their own lifecycles."
 msgstr ""
+"Voraussichtliches WHOIS-Löschdatum. Dies ist der späteste Zeitpunkt, zu dem "
+"dieser Eintrag gemäß dem Standardlebenszyklus der ICANN gelöscht würde. "
+"Beachten Sie, dass einige Registries eigene Lebenszyklen haben."
 
 #: assets/components/Sider.tsx:35
 msgid "Home"
