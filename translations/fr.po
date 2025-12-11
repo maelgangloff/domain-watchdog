@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2025-12-10 11:43+0000\n"
+"PO-Revision-Date: 2025-12-11 13:41+0000\n"
 "Last-Translator: Maël Gangloff <contact@maelgangloff.fr>\n"
 "Language-Team: French <https://weblate.vinceh121.me/projects/domain-watchdog/"
 "domain-watchdog-dashboard/fr/>\n"
@@ -199,29 +199,20 @@ msgid "This domain name does not appear to be valid"
 msgstr "Ce nom de domaine ne semble pas être valide"
 
 #: assets/components/search/EventTimeline.tsx:15
-#, fuzzy
-#| msgid "Estimated removal"
 msgid "Estimated removal (incl. renewal)"
-msgstr "Suppression estimée"
+msgstr "Suppression estimée (avec renouvellement)"
 
 #: assets/components/search/EventTimeline.tsx:15
-#, fuzzy
-#| msgid "Estimated removal"
 msgid "Estimated removal (excl. renewal)"
-msgstr "Suppression estimée"
+msgstr "Suppression estimée (sans renouvellement)"
 
 #: assets/components/search/EventTimeline.tsx:16
-#, fuzzy
-#| msgid ""
-#| "Estimated WHOIS removal date. This is the earliest date this record would "
-#| "be deleted, according to ICANN's standard lifecycle. Note that some "
-#| "registries have their own lifecycles."
 msgid ""
 "Estimated WHOIS removal date. This is the latest date this record would be "
 "deleted, according to ICANN's standard lifecycle. Note that some registries "
 "have their own lifecycles."
 msgstr ""
-"Date estimée de suppression du WHOIS. Il s'agit de la date la plus proche à "
+"Date estimée de suppression du WHOIS. Il s'agit de la date la plus tardive à "
 "laquelle cet enregistrement serait supprimé, conformément au cycle de vie "
 "standard de l'ICANN. Veuillez noter que certains registres ont leurs propres "
 "cycles de vie."
