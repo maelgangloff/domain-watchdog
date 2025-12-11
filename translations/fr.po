@@ -199,6 +199,12 @@ msgid "This domain name does not appear to be valid"
 msgstr "Ce nom de domaine ne semble pas être valide"
 
 #: assets/components/search/EventTimeline.tsx:15
+#, fuzzy
+#| msgid "Estimated removal (incl. renewal)"
+msgid "Estimated removal"
+msgstr "Suppression estimée (avec renouvellement)"
+
+#: assets/components/search/EventTimeline.tsx:15
 msgid "Estimated removal (incl. renewal)"
 msgstr "Suppression estimée (avec renouvellement)"
 
