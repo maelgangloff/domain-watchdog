@@ -57,7 +57,8 @@ export function DomainResult({domain}: { domain: Domain }) {
                                     title={t`Registry-level protection, ensuring the highest level of security by preventing unauthorized, unwanted, or accidental changes to the domain name at the registry level`}
                                 >
                                     <Tag
-                                        bordered={false} color={isDomainLocked(domain.status, 'server') ? 'green' : 'default'}
+                                        bordered={false}
+                                        color={isDomainLocked(domain.status, 'server') ? 'green' : 'default'}
                                         icon={<SafetyCertificateOutlined
                                             style={{fontSize: '16px'}}
                                         />}
@@ -68,7 +69,8 @@ export function DomainResult({domain}: { domain: Domain }) {
                                     title={t`Registrar-level protection, safeguarding the domain from unauthorized, unwanted, or accidental changes through registrar controls`}
                                 >
                                     <Tag
-                                        bordered={false} color={isDomainLocked(domain.status, 'client') ? 'green' : 'default'}
+                                        bordered={false}
+                                        color={isDomainLocked(domain.status, 'client') ? 'green' : 'default'}
                                         icon={<BankOutlined
                                             style={{fontSize: '16px'}}
                                         />}
@@ -96,7 +98,10 @@ export function DomainResult({domain}: { domain: Domain }) {
                             {
                                 domain.events.length > 0 && <>
                                     <Divider orientation='left'>{t`Timeline`}</Divider>
-                                    <EventTimeline events={domainEvents} expiresInDays={domain.expiresInDays}/>
+                                    <EventTimeline events={domainEvents}
+                                                   expiresInDays={domain.expiresInDays}
+                                                   isRenewalPeriod={domain.status.includes('auto renew period') || domain.status.includes('renew period')}
+                                    />
                                 </>
                             }
                             {

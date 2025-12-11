@@ -7,16 +7,17 @@ import {actionToColor} from '../../utils/functions/actionToColor'
 import {actionToIcon} from '../../utils/functions/actionToIcon'
 import {ThunderboltOutlined} from "@ant-design/icons"
 import {t} from "ttag"
+import type {TimeLineItemProps} from "antd/lib/timeline/TimelineItem"
 
-function getWhoisRemoveTimelineEvent(expiresInDays: number) {
+function getWhoisRemoveTimelineEvent(whoisRemoveDateEstimate: Date, withRenewalPeriod = false) {
     const locale = navigator.language.split('-')[0]
     const sm = useBreakpoint('sm')
-    const eventName = t`Estimated removal`
-    const eventDetail = t`Estimated WHOIS removal date. This is the earliest date this record would be deleted, according to ICANN's standard lifecycle. Note that some registries have their own lifecycles.`
+    const eventName = withRenewalPeriod ? t`Estimated removal (incl. renewal)` : t`Estimated removal (excl. renewal)`
+    const eventDetail = t`Estimated WHOIS removal date. This is the latest date this record would be deleted, according to ICANN's standard lifecycle. Note that some registries have their own lifecycles.`
 
     const dateStr =
         <Typography.Text>
-            {new Date(new Date().getTime() + expiresInDays * 24 * 60 * 60 * 1e3).toLocaleDateString(locale)}
+            {whoisRemoveDateEstimate.toLocaleDateString(locale)}
         </Typography.Text>
 
     const text = sm
@@ -31,7 +32,7 @@ function getWhoisRemoveTimelineEvent(expiresInDays: number) {
         }
 
     return {
-        color: 'yellow',
+        color: withRenewalPeriod ? 'grey' : 'yellow',
         dot: <ThunderboltOutlined style={{fontSize: '16px'}}/>,
         pending: true,
         ...text
@@ -39,21 +40,34 @@ function getWhoisRemoveTimelineEvent(expiresInDays: number) {
 }
 
 
-export function EventTimeline({events, expiresInDays}: { events: Event[], expiresInDays?: number }) {
+export function EventTimeline({events, expiresInDays, isRenewalPeriod}: {
+    events: Event[],
+    expiresInDays?: number,
+    isRenewalPeriod: boolean
+}) {
     const sm = useBreakpoint('sm')
+    const sortedEvents = events.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
 
     const locale = navigator.language.split('-')[0]
     const rdapEventNameTranslated = rdapEventNameTranslation()
     const rdapEventDetailTranslated = rdapEventDetailTranslation()
+    const items: TimeLineItemProps[] = []
 
-    const items = []
     if (expiresInDays !== undefined) {
-        items.push(getWhoisRemoveTimelineEvent(expiresInDays))
+        const whoisRemoveDateEstimate = new Date(new Date().getTime() + expiresInDays * 24 * 60 * 60 * 1e3)
+        items.push(getWhoisRemoveTimelineEvent(whoisRemoveDateEstimate, true))
+
+        const expirationEvent = sortedEvents.find(e => !e.deleted && e.action === 'expiration')
+        const lastExpirationEvent = sortedEvents.find(e => e.deleted && e.action === 'expiration')
+
+        if (expirationEvent && lastExpirationEvent && isRenewalPeriod) {
+            const date = new Date(whoisRemoveDateEstimate.getTime() - (new Date(expirationEvent.date).getTime() - new Date(lastExpirationEvent.date).getTime()))
+            items.push(getWhoisRemoveTimelineEvent(date, false))
+        }
     }
 
     items.push(
-        ...events
-            .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+        ...sortedEvents
             .map(e => {
                     const eventName = (
                         <Typography.Text style={{color: e.deleted ? 'grey' : 'default'}}>

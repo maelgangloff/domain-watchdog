@@ -140,43 +140,43 @@ msgid ""
 "at the registry level"
 msgstr ""
 
-#: assets/components/search/DomainResult.tsx:64
+#: assets/components/search/DomainResult.tsx:65
 #: assets/components/tracking/watchlist/TrackedDomainTable.tsx:93
 msgid "Registry Lock"
 msgstr ""
 
-#: assets/components/search/DomainResult.tsx:68
+#: assets/components/search/DomainResult.tsx:69
 msgid ""
 "Registrar-level protection, safeguarding the domain from unauthorized, "
 "unwanted, or accidental changes through registrar controls"
 msgstr ""
 
-#: assets/components/search/DomainResult.tsx:75
+#: assets/components/search/DomainResult.tsx:77
 #: assets/components/tracking/watchlist/TrackedDomainTable.tsx:99
 msgid "Registrar Lock"
 msgstr ""
 
-#: assets/components/search/DomainResult.tsx:79
+#: assets/components/search/DomainResult.tsx:81
 msgid ""
 "DNSSEC secures DNS by adding cryptographic signatures to DNS records, "
 "ensuring authenticity and integrity of responses"
 msgstr ""
 
-#: assets/components/search/DomainResult.tsx:84
+#: assets/components/search/DomainResult.tsx:86
 #: assets/components/tracking/watchlist/TrackedDomainTable.tsx:105
 msgid "DNSSEC"
 msgstr ""
 
-#: assets/components/search/DomainResult.tsx:90
+#: assets/components/search/DomainResult.tsx:92
 #: assets/components/tracking/watchlist/TrackedDomainTable.tsx:219
 msgid "EPP Status Codes"
 msgstr ""
 
-#: assets/components/search/DomainResult.tsx:98
+#: assets/components/search/DomainResult.tsx:100
 msgid "Timeline"
 msgstr ""
 
-#: assets/components/search/DomainResult.tsx:105
+#: assets/components/search/DomainResult.tsx:110
 msgid "Entities"
 msgstr ""
 
@@ -185,15 +185,19 @@ msgstr ""
 msgid "This domain name does not appear to be valid"
 msgstr ""
 
-#: assets/components/search/EventTimeline.tsx:14
-msgid "Estimated removal"
+#: assets/components/search/EventTimeline.tsx:15
+msgid "Estimated removal (incl. renewal)"
 msgstr ""
 
 #: assets/components/search/EventTimeline.tsx:15
+msgid "Estimated removal (excl. renewal)"
+msgstr ""
+
+#: assets/components/search/EventTimeline.tsx:16
 msgid ""
-"Estimated WHOIS removal date. This is the earliest date this record would "
-"be deleted, according to ICANN's standard lifecycle. Note that some "
-"registries have their own lifecycles."
+"Estimated WHOIS removal date. This is the latest date this record would be "
+"deleted, according to ICANN's standard lifecycle. Note that some registries "
+"have their own lifecycles."
 msgstr ""
 
 #: assets/components/Sider.tsx:35
