@@ -1,58 +1,49 @@
 <?php
 
-namespace App\Controller;
+namespace App\State;
 
+use ApiPlatform\Metadata\Operation;
+use ApiPlatform\State\ProcessorInterface;
 use App\Entity\User;
-use App\Repository\UserRepository;
 use App\Security\EmailVerifier;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\HttpKernel\Exception\TooManyRequestsHttpException;
 use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
 use Symfony\Component\HttpKernel\KernelInterface;
-use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Symfony\Component\Mime\Address;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\RateLimiter\RateLimiterFactory;
-use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
-class RegistrationController extends AbstractController
+readonly class RegisterUserProcessor implements ProcessorInterface
 {
     public function __construct(
-        private readonly EmailVerifier $emailVerifier,
-        private readonly string $mailerSenderEmail,
-        private readonly string $mailerSenderName,
-        private readonly RateLimiterFactory $userRegisterLimiter,
-        private readonly EntityManagerInterface $em,
-        private readonly SerializerInterface $serializer,
-        private readonly LoggerInterface $logger,
-        private readonly KernelInterface $kernel,
-        private readonly ValidatorInterface $validator,
+        private KernelInterface $kernel,
+        private LoggerInterface $logger,
+        private EntityManagerInterface $em,
+        private EmailVerifier $emailVerifier,
+        private string $mailerSenderEmail,
+        private string $mailerSenderName,
+        private RateLimiterFactory $userRegisterLimiter,
+        private SerializerInterface $serializer,
+        private ValidatorInterface $validator,
+        private UserPasswordHasherInterface $userPasswordHasher,
+        private RequestStack $requestStack,
+        private ParameterBagInterface $parameterBag,
     ) {
     }
 
-    /**
-     * @throws TransportExceptionInterface
-     */
-    #[Route(
-        path: '/api/register',
-        name: 'user_register',
-        defaults: [
-            '_api_resource_class' => User::class,
-            '_api_operation_name' => 'user_register',
-        ],
-        methods: ['POST']
-    )]
-    public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher): Response
+    public function process(mixed $data, Operation $operation, array $uriVariables = [], array $context = []): mixed
     {
-        if (false === $this->getParameter('registration_enabled')) {
+        $request = $this->requestStack->getCurrentRequest();
+        if (false === $this->parameterBag->get('registration_enabled')) {
             throw new UnauthorizedHttpException('', 'Registration is disabled on this instance');
         }
 
@@ -73,13 +64,13 @@ class RegistrationController extends AbstractController
         }
 
         $user->setPassword(
-            $userPasswordHasher->hashPassword(
+            $this->userPasswordHasher->hashPassword(
                 $user,
                 $user->getPlainPassword()
             )
         )->setCreatedAt(new \DateTimeImmutable());
 
-        if (false === (bool) $this->getParameter('registration_verify_email')) {
+        if (false === (bool) $this->parameterBag->get('registration_verify_email')) {
             $user->setVerifiedAt($user->getCreatedAt());
         } else {
             $email = $this->emailVerifier->sendEmailConfirmation('app_verify_email', $user,
@@ -106,29 +97,5 @@ class RegistrationController extends AbstractController
         ]);
 
         return new Response(null, 201);
-    }
-
-    #[Route('/verify/email', name: 'app_verify_email')]
-    public function verifyUserEmail(Request $request, UserRepository $userRepository): Response
-    {
-        $id = $request->query->get('id');
-
-        if (null === $id) {
-            return $this->redirectToRoute('index');
-        }
-
-        $user = $userRepository->find($id);
-
-        if (null === $user) {
-            return $this->redirectToRoute('index');
-        }
-
-        $this->emailVerifier->handleEmailConfirmation($request, $user);
-
-        $this->logger->info('User has validated his email address', [
-            'username' => $user->getUserIdentifier(),
-        ]);
-
-        return $this->redirectToRoute('index');
     }
 }

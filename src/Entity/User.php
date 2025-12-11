@@ -6,8 +6,8 @@ use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\Post;
 use App\Controller\MeController;
-use App\Controller\RegistrationController;
 use App\Repository\UserRepository;
+use App\State\RegisterUserProcessor;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -37,13 +37,13 @@ use Symfony\Component\Validator\Constraints as Assert;
         new Post(
             uriTemplate: '/register',
             routeName: 'user_register',
-            controller: RegistrationController::class,
             openapiContext: [
                 'summary' => 'Register a new user',
                 'description' => 'If the server configuration allows it, this endpoint enables the registration of a new user. Depending on the server configuration, a confirmation email may be sent to the provided email address so that the user can verify their email address.',
             ],
             denormalizationContext: ['groups' => ['user:register']],
             read: false,
+            processor: RegisterUserProcessor::class,
         ),
     ]
 )]

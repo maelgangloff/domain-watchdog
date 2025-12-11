@@ -2,11 +2,15 @@
 
 namespace App\Controller;
 
+use App\Repository\UserRepository;
+use App\Security\EmailVerifier;
 use KnpU\OAuth2ClientBundle\Client\ClientRegistry;
+use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Attribute\Route;
@@ -17,6 +21,8 @@ class HomeController extends AbstractController
     public function __construct(
         private readonly RouterInterface $router,
         private readonly ParameterBagInterface $parameterBag,
+        private readonly EmailVerifier $emailVerifier,
+        private readonly LoggerInterface $logger,
     ) {
     }
 
@@ -45,5 +51,29 @@ class HomeController extends AbstractController
         }
 
         return $response;
+    }
+
+    #[Route('/verify/email', name: 'app_verify_email')]
+    public function verifyUserEmail(Request $request, UserRepository $userRepository): Response
+    {
+        $id = $request->query->get('id');
+
+        if (null === $id) {
+            return $this->redirectToRoute('index');
+        }
+
+        $user = $userRepository->find($id);
+
+        if (null === $user) {
+            return $this->redirectToRoute('index');
+        }
+
+        $this->emailVerifier->handleEmailConfirmation($request, $user);
+
+        $this->logger->info('User has validated his email address', [
+            'username' => $user->getUserIdentifier(),
+        ]);
+
+        return $this->redirectToRoute('index');
     }
 }
