@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2025-12-11 13:41+0000\n"
+"PO-Revision-Date: 2025-12-11 15:55+0000\n"
 "Last-Translator: Maël Gangloff <contact@maelgangloff.fr>\n"
 "Language-Team: French <https://weblate.vinceh121.me/projects/domain-watchdog/"
 "domain-watchdog-dashboard/fr/>\n"
@@ -199,10 +199,8 @@ msgid "This domain name does not appear to be valid"
 msgstr "Ce nom de domaine ne semble pas être valide"
 
 #: assets/components/search/EventTimeline.tsx:15
-#, fuzzy
-#| msgid "Estimated removal (incl. renewal)"
 msgid "Estimated removal"
-msgstr "Suppression estimée (avec renouvellement)"
+msgstr "Suppression estimée"
 
 #: assets/components/search/EventTimeline.tsx:15
 msgid "Estimated removal (incl. renewal)"
