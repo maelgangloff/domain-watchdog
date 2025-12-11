@@ -148,12 +148,12 @@ msgstr ""
 "autorisées, indésirables ou accidentelles du nom de domaine au niveau du "
 "registre"
 
-#: assets/components/search/DomainResult.tsx:64
+#: assets/components/search/DomainResult.tsx:65
 #: assets/components/tracking/watchlist/TrackedDomainTable.tsx:93
 msgid "Registry Lock"
 msgstr "Verrouillage du registre"
 
-#: assets/components/search/DomainResult.tsx:68
+#: assets/components/search/DomainResult.tsx:69
 msgid ""
 "Registrar-level protection, safeguarding the domain from unauthorized, "
 "unwanted, or accidental changes through registrar controls"
@@ -161,12 +161,12 @@ msgstr ""
 "Protège le domaine contre les modifications non autorisées, non souhaitées "
 "ou accidentelles grâce aux contrôles du bureau d'enregistrement"
 
-#: assets/components/search/DomainResult.tsx:75
+#: assets/components/search/DomainResult.tsx:77
 #: assets/components/tracking/watchlist/TrackedDomainTable.tsx:99
 msgid "Registrar Lock"
 msgstr "Verrouillage du bureau d'enregistrement"
 
-#: assets/components/search/DomainResult.tsx:79
+#: assets/components/search/DomainResult.tsx:81
 msgid ""
 "DNSSEC secures DNS by adding cryptographic signatures to DNS records, "
 "ensuring authenticity and integrity of responses"
@@ -175,21 +175,21 @@ msgstr ""
 "enregistrements DNS, garantissant ainsi l'authenticité et l'intégrité des "
 "réponses"
 
-#: assets/components/search/DomainResult.tsx:84
+#: assets/components/search/DomainResult.tsx:86
 #: assets/components/tracking/watchlist/TrackedDomainTable.tsx:105
 msgid "DNSSEC"
 msgstr "DNSSEC"
 
-#: assets/components/search/DomainResult.tsx:90
+#: assets/components/search/DomainResult.tsx:92
 #: assets/components/tracking/watchlist/TrackedDomainTable.tsx:219
 msgid "EPP Status Codes"
 msgstr "Codes de statut EPP"
 
-#: assets/components/search/DomainResult.tsx:98
+#: assets/components/search/DomainResult.tsx:100
 msgid "Timeline"
 msgstr "Chronologie"
 
-#: assets/components/search/DomainResult.tsx:105
+#: assets/components/search/DomainResult.tsx:110
 msgid "Entities"
 msgstr "Entités"
 
@@ -198,13 +198,26 @@ msgstr "Entités"
 msgid "This domain name does not appear to be valid"
 msgstr "Ce nom de domaine ne semble pas être valide"
 
-#: assets/components/search/EventTimeline.tsx:14
-msgid "Estimated removal"
+#: assets/components/search/EventTimeline.tsx:15
+#, fuzzy
+#| msgid "Estimated removal"
+msgid "Estimated removal (incl. renewal)"
 msgstr "Suppression estimée"
 
 #: assets/components/search/EventTimeline.tsx:15
+#, fuzzy
+#| msgid "Estimated removal"
+msgid "Estimated removal (excl. renewal)"
+msgstr "Suppression estimée"
+
+#: assets/components/search/EventTimeline.tsx:16
+#, fuzzy
+#| msgid ""
+#| "Estimated WHOIS removal date. This is the earliest date this record would "
+#| "be deleted, according to ICANN's standard lifecycle. Note that some "
+#| "registries have their own lifecycles."
 msgid ""
-"Estimated WHOIS removal date. This is the earliest date this record would be "
+"Estimated WHOIS removal date. This is the latest date this record would be "
 "deleted, according to ICANN's standard lifecycle. Note that some registries "
 "have their own lifecycles."
 msgstr ""
