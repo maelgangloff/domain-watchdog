@@ -9,6 +9,7 @@ use App\Message\ValidateConnectorCredentials;
 use App\MessageHandler\ValidateConnectorCredentialsHandler;
 use App\Tests\AuthenticatedUserTrait;
 use PHPUnit\Framework\Attributes\Depends;
+use Symfony\Component\HttpFoundation\Response;
 use Zenstruck\Foundry\Test\Factories;
 
 final class ConnectorControllerTest extends ApiTestCase
@@ -39,7 +40,7 @@ final class ConnectorControllerTest extends ApiTestCase
             ],
             'provider' => 'gandi',
         ]]);
-        $this->assertResponseStatusCodeSame(400);
+        $this->assertResponseStatusCodeSame(Response::HTTP_BAD_REQUEST);
     }
 
     public function testCreateConnectorInvalidConsent(): void
@@ -54,7 +55,7 @@ final class ConnectorControllerTest extends ApiTestCase
             ],
             'provider' => 'gandi',
         ]]);
-        $this->assertResponseStatusCodeSame(451);
+        $this->assertResponseStatusCodeSame(Response::HTTP_UNAVAILABLE_FOR_LEGAL_REASONS);
     }
 
     public function testCreateConnectorInvalidAuthDataAdditionalKey(): void
@@ -70,7 +71,7 @@ final class ConnectorControllerTest extends ApiTestCase
             ],
             'provider' => 'gandi',
         ]]);
-        $this->assertResponseStatusCodeSame(400);
+        $this->assertResponseStatusCodeSame(Response::HTTP_BAD_REQUEST);
     }
 
     public function testCreateConnectorValidAuthData(): void
@@ -89,7 +90,7 @@ final class ConnectorControllerTest extends ApiTestCase
             ],
             'provider' => 'gandi',
         ]]);
-        $this->assertResponseStatusCodeSame(201);
+        $this->assertResponseStatusCodeSame(Response::HTTP_CREATED);
     }
 
     #[Depends('testCreateConnectorValidAuthData')]
@@ -118,10 +119,10 @@ final class ConnectorControllerTest extends ApiTestCase
             ],
             'provider' => 'gandi',
         ]]);
-        $this->assertResponseStatusCodeSame(201);
+        $this->assertResponseStatusCodeSame(Response::HTTP_CREATED);
 
         $client->request('DELETE', '/api/connectors/'.$response->toArray()['id']);
 
-        $this->assertResponseStatusCodeSame(204);
+        $this->assertResponseStatusCodeSame(Response::HTTP_NO_CONTENT);
     }
 }

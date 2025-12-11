@@ -6,6 +6,7 @@ use ApiPlatform\Symfony\Bundle\Test\ApiTestCase;
 use App\Factory\UserFactory;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\HttpFoundation\Response;
 use Zenstruck\Foundry\Test\Factories;
 
 final class RegisterUserProcessorTest extends ApiTestCase
@@ -35,7 +36,7 @@ final class RegisterUserProcessorTest extends ApiTestCase
             ],
         ]);
         $this->assertResponseIsSuccessful();
-        $this->assertResponseStatusCodeSame(201);
+        $this->assertResponseStatusCodeSame(Response::HTTP_CREATED);
     }
 
     public function testRegisterEmptyEmail(): void
@@ -47,7 +48,7 @@ final class RegisterUserProcessorTest extends ApiTestCase
                 'password' => 'MySuperPassword123',
             ],
         ]);
-        $this->assertResponseStatusCodeSame(422);
+        $this->assertResponseStatusCodeSame(Response::HTTP_UNPROCESSABLE_ENTITY);
     }
 
     public function testRegisterEmptyPassword(): void
@@ -59,7 +60,7 @@ final class RegisterUserProcessorTest extends ApiTestCase
                 'password' => '',
             ],
         ]);
-        $this->assertResponseStatusCodeSame(422);
+        $this->assertResponseStatusCodeSame(Response::HTTP_UNPROCESSABLE_ENTITY);
     }
 
     public function testRegisterWeakPassword(): void
@@ -71,6 +72,6 @@ final class RegisterUserProcessorTest extends ApiTestCase
                 'password' => '123',
             ],
         ]);
-        $this->assertResponseStatusCodeSame(422);
+        $this->assertResponseStatusCodeSame(Response::HTTP_UNPROCESSABLE_ENTITY);
     }
 }

@@ -16,6 +16,7 @@ use App\Tests\State\WatchlistUpdateProcessorTest;
 use Doctrine\ORM\EntityManagerInterface;
 use PHPUnit\Framework\Attributes\DependsExternal;
 use Symfony\Component\HttpClient\Exception\ServerException;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Uid\UuidV4;
 
 class AbstractProviderTest extends ApiTestCase
@@ -83,7 +84,7 @@ class AbstractProviderTest extends ApiTestCase
                 'authData' => $authData,
                 'provider' => $connectorProvider->value,
             ]]);
-            $this->assertResponseStatusCodeSame(201);
+            $this->assertResponseStatusCodeSame(Response::HTTP_CREATED);
 
             /** @var EntityManagerInterface $entityManager */
             $entityManager = self::getContainer()->get(EntityManagerInterface::class);
@@ -112,7 +113,7 @@ class AbstractProviderTest extends ApiTestCase
             $message = new OrderDomain($watchlist->getToken(), $domain->getLdhName(), $domain->getUpdatedAt());
             $orderDomainHandler($message);
 
-            $this->assertResponseStatusCodeSame(200);
+            $this->assertResponseStatusCodeSame(Response::HTTP_OK);
         } catch (ServerException $e) {
             $this->markTestSkipped('Provider '.$connectorProvider->value.' is not ready. Response HTTP '.$e->getResponse()->getStatusCode());
         }

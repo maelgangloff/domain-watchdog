@@ -9,6 +9,7 @@ use App\Factory\UserFactory;
 use App\Tests\AuthenticatedUserTrait;
 use App\Tests\Service\RDAPServiceTest;
 use PHPUnit\Framework\Attributes\DependsExternal;
+use Symfony\Component\HttpFoundation\Response;
 use Zenstruck\Foundry\Test\Factories;
 
 final class WatchlistUpdateProcessorTest extends ApiTestCase
@@ -21,7 +22,7 @@ final class WatchlistUpdateProcessorTest extends ApiTestCase
     {
         self::createUserAndWatchlist();
         $this->assertResponseIsSuccessful();
-        $this->assertResponseStatusCodeSame(201);
+        $this->assertResponseStatusCodeSame(Response::HTTP_CREATED);
         $this->assertMatchesResourceItemJsonSchema(Watchlist::class);
     }
 
@@ -31,7 +32,7 @@ final class WatchlistUpdateProcessorTest extends ApiTestCase
         $client = self::createClientWithCredentials(self::getToken(UserFactory::createOne()));
         self::createUserAndWatchlist($client);
         self::createUserAndWatchlist($client);
-        $this->assertResponseStatusCodeSame(403);
+        $this->assertResponseStatusCodeSame(Response::HTTP_FORBIDDEN);
     }
 
     #[DependsExternal(RDAPServiceTest::class, 'testUpdateRdapServers')]

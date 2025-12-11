@@ -10,6 +10,7 @@ use App\Service\RDAPService;
 use App\Tests\AuthenticatedUserTrait;
 use App\Tests\Service\RDAPServiceTest;
 use PHPUnit\Framework\Attributes\DependsExternal;
+use Symfony\Component\HttpFoundation\Response;
 use Zenstruck\Foundry\Test\Factories;
 
 final class AutoRegisterDomainProviderTest extends ApiTestCase
@@ -33,7 +34,7 @@ final class AutoRegisterDomainProviderTest extends ApiTestCase
         $client = $this->createClient();
         $client->request('GET', '/api/domains/example.com');
 
-        $this->assertResponseStatusCodeSame(401);
+        $this->assertResponseStatusCodeSame(Response::HTTP_UNAUTHORIZED);
     }
 
     #[DependsExternal(RDAPServiceTest::class, 'testUpdateRdapServers')]
