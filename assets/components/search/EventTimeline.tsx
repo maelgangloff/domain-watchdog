@@ -32,7 +32,8 @@ function getWhoisRemoveTimelineEvent(whoisRemoveDateEstimate: Date, withRenewalP
         }
 
     return {
-        color: withRenewalPeriod ? 'grey' : 'yellow',
+        date: whoisRemoveDateEstimate,
+        color: withRenewalPeriod ? 'yellow' : 'grey',
         dot: <ThunderboltOutlined style={{fontSize: '16px'}}/>,
         pending: true,
         ...text
@@ -51,7 +52,7 @@ export function EventTimeline({events, expiresInDays, isRenewalPeriod}: {
     const locale = navigator.language.split('-')[0]
     const rdapEventNameTranslated = rdapEventNameTranslation()
     const rdapEventDetailTranslated = rdapEventDetailTranslation()
-    const items: TimeLineItemProps[] = []
+    const items: (TimeLineItemProps & { date: Date })[] = []
 
     if (expiresInDays !== undefined) {
         const whoisRemoveDateEstimate = new Date(new Date().getTime() + expiresInDays * 24 * 60 * 60 * 1e3)
@@ -96,6 +97,7 @@ export function EventTimeline({events, expiresInDays, isRenewalPeriod}: {
                         }
 
                     return {
+                        date: new Date(e.date),
                         color: e.deleted ? 'grey' : actionToColor(e.action),
                         dot: actionToIcon(e.action),
                         pending: new Date(e.date).getTime() > new Date().getTime(),
@@ -107,6 +109,6 @@ export function EventTimeline({events, expiresInDays, isRenewalPeriod}: {
 
     return <Timeline
         mode={sm ? 'left' : 'right'}
-        items={items}
+        items={items.sort((a, b) => b.date.getTime() - a.date.getTime())}
     />
 }
