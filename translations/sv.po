@@ -1,9 +1,9 @@
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2025-11-16 00:42+0000\n"
+"PO-Revision-Date: 2025-12-11 17:23+0000\n"
 "Last-Translator: Maël Gangloff <contact@maelgangloff.fr>\n"
-"Language-Team: Swedish <https://weblate.vinceh121.me/projects/domain-"
-"watchdog/domain-watchdog-dashboard/sv/>\n"
+"Language-Team: Swedish <https://weblate.vinceh121.me/projects/"
+"domain-watchdog/domain-watchdog-dashboard/sv/>\n"
 "Language: sv\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -12,13 +12,15 @@ msgstr ""
 
 #: assets/App.tsx:121
 msgid "Unable to contact the server, please reload the page."
-msgstr ""
+msgstr "Det gick inte att kontakta servern, vänligen ladda sidan igen."
 
 #: assets/App.tsx:135
 msgid ""
 "Please log in to access all features, monitor domains, and manage your "
 "Connectors."
 msgstr ""
+"Logga in för att få tillgång till alla funktioner, övervaka domäner och "
+"hantera dina Connectors."
 
 #: assets/App.tsx:136 assets/components/Sider.tsx:158
 #: assets/pages/LoginPage.tsx:36 assets/pages/LoginPage.tsx:50
@@ -196,15 +198,15 @@ msgstr "Det här domännamnet verkar inte vara giltigt"
 
 #: assets/components/search/EventTimeline.tsx:15
 msgid "Estimated removal"
-msgstr ""
+msgstr "Beräknad borttagning"
 
 #: assets/components/search/EventTimeline.tsx:15
 msgid "Estimated removal (incl. renewal)"
-msgstr ""
+msgstr "Beräknad borttagning (inkl. förnyelse)"
 
 #: assets/components/search/EventTimeline.tsx:15
 msgid "Estimated removal (excl. renewal)"
-msgstr ""
+msgstr "Beräknad borttagning (exkl. förnyelse)"
 
 #: assets/components/search/EventTimeline.tsx:16
 msgid ""
@@ -212,6 +214,9 @@ msgid ""
 "deleted, according to ICANN's standard lifecycle. Note that some registries "
 "have their own lifecycles."
 msgstr ""
+"Beräknat WHOIS-borttagningsdatum. Detta är det senaste datumet då den här "
+"posten skulle raderas, enligt ICANN:s standardlivscykel. Observera att vissa "
+"register har sina egna livscykler."
 
 #: assets/components/Sider.tsx:35
 msgid "Home"
