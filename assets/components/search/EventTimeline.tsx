@@ -33,7 +33,7 @@ function getWhoisRemoveTimelineEvent(whoisRemoveDateEstimate: Date, withRenewalP
 
     return {
         date: whoisRemoveDateEstimate,
-        color: withRenewalPeriod ? 'yellow' : 'grey',
+        color: (withRenewalPeriod === undefined || withRenewalPeriod) ? 'yellow' : 'grey',
         dot: <ThunderboltOutlined style={{fontSize: '16px'}}/>,
         pending: true,
         ...text
