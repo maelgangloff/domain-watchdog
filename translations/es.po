@@ -1,9 +1,9 @@
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2025-11-16 20:49+0000\n"
+"PO-Revision-Date: 2025-12-11 17:23+0000\n"
 "Last-Translator: Maël Gangloff <contact@maelgangloff.fr>\n"
-"Language-Team: Spanish <https://weblate.vinceh121.me/projects/domain-"
-"watchdog/domain-watchdog-dashboard/es/>\n"
+"Language-Team: Spanish <https://weblate.vinceh121.me/projects/"
+"domain-watchdog/domain-watchdog-dashboard/es/>\n"
 "Language: es\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -12,13 +12,15 @@ msgstr ""
 
 #: assets/App.tsx:121
 msgid "Unable to contact the server, please reload the page."
-msgstr ""
+msgstr "No se puede contactar con el servidor, por favor recarga la página."
 
 #: assets/App.tsx:135
 msgid ""
 "Please log in to access all features, monitor domains, and manage your "
 "Connectors."
 msgstr ""
+"Inicie sesión para acceder a todas las funciones, supervisar dominios y "
+"administrar sus conectores."
 
 #: assets/App.tsx:136 assets/components/Sider.tsx:158
 #: assets/pages/LoginPage.tsx:36 assets/pages/LoginPage.tsx:50
@@ -197,15 +199,15 @@ msgstr "Este nombre de dominio no parece ser válido"
 
 #: assets/components/search/EventTimeline.tsx:15
 msgid "Estimated removal"
-msgstr ""
+msgstr "Eliminación estimada"
 
 #: assets/components/search/EventTimeline.tsx:15
 msgid "Estimated removal (incl. renewal)"
-msgstr ""
+msgstr "Eliminación estimada (incl. renovación)"
 
 #: assets/components/search/EventTimeline.tsx:15
 msgid "Estimated removal (excl. renewal)"
-msgstr ""
+msgstr "Eliminación estimada (excl. renovación)"
 
 #: assets/components/search/EventTimeline.tsx:16
 msgid ""
@@ -213,6 +215,9 @@ msgid ""
 "deleted, according to ICANN's standard lifecycle. Note that some registries "
 "have their own lifecycles."
 msgstr ""
+"Fecha estimada de eliminación de WHOIS. Esta es la fecha límite para la "
+"eliminación de este registro, según el ciclo de vida estándar de la ICANN. "
+"Tenga en cuenta que algunos registros tienen sus propios ciclos de vida."
 
 #: assets/components/Sider.tsx:35
 msgid "Home"
