@@ -9,10 +9,10 @@ import {ThunderboltOutlined} from "@ant-design/icons"
 import {t} from "ttag"
 import type {TimeLineItemProps} from "antd/lib/timeline/TimelineItem"
 
-function getWhoisRemoveTimelineEvent(whoisRemoveDateEstimate: Date, withRenewalPeriod = false) {
+function getWhoisRemoveTimelineEvent(whoisRemoveDateEstimate: Date, withRenewalPeriod?: boolean) {
     const locale = navigator.language.split('-')[0]
     const sm = useBreakpoint('sm')
-    const eventName = withRenewalPeriod ? t`Estimated removal (incl. renewal)` : t`Estimated removal (excl. renewal)`
+    const eventName = withRenewalPeriod === undefined ? t`Estimated removal` : withRenewalPeriod ? t`Estimated removal (incl. renewal)` : t`Estimated removal (excl. renewal)`
     const eventDetail = t`Estimated WHOIS removal date. This is the latest date this record would be deleted, according to ICANN's standard lifecycle. Note that some registries have their own lifecycles.`
 
     const dateStr =
@@ -56,14 +56,17 @@ export function EventTimeline({events, expiresInDays, isRenewalPeriod}: {
 
     if (expiresInDays !== undefined) {
         const whoisRemoveDateEstimate = new Date(new Date().getTime() + expiresInDays * 24 * 60 * 60 * 1e3)
-        items.push(getWhoisRemoveTimelineEvent(whoisRemoveDateEstimate, true))
 
         const expirationEvent = sortedEvents.find(e => !e.deleted && e.action === 'expiration')
         const lastExpirationEvent = sortedEvents.find(e => e.deleted && e.action === 'expiration')
 
         if (expirationEvent && lastExpirationEvent && isRenewalPeriod) {
+            items.push(getWhoisRemoveTimelineEvent(whoisRemoveDateEstimate, true))
+
             const date = new Date(whoisRemoveDateEstimate.getTime() - (new Date(expirationEvent.date).getTime() - new Date(lastExpirationEvent.date).getTime()))
             items.push(getWhoisRemoveTimelineEvent(date, false))
+        } else {
+            items.push(getWhoisRemoveTimelineEvent(whoisRemoveDateEstimate))
         }
     }
 
