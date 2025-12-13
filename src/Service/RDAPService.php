@@ -65,6 +65,10 @@ class RDAPService
         'Private',
     ];
 
+    public const PENDING_DELETE_DURATION_DAYS = 5;
+    public const REDEMPTION_PERIOD_DURATION_DAYS = 30;
+    public const AUTO_RENEW_PERIOD_DURATION_DAYS = 45;
+
     public function __construct(
         private readonly HttpClientInterface $client,
         private readonly EntityRepository $entityRepository,
@@ -740,13 +744,13 @@ class RDAPService
             in_array('pending delete', $lastStatus->getAddStatus())
             || in_array('redemption period', $lastStatus->getDeleteStatus()))
         ) {
-            return self::daysBetween($now, $lastStatus->getCreatedAt()->add(new \DateInterval('P'. 5 .'D')));
+            return self::daysBetween($now, $lastStatus->getCreatedAt()->add(new \DateInterval('P'.self::PENDING_DELETE_DURATION_DAYS.'D')));
         }
 
         if ($domain->isRedemptionPeriod()
             && in_array('redemption period', $lastStatus->getAddStatus())
         ) {
-            return self::daysBetween($now, $lastStatus->getCreatedAt()->add(new \DateInterval('P'.(30 + 5).'D')));
+            return self::daysBetween($now, $lastStatus->getCreatedAt()->add(new \DateInterval('P'.(self::REDEMPTION_PERIOD_DURATION_DAYS + self::PENDING_DELETE_DURATION_DAYS).'D')));
         }
 
         return null;
@@ -772,7 +776,7 @@ class RDAPService
         [$expiredAt, $deletedAt] = $this->getRelevantDates($domain);
 
         if ($expiredAt) {
-            $guess = self::daysBetween($now, $expiredAt->add(new \DateInterval('P'.(45 + 30 + 5).'D')));
+            $guess = self::daysBetween($now, $expiredAt->add(new \DateInterval('P'.(self::AUTO_RENEW_PERIOD_DURATION_DAYS + self::REDEMPTION_PERIOD_DURATION_DAYS + self::PENDING_DELETE_DURATION_DAYS).'D')));
         }
 
         if ($deletedAt) {
@@ -781,7 +785,7 @@ class RDAPService
                 return 0;
             }
 
-            $guess = self::daysBetween($now, $deletedAt->add(new \DateInterval('P'. 30 .'D')));
+            $guess = self::daysBetween($now, $deletedAt->add(new \DateInterval('P'.self::REDEMPTION_PERIOD_DURATION_DAYS.'D')));
         }
 
         return self::returnExpiresIn([

@@ -31,7 +31,8 @@ export default defineConfig({
             lastUpdated: true,
             social: [
                 {icon: 'github', label: 'GitHub', href: 'https://github.com/maelgangloff/domain-watchdog'},
-                {icon: 'seti:docker', label: 'Docker', href: 'https://hub.docker.com/r/maelgangloff/domain-watchdog'}
+                {icon: 'seti:docker', label: 'Docker', href: 'https://hub.docker.com/r/maelgangloff/domain-watchdog'},
+                {icon: 'external', label: 'Demo', href: 'https://demo.domainwatchdog.eu'}
             ],
             sidebar: [
                 {slug: 'features'},

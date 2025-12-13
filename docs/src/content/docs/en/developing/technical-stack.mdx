@@ -49,55 +49,59 @@ flowchart LR
 
 ### Framework
 
-The programming language is **PHP**.
+The backend is written in [**PHP**](https://www.php.net/docs.php).
 
-The backend is developed using the **Symfony** framework ([documentation](https://symfony.com/doc)).
+The backend is developed using the [**Symfony** framework](https://symfony.com/doc).
 
-The API is made possible by the **API Platform**
-project ([documentation](https://api-platform.com/docs/symfony/)).
+The API is made possible by the [**API Platform** project](https://api-platform.com/docs/symfony/).
 
-### SQL database
+### SQL Database
 
-This project requires a **PostgreSQL** database ([documentation](https://www.postgresql.org/docs/current/)).
+This project requires a [**PostgreSQL** database](https://www.postgresql.org/docs/current/).
 
-Other database types cannot be used because some migrations were specifically written to leverage the performance of
-this database management system.
+Other database types cannot be used because some migrations were specifically written to leverage PostgreSQL-specific features and performance optimizations.
 
-### Key-value database
+### Key-value Database
 
-A **Redis-compatible** key-value database is required to:
+A [**Redis-compatible**](https://redis.io/docs/latest/apis/) key-value database is required to:
 
 - Cache certain values
 - Implement locks to limit the possibility of conditional raises
-- Store messages to be distributed to workers to process asynchronous actions. For example: updating domain names in a
-  Watchlist on a high-priority RDAP client queue.
+- Store messages for workers to process asynchronous actions
+(e.g. updating domain names in a Watchlist on a high-priority RDAP client queue)
 
-## Time Series database
+### Time-Series Database
 
-The **InfluxDB** database is optional.
+The [**InfluxDB**](https://docs.influxdata.com/) database is optional.
 A data point is added for the following events:
 
-- RDAP requests from your instance: response time, requested domain name, HTTP status code, IP address of the RDAP
-  server, etc.
+- RDAP requests from your instance: response time, requested domain name, HTTP status code, IP address of the RDAP server, etc.
 - User notifications: adding events to a domain name, changing EPP statuses, etc.
 
 ### SSO authentication
 
-An **OAuth 2.0** server is not required to authenticate users.
+An **OAuth 2.0** server is optional for user authentication.
 
 Using Single Sign-On (SSO) allows you to delegate user authentication to a third party. This can be useful if you only
 want people within your organization to be able to use this project instance. Furthermore, you can then configure
 advanced security policies such as passwordless login, passkeys, multifactor authentication, and more.
+
+### Error Reporting
+
+The [**Sentry**](https://docs.sentry.io/platforms/php/guides/symfony/) integration is optional.
+When enabled, Sentry captures and reports application errors, providing useful insights for debugging.
+You can configure this feature through your project’s environment variables.
+
 ___
 
 ## Frontend
 
 ### Framework
 
-The language for frontend development is **TypeScript**.
+The language for frontend development is [**TypeScript**](https://www.typescriptlang.org/docs/).
 
-The framework used for the frontend is **React** ([documentation](https://react.dev/reference/react)).
+The framework used for the frontend is [**React**](https://react.dev/reference/react).
 
 ### Component Library
 
-The component library used is **Ant Design** ([documentation](https://ant.design/components/overview/)).
+The component library used is [**Ant Design**](https://ant.design/components/overview/).

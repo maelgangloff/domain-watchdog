@@ -72,6 +72,7 @@ readonly class AutoRegisterDomainProvider implements ProviderInterface
         $idnDomain = RDAPService::convertToIdn($uriVariables['ldhName']);
 
         $user = $this->security->getUser();
+        $request = $this->requestStack->getCurrentRequest();
 
         if (null !== $user) {
             $this->logger->info('User wants to update a domain name', [
@@ -81,10 +82,9 @@ readonly class AutoRegisterDomainProvider implements ProviderInterface
         } else {
             $this->logger->info('Anonymous wants to update a domain name', [
                 'ldhName' => $idnDomain,
+                'ipAddress' => $request->getClientIp(),
             ]);
         }
-
-        $request = $this->requestStack->getCurrentRequest();
 
         /** @var ?Domain $domain */
         $domain = $this->domainRepository->findOneBy(['ldhName' => $idnDomain]);
