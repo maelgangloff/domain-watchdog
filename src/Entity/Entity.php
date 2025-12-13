@@ -67,15 +67,17 @@ class Entity
 
     #[ORM\Column(
         type: 'string',
+        nullable: true,
         insertable: false,
         updatable: false,
         columnDefinition: "VARCHAR(255) GENERATED ALWAYS AS (UPPER(jsonb_path_query_first(j_card, '$[1]?(@[0] == \"fn\")[3]') #>> '{}')) STORED",
-        generated: 'ALWAYS',
+        generated: 'ALWAYS'
     )]
     private ?string $jCardFn;
 
     #[ORM\Column(
         type: 'string',
+        nullable: true,
         insertable: false,
         updatable: false,
         columnDefinition: "VARCHAR(255) GENERATED ALWAYS AS (UPPER(jsonb_path_query_first(j_card, '$[1]?(@[0] == \"org\")[3]') #>> '{}')) STORED",
@@ -90,6 +92,10 @@ class Entity
     #[ORM\ManyToOne(inversedBy: 'entities')]
     #[Groups(['entity:list', 'entity:item', 'domain:item'])]
     private ?IcannAccreditation $icannAccreditation = null;
+
+    #[ORM\Column]
+    #[Groups(['entity:item', 'domain:item', 'watchlist:item'])]
+    private ?bool $privacyProtection = null;
 
     public function __construct()
     {
@@ -280,6 +286,18 @@ class Entity
     public function setJCardOrg(?string $jCardOrg): Entity
     {
         $this->jCardOrg = $jCardOrg;
+
+        return $this;
+    }
+
+    public function isPrivacyProtection(): ?bool
+    {
+        return $this->privacyProtection;
+    }
+
+    public function setPrivacyProtection(bool $privacyProtection): static
+    {
+        $this->privacyProtection = $privacyProtection;
 
         return $this;
     }

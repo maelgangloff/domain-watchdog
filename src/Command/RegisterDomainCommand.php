@@ -17,7 +17,7 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\Messenger\MessageBusInterface;
 
 #[AsCommand(
-    name: 'app:register-domain',
+    name: 'app:domain:register',
     description: 'Register a domain name in the database',
 )]
 class RegisterDomainCommand extends Command

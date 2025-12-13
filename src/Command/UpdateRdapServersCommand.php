@@ -12,7 +12,7 @@ use Symfony\Component\Messenger\Exception\ExceptionInterface;
 use Symfony\Component\Messenger\MessageBusInterface;
 
 #[AsCommand(
-    name: 'app:update-rdap-servers',
+    name: 'app:rdap-server:update',
     description: 'Updates the RDAP servers cache (requires MQ to be running)',
 )]
 class UpdateRdapServersCommand extends Command

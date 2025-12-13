@@ -588,11 +588,11 @@ class RDAPService
 
         $entity->setHandle($rdapEntity['handle'])->setIcannAccreditation($icannAccreditation);
 
-        if (isset($rdapEntity['remarks']) && is_array($rdapEntity['remarks'])) {
+        if (isset($rdapEntity['remarks']) && is_array($rdapEntity['remarks']) && !$entity->isPrivacyProtection()) {
             $entity->setRemarks($rdapEntity['remarks']);
         }
 
-        if (isset($rdapEntity['vcardArray'])) {
+        if (isset($rdapEntity['vcardArray']) && !$entity->isPrivacyProtection()) {
             if (empty($entity->getJCard())) {
                 if (!array_key_exists('elements', $rdapEntity['vcardArray'])) {
                     $entity->setJCard($rdapEntity['vcardArray']);

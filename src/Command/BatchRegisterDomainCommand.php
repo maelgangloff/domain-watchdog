@@ -15,7 +15,7 @@ use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Messenger\Stamp\TransportNamesStamp;
 
 #[AsCommand(
-    name: 'app:batch-register-domains',
+    name: 'app:domains:import',
     description: 'Register a domain list',
 )]
 class BatchRegisterDomainCommand extends Command

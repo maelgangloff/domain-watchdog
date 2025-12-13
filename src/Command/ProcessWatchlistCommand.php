@@ -12,7 +12,7 @@ use Symfony\Component\Messenger\Exception\ExceptionInterface;
 use Symfony\Component\Messenger\MessageBusInterface;
 
 #[AsCommand(
-    name: 'app:process-watchlist',
+    name: 'app:watchlist:process',
     description: 'Process watchlist and send emails if necessary',
 )]
 class ProcessWatchlistCommand extends Command
