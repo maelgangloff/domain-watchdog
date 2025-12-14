@@ -166,6 +166,11 @@ final readonly class UpdateDomainHandler
             $newDomain = $this->domainRepository->findOneBy(['ldhName' => $domain->getLdhName()]);
 
             if (!$deleted && null !== $newDomain && $newDomain->getDeleted()) {
+                $this->logger->info('Domain has been deleted from WHOIS: a notification is sent to user', [
+                    'ldhName' => $message->ldhName,
+                    'username' => $watchlist->getUser()->getUserIdentifier(),
+                ]);
+
                 $notification = new DomainDeletedNotification($this->sender, $domain);
                 $this->mailer->send($notification->asEmailMessage(new Recipient($watchlist->getUser()->getEmail()))->getMessage());
                 $this->chatNotificationService->sendChatNotification($watchlist, $notification);
