@@ -159,12 +159,12 @@ class OfficialDataService
             ));
         array_shift($tldList);
 
+        $this->tldRepository->setAllTldAsDeleted();
+
         foreach ($tldList as $tld) {
             if ('' === $tld) {
                 continue;
             }
-
-            $this->tldRepository->setAllTldAsDeleted();
 
             $tldEntity = $this->tldRepository->findOneBy(['tld' => $tld]);
 

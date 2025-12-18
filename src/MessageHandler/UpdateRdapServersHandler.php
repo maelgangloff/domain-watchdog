@@ -18,7 +18,8 @@ final readonly class UpdateRdapServersHandler
 {
     public function __construct(
         private OfficialDataService $officialDataService,
-        private ParameterBagInterface $bag, private DomainRepository $domainRepository,
+        private ParameterBagInterface $bag,
+        private DomainRepository $domainRepository,
     ) {
     }
 
