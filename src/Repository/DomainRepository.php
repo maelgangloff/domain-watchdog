@@ -55,36 +55,10 @@ class DomainRepository extends ServiceEntityRepository
     public function getMyTrackedDomains(User $user): array
     {
         return $this->createQueryBuilder('d')
-        ->join('d.watchlists', 'w')
-        ->where('w.user = :user')
-        ->andWhere('d.deleted = false')
-        ->setParameter('user', $user)
-        ->getQuery()
-        ->getResult();
+            ->join('d.watchlists', 'w')
+            ->where('w.user = :user')
+            ->setParameter('user', $user)
+            ->getQuery()
+            ->getResult();
     }
-
-    //    /**
-    //     * @return Domain[] Returns an array of Domain objects
-    //     */
-    //    public function findByExampleField($value): array
-    //    {
-    //        return $this->createQueryBuilder('d')
-    //            ->andWhere('d.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->orderBy('d.id', 'ASC')
-    //            ->setMaxResults(10)
-    //            ->getQuery()
-    //            ->getResult()
-    //        ;
-    //    }
-
-    //    public function findOneBySomeField($value): ?Domain
-    //    {
-    //        return $this->createQueryBuilder('d')
-    //            ->andWhere('d.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->getQuery()
-    //            ->getOneOrNullResult()
-    //        ;
-    //    }
 }
