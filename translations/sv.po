@@ -123,17 +123,17 @@ msgid "Active"
 msgstr "Aktiv"
 
 #: assets/components/search/DomainLifecycleSteps.tsx:29
-#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:115
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:122
 msgid "Auto-Renew Grace Period"
 msgstr "Automatisk förnyelse under respitperioden"
 
 #: assets/components/search/DomainLifecycleSteps.tsx:35
-#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:123
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:130
 msgid "Redemption Grace Period"
 msgstr "Period av nådens återlösning"
 
 #: assets/components/search/DomainLifecycleSteps.tsx:40
-#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:131
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:138
 msgid "Pending Delete"
 msgstr "Väntar på radering"
 
@@ -474,7 +474,7 @@ msgstr ""
 "Minst ett domännamn väntar på radering och kommer snart att bli tillgängligt "
 "för registrering igen"
 
-#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:138
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:114
 msgid "Removed from WHOIS"
 msgstr "Borttagen från WHOIS"
 
