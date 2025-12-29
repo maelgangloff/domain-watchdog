@@ -78,8 +78,8 @@ export function TrackedDomainTable() {
                 return {
                     key: d.ldhName,
                     ldhName: <DomainToTag domain={d}/>,
-                    expirationDate: expirationDate ? new Date(expirationDate).toLocaleString() : '-',
-                    status: (d.status ?? []).map(s => <Tooltip
+                    expirationDate: expirationDate && !d.deleted ? new Date(expirationDate).toLocaleString() : '-',
+                    status: (d.deleted ? [] : (d.status ?? [])).map(s => <Tooltip
                             key={s}
                             placement='bottomLeft'
                             title={rdapStatusCodeDetailTranslated[s as keyof typeof rdapStatusCodeDetailTranslated] || undefined}
@@ -111,34 +111,34 @@ export function TrackedDomainTable() {
                     </Flex>,
                     state: <Flex wrap justify='space-evenly' align='center' gap='4px 0'>
                         {
-                            d.status?.includes('auto renew period') ?
-                                <Tooltip title={t`Auto-Renew Grace Period`}>
+                            d.deleted ? <Tooltip title={t`Removed from WHOIS`}>
                                     <Tag
                                         bordered={false}
-                                        color='palevioletred'
-                                        icon={<FieldTimeOutlined/>}
+                                        color='red'
+                                        icon={<DeleteOutlined/>}
                                     />
                                 </Tooltip> :
-                                d.status?.includes('redemption period') ?
-                                    <Tooltip title={t`Redemption Grace Period`}>
+                                d.status?.includes('auto renew period') ?
+                                    <Tooltip title={t`Auto-Renew Grace Period`}>
                                         <Tag
                                             bordered={false}
-                                            color='magenta'
-                                            icon={<ExclamationCircleOutlined/>}
+                                            color='palevioletred'
+                                            icon={<FieldTimeOutlined/>}
                                         />
                                     </Tooltip> :
-                                    !d.status?.includes('redemption period') && d.status?.includes('pending delete') ?
-                                        <Tooltip title={t`Pending Delete`}>
+                                    d.status?.includes('redemption period') ?
+                                        <Tooltip title={t`Redemption Grace Period`}>
                                             <Tag
                                                 bordered={false}
-                                                color='orangered'
-                                                icon={<DeleteOutlined/>}
+                                                color='magenta'
+                                                icon={<ExclamationCircleOutlined/>}
                                             />
                                         </Tooltip> :
-                                        d.deleted ? <Tooltip title={t`Removed from WHOIS`}>
+                                        !d.status?.includes('redemption period') && d.status?.includes('pending delete') ?
+                                            <Tooltip title={t`Pending Delete`}>
                                                 <Tag
                                                     bordered={false}
-                                                    color='red'
+                                                    color='orangered'
                                                     icon={<DeleteOutlined/>}
                                                 />
                                             </Tooltip>
