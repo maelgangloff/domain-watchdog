@@ -179,7 +179,7 @@ msgid "DNSSEC"
 msgstr "DNSSEC"
 
 #: assets/components/search/DomainResult.tsx:92
-#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:227
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:249
 msgid "EPP Status Codes"
 msgstr "EPP-statuskoder"
 
@@ -475,6 +475,8 @@ msgstr ""
 "för registrering igen"
 
 #: assets/components/tracking/watchlist/TrackedDomainTable.tsx:114
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:199
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:203
 msgid "Removed from WHOIS"
 msgstr "Borttagen från WHOIS"
 
@@ -495,31 +497,36 @@ msgstr "Radering är nära förestående"
 msgid "Status"
 msgstr "Status"
 
-#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:199
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:208
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:212
+msgid "Present in WHOIS"
+msgstr ""
+
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:221
 msgid "Options"
 msgstr "Alternativ"
 
-#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:205
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:227
 msgid "Expiration date"
 msgstr "Utgångsdatum"
 
-#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:219
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:241
 msgid "Updated at"
 msgstr "Uppdaterad på"
 
-#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:248
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:270
 msgid "No tracked domain names were found, please create your first Watchlist"
 msgstr "Inga spårade domännamn hittades, vänligen skapa din första Watchlist"
 
-#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:251
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:273
 msgid "Create now"
 msgstr "Skapa nu"
 
-#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:261
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:283
 msgid "At least one domain name you are tracking requires special attention"
 msgstr "Minst ett domännamn som du spårar kräver särskild uppmärksamhet"
 
-#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:267
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:289
 msgid "The domain names below are subject to special monitoring"
 msgstr "Domännamnen nedan är föremål för särskild övervakning"
 
