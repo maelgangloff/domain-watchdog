@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "PO-Revision-Date: 2025-12-11 17:23+0000\n"
 "Last-Translator: Maël Gangloff <contact@maelgangloff.fr>\n"
-"Language-Team: Swedish <https://weblate.vinceh121.me/projects/"
-"domain-watchdog/domain-watchdog-dashboard/sv/>\n"
+"Language-Team: Swedish <https://weblate.vinceh121.me/projects/domain-"
+"watchdog/domain-watchdog-dashboard/sv/>\n"
 "Language: sv\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -118,7 +118,7 @@ msgid "Registration"
 msgstr "Registrering"
 
 #: assets/components/search/DomainLifecycleSteps.tsx:24
-#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:137
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:145
 msgid "Active"
 msgstr "Aktiv"
 
@@ -179,7 +179,7 @@ msgid "DNSSEC"
 msgstr "DNSSEC"
 
 #: assets/components/search/DomainResult.tsx:92
-#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:219
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:227
 msgid "EPP Status Codes"
 msgstr "EPP-statuskoder"
 
@@ -227,7 +227,7 @@ msgid "Search"
 msgstr "Sök"
 
 #: assets/components/Sider.tsx:47
-#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:179
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:187
 msgid "Domain"
 msgstr "Domännamn"
 
@@ -474,56 +474,52 @@ msgstr ""
 "Minst ett domännamn väntar på radering och kommer snart att bli tillgängligt "
 "för registrering igen"
 
-#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:147
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:138
+msgid "Removed from WHOIS"
+msgstr ""
+
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:155
 msgid "Estimated number of days until WHOIS removal"
 msgstr "Uppskattat antal dagar till borttagning av WHOIS"
 
-#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:150
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:158
 #, javascript-format
 msgid "J ${ expiresInDays }"
 msgstr "J ${ expiresInDays }"
 
-#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:156
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:164
 msgid "Deletion is imminent"
 msgstr "Radering är nära förestående"
 
-#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:185
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:193
 msgid "Status"
 msgstr "Status"
 
-#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:191
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:199
 msgid "Options"
 msgstr "Alternativ"
 
-#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:197
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:205
 msgid "Expiration date"
 msgstr "Utgångsdatum"
 
-#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:211
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:219
 msgid "Updated at"
 msgstr "Uppdaterad på"
 
-#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:240
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:248
 msgid "No tracked domain names were found, please create your first Watchlist"
 msgstr "Inga spårade domännamn hittades, vänligen skapa din första Watchlist"
 
-#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:243
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:251
 msgid "Create now"
 msgstr "Skapa nu"
 
-#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:249
-msgid ""
-"Please note that this table does not include domain names marked as expired "
-"or those with an unknown expiration date"
-msgstr ""
-"Observera att den här tabellen inte inkluderar domännamn markerade som "
-"utgångna eller de med okänt utgångsdatum"
-
-#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:254
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:261
 msgid "At least one domain name you are tracking requires special attention"
 msgstr "Minst ett domännamn som du spårar kräver särskild uppmärksamhet"
 
-#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:260
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:267
 msgid "The domain names below are subject to special monitoring"
 msgstr "Domännamnen nedan är föremål för särskild övervakning"
 
@@ -1757,6 +1753,13 @@ msgid ""
 msgstr ""
 "Är du säker på den här inställningen? Detta kan resultera i ytterligare "
 "avgifter från API-leverantören"
+
+#~ msgid ""
+#~ "Please note that this table does not include domain names marked as "
+#~ "expired or those with an unknown expiration date"
+#~ msgstr ""
+#~ "Observera att den här tabellen inte inkluderar domännamn markerade som "
+#~ "utgångna eller de med okänt utgångsdatum"
 
 #~ msgid "Official git repository"
 #~ msgstr "Officiellt git-arkiv"

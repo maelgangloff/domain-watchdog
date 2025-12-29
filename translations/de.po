@@ -119,7 +119,7 @@ msgid "Registration"
 msgstr "Registrierung"
 
 #: assets/components/search/DomainLifecycleSteps.tsx:24
-#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:137
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:145
 msgid "Active"
 msgstr "Aktiv"
 
@@ -180,7 +180,7 @@ msgid "DNSSEC"
 msgstr "DNSSEC"
 
 #: assets/components/search/DomainResult.tsx:92
-#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:219
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:227
 msgid "EPP Status Codes"
 msgstr "EPP-Statuscodes"
 
@@ -228,7 +228,7 @@ msgid "Search"
 msgstr "Suchen"
 
 #: assets/components/Sider.tsx:47
-#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:179
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:187
 msgid "Domain"
 msgstr "Domain"
 
@@ -479,60 +479,56 @@ msgstr ""
 "Mindestens ein Domänenname steht zur Löschung an und wird bald wieder zur "
 "Registrierung verfügbar sein"
 
-#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:147
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:138
+msgid "Removed from WHOIS"
+msgstr ""
+
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:155
 msgid "Estimated number of days until WHOIS removal"
 msgstr "Geschätzte Anzahl von Tagen bis zur WHOIS-Entfernung"
 
-#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:150
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:158
 #, javascript-format
 msgid "J ${ expiresInDays }"
 msgstr "J ${ expiresInDays }"
 
-#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:156
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:164
 msgid "Deletion is imminent"
 msgstr "Löschung steht unmittelbar bevor"
 
-#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:185
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:193
 msgid "Status"
 msgstr "Status"
 
-#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:191
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:199
 msgid "Options"
 msgstr "Optionen"
 
-#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:197
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:205
 msgid "Expiration date"
 msgstr "Verfallsdatum"
 
-#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:211
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:219
 msgid "Updated at"
 msgstr "Aktualisiert am"
 
-#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:240
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:248
 msgid "No tracked domain names were found, please create your first Watchlist"
 msgstr ""
 "Es wurden keine getrackten Domainnamen gefunden, bitte erstellen Sie Ihre "
 "erste Watchlist"
 
-#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:243
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:251
 msgid "Create now"
 msgstr "Jetzt erstellen"
 
-#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:249
-msgid ""
-"Please note that this table does not include domain names marked as expired "
-"or those with an unknown expiration date"
-msgstr ""
-"Bitte beachten Sie, dass diese Tabelle keine Domänennamen enthält, die als "
-"abgelaufen markiert sind oder deren Ablaufdatum unbekannt ist"
-
-#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:254
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:261
 msgid "At least one domain name you are tracking requires special attention"
 msgstr ""
 "Mindestens ein Domänenname, den Sie verfolgen, erfordert besondere "
 "Aufmerksamkeit"
 
-#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:260
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:267
 msgid "The domain names below are subject to special monitoring"
 msgstr ""
 "Die unten aufgeführten Domänennamen unterliegen einer besonderen Überwachung"
@@ -1806,6 +1802,13 @@ msgid ""
 msgstr ""
 "Sind Sie sich bei dieser Einstellung sicher? Dies kann zu zusätzlichen "
 "Gebühren durch den API-Anbieter führen"
+
+#~ msgid ""
+#~ "Please note that this table does not include domain names marked as "
+#~ "expired or those with an unknown expiration date"
+#~ msgstr ""
+#~ "Bitte beachten Sie, dass diese Tabelle keine Domänennamen enthält, die "
+#~ "als abgelaufen markiert sind oder deren Ablaufdatum unbekannt ist"
 
 #~ msgid "Official git repository"
 #~ msgstr "Offizielles Git-Repository"
