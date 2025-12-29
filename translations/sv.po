@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2025-12-11 17:23+0000\n"
+"PO-Revision-Date: 2025-12-29 18:51+0000\n"
 "Last-Translator: Maël Gangloff <contact@maelgangloff.fr>\n"
 "Language-Team: Swedish <https://weblate.vinceh121.me/projects/domain-"
 "watchdog/domain-watchdog-dashboard/sv/>\n"
@@ -8,7 +8,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.14.3\n"
+"X-Generator: Weblate 5.15\n"
 
 #: assets/App.tsx:121
 msgid "Unable to contact the server, please reload the page."
@@ -476,7 +476,7 @@ msgstr ""
 
 #: assets/components/tracking/watchlist/TrackedDomainTable.tsx:138
 msgid "Removed from WHOIS"
-msgstr ""
+msgstr "Borttagen från WHOIS"
 
 #: assets/components/tracking/watchlist/TrackedDomainTable.tsx:155
 msgid "Estimated number of days until WHOIS removal"
