@@ -69,9 +69,9 @@ export function TrackedDomainTable() {
                 const expirationDate = d.events.find(e => e.action === 'expiration' && !e.deleted)?.date
                 const expiresInDays = d.expiresInDays !== undefined && d.expiresInDays > 0 ? -d.expiresInDays : undefined
 
-                if (d.status.includes('redemption period')) {
+                if (d.status?.includes('redemption period')) {
                     notices.add(REDEMPTION_NOTICE)
-                } else if (d.status.includes('pending delete')) {
+                } else if (d.status?.includes('pending delete')) {
                     notices.add(PENDING_DELETE_NOTICE)
                 }
 
@@ -79,7 +79,7 @@ export function TrackedDomainTable() {
                     key: d.ldhName,
                     ldhName: <DomainToTag domain={d}/>,
                     expirationDate: expirationDate ? new Date(expirationDate).toLocaleString() : '-',
-                    status: d.status.map(s => <Tooltip
+                    status: (d.status ?? []).map(s => <Tooltip
                             key={s}
                             placement='bottomLeft'
                             title={rdapStatusCodeDetailTranslated[s as keyof typeof rdapStatusCodeDetailTranslated] || undefined}
@@ -92,13 +92,13 @@ export function TrackedDomainTable() {
                     options: d.deleted ? '-' : <Flex wrap justify='space-evenly' align='center' gap='4px 0'>
                         <Tooltip title={t`Registry Lock`}>
                             <Tag
-                                bordered={false} color={isDomainLocked(d.status, 'server') ? 'green' : 'default'}
+                                bordered={false} color={isDomainLocked(d.status ?? [], 'server') ? 'green' : 'default'}
                                 icon={<SafetyCertificateOutlined/>}
                             />
                         </Tooltip>
                         <Tooltip title={t`Registrar Lock`}>
                             <Tag
-                                bordered={false} color={isDomainLocked(d.status, 'client') ? 'green' : 'default'}
+                                bordered={false} color={isDomainLocked(d.status ?? [], 'client') ? 'green' : 'default'}
                                 icon={<BankOutlined/>}
                             />
                         </Tooltip>
@@ -111,7 +111,7 @@ export function TrackedDomainTable() {
                     </Flex>,
                     state: <Flex wrap justify='space-evenly' align='center' gap='4px 0'>
                         {
-                            d.status.includes('auto renew period') ?
+                            d.status?.includes('auto renew period') ?
                                 <Tooltip title={t`Auto-Renew Grace Period`}>
                                     <Tag
                                         bordered={false}
@@ -119,7 +119,7 @@ export function TrackedDomainTable() {
                                         icon={<FieldTimeOutlined/>}
                                     />
                                 </Tooltip> :
-                                d.status.includes('redemption period') ?
+                                d.status?.includes('redemption period') ?
                                     <Tooltip title={t`Redemption Grace Period`}>
                                         <Tag
                                             bordered={false}
@@ -127,7 +127,7 @@ export function TrackedDomainTable() {
                                             icon={<ExclamationCircleOutlined/>}
                                         />
                                     </Tooltip> :
-                                    !d.status.includes('redemption period') && d.status.includes('pending delete') ?
+                                    !d.status?.includes('redemption period') && d.status?.includes('pending delete') ?
                                         <Tooltip title={t`Pending Delete`}>
                                             <Tag
                                                 bordered={false}
@@ -136,19 +136,19 @@ export function TrackedDomainTable() {
                                             />
                                         </Tooltip> :
                                         d.deleted ? <Tooltip title={t`Removed from WHOIS`}>
-                                            <Tag
-                                                bordered={false}
-                                                color='red'
-                                                icon={<DeleteOutlined/>}
-                                            />
-                                        </Tooltip>
-                                        : <Tooltip title={t`Active`}>
-                                            <Tag
-                                                bordered={false}
-                                                color='green'
-                                                icon={<CheckOutlined/>}
-                                            />
-                                        </Tooltip>
+                                                <Tag
+                                                    bordered={false}
+                                                    color='red'
+                                                    icon={<DeleteOutlined/>}
+                                                />
+                                            </Tooltip>
+                                            : <Tooltip title={t`Active`}>
+                                                <Tag
+                                                    bordered={false}
+                                                    color='green'
+                                                    icon={<CheckOutlined/>}
+                                                />
+                                            </Tooltip>
                         }
                         {
                             expiresInDays !== undefined ?
@@ -228,7 +228,7 @@ export function TrackedDomainTable() {
             dataIndex: 'status',
             responsive: ['md'],
             showSorterTooltip: {target: 'full-header'},
-            filters: [...new Set(dataTable.map((d: RecordType) => d.rawDomain.status).flat())].map(s => ({
+            filters: [...new Set(dataTable.map((d: RecordType) => d.rawDomain?.status || []).flat())].map(s => ({
                 text: <Tooltip
                     placement='bottomLeft'
                     title={rdapStatusCodeDetailTranslated[s as keyof typeof rdapStatusCodeDetailTranslated] || undefined}
@@ -238,7 +238,7 @@ export function TrackedDomainTable() {
                 </Tooltip>,
                 value: s
             })),
-            onFilter: (value, record: RecordType) => record.rawDomain.status.includes(value as string),
+            onFilter: (value, record: RecordType) => record.rawDomain.status?.includes(value as string) || false,
             width: '30%'
         }
     ]
