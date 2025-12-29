@@ -13,6 +13,7 @@ use App\Repository\DomainRepository;
 use App\Service\RDAPService;
 use App\State\AutoRegisterDomainProvider;
 use App\State\FindDomainCollectionFromEntityProvider;
+use App\State\MyTrackedDomainProvider;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
@@ -69,6 +70,22 @@ use Symfony\Component\Serializer\Attribute\SerializedName;
             parameters: [
                 'forced' => new QueryParameter(schema: ['type' => 'boolean'], description: 'Force an RDAP request. If an update is already in progress, this parameter is ignored and the stored domain is returned.', required: false),
             ],
+        ),
+        new GetCollection(
+            uriTemplate: '/tracked',
+            openapiContext: [
+                'summary' => 'Retrieve tracked domain names',
+                'description' => 'This endpoint allows you to retrieve the list of domain names present in your Watchlists. The list does not contain duplicates.',
+            ],
+            normalizationContext: [
+                'groups' => [
+                    'domain:list',
+                    'tld:list',
+                    'event:list',
+                    'event:list',
+                ],
+            ],
+            provider: MyTrackedDomainProvider::class
         ),
     ],
     provider: AutoRegisterDomainProvider::class,

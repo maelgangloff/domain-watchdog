@@ -114,7 +114,7 @@ msgid "Registration"
 msgstr ""
 
 #: assets/components/search/DomainLifecycleSteps.tsx:24
-#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:137
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:145
 msgid "Active"
 msgstr ""
 
@@ -168,7 +168,7 @@ msgid "DNSSEC"
 msgstr ""
 
 #: assets/components/search/DomainResult.tsx:92
-#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:219
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:227
 msgid "EPP Status Codes"
 msgstr ""
 
@@ -213,7 +213,7 @@ msgid "Search"
 msgstr ""
 
 #: assets/components/Sider.tsx:47
-#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:179
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:187
 msgid "Domain"
 msgstr ""
 
@@ -446,54 +446,52 @@ msgid ""
 "for registration again"
 msgstr ""
 
-#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:147
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:138
+msgid "Removed from WHOIS"
+msgstr ""
+
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:155
 msgid "Estimated number of days until WHOIS removal"
 msgstr ""
 
-#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:150
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:158
 #, javascript-format
 msgid "J ${ expiresInDays }"
 msgstr ""
 
-#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:156
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:164
 msgid "Deletion is imminent"
 msgstr ""
 
-#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:185
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:193
 msgid "Status"
 msgstr ""
 
-#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:191
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:199
 msgid "Options"
 msgstr ""
 
-#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:197
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:205
 msgid "Expiration date"
 msgstr ""
 
-#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:211
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:219
 msgid "Updated at"
 msgstr ""
 
-#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:240
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:248
 msgid "No tracked domain names were found, please create your first Watchlist"
 msgstr ""
 
-#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:243
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:251
 msgid "Create now"
 msgstr ""
 
-#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:249
-msgid ""
-"Please note that this table does not include domain names marked as expired "
-"or those with an unknown expiration date"
-msgstr ""
-
-#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:254
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:261
 msgid "At least one domain name you are tracking requires special attention"
 msgstr ""
 
-#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:260
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:267
 msgid "The domain names below are subject to special monitoring"
 msgstr ""
 

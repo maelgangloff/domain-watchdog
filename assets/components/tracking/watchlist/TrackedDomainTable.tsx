@@ -64,15 +64,15 @@ export function TrackedDomainTable() {
         getTrackedDomainList(params).then(data => {
             setTotal(data['hydra:totalItems'])
 
-            const notices: ReactElement[] = []
+            const notices: Set<ReactElement> = new Set()
             setDataTable(data['hydra:member'].map((d: Domain) => {
                 const expirationDate = d.events.find(e => e.action === 'expiration' && !e.deleted)?.date
                 const expiresInDays = d.expiresInDays !== undefined && d.expiresInDays > 0 ? -d.expiresInDays : undefined
 
                 if (d.status.includes('redemption period')) {
-                    if (!notices.includes(REDEMPTION_NOTICE)) notices.push(REDEMPTION_NOTICE)
+                    notices.add(REDEMPTION_NOTICE)
                 } else if (d.status.includes('pending delete')) {
-                    if (!notices.includes(PENDING_DELETE_NOTICE)) notices.push(PENDING_DELETE_NOTICE)
+                    notices.add(PENDING_DELETE_NOTICE)
                 }
 
                 return {
@@ -89,7 +89,7 @@ export function TrackedDomainTable() {
                     ),
                     updatedAt: new Date(d.updatedAt).toLocaleString(),
                     rawDomain: d,
-                    options: <Flex wrap justify='space-evenly' align='center' gap='4px 0'>
+                    options: d.deleted ? '-' : <Flex wrap justify='space-evenly' align='center' gap='4px 0'>
                         <Tooltip title={t`Registry Lock`}>
                             <Tag
                                 bordered={false} color={isDomainLocked(d.status, 'server') ? 'green' : 'default'}
@@ -134,7 +134,15 @@ export function TrackedDomainTable() {
                                                 color='orangered'
                                                 icon={<DeleteOutlined/>}
                                             />
-                                        </Tooltip> : <Tooltip title={t`Active`}>
+                                        </Tooltip> :
+                                        d.deleted ? <Tooltip title={t`Removed from WHOIS`}>
+                                            <Tag
+                                                bordered={false}
+                                                color='red'
+                                                icon={<DeleteOutlined/>}
+                                            />
+                                        </Tooltip>
+                                        : <Tooltip title={t`Active`}>
                                             <Tag
                                                 bordered={false}
                                                 color='green'
@@ -162,7 +170,7 @@ export function TrackedDomainTable() {
                     </Flex>
                 }
             }))
-            setSpecialNotice(notices)
+            setSpecialNotice([...notices])
         })
     }
 
@@ -246,7 +254,6 @@ export function TrackedDomainTable() {
         : <Skeleton loading={total === undefined}>
             <Result
                 style={{paddingTop: 0}}
-                subTitle={t`Please note that this table does not include domain names marked as expired or those with an unknown expiration date`}
                 {...(specialNotice.length > 0
                     ? {
                         icon: <ExceptionOutlined/>,
