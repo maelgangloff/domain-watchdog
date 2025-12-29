@@ -168,7 +168,7 @@ msgid "DNSSEC"
 msgstr ""
 
 #: assets/components/search/DomainResult.tsx:92
-#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:227
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:249
 msgid "EPP Status Codes"
 msgstr ""
 
@@ -447,6 +447,8 @@ msgid ""
 msgstr ""
 
 #: assets/components/tracking/watchlist/TrackedDomainTable.tsx:114
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:199
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:203
 msgid "Removed from WHOIS"
 msgstr ""
 
@@ -467,31 +469,36 @@ msgstr ""
 msgid "Status"
 msgstr ""
 
-#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:199
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:208
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:212
+msgid "Present in WHOIS"
+msgstr ""
+
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:221
 msgid "Options"
 msgstr ""
 
-#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:205
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:227
 msgid "Expiration date"
 msgstr ""
 
-#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:219
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:241
 msgid "Updated at"
 msgstr ""
 
-#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:248
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:270
 msgid "No tracked domain names were found, please create your first Watchlist"
 msgstr ""
 
-#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:251
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:273
 msgid "Create now"
 msgstr ""
 
-#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:261
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:283
 msgid "At least one domain name you are tracking requires special attention"
 msgstr ""
 
-#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:267
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:289
 msgid "The domain names below are subject to special monitoring"
 msgstr ""
 

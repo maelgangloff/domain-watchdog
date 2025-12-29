@@ -69,9 +69,9 @@ export function TrackedDomainTable() {
                 const expirationDate = d.events.find(e => e.action === 'expiration' && !e.deleted)?.date
                 const expiresInDays = d.expiresInDays !== undefined && d.expiresInDays > 0 ? -d.expiresInDays : undefined
 
-                if (d.status?.includes('redemption period')) {
+                if (!d.deleted && d.status?.includes('redemption period')) {
                     notices.add(REDEMPTION_NOTICE)
-                } else if (d.status?.includes('pending delete')) {
+                } else if (!d.deleted && d.status?.includes('pending delete')) {
                     notices.add(PENDING_DELETE_NOTICE)
                 }
 
@@ -193,7 +193,29 @@ export function TrackedDomainTable() {
             title: t`Status`,
             dataIndex: 'state',
             width: '10%',
-            align: 'center'
+            align: 'center',
+            filters: [
+                {
+                    text: <Tooltip title={t`Removed from WHOIS`}>
+                        <Tag
+                            bordered={false}
+                            color='red'
+                            icon={<DeleteOutlined/>}>{t`Removed from WHOIS`}</Tag>
+                    </Tooltip>,
+                    value: 'NOT_IN_WHOIS'
+                },
+                {
+                    text: <Tooltip title={t`Present in WHOIS`}>
+                        <Tag
+                            bordered={false}
+                            color='default'
+                            icon={<DeleteOutlined/>}>{t`Present in WHOIS`}</Tag>
+                    </Tooltip>,
+                    value: 'IN_WHOIS'
+                }
+            ],
+            onFilter: (value, {rawDomain}: RecordType) => (value === 'IN_WHOIS' && !rawDomain.deleted) || (value === 'NOT_IN_WHOIS' && rawDomain.deleted),
+            defaultFilteredValue: ['IN_WHOIS']
         },
         {
             title: t`Options`,
@@ -228,7 +250,7 @@ export function TrackedDomainTable() {
             dataIndex: 'status',
             responsive: ['md'],
             showSorterTooltip: {target: 'full-header'},
-            filters: [...new Set(dataTable.map((d: RecordType) => d.rawDomain?.status || []).flat())].map(s => ({
+            filters: [...new Set(dataTable.map((d: RecordType) => d.rawDomain.deleted ? [] : (d.rawDomain.status ?? [])).flat())].map(s => ({
                 text: <Tooltip
                     placement='bottomLeft'
                     title={rdapStatusCodeDetailTranslated[s as keyof typeof rdapStatusCodeDetailTranslated] || undefined}
@@ -238,7 +260,7 @@ export function TrackedDomainTable() {
                 </Tooltip>,
                 value: s
             })),
-            onFilter: (value, record: RecordType) => record.rawDomain.status?.includes(value as string) || false,
+            onFilter: (value, record: RecordType) => !record.rawDomain.deleted && record.rawDomain.status?.includes(value as string) || false,
             width: '30%'
         }
     ]
