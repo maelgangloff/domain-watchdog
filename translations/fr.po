@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2025-12-29 18:51+0000\n"
+"PO-Revision-Date: 2026-01-04 00:40+0000\n"
 "Last-Translator: Maël Gangloff <contact@maelgangloff.fr>\n"
 "Language-Team: French <https://weblate.vinceh121.me/projects/domain-watchdog/"
 "domain-watchdog-dashboard/fr/>\n"
@@ -508,7 +508,7 @@ msgstr "Statut"
 #: assets/components/tracking/watchlist/TrackedDomainTable.tsx:208
 #: assets/components/tracking/watchlist/TrackedDomainTable.tsx:212
 msgid "Present in WHOIS"
-msgstr ""
+msgstr "Présent dans le WHOIS"
 
 #: assets/components/tracking/watchlist/TrackedDomainTable.tsx:221
 msgid "Options"
