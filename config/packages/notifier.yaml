@@ -11,6 +11,7 @@ framework:
             discord: '%env(DISCORD_DSN)%'
         texter_transports:
             engagespot: '%env(ENGAGESPOT_DSN)%'
+            ntfy: '%env(NTFY_DSN)%'
             pushover: '%env(PUSHOVER_DSN)%'
         channel_policy:
             # use chat/slack, chat/telegram, sms/twilio or sms/nexmo
