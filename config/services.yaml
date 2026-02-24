@@ -37,6 +37,9 @@ parameters:
     influxdb_enabled: '%env(bool:INFLUXDB_ENABLED)%'
     env(INFLUXDB_ENABLED): false
 
+    http_secure_cookie: '%env(bool:HTTP_SECURE_COOKIE)%'
+    env(HTTP_SECURE_COOKIE): true
+
     influxdb_url: '%env(string:INFLUXDB_URL)%'
     influxdb_token: '%env(string:INFLUXDB_TOKEN)%'
     influxdb_bucket: '%env(string:INFLUXDB_BUCKET)%'
