@@ -5,7 +5,7 @@ namespace App\Service\Provider;
 use App\Dto\Connector\DefaultProviderDto;
 use App\Dto\Connector\GandiProviderDto;
 use App\Entity\Domain;
-use App\Exception\Provider\DomainOrderFailedExeption;
+use App\Exception\Provider\DomainOrderFailedException;
 use App\Exception\Provider\InvalidLoginException;
 use Psr\Cache\CacheItemInterface;
 use Psr\Cache\CacheItemPoolInterface;
@@ -97,7 +97,7 @@ class GandiProvider extends AbstractProvider
 
         if ((!$dryRun && Response::HTTP_ACCEPTED !== $res->getStatusCode())
             || ($dryRun && Response::HTTP_OK !== $res->getStatusCode())) {
-            throw new DomainOrderFailedExeption($res->toArray()['message']);
+            throw new DomainOrderFailedException($res->toArray()['message']);
         }
     }
 

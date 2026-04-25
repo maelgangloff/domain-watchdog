@@ -5,7 +5,7 @@ namespace App\Service\Provider;
 use App\Dto\Connector\DefaultProviderDto;
 use App\Dto\Connector\OvhProviderDto;
 use App\Entity\Domain;
-use App\Exception\Provider\DomainOrderFailedExeption;
+use App\Exception\Provider\DomainOrderFailedException;
 use App\Exception\Provider\ExpiredLoginException;
 use App\Exception\Provider\InvalidLoginStatusException;
 use App\Exception\Provider\PermissionErrorException;
@@ -108,7 +108,7 @@ class OvhProvider extends AbstractProvider
         );
         if (empty($offer)) {
             $conn->delete("/order/cart/{$cartId}");
-            throw new DomainOrderFailedExeption();
+            throw new DomainOrderFailedException();
         }
 
         $item = $conn->post("/order/cart/{$cartId}/domain", [
