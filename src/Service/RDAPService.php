@@ -662,7 +662,8 @@ class RDAPService
 
         try {
             $this->em->flush();
-        } catch (UniqueConstraintViolationException) {}
+        } catch (UniqueConstraintViolationException) {
+        }
 
         return $entity;
     }
