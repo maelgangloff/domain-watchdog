@@ -32,6 +32,7 @@ use App\Repository\NameserverEntityRepository;
 use App\Repository\NameserverRepository;
 use App\Repository\RdapServerRepository;
 use App\Repository\TldRepository;
+use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 use Doctrine\DBAL\LockMode;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\OptimisticLockException;
@@ -50,7 +51,7 @@ use Symfony\Contracts\HttpClient\ResponseInterface;
 
 class RDAPService
 {
-    public const ENTITY_HANDLE_BLACKLIST = [
+    public const array ENTITY_HANDLE_BLACKLIST = [
         'REDACTED_FOR_PRIVACY',
         'ANO00-FRNIC',
         'not applicable',
@@ -65,9 +66,9 @@ class RDAPService
         'Private',
     ];
 
-    public const PENDING_DELETE_DURATION_DAYS = 5;
-    public const REDEMPTION_PERIOD_DURATION_DAYS = 30;
-    public const AUTO_RENEW_PERIOD_DURATION_DAYS = 45;
+    public const int PENDING_DELETE_DURATION_DAYS = 5;
+    public const int REDEMPTION_PERIOD_DURATION_DAYS = 30;
+    public const int AUTO_RENEW_PERIOD_DURATION_DAYS = 45;
 
     public function __construct(
         private readonly HttpClientInterface $client,
@@ -658,7 +659,10 @@ class RDAPService
         }
 
         $this->em->persist($entity);
-        $this->em->flush();
+
+        try {
+            $this->em->flush();
+        } catch (UniqueConstraintViolationException) {}
 
         return $entity;
     }
@@ -670,7 +674,7 @@ class RDAPService
         $this->em->flush();
 
         if (array_key_exists('secureDNS', $rdapData) && array_key_exists('dsData', $rdapData['secureDNS']) && is_array($rdapData['secureDNS']['dsData'])) {
-            foreach (array_unique($rdapData['secureDNS']['dsData']) as $rdapDsData) {
+            foreach (array_unique($rdapData['secureDNS']['dsData'], SORT_REGULAR) as $rdapDsData) {
                 $dsData = new DnsKey();
                 if (array_key_exists('keyTag', $rdapDsData)) {
                     $dsData->setKeyTag(pack('n', $rdapDsData['keyTag']));
