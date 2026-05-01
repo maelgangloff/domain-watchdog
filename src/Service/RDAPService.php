@@ -670,7 +670,7 @@ class RDAPService
         $this->em->flush();
 
         if (array_key_exists('secureDNS', $rdapData) && array_key_exists('dsData', $rdapData['secureDNS']) && is_array($rdapData['secureDNS']['dsData'])) {
-            foreach ($rdapData['secureDNS']['dsData'] as $rdapDsData) {
+            foreach (array_unique($rdapData['secureDNS']['dsData']) as $rdapDsData) {
                 $dsData = new DnsKey();
                 if (array_key_exists('keyTag', $rdapDsData)) {
                     $dsData->setKeyTag(pack('n', $rdapDsData['keyTag']));
