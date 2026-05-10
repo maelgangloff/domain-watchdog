@@ -136,14 +136,24 @@ final readonly class OrderDomainHandler
             $this->mailer->send($notification->asEmailMessage(new Recipient($watchlist->getUser()->getEmail()))->getMessage());
             $this->chatNotificationService->sendChatNotification($watchlist, $notification);
 
-            $this->em->persist((new DomainPurchase())
-                ->setDomain($domain)
-                ->setConnector($connector)
-                ->setConnectorProvider($connector->getProvider())
-                ->setDomainOrderedAt(new \DateTimeImmutable())
-                ->setUser($watchlist->getUser())
-                ->setDomainDeletedAt($domain->getUpdatedAt())
-                ->setDomainUpdatedAt($message->updatedAt));
+            $domainPurchase = $this->domainPurchaseRepository->findOneBy([
+                'domain' => $domain,
+                'connector' => $connector,
+                'domainUpdatedAt' => $message->updatedAt,
+                'user' => $watchlist->getUser(),
+            ]);
+
+            if (null === $domainPurchase) {
+                $this->em->persist((new DomainPurchase())
+                    ->setDomain($domain)
+                    ->setConnector($connector)
+                    ->setConnectorProvider($connector->getProvider())
+                    ->setDomainOrderedAt(new \DateTimeImmutable())
+                    ->setUser($watchlist->getUser())
+                    ->setDomainDeletedAt($domain->getUpdatedAt())
+                    ->setDomainUpdatedAt($message->updatedAt));
+            }
+
             $this->em->flush();
         } catch (\Throwable $exception) {
             /*

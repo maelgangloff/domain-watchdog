@@ -16,8 +16,8 @@ import {isDomainLocked} from "../../utils/functions/isDomainLocked"
 export function DomainResult({domain}: { domain: Domain }) {
     const {tld, events} = domain
     const domainEvents = events.sort((e1, e2) => new Date(e2.date).getTime() - new Date(e1.date).getTime())
-    const clientStatus = domain.status.filter(s => s.startsWith('client'))
-    const serverStatus = domain.status.filter(s => !clientStatus.includes(s))
+    const clientStatus = domain.status?.filter(s => s.startsWith('client')) ?? []
+    const serverStatus = domain.status?.filter(s => !clientStatus?.includes(s)) ?? []
 
     return (
         <Space direction='vertical' size='middle' style={{width: '100%'}}>
@@ -48,7 +48,7 @@ export function DomainResult({domain}: { domain: Domain }) {
                     size='small'
                 >
                     {
-                        domain.events.length > 0 && <DomainLifecycleSteps status={domain.status}/>
+                        domain.events.length > 0 && <DomainLifecycleSteps status={domain.status ?? []}/>
                     }
                     <Row gutter={8}>
                         <Col span={24} xl={12} xxl={12}>
@@ -58,7 +58,7 @@ export function DomainResult({domain}: { domain: Domain }) {
                                 >
                                     <Tag
                                         bordered={false}
-                                        color={isDomainLocked(domain.status, 'server') ? 'green' : 'default'}
+                                        color={isDomainLocked(domain.status ?? [], 'server') ? 'green' : 'default'}
                                         icon={<SafetyCertificateOutlined
                                             style={{fontSize: '16px'}}
                                         />}
@@ -70,7 +70,7 @@ export function DomainResult({domain}: { domain: Domain }) {
                                 >
                                     <Tag
                                         bordered={false}
-                                        color={isDomainLocked(domain.status, 'client') ? 'green' : 'default'}
+                                        color={isDomainLocked(domain.status ?? [], 'client') ? 'green' : 'default'}
                                         icon={<BankOutlined
                                             style={{fontSize: '16px'}}
                                         />}
@@ -87,7 +87,7 @@ export function DomainResult({domain}: { domain: Domain }) {
                                     </Tag>
                                 </Tooltip>
                             </Flex>
-                            {domain.status.length > 0 &&
+                            {domain.status && domain.status.length > 0 &&
                                 <>
                                     <Divider orientation='left'>{t`EPP Status Codes`}</Divider>
                                     <Flex gap='4px 0' wrap>
@@ -100,7 +100,7 @@ export function DomainResult({domain}: { domain: Domain }) {
                                     <Divider orientation='left'>{t`Timeline`}</Divider>
                                     <EventTimeline events={domainEvents}
                                                    expiresInDays={domain.expiresInDays}
-                                                   isRenewalPeriod={domain.status.includes('auto renew period') || domain.status.includes('renew period')}
+                                                   isRenewalPeriod={domain.status?.includes('auto renew period') || domain.status?.includes('renew period') || false}
                                     />
                                 </>
                             }

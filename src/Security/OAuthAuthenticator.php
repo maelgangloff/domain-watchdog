@@ -8,6 +8,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use KnpU\OAuth2ClientBundle\Client\ClientRegistry;
 use KnpU\OAuth2ClientBundle\Security\Authenticator\OAuth2Authenticator;
 use Lexik\Bundle\JWTAuthenticationBundle\Services\JWTTokenManagerInterface;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\HttpFoundation\Cookie;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -28,6 +29,8 @@ class OAuthAuthenticator extends OAuth2Authenticator implements AuthenticationEn
         private readonly EntityManagerInterface $em,
         private readonly RouterInterface $router,
         private readonly JWTTokenManagerInterface $JWTManager,
+        #[Autowire(param: 'http_secure_cookie')]
+        protected bool $httpSecureCookie,
     ) {
     }
 
@@ -78,7 +81,7 @@ class OAuthAuthenticator extends OAuth2Authenticator implements AuthenticationEn
                 time() + 604800, // expiration
                 '/',
                 null,
-                true,
+                $this->httpSecureCookie,
                 true,
                 false,
                 'strict'

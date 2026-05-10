@@ -1,14 +1,14 @@
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2025-12-11 17:23+0000\n"
+"PO-Revision-Date: 2026-01-04 00:40+0000\n"
 "Last-Translator: Maël Gangloff <contact@maelgangloff.fr>\n"
-"Language-Team: Spanish <https://weblate.vinceh121.me/projects/"
-"domain-watchdog/domain-watchdog-dashboard/es/>\n"
+"Language-Team: Spanish <https://weblate.vinceh121.me/projects/domain-"
+"watchdog/domain-watchdog-dashboard/es/>\n"
 "Language: es\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.14.3\n"
+"X-Generator: Weblate 5.15\n"
 
 #: assets/App.tsx:121
 msgid "Unable to contact the server, please reload the page."
@@ -118,22 +118,22 @@ msgid "Registration"
 msgstr "Registro"
 
 #: assets/components/search/DomainLifecycleSteps.tsx:24
-#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:137
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:145
 msgid "Active"
 msgstr "Activo"
 
 #: assets/components/search/DomainLifecycleSteps.tsx:29
-#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:115
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:122
 msgid "Auto-Renew Grace Period"
 msgstr "Período de gracia de autorrenovación"
 
 #: assets/components/search/DomainLifecycleSteps.tsx:35
-#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:123
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:130
 msgid "Redemption Grace Period"
 msgstr "Período de gracia de redención"
 
 #: assets/components/search/DomainLifecycleSteps.tsx:40
-#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:131
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:138
 msgid "Pending Delete"
 msgstr "Pendiente de eliminación"
 
@@ -180,7 +180,7 @@ msgid "DNSSEC"
 msgstr "DNSSEC"
 
 #: assets/components/search/DomainResult.tsx:92
-#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:219
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:249
 msgid "EPP Status Codes"
 msgstr "Códigos de estado EPP"
 
@@ -228,7 +228,7 @@ msgid "Search"
 msgstr "Buscar"
 
 #: assets/components/Sider.tsx:47
-#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:179
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:187
 msgid "Domain"
 msgstr "Dominio"
 
@@ -477,60 +477,63 @@ msgstr ""
 "Al menos un nombre de dominio está pendiente de eliminación y pronto volverá "
 "a estar disponible para su registro"
 
-#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:147
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:114
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:199
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:203
+msgid "Removed from WHOIS"
+msgstr "Eliminado de WHOIS"
+
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:155
 msgid "Estimated number of days until WHOIS removal"
 msgstr "Número estimado de días hasta la eliminación de WHOIS"
 
-#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:150
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:158
 #, javascript-format
 msgid "J ${ expiresInDays }"
 msgstr "J ${ expiresInDays }"
 
-#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:156
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:164
 msgid "Deletion is imminent"
 msgstr "La eliminación es inminente"
 
-#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:185
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:193
 msgid "Status"
 msgstr "Estado"
 
-#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:191
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:208
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:212
+msgid "Present in WHOIS"
+msgstr "Presente en WHOIS"
+
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:221
 msgid "Options"
 msgstr "Opciones"
 
-#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:197
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:227
 msgid "Expiration date"
 msgstr "Fecha de expiración"
 
-#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:211
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:241
 msgid "Updated at"
 msgstr "Actualizado el"
 
-#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:240
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:270
 msgid "No tracked domain names were found, please create your first Watchlist"
 msgstr ""
 "No se encontraron nombres de dominio rastreados; por favor, crea tu primera "
 "Watchlist"
 
-#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:243
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:273
 msgid "Create now"
 msgstr "Crear ahora"
 
-#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:249
-msgid ""
-"Please note that this table does not include domain names marked as expired "
-"or those with an unknown expiration date"
-msgstr ""
-"Tenga en cuenta que esta tabla no incluye los nombres de dominio marcados "
-"como expirados o aquellos cuya fecha de expiración se desconoce"
-
-#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:254
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:283
 msgid "At least one domain name you are tracking requires special attention"
 msgstr ""
 "Al menos uno de los nombres de dominio que estás monitorizando requiere "
 "especial atención"
 
-#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:260
+#: assets/components/tracking/watchlist/TrackedDomainTable.tsx:289
 msgid "The domain names below are subject to special monitoring"
 msgstr ""
 "Los nombres de dominio que aparecen a continuación están sujetos a una "
@@ -1795,3 +1798,10 @@ msgid ""
 msgstr ""
 "¿Estás seguro de esta configuración? Esto podría generar cargos adicionales "
 "por parte del proveedor de la API"
+
+#~ msgid ""
+#~ "Please note that this table does not include domain names marked as "
+#~ "expired or those with an unknown expiration date"
+#~ msgstr ""
+#~ "Tenga en cuenta que esta tabla no incluye los nombres de dominio marcados "
+#~ "como expirados o aquellos cuya fecha de expiración se desconoce"

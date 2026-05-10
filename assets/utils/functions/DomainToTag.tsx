@@ -6,7 +6,7 @@ import React from 'react'
 import type {Event} from "../api"
 import {t} from "ttag"
 
-export function DomainToTag({domain, link}: { domain: { ldhName: string, deleted: boolean, status: string[], events?: Event[] }, link?: boolean }) {
+export function DomainToTag({domain, link}: { domain: { ldhName: string, deleted: boolean, status?: string[], events?: Event[] }, link?: boolean }) {
     const tag = <Badge dot={domain.events?.find(e =>
         e.action === 'last changed' &&
         !e.deleted &&
@@ -16,16 +16,16 @@ export function DomainToTag({domain, link}: { domain: { ldhName: string, deleted
             color={
                 domain.deleted
                     ? 'magenta'
-                    : domain.status.includes('redemption period')
+                    : domain.status?.includes('redemption period')
                         ? 'yellow'
-                        : domain.status.includes('pending delete') ? 'volcano' : 'default'
+                        : domain.status?.includes('pending delete') ? 'volcano' : 'default'
             }
             icon={
                 domain.deleted
                     ? <DeleteOutlined/>
-                    : domain.status.includes('redemption period')
+                    : domain.status?.includes('redemption period')
                         ? <ExclamationCircleOutlined/>
-                        : domain.status.includes('pending delete') ? <DeleteOutlined/> : null
+                        : domain.status?.includes('pending delete') ? <DeleteOutlined/> : null
             }
         >{punycode.toUnicode(domain.ldhName)}
         </Tag>

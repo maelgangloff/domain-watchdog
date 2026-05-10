@@ -7,6 +7,7 @@ use Lexik\Bundle\JWTAuthenticationBundle\Event\AuthenticationSuccessEvent;
 use Lexik\Bundle\JWTAuthenticationBundle\Events;
 use Lexik\Bundle\JWTAuthenticationBundle\Response\JWTAuthenticationSuccessResponse;
 use Lexik\Bundle\JWTAuthenticationBundle\Services\JWTTokenManagerInterface;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\HttpFoundation\Cookie;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -23,6 +24,8 @@ class JWTAuthenticator implements AuthenticationSuccessHandlerInterface
         protected JWTTokenManagerInterface $jwtManager,
         protected EventDispatcherInterface $dispatcher,
         protected KernelInterface $kernel,
+        #[Autowire(param: 'http_secure_cookie')]
+        protected bool $httpSecureCookie,
     ) {
     }
 
@@ -48,7 +51,7 @@ class JWTAuthenticator implements AuthenticationSuccessHandlerInterface
                 time() + 604800, // expiration
                 '/',
                 null,
-                !$this->kernel->isDebug(),
+                !$this->kernel->isDebug() && $this->httpSecureCookie,
                 true,
                 false,
                 'strict'

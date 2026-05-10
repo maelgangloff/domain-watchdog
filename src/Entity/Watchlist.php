@@ -10,7 +10,6 @@ use ApiPlatform\Metadata\Patch;
 use ApiPlatform\Metadata\Post;
 use ApiPlatform\Metadata\Put;
 use App\Repository\WatchlistRepository;
-use App\State\MyTrackedDomainProvider;
 use App\State\MyWatchlistsProvider;
 use App\State\WatchlistUpdateProcessor;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -39,22 +38,6 @@ use Symfony\Component\Validator\Constraints as Assert;
                 ],
             ],
             provider: MyWatchlistsProvider::class,
-        ),
-        new GetCollection(
-            uriTemplate: '/tracked',
-            openapiContext: [
-                'summary' => 'Retrieve tracked domain names',
-                'description' => 'This endpoint allows you to retrieve the list of domain names present in your Watchlists. The list does not contain duplicates.',
-            ],
-            normalizationContext: [
-                'groups' => [
-                    'domain:list',
-                    'tld:list',
-                    'event:list',
-                    'event:list',
-                ],
-            ],
-            provider: MyTrackedDomainProvider::class
         ),
         new Get(
             openapiContext: [

@@ -14,6 +14,8 @@ services:
             MESSENGER_ASYNC_TRANSPORT_DSN: redis://valkey:6379/messages
             MESSENGER_RDAP_LOW_TRANSPORT_DSN: redis://valkey:6379/messages-rdap-low
             MESSENGER_RDAP_HIGH_TRANSPORT_DSN: redis://valkey:6379/messages-rdap-high
+            LOCK_DSN: redis://valkey:6379
+            HTTP_SECURE_COOKIE: true # Change to "false" if you are using HTTP
         volumes:
             - caddy_data:/data
             - caddy_config:/config
@@ -33,6 +35,7 @@ services:
         environment:
             APP_ENV: prod
             DATABASE_URL: postgresql://${POSTGRES_USER:-app}:${POSTGRES_PASSWORD:-!ChangeMe!}@database:${POSTGRES_PORT:-5432}/${POSTGRES_DB:-app}?serverVersion=${POSTGRES_VERSION:-15}&charset=${POSTGRES_CHARSET:-utf8}
+            LOCK_DSN: redis://valkey:6379
             MESSENGER_ASYNC_TRANSPORT_DSN: redis://valkey:6379/messages
             MESSENGER_RDAP_LOW_TRANSPORT_DSN: redis://valkey:6379/messages-rdap-low
             MESSENGER_RDAP_HIGH_TRANSPORT_DSN: redis://valkey:6379/messages-rdap-high

@@ -25,11 +25,12 @@ readonly class MyTrackedDomainProvider implements ProviderInterface
         $user = $this->security->getUser();
 
         $domains = $this->domainRepository->getMyTrackedDomains($user);
+
         foreach ($domains as $domain) {
             $domain->setExpiresInDays($this->RDAPService->getExpiresInDays($domain));
         }
 
-        usort($domains, fn (Domain $d1, Domain $d2) => $d1->getExpiresInDays() - $d2->getExpiresInDays());
+        usort($domains, fn (Domain $d1, Domain $d2) => $d2->getDeleted() <=> $d1->getDeleted() ?: $d1->getExpiresInDays() - $d2->getExpiresInDays());
 
         return $domains;
     }

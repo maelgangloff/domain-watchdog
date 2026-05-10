@@ -56,7 +56,7 @@ export interface Tld {
 export interface Domain {
     ldhName: string
     handle: string
-    status: string[]
+    status?: string[]
     events: Event[]
     entities: Array<{
         entity: Entity
