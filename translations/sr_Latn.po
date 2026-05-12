@@ -1,16 +1,19 @@
 msgid ""
 msgstr ""
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
+"PO-Revision-Date: 2026-05-13 11:11+0000\n"
+"Last-Translator: Srdan Sajin <insha@users.noreply.weblate.vinceh121.me>\n"
+"Language-Team: Serbian (Latin script) <https://weblate.vinceh121.me/projects/"
+"domain-watchdog/domain-watchdog-dashboard/sr_Latn/>\n"
 "Language: sr_Latn\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
 "n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"X-Generator: Weblate 5.15\n"
 
 #: assets/App.tsx:121
 msgid "Unable to contact the server, please reload the page."
-msgstr ""
+msgstr "Unable to contact the server, please reload the page."
 
 #: assets/App.tsx:135
 msgid ""
