@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "PO-Revision-Date: 2026-05-13 11:11+0000\n"
-"Last-Translator: Srdan Sajin <insha@users.noreply.weblate.vinceh121.me>\n"
+"Last-Translator: vinceh121 <contact@vinceh121.me>\n"
 "Language-Team: Serbian (Latin script) <https://weblate.vinceh121.me/projects/"
 "domain-watchdog/domain-watchdog-dashboard/sr_Latn/>\n"
 "Language: sr_Latn\n"
@@ -13,7 +13,7 @@ msgstr ""
 
 #: assets/App.tsx:121
 msgid "Unable to contact the server, please reload the page."
-msgstr "Unable to contact the server, please reload the page."
+msgstr ""
 
 #: assets/App.tsx:135
 msgid ""
