@@ -2,8 +2,10 @@
 
 namespace App\MessageHandler;
 
+use App\Config\DomainPurchaseFailureReason;
 use App\Entity\Domain;
-use App\Entity\DomainPurchase;
+use App\Entity\DomainPurchaseFailure;
+use App\Entity\DomainPurchaseSuccess;
 use App\Entity\Watchlist;
 use App\Message\OrderDomain;
 use App\Notifier\DomainOrderErrorNotification;
@@ -14,6 +16,7 @@ use App\Repository\WatchlistRepository;
 use App\Service\ChatNotificationService;
 use App\Service\InfluxdbService;
 use App\Service\Provider\AbstractProvider;
+use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
@@ -144,7 +147,7 @@ final readonly class OrderDomainHandler
             ]);
 
             if (null === $domainPurchase) {
-                $this->em->persist((new DomainPurchase())
+                $this->em->persist((new DomainPurchaseSuccess())
                     ->setDomain($domain)
                     ->setConnector($connector)
                     ->setConnectorProvider($connector->getProvider())
@@ -174,28 +177,30 @@ final readonly class OrderDomainHandler
             $this->mailer->send($notification->asEmailMessage(new Recipient($watchlist->getUser()->getEmail()))->getMessage());
             $this->chatNotificationService->sendChatNotification($watchlist, $notification);
 
-            $domainPurchase = $this->domainPurchaseRepository->findOneBy([
-                'domain' => $domain,
-                'connector' => $connector,
-                'domainOrderedAt' => null,
-                'domainUpdatedAt' => $message->updatedAt,
-                'user' => $watchlist->getUser(),
-            ]);
-            if (null === $domainPurchase) {
-                $this->em->persist((new DomainPurchase())
-                    ->setDomain($domain)
-                    ->setConnector($connector)
-                    ->setConnectorProvider($connector->getProvider())
-                    ->setDomainOrderedAt(null)
-                    ->setUser($watchlist->getUser())
-                    ->setDomainDeletedAt($domain->getUpdatedAt())
-                    ->setDomainUpdatedAt($message->updatedAt));
-                $this->em->flush();
-            }
+            $this->updateDomainPurchaseFailure($domain, $watchlist, $message, $exception);
 
             $lock->release();
 
             throw $exception;
+        }
+    }
+
+    private function updateDomainPurchaseFailure(Domain $domain, Watchlist $watchlist, OrderDomain $message, \Throwable $throwable): void
+    {
+        $this->em->persist((new DomainPurchaseFailure())
+            ->setDomain($domain)
+            ->setExceptionClass($throwable::class)
+            ->setExceptionMessage(substr($throwable->getMessage(), 0, 255))
+            ->setConnector($watchlist->getConnector())
+            ->setReason(DomainPurchaseFailureReason::Exception)
+            ->setConnectorProvider($watchlist->getConnector()->getProvider())
+            ->setUser($watchlist->getUser())
+            ->setDomainDeletedAt($domain->getUpdatedAt())
+            ->setDomainUpdatedAt($message->updatedAt));
+
+        try {
+            $this->em->flush();
+        } catch (UniqueConstraintViolationException) {
         }
     }
 }
