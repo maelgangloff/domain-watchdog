@@ -668,6 +668,16 @@ class RDAPService
         return $entity;
     }
 
+    private static function normalizeDsData(array $dsData): array
+    {
+        return [
+            'keyTag' => (int) $dsData['keyTag'],
+            'algorithm' => (int) $dsData['algorithm'],
+            'digest' => strtoupper($dsData['digest']),
+            'digestType' => (int) $dsData['digestType'],
+        ];
+    }
+
     private function updateDomainDsData(Domain $domain, array $rdapData): void
     {
         $domain->getDnsKey()->clear();
@@ -675,7 +685,14 @@ class RDAPService
         $this->em->flush();
 
         if (array_key_exists('secureDNS', $rdapData) && array_key_exists('dsData', $rdapData['secureDNS']) && is_array($rdapData['secureDNS']['dsData'])) {
-            foreach (array_unique($rdapData['secureDNS']['dsData'], SORT_REGULAR) as $rdapDsData) {
+            foreach (
+                array_unique(
+                    array_map(
+                        [$this, 'normalizeDsData'],
+                        $rdapData['secureDNS']['dsData']),
+                    SORT_REGULAR
+                ) as $rdapDsData
+            ) {
                 $dsData = new DnsKey();
                 if (array_key_exists('keyTag', $rdapDsData)) {
                     $dsData->setKeyTag(pack('n', $rdapDsData['keyTag']));
