@@ -8,7 +8,6 @@ use App\Entity\Domain;
 use App\Entity\DomainPurchaseFailure;
 use App\Entity\DomainPurchaseSuccess;
 use App\Entity\Watchlist;
-use App\Message\DetectDomainChange;
 use App\Message\OrderDomain;
 use App\Notifier\DomainOrderErrorNotification;
 use App\Notifier\DomainOrderNotification;

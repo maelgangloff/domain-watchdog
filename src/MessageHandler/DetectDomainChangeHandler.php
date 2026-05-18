@@ -152,7 +152,7 @@ final readonly class DetectDomainChangeHandler
             $this->statService->incrementStat('stats.alert.sent');
         }
 
-        if($watchlist->getConnector()) {
+        if ($watchlist->getConnector()) {
             $this->updateDomainPurchaseFailure($domain, $watchlist->getConnector(), $message);
         }
     }
