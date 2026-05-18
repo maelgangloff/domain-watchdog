@@ -156,6 +156,10 @@ final readonly class DetectDomainChangeHandler
 
     private function updateDomainPurchaseFailure(Domain $domain, Watchlist $watchlist, DetectDomainChange $message): void
     {
+        if (null === $watchlist->getConnector()) {
+            return;
+        }
+
         $registrationEvent = $this->domainEventRepository->findLastDomainEventByEventAction($domain, EventAction::Registration, false);
         if (!$registrationEvent || $registrationEvent->getDate() <= $message->updatedAt) {
             return;

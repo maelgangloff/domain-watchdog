@@ -187,6 +187,10 @@ final readonly class OrderDomainHandler
 
     private function updateDomainPurchaseFailure(Domain $domain, Watchlist $watchlist, OrderDomain $message, \Throwable $throwable): void
     {
+        if (null === $watchlist->getConnector()) {
+            return;
+        }
+
         $this->em->persist((new DomainPurchaseFailure())
             ->setDomain($domain)
             ->setExceptionClass($throwable::class)
