@@ -4,6 +4,7 @@ namespace App\MessageHandler;
 
 use App\Config\DomainPurchaseFailureReason;
 use App\Config\EventAction;
+use App\Entity\Connector;
 use App\Entity\Domain;
 use App\Entity\DomainEvent;
 use App\Entity\DomainPurchaseFailure;
@@ -151,15 +152,13 @@ final readonly class DetectDomainChangeHandler
             $this->statService->incrementStat('stats.alert.sent');
         }
 
-        $this->updateDomainPurchaseFailure($domain, $watchlist, $message);
+        if($watchlist->getConnector()) {
+            $this->updateDomainPurchaseFailure($domain, $watchlist->getConnector(), $message);
+        }
     }
 
-    private function updateDomainPurchaseFailure(Domain $domain, Watchlist $watchlist, DetectDomainChange $message): void
+    private function updateDomainPurchaseFailure(Domain $domain, Connector $connector, DetectDomainChange $message): void
     {
-        if (null === $watchlist->getConnector()) {
-            return;
-        }
-
         $registrationEvent = $this->domainEventRepository->findLastDomainEventByEventAction($domain, EventAction::Registration, false);
         if (!$registrationEvent || $registrationEvent->getDate() <= $message->updatedAt) {
             return;
@@ -167,10 +166,10 @@ final readonly class DetectDomainChangeHandler
 
         $this->entityManager->persist((new DomainPurchaseFailure())
             ->setDomain($domain)
-            ->setConnector($watchlist->getConnector())
+            ->setConnector($connector)
             ->setReason(DomainPurchaseFailureReason::AlreadyRegistered)
-            ->setConnectorProvider($watchlist->getConnector()->getProvider())
-            ->setUser($watchlist->getUser())
+            ->setConnectorProvider($connector->getProvider())
+            ->setUser($connector->getUser())
             ->setDomainDeletedAt($domain->getUpdatedAt())
             ->setDomainUpdatedAt($message->updatedAt));
 

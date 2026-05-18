@@ -3,10 +3,12 @@
 namespace App\MessageHandler;
 
 use App\Config\DomainPurchaseFailureReason;
+use App\Entity\Connector;
 use App\Entity\Domain;
 use App\Entity\DomainPurchaseFailure;
 use App\Entity\DomainPurchaseSuccess;
 use App\Entity\Watchlist;
+use App\Message\DetectDomainChange;
 use App\Message\OrderDomain;
 use App\Notifier\DomainOrderErrorNotification;
 use App\Notifier\DomainOrderNotification;
@@ -177,7 +179,7 @@ final readonly class OrderDomainHandler
             $this->mailer->send($notification->asEmailMessage(new Recipient($watchlist->getUser()->getEmail()))->getMessage());
             $this->chatNotificationService->sendChatNotification($watchlist, $notification);
 
-            $this->updateDomainPurchaseFailure($domain, $watchlist, $message, $exception);
+            $this->updateDomainPurchaseFailure($domain, $connector, $message, $exception);
 
             $lock->release();
 
@@ -185,20 +187,16 @@ final readonly class OrderDomainHandler
         }
     }
 
-    private function updateDomainPurchaseFailure(Domain $domain, Watchlist $watchlist, OrderDomain $message, \Throwable $throwable): void
+    private function updateDomainPurchaseFailure(Domain $domain, Connector $connector, OrderDomain $message, \Throwable $throwable): void
     {
-        if (null === $watchlist->getConnector()) {
-            return;
-        }
-
         $this->em->persist((new DomainPurchaseFailure())
             ->setDomain($domain)
             ->setExceptionClass($throwable::class)
             ->setExceptionMessage(substr($throwable->getMessage(), 0, 255))
-            ->setConnector($watchlist->getConnector())
+            ->setConnector($connector)
             ->setReason(DomainPurchaseFailureReason::Exception)
-            ->setConnectorProvider($watchlist->getConnector()->getProvider())
-            ->setUser($watchlist->getUser())
+            ->setConnectorProvider($connector->getProvider())
+            ->setUser($connector->getUser())
             ->setDomainDeletedAt($domain->getUpdatedAt())
             ->setDomainUpdatedAt($message->updatedAt));
 
