@@ -3,10 +3,10 @@
 namespace App\Entity;
 
 use App\Config\DomainPurchaseFailureReason;
-use App\Repository\DomainPurchaseRepository;
+use App\Repository\DomainPurchaseFailureRepository;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: DomainPurchaseRepository::class)]
+#[ORM\Entity(repositoryClass: DomainPurchaseFailureRepository::class)]
 class DomainPurchaseFailure extends DomainPurchase
 {
     #[ORM\Column(length: 255, nullable: true)]

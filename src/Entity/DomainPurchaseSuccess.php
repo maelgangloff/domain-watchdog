@@ -2,9 +2,10 @@
 
 namespace App\Entity;
 
+use App\Repository\DomainPurchaseSuccessRepository;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity]
+#[ORM\Entity(repositoryClass: DomainPurchaseSuccessRepository::class)]
 class DomainPurchaseSuccess extends DomainPurchase
 {
     #[ORM\Column(nullable: true)]

@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Statistics;
-use App\Repository\DomainPurchaseRepository;
+use App\Repository\DomainPurchaseFailureRepository;
 use App\Repository\DomainRepository;
 use App\Repository\WatchlistRepository;
 use Psr\Cache\CacheItemPoolInterface;
@@ -17,7 +17,7 @@ class StatisticsController extends AbstractController
         private readonly CacheItemPoolInterface $pool,
         private readonly DomainRepository $domainRepository,
         private readonly WatchlistRepository $watchlistRepository,
-        private readonly DomainPurchaseRepository $domainPurchaseRepository,
+        private readonly DomainPurchaseFailureRepository $domainPurchaseRepository,
         private readonly KernelInterface $kernel,
     ) {
     }

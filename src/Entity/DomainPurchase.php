@@ -3,12 +3,11 @@
 namespace App\Entity;
 
 use App\Config\ConnectorProvider;
-use App\Repository\DomainPurchaseRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Uid\Uuid;
 
 #[ORM\UniqueConstraint(columns: ['domain_id', 'domain_updated_at', 'domain_ordered_at', 'user_id'])]
-#[ORM\Entity(repositoryClass: DomainPurchaseRepository::class)]
+#[ORM\Entity]
 #[ORM\InheritanceType('SINGLE_TABLE')]
 #[ORM\DiscriminatorColumn(name: 'type', type: 'string')]
 #[ORM\DiscriminatorMap(['success' => DomainPurchaseSuccess::class, 'failure' => DomainPurchaseFailure::class])]

@@ -11,7 +11,7 @@ use App\Entity\Watchlist;
 use App\Message\OrderDomain;
 use App\Notifier\DomainOrderErrorNotification;
 use App\Notifier\DomainOrderNotification;
-use App\Repository\DomainPurchaseRepository;
+use App\Repository\DomainPurchaseSuccessRepository;
 use App\Repository\DomainRepository;
 use App\Repository\WatchlistRepository;
 use App\Service\ChatNotificationService;
@@ -50,8 +50,8 @@ final readonly class OrderDomainHandler
         private ContainerInterface $locator,
         #[Autowire(param: 'influxdb_enabled')]
         private bool $influxdbEnabled, private EntityManagerInterface $em,
-        private DomainPurchaseRepository $domainPurchaseRepository,
         private LockFactory $lockFactory,
+        private DomainPurchaseSuccessRepository $domainPurchaseSuccessRepository,
     ) {
         $this->sender = new Address($mailerSenderEmail, $mailerSenderName);
     }
@@ -140,7 +140,7 @@ final readonly class OrderDomainHandler
             $this->mailer->send($notification->asEmailMessage(new Recipient($watchlist->getUser()->getEmail()))->getMessage());
             $this->chatNotificationService->sendChatNotification($watchlist, $notification);
 
-            $domainPurchase = $this->domainPurchaseRepository->findOneBy([
+            $domainPurchase = $this->domainPurchaseSuccessRepository->findOneBy([
                 'domain' => $domain,
                 'connector' => $connector,
                 'domainUpdatedAt' => $message->updatedAt,
