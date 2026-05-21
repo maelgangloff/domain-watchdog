@@ -1,0 +1,6 @@
+services:
+  domainwatchdog:
+    build:
+      context: .
+      target: frankenphp_test
+#    command: php infection.php

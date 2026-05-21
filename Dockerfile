@@ -70,6 +70,37 @@ COPY --link frankenphp/conf.d/20-app.dev.ini $PHP_INI_DIR/app.conf.d/
 
 CMD [ "frankenphp", "run", "--config", "/etc/caddy/Caddyfile", "--watch" ]
 
+FROM frankenphp_base AS frankenphp_test
+
+ENV APP_ENV=test XDEBUG_MODE=coverage
+
+# prevent the reinstallation of vendors at every changes in the source code
+COPY --link composer.* symfony.* ./
+RUN set -eux; \
+    install-php-extensions xdebug redis; \
+    curl -LO https://github.com/infection/infection/releases/download/0.32.6/infection.phar ; \
+    composer install --no-cache --prefer-dist --no-autoloader --no-scripts --no-progress
+
+# copy sources
+COPY --link . ./
+RUN rm -Rf frankenphp/
+
+RUN set -eux; \
+    mkdir -p var/cache var/log; \
+    composer dump-autoload --classmap-authoritative; \
+    composer dump-env prod; \
+    composer run-script post-install-cmd; \
+    chmod +x bin/console; \
+    php bin/console assets:install; \
+    yarn install; \
+    yarn run build; \
+    yarn run ttag:po2json; \
+    rm -rf node_modules; \
+    sync
+
+#CMD [ "php", "infection.phar" ]
+CMD [ "sleep", "infinity" ]
+
 # Prod FrankenPHP image
 FROM frankenphp_base AS frankenphp_prod
 
