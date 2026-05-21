@@ -16,11 +16,4 @@ class DomainPurchaseFailureRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, DomainPurchaseFailure::class);
     }
-
-    public function countFailDomainPurchase(): int
-    {
-        return $this->createQueryBuilder('dp')
-            ->select('COUNT(dp)')
-            ->getQuery()->getSingleScalarResult();
-    }
 }
