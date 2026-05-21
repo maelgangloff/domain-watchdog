@@ -115,8 +115,8 @@ export interface InstanceConfig {
 export interface Statistics {
     rdapQueries: number
     alertSent: number
-    domainPurchased: number
-    domainPurchaseFailed: number
+    domainPurchaseSuccess: number
+    domainPurchaseFailure: number
     domainCount: Array<{ tld: string, domain: number }>
     domainCountTotal: number
     domainTracked: number

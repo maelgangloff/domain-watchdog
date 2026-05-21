@@ -33,11 +33,11 @@ class StatisticsController extends AbstractController
 
         $stats
             ->setRdapQueries($this->pool->getItem('stats.rdap_queries.count')->get() ?? 0)
-            ->setDomainPurchased(
-                $this->getCachedItem('stats.domain.purchase', fn () => $this->domainPurchaseSuccessRepository->count())
+            ->setDomainPurchaseSuccess(
+                $this->getCachedItem('stats.domain.purchase.success', fn () => $this->domainPurchaseSuccessRepository->count())
             )
-            ->setDomainPurchaseFailed(
-                $this->getCachedItem('stats.domain.purchase.failed', fn () => $this->domainPurchaseFailureRepository->count())
+            ->setDomainPurchaseFailure(
+                $this->getCachedItem('stats.domain.purchase.failure', fn () => $this->domainPurchaseFailureRepository->count())
             )
             ->setAlertSent($this->pool->getItem('stats.alert.sent')->get() ?? 0)
 
