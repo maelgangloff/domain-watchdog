@@ -18,9 +18,8 @@ export default function StatisticsPage() {
         getStatistics().then(setStats)
     }, [])
 
-    const successRate = stats !== undefined
-        ? (stats?.domainPurchased === 0 ? undefined : ((stats?.domainPurchased ?? 0) - (stats?.domainPurchaseFailed ?? 0)) /  stats?.domainPurchased)
-        : undefined
+    const totalPurchase = stats !== undefined ? (stats?.domainPurchaseSuccess ?? 0) + (stats?.domainPurchaseFailure ?? 0) : undefined
+    const successRate = totalPurchase !== undefined ? (stats?.domainPurchaseSuccess ?? 0) / totalPurchase : undefined
 
     return (
         <>
@@ -80,7 +79,7 @@ export default function StatisticsPage() {
                             loading={stats === undefined}
                             title={t`Purchased domain names`}
                             prefix={<FieldTimeOutlined/>}
-                            value={(stats?.domainPurchased??0) - (stats?.domainPurchaseFailed??0)}
+                            value={stats?.domainPurchaseSuccess}
                             valueStyle={{color: 'green'}}
                         />
                     </Card>

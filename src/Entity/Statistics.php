@@ -24,8 +24,8 @@ class Statistics
 {
     private ?int $rdapQueries = null;
     private ?int $alertSent = null;
-    private ?int $domainPurchased = null;
-    private ?int $domainPurchaseFailed = null;
+    private ?int $domainPurchaseSuccess = null;
+    private ?int $domainPurchaseFailure = null;
 
     private ?array $domainCount = null;
     private ?int $domainTracked = null;
@@ -55,18 +55,6 @@ class Statistics
         return $this;
     }
 
-    public function getDomainPurchased(): ?int
-    {
-        return $this->domainPurchased;
-    }
-
-    public function setDomainPurchased(?int $domainPurchased): static
-    {
-        $this->domainPurchased = $domainPurchased;
-
-        return $this;
-    }
-
     public function getDomainCount(): ?array
     {
         return $this->domainCount;
@@ -84,19 +72,9 @@ class Statistics
         return $this->domainCountTotal;
     }
 
-    public function setDomainCountTotal(?int $domainCountTotal): void
+    public function setDomainCountTotal(?int $domainCountTotal): static
     {
         $this->domainCountTotal = $domainCountTotal;
-    }
-
-    public function getDomainPurchaseFailed(): ?int
-    {
-        return $this->domainPurchaseFailed;
-    }
-
-    public function setDomainPurchaseFailed(?int $domainPurchaseFailed): static
-    {
-        $this->domainPurchaseFailed = $domainPurchaseFailed;
 
         return $this;
     }
@@ -109,6 +87,30 @@ class Statistics
     public function setDomainTracked(?int $domainTracked): static
     {
         $this->domainTracked = $domainTracked;
+
+        return $this;
+    }
+
+    public function getDomainPurchaseSuccess(): ?int
+    {
+        return $this->domainPurchaseSuccess;
+    }
+
+    public function setDomainPurchaseSuccess(?int $domainPurchaseSuccess): self
+    {
+        $this->domainPurchaseSuccess = $domainPurchaseSuccess;
+
+        return $this;
+    }
+
+    public function getDomainPurchaseFailure(): ?int
+    {
+        return $this->domainPurchaseFailure;
+    }
+
+    public function setDomainPurchaseFailure(?int $domainPurchaseFailure): self
+    {
+        $this->domainPurchaseFailure = $domainPurchaseFailure;
 
         return $this;
     }

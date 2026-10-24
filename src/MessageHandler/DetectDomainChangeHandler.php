@@ -2,8 +2,12 @@
 
 namespace App\MessageHandler;
 
+use App\Config\DomainPurchaseFailureReason;
+use App\Config\EventAction;
+use App\Entity\Connector;
 use App\Entity\Domain;
 use App\Entity\DomainEvent;
+use App\Entity\DomainPurchaseFailure;
 use App\Entity\DomainStatus;
 use App\Entity\Watchlist;
 use App\Message\DetectDomainChange;
@@ -16,6 +20,8 @@ use App\Repository\WatchlistRepository;
 use App\Service\ChatNotificationService;
 use App\Service\InfluxdbService;
 use App\Service\StatService;
+use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
+use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
@@ -43,6 +49,7 @@ final readonly class DetectDomainChangeHandler
         private InfluxdbService $influxdbService,
         private DomainEventRepository $domainEventRepository,
         private DomainStatusRepository $domainStatusRepository,
+        private EntityManagerInterface $entityManager,
     ) {
         $this->sender = new Address($mailerSenderEmail, $mailerSenderName);
     }
@@ -143,6 +150,32 @@ final readonly class DetectDomainChangeHandler
             }
 
             $this->statService->incrementStat('stats.alert.sent');
+        }
+
+        if ($watchlist->getConnector()) {
+            $this->updateDomainPurchaseFailure($domain, $watchlist->getConnector(), $message);
+        }
+    }
+
+    private function updateDomainPurchaseFailure(Domain $domain, Connector $connector, DetectDomainChange $message): void
+    {
+        $registrationEvent = $this->domainEventRepository->findLastDomainEventByEventAction($domain, EventAction::Registration, false);
+        if (!$registrationEvent || $registrationEvent->getDate() <= $message->updatedAt) {
+            return;
+        }
+
+        $this->entityManager->persist((new DomainPurchaseFailure())
+            ->setDomain($domain)
+            ->setConnector($connector)
+            ->setReason(DomainPurchaseFailureReason::AlreadyRegistered)
+            ->setConnectorProvider($connector->getProvider())
+            ->setUser($connector->getUser())
+            ->setDomainDeletedAt($domain->getUpdatedAt())
+            ->setDomainUpdatedAt($message->updatedAt));
+
+        try {
+            $this->entityManager->flush();
+        } catch (UniqueConstraintViolationException) {
         }
     }
 }

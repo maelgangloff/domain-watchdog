@@ -3,7 +3,8 @@
 namespace App\Controller;
 
 use App\Entity\Statistics;
-use App\Repository\DomainPurchaseRepository;
+use App\Repository\DomainPurchaseFailureRepository;
+use App\Repository\DomainPurchaseSuccessRepository;
 use App\Repository\DomainRepository;
 use App\Repository\WatchlistRepository;
 use Psr\Cache\CacheItemPoolInterface;
@@ -17,7 +18,8 @@ class StatisticsController extends AbstractController
         private readonly CacheItemPoolInterface $pool,
         private readonly DomainRepository $domainRepository,
         private readonly WatchlistRepository $watchlistRepository,
-        private readonly DomainPurchaseRepository $domainPurchaseRepository,
+        private readonly DomainPurchaseFailureRepository $domainPurchaseFailureRepository,
+        private readonly DomainPurchaseSuccessRepository $domainPurchaseSuccessRepository,
         private readonly KernelInterface $kernel,
     ) {
     }
@@ -31,11 +33,11 @@ class StatisticsController extends AbstractController
 
         $stats
             ->setRdapQueries($this->pool->getItem('stats.rdap_queries.count')->get() ?? 0)
-            ->setDomainPurchased(
-                $this->getCachedItem('stats.domain.purchase', fn () => $this->domainPurchaseRepository->count())
+            ->setDomainPurchaseSuccess(
+                $this->getCachedItem('stats.domain.purchase.success', fn () => $this->domainPurchaseSuccessRepository->count())
             )
-            ->setDomainPurchaseFailed(
-                $this->getCachedItem('stats.domain.purchase.failed', fn () => $this->domainPurchaseRepository->countFailDomainPurchase())
+            ->setDomainPurchaseFailure(
+                $this->getCachedItem('stats.domain.purchase.failure', fn () => $this->domainPurchaseFailureRepository->count())
             )
             ->setAlertSent($this->pool->getItem('stats.alert.sent')->get() ?? 0)
 

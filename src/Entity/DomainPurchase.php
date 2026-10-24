@@ -3,12 +3,15 @@
 namespace App\Entity;
 
 use App\Config\ConnectorProvider;
-use App\Repository\DomainPurchaseRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Uid\Uuid;
 
-#[ORM\Entity(repositoryClass: DomainPurchaseRepository::class)]
-class DomainPurchase
+#[ORM\UniqueConstraint(columns: ['domain_id', 'domain_updated_at', 'domain_ordered_at', 'user_id'])]
+#[ORM\Entity]
+#[ORM\InheritanceType('SINGLE_TABLE')]
+#[ORM\DiscriminatorColumn(name: 'type', type: 'string')]
+#[ORM\DiscriminatorMap(['success' => DomainPurchaseSuccess::class, 'failure' => DomainPurchaseFailure::class])]
+abstract class DomainPurchase
 {
     #[ORM\Id]
     #[ORM\Column(type: 'uuid')]
@@ -21,9 +24,6 @@ class DomainPurchase
     #[ORM\Column]
     private ?\DateTimeImmutable $domainUpdatedAt = null;
 
-    #[ORM\Column(nullable: true)]
-    private ?\DateTimeImmutable $domainOrderedAt = null;
-
     #[ORM\Column(enumType: ConnectorProvider::class)]
     private ?ConnectorProvider $connectorProvider = null;
 
@@ -32,7 +32,7 @@ class DomainPurchase
     private ?Connector $connector = null;
 
     #[ORM\ManyToOne(inversedBy: 'domainPurchases')]
-    #[ORM\JoinColumn(referencedColumnName: 'id', nullable: true, onDelete: 'SET NULL')]
+    #[ORM\JoinColumn(referencedColumnName: 'id', nullable: false, onDelete: 'CASCADE')]
     private ?User $user = null;
 
     #[ORM\Column]
@@ -68,18 +68,6 @@ class DomainPurchase
     public function setDomainUpdatedAt(\DateTimeImmutable $domainUpdatedAt): static
     {
         $this->domainUpdatedAt = $domainUpdatedAt;
-
-        return $this;
-    }
-
-    public function getDomainOrderedAt(): ?\DateTimeImmutable
-    {
-        return $this->domainOrderedAt;
-    }
-
-    public function setDomainOrderedAt(?\DateTimeImmutable $domainOrderedAt): static
-    {
-        $this->domainOrderedAt = $domainOrderedAt;
 
         return $this;
     }

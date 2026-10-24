@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Config\EventAction;
 use App\Entity\Domain;
 use App\Entity\DomainEvent;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
@@ -57,28 +58,18 @@ class DomainEventRepository extends ServiceEntityRepository
             ->execute();
     }
 
-    //    /**
-    //     * @return DomainEvent[] Returns an array of DomainEvent objects
-    //     */
-    //    public function findByExampleField($value): array
-    //    {
-    //        return $this->createQueryBuilder('e')
-    //            ->andWhere('e.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->orderBy('e.id', 'ASC')
-    //            ->setMaxResults(10)
-    //            ->getQuery()
-    //            ->getResult()
-    //        ;
-    //    }
-
-    //    public function findOneBySomeField($value): ?DomainEvent
-    //    {
-    //        return $this->createQueryBuilder('e')
-    //            ->andWhere('e.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->getQuery()
-    //            ->getOneOrNullResult()
-    //        ;
-    //    }
+    public function findLastDomainEventByEventAction(Domain $domain, EventAction $eventAction, bool $deleted): ?DomainEvent
+    {
+        return $this->createQueryBuilder('de')
+            ->select()
+            ->where('de.domain = :domain')
+            ->andWhere('de.action = :action')
+            ->andWhere('de.deleted = :deleted')
+            ->orderBy('de.date', 'DESC')
+            ->setParameter('deleted', $deleted)
+            ->setParameter('domain', $domain)
+            ->setParameter('action', $eventAction)
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
 }
