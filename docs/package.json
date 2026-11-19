@@ -16,6 +16,7 @@
     "astro": "astro"
   },
   "dependencies": {
+    "@astrojs/sitemap": "^3.6.0",
     "@astrojs/starlight": "^0.36.2",
     "@fontsource/noto-color-emoji": "^5.2.10",
     "astro": "^5.6.1",

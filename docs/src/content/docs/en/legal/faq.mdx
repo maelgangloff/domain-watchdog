@@ -1,0 +1,112 @@
+---
+title: ❔ FAQ
+description: Answers to common questions about Domain Watchdog - price, RDAP vs WHOIS, supported TLDs, refresh frequency, automatic backorder and notifications.
+---
+
+export const faq = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "inLanguage": "en",
+    "mainEntity": [
+        {
+            "@type": "Question",
+            "name": "What is Domain Watchdog?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Domain Watchdog is an open-source application that uses the RDAP protocol to collect publicly available information about domain names, keep a history of every change, notify you when something happens and, optionally, try to register a domain name automatically as soon as it becomes available again."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "Is Domain Watchdog free?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Yes. Domain Watchdog is free software distributed under the GNU AGPL v3.0 or later license. You can host your own instance at no cost, or try the public demo at https://demo.domainwatchdog.eu."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "How is Domain Watchdog different from a WHOIS lookup?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "A WHOIS or RDAP lookup only returns the current state of a domain name. These protocols neither keep a history of past events (ownership changes, renewals, transfers) nor allow a reverse search of the domains associated with an entity. Domain Watchdog stores every RDAP response it collects, which makes it possible to rebuild the timeline of a domain and to be notified of each change."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "Which top-level domains are supported?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Every top-level domain whose registry operates an RDAP server is supported. The list of RDAP servers is taken from the official IANA bootstrap file and refreshed every month. An instance administrator can also declare additional RDAP servers for TLDs that are missing from this list."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "How often are domain names refreshed?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Watchlists are processed every 5 minutes. A domain name is refreshed at least once a week, and much more often when its status announces an imminent change, for example during the redemption period or when the domain is pending deletion. Domain Watchdog limits the number of RDAP requests sent to registries with rate limiting and caching."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "Can Domain Watchdog buy an expired domain name automatically?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Yes. Link a Connector to a Watchlist: when a domain of this Watchlist is deleted, Domain Watchdog immediately tries to register it through the API of your registrar. Supported providers are OVH, Gandi, Namecheap, AutoDNS, Name.com and custom EPP servers. Success is not guaranteed, since other backorder services may try to register the same domain name at the same time."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "How can I be notified of a change?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Each Watchlist lets you choose the events that trigger a notification. Notifications are sent by email and can also be delivered through webhooks to Discord, Mattermost, Slack, Telegram, Zulip, Pushover, ntfy or Engagespot. Each Watchlist also provides an iCalendar feed and RSS feeds."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "Is Domain Watchdog affiliated with a registrar?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "No. Domain Watchdog is an independent project and is not affiliated in any way with the registrars or API providers used to order domain names."
+            }
+        }
+    ]
+}
+
+<script type="application/ld+json" set:html={JSON.stringify(faq)}/>
+
+Answers to the most frequently asked questions about Domain Watchdog.
+
+## What is Domain Watchdog?
+
+Domain Watchdog is an open-source application that uses the [RDAP](/en/definitions/rdap/) protocol to collect publicly available information about domain names, keep a history of every change, notify you when something happens and, optionally, try to register a domain name automatically as soon as it becomes available again.
+
+## Is Domain Watchdog free?
+
+Yes. Domain Watchdog is free software distributed under the [GNU AGPL v3.0 or later](/en/legal/license/) license. You can host your own instance at no cost, or try the [public demo](https://demo.domainwatchdog.eu).
+
+## How is Domain Watchdog different from a WHOIS lookup?
+
+A [WHOIS](/en/definitions/whois/) or RDAP lookup only returns the current state of a domain name. These protocols neither keep a history of past events (ownership changes, renewals, transfers) nor allow a reverse search of the domains associated with an entity. Domain Watchdog stores every RDAP response it collects, which makes it possible to rebuild the timeline of a domain and to be notified of each change.
+
+## Which top-level domains are supported?
+
+Every [top-level domain](/en/definitions/top-level-domain/) whose registry operates an RDAP server is supported. The list of RDAP servers is taken from the official [IANA bootstrap file](https://data.iana.org/rdap/dns.json) and refreshed every month. An instance administrator can also declare additional RDAP servers for TLDs that are missing from this list.
+
+## How often are domain names refreshed?
+
+Watchlists are processed every 5 minutes. A domain name is refreshed at least once a week, and much more often when its status announces an imminent change, for example during the redemption period or when the domain is pending deletion. Domain Watchdog limits the number of RDAP requests sent to registries with rate limiting and caching.
+
+## Can Domain Watchdog buy an expired domain name automatically?
+
+Yes. Link a [Connector](/en/features/backorder/connector/) to a [Watchlist](/en/features/tracking/watchlist/): when a domain of this Watchlist is deleted, Domain Watchdog immediately tries to register it through the API of your registrar. Supported providers are OVH, Gandi, Namecheap, AutoDNS, Name.com and custom EPP servers (see the [list of supported registrars](/en/features/backorder/supported-registrar/)). Success is not guaranteed, since other backorder services may try to register the same domain name at the same time.
+
+## How can I be notified of a change?
+
+Each Watchlist lets you choose the events that trigger a notification. Notifications are sent by email and can also be delivered through webhooks to Discord, Mattermost, Slack, Telegram, Zulip, Pushover, ntfy or Engagespot. Each Watchlist also provides an iCalendar feed and RSS feeds, also available through the API.
+
+## Is Domain Watchdog affiliated with a registrar?
+
+No. Domain Watchdog is an independent project and is not affiliated in any way with the registrars or API providers used to order domain names.

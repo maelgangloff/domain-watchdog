@@ -3,23 +3,76 @@ title: 🐋 Installation Docker Compose
 description: Guide pour installer le projet en utilisant Docker Compose, avec les étapes de configuration et les notes de déploiement.
 ---
 
-import {LinkCard} from '@astrojs/starlight/components';
+import {LinkCard, Steps} from '@astrojs/starlight/components';
 
-1. Téléchargez le fichier [docker-compose.yml](https://github.com/maelgangloff/domain-watchdog/blob/develop/docker-compose.yml) et modifiez-le selon vos besoins
-2. Téléchargez le fichier [.env](https://github.com/maelgangloff/domain-watchdog/blob/develop/.env), renommez-le en `.env.local` et modifiez-le selon vos besoins
-<LinkCard title="Configuration" description="Liste des variables d'environnement" href="/en/install-config/configuration/#environment-variables"/>
+Docker Compose est la méthode recommandée pour auto-héberger Domain Watchdog. L'image officielle
+[`maelgangloff/domain-watchdog`](https://hub.docker.com/r/maelgangloff/domain-watchdog) contient l'application web et
+l'API ; le fichier `docker-compose.yml` fourni la démarre avec tous les services dont elle a besoin.
 
-3. Ajoutez des fichiers statiques pour personnaliser votre instance (sous `public/content`)
-4. Récupérez la dernière version de l'image Domain Watchdog depuis Docker Hub
+## Prérequis
 
-```shell
-docker compose pull
-```
+- Un serveur Linux (ou toute autre machine) avec [Docker Engine](https://docs.docker.com/engine/install/) et le plugin Docker Compose
+- Un nom de domaine pointant vers le serveur et un reverse proxy, si l'instance doit être accessible depuis Internet
+- Optionnellement, un serveur SMTP ou un autre transport [Symfony Mailer](https://symfony.com/doc/current/mailer.html) pour envoyer les notifications par email
 
-5. Démarrez le projet en environnement de production
+## Quels services sont démarrés ?
 
-```shell
-docker compose up
-```
+| Service          | Image                          | Rôle                                                                                |
+|------------------|--------------------------------|-------------------------------------------------------------------------------------|
+| `domainwatchdog` | `maelgangloff/domain-watchdog` | Interface web et API, à l'écoute sur `127.0.0.1:8080`                               |
+| `php-worker`     | `maelgangloff/domain-watchdog` | Worker en arrière-plan : mises à jour RDAP, notifications et commandes de domaines  |
+| `database`       | `postgres:16-alpine`           | Base PostgreSQL stockant les domaines, leur historique et les comptes utilisateurs  |
+| `valkey`         | `valkey/valkey`                | Files de messages et verrous partagés entre l'application et le worker              |
 
-Par défaut, le conteneur écoute sur http://localhost:8080, mais vous pouvez configurer cela dans les variables d'environnement.
+Un service InfluxDB est également présent dans le fichier, en commentaire : activez-le uniquement si vous souhaitez
+collecter des statistiques.
+
+## Comment installer Domain Watchdog avec Docker Compose ?
+
+<Steps>
+1. Téléchargez le fichier [docker-compose.yml](https://github.com/maelgangloff/domain-watchdog/blob/develop/docker-compose.yml) et modifiez-le selon vos besoins.
+   Remplacez au minimum le mot de passe PostgreSQL par défaut `!ChangeMe!` (variable `POSTGRES_PASSWORD`).
+
+2. Téléchargez le fichier [.env](https://github.com/maelgangloff/domain-watchdog/blob/develop/.env), renommez-le en `.env.local` et modifiez-le selon vos besoins.
+   Ce fichier contient les paramètres de l'instance (envoi d'emails, inscription, limites, SSO…).
+
+   <LinkCard title="Configuration" description="Liste des variables d'environnement" href="/fr/install-config/configuration/#variables-denvironnement"/>
+
+3. Ajoutez des fichiers statiques pour personnaliser votre instance (sous `public/content`). Ce répertoire est monté dans le conteneur.
+
+4. Récupérez la dernière version de l'image Domain Watchdog depuis Docker Hub :
+
+   ```shell
+   docker compose pull
+   ```
+
+5. Démarrez le projet en environnement de production :
+
+   ```shell
+   docker compose up -d
+   ```
+
+6. Ouvrez http://localhost:8080 et créez le premier compte.
+</Steps>
+
+## Comment vérifier que l'instance fonctionne ?
+
+- `docker compose ps` liste les quatre services à l'état `running`.
+- `docker compose logs -f php-worker` affiche les messages traités par le worker. Les Watchlists sont traitées toutes
+  les 5 minutes : les noms de domaine ajoutés à une Watchlist sont donc actualisés peu après sa création.
+- Une recherche de domaine depuis l'interface web renvoie les données RDAP du domaine.
+
+## Comment exposer l'instance sur Internet ?
+
+Le conteneur `domainwatchdog` n'écoute que sur l'interface locale (`127.0.0.1:8080`). Pour le rendre accessible depuis
+Internet, placez devant lui un reverse proxy (Caddy, Nginx, Traefik…) et servez-le en HTTPS.
+
+:::caution
+Si l'instance est servie en HTTP simple, passez `HTTP_SECURE_COOKIE` à `false` dans `docker-compose.yml`, sinon le
+cookie de session est refusé par le navigateur et vous ne pourrez pas vous connecter.
+:::
+
+Sur une instance publique, envisagez de désactiver l'inscription libre (`REGISTRATION_ENABLED=false`) ou de limiter le
+nombre de Watchlists par utilisateur (variables `LIMITED_FEATURES` et `LIMIT_MAX_*`).
+
+<LinkCard title="Mise à jour" description="Mettre à jour une instance existante vers une nouvelle version" href="/fr/install-config/upgrade/"/>

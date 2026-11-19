@@ -6,10 +6,22 @@ import mermaid from "astro-mermaid"
 import starlightCoolerCredit from "starlight-cooler-credit"
 import starlightKbd from 'starlight-kbd'
 import starlightOpenAPI, {createOpenAPISidebarGroup} from 'starlight-openapi'
+import sitemap from '@astrojs/sitemap'
+import {readdirSync} from 'node:fs'
 
 
 const domainWatchdogSidebarGroup = createOpenAPISidebarGroup()
 const BASE_URL = 'https://domainwatchdog.eu'
+
+const contentKeys = (locale) => new Set(
+    readdirSync(new URL(`./src/content/docs/${locale}`, import.meta.url), {recursive: true})
+        .filter(file => /\.mdx?$/.test(file))
+        .map(file => file.replace(/\\/g, '/').replace(/\.mdx?$/, '').replace(/(^|\/)index$/, ''))
+)
+const frenchKeys = contentKeys('fr')
+const untranslatedFrenchUrls = new Set(
+    [...contentKeys('en')].filter(key => !frenchKeys.has(key)).map(key => `${BASE_URL}/fr/${key ? key + '/' : ''}`)
+)
 
 // https://astro.build/config
 export default defineConfig({
@@ -23,7 +35,8 @@ export default defineConfig({
                 alt: 'Domain Watchdog logo'
             },
             favicon: 'logo.png',
-            description: 'An app that uses RDAP to collect publicly available info about domains, track their history, and purchase then when they expire',
+            routeMiddleware: './src/routeData.ts',
+            description: 'An app that uses RDAP to collect publicly available info about domains, track their history, and purchase them when they expire',
             editLink: {
                 baseUrl: 'https://github.com/maelgangloff/domain-watchdog/edit/develop/docs/'
             },
@@ -169,6 +182,11 @@ _paq.push(['enableHeartBeatTimer']);
                 '@fontsource/noto-color-emoji/emoji.css'
             ]
         }),
-        mermaid()
+        mermaid(),
+        // Declared explicitly (instead of the one Starlight adds automatically) to filter out untranslated pages.
+        sitemap({
+            i18n: {defaultLocale: 'en', locales: {en: 'en', fr: 'fr'}},
+            filter: page => !untranslatedFrenchUrls.has(page)
+        })
     ]
 })

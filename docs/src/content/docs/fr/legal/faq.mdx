@@ -1,0 +1,104 @@
+---
+title: ❔ FAQ
+description: Réponses aux questions fréquentes sur Domain Watchdog - prix, RDAP ou WHOIS, extensions prises en charge, fréquence d'actualisation, achat automatique.
+---
+
+export const faq = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "inLanguage": "fr",
+    "mainEntity": [
+        {
+            "@type": "Question",
+            "name": "Qu'est-ce que Domain Watchdog ?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Domain Watchdog est une application open source qui utilise le protocole RDAP pour collecter les informations publiques des noms de domaine, conserver l'historique de chaque changement, vous notifier lorsqu'un événement survient et, si vous le souhaitez, tenter d'enregistrer automatiquement un nom de domaine dès qu'il redevient disponible."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "Domain Watchdog est-il gratuit ?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Oui. Domain Watchdog est un logiciel libre distribué sous licence GNU AGPL v3.0 ou ultérieure. Vous pouvez héberger votre propre instance gratuitement, ou essayer la démo publique sur https://demo.domainwatchdog.eu."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "Quelle différence avec une recherche WHOIS ?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Une recherche WHOIS ou RDAP ne renvoie que l'état actuel d'un nom de domaine. Ces protocoles ne conservent pas l'historique des événements passés (changements de titulaire, renouvellements, transferts) et ne permettent pas de recherche inversée des domaines associés à une entité. Domain Watchdog enregistre chaque réponse RDAP collectée, ce qui permet de reconstituer la chronologie d'un domaine et d'être notifié de chaque changement."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "Quelles extensions de domaine sont prises en charge ?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Toutes les extensions dont le registre exploite un serveur RDAP sont prises en charge. La liste des serveurs RDAP provient du fichier officiel de l'IANA et est actualisée chaque mois. L'administrateur d'une instance peut aussi déclarer des serveurs RDAP supplémentaires pour les extensions absentes de cette liste."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "À quelle fréquence les noms de domaine sont-ils actualisés ?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Les Watchlists sont traitées toutes les 5 minutes. Un nom de domaine est actualisé au moins une fois par semaine, et bien plus souvent lorsque son statut annonce un changement imminent, par exemple pendant la période de rédemption ou lorsqu'il est en attente de suppression. Domain Watchdog limite le nombre de requêtes RDAP envoyées aux registres grâce à une limitation de débit et à un cache."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "Domain Watchdog peut-il acheter automatiquement un domaine expiré ?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Oui. Associez un Connecteur à une Watchlist : lorsqu'un domaine de cette Watchlist est supprimé, Domain Watchdog tente immédiatement de l'enregistrer via l'API de votre bureau d'enregistrement. Les fournisseurs pris en charge sont OVH, Gandi, Namecheap, AutoDNS, Name.com et les serveurs EPP personnalisés. Le succès n'est pas garanti, car d'autres services de backorder peuvent tenter d'enregistrer le même nom au même moment."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "Comment être notifié d'un changement ?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Chaque Watchlist permet de choisir les événements qui déclenchent une notification. Les notifications sont envoyées par email et peuvent aussi être transmises par webhook à Discord, Mattermost, Slack, Telegram, Zulip, Pushover, ntfy ou Engagespot. Chaque Watchlist fournit également un flux iCalendar et des flux RSS."
+            }
+        },
+    ]
+}
+
+<script type="application/ld+json" set:html={JSON.stringify(faq)}/>
+
+Réponses aux questions les plus fréquentes sur Domain Watchdog.
+
+## Qu'est-ce que Domain Watchdog ?
+
+Domain Watchdog est une application open source qui utilise le protocole [RDAP](/fr/definitions/rdap/) pour collecter les informations publiques des noms de domaine, conserver l'historique de chaque changement, vous notifier lorsqu'un événement survient et, si vous le souhaitez, tenter d'enregistrer automatiquement un nom de domaine dès qu'il redevient disponible.
+
+## Domain Watchdog est-il gratuit ?
+
+Oui. Domain Watchdog est un logiciel libre distribué sous licence [GNU AGPL v3.0 ou ultérieure](/en/legal/license/). Vous pouvez héberger votre propre instance gratuitement, ou essayer la [démo publique](https://demo.domainwatchdog.eu).
+
+## Quelle différence avec une recherche WHOIS ?
+
+Une recherche [WHOIS](/fr/definitions/whois/) ou RDAP ne renvoie que l'état actuel d'un nom de domaine. Ces protocoles ne conservent pas l'historique des événements passés (changements de titulaire, renouvellements, transferts) et ne permettent pas de recherche inversée des domaines associés à une entité. Domain Watchdog enregistre chaque réponse RDAP collectée, ce qui permet de reconstituer la chronologie d'un domaine et d'être notifié de chaque changement.
+
+## Quelles extensions de domaine sont prises en charge ?
+
+Toutes les [extensions](/fr/definitions/top-level-domain/) dont le registre exploite un serveur RDAP sont prises en charge. La liste des serveurs RDAP provient du [fichier officiel de l'IANA](https://data.iana.org/rdap/dns.json) et est actualisée chaque mois. L'administrateur d'une instance peut aussi déclarer des serveurs RDAP supplémentaires pour les extensions absentes de cette liste.
+
+## À quelle fréquence les noms de domaine sont-ils actualisés ?
+
+Les Watchlists sont traitées toutes les 5 minutes. Un nom de domaine est actualisé au moins une fois par semaine, et bien plus souvent lorsque son statut annonce un changement imminent, par exemple pendant la période de rédemption ou lorsqu'il est en attente de suppression. Domain Watchdog limite le nombre de requêtes RDAP envoyées aux registres grâce à une limitation de débit et à un cache.
+
+## Domain Watchdog peut-il acheter automatiquement un domaine expiré ?
+
+Oui. Associez un [Connecteur](/fr/features/backorder/connector/) à une [Watchlist](/fr/features/tracking/watchlist/) : lorsqu'un domaine de cette Watchlist est supprimé, Domain Watchdog tente immédiatement de l'enregistrer via l'API de votre bureau d'enregistrement. Les fournisseurs pris en charge sont OVH, Gandi, Namecheap, AutoDNS, Name.com et les serveurs EPP personnalisés (voir la [liste des registrars supportés](/fr/features/backorder/supported-registrar/)). Le succès n'est pas garanti, car d'autres services de backorder peuvent tenter d'enregistrer le même nom au même moment.
+
+## Comment être notifié d'un changement ?
+
+Chaque Watchlist permet de choisir les événements qui déclenchent une notification. Les notifications sont envoyées par email et peuvent aussi être transmises par webhook à Discord, Mattermost, Slack, Telegram, Zulip, Pushover, ntfy ou Engagespot. Chaque Watchlist fournit également un flux iCalendar et des flux RSS, également accessibles via l'API.
+
+## Domain Watchdog est-il affilié à un bureau d'enregistrement ?
+
+Non. Domain Watchdog est un projet indépendant, sans aucune affiliation avec les bureaux d'enregistrement ou les fournisseurs d'API utilisés pour commander des noms de domaine.

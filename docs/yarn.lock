@@ -105,6 +105,14 @@
     stream-replace-string "^2.0.0"
     zod "^3.25.76"
 
+"@astrojs/sitemap@^3.6.0":
+  version "3.7.6"
+  resolved "https://registry.yarnpkg.com/@astrojs/sitemap/-/sitemap-3.7.6.tgz#8a4d95b00d7c0ba9364c1ff36d50e4a388efcaeb"
+  integrity sha512-QEKD3ubC0iJxpNzC4KvcKdxSP97U5SjuQ16+VkmUwx1TT+Hq7TIV8QGm/d2pvkN6+3GqGXLRzm7j6lZxHETm3A==
+  dependencies:
+    sitemap "^10.0.0"
+    zod "^4.6.7"
+
 "@astrojs/starlight@^0.36.2":
   version "0.36.2"
   resolved "https://registry.yarnpkg.com/@astrojs/starlight/-/starlight-0.36.2.tgz#629adafd18ed0e0e86de34f9d916151ec105ec68"
@@ -1174,6 +1182,13 @@
   version "17.0.45"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-17.0.45.tgz#2c0fafd78705e7a18b7906b5201a522719dc5190"
   integrity sha512-w+tIMs3rq2afQdsPJlODhoUEKzFP1ayaoyl1CcnwtIlsVe7K7bA1NGm4s3PraqTLlXnbIN84zuBlxBWo1u9BLw==
+
+"@types/node@^22.0.0 || ^24.0.0 || ^26.0.0":
+  version "26.6.6"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-26.6.6.tgz#9ed7b5817e728ed9216ef7c5b7d373fe3b777104"
+  integrity sha512-MzQj+8Kx3XI40OmUAE6Qoh58ZMNstNNMwn2nfd3qWsfe7nDNSqJNzes4njhz6AHwrSHOffSLwXU6yb474Q4aog==
+  dependencies:
+    undici-types "~8.9.0"
 
 "@types/picomatch@^3.0.1":
   version "3.0.2"
@@ -4148,6 +4163,15 @@ sisteransi@^1.0.5:
   resolved "https://registry.yarnpkg.com/sisteransi/-/sisteransi-1.0.5.tgz#134d681297756437cc05ca01370d3a7a571075ed"
   integrity sha512-bLGGlR1QxBcynn2d5YmDX4MGjlZvy2MRBDRNHLJ8VI6l6+9FUiyTFNJ0IveOSP0bcXgVDPRcfGqA0pjaqUpfVg==
 
+sitemap@^10.0.0:
+  version "10.0.0"
+  resolved "https://registry.yarnpkg.com/sitemap/-/sitemap-10.0.0.tgz#d6da651b6efafb841a44e77028391bdd6f6aeb6a"
+  integrity sha512-KSjl4H4KBEnGX5KXgzInPAycdOFhwLar0EmksDcYn6NqW2O+zLiMGeV2THE6tpuv3LCVdv+6xsSo2SWLGaBDKw==
+  dependencies:
+    "@types/node" "^22.0.0 || ^24.0.0 || ^26.0.0"
+    "@types/sax" "^1.2.1"
+    sax "^1.4.1"
+
 sitemap@^8.0.0:
   version "8.0.2"
   resolved "https://registry.yarnpkg.com/sitemap/-/sitemap-8.0.2.tgz#27bddb5fc2c61a1cf8f0194674cd89d762c9f5ae"
@@ -4380,6 +4404,11 @@ undici-types@~7.16.0:
   version "7.16.0"
   resolved "https://registry.yarnpkg.com/undici-types/-/undici-types-7.16.0.tgz#ffccdff36aea4884cbfce9a750a0580224f58a46"
   integrity sha512-Zz+aZWSj8LE6zoxD+xrjh4VfkIG8Ya6LvYkZqtUQGJPZjYl53ypCaUwWqo7eI0x66KBGeRo+mlBEkMSeSZ38Nw==
+
+undici-types@~8.9.0:
+  version "8.9.0"
+  resolved "https://registry.yarnpkg.com/undici-types/-/undici-types-8.9.0.tgz#e240d97c8b5d85e5347ce73d25865c7906c1ec9f"
+  integrity sha512-KTDyRTYX8sWmKXAikPHHSyc63CRPETMctyjKFupcC6OBLXT3xsN0e9aF7m+mIXutFWpUXuedtowG7iLOzp0kQg==
 
 unicode-properties@^1.4.0:
   version "1.4.1"
@@ -4687,6 +4716,11 @@ zod@^3.25.76:
   version "3.25.76"
   resolved "https://registry.yarnpkg.com/zod/-/zod-3.25.76.tgz#26841c3f6fd22a6a2760e7ccb719179768471e34"
   integrity sha512-gzUt/qt81nXsFGKIFcC3YnfEAx5NkunCfnDlvuBSSFS02bcXu4Lmea0AFIUwbLWxWPx3d9p8S5QoaujKcNQxcQ==
+
+zod@^4.6.7:
+  version "4.6.7"
+  resolved "https://registry.yarnpkg.com/zod/-/zod-4.6.7.tgz#e806cf64a7f4e37635ce9f2f52c04c3766f75e5b"
+  integrity sha512-g8W2D2kU6a8untc053fX1uVBKzM7yqAxW/3zwk83+6RyF2+SKOuV+c0wBDhUwzV1PaGapmZH+rmcUzPf+3CGwg==
 
 zwitch@^2.0.0, zwitch@^2.0.4:
   version "2.0.4"
